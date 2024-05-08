@@ -1,0 +1,321 @@
+// color variants
+@import 'themes-vars.module.scss';
+
+// third-party
+@import '~react-perfect-scrollbar/dist/css/styles.css';
+
+// ==============================|| LIGHT BOX ||============================== //
+.fullscreen .react-images__blanket {
+  z-index: 1200;
+}
+
+// ==============================|| APEXCHART ||============================== //
+
+.apexcharts-legend-series .apexcharts-legend-marker {
+  margin-right: 8px;
+}
+
+// ==============================|| PERFECT SCROLLBAR ||============================== //
+
+.scrollbar-container {
+  .ps__rail-y {
+    &:hover > .ps__thumb-y,
+    &:focus > .ps__thumb-y,
+    &.ps--clicking .ps__thumb-y {
+      background-color: $grey500;
+      width: 5px;
+    }
+  }
+  .ps__thumb-y {
+    background-color: $grey500;
+    border-radius: 6px;
+    width: 5px;
+    right: 0;
+  }
+}
+
+.scrollbar-container.ps,
+.scrollbar-container > .ps {
+  &.ps--active-y > .ps__rail-y {
+    width: 5px;
+    background-color: transparent !important;
+    z-index: 999;
+    &:hover,
+    &.ps--clicking {
+      width: 5px;
+      background-color: transparent;
+    }
+  }
+  &.ps--scrolling-y > .ps__rail-y,
+  &.ps--scrolling-x > .ps__rail-x {
+    opacity: 0.4;
+    background-color: transparent;
+  }
+}
+
+// ==============================|| ANIMATION KEYFRAMES ||============================== //
+
+@keyframes wings {
+  50% {
+    transform: translateY(-40px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  53%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translateZ(0);
+  }
+  40%,
+  43% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -5px, 0);
+  }
+  70% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -7px, 0);
+  }
+  80% {
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translateZ(0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+@keyframes slideY {
+  0%,
+  50%,
+  100% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(-10px);
+  }
+  75% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes slideX {
+  0%,
+  50%,
+  100% {
+    transform: translateX(0px);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}
+// .css-ysibbi-MuiButtonBase-root-MuiListItemButton-root{
+//   color:blue !important
+// }
+// // .css-ysibbi-MuiButtonBase-root-MuiListItemButton-root:active{
+// //   color:rgb(60, 255, 0) !important
+// // }
+// .css-ysibbi-MuiButtonBase-root-MuiListItemButton-root:visited{
+//   color:rgb(60, 255, 0) !important
+// }
+.css-ysibbi-MuiButtonBase-root-MuiListItemButton-root.Mui-selected,
+.css-ysibbi-MuiButtonBase-root-MuiListItemButton-root.Mui-selected:hover {
+  background-color: #e3e1fc !important;
+  color: #7367f0;
+  font-weight: 800;
+}
+.css-ysibbi-MuiButtonBase-root-MuiListItemButton-root.Mui-selected .MuiListItemIcon-root {
+  color: #7367f0 !important;
+}
+
+// .Mui-selected,.Mui-selected:hover {
+//   color:$darkBackground !important;
+//   font-weight: 800 !important;
+
+//   .MuiSvgIcon-root {
+//     color: $darkBackground !important;
+//   }
+// }
+
+///FlippingCard/////
+
+// .card-container {
+
+//   // position: relative;
+//   &.flipped {
+//     .front {
+//       transform: rotateY(180deg);
+//     }
+//     .back {
+//       transform: rotateY(0deg);
+//     }
+//   }
+//   .idCardConatiner{
+//     position: relative;
+//   }
+//   .front,
+//   .back {
+//    position:absolute;
+//     backface-visibility: hidden !important;
+//     transition: -webkit-transform ease 500ms;
+//     transition: transform ease 500ms;
+//   }
+//   .front {
+//     transform: rotateY(0deg);
+//   }
+//   .back {
+//     transform: rotateY(-180deg);
+//   }
+// }
+
+// .page-container {
+//   position: relative;
+//   width: 100%;
+//   height: 100vh;
+//   display: block;
+//   // perspective: 1000px;
+//   .card-container {
+//     height: 350px;
+//     margin: 0;
+//     padding: 0;
+//     top: 20px;
+//     width: 330px;
+//     margin-left: 35%;
+//     margin-right: 35%;
+//     position: relative;
+//     transform-style: preserve-3d;
+//     box-sizing: border-box;
+//     &.flipped {
+//       .front {
+//         transform: rotateY(180deg);
+//       }
+//       .back {
+//         transform: rotateY(0deg);
+//       }
+//     }
+//     .front,
+//     .back {
+//       box-sizing: border-box;
+//       height: 100%;
+//       width: 100%;
+//       display: block;
+//       // background: $new-white;
+//       box-shadow: 10px 10px 5px rgb(95, 77, 99);
+//       padding: 10px;
+//       position: absolute;
+//       border-radius: 10px;
+//       backface-visibility: hidden;
+//       transform-style: preserve-3d;
+//       transition: -webkit-transform ease 500ms;
+//       transition: transform ease 500ms;
+//     }
+//     .front {
+//       z-index: 2;
+//       transform: rotateY(0deg);
+//       /* front tile styles go here! */
+//     }
+//     .back {
+//       // background: $new-white;
+//       transform: rotateY(-180deg);
+//       padding: 20px;
+//       font-size: 20px;
+//       /* back tile styles go here! */
+//     }
+//   }
+// }
+
+// .CourseModules-Card{
+//  ::-webkit-scrollbar{
+//   background-color: #7367f0 !important;
+//  }
+// }
+* {
+  ::-webkit-scrollbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 10px !important;
+    height: 100vh !important;
+    background-color: #ffffff !important;
+    border-radius: 10px;
+    display: none !important;
+  }
+
+  .scrollbar-thumb {
+    width: 100%;
+    height: 50px;
+    background-color: #888 !important;
+    cursor: pointer;
+  }
+}
+
+.courseAccordian {
+  .css-1lzgix5-MuiPaper-root-MuiAccordion-root:last-of-type {
+    border-bottom-left-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+  }
+  .css-1lzgix5-MuiPaper-root-MuiAccordion-root:first-of-type {
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+  }
+}
+
+.connect::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  text-align: center;
+  line-height: 10px;
+  border-radius: 5px;
+  background: $warningDark;
+  margin: 0;
+  display: inline-block;
+  position: absolute;
+  top: -4px;
+}
+
+.connect::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  text-align: center;
+  line-height: 10px;
+  border-radius: 5px;
+  background: $warningDark;
+  margin: 0;
+  display: inline-block;
+  position: absolute;
+  top: -4px;
+}
+
+.connect::before {
+  left: -5px;
+}
+
+.connect::after {
+  right: -5px;
+}
+
+.connect {
+  width: 50px;
+  height: 2px;
+  background: $warningDark;
+  position: relative;
+}

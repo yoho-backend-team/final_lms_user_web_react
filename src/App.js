@@ -1,25 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import { useSelector } from 'react-redux';
+import {useEffect} from 'react'
+import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline, StyledEngineProvider } from '@mui/material';
 
-function App() {
+// routing
+import Routes from './routes';
+
+// defaultTheme
+import themes from './themes';
+
+// project imports
+import NavigationScroll from 'layout/NavigationScroll';
+import { onMessageListener,requestForToken } from './firebase';
+// ==============================|| APP ||============================== //
+
+const App = () => {
+  const customization = useSelector((state) => state.customization);
+  onMessageListener()
+  .then((payload) => {
+    console.log(payload);
+  })
+  .catch((err) => console.log('failed: ', err));
+
+  useEffect(()=>{
+    requestForToken()
+  },[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={themes(customization)}>
+        <CssBaseline />
+        <NavigationScroll>
+          <Routes />
+        </NavigationScroll>
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
-}
+};
 
 export default App;
