@@ -20,6 +20,8 @@ const StudentHelpCenterPage = Loadable(lazy(() => import("views/student-pages/he
 const StudentTicketsPage = Loadable(lazy(() => import("views/student-pages/tickets-page")));
 const StudentPaymentsPage = Loadable(lazy(() => import("views/student-pages/payments-page")));
 const StudentClassViewPage = Loadable(lazy(() => import("views/student-pages/class[id]-page")));
+const StudentProfilePage = Loadable(lazy(() => import("views/student-pages/profile-page")));
+const StudentCreateTicketPage = Loadable(lazy(() => import("views/student-pages/create-ticket-page")));
 
 
 // Instructor Pages
@@ -33,6 +35,8 @@ const InstructorHelpCenterPage = Loadable(lazy(() => import("views/instructor-pa
 const InstructorTicketsPage = Loadable(lazy(() => import("views/instructor-pages/tickets-page")));
 const InstructorPaymentsPage = Loadable(lazy(() => import("views/instructor-pages/payments-page")));
 const InstructorClassViewPage = Loadable(lazy(() => import("views/instructor-pages/class[id]-page")));
+const InstructorProfilePage = Loadable(lazy(() => import("views/student-pages/profile-page")));
+const InstructorCreateTicketPage = Loadable(lazy(() => import("views/student-pages/create-ticket-page")));
 
 const ApplicationRoutes = () => {
 
@@ -80,6 +84,8 @@ const ApplicationRoutes = () => {
                     <Route path="student/help-center" element={<StudentHelpCenterPage />} />
                     <Route path="student/payments" element={<StudentPaymentsPage />} />
                     <Route path="student/tickets" element={<StudentTicketsPage />} />
+                    <Route path="student/profile" element={<StudentProfilePage />} />
+                    <Route path="student/create-ticket" element={<StudentCreateTicketPage />} />
                 </Route>
                 <Route element={<InstructorRoute />}>
                     <Route path="/" element={<Navigate to={'instructor/home'} />} />
@@ -94,6 +100,8 @@ const ApplicationRoutes = () => {
                     <Route path="instructor/help-center" element={<InstructorHelpCenterPage />} />
                     <Route path="instructor/payments" element={<InstructorPaymentsPage />} />
                     <Route path="instructor/tickets" element={<InstructorTicketsPage />} />
+                    <Route path="instructor/profile" element={<InstructorProfilePage />} />
+                    <Route path="instructor/create-ticket" element={<InstructorCreateTicketPage />} />
                 </Route>
                 <Route path="login" element={<LoginPage />} />
                 <Route path="*" element={<ErrorPage404 />} />
