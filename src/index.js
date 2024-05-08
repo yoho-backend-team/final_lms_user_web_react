@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 
 // third party
-import { HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 // project imports
@@ -19,13 +19,13 @@ const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 root.render(
   <Provider store={store}>
-    <HashRouter>
+    <BrowserRouter>
       <ErrorBoundary>
         <ToastProvider>
           <App />
         </ToastProvider>
       </ErrorBoundary>
-    </HashRouter>
+    </BrowserRouter>
   </Provider>
 );
 
