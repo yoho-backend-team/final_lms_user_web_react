@@ -1,9 +1,8 @@
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
-import React from "react";
-import { lazy } from "react";
-import Loadable from "components/loadable";
-import MainLayout from "layout/MainLayout";
-import AuthLayout from "layout/AuthLayout";
+import React from 'react'
+import { lazy } from 'react';
+import Loadable from 'components/loadable';
+
 // Auth Pages
 const LoginPage = Loadable(lazy(() => import("views/auth-pages/login-page")));
 
