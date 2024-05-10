@@ -118,7 +118,7 @@ const ApplicationRoutes = () => {
   return (
     <Routes>
       <Route element={<RequireAuth />}>
-        <Route element={<MainLayout />}>
+        {/* <Route element={<MainLayout />}> */}
           <Route element={<StudentRoute />}>
             <Route path="/" element={<Navigate to={"student/home"} />} />
             <Route path="student" element={<StudentHomePage />} />
@@ -202,7 +202,7 @@ const ApplicationRoutes = () => {
               element={<InstructorCreateTicketPage />}
             />
           </Route>
-        </Route>
+        {/* </Route> */}
         <Route path="login" element={<LoginPage />} />
         <Route path="*" element={<ErrorPage404 />} />
       </Route>

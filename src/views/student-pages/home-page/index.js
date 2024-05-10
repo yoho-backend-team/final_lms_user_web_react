@@ -1,8 +1,21 @@
-import React from 'react'
 
+import React from 'react'
+import StudentNavLinks from 'features/common/Navbar/StudentNavLinks'
 const HomePage = () => {
+
+
+
+
   return (
-    <div>HomePage</div>
+    <div>
+
+      <StudentNavLinks />
+
+
+
+
+
+    </div>
   )
 }
 
