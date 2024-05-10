@@ -170,7 +170,45 @@ export default function NavBar() {
   const DrawerList = (
     <Box>
       <Box sx={{ mt: 1, p: 2 }}>
-        <img src={logo} height={10} />
+        <img src={logo} height={100} />
+      </Box>
+      <Box role="presentation" onClick={toggleDrawer(false)} p={1}>
+        <List>
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <Home />
+              </ListItemIcon>
+              <ListItemText primary="Home" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <Ballot />
+              </ListItemIcon>
+
+              <ListItemText primary="Products" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <Person />
+              </ListItemIcon>
+              <ListItemText primary="Contact" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <Diversity1 />
+              </ListItemIcon>
+              <ListItemText primary="About" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+        <Divider />
       </Box>
     </Box>
   );
@@ -185,8 +223,42 @@ export default function NavBar() {
           boxShadow: 1,
         }}
       >
+      
         <Toolbar>
-          <Grid container alignItems="center" display="flex">
+        <Grid
+            container
+            sx={{
+              display: { xs:'flex',md: "none",alignItems:'center'},
+            }}
+          >
+            <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="open drawer"
+                onClick={toggleDrawer(true)}
+              >
+                <MenuIcon sx={{color:theme.palette.primary.main}}/>
+              </IconButton>
+              <Box sx={{ display: { xs: "none", md: "block" } }}>
+                <img src={logo} alt="logo" height={10} />
+              </Box>
+            </Grid>
+            <Grid xs={8} sx={{ display: "flex", justifyContent: "end" }}>
+              <IconButton
+                size="large"
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon sx={{color:theme.palette.primary.main}}/>
+              </IconButton>
+            </Grid>
+          </Grid>
+          <Grid container alignItems="center" sx={{display:{sm:'flex',xs:'none'}}}>
             <Grid item md={4}>
               {" "}
               <Box
@@ -295,36 +367,9 @@ export default function NavBar() {
             </Grid>
           </Grid>
 
-          <Grid
-            container
-            sx={{ display: { xs: "flex", md: "none", alignItems: "center" } }}
-          >
-            <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="open drawer"
-                onClick={toggleDrawer(true)}
-              >
-                <MenuIcon />
-              </IconButton>
-              <img src={logo} alt="logo" height={10} />
-            </Grid>
-            <Grid xs={8} sx={{ display: "flex", justifyContent: "end" }}>
-              <IconButton
-                size="large"
-                aria-label="show more"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon />
-              </IconButton>
-            </Grid>
-          </Grid>
+         
         </Toolbar>
+        
       </AppBar>
       {renderMobileMenu}
       {renderMenu}

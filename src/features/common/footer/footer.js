@@ -1,4 +1,4 @@
-import { Grid, Typography, Box } from "@mui/material";
+import {  Typography, Box } from "@mui/material";
 import React from "react";
 
 const Footer = () => {
@@ -7,7 +7,9 @@ const Footer = () => {
       sx={{
         position: "sticky",
         minHeight: "100vh",
-        flexShrink: 0
+        display: 'flex',
+        flexDirection: 'column',
+        // flexShrink: 0
       }}
     >
       <Box component="footer" square variant="outlined">
@@ -16,7 +18,6 @@ const Footer = () => {
             display: "flex",
             justifyContent: "space-between",
             p: 2,
-            height: "100%",
           }}
         >
           <Typography>help ?</Typography>
