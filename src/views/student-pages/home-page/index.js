@@ -1,6 +1,6 @@
 
 import React from 'react'
-import StudentNavLinks from 'features/common/Navbar/StudentNavLinks'
+
 const HomePage = () => {
 
 
@@ -9,10 +9,8 @@ const HomePage = () => {
   return (
     <div>
 
-      <StudentNavLinks />
 
-
-
+      HomeScreen
 
 
     </div>

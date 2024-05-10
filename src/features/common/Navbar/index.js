@@ -38,6 +38,7 @@ import { Button, Typography } from "@mui/material";
 // import ListItemIcon from "@mui/material/ListItemIcon";
 import { Ballot, Diversity1, Home, Person } from "@mui/icons-material";
 import { useTheme } from "@emotion/react";
+import StudentNavLinks from "./StudentNavLinks";
 // import { colorModeContext, tokens } from "../../assets/Styles/theme";
 
 export default function NavBar() {
@@ -223,12 +224,12 @@ export default function NavBar() {
           boxShadow: 1,
         }}
       >
-      
+
         <Toolbar>
-        <Grid
+          <Grid
             container
             sx={{
-              display: { xs:'flex',md: "none",alignItems:'center'},
+              display: { xs: 'flex', md: "none", alignItems: 'center' },
             }}
           >
             <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
@@ -239,7 +240,7 @@ export default function NavBar() {
                 aria-label="open drawer"
                 onClick={toggleDrawer(true)}
               >
-                <MenuIcon sx={{color:theme.palette.primary.main}}/>
+                <MenuIcon sx={{ color: theme.palette.primary.main }} />
               </IconButton>
               <Box sx={{ display: { xs: "none", md: "block" } }}>
                 <img src={logo} alt="logo" height={10} />
@@ -254,11 +255,11 @@ export default function NavBar() {
                 onClick={handleMobileMenuOpen}
                 color="inherit"
               >
-                <MoreIcon sx={{color:theme.palette.primary.main}}/>
+                <MoreIcon sx={{ color: theme.palette.primary.main }} />
               </IconButton>
             </Grid>
           </Grid>
-          <Grid container alignItems="center" sx={{display:{sm:'flex',xs:'none'}}}>
+          <Grid container alignItems="center" sx={{ display: { sm: 'flex', xs: 'none' } }}>
             <Grid item md={4}>
               {" "}
               <Box
@@ -269,7 +270,7 @@ export default function NavBar() {
                 <img src={logo} alt="logo" height={70} />
               </Box>
             </Grid>
-            <Grid
+            {/* <Grid
               item
               md={4}
               sx={{
@@ -315,7 +316,8 @@ export default function NavBar() {
                   Contact
                 </Typography>
               </Box>
-            </Grid>
+            </Grid> */}
+            <StudentNavLinks />
             <Grid item md={4} sx={{ justifyContent: "end", display: "flex" }}>
               {" "}
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -367,9 +369,9 @@ export default function NavBar() {
             </Grid>
           </Grid>
 
-         
+
         </Toolbar>
-        
+
       </AppBar>
       {renderMobileMenu}
       {renderMenu}

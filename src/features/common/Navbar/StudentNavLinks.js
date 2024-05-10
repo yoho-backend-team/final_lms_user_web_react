@@ -51,73 +51,74 @@ const StudentNavLinks = () => {
         },
     ]
     return (
-        <div>
 
-            <Grid
-                item
-                md={4}
+
+        <Grid
+            item
+            md={4}
+            sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                mt: 12
+
+            }}
+        >
+            <Box sx={{ position: 'absolute' }}>
+
+                <img src={nav_back_image} style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center', }} />
+            </Box>
+
+
+
+            <Box
                 sx={{
-                    justifyContent: "center",
-                    alignItems: "center",
                     display: "flex",
-
+                    gap: 5,
+                    position: 'relative',
+                    display: { xs: "none", sm: "flex" },
+                    padding: 7, borderBottomLeftRadius: 80, borderBottomRightRadius: 80,
                 }}
             >
-                <Box sx={{ position: 'absolute' }}>
+                {
+                    nav_items?.map((item, index) => (
 
-                    <img src={nav_back_image} style={{ alignItems: 'center', justifyContent: 'center', textAlign: 'center', }} />
-                </Box>
+                        <Box sx={{ alignItems: 'center', justifyContent: 'center', textDecoration: "none", marginTop: -13.3, pt: 5 }} component={Link}
+                            to={item.to} onClick={() => {
+                                setSelected(item.id)
 
+                            }}>
 
+                            <Box sx={{ textAlign: 'center', pt: 5 }}>
 
-                <Box
-                    sx={{
-                        display: "flex",
-                        gap: 5,
-                        position: 'relative',
-                        display: { xs: "none", sm: "flex" },
-                        padding: 7, borderBottomLeftRadius: 80, borderBottomRightRadius: 80,
-                    }}
-                >
-                    {
-                        nav_items?.map((item, index) => (
-
-                            <Box sx={{ alignItems: 'center', justifyContent: 'center', textDecoration: "none", marginTop: -13.3, pt: 5 }} component={Link}
-                                to={item.to} onClick={() => {
-                                    setSelected(item.id)
-
-                                }}>
-
-                                <Box sx={{ textAlign: 'center', pt: 5 }}>
-
-                                    <Icon icon={item.icon} color={selected == item.id ? '#0D6EFD' : '#6C757D'} />
-                                </Box>
-
-
-                                <Typography
-                                    variant='h5'
-
-                                    sx={{ textDecoration: "none", textAlign: 'center', fontWeight: '500', color: selected == item.id ? '#0D6EFD' : '#6C757D', fontSize: '14px', fontFamily: "poppins", lineHeight: '22px' }}
-                                >
-                                    {item.name}
-                                </Typography>
-                                {
-                                    item.id == selected && (
-
-                                        <img src={nav_selected_image} style={{ marginTop: -34, height: 50, }} />
-                                    )
-                                }
-
+                                <Icon icon={item.icon} color={selected == item.id ? '#0D6EFD' : '#6C757D'} />
                             </Box>
-                        ))
-                    }
-
-                </Box>
-            </Grid>
 
 
+                            <Typography
+                                variant='h5'
 
-        </div>
+                                sx={{ textDecoration: "none", textAlign: 'center', fontWeight: '500', color: selected == item.id ? '#0D6EFD' : '#6C757D', fontSize: '14px', fontFamily: "poppins", lineHeight: '22px' }}
+                            >
+                                {item.name}
+                            </Typography>
+                            {
+                                item.id == selected && (
+
+                                    <img src={nav_selected_image} style={{ marginTop: -34, height: 50, }} />
+                                )
+                            }
+
+                        </Box>
+                    ))
+                }
+
+            </Box>
+        </Grid>
+
+
+
+
     )
 }
 

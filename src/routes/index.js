@@ -118,7 +118,7 @@ const ApplicationRoutes = () => {
   return (
     <Routes>
       <Route element={<RequireAuth />}>
-        {/* <Route element={<MainLayout />}> */}
+        <Route element={<MainLayout />}>
           <Route element={<StudentRoute />}>
             <Route path="/" element={<Navigate to={"student/home"} />} />
             <Route path="student" element={<StudentHomePage />} />
@@ -153,55 +153,56 @@ const ApplicationRoutes = () => {
               element={<StudentCreateTicketPage />}
             />
           </Route>
-          <Route element={<InstructorRoute />}>
-            <Route path="/" element={<Navigate to={"instructor/home"} />} />
-            <Route path="instructor" element={<InstructorHomePage />} />
-            <Route path="instructor/home" element={<InstructorHomePage />} />
-            <Route
-              path="instructor/activity-logs"
-              element={<InstructorActivityLogsPage />}
-            />
-            <Route
-              path="instructor/attendances"
-              element={<InstructorAttendancesPage />}
-            />
-            <Route
-              path="instructor/classes"
-              element={<InstructorClassesPage />}
-            />
-            <Route
-              path="instructor/class/:id"
-              element={<InstructorClassViewPage />}
-            />
-            <Route
-              path="instructor/community"
-              element={<InstructorCommunityPage />}
-            />
-            <Route
-              path="instructor/course"
-              element={<InstructorCoursePage />}
-            />
-            <Route
-              path="instructor/help-center"
-              element={<InstructorHelpCenterPage />}
-            />
-            <Route
-              path="instructor/payments"
-              element={<InstructorPaymentsPage />}
-            />
-            <Route
-              path="instructor/tickets"
-              element={<InstructorTicketsPage />}
-            />
-            <Route
-              path="instructor/profile"
-              element={<InstructorProfilePage />}
-            />
-            <Route
-              path="instructor/create-ticket"
-              element={<InstructorCreateTicketPage />}
-            />
-          </Route>
+        </Route>
+        <Route element={<InstructorRoute />}>
+          <Route path="/" element={<Navigate to={"instructor/home"} />} />
+          <Route path="instructor" element={<InstructorHomePage />} />
+          <Route path="instructor/home" element={<InstructorHomePage />} />
+          <Route
+            path="instructor/activity-logs"
+            element={<InstructorActivityLogsPage />}
+          />
+          <Route
+            path="instructor/attendances"
+            element={<InstructorAttendancesPage />}
+          />
+          <Route
+            path="instructor/classes"
+            element={<InstructorClassesPage />}
+          />
+          <Route
+            path="instructor/class/:id"
+            element={<InstructorClassViewPage />}
+          />
+          <Route
+            path="instructor/community"
+            element={<InstructorCommunityPage />}
+          />
+          <Route
+            path="instructor/course"
+            element={<InstructorCoursePage />}
+          />
+          <Route
+            path="instructor/help-center"
+            element={<InstructorHelpCenterPage />}
+          />
+          <Route
+            path="instructor/payments"
+            element={<InstructorPaymentsPage />}
+          />
+          <Route
+            path="instructor/tickets"
+            element={<InstructorTicketsPage />}
+          />
+          <Route
+            path="instructor/profile"
+            element={<InstructorProfilePage />}
+          />
+          <Route
+            path="instructor/create-ticket"
+            element={<InstructorCreateTicketPage />}
+          />
+        </Route>
         {/* </Route> */}
         <Route path="login" element={<LoginPage />} />
         <Route path="*" element={<ErrorPage404 />} />

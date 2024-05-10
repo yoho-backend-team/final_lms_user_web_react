@@ -1,4 +1,4 @@
-import {  Typography, Box } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import React from "react";
 
 const Footer = () => {
@@ -6,9 +6,10 @@ const Footer = () => {
     <Box
       sx={{
         position: "sticky",
-        minHeight: "100vh",
+
         display: 'flex',
         flexDirection: 'column',
+        backgroundColor:'white',
         // flexShrink: 0
       }}
     >
@@ -17,7 +18,8 @@ const Footer = () => {
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            p: 2,
+            ml: 2,
+            mr: 2,
           }}
         >
           <Typography>help ?</Typography>
