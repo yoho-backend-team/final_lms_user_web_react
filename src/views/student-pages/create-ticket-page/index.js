@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from '@mui/material';
 import logo from '../../../assets/images/pages/auth-v2-forgot-password-illustration-light.png';
 import { Container, Paper, Typography, TextField, Button, InputLabel, Select, MenuItem, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
