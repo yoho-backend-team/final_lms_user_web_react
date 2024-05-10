@@ -18,11 +18,11 @@ const LoginPage = () => {
   const theme = useTheme();
 
   return (
-    <Grid container display="flex">
+    <Grid container sx={{display:{xs:'block',sm:'flex'}}}>
       <Grid
         item
-        xs={8}
-        sx={{ backgroundColor: theme.palette.secondary.main, height: "100vh" }}
+        xs={12} sm={8}
+        sx={{ backgroundColor: theme.palette.secondary.main,width:'100%' }}
       >
         <Box>
           <Box>
@@ -30,19 +30,18 @@ const LoginPage = () => {
           </Box>
           <Box
             sx={{
-              px: 20,
-              py: 10,
+              px:{sm:20,xs:5},
+              py:{xs:5,sm:10},
               flexWrap: "wrap",
               justifyContent: "center",
               display: "flex",
-             
             }}
           >
             <Typography
               fontFamily="poppins"
               variant="h1"
               color={theme.palette.common.white}
-              sx={{ fontSize: 60,lineHeight:'5rem' }}
+              sx={{ fontSize:{xs:'2em',sm:'4em'}, lineHeight:{sm:'5rem'}}}
             >
               "Embark on a learning odyssey let your aspirations guide you"
             </Typography>
@@ -51,17 +50,17 @@ const LoginPage = () => {
       </Grid>
       <Grid
         item
-        xs={4}
+        xs={12} sm={4}
         sx={{
           backgroundColor: theme.palette.common.white,
-          height: "100vh",
-          p: 5,
+          height:{xs:'100%',sm:'100vh'},
+          p:{xs:1,sm:5},
           justifyContent: "center",
           display: "flex",
         }}
       >
         <Box>
-          <Box sx={{ px: 5, mt: "15vh" }}>
+          <Box sx={{ px:{sm:5,xs:1}, mt:{sm:'15vh',xs:5} }}>
             <Typography
               variant="h4"
               sx={{
@@ -87,7 +86,7 @@ const LoginPage = () => {
                 </FormControl>
               </Box>
               <Box
-                sx={{ alignItems: "center", display: "flex", gap: 3, mt: 2 }}
+                sx={{ alignItems: "center", display: "flex", gap: 3, mt: 2,justifyContent:'center' }}
               >
                 <Box sx={{ alignItems: "center", display: "flex" }}>
                   <Checkbox />
@@ -107,7 +106,7 @@ const LoginPage = () => {
                 <Typography>Forget Password?</Typography>
                 <Link to="#">Get it</Link>
               </Box>
-              <Box sx={{ mt: 8,justifyContent:'center',display:'flex' }} >
+              <Box sx={{ mt: 8, justifyContent: "center", display: "flex" }}>
                 <Typography sx={{ fontSize: 12 }}>
                   Enter the mail ID & Password that given by LMS
                 </Typography>
