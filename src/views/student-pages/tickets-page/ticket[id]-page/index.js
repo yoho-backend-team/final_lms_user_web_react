@@ -36,7 +36,7 @@ const TicketViewPage = () => {
           }}
         >
           <Typography variant="h5">Ticket ID : Ticket #123454566774</Typography>
-          <Button variant="contained" size="medium">
+          <Button variant="contained" size="medium" color="success">
             Request For Close
           </Button>
         </Grid>
