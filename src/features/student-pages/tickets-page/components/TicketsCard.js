@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Typography, CardContent, Box, Grid, Button } from '@mui/material';
 import Chip from 'components/mui/chip';
 import Icon from 'components/icon';
+import { Link } from 'react-router-dom';
 
 // import IconifyIcon from 'components/icon';
 import IconButton from '@mui/material/IconButton';
@@ -45,6 +46,7 @@ const TicketsCard = () => {
     <Grid container spacing={2}> 
       {dummyData.map((data, index) => (
         <Grid item xs={12} sm={6} md={4} key={index}>
+           <Link to={`1`} style={{ textDecoration: 'none' }}>
           <Card sx={{ mb: 1 }}>
             <CardContent sx={{p:2 }}>
               <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -82,6 +84,7 @@ const TicketsCard = () => {
               </Box>
             </CardContent>
           </Card>
+          </Link>
         </Grid>
       ))}
     </Grid>
