@@ -20,8 +20,8 @@ const TicketsPage = () => {
       <Grid item md={1} xs={12} sx={{mt:2}}>
         <Typography variant="h2">Ticket</Typography>
       </Grid>
-      <Grid item md={11} xs={12}>
-        <Box sx={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}>
+      <Grid item md={9} xs={12}>
+        {/* <Box sx={{display:"flex",justifyContent:"space-between",alignItems:"flex-start"}}> */}
           <Grid sx={{  typography: "body1" }}>
           <TabContext value={value}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -29,9 +29,9 @@ const TicketsPage = () => {
                 onChange={handleChange}
                 aria-label="lab API tabs example"
               >
-                <Tab label="Item One" value="1" />
-                <Tab label="Item Two" value="2" />
-                <Tab label="Item Three" value="3" />
+                <Tab label="All" value="1" />
+                <Tab label="Open" value="2" />
+                <Tab label="Close" value="3" />
               </TabList>
             </Box>
             <TabPanel value="1"><TicketsCard/></TabPanel>
@@ -39,11 +39,13 @@ const TicketsPage = () => {
             <TabPanel value="3">Item Three</TabPanel>
           </TabContext>
           </Grid>
-          <Grid>
+
+         
+        {/* </Box> */}
+      </Grid>
+      <Grid item md={2} xs={12} >
           <Button variant="contained">Create Ticket</Button>
           </Grid>
-        </Box>
-      </Grid>
     </Grid>
     </Box>
   );

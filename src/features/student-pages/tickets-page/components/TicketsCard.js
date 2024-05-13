@@ -76,7 +76,7 @@ const TicketsCard = () => {
 
                 <Box>
                   <Button size="small" variant="contained" sx={{px:2}}>
-                    In progress
+                    Opened
                   </Button>
                 </Box>
               </Box>
