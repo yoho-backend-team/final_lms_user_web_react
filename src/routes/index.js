@@ -120,7 +120,7 @@ const ApplicationRoutes = () => {
       <Route element={<RequireAuth />}>
         <Route element={<MainLayout />}>
           <Route element={<StudentRoute />}>
-            <Route path="/" element={<Navigate to={"student/home"} />} />
+            <Route path="/" element={<Navigate to={"student/tickets"} />} />
             <Route path="student" element={<StudentHomePage />} />
             <Route path="student/home" element={<StudentHomePage />} />
             <Route
