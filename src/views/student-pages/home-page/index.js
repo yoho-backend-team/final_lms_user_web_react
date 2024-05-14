@@ -1,6 +1,7 @@
 import { Button, Card, Grid, Typography } from "@mui/material";
 import React from "react";
 import { Box, Avatar } from "@mui/material";
+import CourseCard from "features/student-pages/home-page/components/CourseCard";
 import {
   Assessment,
   CheckCircle,
@@ -9,13 +10,16 @@ import {
   Podcasts,
 } from "@mui/icons-material";
 import { useTheme } from "@emotion/react";
+import AttendanceCard from "features/student-pages/home-page/components/AttendanceCard";
+import PaymentsCard from "features/student-pages/home-page/components/PaymentsCard";
+import UpdatesCard from "features/student-pages/home-page/components/UpdatesCard";
 
 const StudentDashboard = () => {
   const theme = useTheme();
   return (
     <Grid container p={8} sx={{ p: { xs: 2, sm: 5 } }}>
       <Grid item xs={12} sm={4} className="MainGrid-1">
-        <Card>
+        <Card sx={{ boxShadow: "none" }}>
           <Box>
             <img
               src="https://w0.peakpx.com/wallpaper/23/429/HD-wallpaper-blue-abstract-lines-background-banner-background-on-lovepik.jpg"
@@ -234,6 +238,7 @@ const StudentDashboard = () => {
                       fontWeight: 500,
                       fontSize: 12,
                       color: "black",
+                      mt:2
                     }}
                   >
                     Rajalakshmi Institute, Vellore
@@ -255,15 +260,19 @@ const StudentDashboard = () => {
         </Card>
       </Grid>
       <Grid item xs={12} sm={4} className="MainGrid-2">
-        <Gauge
-          width={100}
-          height={100}
-          value={60}
-          startAngle={-90}
-          endAngle={90}
-        />
+        <Grid item xs={12} px={3} mb={2}>
+          <CourseCard />
+        </Grid>
+        <Grid item xs={12} px={3} mb={2}>
+          <AttendanceCard />
+        </Grid>
+        <Grid item xs={12} px={3}>
+          <PaymentsCard />
+        </Grid>
       </Grid>
-      <Grid item xs={12} sm={4} className="MainGrid-3"></Grid>
+      <Grid item xs={12} sm={4} className="MainGrid-3">
+        <UpdatesCard/>
+      </Grid>
     </Grid>
   );
 };

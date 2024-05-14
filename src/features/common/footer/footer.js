@@ -5,11 +5,10 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        position: "sticky",
-
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor:'white',
+        position: "static",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "white",
         // flexShrink: 0
       }}
     >
