@@ -75,12 +75,12 @@ const TicketViewPage = () => {
               </Grid>
             </Box>
 
-            <Box sx={{ my: 2 }} >
+            <Box sx={{ my: 2 }}>
               <Grid container spacing={3}>
                 <Grid item md={6} xs={12}>
                   <Card>
                     <CardContent>
-                      <Box>
+                      <Box sx={{ mt: 2 }}>
                         <Grid container>
                           <Grid item xs={12}>
                             <Grid
@@ -116,7 +116,7 @@ const TicketViewPage = () => {
 
                       <Box
                         sx={{
-                          mt: 3,
+                          mt: 4,
                           backgroundColor: "#757575",
                           p: 2,
                           borderRadius: "15px",
@@ -154,7 +154,7 @@ const TicketViewPage = () => {
                         </Grid>
                       </Box>
 
-                      <Box sx={{ mt: 3 }}>
+                      <Box sx={{ mt: 4 }}>
                         <Grid container>
                           <Grid item xs={12}>
                             <Grid
@@ -203,7 +203,7 @@ const TicketViewPage = () => {
                   </Card>
                 </Grid>
 
-                <Grid item md={6} xs={12} sx={{mt:2}}>
+                <Grid item md={6} xs={12} sx={{ mt: 2 }}>
                   <Box>
                     <Grid container>
                       <Grid item xs={12}>
@@ -244,20 +244,16 @@ const TicketViewPage = () => {
                           }}
                         >
                           <Grid item>
-                            <Typography variant="h4">
-                              issue Category
-                            </Typography>
+                            <Typography variant="h4">issue Category</Typography>
                           </Grid>
                         </Grid>
                       </Grid>
                       <Grid item xs={12} sx={{ mt: 2 }}>
-                        <Typography variant="body2">
-                            Attendance
-                        </Typography>
+                        <Typography variant="body2">Attendance</Typography>
                       </Grid>
                     </Grid>
                   </Box>
-                  
+
                   <Box sx={{ mt: 3 }}>
                     <Grid container>
                       <Grid item xs={12}>
@@ -270,15 +266,13 @@ const TicketViewPage = () => {
                           }}
                         >
                           <Grid item>
-                            <Typography variant="h4">
-                              Attachments
-                            </Typography>
+                            <Typography variant="h4">Attachments</Typography>
                           </Grid>
                         </Grid>
                       </Grid>
                       <Grid item xs={12} sx={{ mt: 2 }}>
                         <Typography variant="body2">
-                            01 Screenshot.PDF View
+                          01 Screenshot.PDF View
                         </Typography>
                       </Grid>
                     </Grid>
@@ -296,14 +290,12 @@ const TicketViewPage = () => {
                           }}
                         >
                           <Grid item>
-                            <Typography variant="h4">
-                              Status
-                            </Typography>
+                            <Typography variant="h4">Status</Typography>
                           </Grid>
                         </Grid>
                       </Grid>
                       <Grid item xs={12} sx={{ mt: 2 }}>
-                  <Chip label="Opened"  color='success'/>
+                        <Chip label="Opened" color="success" />
                       </Grid>
                     </Grid>
                   </Box>
@@ -319,20 +311,15 @@ const TicketViewPage = () => {
                           }}
                         >
                           <Grid item>
-                            <Typography variant="h4">
-                              Attempt
-                            </Typography>
+                            <Typography variant="h4">Attempt</Typography>
                           </Grid>
                         </Grid>
                       </Grid>
                       <Grid item xs={12} sx={{ mt: 2 }}>
-                        <Typography variant="body2">
-                            01
-                        </Typography>
+                        <Typography variant="body2">01</Typography>
                       </Grid>
                     </Grid>
                   </Box>
-                  
                 </Grid>
               </Grid>
             </Box>
