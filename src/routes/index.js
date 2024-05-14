@@ -49,7 +49,9 @@ const StudentProfilePage = Loadable(
 const StudentCreateTicketPage = Loadable(
   lazy(() => import("views/student-pages/create-ticket-page"))
 );
-
+const StudentTicketViewPage = Loadable(
+  lazy(() => import("views/student-pages/tickets-page/ticket[id]-page"))
+);
 // Instructor Pages
 const InstructorHomePage = Loadable(
   lazy(() => import("views/instructor-pages/home-page"))
@@ -149,6 +151,10 @@ const ApplicationRoutes = () => {
             />
             <Route path="student/payments" element={<StudentPaymentsPage />} />
             <Route path="student/tickets" element={<StudentTicketsPage />} />
+            <Route
+              path="student/tickets/:id"
+              element={<StudentTicketViewPage />}
+            />
             <Route path="student/profile" element={<StudentProfilePage />} />
             <Route
               path="student/create-ticket"
