@@ -1,12 +1,15 @@
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Typography, IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import HelpCenterCard from "features/student-pages/help-center-page/components/HelpCenterCard";
 import * as React from "react";
 import HelpCenterView from "features/student-pages/help-center-page/components/HelpCenterView";
+import ChatIcon from "@mui/icons-material/Chat";
+import CallIcon from "@mui/icons-material/Call";
+import MailIcon from "@mui/icons-material/Mail";
 
 const HelpCenterPage = () => {
   const [value, setValue] = React.useState("1");
@@ -16,7 +19,7 @@ const HelpCenterPage = () => {
   };
 
   return (
-    <Box sx={{ p: 4 }}>
+    <Box sx={{ p: 2 }}>
       <TabContext value={value}>
         <Grid container spacing={2} xs={12} sx={{ alignItems: "flex-start" }}>
           <Grid item xs={12} sx={{ mt: 2 }}>
@@ -93,7 +96,34 @@ const HelpCenterPage = () => {
               </Grid>
               <Grid item md={2} xs={12}>
                 <Box>
-                  <Typography variant="h4">Try Other Option ?</Typography>
+                  <Typography variant="h4">Try Other Option?</Typography>
+                  <Box
+                    sx={{
+                      mt: 0.75,
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box sx={{ textAlign: "center" }}>
+                      <IconButton>
+                        <ChatIcon />
+                      </IconButton>
+                      <Typography variant="caption">Chat</Typography>
+                    </Box>
+                    <Box sx={{ textAlign: "center" }}>
+                      <IconButton>
+                        <CallIcon />
+                      </IconButton>
+                      <Typography variant="caption">Call</Typography>
+                    </Box>
+                    <Box sx={{ textAlign: "center" }}>
+                      <IconButton>
+                        <MailIcon />
+                      </IconButton>
+                      <Typography variant="caption">Mail</Typography>
+                    </Box>
+                  </Box>
                 </Box>
               </Grid>
             </Grid>
