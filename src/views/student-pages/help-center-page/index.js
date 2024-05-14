@@ -91,6 +91,16 @@ const HelpCenterPage = () => {
                         color: value === "5" ? "#fff" : "#000",
                       }}
                     />
+                    <Tab
+                      label="Payment"
+                      value="6"
+                      sx={{
+                        backgroundColor:
+                          value === "6" ? "#2196f3" : "transparent",
+                        borderRadius: 16,
+                        color: value === "6" ? "#fff" : "#000",
+                      }}
+                    />
                   </TabList>
                 </Box>
               </Grid>
@@ -138,8 +148,9 @@ const HelpCenterPage = () => {
                 <HelpCenterView />
               </TabPanel>
               <TabPanel value="3">Item Three</TabPanel>
-              <TabPanel value="4">Item Three</TabPanel>
-              <TabPanel value="5">Item Three</TabPanel>
+              <TabPanel value="4">Item Four</TabPanel>
+              <TabPanel value="5">Item Five</TabPanel>
+              <TabPanel value="6">Item Six</TabPanel>
             </Grid>
           </Grid>
         </Grid>

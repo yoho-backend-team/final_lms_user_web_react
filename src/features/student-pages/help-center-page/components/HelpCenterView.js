@@ -55,6 +55,16 @@ const HelpCenterView = () => {
         <Grid item xs={12} md={5}>
           <Box>
             <Typography variant="h4">Video Guide</Typography>
+            <Box sx={{ mt: 2 }}>
+              <video
+                controls
+                width="100%"
+                src="https://youtu.be/M9hbj3phdT8?si=UVgdq7ZEtWXwIeWF" 
+                poster="path/to/your/poster.jpg" 
+              >
+                Your browser does not support the video tag.
+              </video>
+            </Box>
           </Box>
         </Grid>
       </Grid>
