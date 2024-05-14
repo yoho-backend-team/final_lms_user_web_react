@@ -1,8 +1,10 @@
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
-import React from 'react'
-import { lazy } from 'react';
-import Loadable from 'components/loadable';
+import React from "react";
+import { lazy } from "react";
+import Loadable from "components/loadable";
 import MainLayout from "layout/MainLayout";
+import AuthLayout from "layout/AuthLayout";
+// import Login from "features/Auth/login";
 
 // Auth Pages
 const LoginPage = Loadable(lazy(() => import("views/auth-pages/login-page")));
@@ -178,10 +180,7 @@ const ApplicationRoutes = () => {
             path="instructor/community"
             element={<InstructorCommunityPage />}
           />
-          <Route
-            path="instructor/course"
-            element={<InstructorCoursePage />}
-          />
+          <Route path="instructor/course" element={<InstructorCoursePage />} />
           <Route
             path="instructor/help-center"
             element={<InstructorHelpCenterPage />}
@@ -204,8 +203,10 @@ const ApplicationRoutes = () => {
           />
         </Route>
         {/* </Route> */}
-        <Route path="login" element={<LoginPage />} />
-        <Route path="*" element={<ErrorPage404 />} />
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<ErrorPage404 />} />
+        </Route>
       </Route>
     </Routes>
   );

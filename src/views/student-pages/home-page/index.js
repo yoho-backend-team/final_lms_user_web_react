@@ -1,282 +1,271 @@
-import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import { blue } from "@mui/material/colors";
-import Grid from "@mui/system/Unstable_Grid/Grid";
-import { display, fontSize } from "@mui/system";
-import Button from "@mui/material/Button";
+import { Button, Card, Grid, Typography } from "@mui/material";
+import React from "react";
+import { Box, Avatar } from "@mui/material";
+import {
+  Assessment,
+  CheckCircle,
+  Devices,
+  NearbyError,
+  Podcasts,
+} from "@mui/icons-material";
+import { useTheme } from "@emotion/react";
 
-function AccountMenu() {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const [value, setValue] = useState("one");
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
+const StudentDashboard = () => {
+  const theme = useTheme();
   return (
-    <React.Fragment>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          textAlign: "center",
-          flexDirection: "column",
-        }}
-      >
-        <Tooltip>
-          <IconButton
-            onClick={handleClick}
-            size="small"
-            sx={{ mt: 2 }}
-            aria-controls={open ? "account-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-          >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-          </IconButton>
-        </Tooltip>
-      </Box>
-      <Menu
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-            mt: 1.5,
-            "& .MuiAvatar-root": {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-            "&::before": {
-              content: '""',
-              display: "block",
-              position: "absolute",
-              top: 0,
-              right: 14,
-              width: 10,
-              height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
-              zIndex: 0,
-            },
-          },
-        }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      >
-        <Typography
-          variant="h5"
-          sx={{
-            minWidth: 100,
-            color: "black",
-            fontSize: "20px",
-            paddingLeft: "10px",
-          }}
-        >
-          Notification (1)
-        </Typography>
-        <Box sx={{ width: "100%" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            textColor="secondary"
-            indicatorColor="secondary"
-            aria-label="secondary tabs example"
-            indicator={<Box sx={{ bgcolor: "secondary.main", height: 2 }} />}
-          >
-            <Tab value="one" label="ALL" />
-            <Tab value="two" label="Read" />
-            <Tab value="three" label="Unread" />
-          </Tabs>
-        </Box>
-        <Divider />
-        <MenuItem sx={{ padding: 0 }} onClick={handleClose}>
-      <Grid container >
-      <Grid item xs={12}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                paddingTop: 2,
-                width: "100%",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  maxWidth: 300,
-                  
-                }}
-              >
-                <Avatar
-                  alt="Remy Sharp"
-                  src="https://cdn-icons-png.flaticon.com/128/4140/4140037.png"
-                  style={{ width: "40px", height: "40px" }}
-                />
-                <Grid item >
-                  <Typography variant="h5" sx={{ color: "black" }}>
-                    Michael Just purchased
-                  </Typography>
-                  <Typography variant="subtitle2" sx={{ color: "black",display:'block' }} noWrap lineHeight={2}>
-                    Michael Just purchased view in idjdoijoko mjojokoko
-                  </Typography>
-                </Grid>
-                
-              </Box>
-              <Box
-                sx={{
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  display: "flex",
-                }}
-              >
-                <Box
-                  sx={{
-                    bgcolor: blue[500],
-                    width: 20,
-                    height: 20,
-                    borderRadius: 20,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    display: "flex",
-                  }}
-                  alt="Remy Sharp"
-                  src="/broken-image.jpg"
-                >
-                  <Typography sx={{ color: "white", fontSize: "10px" }}>
-                    3
-                  </Typography>
-                </Box>
-                <Typography sx={{ fontSize: "8px", mt: 1 }}>
-                  33 Minutes Ago
-                </Typography>
-              </Box>
-            </Grid>
-      </Grid>
-            
-          
-        </MenuItem>
-        <MenuItem sx={{ padding: 0 }} onClick={handleClose}>
-      <Grid container >
-      <Grid item xs={12}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                paddingTop: 2,
-                width: "100%",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  maxWidth: 300,
-                  
-                }}
-              >
-                <Avatar
-                  alt="Remy Sharp"
-                  src="https://cdn-icons-png.flaticon.com/128/4140/4140037.png"
-                  style={{ width: "40px", height: "40px" }}
-                />
-                <Grid item >
-                  <Typography variant="h5" sx={{ color: "black" }}>
-                    Michael Just purchased
-                  </Typography>
-                  <Typography variant="subtitle2" sx={{ color: "black",display:'block' }} noWrap lineHeight={2}>
-                    Michael Just purchased view in idjdoijoko mjojokoko
-                  </Typography>
-                </Grid>
-                
-              </Box>
-              {/* <Box
-                sx={{
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  display: "flex",
-                }}
-              >
-                <Box
-                  sx={{
-                    bgcolor: blue[500],
-                    width: 20,
-                    height: 20,
-                    borderRadius: 20,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    display: "flex",
-                  }}
-                  alt="Remy Sharp"
-                  src="/broken-image.jpg"
-                >
-                  <Typography sx={{ color: "white", fontSize: "10px" }}>
-                    3
-                  </Typography>
-                </Box> */}
-                <Typography sx={{ fontSize: "8px", mt: 2.5 }}>
-                  33 Minutes Ago
-                </Typography>
-            </Grid>
-      </Grid>
-          
-        </MenuItem>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            paddingRight: "15px",
-          }}
-        >
-          <Button
-            variant="contained"
-            color="primary"
+    <Grid container p={8} sx={{ p: { xs: 2, sm: 5 } }}>
+      <Grid item xs={12} sm={4} className="MainGrid-1">
+        <Card>
+          <Box>
+            <img
+              src="https://w0.peakpx.com/wallpaper/23/429/HD-wallpaper-blue-abstract-lines-background-banner-background-on-lovepik.jpg"
+              alt="account-banner"
+              style={{ height: 100, width: "100%" }}
+            />
+          </Box>
+          <Grid
+            container
             sx={{
-              borderRadius: "8px",
-              backgroundColor: blue[500],
-              "&:hover": {
-                backgroundColor: "darkblue",
-              },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
             }}
           >
-            View all Notifications
-          </Button>
-        </div>
-      </Menu>
-    </React.Fragment>
-  );
-}
+            <Grid xs={8}>
+              <Box p={2} sx={{ mt: -8 }}>
+                <Avatar
+                  alt="user-name"
+                  src="https://cdn.tamaggo.com/1663756964157.png"
+                  sx={{ height: 60, width: 60, borderRadius: 2, mb: 1 }}
+                />
 
-export default AccountMenu;
+                <Box>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: 600,
+                      color: "black",
+                      fontFamily: "poppins",
+                    }}
+                  >
+                    Ramakrishnan P
+                  </Typography>
+                  <Box sx={{ display: "flex ", mt: 1 }}>
+                    <Typography
+                      color="black"
+                      sx={{
+                        mr: 1,
+                        fontWeight: 600,
+                        fontSize: 12,
+                        fontFamily: "poppins",
+                      }}
+                    >
+                      Student ID :
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 500,
+                        fontSize: 12,
+                        fontFamily: "poppins",
+                      }}
+                    >
+                      LMSSTUD1243
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid xs={4}>
+              <Button
+                variant="contained"
+                color="secondary"
+                size="medium"
+                sx={{ p: 1, px: 2, borderRadius: 5 }}
+              >
+                Edit Profile
+              </Button>
+            </Grid>
+          </Grid>
+
+          <Grid container>
+            <Grid item xs={12} alignItems="center">
+              {" "}
+              <Typography variant="h4" sx={{ mb: 1, mx: { xs: 3, sm: 5 } }}>
+                Class
+              </Typography>
+            </Grid>
+
+            <Grid
+              xs={4}
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                mb: 2,
+              }}
+            >
+              {" "}
+              <Box>
+                <Box display="flex" alignItems="center">
+                  <Typography variant="h2">146</Typography>
+                  <Assessment color="secondary" />
+                </Box>
+                <Typography sx={{ color: "grey" }}>Total Class</Typography>
+              </Box>
+            </Grid>
+            <Grid
+              xs={4}
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                mb: 2,
+              }}
+            >
+              <Box>
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Typography variant="h2">56</Typography>
+                  <CheckCircle color="secondary" />
+                </Box>
+                <Typography sx={{ color: "grey" }}>Completed</Typography>
+              </Box>
+            </Grid>
+            <Grid
+              xs={4}
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                mb: 2,
+              }}
+            >
+              <Box>
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Typography variant="h2">90</Typography>
+                  <NearbyError color="secondary" />
+                </Box>
+                <Typography sx={{ color: "grey" }}>Pending</Typography>
+              </Box>
+            </Grid>
+            <Grid
+              xs={4}
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                mb: 2,
+              }}
+            >
+              <Box>
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Typography variant="h2">1</Typography>
+                  <Podcasts color="secondary" />
+                </Box>
+                <Typography sx={{ color: "grey" }}>Live Class</Typography>
+              </Box>
+            </Grid>
+            <Grid
+              xs={4}
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                mb: 2,
+              }}
+            >
+              <Box>
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Typography variant="h2">146</Typography>
+                  <Assessment color="secondary" />
+                </Box>
+                <Typography sx={{ color: "grey" }}>Total Class</Typography>
+              </Box>
+            </Grid>
+            <Grid
+              xs={4}
+              sx={{
+                justifyContent: "center",
+                alignItems: "center",
+                display: "flex",
+                mb: 2,
+              }}
+            >
+              <Box>
+                <Box display="flex" alignItems="center" gap={2}>
+                  <Typography variant="h2">123</Typography>
+                  <Devices color="secondary" />
+                </Box>
+                <Typography sx={{ color: "grey" }}>Online Class</Typography>
+              </Box>
+            </Grid>
+          </Grid>
+          <Box sx={{ px: 2 }}>
+            <Card
+              sx={{
+                borderRadius: "10px 10px 0px 0px",
+                border: "1px solid ",
+                borderColor: theme.palette.secondary.main,
+                backgroundColor: theme.palette.secondary.light,
+              }}
+            >
+              <Grid
+                container
+                sx={{
+                  justifyContent: "center",
+                  display: "flex",
+                  alignItems: "center",
+                  p: 2,
+                }}
+              >
+                <Grid item xs={6}>
+                  <Typography
+                    sx={{
+                      fontFamily: "poppins",
+                      fontWeight: 700,
+                      fontSize: 15,
+                      color: "black",
+                    }}
+                  >
+                    Institute Name :
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: "poppins",
+                      fontWeight: 500,
+                      fontSize: 12,
+                      color: "black",
+                    }}
+                  >
+                    Rajalakshmi Institute, Vellore
+                  </Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs={6}
+                  sx={{ justifyContent: "center", display: "flex" }}
+                >
+                  <Avatar
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSebBO174VR6evP4d1N0W5M8GdBBsCvzQKF4vjlfgBva26Doib78Zcc084ekRdejEZ_HnQ&usqp=CAU"
+                    sx={{ height: 100, width: 100, backgroundColor: "white" }}
+                  ></Avatar>
+                </Grid>
+              </Grid>
+            </Card>
+          </Box>
+        </Card>
+      </Grid>
+      <Grid item xs={12} sm={4} className="MainGrid-2">
+        <Gauge
+          width={100}
+          height={100}
+          value={60}
+          startAngle={-90}
+          endAngle={90}
+        />
+      </Grid>
+      <Grid item xs={12} sm={4} className="MainGrid-3"></Grid>
+    </Grid>
+  );
+};
+
+export default StudentDashboard;
