@@ -21,7 +21,10 @@ const StudentTicketsPage = Loadable(lazy(() => import("views/student-pages/ticke
 const StudentPaymentsPage = Loadable(lazy(() => import("views/student-pages/payments-page")));
 const StudentClassViewPage = Loadable(lazy(() => import("views/student-pages/class[id]-page")));
 
-
+const StudentOnlineClassHistory = Loadable(lazy(()=> import("views/student-pages/classes-page/Classes/OnlineClasses/ClassHistory/ClassHistory")))
+const StudentOnlineCompletedClasses = Loadable(lazy(()=> import("views/student-pages/classes-page/Classes/OnlineClasses/Completed Classes/completedClasses")))
+const StudentOnlineLiveClasses = Loadable(lazy(()=> import("views/student-pages/classes-page/Classes/OnlineClasses/LiveClass/LiveClass")))
+const StudentOnlineUpcomingClasses = Loadable(lazy(()=> import("views/student-pages/classes-page/Classes/OnlineClasses/Upcoming Classes/UpcomingClasses")))
 // Instructor Pages
 const InstructorHomePage = Loadable(lazy(() => import("views/instructor-pages/home-page")));
 const InstructorActivityLogsPage = Loadable(lazy(() => import("views/instructor-pages/activity-logs-page")));
@@ -80,6 +83,10 @@ const ApplicationRoutes = () => {
                     <Route path="student/help-center" element={<StudentHelpCenterPage />} />
                     <Route path="student/payments" element={<StudentPaymentsPage />} />
                     <Route path="student/tickets" element={<StudentTicketsPage />} />
+                    <Route path="student/online/classHistory" element={<StudentOnlineClassHistory/>}/>
+                    <Route path="student/online/completedClasses" element={<StudentOnlineCompletedClasses/>}/>
+                    <Route path="student/online/liveClasses" element={<StudentOnlineLiveClasses/>}/>
+                    <Route path="student/online/upcomingClasses" element={< StudentOnlineUpcomingClasses/>}/>
                 </Route>
                 <Route element={<InstructorRoute />}>
                     <Route path="/" element={<Navigate to={'instructor/home'} />} />
