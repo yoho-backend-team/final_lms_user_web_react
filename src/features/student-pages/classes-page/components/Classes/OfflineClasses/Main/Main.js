@@ -68,7 +68,7 @@ function Main() {
               <Box sx={{ backgroundColor:"white", borderBottomRightRadius:"10px", borderBottomLeftRadius:"10px"}}>
                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                   <Tab label="Upcoming Classes" value="1" />
-                  <Tab label="Completed Classes" value="2" />
+                  <Tab label="Completed Classes" value="2" />  
                   <Tab label="Class History" value="3" />
                   <Tab label="Live Class" value="4" />
                 </TabList>
