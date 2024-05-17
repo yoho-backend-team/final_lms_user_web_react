@@ -117,7 +117,7 @@ function StudentAttendance() {
                 <Card style={{backgroundColor:"orange"}}>
                   <CardContent>
                     <Typography variant='h5' gutterBottom>Present days</Typography>
-                    <Typography variant='h4'>24/29</Typography>
+                    <Typography variant='h3'>24/29</Typography>
                   </CardContent>
                 </Card>
               </Grid>
@@ -125,7 +125,7 @@ function StudentAttendance() {
                 <Card style={{backgroundColor:"yellow"}}>
                   <CardContent>
                     <Typography variant='h5' gutterBottom>Absent days</Typography>
-                    <Typography variant='h4'>5</Typography>
+                    <Typography variant='h3'>5</Typography>
                   </CardContent>
                 </Card>
               </Grid>
@@ -133,19 +133,16 @@ function StudentAttendance() {
                 <Card style={{backgroundColor:"blue"}}>
                   <CardContent>
                     <Typography variant='h5' gutterBottom>Classes Attended</Typography>
-                    <Typography variant='h4'>27/34</Typography>
+                    <Typography variant='h3'>27/34</Typography>
                   </CardContent>
                 </Card>
               </Grid>
             </Grid>
           </Grid>
-          <Grid style={{ marginTop:"50px"}}>
-  <Button variant="contained">Create Ticket</Button>
+          <Grid item xs={6} style={{ marginTop:"50px",}}>
+  <Button variant="contained" style={{width:"100%"}}>Create Ticket</Button>
 </Grid>
-
           </Grid>
-
-
           <Grid item xs={isSmallScreen? 8: 8} >
             <Grid item xs={isSmallScreen? 12:12}>
              <Grid container spacing={2}>
@@ -166,7 +163,7 @@ function StudentAttendance() {
                   </Grid>
                   <Grid item>
                     <FormControl>
-                      <InputLabel>Attendance</InputLabel>
+                      <InputLabel>Present & Absent</InputLabel>
                       <Select
                         value={globalAttendance}
                         onChange={handleGlobalAttendanceChange}
@@ -181,10 +178,7 @@ function StudentAttendance() {
                 </Grid>
               </Grid>
               <Grid container spacing={2} style={{padding:"25px"}}>
-               
-                  {generateDays()}
-               
-               
+                  {generateDays()}     
               </Grid>
             </Grid>
           </Grid>
@@ -194,6 +188,4 @@ function StudentAttendance() {
     </StyledPaper>
   );
 }
-
 export default StudentAttendance;
-
