@@ -1,8 +1,11 @@
 import React from 'react'
+import Calendar from '../../../features/student-pages/attendances-page/components/index'
 
 const AttendancesPage = () => {
   return (
-    <div>AttendancesPage</div>
+    <div>
+      <Calendar/>
+    </div>
   )
 }
 

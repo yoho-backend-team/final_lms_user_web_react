@@ -1,14 +1,17 @@
-import { Typography, Box } from "@mui/material";
+import { Box } from "@mui/material";
+import { Link } from "react-router-dom";
 import React from "react";
 
 const Footer = () => {
   return (
     <Box
       sx={{
-        position: "static",
+        position: "fixed",
         display: "flex",
         flexDirection: "column",
         backgroundColor: "white",
+        width:"100%",
+        
         // flexShrink: 0
       }}
     >
@@ -21,10 +24,14 @@ const Footer = () => {
             mr: 2,
           }}
         >
-          <Typography>help ?</Typography>
+           <Link to="student/help-center" style={{textDecoration:"none"}}>Help Center</Link>
           <Box sx={{ display: "flex", gap: 2 }}>
-            <Box>Activity Log</Box>
-            <Box>Ticktet</Box>
+            <Box>
+              <Link to="student/activity-logs" style={{textDecoration:"none"}}>Activity Log</Link>
+            </Box>
+            <Box>
+            <Link to="student/tickets" style={{textDecoration:"none"}}>Ticket</Link>
+            </Box>
           </Box>
         </Box>
       </Box>

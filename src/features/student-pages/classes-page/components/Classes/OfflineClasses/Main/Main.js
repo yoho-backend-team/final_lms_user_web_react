@@ -29,9 +29,9 @@ function Main() {
   const matches = useMediaQuery("(min-width:600px)");
 
   const StyledPaper = styled(Paper)(({ theme }) => ({
-    padding: theme.spacing(3),
-    margin: theme.spacing(3),
-    width: '80%',
+    padding: theme.spacing(5),
+    width: 'auto',
+    height: 'auto',
     marginLeft: 'auto',
     marginRight: 'auto',
     background: theme.palette.mode === 'dark' ? '#1A2027' : 'linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(162,148,233,0.76234243697479) 100%)'
@@ -39,7 +39,7 @@ function Main() {
 
   return (
    <StyledPaper>
-    <Container maxWidth="lg" sx={{ marginLeft: matches ? "20px" : "20px" }}>
+    <Container maxWidth="lg" sx={{ marginLeft: matches ? "20px" : "20px",}}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant="h2" gutterBottom>
