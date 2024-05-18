@@ -10,12 +10,11 @@ function StudentAttendance() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const StyledPaper = styled(Paper)(({ theme }) => ({
-    padding: theme.spacing(3),
-    margin: theme.spacing(3),
-    width: '90%',
+    padding: theme.spacing(5),
+    width: 'auto',
+    height:"auto",
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: '100px',
     background: theme.palette.mode === 'dark' ? '#1A2027' : 'linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(162,148,233,0.76234243697479) 100%)'
   }));
 
