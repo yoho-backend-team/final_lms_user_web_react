@@ -1,8 +1,10 @@
 import React from 'react'
-
+import CommunityPageView from 'features/student-pages/community-page/components/Community/Community'
 const CommunityPage = () => {
   return (
-    <div>CommunityPage</div>
+    <div>
+      <CommunityPageView/>
+    </div>
   )
 }
 
