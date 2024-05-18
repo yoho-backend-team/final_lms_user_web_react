@@ -24,7 +24,7 @@ import ReactApexChart from 'react-apexcharts';
 import { useState } from "react";
 
 const ApexChart = () => {
-  const [series, setSeries] = useState([
+  const [series] = useState([
     {
       name: 'series1',
       data: [31, 40, 28, 51, 42, 109, 100],
@@ -35,7 +35,7 @@ const ApexChart = () => {
     },
   ]);
 
-  const [options, setOptions] = useState({
+  const [options] = useState({
     chart: {
       height: 350,
       type: 'area',
