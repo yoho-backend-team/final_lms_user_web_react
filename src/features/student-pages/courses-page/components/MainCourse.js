@@ -19,6 +19,8 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import TranslateIcon from '@mui/icons-material/Translate';
 import Rating from '@mui/material/Rating';
 
+
+
 function StudentMainCourse() {
     const [value, setValue] = useState('1');
     const matches = useMediaQuery('(min-width:600px)');
@@ -35,6 +37,10 @@ function StudentMainCourse() {
         marginRight: 'auto',
         background: theme.palette.mode === 'dark' ? '#1A2027' : 'linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(162,148,233,0.76234243697479) 100%)'
     }));
+
+ 
+
+
 
     return (
         <StyledPaper elevation={3}>
@@ -102,8 +108,7 @@ function StudentMainCourse() {
                     <Grid item xs={12} mt={2}>
                         <Button variant='outlined' style={{marginRight:"10px"}}>Durations: 6months</Button>
                         <Button variant='outlined' style={{marginRight:"10px"}}>Type: Online</Button>
-                        <Button>Status: 72%</Button>
-                    
+                       <Button>Status 72%</Button>
                     </Grid>
                 <Grid item xs={12} mt={2}>
                 <Typography variant='h4' gutterBottom>Benefits</Typography>
@@ -116,30 +121,26 @@ function StudentMainCourse() {
                             </Grid>
                              </CardContent>
                           </Card>
-                        
                         <Card style={{width:"150px", height:"100px", backgroundColor:"#2a4ed9", marginRight:"25px"}}>
-                        <CardContent>
+                           <CardContent>
                             <CardMembershipIcon style={{color:"white", width:"50px", marginLeft:"20px"}}/>
                             <Grid  style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
                             <Typography variant='h5' style={{color:"#fff"}}>3 Certificates</Typography>
                             </Grid>
-                        </CardContent>
+                          </CardContent>
                         </Card>
-                       
                     <Card style={{width:"150px", height:"100px", backgroundColor:"#0fad11"}}>
                         <CardContent>
                             <DescriptionIcon style={{color:"white", width:"50px", marginLeft:"20px"}}/>
                             <Grid  style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
                             <Typography variant='h5' style={{color:"#fff"}}>Notes</Typography>
-                            </Grid>
+                            </Grid> 
                         </CardContent>
                     </Card>
-                        
                         </Grid>
                     </Grid>
                 </Grid>
                 {/* Right Content */}
-                
         <Grid xs={matches ? 5 : 12} mt={4}>
             <Grid item xs={12}>
                 <Grid style={{display:"flex", justifyContent:"space-between", marginBottom:"20px", alignItems:"center"}}>
@@ -148,6 +149,7 @@ function StudentMainCourse() {
                     <Typography variant='h4'><FiberManualRecordSharpIcon style={{marginBottom:"-5px", width:"10%"}}/>146 classes</Typography>
                 </Grid>
             </Grid>
+    <Grid container justifyContent="center" style={{ height: '500px', overflowY: 'scroll'}}>
         <Grid item xs={11}>
            <Grid>
             <Card style={{backgroundColor:"#193ae3"}}>
@@ -218,12 +220,34 @@ function StudentMainCourse() {
                 </CardContent>
             </Card>  
                         </Grid>  
-                        </Grid> 
+                        <Grid mt={2}>
+        <Card style={{backgroundColor:"green"}}>
+                <CardContent>
+                    <Grid container justifyContent="space-between" alignItems="center" spacing={2}>
+                        <Grid item xs={8}>
+                            <Typography variant='h3' style={{color:"#fff"}}>Frame Work and Styling</Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Button variant='outlined' style={{backgroundColor:"#fff", color:"black", border:"none", fontWeight:"bolder", fontSize:"18px"}}>12</Button>
+                            <Typography variant='h5'  style={{color:"black"}}>Classes</Typography>
+                        </Grid>
                     </Grid>
-              
+                    <Grid container justifyContent="space-between" alignItems="center" spacing={2} mt={1}>
+                        <Grid item xs={6}>
+                            <Typography variant='h4' style={{color:"#e3d0d0"}}>Front Development Advance Level</Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Typography variant='h4'  style={{color:"black"}}>Enrolled</Typography>
+                        </Grid>
+                    </Grid>
+                </CardContent>
+            </Card>
+            </Grid>
+                        </Grid> 
+                   </Grid>   
+                   </Grid>           
             </Grid>
         </StyledPaper>
     );
 }
-
 export default StudentMainCourse;
