@@ -54,7 +54,7 @@ function StudentOnlineUpcomingClasses(){
               </Box>
               <Box>
                 <Button variant="outlined" sx={{ borderRadius: "50px" }}>
-                <Link to={`student/OnlineUpcomingClass/${item}`} style={{textDecoration:"none"}}>View Class</Link>
+                <Link to={`/student/OnlineUpcomingClass/${item}`} style={{textDecoration:"none"}}>View Class</Link>
                 </Button>
               </Box>
             </Box>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Grid, Typography, Select, MenuItem, Box, InputLabel, FormControl, styled, Paper } from "@mui/material";
+import { Grid, Typography, Select, MenuItem, Box, InputLabel, FormControl, styled, Paper } from "@mui/material";
 import LaptopWindowsIcon from '@mui/icons-material/LaptopWindows';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -41,7 +41,7 @@ const Main = () => {
 
   return (
     <StyledPaper>
-      <Container maxWidth="lg" sx={{ marginLeft: matches ? "20px" : "20px" }}>
+      
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h2" gutterBottom>
@@ -93,7 +93,6 @@ const Main = () => {
             </TabContext>
           </Grid>
         </Grid>
-      </Container>
     </StyledPaper>
   );
 }
