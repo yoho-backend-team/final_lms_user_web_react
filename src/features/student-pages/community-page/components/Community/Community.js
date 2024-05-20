@@ -27,15 +27,19 @@ function Community() {
   const StyledPaper = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(5),
     width: 'auto',
-    height: '100vh',
+    height: 'auto',
     marginLeft: 'auto',
     marginRight: 'auto',
     background: theme.palette.mode === 'dark' ? '#1A2027' : 'linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(162,148,233,0.76234243697479) 100%)',
   }));
 
   const messages = [
-    { id: 1, text: 'Hello!', datetime: '2024-05-16 12:45', daysAgo: 2, sender: 'me' },
-    { id: 2, text: 'How are you?', datetime: '2024-05-17 15:30', daysAgo: 1, sender: 'other' }
+    { id: 1, text: 'Hello!', datetime: '2024-05-16 12:45', daysAgo: 3, sender: 'me' },
+    { id: 2, text: 'How are you?', datetime: '2024-05-17 15:30', daysAgo: 3, sender: 'other' },
+    { id: 3, text: 'what are you doing', datetime: '2024-05-18 12:45', daysAgo: 2, sender: 'me' },
+    { id: 4, text: 'I learning from Java', datetime: '2024-05-18 15:30', daysAgo: 2, sender: 'other' },
+    { id: 5, text: 'And You', datetime: '2024-05-19 20:45', isYesterday: 0, sender: 'me' },
+    { id: 6, text: 'I`m going to study in React ', datetime: '2024-05-20 13:30', isToday: 0, sender: 'other' }
   ];
 
   return (
@@ -66,7 +70,7 @@ function Community() {
               <Box display="flex" justifyContent="center" width="100%" alignItems="center" padding={1}>
                 <Typography variant="body2" style={{width:"45%", backgroundColor:"lightyellow"}}>Messages are end-to-end encrypted. No one outside of this chat. not even WhatsApp can read or listen to them. Click to learn more.</Typography>
               </Box>
-              <Box padding={2} overflow="auto" flexGrow={1}>
+              <Box padding={4} overflow="auto" flexGrow={1}>
                 {messages.map((msg) => (
                   <Box key={msg.id} marginBottom={2} display="flex" flexDirection="column" alignItems={msg.sender === 'me' ? 'flex-end' : 'flex-start'}>
                     <Box padding={2} bgcolor={msg.sender === 'me' ? '#d1c4e9' : '#b2dfdb'} borderRadius={1} maxWidth="60%">

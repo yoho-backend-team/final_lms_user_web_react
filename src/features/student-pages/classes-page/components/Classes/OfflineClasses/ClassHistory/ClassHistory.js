@@ -130,7 +130,7 @@ function StudentOfflineClassHistory() {
 
       <Grid container spacing={2} sx={{ marginTop: 2 }}>
         {/* Example class entries */}
-        {Array.from({ length: 3 }).map((_, index) => (
+        {Array.from({ length: 2 }).map((_, index) => (
           <Grid item xs={12} key={index}>
             <Paper>
               <Box sx={{

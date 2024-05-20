@@ -1,13 +1,10 @@
-
-import OfflineClasses from '../classes-page/Classes/OfflineClasses/Main/Main'
-import OnlineClasses from '../classes-page/Classes/OnlineClasses/Main/Main'
+import MainClasses from '../../../features/student-pages/classes-page/components/Classes/MainClasses/MainClasses'
 import React from 'react'
 
 const ClassesPage = () => {
   return (
   <>
-  <OfflineClasses/>
-  <OnlineClasses/>
+<MainClasses/>
   </>
   )
 }
