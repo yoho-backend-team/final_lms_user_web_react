@@ -217,11 +217,12 @@ export default function NavBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
-        position="static"
+        position="sticky"
         sx={{
           height: 70,
           backgroundColor: theme.palette.common.white,
           boxShadow: 1,
+
         }}
       >
 

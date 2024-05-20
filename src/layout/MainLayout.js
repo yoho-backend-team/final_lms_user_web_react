@@ -7,14 +7,26 @@ import { Outlet } from 'react-router-dom'
 
 const MainLayout = () => {
   return (
-    <Grid>
-      <NavBar />
-      <div style={{ height: '86vh' }}>
+    // <Grid>
+    //   <NavBar />
+    //   <div style={{ height: '84vh' }}>
 
-        <Outlet />
-      </div>
+    //     <Outlet />
+    //   </div>
+    //   <Footer />
+    // </Grid>
+
+    <div className="App">
+      <header className="header">
+      <NavBar />
+      </header>
+      <main className="main">
+      <Outlet />
+      </main>
+      <footer className="footer">
       <Footer />
-    </Grid>
+      </footer>
+    </div>
   )
 }
 

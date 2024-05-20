@@ -1,14 +1,18 @@
 import Icon from '../../../components/icon'
 import { Grid, Box, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+
 const StudentNavLinks = () => {
+
+    const location = useLocation();
+    const currentPath = location.pathname;
+
 
     const nav_selected_image = require('../../../assets/images/pages/nav_selected.png')
     const nav_back_image = require('../../../assets/images/pages/nav_back.png')
 
-    const navigate = useNavigate()
 
     const [selected, setSelected] = useState(1);
 
@@ -50,6 +54,14 @@ const StudentNavLinks = () => {
             to: '/student/community'
         },
     ]
+
+    useEffect(() => {
+        const current = nav_items.find(item => item.to == currentPath)
+        setSelected(current?.id)
+    }, [currentPath, nav_items])
+
+
+
     return (
 
 
