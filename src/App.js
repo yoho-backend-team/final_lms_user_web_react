@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import {useEffect} from 'react'
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
-
+import './App.css'
 // routing
 import Routes from './routes';
 
