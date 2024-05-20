@@ -18,13 +18,12 @@ import StudentOfflineCompletedClass from "../OfflineClasses/Completed Classes/Co
 import StudentOfflineUpcoming from "../OfflineClasses/Upcoming Classes/UpcomingClasses";
 import back from '../../../../../../assets/images/pages/background_1.png'
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(5),
-  width: 'auto',
+  // padding: theme.spacing(5),
+  // width: 'auto',
   height: '100vh',
-  marginLeft: 'auto',
-  marginRight: 'auto',
-  // background: theme.palette.mode === 'dark' ? '#1A2027' : 'linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(162,148,233,0.76234243697479) 100%)',
-  backgroundImage:`url(${back})`
+  // marginLeft: 'auto',
+  // marginRight: 'auto',
+  backgroundImage: `url(${back})`
 }));
 
 const Main = () => {
@@ -43,57 +42,57 @@ const Main = () => {
   return (
     <StyledPaper>
       {/* <Container maxWidth="lg" sx={{ marginLeft: matches ? "20px" : "20px" }}> */}
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant="h2" gutterBottom>
-              Classes
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant="h2" gutterBottom>
+            Classes
+          </Typography>
+          <Box sx={{ padding: matches ? "20px" : "10px", display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: "white", borderTopLeftRadius: "10px", borderTopRightRadius: "10px", flexDirection: matches ? 'row' : 'column' }}>
+            <Typography variant="h3">
+              {classType} Classes <LaptopWindowsIcon style={{ marginLeft: "10px", marginBottom: matches ? "-5px" : "0" }} />
             </Typography>
-            <Box sx={{ padding: matches ? "20px" : "10px", display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: "white", borderTopLeftRadius: "10px", borderTopRightRadius: "10px", flexDirection: matches ? 'row' : 'column' }}>
-              <Typography variant="h3">
-                {classType} Classes <LaptopWindowsIcon style={{ marginLeft: "10px", marginBottom: matches ? "-5px" : "0" }} />
-              </Typography>
-              <FormControl sx={{ minWidth: 120, marginTop: matches ? "0" : "10px" }}>
-                <InputLabel id="class-select-label">Classes</InputLabel>
-                <Select
-                  labelId="class-select-label"
-                  id="class-select"
-                  value={classType}
-                  label="Class Type"
-                  onChange={handleClassChange}
-                >
-                  <MenuItem value="Online">Online</MenuItem>
-                  <MenuItem value="Offline">Offline</MenuItem>
-                </Select>
-              </FormControl>
+            <FormControl sx={{ minWidth: 120, marginTop: matches ? "0" : "10px" }}>
+              <InputLabel id="class-select-label">Classes</InputLabel>
+              <Select
+                labelId="class-select-label"
+                id="class-select"
+                value={classType}
+                label="Class Type"
+                onChange={handleClassChange}
+              >
+                <MenuItem value="Online">Online</MenuItem>
+                <MenuItem value="Offline">Offline</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          <TabContext value={value}>
+            <Box sx={{ backgroundColor: "white", borderBottomRightRadius: "10px", borderBottomLeftRadius: "10px" }}>
+              <TabList onChange={handleChange} aria-label="class tabs">
+                <Tab label="Upcoming Classes" value="1" />
+                <Tab label="Completed Classes" value="2" />
+                <Tab label="Class History" value="3" />
+                <Tab label="Live Class" value="4" />
+              </TabList>
             </Box>
-            <TabContext value={value}>
-              <Box sx={{ backgroundColor: "white", borderBottomRightRadius: "10px", borderBottomLeftRadius: "10px" }}>
-                <TabList onChange={handleChange} aria-label="class tabs">
-                  <Tab label="Upcoming Classes" value="1" />
-                  <Tab label="Completed Classes" value="2" />
-                  <Tab label="Class History" value="3" />
-                  <Tab label="Live Class" value="4" />
-                </TabList>
-              </Box>
-              {classType === 'Online' && (
-                <>
-                  <TabPanel value="1"><StudentOnlineUpcoming /></TabPanel>
-                  <TabPanel value="2"><StudentOnlineCompletedClass /></TabPanel>
-                  <TabPanel value="3"><StudentOnlineClassHistory /></TabPanel>
-                  <TabPanel value="4"><StudentOnlineLiveClasses /></TabPanel>
-                </>
-              )}
-              {classType === 'Offline' && (
-                <>
-                  <TabPanel value="1"><StudentOfflineUpcoming /></TabPanel>
-                  <TabPanel value="2"><StudentOfflineCompletedClass /></TabPanel>
-                  <TabPanel value="3"><StudentOfflineClassHistory /></TabPanel>
-                  <TabPanel value="4"><StudentOfflineLiveClasses /></TabPanel>
-                </>
-              )}
-            </TabContext>
-          </Grid>
+            {classType === 'Online' && (
+              <>
+                <TabPanel value="1"><StudentOnlineUpcoming /></TabPanel>
+                <TabPanel value="2"><StudentOnlineCompletedClass /></TabPanel>
+                <TabPanel value="3"><StudentOnlineClassHistory /></TabPanel>
+                <TabPanel value="4"><StudentOnlineLiveClasses /></TabPanel>
+              </>
+            )}
+            {classType === 'Offline' && (
+              <>
+                <TabPanel value="1"><StudentOfflineUpcoming /></TabPanel>
+                <TabPanel value="2"><StudentOfflineCompletedClass /></TabPanel>
+                <TabPanel value="3"><StudentOfflineClassHistory /></TabPanel>
+                <TabPanel value="4"><StudentOfflineLiveClasses /></TabPanel>
+              </>
+            )}
+          </TabContext>
         </Grid>
+      </Grid>
       {/* </Container> */}
     </StyledPaper>
   );
