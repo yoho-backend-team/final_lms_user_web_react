@@ -18,7 +18,7 @@ import StudentOfflineCompletedClass from "../OfflineClasses/Completed Classes/Co
 import StudentOfflineUpcoming from "../OfflineClasses/Upcoming Classes/UpcomingClasses";
 import back from '../../../../../../assets/images/pages/background_1.png'
 const StyledPaper = styled(Paper)(({ theme }) => ({
-  // padding: theme.spacing(5),
+  padding: theme.spacing(5),
   // width: 'auto',
   height: '100vh',
   // marginLeft: 'auto',
