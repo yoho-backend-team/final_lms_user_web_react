@@ -3,9 +3,9 @@ import React from 'react'
 
 const ClassesPage = () => {
   return (
-  <>
-<MainClasses/>
-  </>
+
+    <MainClasses />
+
   )
 }
 
