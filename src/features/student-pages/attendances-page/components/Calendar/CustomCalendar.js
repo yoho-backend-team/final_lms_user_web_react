@@ -2,6 +2,7 @@ import React from 'react';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import {Link} from 'react-router-dom';
 import { useState } from 'react';
 import { MenuItem, Select, FormControl, InputLabel, Typography, Card, CardContent, Grid, useMediaQuery, useTheme } from '@mui/material';
 
@@ -139,7 +140,7 @@ function StudentAttendance() {
             </Grid>
           </Grid>
           <Grid item xs={6} style={{ marginTop:"50px",}}>
-  <Button variant="contained" style={{width:"100%"}}>Create Ticket</Button>
+  <Button variant="contained" style={{width:"100%"}}><Link to='/student/create-ticket' style={{color:"white", textDecoration:"none"}}>Create Link</Link></Button>
 </Grid>
           </Grid>
           <Grid item xs={isSmallScreen? 8: 8} >
