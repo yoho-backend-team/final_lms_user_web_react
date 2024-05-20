@@ -16,14 +16,15 @@ import StudentOfflineClassHistory from "../OfflineClasses/ClassHistory/ClassHist
 import StudentOfflineLiveClasses from "../OfflineClasses/LiveClass/LiveClass";
 import StudentOfflineCompletedClass from "../OfflineClasses/Completed Classes/CompletedClasses";
 import StudentOfflineUpcoming from "../OfflineClasses/Upcoming Classes/UpcomingClasses";
-
+import back from '../../../../../../assets/images/pages/background_1.png'
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(5),
   width: 'auto',
   height: '100vh',
   marginLeft: 'auto',
   marginRight: 'auto',
-  background: theme.palette.mode === 'dark' ? '#1A2027' : 'linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(162,148,233,0.76234243697479) 100%)'
+  // background: theme.palette.mode === 'dark' ? '#1A2027' : 'linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(162,148,233,0.76234243697479) 100%)',
+  backgroundImage:`url(${back})`
 }));
 
 const Main = () => {
