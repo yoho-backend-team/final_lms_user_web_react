@@ -41,7 +41,7 @@ const Main = () => {
 
   return (
     <StyledPaper>
-      
+      <Container maxWidth="lg" sx={{ marginLeft: matches ? "20px" : "20px" }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Typography variant="h2" gutterBottom>
@@ -93,6 +93,7 @@ const Main = () => {
             </TabContext>
           </Grid>
         </Grid>
+      </Container>
     </StyledPaper>
   );
 }
