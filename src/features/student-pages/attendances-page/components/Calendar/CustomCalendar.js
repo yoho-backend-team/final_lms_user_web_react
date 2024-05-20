@@ -166,8 +166,9 @@ function StudentAttendance() {
                       <Select
                         value={globalAttendance}
                         onChange={handleGlobalAttendanceChange}
+                        style={{width:"110%"}}
                       >
-                        <MenuItem value="" disabled>Select</MenuItem>
+                        <MenuItem value="">Select</MenuItem>
                         {attendanceOptions.map((option, index) => (
                           <MenuItem key={index} value={option}>{option}</MenuItem>
                         ))}

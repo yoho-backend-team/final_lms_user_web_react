@@ -17,7 +17,7 @@ function StudentOfflineUpcomingClasses(){
 
     return(
         <>
-  {[1, 2].map((item) => (
+  {[1].map((item) => (
         <Grid item xs={12} key={item} sx={{ marginTop: 2}}>
           <Item>
             <Box

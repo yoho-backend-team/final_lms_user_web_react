@@ -1,54 +1,20 @@
-import React, { useState } from 'react';
-import Paper from '@mui/material/Paper';
+import React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import DescriptionIcon from '@mui/icons-material/Description';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 
 function StudentOneCourse() {
-    const [value, setValue] = useState('1');
+   
     const matches = useMediaQuery('(min-width:600px)');
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
-    const StyledPaper = styled(Paper)(({ theme }) => ({
-        padding: theme.spacing(5),
-        width: 'auto',
-        height: 'auto',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        background: theme.palette.mode === 'dark' ? '#1A2027' : 'linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(162,148,233,0.76234243697479) 100%)'
-    }));
-
     return (
-        <StyledPaper elevation={3}>
-            <Grid container spacing={2}>
-                <Grid item xs={matches? 12: 12} display="flex" alignItems="center" mt={2}>
-                    <ArrowBackIcon style={{ marginBottom: "-5px", marginRight: "20px" }} />
-                    <Typography variant="h3">Course</Typography>
-                </Grid>
-                <Grid item xs={matches? 12:12} mt={2} mb={3}>
-                <Grid item style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                    <TabContext value={value}>
-                        <TabList onChange={handleChange} centered>
-                            <Tab label="About" value="1" />
-                            <Tab label="Class/Notes & Materials" value="2" />
-                        </TabList>
-                    </TabContext>
-                    </Grid>
-                </Grid>
-            </Grid>
+        // <StyledPaper elevation={3}>
+        <>
             <Grid container spacing={2}>
                 {/* Left Content */}
                 <Grid item xs={matches? 12:12} md={9} lg={12} mt={4}>
@@ -98,7 +64,7 @@ function StudentOneCourse() {
                     </Grid>
                 </Grid>
             </Grid>
-        </StyledPaper>
+            </>
     );
 }
 
