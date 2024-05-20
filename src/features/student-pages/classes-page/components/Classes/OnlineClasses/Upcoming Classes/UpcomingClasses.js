@@ -2,6 +2,7 @@ import React from "react";
 import {Button, Paper, styled, Box, Typography, Grid} from "@mui/material";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import { Link } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 function StudentOnlineUpcomingClasses(){
@@ -53,7 +54,7 @@ function StudentOnlineUpcomingClasses(){
               </Box>
               <Box>
                 <Button variant="outlined" sx={{ borderRadius: "50px" }}>
-                  View Class
+                <Link to={`student/OnlineUpcomingClass/${item}`} style={{textDecoration:"none"}}>View Class</Link>
                 </Button>
               </Box>
             </Box>

@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import { Grid, Typography, Card, Button, Avatar, Box, CardContent, AvatarGroup, Paper, Breadcrumbs, Stack, Tooltip, CardMedia, Link } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -10,7 +11,8 @@ import pdf from '../../../../assets/images/Elite/pdf.png';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-export default function OnlineClasses() {
+export default function LiveClasses() {
+  const { id } = useParams();
   const matches = useMediaQuery('(min-width:600px)');
   const [open, setOpen] = useState(false);
 
@@ -27,7 +29,7 @@ export default function OnlineClasses() {
       Classes
     </Typography>,
     <Link underline="hover" key="2" color="inherit" href="/" onClick={handleClick}>
-      Online class
+      Offline class
     </Link>,
     <Link
       underline="hover"
@@ -36,7 +38,7 @@ export default function OnlineClasses() {
       href="/material-ui/getting-started/installation/"
       onClick={handleClick}
     >
-      Completed class
+      Live Class
     </Link>,
     <Link
       underline="hover"
@@ -81,7 +83,7 @@ export default function OnlineClasses() {
                 <Box>
                   <Grid container alignItems="center">
                     <ArrowBackIcon sx={{ marginRight: 1 }} />
-                    Batch No:<Typography variant="h3">#3022024</Typography>
+                    Batch No:<Typography variant="h3">#{id}</Typography>
                   </Grid>
                 </Box>
                 <Box mt={2}>

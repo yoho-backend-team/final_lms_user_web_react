@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Paper, styled, Box, Typography, Grid } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import {Link} from 'react-router-dom';
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -52,7 +53,7 @@ function StudentOfflineCompletedClasses() {
               </Box>
               <Box>
                 <Button variant="outlined" sx={{ borderRadius: "50px" }}>
-                  View Class
+                <Link to={`/student/OfflineCompleteClass/${item}`} style={{textDecoration:"none"}}>View Class</Link>
                 </Button>
               </Box>
             </Box>
