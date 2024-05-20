@@ -216,7 +216,7 @@ export default function NavBar() {
       <AppBar
         position="sticky"
         sx={{
-          height: 70,
+          height: 60,
           backgroundColor: theme.palette.common.white,
           boxShadow: 1,
 

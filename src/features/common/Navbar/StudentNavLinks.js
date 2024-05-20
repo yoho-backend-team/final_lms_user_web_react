@@ -72,7 +72,7 @@ const StudentNavLinks = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 display: "flex",
-                mt: 12
+                mt: 10
 
             }}
         >
