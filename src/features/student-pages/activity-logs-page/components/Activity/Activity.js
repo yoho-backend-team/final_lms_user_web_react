@@ -14,19 +14,20 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import DeleteIcon from '@mui/icons-material/Delete';
 import KeyIcon from '@mui/icons-material/Key';
 import PersonIcon from '@mui/icons-material/Person';
+import back from '../../../../../assets/images/pages/background_1.png'
 
 function ActivityLog() {
+  const StyledPaper = styled(Paper)(({ theme }) => ({
+    padding: theme.spacing(5),
+    backgroundImage: `url(${back})`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "cover"
+  }));
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const StyledPaper = styled(Paper)(({ theme }) => ({
-    padding: theme.spacing(5),
-    width: 'auto',
-    height: 'auto',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    background: theme.palette.mode === 'dark' ? '#1A2027' : 'linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(162,148,233,0.76234243697479) 100%)',
-  }));
+ 
 
   const [fromDate, setFromDate] = React.useState(null);
   const [toDate, setToDate] = React.useState(null);

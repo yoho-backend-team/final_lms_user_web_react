@@ -10,6 +10,7 @@ import stu from '../../../../assets/images/Elite/stu.jpg';
 import pdf from '../../../../assets/images/Elite/pdf.png';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import back from 'assets/images/pages/background_1.png'
 
 export default function OnlineCompletedClasses() {
   const { id } = useParams();
@@ -56,13 +57,12 @@ export default function OnlineCompletedClasses() {
     console.info('You clicked a breadcrumb.');
   }
 
-  const PadPaper = styled(Paper)(({ theme }) => ({
+  const PadPaper= styled(Paper)(({ theme }) => ({
     padding: theme.spacing(5),
-    width: 'auto',
-    height: 'auto',
-    marginLeft: 'auto', 
-    marginRight: 'auto',
-    background: theme.palette.mode === 'dark' ? '#1A2027' : 'linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(162,148,233,0.76234243697479) 100%)'
+    backgroundImage: `url(${back})`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "cover"
   }));
 
   return (

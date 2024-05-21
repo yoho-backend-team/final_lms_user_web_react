@@ -1,4 +1,4 @@
-import Course from "features/student-pages/courses-page/components/MainCourse";
+import Course from "features/student-pages/courses-page/components/CourseOne";
 import React from 'react'
 
 const CoursesPage = () => {

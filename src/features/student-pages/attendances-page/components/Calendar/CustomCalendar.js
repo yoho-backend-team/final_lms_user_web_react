@@ -5,19 +5,23 @@ import { styled } from '@mui/material/styles';
 import {Link} from 'react-router-dom';
 import { useState } from 'react';
 import { MenuItem, Select, FormControl, InputLabel, Typography, Card, CardContent, Grid, useMediaQuery, useTheme } from '@mui/material';
+import back from '../../../../../assets/images/pages/background_1.png'
 
 function StudentAttendance() {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
 
   const StyledPaper = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(5),
-    width: 'auto',
-    height: 'auto',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    background: theme.palette.mode === 'dark' ? '#1A2027' : 'linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(162,148,233,0.76234243697479) 100%)'
+    backgroundImage: `url(${back})`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "cover"
   }));
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  
 
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [attendance, setAttendance] = useState({});
