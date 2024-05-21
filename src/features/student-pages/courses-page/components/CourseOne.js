@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import DescriptionIcon from '@mui/icons-material/Description';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
+import back from '../../../../../src/assets/images/pages/background_2.png';
 
 function StudentOneCourse() {
   const matches = useMediaQuery('(min-width:600px)');
@@ -21,6 +22,8 @@ function StudentOneCourse() {
   ];
 
   return (
+    <Grid style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundPosition: "center", minHeight: '120vh' }}>
+            <Grid container spacing={2} style={{ padding: '60px' }}>
     <Grid container spacing={2} mt={4}>
       {courses.map((course, index) => (
         <Grid item xs={matches? 12 :12} sm={6} md={4} lg={3} key={index}>
@@ -62,6 +65,8 @@ function StudentOneCourse() {
           </Card>
         </Grid>
       ))}
+    </Grid>
+    </Grid>
     </Grid>
   );
 }

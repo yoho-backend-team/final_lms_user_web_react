@@ -7,6 +7,7 @@ import DescriptionIcon from '@mui/icons-material/Description';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
+import back from '../../../../../src/assets/images/pages/background_2.png';
 
 import pdf from '../../../../assets/images/Elite/pdf.png';
 import stu1 from '../../../../assets/images/Elite/stu1.jpg';
@@ -31,6 +32,8 @@ function StudentTwoCourse() {
 
   return (
   <>
+   <Grid style={{ backgroundImage: `url(${back})`, backgroundSize: 'cover', backgroundPosition: "center", minHeight: '140vh' }}>
+            <Grid container spacing={2} style={{ padding: '80px' }}>
       <Grid container spacing={4} mt={2}>
         <Grid item xs={matches? 12 :12} sm={6}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -39,7 +42,7 @@ function StudentTwoCourse() {
               <Typography variant='h4'>Java Notes</Typography>
               <Typography variant='body1'>Foundation of Python & SQL Basic...</Typography>
             </Box>
-            <Typography variant='h2' style={{ flexShrink: 0 }}>97%</Typography>
+            <Typography variant='h2'>97%</Typography>
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} display="flex" justifyContent="space-around" alignItems="center">
@@ -135,6 +138,8 @@ function StudentTwoCourse() {
 </Demo>
 </Grid>
 ))}
+</Grid>
+</Grid>
 </Grid>
 </Grid>
 </Grid>
