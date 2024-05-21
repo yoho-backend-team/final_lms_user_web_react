@@ -19,6 +19,7 @@ import {
 } from '@mui/icons-material';
 import WifiCalling3Icon from '@mui/icons-material/WifiCalling3';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import back from '../../../../../assets/images/pages/background_1.png'
 
 function Community() {
   const theme = useTheme();
@@ -26,11 +27,10 @@ function Community() {
 
   const StyledPaper = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(5),
-    width: 'auto',
-    height: 'auto',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    background: theme.palette.mode === 'dark' ? '#1A2027' : 'linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(162,148,233,0.76234243697479) 100%)',
+    backgroundImage: `url(${back})`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "cover"
   }));
 
   const messages = [

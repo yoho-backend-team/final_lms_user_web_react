@@ -1,12 +1,11 @@
 import { Grid } from '@mui/material'
 import React from 'react'
-import { Outlet } from 'react-router'
 import logo from "assets/images/logo.png";
 import AuthFrame from "assets/images/auth/AuthFrame.png";
 import {Box,Typography,} from '@mui/material';
 import { useTheme } from '@emotion/react';
 import Login from 'features/Auth/login';
-import ForgetPassword from 'features/Auth/ForgetPassword';
+
 const AuthLayout = () => {
   const theme = useTheme()
   return (
