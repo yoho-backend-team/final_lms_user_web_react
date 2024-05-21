@@ -1,61 +1,52 @@
-import React from "react";
-import { Container, Grid, Box, styled, Paper, Typography } from "@mui/material";
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import { useState } from "react";
-import TabPanel from '@mui/lab/TabPanel';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import useMediaQuery from "@mui/material/useMediaQuery";
-
-// Import your tab components here
+import React, { useState } from "react";
+import { Container, Grid, Box, Typography, styled, Paper, Tab } from "@mui/material";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 import CourseOne from "../components/CourseOne";
 import CourseTwo from "../components/CourseTwo";
-import Course from "../components/Course"
+import Course from "../components/Course";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-import back from '../../../../assets/images/pages/background_2.png'
-
+import back from '../../../../../src/assets/images/pages/background_1.png'
 
 function Main() {
   const [value, setValue] = useState('1');
 
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-
-
-  const matches = useMediaQuery("(min-width:600px)");
-
   const StyledPaper = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(5),
-    width: 'auto',
-    height: 'auto',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    // background: theme.palette.mode === 'dark' ? '#1A2027' : 'linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(162,148,233,0.76234243697479) 100%)',
-    backgroundImage:`url(${back})`
+    backgroundImage: `url(${back})`,
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "cover"
   }));
 
   return (
     <StyledPaper>
-      <Container maxWidth="lg" sx={{ marginLeft: matches ? "20px" : "20px", }}>
+      <Container>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Grid item xs={12} display="flex" alignItems="center" mt={2}>
+            <Box display="flex" alignItems="center" mt={2}>
               <ArrowBackIcon style={{ marginBottom: "-5px", marginRight: "20px" }} />
               <Typography variant="h3">Course</Typography>
-            </Grid>
+            </Box>
             <TabContext value={value}>
               <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <TabList onChange={handleChange} aria-label="lab API tabs example">
+                <TabList onChange={handleChange} value={value} aria-label="Course tabs">
                   <Tab label="About" value="1" />
-                  <Tab label="class/Notes & Materials" value="2" />
+                  <Tab label="Class/Notes & Materials" value="2" />
                 </TabList>
               </Box>
-              <TabPanel value="1"><Course /></TabPanel>
-              <TabPanel value="2"><CourseOne /><CourseTwo /></TabPanel>
+              <TabPanel value="1">
+                <Course/>
+              </TabPanel>
+              <TabPanel value="2">
+                <CourseOne />
+                <CourseTwo />
+              </TabPanel>
             </TabContext>
           </Grid>
         </Grid>
