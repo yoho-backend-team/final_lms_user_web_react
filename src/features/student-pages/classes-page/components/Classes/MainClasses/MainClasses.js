@@ -1,10 +1,20 @@
 import React, { useState } from "react";
-import { Grid, Typography, Select, MenuItem, Box, InputLabel, FormControl, styled, Paper } from "@mui/material";
-import LaptopWindowsIcon from '@mui/icons-material/LaptopWindows';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
+import {
+  Grid,
+  Typography,
+  Select,
+  MenuItem,
+  Box,
+  InputLabel,
+  FormControl,
+  styled,
+  Paper,
+} from "@mui/material";
+import { SpatialAudioOff } from "@mui/icons-material";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 // Import your tab components here
@@ -16,19 +26,22 @@ import StudentOfflineClassHistory from "../OfflineClasses/ClassHistory/ClassHist
 import StudentOfflineLiveClasses from "../OfflineClasses/LiveClass/LiveClass";
 import StudentOfflineCompletedClass from "../OfflineClasses/Completed Classes/CompletedClasses";
 import StudentOfflineUpcoming from "../OfflineClasses/Upcoming Classes/UpcomingClasses";
-import back from '../../../../../../assets/images/pages/background_1.png'
+import back from "../../../../../../assets/images/pages/background_1.png";
+import { useTheme } from "@emotion/react";
+import { OnlinePrediction } from "@mui/icons-material";
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(5),
   // width: 'auto',
-  height: '100vh',
+  height: "100vh",
   // marginLeft: 'auto',
   // marginRight: 'auto',
-  backgroundImage: `url(${back})`
+  backgroundImage: `url(${back})`,
 }));
 
 const Main = () => {
-  const [value, setValue] = useState('1');
-  const [classType, setClassType] = useState('Online');
+  const theme = useTheme();
+  const [value, setValue] = useState("1");
+  const [classType, setClassType] = useState("Online");
   const matches = useMediaQuery("(min-width:600px)");
 
   const handleChange = (event, newValue) => {
@@ -47,11 +60,41 @@ const Main = () => {
           <Typography variant="h2" gutterBottom>
             Classes
           </Typography>
-          <Box sx={{ padding: matches ? "20px" : "10px", display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: "white", borderTopLeftRadius: "10px", borderTopRightRadius: "10px", flexDirection: matches ? 'row' : 'column' }}>
+          <Box
+            sx={{
+              padding: matches ? "20px" : "10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              backgroundColor: "white",
+              borderTopLeftRadius: "10px",
+              borderTopRightRadius: "10px",
+              flexDirection: matches ? "row" : "column",
+            }}
+          >
             <Typography variant="h3">
-              {classType} Classes <LaptopWindowsIcon style={{ marginLeft: "10px", marginBottom: matches ? "-5px" : "0" }} />
+              {classType} Classes{" "}
+              {classType == "Online" ? (
+                <OnlinePrediction
+                  color={classType == "Online" ? "primary" : "success"}
+                  style={{
+                    marginLeft: "10px",
+                    marginBottom: matches ? "-5px" : "0",
+                  }}
+                />
+              ) : (
+                <SpatialAudioOff
+                  color={classType == "Online" ? "primary" : "success"}
+                  style={{
+                    marginLeft: "10px",
+                    marginBottom: matches ? "-5px" : "0",
+                  }}
+                />
+              )}
             </Typography>
-            <FormControl sx={{ minWidth: 120, marginTop: matches ? "0" : "10px" }}>
+            <FormControl
+              sx={{ minWidth: 120, marginTop: matches ? "0" : "10px" }}
+            >
               <InputLabel id="class-select-label">Classes</InputLabel>
               <Select
                 labelId="class-select-label"
@@ -66,7 +109,13 @@ const Main = () => {
             </FormControl>
           </Box>
           <TabContext value={value}>
-            <Box sx={{ backgroundColor: "white", borderBottomRightRadius: "10px", borderBottomLeftRadius: "10px" }}>
+            <Box
+              sx={{
+                backgroundColor: "white",
+                borderBottomRightRadius: "10px",
+                borderBottomLeftRadius: "10px",
+              }}
+            >
               <TabList onChange={handleChange} aria-label="class tabs">
                 <Tab label="Upcoming Classes" value="1" />
                 <Tab label="Completed Classes" value="2" />
@@ -74,20 +123,36 @@ const Main = () => {
                 <Tab label="Live Class" value="4" />
               </TabList>
             </Box>
-            {classType === 'Online' && (
+            {classType === "Online" && (
               <>
-                <TabPanel value="1"><StudentOnlineUpcoming /></TabPanel>
-                <TabPanel value="2"><StudentOnlineCompletedClass /></TabPanel>
-                <TabPanel value="3"><StudentOnlineClassHistory /></TabPanel>
-                <TabPanel value="4"><StudentOnlineLiveClasses /></TabPanel>
+                <TabPanel value="1">
+                  <StudentOnlineUpcoming/>
+                </TabPanel>
+                <TabPanel value="2">
+                  <StudentOnlineCompletedClass />
+                </TabPanel>
+                <TabPanel value="3">
+                  <StudentOnlineClassHistory />
+                </TabPanel>
+                <TabPanel value="4">
+                  <StudentOnlineLiveClasses />
+                </TabPanel>
               </>
             )}
-            {classType === 'Offline' && (
+            {classType === "Offline" && (
               <>
-                <TabPanel value="1"><StudentOfflineUpcoming /></TabPanel>
-                <TabPanel value="2"><StudentOfflineCompletedClass /></TabPanel>
-                <TabPanel value="3"><StudentOfflineClassHistory /></TabPanel>
-                <TabPanel value="4"><StudentOfflineLiveClasses /></TabPanel>
+                <TabPanel value="1">
+                  <StudentOfflineUpcoming />
+                </TabPanel>
+                <TabPanel value="2">
+                  <StudentOfflineCompletedClass />
+                </TabPanel>
+                <TabPanel value="3">
+                  <StudentOfflineClassHistory />
+                </TabPanel>
+                <TabPanel value="4">
+                  <StudentOfflineLiveClasses />
+                </TabPanel>
               </>
             )}
           </TabContext>
@@ -96,6 +161,6 @@ const Main = () => {
       {/* </Container> */}
     </StyledPaper>
   );
-}
+};
 
 export default Main;

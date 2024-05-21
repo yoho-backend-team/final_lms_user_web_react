@@ -219,15 +219,13 @@ export default function NavBar() {
           height: 60,
           backgroundColor: theme.palette.common.white,
           boxShadow: 1,
-
         }}
       >
-
         <Toolbar>
           <Grid
             container
             sx={{
-              display: { xs: 'flex', md: "none", alignItems: 'center' },
+              display: { xs: "flex", md: "none", alignItems: "center" },
             }}
           >
             <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
@@ -257,7 +255,11 @@ export default function NavBar() {
               </IconButton>
             </Grid>
           </Grid>
-          <Grid container alignItems="center" sx={{ display: { sm: 'flex', xs: 'none' } }}>
+          <Grid
+            container
+            alignItems="center"
+            sx={{ display: { sm: "flex", xs: "none" } }}
+          >
             <Grid item md={4}>
               {" "}
               <Box
@@ -350,6 +352,12 @@ export default function NavBar() {
                           fontSize: 17,
                           fontFamily: "poppins",
                           fontWeight: "600",
+                          display: {
+                            xs: "none",
+                            sm: "none",
+                            md: "none",
+                            lg: "block",
+                          },
                         }}
                       >
                         Jimmy Tommy
@@ -358,7 +366,18 @@ export default function NavBar() {
                     <Box>
                       {" "}
                       <Box>
-                        <Typography>{"(you)"} ID: Stu23#</Typography>
+                        <Typography
+                          sx={{
+                            display: {
+                              xs: "none",
+                              sm: "none",
+                              md: "none",
+                              lg: "block",
+                            },
+                          }}
+                        >
+                          {"(you)"} ID: Stu23#
+                        </Typography>
                       </Box>
                     </Box>
                   </Box>
@@ -366,10 +385,7 @@ export default function NavBar() {
               </Box>
             </Grid>
           </Grid>
-
-
         </Toolbar>
-
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
