@@ -68,8 +68,8 @@ const AuthLayout = () => {
           display: "flex",
         }}
       >
-        {/* <Login/> */}
-        <ForgetPassword/>
+        <Login/>
+        {/* <ForgetPassword/> */}
       </Grid>
     </Grid>
   )

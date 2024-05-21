@@ -238,7 +238,7 @@ const StudentDashboard = () => {
                       fontWeight: 500,
                       fontSize: 12,
                       color: "black",
-                      mt:2
+                      mt: 2,
                     }}
                   >
                     Rajalakshmi Institute, Vellore
@@ -271,7 +271,7 @@ const StudentDashboard = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} sm={4} className="MainGrid-3">
-        <UpdatesCard/>
+        <UpdatesCard />
       </Grid>
     </Grid>
   );
