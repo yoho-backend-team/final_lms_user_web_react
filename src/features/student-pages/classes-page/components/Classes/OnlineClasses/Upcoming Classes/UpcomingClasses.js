@@ -29,8 +29,18 @@ function StudentOnlineUpcomingClasses(classType) {
               }}
             >
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
-                <Typography variant="h4" sx={{fontFamily:'poppins',color:'black',}}>Basic of User Experience</Typography>
-                <Typography variant="subtitle1"sx={{fontFamily:'poppins',color:'black',}} >UI/UX Design</Typography>
+                <Typography
+                  variant="h4"
+                  sx={{ fontFamily: "poppins", color: "black" }}
+                >
+                  Basic of User Experience
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ fontFamily: "poppins", color: "black" }}
+                >
+                  UI/UX Design
+                </Typography>
               </Box>
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
                 <Typography
@@ -65,7 +75,7 @@ function StudentOnlineUpcomingClasses(classType) {
                 <Button
                   href="/student/OnlineUpcomingClass/${item}"
                   variant="conatined"
-                  sx={{ borderRadius: "50px", boxShadow: 1 }}
+                  sx={{ borderRadius: "50px", boxShadow: 1 }} 
                 >
                   {" "}
                   <Typography color="success">view class</Typography>
@@ -79,3 +89,5 @@ function StudentOnlineUpcomingClasses(classType) {
   );
 }
 export default StudentOnlineUpcomingClasses;
+
+
