@@ -36,6 +36,7 @@ import { Button, Typography } from "@mui/material";
 import { Ballot, Diversity1, Home, Person } from "@mui/icons-material";
 import { useTheme } from "@emotion/react";
 import StudentNavLinks from "./StudentNavLinks";
+import InstructorNavLinks from "./InstructorNavLinks";
 // import { colorModeContext, tokens } from "../../assets/Styles/theme";
 
 export default function NavBar() {
@@ -161,6 +162,18 @@ export default function NavBar() {
       </MenuItem>
     </Menu>
   );
+
+  const auth = {
+    isLoggedIn: true,
+    role: "instructor",
+  };
+
+  const getRouteLinks = () => {
+    if(auth.role==="instructor"){
+      return <InstructorNavLinks />
+    }
+    return <StudentNavLinks />
+  }
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -317,7 +330,7 @@ export default function NavBar() {
                 </Typography>
               </Box>
             </Grid> */}
-            <StudentNavLinks />
+            {getRouteLinks()}
             <Grid item md={4} sx={{ justifyContent: "end", display: "flex" }}>
               {" "}
               <Box sx={{ display: { xs: "none", md: "flex" } }}>

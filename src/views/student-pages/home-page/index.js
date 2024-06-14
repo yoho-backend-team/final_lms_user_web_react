@@ -271,7 +271,7 @@ const StudentDashboard = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} sm={4} className="MainGrid-3">
-        <UpdatesCard />
+        <UpdatesCard image={"https://i.postimg.cc/qq8XHVBg/Frame-28674.png"} />
       </Grid>
     </Grid>
   );

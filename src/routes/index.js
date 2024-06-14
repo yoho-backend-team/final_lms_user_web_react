@@ -3,9 +3,11 @@ import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Loadable from "components/loadable";
 import MainLayout from "layout/MainLayout";
 import AuthLayout from "layout/AuthLayout";
+import InstructorAuthLayout from "layout/InstructorAuthLayout";
 
 // Auth Pages
 const LoginPage = Loadable(lazy(() => import("views/auth-pages/login-page")));
+const InstructorLogin = Loadable(lazy(()=>import("views/auth-pages/login-page/instructorLogin")))
 
 // Error Pages
 const ErrorPage404 = Loadable(lazy(() => import("views/error-pages/404-page")));
@@ -56,7 +58,7 @@ const InstructorCreateTicketPage = Loadable(lazy(() => import("views/student-pag
 const ApplicationRoutes = () => {
   const auth = {
     isLoggedIn: true,
-    role: "student",
+    role: "instructor",
   };
 
   const RequireAuth = () => {
@@ -80,11 +82,22 @@ const ApplicationRoutes = () => {
     return <Navigate to="/student" replace />;
   };
 
+  const LoginRouter = () => {
+    const element = window.location.pathname === "/instructor/login" ? <InstructorLogin /> : <LoginPage />
+    return element
+
+  }
+
+  const LoginLayout = () => {
+    const element = window.location.pathname === "/instructor/login" ? <InstructorAuthLayout /> : <AuthLayout />
+    return element
+  }
+
   return (
     <Routes>
-      <Route element={<RequireAuth />}>
+      <Route >
         <Route element={<MainLayout />}>
-          <Route element={<StudentRoute />}>
+          <Route >
             <Route path="/" element={<Navigate to="student/home" />} />
             <Route path="student/home" element={<StudentHomePage />} />
             <Route path="student/activity-logs" element={<StudentActivityLogsPage />} />
@@ -111,7 +124,7 @@ const ApplicationRoutes = () => {
             <Route path="student/OnlineLiveClasses/:id" element={<StudentOnlineLiveClassesView />} />
             <Route path="student/OnlineCompletedClasses/:id" element={<StudentOnlineCompletedClassesView />} />
           </Route>
-          <Route element={<InstructorRoute />}>
+          <Route>
             <Route path="instructor/home" element={<InstructorHomePage />} />
             <Route path="instructor/activity-logs" element={<InstructorActivityLogsPage />} />
             <Route path="instructor/attendances" element={<InstructorAttendancesPage />} />
@@ -126,8 +139,8 @@ const ApplicationRoutes = () => {
             <Route path="instructor/create-ticket" element={<InstructorCreateTicketPage />} />
           </Route>
         </Route>
-        <Route element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
+        <Route element={<LoginLayout section={"instructor"} />}>
+          <Route path="/login" element={<LoginRouter section={"instructor"} />} />
           <Route path="*" element={<ErrorPage404 />} />
         </Route>
       </Route>
