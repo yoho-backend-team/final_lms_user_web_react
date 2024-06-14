@@ -5,6 +5,7 @@ import AuthFrame from "assets/images/auth/AuthFrame.png";
 import {Box,Typography,} from '@mui/material';
 import { useTheme } from '@emotion/react';
 import Login from 'features/Auth/login';
+import { Outlet } from 'react-router-dom';
 
 const AuthLayout = () => {
   const theme = useTheme()
@@ -68,7 +69,6 @@ const AuthLayout = () => {
         }}
       >
         <Login/>
-        {/* <ForgetPassword/> */}
       </Grid>
     </Grid>
   )

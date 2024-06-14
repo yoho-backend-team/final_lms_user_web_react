@@ -1,0 +1,8 @@
+export {default as StudentProfile} from "../assets/instructor/dashboard/profile.svg"
+export {default as StudentBg} from "../assets/instructor/dashboard/bg.svg"
+export {default as AttedenceBg } from "../assets/instructor/dashboard/attedence_bg.svg"
+export {default as UpdateCardBg } from "../assets/instructor/dashboard/update_card_bg.svg"
+export {default as ClassBg } from "../assets/instructor/class/main-bg.svg"
+export {default as OfflineClassIcon } from "../assets/instructor/class/online-class.svg"
+export {default as InstructorLoginBg } from "../assets/instructor/login/login-bg.svg"
+export {default as InstructorLoginGroups } from "../assets/instructor/login/objects.svg"
