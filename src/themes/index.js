@@ -44,7 +44,18 @@ export const theme = (customization) => {
         }
       }
     },
-    typography: themeTypography(themeOption)
+    typography: themeTypography(themeOption),
+    custom : {
+      buttonStyles : {
+        button1 : {
+          borderRadius : "8px",
+          padding : "9px 24px",
+          fontSize : "14px",
+          fontWeight : 500,
+          lineHeight : "22px"
+        }
+      }
+    }
   };
 
   const themes = createTheme(themeOptions);

@@ -1,8 +1,9 @@
 import React from 'react'
+import InstructorTicketsPage from 'features/instructor-pages/tickets-page/components'
 
 const TicketsPage = () => {
   return (
-    <div>TicketsPage</div>
+    <InstructorTicketsPage />
   )
 }
 
