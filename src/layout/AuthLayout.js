@@ -7,7 +7,7 @@ import { useTheme } from '@emotion/react';
 import Login from 'features/Auth/login';
 import { Outlet } from 'react-router-dom';
 
-const AuthLayout = () => {
+const AuthLayout = ({children}) => {
   const theme = useTheme()
   return (
     <Grid container sx={{ display: { xs: "block", sm: "flex" } }}>
@@ -68,7 +68,7 @@ const AuthLayout = () => {
           display: "flex",
         }}
       >
-        <Login/>
+        {children}
       </Grid>
     </Grid>
   )

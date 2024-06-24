@@ -1,118 +1,188 @@
-// src/Attendance.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
-  Grid,
-  Paper,
-  Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Button,Card
+  Typography, Grid, FormControl, Select, MenuItem, Button, CircularProgress
 } from '@mui/material';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { makeStyles } from '@mui/styles';
+import { AttedenceMainBg, AttedenceHeaderImg, AttedenceHeader2Img } from 'utils/images';
+import InstructorAttendance from 'features/instructor-pages/attendances-page/components/Calender';
+import Client from "../../../api/index";
+import { getInstructorDetails } from 'store/atoms/authorized-atom';
+
+const useStyles = makeStyles({
+  root: {
+    padding: "56px 40px 17px 40px",
+    display: "flex",
+    height: "100vh",
+    width: "100vw",
+  },
+  card: {
+    backgroundImage: `url(${AttedenceMainBg})`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    width: '100%',
+    height: "100%",
+    borderRadius: "18px",
+    position: "relative",
+    overflow: 'hidden',
+  },
+  headerImg: {
+    position: "absolute",
+  },
+  header2Img: {
+    opacity: 0.5,
+  },
+  monthText: {
+    position: "absolute",
+    color: "white",
+    top: "7px",
+    right: 0,
+    padding: '5px 10px',
+    borderRadius: '5px',
+    fontSize: "20px",
+    fontWeight: 700,
+  },
+  formControl: {
+    minWidth: 120,
+  },
+  sidebar: {
+    paddingTop: "40px",
+    paddingLeft: "31px",
+    overflowY: 'auto',
+    maxHeight: 'calc(100vh - 150px)',
+  },
+  content: {
+    padding: "20px 20px 20px 0",
+    overflowY: 'auto',
+    maxHeight: 'calc(100vh - 150px)'
+  }
+});
+
+const months = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+const getCurrentMonth = () => {
+  const date = new Date();
+  return months[date.getMonth()];
+};
 
 const Attendance = () => {
-  const [month, setMonth] = React.useState('April');
+  const classes = useStyles();
+  const [selectedMonth, setSelectedMonth] = React.useState(getCurrentMonth());
+  const [attendance, setAttendance] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (event) => {
-    setMonth(event.target.value);
+    setSelectedMonth(event.target.value);
   };
 
-  const renderDays = () => {
-    const days = [];
-    for (let i = 1; i <= 30; i++) {
-      days.push(
-        <Grid item xs={12} sm={6} md={4} lg={2} key={i}>
-          <Paper
-            elevation={3}
-            sx={{
-              textAlign: 'center',
-              padding: 2,
-              backgroundColor: i % 5 === 0 ? '#ffebee' : '#e8f5e9',
-            }}
-          >
-            <Typography variant="h6">{i < 10 ? `0${i}` : i}</Typography>
-            <Typography variant="body2">
-              {i % 5 === 0 ? 'Absent' : 'Present'}
-            </Typography>
-          </Paper>
-        </Grid>
-      );
+  useEffect(() => {
+    const getAttedenceDetails = async () => {
+      try {
+        setLoading(true);
+        const user = getInstructorDetails();
+        const response = await Client.Instructor.attendance.get({ userId: user.uuid });
+        setAttendance(response?.data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error, "error");
+        setLoading(false);
+      }
     }
-    return days;
-  };
+    getAttedenceDetails();
+  }, []);
+
+  if (loading) {
+    return <CircularProgress />;
+  }
 
   return (
-    <Card
-    sx={{p:"40px"}}>
-    <Box sx={{ padding: 4 }}>
-      <Grid container xs={12} spacing={2}>
-        <Grid item sx={4}>
-        <Box>
-          <Typography variant="h4" gutterBottom>
-            Attendance
-          </Typography>
+    <Box className={classes.root}>
+      <Box className={classes.card}>
+        <Box sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          flexDirection: "row",
+          height: "58px",
+          width: "100%"
+        }}>
+          <Box>
+            <Typography sx={{ color: "#282828", fontSize: "24px", fontWeight: 800, lineHeight: "24px", pt: "34px", pl: "31px" }}>
+              Attendance
+            </Typography>
+          </Box>
+          <Box className={classes.headerImgContainer}>
+            <img src={AttedenceHeaderImg} className={classes.headerImg} alt="Header 1" />
+            <img src={AttedenceHeader2Img} className={classes.header2Img} alt="Header 2" />
+            <Typography className={classes.monthText}>
+              June 2024
+            </Typography>
+          </Box>
         </Box>
-        <Box>
-          <Paper elevation={3} sx={{ padding: 2, backgroundColor: '#e8f5e9' }}>
-            <Typography variant="h6">Present days</Typography>
-            <Typography variant="h4">24/29</Typography>
-          </Paper>
-        </Box>
-        <Box>
-          <Paper elevation={3} sx={{ padding: 2, backgroundColor: '#ffebee' }}>
-            <Typography variant="h6">Absent days</Typography>
-            <Typography variant="h4">5</Typography>
-          </Paper>
-        </Box>
-        <Box>
-          <Paper elevation={3} sx={{ padding: 2, backgroundColor: '#fff9c4' }}>
-            <Typography variant="h6">Total classes attended by Student</Typography>
-            <Typography variant="h4">27/34</Typography>
-          </Paper>
-        </Box>
-        <Grid item xs={12}>
-          <FormControl fullWidth>
-            <InputLabel id="month-select-label">Month</InputLabel>
-            <Select
-              labelId="month-select-label"
-              id="month-select"
-              value={month}
-              label="Month"
-              onChange={handleChange}
-            >
-              <MenuItem value="April">April</MenuItem>
-              <MenuItem value="May">May</MenuItem>
-              <MenuItem value="June">June</MenuItem>
-            </Select>
-          </FormControl>
+        <Grid container>
+          <Grid item xs={4} className={classes.sidebar}>
+            <FormControl className={classes.formControl}>
+              <Select
+                id="month-select"
+                value={selectedMonth}
+                onChange={handleChange}
+                sx={{ border: "1px solid #5611B1", backgroundColor: "white", borderRadius: "8px" }}
+              >
+                {months.map((month, index) => (
+                  <MenuItem key={index} value={month}>{month}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Box sx={{ pt: "20px", display: "flex", gap: "20px" }}>
+              <Box sx={{ padding: "36px 35px 36px 27px", backgroundColor: "#B8FEBF", borderRadius: "10px" }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+                  <Box>
+                    <Typography sx={{ color: "#2C9939", fontSize: "20px", fontWeight: 600, lineHeight: "24px" }}>Present days</Typography>
+                  </Box>
+                  <Box sx={{ display: "inline-flex" }}>
+                    <Typography sx={{ fontSize: "40px", fontWeight: 600, lineHeight: "24px", letterSpacing: "0.8px", color: "blacks" }}>24</Typography>
+                    <Typography sx={{ fontSize: "40px", fontWeight: 600, lineHeight: "24px", letterSpacing: "0.8px", color: "#2C9939" }}>/29</Typography>
+                  </Box>
+                </Box>
+              </Box>
+              <Box sx={{ padding: "36px 35px 36px 27px", backgroundColor: "#EBACAC", borderRadius: "10px" }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+                  <Box>
+                    <Typography sx={{ color: "#A04A4A", fontSize: "20px", fontWeight: 600, lineHeight: "24px" }}>Absent days</Typography>
+                  </Box>
+                  <Box>
+                    <Typography sx={{ fontSize: "40px", fontWeight: 600, lineHeight: "24px", letterSpacing: "0.8px", color: "blacks" }}>5</Typography>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+            <Box sx={{ pt: "20px", display: "flex", gap: "20px" }}>
+              <Box sx={{ padding: "36px 35px 36px 27px", backgroundColor: "#FFE896", borderRadius: "10px" }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+                  <Box>
+                    <Typography sx={{ color: "#9F8015", fontSize: "20px", fontWeight: 600, lineHeight: "24px" }}>Classes Atten</Typography>
+                  </Box>
+                  <Box sx={{ display: "inline-flex" }}>
+                    <Typography sx={{ fontSize: "40px", fontWeight: 600, lineHeight: "24px", letterSpacing: "0.8px", color: "blacks" }}>27</Typography>
+                    <Typography sx={{ fontSize: "40px", fontWeight: 600, lineHeight: "24px", letterSpacing: "0.8px", color: "#9F8015" }}>/34</Typography>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column-reverse", pt: "72px" }}>
+              <Box>
+                <Button sx={{ backgroundColor: "#5611B1", boxShadow: "0px 6px 34px -8px #5611B1", borderRadius: "8px", padding: "9px 82px", fontSize: "14px", fontWeight: 500, color: "#FBFBFB" }}>Create Ticket</Button>
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={8} className={classes.content}>
+            <InstructorAttendance attendanceData={attendance} />
+          </Grid>
         </Grid>
-        </Grid>
-        <Grid item xs={8} >
-        <Grid item xs={12}>
-          <Typography variant="h6" gutterBottom>
-            Calendar view
-          </Typography>
-        </Grid>
-        <Grid container spacing={2}>
-          {renderDays()}
-        </Grid>
-        <Grid item xs={12}>
-          <Button
-            variant="contained"
-            color="primary"
-            startIcon={<CalendarMonthIcon />}
-            sx={{ marginTop: 2 }}
-          >
-            Raise Ticket
-          </Button>
-        </Grid>
-        </Grid>
-      </Grid>
+      </Box>
     </Box>
-    </Card>
   );
 };
 

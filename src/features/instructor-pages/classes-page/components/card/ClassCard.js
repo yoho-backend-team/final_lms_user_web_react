@@ -4,9 +4,13 @@ import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import TimeIcon from '../icons/TimeIcon';
 import DurationIcon from "../icons/DurationIcon";
+import { Link, useNavigate } from 'react-router-dom';
 
 const ClassCard = ({ cls,style }) => {
-  console.log(style,"style")
+  const navigate = useNavigate()
+  const handleView = (id) => {
+    navigate("instructor/class/"+id)
+  }
   return (
     <Card sx={{ mb: 2, p: 2 }}>
       <Grid container sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -48,7 +52,7 @@ const ClassCard = ({ cls,style }) => {
         </Grid>
 
         <Grid item xs={3} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button variant="contained" sx={{ backgroundColor: '#5611B1', color: 'white' }}>
+          <Button componet={Link} href={"/instructor/class/"+cls.id} to={"/instructor/class/"+cls.id} variant="contained" sx={{ backgroundColor: '#5611B1', color: 'white' }}>
             View Class
           </Button>
         </Grid>

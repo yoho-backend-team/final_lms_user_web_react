@@ -330,7 +330,7 @@ export default function NavBar() {
                 </Typography>
               </Box>
             </Grid> */}
-            {getRouteLinks()}
+            <StudentNavLinks />
             <Grid item md={4} sx={{ justifyContent: "end", display: "flex" }}>
               {" "}
               <Box sx={{ display: { xs: "none", md: "flex" } }}>

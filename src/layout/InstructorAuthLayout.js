@@ -10,7 +10,7 @@ import { InstructorLoginBg } from 'utils/images';
 import { InstructorLoginGroups } from 'utils/images';
 import objects from "assets/instructor/login/objects.png"
 
-const InstructorAuthLayout = () => {
+const InstructorAuthLayout = ({children}) => {
   const theme = useTheme()
   return (
     <Grid container sx={{ display: { xs: "block", sm: "flex" } }}>
@@ -76,7 +76,7 @@ const InstructorAuthLayout = () => {
           display: "flex",
         }}
       >
-        <InstructorLogin />
+        {children}
       </Grid>
     </Grid>
   )

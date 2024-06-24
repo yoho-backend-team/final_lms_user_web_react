@@ -94,7 +94,7 @@ const InstructorNavLinks = () => {
                 {
                     nav_items?.map((item, index) => (
 
-                        <Box sx={{ alignItems: 'center', justifyContent: 'center', textDecoration: "none", marginTop: -13.3, pt: 5 }} component={Link}
+                        <Box key={item.to} sx={{ alignItems: 'center', justifyContent: 'center', textDecoration: "none", marginTop: -13.3, pt: 5 }} component={Link}
                             to={item.to} onClick={() => {
                                 setSelected(item.id)
 

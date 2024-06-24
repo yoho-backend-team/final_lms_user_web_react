@@ -4,6 +4,9 @@ import Loadable from "components/loadable";
 import MainLayout from "layout/MainLayout";
 import AuthLayout from "layout/AuthLayout";
 import InstructorAuthLayout from "layout/InstructorAuthLayout";
+import InstructorLayout from "layout/InstructorLayout";
+import { checkUserLoggedIn,checkUser,getInstructorDetails } from "store/atoms/authorized-atom";
+import { role_to_details } from "lib/constants";
 
 // Auth Pages
 const LoginPage = Loadable(lazy(() => import("views/auth-pages/login-page")));
@@ -55,49 +58,47 @@ const InstructorClassViewPage = Loadable(lazy(() => import("views/instructor-pag
 const InstructorProfilePage = Loadable(lazy(() => import("views/student-pages/profile-page"))); // This seems like an error; correct import path should be checked
 const InstructorCreateTicketPage = Loadable(lazy(() => import("views/student-pages/create-ticket-page"))); // This seems like an error; correct import path should be checked
 
+const getRoleFromPath = () => {
+  const path = window.location.pathname.split("/")?.[1];
+  return role_to_details[path];
+};
+
+const isLoggedIn = (role) => {
+  return checkUserLoggedIn(role);
+};
+
 const ApplicationRoutes = () => {
-  const auth = {
-    isLoggedIn: true,
-    role: "instructor",
-  };
 
   const RequireAuth = () => {
-    if (!auth.isLoggedIn) {
-      return <Navigate to="/login" replace />;
+    const role = getRoleFromPath();
+    if (!isLoggedIn(role)) {
+      return <Navigate to="/instructor/login" replace />;
     }
     return <Outlet />;
   };
 
-  const StudentRoute = () => {
-    if (auth.role === "student") {
-      return <Outlet />;
+  const RoleBasedRoute = ({ allowedRoles, children }) => {
+    const role = getRoleFromPath();
+    if (!allowedRoles.includes(checkUser(role).role)) {
+      return <Navigate to={`/${allowedRoles[0]}/login`} replace />;
     }
-    return <Navigate to="/instructor" replace />;
+    return children;
   };
 
-  const InstructorRoute = () => {
-    if (auth.role === "instructor") {
-      return <Outlet />;
+  const LoginRoute = () => {
+    const role = getRoleFromPath()
+    if (isLoggedIn(role)) {
+      return <Navigate to={`${checkUser(role).role}/home`} replace />;
     }
-    return <Navigate to="/student" replace />;
+    return <Outlet />;
   };
 
-  const LoginRouter = () => {
-    const element = window.location.pathname === "/instructor/login" ? <InstructorLogin /> : <LoginPage />
-    return element
-
-  }
-
-  const LoginLayout = () => {
-    const element = window.location.pathname === "/instructor/login" ? <InstructorAuthLayout /> : <AuthLayout />
-    return element
-  }
 
   return (
     <Routes>
       <Route >
-        <Route element={<MainLayout />}>
-          <Route >
+        <Route element={<RequireAuth />} >
+          <Route element={<RoleBasedRoute allowedRoles={['student']}><MainLayout /></RoleBasedRoute>} >
             <Route path="/" element={<Navigate to="student/home" />} />
             <Route path="student/home" element={<StudentHomePage />} />
             <Route path="student/activity-logs" element={<StudentActivityLogsPage />} />
@@ -124,7 +125,9 @@ const ApplicationRoutes = () => {
             <Route path="student/OnlineLiveClasses/:id" element={<StudentOnlineLiveClassesView />} />
             <Route path="student/OnlineCompletedClasses/:id" element={<StudentOnlineCompletedClassesView />} />
           </Route>
-          <Route>
+        </Route>
+        <Route element={<RequireAuth />} >
+          <Route element={<RoleBasedRoute allowedRoles={['instructor']}><InstructorLayout /></RoleBasedRoute>} >
             <Route path="instructor/home" element={<InstructorHomePage />} />
             <Route path="instructor/activity-logs" element={<InstructorActivityLogsPage />} />
             <Route path="instructor/attendances" element={<InstructorAttendancesPage />} />
@@ -139,8 +142,9 @@ const ApplicationRoutes = () => {
             <Route path="instructor/create-ticket" element={<InstructorCreateTicketPage />} />
           </Route>
         </Route>
-        <Route element={<LoginLayout section={"instructor"} />}>
-          <Route path="/login" element={<LoginRouter section={"instructor"} />} />
+        <Route element={<LoginRoute />} >
+          <Route path="/student/login" element={<LoginPage />}   />
+          <Route path="/instructor/login" element={<InstructorLogin />}  />
           <Route path="*" element={<ErrorPage404 />} />
         </Route>
       </Route>
