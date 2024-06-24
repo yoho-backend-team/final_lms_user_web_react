@@ -4,20 +4,21 @@ import { instructorPaymentCardData } from 'data/instructor';
 import PaymentCard from 'features/instructor-pages/payments-page/components/paymentCard';
 import { PaymentBg } from 'utils/images';
 import SalaryDetailsTable from 'features/instructor-pages/payments-page/components/salaryTable';
+import { useTabResponsive } from 'utils/tabResponsive';
 
 const PaymentInterface = () => {
-
+      const {tabView}  = useTabResponsive()
   
-
+  
   return (
     <>
     <Box
     sx={{
-      mx : "40px",
-      mt : "40px",
+      mx : tabView ? "0px" : "40px" ,
+      mt : tabView ? "80px" : "40px",
       mb : "20px",
       borderRadius : "25px",
-      boxShadow : "0px 0px 64px 0px rgba(0, 0, 0, 0.10);",
+      boxShadow : tabView ? "none" : "0px 0px 64px 0px rgba(0, 0, 0, 0.10);",
     }}
     >
     <Box
@@ -41,8 +42,9 @@ const PaymentInterface = () => {
       <Box
       sx={{
         display : "flex",
-        p : "40px",
-        justifyContent : "space-between"
+        p : tabView ? "20px":"40px",
+        gap : "46px",
+        flexWrap : "wrap"
       }}
       >
         {

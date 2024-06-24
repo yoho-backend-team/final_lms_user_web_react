@@ -8,7 +8,7 @@ const ClassLayout = ({ children }) => {
       container
       sx={{
         background: `url(${ClassBg})`,
-        backgroundSize: 'contain',
+        backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
         width: '100vw',
         height: '100vh',

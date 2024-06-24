@@ -28,7 +28,7 @@ const CourseProgressCard = () => {
                 <>
                 {
                     isOddNumber(index+1) ?
-                    <Box sx={{display:"flex",clipPath:"polygon(0 0, 100% 15%, 100% 75%, 0% 100%)",backgroundColor:"white",p:2,gap:25,borderRadius:2,alignItems:"center"}}>
+                    <Box key={item.name} sx={{display:"flex",clipPath:"polygon(0 0, 100% 15%, 100% 75%, 0% 100%)",backgroundColor:"white",p:2,gap:25,borderRadius:2,alignItems:"center"}}>
                     <Box >
                       <Typography sx={{fontSize:"14px",lineHeight:"19px",fontWeight:600,color:"#272835"}} >{item.name}</Typography>
                       <Typography sx={{fontWeight:400,fontSize:"13px",lineHeight:"19px"}}>{item.registered } Registered</Typography>
@@ -43,7 +43,7 @@ const CourseProgressCard = () => {
                     </Box>
                 </Box>
                 :
-                <Box sx={{display:"flex",clipPath:"polygon(0 15%, 100% 0, 100% 100%, 0 75%);",backgroundColor:"white",p:2,gap:25,alignItems:"center"}}>
+                <Box key={item.name} sx={{display:"flex",clipPath:"polygon(0 15%, 100% 0, 100% 100%, 0 75%);",backgroundColor:"white",p:2,gap:25,alignItems:"center"}}>
                      <Box>
                       <CircularProgress
                       variant="determinate"

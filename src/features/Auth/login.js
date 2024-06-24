@@ -10,74 +10,28 @@ import {
   Input,
   Typography,
 } from "@mui/material";
+import AuthLayout from 'layout/AuthLayout';
+import { useAtom } from 'jotai';
+import { studentLoginStepAtom } from 'store/atoms/authAtoms';
 
 
 import { Link } from "react-router-dom/dist";
+import LoginForm from './Forms/login-form';
+import OTPInput from "./Forms/otp-form"
 
 const Login = () => {
   const theme = useTheme()
+  const [loginStep,setLoginStep] = useAtom(studentLoginStepAtom)
+
+  const map_to_form = {
+    login : LoginForm,
+    otp : OTPInput
+  }
+  const Component = map_to_form[loginStep]
   return (
-  <Box>
-          <Box sx={{ px: { sm: 5, xs: 1 }, mt: { sm: "15vh", xs: 5 } }}>
-            <Typography
-              variant="h4"
-              sx={{
-                fontFamily: "poppins",
-                textAlign: "justify",
-                fontSize: 22,
-                color: theme.palette.dark.main,
-              }}
-            >
-              Join & Connect the Fastest Growing Online Community
-            </Typography>
-            <form noValidate autoComplete="off">
-              <Box mt={2}>
-                <FormControl fullWidth>
-                  <InputLabel>Email or Username</InputLabel>
-                  <Input id="user-name" />
-                </FormControl>
-              </Box>
-              <Box mt={2}>
-                <FormControl fullWidth>
-                  <InputLabel>Password</InputLabel>
-                  <Input type="password" id="password" />
-                </FormControl>
-              </Box>
-              <Box
-                sx={{
-                  alignItems: "center",
-                  display: "flex",
-                  gap: 3,
-                  mt: 2,
-                  justifyContent: "center",
-                }}
-              >
-                <Box sx={{ alignItems: "center", display: "flex" }}>
-                  <Checkbox />
-                  <Typography sx={{ fontSize: 12 }}>
-                    I accept the terms & conditions
-                  </Typography>
-                </Box>
-                <Button
-                  href="/student/home"
-                  variant="contained"
-                  sx={{ borderRadius: 20, px: 2, py: 1 }}
-                >
-                  Sign in
-                </Button>
-              </Box>
-              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-                <Typography>Forget Password?</Typography>
-                <Link to="#">Get it</Link>
-              </Box>
-              <Box sx={{ mt: 8, justifyContent: "center", display: "flex" }}>
-                <Typography sx={{ fontSize: 12 }}>
-                  Enter the mail ID & Password that given by LMS
-                </Typography>
-              </Box>
-            </form>
-          </Box>
-        </Box>
+  <AuthLayout>
+      <Component />
+  </AuthLayout>
   )
 }
 
