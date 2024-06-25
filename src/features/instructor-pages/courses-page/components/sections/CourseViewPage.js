@@ -3,6 +3,9 @@ import NoteIcon from "assets/icons/noteIcon";
 import SmartDisplayOutlined from "@mui/icons-material/SmartDisplayOutlined";
 import StudyMaterialIcon from "assets/icons/study-material-icon";
 import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
+import SandClockIcon from "assets/icons/course/sandClockIcon";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const SingleCourseView = () => {
     return (
@@ -48,12 +51,29 @@ const SingleCourseView = () => {
                                 image={`https://via.placeholder.com/150?text=Chapter+${chapter}`}
                                 alt={`Chapter ${chapter}`}
                             />
-                            <CardContent>
-                                <Typography variant="h6">Chapter {chapter}</Typography>
-                                <Typography variant="body2" color="textSecondary">By Raja Kannan</Typography>
-                                <Typography variant="body2" color="textSecondary">01:32:00</Typography>
-                                <Typography variant="body2" color="textSecondary">23 Apr 2023</Typography>
-                                <Typography variant="body2" color="textSecondary">5:30PM</Typography>
+                            <CardContent sx={{ padding:"0px",pt:"5px"}} >
+                                <Box sx={{ display: 'flex',justifyContent:"space-between",pb:"5px", alignItems:"center"}} >
+                                    <Box>
+                                    <Typography sx={{ color : "#000000", fontSize:"12px",fontWeight:700,lineHeight:"22px"}} >Chapter {chapter}</Typography>
+                                    </Box>
+                                    <Box sx={{ display:"flex", gap:"4px"}}>
+                                      <SandClockIcon />
+                                      <Typography sx={{ color : "#000000", fontSize:"12px",fontWeight:700,lineHeight:"22px"}} >01:32:00</Typography>
+                                    </Box>
+                                </Box>
+                                <Box sx={{ pb:"5px"}} >
+                                    <Typography sx={{ color : "#747474", fontWeight:700,fontSize:"13px",lineHeight:"22px"}} >By Raja Kannan</Typography>
+                                </Box>
+                                <Box sx={{ display: "flex",py:"5px", justifyContent: "space-between",alignItems:"center"}} >
+                                <Box sx={{ display:"inline-flex",gap:"5px"}} >
+                                  <CalendarMonthIcon sx={{ color : "#5611B1", width:"15px",height:"15px"}} />
+                                  <Typography sx={{ color : "#747474",fontSize:"10px",fontWeight:700,lineHeight:"22px" }} >23 Apr 2023</Typography>
+                                </Box>
+                                <Box sx={{ display:"inline-flex",gap:"5px"}} >
+                                  <AccessTimeIcon sx={{ color : "#5611B1", height:"15px", width:"15px"}} />
+                                  <Typography sx={{ color : "#747474",fontSize:"10px",fontWeight:700,lineHeight:"22px" }} >5:30PM</Typography>
+                                </Box>
+                                </Box>
                             </CardContent>
                         </Card>
                     ))}

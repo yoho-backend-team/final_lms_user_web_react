@@ -1,8 +1,9 @@
 import React from 'react'
+import ActivityLog from 'features/instructor-pages/activity-logs-page/components/index'
 
 const ActivityLogsPage = () => {
     return (
-        <div>ActivityLogsPage</div>
+       <ActivityLog />
     )
 }
 
