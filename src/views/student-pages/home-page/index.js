@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import { Button, Card, Grid, Typography } from "@mui/material";
-import React from "react";
 import { Box, Avatar } from "@mui/material";
 import CourseCard from "features/student-pages/home-page/components/CourseCard";
 import {
@@ -13,9 +13,28 @@ import { useTheme } from "@emotion/react";
 import AttendanceCard from "features/student-pages/home-page/components/AttendanceCard";
 import PaymentsCard from "features/student-pages/home-page/components/PaymentsCard";
 import UpdatesCard from "features/student-pages/home-page/components/UpdatesCard";
+import ProfilePage from "../../../views/student-pages/profile-page/index.js";
 
 const StudentDashboard = () => {
   const theme = useTheme();
+  const [editProfileClicked, setEditProfileClicked] = useState(false);
+
+  const handleEditProfileClick = () => {
+    setEditProfileClicked(true);
+  };
+
+   // Student details
+   const student = {
+    name: "Ramakrishnan P",
+    profileImage: "https://cdn.tamaggo.com/1663756964157.png",
+    studentID: "LMSSTUD1243",
+  };
+  
+  // Render ProfilePage if editProfileClicked is true
+  if (editProfileClicked) {
+    return <ProfilePage />;
+  }
+
   return (
     <Grid container p={8} sx={{ p: { xs: 2, sm: 5 } }}>
       <Grid item xs={12} sm={4} className="MainGrid-1">
@@ -39,7 +58,7 @@ const StudentDashboard = () => {
               <Box p={2} sx={{ mt: -8 }}>
                 <Avatar
                   alt="user-name"
-                  src="https://cdn.tamaggo.com/1663756964157.png"
+                  src={student.profileImage}
                   sx={{ height: 60, width: 60, borderRadius: 2, mb: 1 }}
                 />
 
@@ -52,7 +71,7 @@ const StudentDashboard = () => {
                       fontFamily: "poppins",
                     }}
                   >
-                    Ramakrishnan P
+                    {student.name}
                   </Typography>
                   <Box sx={{ display: "flex ", mt: 1 }}>
                     <Typography
@@ -73,7 +92,7 @@ const StudentDashboard = () => {
                         fontFamily: "poppins",
                       }}
                     >
-                      LMSSTUD1243
+                      {student.studentID}
                     </Typography>
                   </Box>
                 </Box>
@@ -81,13 +100,14 @@ const StudentDashboard = () => {
             </Grid>
             <Grid xs={4}>
               <Button
-                variant="contained"
-                color="secondary"
-                size="medium"
-                sx={{ p: 1, px: 2, borderRadius: 5 }}
-              >
-                Edit Profile
-              </Button>
+            variant="contained"
+            color="secondary"
+            size="medium"
+            sx={{ p: 1, px: 2, borderRadius: 5 }}
+            onClick={handleEditProfileClick}
+          >
+            Edit Profile
+          </Button>
             </Grid>
           </Grid>
 
