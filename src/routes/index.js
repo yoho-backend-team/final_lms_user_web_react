@@ -51,6 +51,7 @@ const InstructorAttendancesPage = Loadable(lazy(() => import("views/instructor-p
 const InstructorClassesPage = Loadable(lazy(() => import("views/instructor-pages/classes-page")));
 const InstructorCommunityPage = Loadable(lazy(() => import("views/instructor-pages/community-page")));
 const InstructorCoursePage = Loadable(lazy(() => import("views/instructor-pages/courses-page")));
+const InstructorStudyMaterialsPage = Loadable(lazy(() => import("views/instructor-pages/courses-page/courses-add-page/index")))
 const InstructorHelpCenterPage = Loadable(lazy(() => import("views/instructor-pages/help-center-page")));
 const InstructorTicketsPage = Loadable(lazy(() => import("views/instructor-pages/tickets-page")));
 const InstructorPaymentsPage = Loadable(lazy(() => import("views/instructor-pages/payments-page")));
@@ -135,6 +136,7 @@ const ApplicationRoutes = () => {
             <Route path="instructor/class/:id" element={<InstructorClassViewPage />} />
             <Route path="instructor/community" element={<InstructorCommunityPage />} />
             <Route path="instructor/course" element={<InstructorCoursePage />} />
+            <Route path="instructor/StudyMaterialsPage" element={<InstructorStudyMaterialsPage />} />
             <Route path="instructor/help-center" element={<InstructorHelpCenterPage />} />
             <Route path="instructor/payments" element={<InstructorPaymentsPage />} />
             <Route path="instructor/tickets" element={<InstructorTicketsPage />} />

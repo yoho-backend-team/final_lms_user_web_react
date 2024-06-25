@@ -1,5 +1,6 @@
 import CourseModuleCard from "../courseNotesComponents/courseModuelCard"
-import { Grid, Box } from "@mui/material"
+import { Grid, Box, Typography } from "@mui/material"
+import { Link } from "react-router-dom"
 import { useTabResponsive } from "utils/tabResponsive"
 
 
@@ -11,6 +12,7 @@ const modules = [
     {id:5,title:"Prototype Functionalities ...",progress:"0%",notes:0,videos:0,style:{card:"118deg, #70ED7C 1.82%, #0BADC3 97.62%",color:'#26A456',background:"#8AEFB2"}},
     {id:6,title:"Padding with Python",progress:"0%",notes:0,videos:0,style:{card:"118deg, #9070ED 1.82%, #0BADC3 97.62%",color:'#646CDC',background:"#A4ACF4"}}
 ]
+
 
 const CourseAndNotesPage = ({openCourseView,closeCourseView}) => {
     const { tabView } = useTabResponsive()
@@ -24,7 +26,19 @@ const CourseAndNotesPage = ({openCourseView,closeCourseView}) => {
                 </Grid>
             ))
          }
+         <Grid sx={{ display:"flex", flexDirection:"row", justifyContent:"center", alignItems:"center",border:"1px dashed #5611B1",px:"66px", borderRadius:"12px",cursor:"pointer"}} >
+            <Box  >
+                <Typography sx={{ color: "#5611B1", fontSize:"16px", fontWeight:500,lineHeight:"14px"}} component={Link} to={"/instructor/StudyMaterialsPage"} > 
+                  Add Notes & Videos
+                </Typography>
+            </Box>
          </Grid>
+         </Grid>
+         <Box sx={{ display:"flex",justifyItems:"center",width:"100%", py:"20px",justifyContent:"center", height:"100%"}}>
+                <Typography sx={{ fontSize:"14px", fontWeight:600,lineHeight:"24px"}}  >
+                   Click the Card to view Preview Details
+                </Typography>
+         </Box>
        </Box>
     )
 }
