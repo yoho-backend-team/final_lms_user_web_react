@@ -9,12 +9,12 @@ import Grid from '@mui/material/Grid';
 import Avatar from '@mui/material/Avatar';
 import CircularProgress from '@mui/material/CircularProgress';
 import StudyMaterialIcon from 'assets/icons/study-material-icon';
-import EllipseImage from '../../../assets/Ellipse 1928.svg'
+import EllipseImage from '../../../assets/Ellipse 1928.svg';
 
 const ProfilePage = () => {
   return (
     <Box sx={{ padding: '20px 30px', backgroundColor: '#F4F4F6' }}>
-      <Grid display={"flex"} justifyContent="space-between" alignItems="center" sx={{ marginBottom: 2 }}>
+      <Grid container justifyContent="space-between" alignItems="center" sx={{ marginBottom: 2 }}>
         <Button startIcon={<ArrowBackIcon />} color="primary">
           Back to Dashboard
         </Button>
@@ -23,328 +23,155 @@ const ProfilePage = () => {
         </Button>
       </Grid>
 
-      <Grid xs={12} container spacing={20} >
-         <Grid item xs={8}>
-  <Card sx={{
-    height: '100%',
-    backgroundColor: '#FFF',
-    borderRadius: 8,
-    border: '1px solid var(--Gray-300, #DEE2E6)',
-    boxShadow: '0px 0px 64px 0px rgba(0, 0, 0, 0.10)',
-    p: '20px'
-  }}>
-    <CardContent>
-    <Typography
-  variant="h5"
-  gutterBottom
-  sx={{
-    color: '#000',
-    fontFamily: 'Poppins',
-    fontSize: '20px',
-    fontStyle: 'normal',
-    fontWeight: 700,
-    lineHeight: '32px'
-  }}
->
-  Personal info
-</Typography>
-      <Grid container spacing={2} sx={{ display: "inline-flex", alignItems: "center" }}>
-        <Grid item  xs={4} sx={{ paddingRight: '20px' }}>
-        <Typography
-      variant="body1"
-      sx={{
-        color: 'var(--Gray-700, #495057)',
-        fontFamily: 'Poppins',
-        fontSize: '16px',
-        fontStyle: 'normal',
-        fontWeight: 500,
-        lineHeight: '32px' // 200%
-      }}
-    >
-      First Name
-    </Typography>
-          <Typography variant="body2" sx={{
-    color: 'var(--Gray-700, #495057)',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: '32px' // 200%
-  }}>Janu</Typography>
-        </Grid>
-        <Grid item  xs={4} sx={{ paddingRight: '20px' }}>
-          <Typography variant="body1" sx={{
-        color: 'var(--Gray-700, #495057)',
-        fontFamily: 'Poppins',
-        fontSize: '16px',
-        fontStyle: 'normal',
-        fontWeight: 500,
-        lineHeight: '32px' // 200%
-      }}>Last Name</Typography>
-          <Typography variant="body2" sx={{
-    color: 'var(--Gray-700, #495057)',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: '32px' // 200%
-  }}>Janu</Typography>
-        </Grid>
-        <Grid item  xs={4} sx={{ paddingRight: '20px' }}>
-          <Typography variant="body1" sx={{
-        color: 'var(--Gray-700, #495057)',
-        fontFamily: 'Poppins',
-        fontSize: '16px',
-        fontStyle: 'normal',
-        fontWeight: 500,
-        lineHeight: '32px' // 200%
-      }}>Enter Email ID</Typography>
-          <Typography variant="body2" sx={{
-    color: 'var(--Gray-700, #495057)',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: '32px' // 200%
-  }}>janu@design.com</Typography>
-        </Grid>
-        <Grid item  xs={4} sx={{ paddingRight: '20px' }}>
-          <Typography variant="body1" sx={{
-        color: 'var(--Gray-700, #495057)',
-        fontFamily: 'Poppins',
-        fontSize: '16px',
-        fontStyle: 'normal',
-        fontWeight: 500,
-        lineHeight: '32px' // 200%
-      }}>Gender</Typography>
-          <Typography variant="body2" sx={{
-    color: 'var(--Gray-700, #495057)',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: '32px' // 200%
-  }}>female</Typography>
-        </Grid>
-        <Grid item  xs={4} sx={{ paddingRight: '20px' }}>
-          <Typography variant="body1" sx={{
-        color: 'var(--Gray-700, #495057)',
-        fontFamily: 'Poppins',
-        fontSize: '16px',
-        fontStyle: 'normal',
-        fontWeight: 500,
-        lineHeight: '32px' // 200%
-      }}>Contact</Typography>
-          <Typography variant="body2" sx={{
-    color: 'var(--Gray-700, #495057)',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: '32px' // 200%
-  }}>9876543210</Typography>
-        </Grid>
-        <Grid item sx={{ paddingRight: '20px' }}>
-          <Typography variant="body1" sx={{
-        color: 'var(--Gray-700, #495057)',
-        fontFamily: 'Poppins',
-        fontSize: '16px',
-        fontStyle: 'normal',
-        fontWeight: 500,
-        lineHeight: '32px' // 200%
-      }}>Address</Typography>
-          <Typography variant="body2" sx={{
-    color: 'var(--Gray-700, #495057)',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: '32px' // 200%
-  }}>20/1 Km street, mm nagar chengalpattu</Typography>
-        </Grid>
-        <Grid item sx={{ paddingRight: '20px' }}>
-          <Typography variant="body1" sx={{
-        color: 'var(--Gray-700, #495057)',
-        fontFamily: 'Poppins',
-        fontSize: '16px',
-        fontStyle: 'normal',
-        fontWeight: 500,
-        lineHeight: '32px' // 200%
-      }}>Pincode</Typography>
-          <Typography variant="body2" sx={{
-    color: 'var(--Gray-700, #495057)',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: '32px' // 200%
-  }}>897653</Typography>
-        </Grid>
-      </Grid>
-    </CardContent>
-  </Card>
-
-
-        {/* Virtual ID */}
-       
-
-        {/* Academic Info */}
-        <Grid item xs={12} sx={{ mt: 2 }}>
-          <Card sx={{ backgroundColor: '#FFFFFF', borderRadius: 2, boxShadow: 2 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={8}>
+          {/* Personal Info */}
+          <Card sx={{ backgroundColor: '#FFF', borderRadius: 2, border: '1px solid var(--Gray-300, #DEE2E6)', boxShadow: 2, mb: 2 }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom sx={{
-    color: '#000',
-    fontFamily: 'Poppins',
-    fontSize: '20px',
-    fontStyle: 'normal',
-    fontWeight: 700,
-    lineHeight: '32px'
-  }}>
-                Academics info
+              <Typography variant="h5" gutterBottom sx={{ color: '#000', fontFamily: 'Poppins', fontWeight: 700 }}>
+                Personal Info
+              </Typography>
+              <Box sx={{ display: "flex",justifyContent: "space-between" }} >
+              <Box>
+                <Typography variant="body1" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                  First Name
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>Janu</Typography>
+              </Box>
+                <Box>
+                  <Typography variant="body1" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    Last Name
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>Janu</Typography>
+                </Box>
+                <Box>
+                  <Typography variant="body1" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    Enter Email ID
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>janu@design.com</Typography>
+                </Box>
+                <Box >
+                  <Typography variant="body1" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    Gender
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>Female</Typography>
+                </Box>
+                <Box >
+                  <Typography variant="body1" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    Contact
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>9876543210</Typography>
+                </Box>
+                </Box>
+                <Box sx={{ display:"flex",gap:"60px",pt:"40px"}} >
+                <Box>
+                  <Typography variant="body1" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    Address
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    20/1 Km street, mm nagar chengalpattu
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography variant="body1" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    Pincode
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>897653</Typography>
+                </Box>
+                </Box>
+            </CardContent>
+          </Card>
+
+          {/* Academic Info */}
+          <Card sx={{ backgroundColor: '#FFFFFF', borderRadius: 2, boxShadow: 2, mb: 2 }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom sx={{ color: '#000', fontFamily: 'Poppins', fontWeight: 700 }}>
+                Academics Info
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={6} md={3}>
-                  <Typography variant="body1" sx={{
-        color: 'var(--Gray-700, #495057)',
-        fontFamily: 'Poppins',
-        fontSize: '16px',
-        fontStyle: 'normal',
-        fontWeight: 500,
-        lineHeight: '32px' // 200%
-      }}>Department</Typography>
-                  <Typography variant="body2" sx={{
-    color: 'var(--Gray-700, #495057)',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: '32px' // 200%
-  }}>Design Development</Typography>
+                  <Typography variant="body1" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    Department
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    Design Development
+                  </Typography>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                  <Typography variant="body1" sx={{
-        color: 'var(--Gray-700, #495057)',
-        fontFamily: 'Poppins',
-        fontSize: '16px',
-        fontStyle: 'normal',
-        fontWeight: 500,
-        lineHeight: '32px' // 200%
-      }}>Course</Typography>
-                  <Typography variant="body2" sx={{
-    color: 'var(--Gray-700, #495057)',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: '32px' // 200%
-  }}>UI / UX Design</Typography>
+                  <Typography variant="body1" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    Course
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    UI / UX Design
+                  </Typography>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                  <Typography variant="body1" sx={{
-        color: 'var(--Gray-700, #495057)',
-        fontFamily: 'Poppins',
-        fontSize: '16px',
-        fontStyle: 'normal',
-        fontWeight: 500,
-        lineHeight: '32px' // 200%
-      }}>Batch</Typography>
-                  <Typography variant="body2" sx={{
-    color: 'var(--Gray-700, #495057)',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: '32px' // 200%
-  }}>batch "A"</Typography>
+                  <Typography variant="body1" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    Batch
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    Batch "A"
+                  </Typography>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                  <Typography variant="body1" sx={{
-        color: 'var(--Gray-700, #495057)',
-        fontFamily: 'Poppins',
-        fontSize: '16px',
-        fontStyle: 'normal',
-        fontWeight: 500,
-        lineHeight: '32px' // 200%
-      }}>Roll Number</Typography>
-                  <Typography variant="body2" sx={{
-    color: 'var(--Gray-700, #495057)',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: '32px' // 200%
-  }}>100099</Typography>
+                  <Typography variant="body1" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    Roll Number
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    100099
+                  </Typography>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                  <Typography variant="body1" sx={{
-        color: 'var(--Gray-700, #495057)',
-        fontFamily: 'Poppins',
-        fontSize: '16px',
-        fontStyle: 'normal',
-        fontWeight: 500,
-        lineHeight: '32px' // 200%
-      }}>Student ID</Typography>
-                  <Typography variant="body2" sx={{
-    color: 'var(--Gray-700, #495057)',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    lineHeight: '32px' // 200%
-  }}>9niudwybutv7</Typography>
+                  <Typography variant="body1" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    Student ID
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontWeight: 500 }}>
+                    9niudwybutv7
+                  </Typography>
                 </Grid>
               </Grid>
             </CardContent>
           </Card>
-        </Grid>
 
-        {/* Documents */}
-        <Grid item xs={12} sx={{ mt: 2 }}>
+          {/* Documents */}
           <Card sx={{ backgroundColor: '#FFFFFF', borderRadius: 2, boxShadow: 2 }}>
             <CardContent>
-              <Typography variant="h6" gutterBottom sx={{
-    color: '#000',
-    fontFamily: 'Poppins',
-    fontSize: '20px',
-    fontStyle: 'normal',
-    fontWeight: 700,
-    lineHeight: '32px'
-  }}>
+              <Typography variant="h6" gutterBottom sx={{ color: '#000', fontFamily: 'Poppins', fontWeight: 700 }}>
                 Documents
               </Typography>
               <Grid container spacing={2}>
                 <Grid item xs={6} md={3}>
-                <Box>
-                <StudyMaterialIcon />
-              </Box>
-              <Typography sx={{ ml: 1 }}>10th Mark sheet</Typography>
+                  <Box display="flex" alignItems="center">
+                    <StudyMaterialIcon />
+                    <Typography sx={{ ml: 1 }}>10th Mark sheet</Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                <Box>
-                <StudyMaterialIcon />
-              </Box>
-                <Typography sx={{ ml: 1 }}>12th Mark sheet</Typography>
+                  <Box display="flex" alignItems="center">
+                    <StudyMaterialIcon />
+                    <Typography sx={{ ml: 1 }}>12th Mark sheet</Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                <Box>
-                <StudyMaterialIcon />
-              </Box>
-                <Typography sx={{ ml: 1 }}>Aadhar Card</Typography>
+                  <Box display="flex" alignItems="center">
+                    <StudyMaterialIcon />
+                    <Typography sx={{ ml: 1 }}>Aadhar Card</Typography>
+                  </Box>
                 </Grid>
                 <Grid item xs={6} md={3}>
-                <Box>
-                <StudyMaterialIcon />
-              </Box>
-                  <Typography sx={{ ml: 1 }}>school tc</Typography>
+                  <Box display="flex" alignItems="center">
+                    <StudyMaterialIcon />
+                    <Typography sx={{ ml: 1 }}>School TC</Typography>
+                  </Box>
                 </Grid>
               </Grid>
             </CardContent>
           </Card>
-        </Grid> 
-         </Grid>
-         <Grid item xs={4}>
-         <Grid item xs={12} md={3}>
-          <Card sx={{ backgroundColor: '#FFFFFF', borderRadius: 2, boxShadow: 2, width: 250, height: 350, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2 }}>
+        </Grid>
+
+        <Grid item xs={4}>
+          {/* Virtual ID */}
+          <Card sx={{ backgroundColor: '#FFFFFF', borderRadius: 2, boxShadow: 2, mb: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: 2 }}>
             <Typography variant="h6" gutterBottom>
               Virtual ID
             </Typography>
@@ -353,20 +180,19 @@ const ProfilePage = () => {
             <Typography variant="body2">Student ID: 9niudwybutv7</Typography>
             <Typography variant="body2">Batch: A</Typography>
           </Card>
+
+          {/* Course Status */}
+          <Card sx={{ backgroundColor: '#FFFFFF', borderRadius: 2, boxShadow: 2, textAlign: 'center', width: 196, height: 196, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Course Status
+              </Typography>
+              <img src={EllipseImage} alt="Ellipse" style={{ width: '100%', height: 'auto' }} />
+              <CircularProgress variant="determinate" value={75} size={100} sx={{ marginBottom: 2 }} />
+              <Typography variant="body1">Course Ends at: 29 May 2024</Typography>
+            </CardContent>
+          </Card>
         </Grid>
-        <Grid item xs={12} md={6} sx={{ mt: 2 }}>
-      <Card sx={{ backgroundColor: '#FFFFFF', borderRadius: 2, boxShadow: 2, textAlign: 'center', width: 196, height: 196, flexShrink: 0 }}>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
-            Course Status
-          </Typography>
-          <img src={EllipseImage} alt="Ellipse" style={{ width: '100%', height: 'auto', fill: '#0D6EFD' }} />
-          <CircularProgress variant="determinate" value={75} size={100} sx={{ marginBottom: 2 }} />
-          <Typography variant="body1">Course Ends at: 29 May 2024</Typography>
-        </CardContent>
-      </Card>
-    </Grid>
-         </Grid>
       </Grid>
     </Box>
   );
