@@ -33,7 +33,7 @@ function InstructorAttendance({attendanceData}) {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
-  const [attendance, setAttendance] = useState({});
+  const [attendance, setAttendance] = useState({}); 
 
   useEffect(() => {
     const formattedAttendance = formatAttendanceForMonth(attendanceData, selectedMonth);
