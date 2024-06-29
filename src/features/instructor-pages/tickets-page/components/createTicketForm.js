@@ -8,6 +8,7 @@ import { CreateTicketRightSideImage } from 'utils/images';
 import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CancelDialog from 'components/modal/cancelModel';
+import { useTabResponsive } from 'utils/tabResponsive';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -62,6 +63,7 @@ const CreateTicketForm = ({ handleClose }) => {
   const [description, setDescription] = useState('');
   const [attachment, setAttachment] = useState(null);
   const [open, setOpen] = useState(false);
+  const { tabView } = useTabResponsive()
 
   const problems = [
     { value: 'attendance', label: 'Attendance Issue' },
@@ -185,7 +187,15 @@ const CreateTicketForm = ({ handleClose }) => {
            </Box>
         </Grid>
         <Grid item xs={4} >
-           <Grid className={classes.rootright} >
+           <Grid 
+           sx={{
+            display : "flex",
+            flexDirection : tabView ? "column" : "column",
+            justifyContent :  "space-between",
+            paddingRight : "20px",
+            height : "100%"
+           }}
+            >
             <Box className={classes.rightImage} >
               <img src={CreateTicketRightSideImage} alt='create ticket' />
             </Box>

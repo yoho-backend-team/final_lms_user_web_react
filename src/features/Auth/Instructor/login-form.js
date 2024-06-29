@@ -16,6 +16,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {useInstructorLogin} from '../services';
 import { useNavigate } from 'react-router-dom';
+import { useTabResponsive } from 'utils/tabResponsive';
 
 const validationSchema = yup.object({
   email: yup
@@ -32,6 +33,7 @@ const InstructorLoginForm = () => {
   const theme = useTheme();
   const instructorLogin = useInstructorLogin();
   const navigate = useNavigate()
+  const { tabView } = useTabResponsive()
 
 
   const formik = useFormik({
@@ -52,7 +54,7 @@ const InstructorLoginForm = () => {
 
   return (
     <Box>
-      <Box sx={{ px: { sm: 5, xs: 1 }, mt: { sm: "15vh", xs: 5 } }}>
+      <Box sx={{ px: { sm: 5, xs: 1 }, mt: { sm: "15vh", xs: 5 }, display: "flex", flexDirection: "column", alignItems: 'center' }}>
         <Typography
           variant="h4"
           sx={{
@@ -64,7 +66,7 @@ const InstructorLoginForm = () => {
         >
           Join & Connect the Fastest Growing Online Community
         </Typography>
-        <form noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
+        <form noValidate autoComplete="off" onSubmit={formik.handleSubmit} style={{ minWidth:"380px",maxWidth:"400px"}} >
           <Box mt={2}>
             <FormControl fullWidth error={formik.touched.email && Boolean(formik.errors.email)}>
               <InputLabel>Email or Username</InputLabel>

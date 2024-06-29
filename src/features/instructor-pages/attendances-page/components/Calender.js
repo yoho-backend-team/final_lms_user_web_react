@@ -75,7 +75,7 @@ function InstructorAttendance({attendanceData}) {
       const attendanceStatus = attendance[i] || 'Absent';
 
       days.push(
-        <Grid item xs={12} sm={6} md={4} lg={3} xl={2.4} key={i}>
+        <Grid item xs={2.4} key={i}>
           <Card>
             <CardContent>
               <Typography sx={{fontSize:"11px",fontWeight:300}}>{dayOfWeek}</Typography>

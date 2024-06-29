@@ -6,9 +6,10 @@ import CircularProgressWithLabel from "./cirularProgresswithLabel";
 import NoteIcon from "assets/icons/noteIcon";
 import CertificateIcon from "assets/icons/certificateIcon";
 import LanguageIcon from "assets/icons/languageIcon";
+import { getImageUrl } from "utils/common/imageUtlils";
 
 
-const CourseDetails = () => {
+const CourseDetails = ({Course}) => {
     const Benefits = [
         {icon: <LanguageIcon color="white"  />,id:"benifit1",title:"English & Tamil",background : "#5F1AA4", shadow : "0px 0px 50px 0px rgba(95, 26, 164, 0.63)" },
         { icon: <CertificateIcon color="white" padding="17px 41px 10px 40px" /> , id : "benifit2", title: "3 Certificates", background: "#0051C8", shadow: "0px 0px 50px 0px rgba(0, 81, 200, 0.63)"},
@@ -27,11 +28,11 @@ const CourseDetails = () => {
                    </Typography>
                 </Box>
                 <Box sx={{ pb:"27px" }} >
-                   <img src={CourseCardBg} style={{ width:"363px", height:"160px", borderRadius:"25px"}} alt="course" />
+                   <img src={getImageUrl(Course?.image)} style={{ width:"363px", height:"160px", borderRadius:"25px"}} alt="course" />
                 </Box>
                 <Box sx={{ pb:"12px", display: "flex", gap : "21px" }}>
                     <Typography sx={{ color : "#000000", fontSize: '16px', fontWeight:700, lineHeight:"32px"}} >
-                        Basic of Python Chapter 3, Frame work & Styling
+                        {Course?.course_name}
                     </Typography>
                     <Typography sx={{ display: "inline-flex", gap:"5px", alignItems : "center" }} >
                         <StarIcon sx={{ color : "#EEBA02" }} />
@@ -49,17 +50,17 @@ const CourseDetails = () => {
                 </Box>
                  <Box>
                     <Typography sx={{ color: "#6C757D", fontSize: "12px", fontWeight: 400, lineHeight : "16px" }} >
-                        User experience (UX) is the overall experience a user has when interacting with a product or service. UX design is the process of creating products that provide meaningful experiences for users.
+                        {Course?.description}
                     </Typography>
                  </Box>
                  <Box sx={{ display: 'flex', gap: "40px", pt: "40px" }} >
                     <Box sx={{ border : "1px solid #2A2A2A", padding : "10px", borderRadius : "7px", display: "inline-flex" }} >
                         <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight : 700, lineHeight : "24px" }} >Durations:</Typography>
-                        <Typography sx={{ color : '#0051C8', fontSize: "16px", fontWeight : 600, lineHeight : "24px" }} > 6 months</Typography>
+                        <Typography sx={{ color : '#0051C8', fontSize: "16px", fontWeight : 600, lineHeight : "24px" }} > {Course?.duration} months</Typography>
                     </Box>
                     <Box sx={{ border : "1px solid #2A2A2A", padding : "10px", borderRadius : "7px", display : "inline-flex" }} >
                         <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight : 700, lineHeight : "24px" }} >Type:</Typography>
-                        <Typography sx={{ color : '#0051C8', fontSize: "16px", fontWeight : 600, lineHeight : "24px" }} > Online </Typography>
+                        <Typography sx={{ color : '#0051C8', fontSize: "16px", fontWeight : 600, lineHeight : "24px" }} > {Course?.class_type?.[0]} </Typography>
                     </Box>
                     <Box sx={{ display: "inline-flex",  gap: "15px", alignItems : "center"}}>
                         <Typography>Status:</Typography>

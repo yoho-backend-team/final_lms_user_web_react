@@ -7,29 +7,31 @@ import { useTheme } from '@emotion/react';
 import InstructorLogin from 'features/Auth/instructorLogin';
 import { Outlet } from 'react-router-dom';
 import { InstructorLoginBg } from 'utils/images';
-import { InstructorLoginGroups } from 'utils/images';
+import { InstructorLoginGroups, MobileLoginInstructorBg } from 'utils/images';
 import objects from "assets/instructor/login/objects.png"
+import { useTabResponsive } from 'utils/tabResponsive';
 
 const InstructorAuthLayout = ({children}) => {
   const theme = useTheme()
+  const { tabView } = useTabResponsive()
   return (
-    <Grid container sx={{ display: { xs: "block", sm: "flex" } }}>
+    <Grid  sx={{ display: { xs: "block", sm: "flex" }, flexDirection: tabView ? "column" : "row" }}>
       <Grid
         item
         xs={12}
         sm={8}
         sx={{
-          backgroundImage: `url(${InstructorLoginGroups})`,
+          backgroundImage: `url(${ tabView ? MobileLoginInstructorBg : InstructorLoginGroups})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: { xs: "center" },
           overflow: "hidden",
           width: "100%",
-          height: { xs: "50vh", sm: "100vh" },
+          height: tabView ? "597px" :"100vh",
         }}
       >
         <Box>
-          <Box sx={{ px: { sm: 10, xs: 2 }}}>
+          <Box  sx={{  px: { sm: 10, xs: 2 }, display : tabView&&"none"}}>
             <img 
             src={objects} 
             alt="logo" 
@@ -50,8 +52,8 @@ const InstructorAuthLayout = ({children}) => {
               variant="h1"
               color={theme.palette.common.white}
               sx={{
-                fontSize: { xs: "2em", sm: "4em"},
-                lineHeight: { sm: "5rem"},
+                fontSize: tabView ? "2em" : "4em",
+                lineHeight: tabView ? "4rem" :"5rem",
                 display: "flex",
                 pt:{sm:"15%"}
               }}
@@ -70,8 +72,8 @@ const InstructorAuthLayout = ({children}) => {
         sm={4}
         sx={{
           // backgroundColor: theme.palette.common.white,
-          height: { xs: "100%", sm: "100vh" },
-          p: { xs: 1, sm: 5 },
+          height: tabView ? "597px" : "100vh" ,
+          p: tabView ? 1 : 5,
           justifyContent: "center",
           display: "flex",
         }}

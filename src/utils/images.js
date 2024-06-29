@@ -22,3 +22,13 @@ export {default as ClassInstructorViewCard } from "../assets/instructor/class/cl
 export {default as ClassCoordinatorViewCard } from "../assets/instructor/class/class-view/cooridinator-card.svg"
 export {default as CourseBg } from "../assets/instructor/course/course_bg.svg"
 export {default as CourseCardBg } from "../assets/instructor/course/course-card.svg"
+export {default as HelpCenterBg } from "../assets/instructor/help-center/bg.svg"
+
+//nav
+export { default as NavBg } from "../assets/common/nav.svg"
+export { default as NavMobileBg } from "../assets/common/mobile-nav.svg"
+export { default as NavSelectedImage } from "../assets/common/nav-selected-image.svg"
+export { default as NavMobileSelectedImage } from "../assets/common/nav-mobile-selected-image.svg"
+
+//auth 
+export { default as MobileLoginInstructorBg } from "../assets/instructor/login/mobile-login-instructor-bg.svg"

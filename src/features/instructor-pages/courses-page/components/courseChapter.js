@@ -8,7 +8,7 @@ const chapters = [
   { title: 'Foundation of Python & SQL Basics', classes: 12 ,background: 'linear-gradient(120deg, #0068FF 2.28%, #141BC4 100%)',color : "#84B6FF"},
 ];
 
-const CourseChapters = () => {
+const CourseChapters = ({Chapters}) => {
   return (
     <Box sx={{ pl : "91px", pr: "50px", height: "80vh", overflowY : "auto"}} >
       <Box sx={{ display: 'flex', justifyContent : "space-between", pb : "20px"}} >
@@ -16,14 +16,14 @@ const CourseChapters = () => {
         Course Chapters / Topics
       </Typography>
       <Typography sx={{ color : "#4B4B4B", fontSize: "14px",fontWeight:700, lineHeight : "24px"}} >
-        6 Chapters
+        {Chapters?.length} Chapters
       </Typography>
       <Typography sx={{ color : "#4B4B4B", fontSize: "14px",fontWeight:700, lineHeight : "24px"}} >
         146 classes
       </Typography>
       </Box>
-      {chapters.map((chapter, index) => (
-        <Paper key={index} sx={{ mb: 2, p: 2, background: chapter.background, padding : '30px' }}>
+      {Chapters?.map((chapter, index) => (
+        <Paper key={index} sx={{ mb: 2, p: 2, background: chapters[index].background, padding : '30px' }}>
            <Box>
               <Box sx={{ display: "flex",justifyContent: "space-between"}} >
                  <Typography sx={{ color : "white", fontSize: "24px", fontWeight:800, lineHeight: "27px"}} >
@@ -31,7 +31,7 @@ const CourseChapters = () => {
                  </Typography>
                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: "9px"}} >
                    <Typography sx={{ color : "black",background: "white",padding:"16px",borderRadius:"10px",fontSize:"24px",fontWeight:900,lineHeight:"17px"}} >
-                     {chapter.classes}
+                     12
                    </Typography>
                    <Typography sx={{ color : "white", fontSize: "14px", fontWeight : "800", lineHeight : "17px"}} >
                     classes
@@ -39,8 +39,8 @@ const CourseChapters = () => {
                  </Box>
               </Box>
               <Box sx={{ display: 'flex', justifyContent : "space-between", pt:"29px" }} >
-                <Typography sx={{ color : chapter.color , fontSize: "16px", fontWeight: 700, lineHeight:"17px", minWidth: "138px"}} >
-                   {chapter.title}
+                <Typography sx={{ color : chapters[index].color , fontSize: "16px", fontWeight: 700, lineHeight:"17px", minWidth: "138px"}} >
+                   {chapter.description}
                 </Typography>
                 <Typography sx={{ fontSize: "16px", fontWeight: 700, lineHeight : "17px", color : "white", textAlign: "end" }} >
                   Enrolled

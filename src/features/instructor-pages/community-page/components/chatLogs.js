@@ -8,7 +8,8 @@ const messages = [
   { id: 4, sender: 'me', text: 'Great to hear!', time: '10:06 AM' },
 ];
 
-const ChatLog = () => {
+const ChatLog = ({socket,Messages}) => {
+  console.log(Messages,"messages")
   return (
     <Box sx={{ padding: '16px', height: '100%', overflowY: 'auto' }}>
       {messages.map((message) => (
@@ -61,6 +62,57 @@ const ChatLog = () => {
             </Box>
           </Grid>
         </Grid>
+      ))}
+      {Messages?.map((msg)=>(
+         <Grid
+         container
+         key={msg.id}
+         justifyContent={msg === 'user' ? 'flex-end' : 'flex-start'}
+         sx={{ marginBottom: '8px' }}
+       >
+         {/* {message.sender === 'other' && (
+           <Grid item>
+             <Avatar sx={{ marginRight: '8px' }}>O</Avatar>
+           </Grid>
+         )} */}
+         <Grid item xs={8} sm={7} md={6}>
+         <Typography
+               sx={{
+                 color: '#0B3048',
+                 fontSize : "12px",
+                 fontWeight : 400,
+                 opacity : "0.7",
+                 marginBottom: '10px',
+                 textAlign : msg.user === 'user' ? 'end' : 'start',
+               //   py : "10px",
+               }}
+             >
+               {msg.date}
+             </Typography>
+           <Box
+             sx={{
+               // border: message.sender === 'me' ? '1px solid #DCF8C6' : 'none',
+               display: 'flex',
+               flexDirection: 'column',
+               alignItems: msg.user === 'user' ? 'flex-end' : 'flex-start',
+             }}
+           >
+             <Typography variant="body1" 
+             sx={{ 
+               wordBreak: 'break-word',
+               backgroundColor: msg.user === 'user' ? '#61C554' : '#E8ECEF',  
+               padding: '15px 20px 16px 15px',
+               borderRadius: '10px',
+               color : msg.user === 'user' ? "white" : "#000000",
+               fontSize : "14px",
+               fontWeight : 400,  
+               }}
+               >
+               {msg.message}
+             </Typography>
+           </Box>
+         </Grid>
+       </Grid>
       ))}
     </Box>
   );
