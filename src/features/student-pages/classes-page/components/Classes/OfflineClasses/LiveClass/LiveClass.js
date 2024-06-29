@@ -1,25 +1,55 @@
-import React from "react";
-import {Button, Paper, styled, Box, Typography, Grid,} from "@mui/material";
-import {Link} from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { Button, Paper, styled, Box, Typography, Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-function StudentOfflineLiveClasses(){
+const fetchLiveClasses = async () => {
+  // Simulate an API call
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        {
+          id: 1,
+          title: "Basics of User Experience",
+          subtitle: "UX Design",
+          date: "14 Feb 2024",
+          startTime: "10:30AM",
+          duration: "1hr 5 min",
+        },
+        {
+          id: 2,
+          title: "Advanced User Experience",
+          subtitle: "UX Design",
+          date: "15 Mar 2024",
+          startTime: "12:00PM",
+          duration: "2hr 10 min",
+        },
+      ]);
+    }, 1000);
+  });
+};
 
-    const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-        ...theme.typography.body2,
-        padding: theme.spacing(2),
-        color: theme.palette.text.secondary,
-      }));
+function StudentOfflineLiveClasses() {
+  const [classes, setClasses] = useState([]);
+  const matches = useMediaQuery("(min-width:600px)");
 
-      const matches = useMediaQuery("(min-width:600px)");
-     
-    return(
-        <>
-         {[1].map((item) => (
-        <Grid item xs={12} key={item} sx={{ marginTop: 2 }}>
+  useEffect(() => {
+    fetchLiveClasses().then(setClasses);
+  }, []);
+
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(2),
+    color: theme.palette.text.secondary,
+  }));
+
+  return (
+    <>
+      {classes.map((item) => (
+        <Grid item xs={12} key={item.id} sx={{ marginTop: 2 }}>
           <Item>
             <Box
               sx={{
@@ -31,37 +61,59 @@ function StudentOfflineLiveClasses(){
               }}
             >
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
-                <Typography variant="h3">Basic of User Experience</Typography>
-                <Typography variant="subtitle1">UI/UX Design</Typography>
-              </Box>
-              <Box sx={{ marginBottom: matches ? 0 : 2 }}>
-                <Typography variant="h5">
-                  <CalendarTodayIcon style={{ marginBottom: "-5px" }} /> 14 Feb 2024
+                <Typography variant="h6" sx={{
+                  color: 'var(--Gray-Black, var(--Colour-Neutral-1, #000))',
+                  fontFamily: 'Poppins',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  lineHeight: '22px'
+                }}>
+                  {item.title}
+                </Typography>
+                <Typography variant="subtitle2" sx={{
+                  color: 'var(--Gray-Black, var(--Colour-Neutral-1, #000))',
+                  fontFamily: 'Poppins',
+                  fontSize: '10px',
+                  fontWeight: 400,
+                  lineHeight: '16px'
+                }}>
+                  {item.subtitle}
                 </Typography>
               </Box>
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
-                <Typography variant="h5">
-                  <AccessTimeIcon style={{ marginBottom: "-5px" }} /> Start at: 10:30AM
+                <Typography variant="h5" sx={{ color: 'var(--Gray-600, #6C757D)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 500, lineHeight: '22px' }}>
+                  <CalendarTodayIcon style={{ marginBottom: "-5px" }} /> {item.date}
+                </Typography>
+              </Box>
+              <Box sx={{ marginBottom: matches ? 0 : 2 }}>
+                <Typography variant="h5" sx={{ color: 'var(--Gray-600, #6C757D)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 500, lineHeight: '22px' }}>
+                  <AccessTimeIcon style={{ marginBottom: "-5px" }} /> Start at: {item.startTime}
                 </Typography>
               </Box>
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
                 <Typography
                   variant="h5"
-                  sx={{ backgroundColor: "lightblue", color: "darkblue", borderRadius: "2px" }}
+                  sx={{
+                    color: '#0D6EFD', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 600, lineHeight: '22px', borderRadius: '26px',
+                    background: 'rgba(61, 139, 253, 0.22)'
+                  }}
                 >
-                  1hr 5 min
+                  {item.duration}
                 </Typography>
               </Box>
               <Box>
-                <Button variant="outlined" sx={{ borderRadius: "50px" }}>
-                <Link to={`/student/OfflineLiveClass/${item}`} style={{textDecoration:"none"}}>View Class</Link>
+                <Button variant="outlined" sx={{
+                  color: '#0D6EFD', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, lineHeight: '22px', borderRadius: '24px', background: '#FFF', display: 'flex', width: '113px', height: '40px', padding: '10px', justifyContent: 'center', alignItems: 'center', gap: '10px', flexShrink: 0
+                }}>
+                  <Link to={`/student/OnlineLiveClass/${item.id}`} style={{ textDecoration: "none" }}>View Class</Link>
                 </Button>
               </Box>
             </Box>
           </Item>
         </Grid>
       ))}
-        </>
-    )
+    </>
+  );
 }
+
 export default StudentOfflineLiveClasses;
