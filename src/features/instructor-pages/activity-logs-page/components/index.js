@@ -9,9 +9,19 @@ import {
   FormControl,
   FormLabel
 } from '@mui/material';
-import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot } from '@mui/lab';
-import {TimelineOppositeContent} from '@mui/lab';
+import {
+  Timeline,
+  TimelineItem,
+  TimelineSeparator,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDot
+} from '@mui/lab';
+import { TimelineOppositeContent } from '@mui/lab';
 import { styled } from '@mui/system';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const ActivityLog = () => {
   const [page, setPage] = useState(1);
@@ -35,39 +45,50 @@ const ActivityLog = () => {
 
   const paginatedLogs = activityLogs.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'Success':
+        return <CheckCircleIcon color="primary" />;
+      case 'Failed':
+        return <CancelIcon color="error" />;
+      default:
+        return <AccessTimeIcon color="action" />;
+    }
+  };
+
   return (
     <>
-    <Box
-    sx={{
-        display: 'flex',
-        padding : "60px 40px 20px 40px"
-    }}
-    >
-       <Box
-       sx={{
-        borderRadius: "18px",
-        backgroundColor : "#FFFFFF",
-        boxShadow : "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
-        width : "100vw",
-        height : "100vh"
-       }}
-       >
-          <Box sx={{ display: "flex", justifyContent: "space-between",padding:"30px 45px 28px 30px"}} >
-            <Box sx={{ display:"flex", alignItems:"center"}} >
-              <Typography sx={{ color: "#495057",fontSize:"24px",fontweight:700,lineHeight:"24px" }}>Activity Log</Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          padding: "60px 40px 20px 40px"
+        }}
+      >
+        <Box
+          sx={{
+            borderRadius: "18px",
+            backgroundColor: "#FFFFFF",
+            boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
+            width: "100vw",
+            height: "100vh"
+          }}
+        >
+          <Box sx={{ display: "flex", justifyContent: "space-between", padding: "30px 45px 28px 30px" }}>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography sx={{ color: "#495057", fontSize: "24px", fontWeight: 700, lineHeight: "24px" }}>Activity Log</Typography>
             </Box>
-            <Box sx={{ display:'flex', gap:"20px"}} >
-                <FormControl sx={{ display: "inline-flex",gap:"6px",flexDirection:"row",alignItems:"center"}} >
-                  <FormLabel>From</FormLabel>
-                  <TextField
-                   type="date"
-                   value={fromDate}
-                   onChange={(e) => setFromDate(e.target.value)}
-                   sx={{ marginRight: 2 }}
-                   InputLabelProps={{ shrink: true }}
-                  />
-                </FormControl>
-                <FormControl sx={{ display:"inline-flex",gap:"6px",flexDirection:"row",alignItems:"center"}} >
+            <Box sx={{ display: 'flex', gap: "20px" }}>
+              <FormControl sx={{ display: "inline-flex", gap: "6px", flexDirection: "row", alignItems: "center" }}>
+                <FormLabel>From</FormLabel>
+                <TextField
+                  type="date"
+                  value={fromDate}
+                  onChange={(e) => setFromDate(e.target.value)}
+                  sx={{ marginRight: 2 }}
+                  InputLabelProps={{ shrink: true }}
+                />
+              </FormControl>
+              <FormControl sx={{ display: "inline-flex", gap: "6px", flexDirection: "row", alignItems: "center" }}>
                 <FormLabel>To</FormLabel>
                 <TextField
                   type="date"
@@ -76,73 +97,76 @@ const ActivityLog = () => {
                   sx={{ marginRight: 2 }}
                   InputLabelProps={{ shrink: true }}
                 />
-                </FormControl>
-                <FormControl>
+              </FormControl>
+              <FormControl>
                 <TextField
                   select
                   value={week}
                   onChange={(e) => setWeek(e.target.value)}
                   sx={{ width: 150 }}
                 >
-                <MenuItem value="Past Week">Past Week</MenuItem>
-                <MenuItem value="Past Month">Past Month</MenuItem>
-                <MenuItem value="Past Year">Past Year</MenuItem>
-                </TextField> 
-               </FormControl>
+                  <MenuItem value="Past Week">Past Week</MenuItem>
+                  <MenuItem value="Past Month">Past Month</MenuItem>
+                  <MenuItem value="Past Year">Past Year</MenuItem>
+                </TextField>
+              </FormControl>
             </Box>
           </Box>
           <Box>
-          <Paper sx={{ boxShadow: "none"}} >
-            <Box sx={{ maxHeight: 500, overflow: 'auto', padding: 2 }}>
-              <Timeline position="right" sx={{ alignItems : "flex-start"}} >
-                {paginatedLogs.map((log, index) => (
-                  <TimelineItem key={log.id}>
-                    <TimelineOppositeContent>
-                      <Typography variant="body2" color="textSecondary">
-                        {log.time}
-                      </Typography>
-                    </TimelineOppositeContent>
-                    <TimelineSeparator>
-                      <TimelineDot color={log.status === 'Success' ? 'primary' : 'secondary'} />
-                      {index < paginatedLogs.length - 1 && <TimelineConnector />}
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Paper elevation={3} sx={{ padding: '6px 16px' }}>
-                        <Typography variant="h6" component="span">
-                          {log.type}
-                        </Typography>
-                        <Typography>{log.status}</Typography>
+            <Paper sx={{ boxShadow: "none" }}>
+              <Box sx={{ maxHeight: 500, overflow: 'auto', padding: 2 }}>
+                <Timeline position="right" sx={{ alignItems: "flex-start" }}>
+                  {paginatedLogs.map((log, index) => (
+                    <TimelineItem key={log.id}>
+                      <TimelineOppositeContent>
                         <Typography variant="body2" color="textSecondary">
-                          {log.date} | User: {log.user}
+                          {log.date}
                         </Typography>
-                      </Paper>
-                    </TimelineContent>
-                  </TimelineItem>
-                ))}
-              </Timeline>
+                      </TimelineOppositeContent>
+                      <TimelineSeparator>
+                        <TimelineDot>
+                          {getStatusIcon(log.status)}
+                        </TimelineDot>
+                        {index < paginatedLogs.length - 1 && <TimelineConnector />}
+                      </TimelineSeparator>
+                      <TimelineContent>
+                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                          <Box>
+                            <Typography variant="h6" component="span">
+                              {log.type}
+                            </Typography>
+                          </Box>
+                          <Box
+                            sx={{
+                              borderTop: '1px solid #e0e0e0',
+                              marginTop: 1,
+                              paddingTop: 1,
+                              overflowY: 'auto'
+                            }}
+                          >
+                            <Typography variant="body2" color="textSecondary">
+                              Time: {log.time} | User: {log.user}
+                            </Typography>
+                            <Typography>{log.status}</Typography>
+                          </Box>
+                        </Box>
+                      </TimelineContent>
+                    </TimelineItem>
+                  ))}
+                </Timeline>
+              </Box>
+            </Paper>
+            <Box sx={{ display: 'flex', justifyContent: "flex-end", pr: "35px" }}>
+              <Pagination
+                count={Math.ceil(activityLogs.length / rowsPerPage)}
+                page={page}
+                onChange={handleChangePage}
+                sx={{ marginTop: 2 }}
+              />
             </Box>
-        </Paper>
-        <Box sx={{ display:'flex', justifyContent:"flex-end",pr:"35px"}} >
-        <Pagination
-          count={Math.ceil(activityLogs.length / rowsPerPage)}
-          page={page}
-          onChange={handleChangePage}
-          sx={{ marginTop: 2 }}
-        />
+          </Box>
         </Box>
-        </Box>
-       </Box>
-    </Box>
-
-    <Box>
-      <TopBar>
-        <Typography variant="h6"></Typography>
-        <Box display="flex" alignItems="center">
-          
-        </Box>
-      </TopBar>
-      
-    </Box>
+      </Box>
     </>
   );
 };

@@ -1,7 +1,20 @@
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { Box, TextField, InputAdornment, Typography } from '@mui/material';
+import { getImageUrl } from 'utils/common/imageUtlils';
+import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
+import { useEffect } from 'react';
 
-const SideBar = ({communities,currentChat,setCurrentChat}) => {
+const SideBar = ({communities,currentChat,setCurrentChat,socket}) => {
+
+  const handleChat = (group) => {
+      setCurrentChat(group)
+      const communituy_id = group?._id
+      console.log(communituy_id,"communityId")
+      socket.emit("join", { group: communituy_id, user : "user" },(error)=>{
+        console.log(error,"error")
+      })
+  }
+
   return (
     <Box>
       <Box 
@@ -56,7 +69,7 @@ const SideBar = ({communities,currentChat,setCurrentChat}) => {
             communities?.map((group)=>(
                 <Box 
                 key={group.id}
-                onClick={()=>setCurrentChat(group)}
+                onClick={()=>handleChat(group)}
                 sx={{
                     display : "flex",
                     padding : "8px",
@@ -66,18 +79,20 @@ const SideBar = ({communities,currentChat,setCurrentChat}) => {
                 }}>
                   <Box sx={{display:"flex",gap:"10px"}}>
                   <Box>
-                    <img src={group.image} alt={group.batch_name} />
+                    <img src={ getImageUrl(group?.batch?.course?.image)} alt={group?.group} style={{ height:"60px",width:"60px",borderRadius:"50%" }} />
                   </Box>
                   <Box sx={{display:"flex",flexDirection:"column",justifyContent:"space-between",py:"10px"}} >
-                     <Typography sx={{color:"#09132C",fontSize:"16px",fontWeight:500,lineHeight:"24px"}} >{group.batch_name}</Typography>
-                     <Typography sx={{color:"#09132C",fontSize:"12px",fontWeight:"400",lineHeight:"16px"}} >{group.last_message}</Typography>
+                     <Typography sx={{color:"#09132C",fontSize:"16px",fontWeight:500,lineHeight:"24px"}} >{group?.group}</Typography>
+                     <Typography sx={{color:"#09132C",fontSize:"12px",fontWeight:"400",lineHeight:"16px"}} >{group.last_message ? group?.last_message : "Hahah oh man"}</Typography>
                   </Box>
                   </Box>
                   <Box sx={{display:"flex",flexDirection:"column",justifyContent:"space-between",gap:"10px"}} >
                     <Box>
-                    <Typography sx={{color:"#829C99",fontSize:"10px",fontWeight:400,lineHeight:"16px"}}>{group.date}</Typography>
+                    <Typography sx={{color:"#829C99",fontSize:"10px",fontWeight:400,lineHeight:"16px"}}>{group.date ? group?.date : "7:38 am"}</Typography>
                     </Box>
-                    <Box>{group.chat} </Box>
+                    <Box>
+                      <DoneAllOutlinedIcon sx={{color:"#2361FF"}} />
+                    </Box>
                   </Box>
                 </Box>
             ))

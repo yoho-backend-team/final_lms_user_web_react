@@ -13,13 +13,17 @@ import { useTheme } from "@emotion/react";
 import TicketCard from "features/instructor-pages/home-page/components/TicketCard";
 import CourseCard from "features/instructor-pages/home-page/components/courseCard";
 import CourseProgressCard from "features/instructor-pages/home-page/components/courseProgressCard";
+import { useTabResponsive } from "utils/tabResponsive";
+import { getBranchDetails, getInstituteDetails } from "store/atoms/authorized-atom";
 
 
 const InstructorDashBoard = () => {
   const theme = useTheme()
+  const { tabView } = useTabResponsive()
+  
    return(
-    <Grid container p={8} sx={{p:{xs:2,sm:5}}} gap={5}>
-        <Grid item xs={12} sm={3}>
+    <Grid container p={tabView ? 4 : 8} sx={{p:{xs:2,sm:tabView?"40px 10px 10px 10px":5}}} gap={ tabView ? "0px" : 5}>
+        <Grid item xs={ tabView ? 6 : 3} >
           <Card>
              <Box>
                <img 
@@ -244,18 +248,31 @@ const InstructorDashBoard = () => {
             </Card>
           </Box>
           </Card>
-          <TicketCard />
+          {
+           tabView ? <CourseProgressCard /> : <TicketCard />}
         </Grid>
-
+      {
+        !tabView &&
         <Grid item sm={4}>
           <AttendanceCard />
           <CourseProgressCard />
-        </Grid>
+        </Grid> 
+      }
+      {
+        !tabView &&
         <Grid item sm={4}>
-          <Card>
-             <UpdatesCard image={UpdateCardBg} />
-          </Card>
+        <Card>
+           <UpdatesCard image={UpdateCardBg} />
+        </Card>
+      </Grid>
+      }
+      { tabView &&
+        <Grid item xs={6}  >
+           <UpdatesCard image={UpdateCardBg} />
+           <AttendanceCard />
+           <TicketCard />
         </Grid>
+      }
     </Grid>
    )
 }
