@@ -1,22 +1,23 @@
 import React from 'react';
 import { Box, Typography, Avatar, Grid } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { formatDate, formatTime } from 'utils/formatDate';
 
-const AttendanceHeader = ({setShowAttendance}) => {
-    
+const AttendanceHeader = ({setShowAttendance,classDetails}) => {
+  console.log(classDetails,"classDetails")
   return (
     <Box sx={{ backgroundColor: '#5611B1', padding: '20px 40px', borderRadius: '10px', color: 'white', width: '100%',borderBottomLeftRadius:"0px",borderBottomRightRadius:"0px" }}>
       <Box container alignItems="center" sx={{display:"flex",color:"white"}} justifyContent="space-between">
           <ArrowBackIcon sx={{cursor:"pointer"}} onClick={()=>setShowAttendance(false)}  />
           <Box>
-            <Typography sx={{ fontWeight: 500, color:"white",fontSize:"16px",lineHeight:"32px" }}>UX Class 13022024</Typography>
+            <Typography sx={{ fontWeight: 500, color:"white",fontSize:"16px",lineHeight:"32px" }}>{classDetails?.class_name}</Typography>
           </Box>
           <Box>
             <Typography sx={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap',color:"#B28AE7",fontSize:"12px",fontWeight:600,lineHeight:"16px" }}>
               Course:
             </Typography>
             <Typography variant="body1" sx={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', color: "white", fontSize: "16px", fontWeight: 500, lineHeight: "24px" }}>
-              UX Design
+              {classDetails?.course?.course_name}
             </Typography>
           </Box>
           <Box>
@@ -24,7 +25,7 @@ const AttendanceHeader = ({setShowAttendance}) => {
               <span>Batch</span>
             </Typography>
             <Typography variant="body1" sx={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', color: "white", fontSize: "16px", fontWeight: 500, lineHeight: "24px" }}>
-              <span>#3022024</span>
+              <span>#{classDetails?.batch?.id}</span>
             </Typography>
           </Box>
           <Box>
@@ -32,7 +33,7 @@ const AttendanceHeader = ({setShowAttendance}) => {
               <span>Trainer:</span>
             </Typography>
             <Typography variant="body1" sx={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', color: "white", fontSize: "16px", fontWeight: 500, lineHeight: "24px" }}>
-              <span>Jerome Bell</span>
+              <span>{classDetails?.instructors?.[0]?.full_name}</span>
             </Typography>
           </Box>
           <Box>
@@ -40,7 +41,7 @@ const AttendanceHeader = ({setShowAttendance}) => {
               <span>Date:</span>
             </Typography>
             <Typography variant="body1" sx={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', color: "white", fontSize: "16px", fontWeight: 500, lineHeight: "24px" }}>
-              <span>13 Feb 2024</span>
+              <span>{formatDate(classDetails?.start_date)}</span>
             </Typography>
           </Box>
           <Box>
@@ -48,7 +49,7 @@ const AttendanceHeader = ({setShowAttendance}) => {
               <span>Started At:</span>
             </Typography>
             <Typography variant="body1" sx={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap', color: "white", fontSize: "16px", fontWeight: 500, lineHeight: "24px" }}>
-              <span>10:30 AM</span>
+              <span>{formatTime(classDetails?.start_time)}</span>
             </Typography>
           </Box>
             <Box sx={{ display: "flex", flexDirection: "row-reverse", gap: "10px" }}>

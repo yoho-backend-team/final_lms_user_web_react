@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 
 // third party
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 // project imports

@@ -2,8 +2,10 @@ import axios from "axios"
 import { AUTH_TOKEN_KEY,instructorDetails } from "lib/constants"
 import Cookies from "js-cookie"
 
+const backendUrl = process.env.REACT_APP_BACK_END_URL
+
 const Axios = axios.create({
-    baseURL : process.env.REACT_APP_BACK_END_URL,
+    baseURL : backendUrl ,
     timeout : 5000000,
     headers : {
         "Content-Type" : "application/json"
@@ -24,7 +26,7 @@ Axios.interceptors.response.use(
     (response)=>response,
     (error) => {
      if(error.response && error.response.status === 401 && error.response.statusText === "Unauthorized"){
-        Cookies.remove(AUTH_TOKEN_KEY)
+        Cookies.remove(instructorDetails)
      }
      return Promise.reject(error)
     }

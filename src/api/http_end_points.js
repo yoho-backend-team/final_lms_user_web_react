@@ -47,13 +47,18 @@ const generateEndpoints = () => {
         get: `/institutes/${institute}/branches/${branch}/course/${course}`
       },
       class: {
-        get: `/institutes/class/${course}`
+        get: `/institutes/class/${course}`,
+        getwithId : `/institutes/class/course/`
       },
       community : {
         get : `/institutes/community/course/${course}`
       },
       payments : {
         getSalaries : "/institutes/payments/staff-salary/salary"
+      },
+      ticket : {
+        create : "/institutes/staff/ticket",
+        get : "/institutes/staff/ticket/all",
       }
     }
   };
