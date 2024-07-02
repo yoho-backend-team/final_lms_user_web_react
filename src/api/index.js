@@ -18,13 +18,18 @@ class Client {
       get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.course.get,params)
     },
     class : {
-      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.class.get,params)
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.class.get,params),
+      getWithId : (params) => httpClient.get(HTTP_END_POINTS.Instructor.class.getwithId+params.course,params)
     },
     community : {
       get : () => httpClient.get(HTTP_END_POINTS.Instructor.community.get)
     },
     payment : {
       get : () => httpClient.get(HTTP_END_POINTS.Instructor.payments.getSalaries)
+    },
+    ticket : {
+      create : (data) => httpClient.post(HTTP_END_POINTS.Instructor.ticket.create,data),
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.ticket.get,params)
     }
   };
 }
