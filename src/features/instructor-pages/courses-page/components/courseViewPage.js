@@ -7,7 +7,7 @@ import SingleCourseView from "./sections/CourseViewPage";
 import { useTabResponsive } from "utils/tabResponsive";
 import EditIcon from "assets/icons/editIcon";
 
-const CourseViewPage = () => {
+const CourseViewPage = ({Course}) => {
     const { tabView } = useTabResponsive();
     const [currentTab, setCurrentTab] = useState("1");
     const [courseView, setCourseView] = useState(false);
@@ -68,7 +68,7 @@ const CourseViewPage = () => {
                             </Tabs>
                         </Box>
                     </Box>
-                    <Box sx={{ pr: "40px" }}>
+                    <Box sx={{ pr: "40px", display: tabView && "none" }}>
                    {
                     courseView &&
                    
@@ -76,7 +76,7 @@ const CourseViewPage = () => {
                    } 
                     </Box>
                 </Box>
-                {currentTab === "1" && <About />}
+                {currentTab === "1" && <About Course={Course} />}
                 {currentTab === "2" && !courseView && <CourseAndNotesPage openCourseView={openCourseView} closeCourseView={closeCourseView} />}
                 {courseView && <SingleCourseView />}
             </Box>

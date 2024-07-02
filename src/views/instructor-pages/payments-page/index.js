@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppBar, Toolbar, Typography, Paper, Box, Grid, Button, Divider, Card } from '@mui/material';
 import { instructorPaymentCardData } from 'data/instructor';
 import PaymentCard from 'features/instructor-pages/payments-page/components/paymentCard';
 import { PaymentBg } from 'utils/images';
 import SalaryDetailsTable from 'features/instructor-pages/payments-page/components/salaryTable';
 import { useTabResponsive } from 'utils/tabResponsive';
+import updateStaffSalaries from 'features/instructor-pages/payments-page/redux/thunks';
+import { useDispatch,useSelector } from 'react-redux';
+import { selectInstructorPayments,selectLoading } from 'features/instructor-pages/payments-page/redux/selectors';
 
 const PaymentInterface = () => {
+      const dispatch = useDispatch()
+      const salaries = useSelector(selectInstructorPayments)
+      const loading = useSelector(selectLoading)
       const {tabView}  = useTabResponsive()
-  
+
+
+      const getSalaryDetails = async () => {
+       dispatch(updateStaffSalaries())
+      }
+
+      useEffect(()=>{
+        getSalaryDetails()
+      },[dispatch])
+      console.log(salaries,"salaries")
   
   return (
     <>

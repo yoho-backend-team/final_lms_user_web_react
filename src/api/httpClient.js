@@ -1,5 +1,5 @@
 import axios from "axios"
-import { AUTH_TOKEN_KEY } from "lib/constants"
+import { AUTH_TOKEN_KEY,instructorDetails } from "lib/constants"
 import Cookies from "js-cookie"
 
 const Axios = axios.create({
@@ -9,9 +9,11 @@ const Axios = axios.create({
         "Content-Type" : "application/json"
     }
 })
-console.log(process.env.REACT_APP_BACK_END_URL)
+
 Axios.interceptors.request.use((config)=>{
-    const token = Cookies.get(AUTH_TOKEN_KEY)
+    const user = Cookies.get(instructorDetails) 
+    
+    const token = user ?  JSON.parse(user)?.token : ''
     if(token){
       config.headers["Authorization"] = `Token ${token ? token :''}`
     }

@@ -29,13 +29,16 @@ import StudentOfflineUpcoming from "../OfflineClasses/Upcoming Classes/UpcomingC
 import back from "../../../../../../assets/images/pages/background_1.png";
 import { useTheme } from "@emotion/react";
 import { OnlinePrediction } from "@mui/icons-material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import backgroundimg from "../../../../../../assets/images/background.png"
+
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(5),
   // width: 'auto',
   height: "100vh",
   // marginLeft: 'auto',
   // marginRight: 'auto',
-  backgroundImage: `url(${back})`,
+  backgroundColor: "#F2F2F2",
 }));
 
 const Main = () => {
@@ -54,10 +57,22 @@ const Main = () => {
 
   return (
     <StyledPaper>
+      <div
+  style={{
+    backgroundImage: `url(${backgroundimg})`,
+    backgroundPosition: 'center bottom',
+    backgroundRepeat: 'no-repeat',
+    position:"relative",
+    backgroundAttachment:"fixed"
+ 
+  }}
+>
+
+      
       {/* <Container maxWidth="lg" sx={{ marginLeft: matches ? "20px" : "20px" }}> */}
       <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography variant="h2" gutterBottom>
+        <Grid item xs={12}> 
+          <Typography variant="h2" gutterBottom sx={{ color: '#000', fontFamily: 'Poppins', fontWeight: 700 }}>
             Classes
           </Typography>
           <Box
@@ -72,7 +87,7 @@ const Main = () => {
               flexDirection: matches ? "row" : "column",
             }}
           >
-            <Typography variant="h3">
+            <Typography variant="h3" sx={{ color: '#000', fontFamily: 'Poppins', fontWeight: 500, fontsize: '20px',lineheight: '32px' }}>
               {classType} Classes{" "}
               {classType == "Online" ? (
                 <OnlinePrediction
@@ -93,20 +108,61 @@ const Main = () => {
               )}
             </Typography>
             <FormControl
-              sx={{ minWidth: 120, marginTop: matches ? "0" : "10px" }}
-            >
-              <InputLabel id="class-select-label">Classes</InputLabel>
-              <Select
-                labelId="class-select-label"
-                id="class-select"
-                value={classType}
-                label="Class Type"
-                onChange={handleClassChange}
-              >
-                <MenuItem value="Online">Online</MenuItem>
-                <MenuItem value="Offline">Offline</MenuItem>
-              </Select>
-            </FormControl>
+    sx={{ 
+      display: "inline-flex",
+      padding: "0px 0px",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: "10px",
+      borderRadius: "10px",
+      border: "2px solid #0D6EFD", 
+    }}
+  >
+    <Select
+      labelId="class-select-label"
+      id="class-select"
+      value={classType}
+      label="Class Type"
+      sx={{
+        "& .MuiOutlinedInput-notchedOutline": {
+          border: "none",
+          boxShadow: "none"
+        },
+        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          boxShadow: "none"
+        }
+      }}
+      onChange={handleClassChange}
+      IconComponent={ExpandMoreIcon}
+    >
+      <MenuItem
+          value="Online"
+          sx={{
+            color: 'var(--Colour-Neutral-1, #000)',
+            fontFamily: 'Poppins',
+            fontSize: '14px',
+            fontStyle: 'normal',
+            fontWeight: 500,
+            lineHeight: '22px' // 157.143%
+          }}
+        >
+          Online
+        </MenuItem>
+        <MenuItem
+          value="Offline"
+          sx={{
+            color: 'var(--Colour-Neutral-1, #000)',
+            fontFamily: 'Poppins',
+            fontSize: '14px',
+            fontStyle: 'normal',
+            fontWeight: 500,
+            lineHeight: '22px' // 157.143%
+          }}
+        >
+          Offline
+        </MenuItem>
+    </Select>
+  </FormControl>
           </Box>
           <TabContext value={value}>
             <Box
@@ -116,12 +172,26 @@ const Main = () => {
                 borderBottomLeftRadius: "10px",
               }}
             >
-              <TabList onChange={handleChange} aria-label="class tabs">
-                <Tab label="Upcoming Classes" value="1" />
-                <Tab label="Completed Classes" value="2" />
-                <Tab label="Class History" value="3" />
-                <Tab label="Live Class" value="4" />
-              </TabList>
+              <TabList 
+    onChange={handleChange} 
+    aria-label="class tabs"
+    sx={{
+      '& .MuiTab-root': {
+        fontFamily: 'Poppins',  
+        fontWeight: 600,        
+        color: '#000',          
+      },
+      '& .Mui-selected': {
+        color: '#0000FF',       
+        fontWeight: 700,        
+      },
+    }}
+  >
+    <Tab label="Upcoming Classes" value="1" />
+    <Tab label="Completed Classes" value="2" />
+    <Tab label="Class History" value="3" />
+    <Tab label="Live Class" value="4" />
+  </TabList>
             </Box>
             {classType === "Online" && (
               <>
@@ -159,6 +229,7 @@ const Main = () => {
         </Grid>
       </Grid>
       {/* </Container> */}
+      </div>
     </StyledPaper>
   );
 };

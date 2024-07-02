@@ -4,11 +4,13 @@ import CreateTicketForm from './createTicketForm';
 import { TicketBg } from 'utils/images';
 import TicketCard from './TicketCard';
 import TicketView from './TicketView';
+import { useTabResponsive } from 'utils/tabResponsive';
 
 const InstructorTicketsPage = () => {
   const [value, setValue] = useState('1');
   const [open, setOpen] = useState(false);
   const [ticketView,setTicketView] = useState(false)
+  const { tabView } = useTabResponsive()
 
 
   const handleOpen = () => setOpen(true);
@@ -89,7 +91,7 @@ const InstructorTicketsPage = () => {
           overflow : "auto"
         }}
       >
-        <Box sx={{ p: '62px 40px 20px 80px' }}>
+        <Box sx={{ p: tabView ?'62px 40px 20px 38px' : "62px 40px 20px 80px" }}>
          {
             open || ticketView ? open ?  <CreateTicketForm handleClose={handleClose} /> : <TicketView handleTicketViewClose={handleTicketViewClose} />
             :
@@ -130,9 +132,9 @@ const InstructorTicketsPage = () => {
             </Box>
           </Box>
 
-          <Grid container spacing={10} sx={{ pt: '40px', }}>
+          <Grid container spacing={ tabView ? 4 : 10} sx={{ pt: '40px', }}>
             {tickets.map((ticket, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
+              <Grid item xs={ tabView ? 6 : 4 } key={index}>
                 <TicketCard {...ticket} handleTicketViewOpen={handleTicketViewOpen} handleTicketViewClose={handleTicketViewClose} />
               </Grid>
             ))}

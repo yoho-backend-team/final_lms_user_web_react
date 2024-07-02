@@ -16,12 +16,12 @@ const defaultStyles = {
   durationColor : "rgba(61, 139, 253, 0.22)"
 }
 
-const LiveClassList = () => {
+const LiveClassList = ({data}) => {
 
 
   return (
     <Box sx={{ mt: 3, px: '40px' }}>
-      {classes.map((cls) => (
+      {data.map((cls) => (
         <ClassCard key={cls.id} cls={cls} style={defaultStyles} />
       ))}
     </Box>

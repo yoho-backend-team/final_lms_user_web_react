@@ -7,7 +7,7 @@ import RecordIcon from 'assets/icons/RecordIcon';
 import EmojiIcon from 'assets/icons/EmojiIcon';
 import EmojiPicker from './EmojiPicker';
 
-const BottomBar = () => {
+const BottomBar = ({socket}) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -22,6 +22,9 @@ const BottomBar = () => {
   const handleSendClick = () => {
     console.log('Sending message:', message);
     setMessage('');
+    socket.emit("sendMessage",{message:message,user:"user"},(response)=>{
+      console.log(response,"response")
+    })
   };
 
   return (

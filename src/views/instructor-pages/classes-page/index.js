@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, Card, Grid, FormControl, Select, MenuItem } from '@mui/material';
 import ClassLayout from '../../../features/instructor-pages/classes-page/components/classLayout';
 import { OfflineClassIcon } from 'utils/images';
@@ -7,10 +7,17 @@ import UpcomingClassList from 'features/instructor-pages/classes-page/components
 import CompletedClassList from 'features/instructor-pages/classes-page/components/completedClass';
 import LiveClassList from 'features/instructor-pages/classes-page/components/liveClass';
 import ClassHistory from 'features/instructor-pages/classes-page/components/classHistory';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllClasses } from 'features/instructor-pages/classes-page/redux/thunks';
+import { selectClasses, selectLoading } from 'features/instructor-pages/classes-page/redux/selectors';
+import ClassLoader from 'components/ui/loaders/classLoading';
 
 const ClassesPage = () => {
   const [value, setValue] = useState('1');
-  const [classType, setClassType] = useState('online class');
+  const [classType, setClassType] = useState('online');
+  const dispatch = useDispatch();
+  const classes = useSelector(selectClasses);
+  const loading = useSelector(selectLoading);
 
   const tabs = [
     { id: '1', title: 'Upcoming Classes' },
@@ -20,16 +27,25 @@ const ClassesPage = () => {
   ];
 
   const renderComponents = {
-    "1" : <UpcomingClassList />,
-    "2" : <CompletedClassList />,
-    "3" : <ClassHistory />,
-    "4" : <LiveClassList />
-  }
+    '1': <UpcomingClassList data={classes} />,
+    '2': <CompletedClassList data={classes} />,
+    '3': <ClassHistory data={classes} />,
+    '4': <LiveClassList data={classes} />
+  };
 
   const classTypes = [
-    { id: '1', title: 'online class' },
-    { id: '2', title: 'offline class' },
+    { id: '1', title: 'online class', value: 'online' },
+    { id: '2', title: 'offline class', value: 'offline' },
   ];
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = { userType: classType };
+      await dispatch(getAllClasses(data));
+    };
+
+    fetchData();
+  }, [dispatch, classType]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -37,6 +53,8 @@ const ClassesPage = () => {
 
   const handleClassTypeChange = (event) => {
     setClassType(event.target.value);
+    const filter = { userType: event.target.value };
+    dispatch(getAllClasses(filter));
   };
 
   return (
@@ -74,7 +92,7 @@ const ClassesPage = () => {
                 <FormControl>
                   <Select value={classType} onChange={handleClassTypeChange}>
                     {classTypes.map((list) => (
-                      <MenuItem key={list.id} value={list.title}>
+                      <MenuItem key={list.id} value={list.value}>
                         {list.title}
                       </MenuItem>
                     ))}
@@ -85,7 +103,7 @@ const ClassesPage = () => {
           </Grid>
         </Card>
 
-        {renderComponents[value]}
+        {loading ? <ClassLoader /> : renderComponents[value]}
       </Box>
     </ClassLayout>
   );

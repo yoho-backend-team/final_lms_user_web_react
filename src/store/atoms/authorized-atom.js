@@ -20,3 +20,23 @@ export const getInstructorDetails = () => {
     const user = checkUser(instructorDetails)
     return user.userDetails
 }
+
+export const getInstituteDetails = () => {
+    const user = getInstructorDetails()
+    return user.institute_id
+}
+
+export const getBranchDetails = () => {
+    const user = getInstructorDetails()
+    return user.branch_id
+}
+
+export const useInstitute = () => {
+    const institute = getInstituteDetails()
+    return institute.uuid
+}
+
+export const useBranch = () => {
+    const branch = getBranchDetails()
+    return branch.uuid
+}
