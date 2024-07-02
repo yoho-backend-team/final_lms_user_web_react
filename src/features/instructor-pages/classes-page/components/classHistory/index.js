@@ -17,7 +17,7 @@ const defaultStyles = {
   durationColor : "rgba(210, 244, 234, 1)"
 }
 
-const ClassHistory = () => {
+const ClassHistory = ({data}) => {
 
   const [filters, setFilters] = React.useState({
     class: '',
@@ -43,7 +43,7 @@ const ClassHistory = () => {
     <>
     <FilterHeader filters={filters} onFilterChange={handleFilterChange} onResetFilters={handleResetFilters} />
     <Box sx={{ mt: 3, px: '40px' }}>
-      {classes.map((cls) => (
+      {data.map((cls) => (
         <ClassCard key={cls.id} cls={cls} style={defaultStyles} />
       ))}
     </Box>

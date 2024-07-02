@@ -1,271 +1,180 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Grid, Typography, Card, Button, Avatar, Box, CardContent, AvatarGroup, Paper, Breadcrumbs, Stack, Tooltip, CardMedia, Link } from '@mui/material';
+import { Grid, Typography, Box, Paper, Breadcrumbs, Link, IconButton, Avatar, AvatarGroup } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { useState } from 'react';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import stu from '../../../../assets/images/Elite/stu.jpg';
-import pdf from '../../../../assets/images/Elite/pdf.png';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import DownloadIcon from '@mui/icons-material/Download';
+import StudyMaterialIcon from 'assets/icons/study-material-icon';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import back from 'assets/images/pages/background_1.png'
+import back from 'assets/images/pages/background_1.png';
+import StudentClassLayout from 'features/student-pages/classes-page/components/layout';
 
-export default function OnlineCompletedClasses() {
+const breadcrumbs = [
+  <Link key="1" sx={{ color: '#484848', fontFamily: 'Poppins', fontSize: '28px', fontWeight: 700, lineHeight: '22px' }} color="inherit" href="/">
+    Classes
+  </Link>,
+  <Link key="2" sx={{ color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontSize: '20px', fontWeight: 500, lineHeight: '32px' }} color="inherit" href="/">
+    Online Class
+  </Link>,
+  <Link key="3" sx={{ color: 'var(--Gray-600, #6C757D)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, lineHeight: '22px' }} color="inherit" href="/">
+    Upcoming Class
+  </Link>,
+  <Typography key="4" sx={{ color: 'var(--Gray-600, #6C757D)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, lineHeight: '22px' }} color="text.primary">
+    Basic of User ...
+  </Typography>,
+];
+
+const studyMaterials = [
+  { title: "Chapter-01", description: "JavaScript Development Workbook" },
+  { title: "Chapter-02", description: "JavaScript Development Workbook" },
+];
+
+const PadPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(5),
+  backgroundImage: `url(${back})`,
+  backgroundRepeat: "no-repeat",
+  backgroundPosition: "center",
+  backgroundSize: "cover"
+}));
+
+export default function OnlineUpcomingClasses() {
   const { id } = useParams();
   const matches = useMediaQuery('(min-width:600px)');
-  const [open, setOpen] = useState(false);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const breadcrumbs = [
-    <Typography key="1" color="text.primary" variant='h2'>
-      Classes
-    </Typography>,
-    <Link underline="hover" key="2" color="inherit" href="/" onClick={handleClick}>
-      Online class
-    </Link>,
-    <Link
-      underline="hover"
-      key="3"
-      color="inherit"
-      href="/material-ui/getting-started/installation/"
-      onClick={handleClick}
-    >
-      Completed class
-    </Link>,
-    <Link
-      underline="hover"
-      key="4"
-      color="inherit"
-      href="/material-ui/getting-started/installation/"
-      onClick={handleClick}
-    >
-      Basic of Pyth...
-    </Link>,
-  ];
-
-  function handleClick(event) {
-    event.preventDefault();
-    console.info('You clicked a breadcrumb.');
-  }
-
-  const PadPaper= styled(Paper)(({ theme }) => ({
-    padding: theme.spacing(5),
-    backgroundImage: `url(${back})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    backgroundSize: "cover"
-  }));
 
   return (
-    <PadPaper>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Breadcrumbs
-            separator={<NavigateNextIcon fontSize="small" />}
-            aria-label="breadcrumb"
-          >
+    <StudentClassLayout >
+      <Grid container spacing={2} sx={{ paddingLeft:"44px",paddingBottom:"35px"}} >
+        <Grid item xs={12} >
+          <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
             {breadcrumbs}
           </Breadcrumbs>
         </Grid>
-        <Grid item xs={12}>
-          <Card sx={{ margin: "25px", marginLeft: "35px" }}>
-            <Grid container spacing={2} sx={{ padding: "20px" }}>
-              <Grid item xs={12} md={6}>
-                <Box>
-                  <Grid container alignItems="center">
-                    <ArrowBackIcon sx={{ marginRight: 1 }} />
-                    Batch No:<Typography variant="h3">#{id}</Typography>
-                  </Grid>
-                </Box>
-                <Box mt={2}>
-                  <Typography variant="h1">Class Details</Typography>
-                </Box>
-                <Box mt={3}>
-                  <Typography variant="h3">Basics of Python Chapter 3, Framework & Styling</Typography>
-                </Box>
-                <Box mt={4}>
-                  <Typography variant="body1">
-                    User experience (UX) is the overall experience a user has when interacting with a product or service. UX design is the process of creating products that provide meaningful experiences for users.
-                  </Typography>
-                </Box>
-                <Box mt={4}>
-                  <Card sx={{ backgroundColor: "#beeef7" }}>
-                    <CardContent>
-                      <Grid container justifyContent="space-around">
-                        <Typography variant="h5" sx={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>Date</Typography>
-                        <Typography variant="h5" sx={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>Start At</Typography>
-                        <Typography variant="h5" sx={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>End At</Typography>
-                        <Typography variant="h5" sx={{ fontSize: "16px", fontWeight: "bold", color: "black" }}>Duration</Typography>
-                      </Grid>
-                      <Grid container justifyContent="space-around" sx={{ marginTop: "10px", marginBottom: "10px" }}>
-                        <Typography variant="h4" sx={{ color: "#79a7d9" }}>13 Feb 2024</Typography>
-                        <Typography variant="h4" sx={{ color: "#79a7d9" }}>10:30 AM</Typography>
-                        <Typography variant="h4" sx={{ color: "#79a7d9" }}>11:30 AM</Typography>
-                        <Typography variant="h4" sx={{ color: "#79a7d9" }}>1:24:36</Typography>
-                      </Grid>
-                    </CardContent>
-                  </Card>
-                </Box>
-                <Box mt={4}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={6} sm={6}>
-                      <Typography variant="h3" gutterBottom>Class Status</Typography>
-                      <Typography variant="body1">Class Finished &copy;11:30 AM</Typography>
-                    </Grid>
-                    <Grid item xs={6} sm={6} sx={{ display: 'flex', flexDirection: 'column'}}>
-                      <Button variant="outlined" sx={{ borderRadius: "50px", marginBottom: "15px" }}>Check Attendance</Button>
-                      <Typography variant="body1"><ErrorOutlineIcon sx={{ marginBottom: "-6px" }} />If there are any issues with attendance, please raise a ticket.</Typography>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Typography variant='h3'>Other Details</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Card sx={{ backgroundColor: "#f5ca9d" }}>
-                      <CardContent>
-                        <Typography variant="h4" gutterBottom>Students</Typography>
-                        <AvatarGroup max={4}>
-                          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-                          <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-                          <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-                          <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
-                        </AvatarGroup>
-                        <Grid container justifyContent="space-between" sx={{ marginTop: "20px" }}>
-                          <Typography variant='h5'>Total 67</Typography>
-                          <Box>
-                            <CardMedia
-                              component="img"
-                              image={stu}
-                              height={60}
-                              width={20}
-                              alt="Student Image"
-                              sx={{ marginBottom: "-22px", marginLeft: "20px" }}
-                            />
-                          </Box>
-                        </Grid>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Card sx={{ backgroundColor: "#f2e4e4" }}>
-                      <CardContent>
-                        <Typography variant="h4" gutterBottom>Instructor</Typography>
-                        <AvatarGroup max={4}>
-                          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                          <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-                          <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-                          <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-                          <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
-                        </AvatarGroup>
-                        <Grid container justifyContent="space-between" sx={{ marginTop: "20px" }}>
-                          <Typography variant='h5'>Total 4</Typography>
-                          <Box>
-                            <CardMedia
-                              component="img"
-                              image={stu}
-                              height={60}
-                              width={20}
-                              alt="Instructor Image"
-                              sx={{ marginBottom: "-22px", marginLeft: "20px" }}
-                            />
-                          </Box>
-                        </Grid>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <Card sx={{ backgroundColor: "#eff59d" }}>
-                      <CardContent>
-                        <Tooltip open={open} onClose={handleClose} onOpen={handleOpen} title="Student">
-                          <AvatarGroup max={4}>
-                            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                            <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-                            <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-                            <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />
-                            <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />
-                          </AvatarGroup>
-                        </Tooltip>
-                        <Grid container justifyContent="space-between" sx={{ marginTop: "20px" }}>
-                          <Typography variant='h5'>Total 2</Typography>
-                          <Box>
-                            <CardMedia
-                              component="img"
-                              image={stu}
-                              height={60}
-                              width={20}
-                              alt="Student Image"
-                              sx={{ marginBottom: "-22px", marginLeft: "20px" }}
-                            />
-                          </Box>
-                        </Grid>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                </Grid>
-                <Grid container>
-                  <Grid item xs={12} sx={{ marginTop: "25px" }}>
-                    <Typography variant='h3' gutterBottom>Study Materials</Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Stack spacing={2}>
-                      <Paper variant="outlined" sx={{ borderColor: "black", borderBottom: "none", padding: matches ? '20px' : '10px' }}>
-                        <Paper variant="outlined" sx={{ borderColor: "black", padding: matches ? '20px' : '10px', marginBottom: matches ? '10px' : '5px' }}>
-                          <Grid container alignItems="center" justifyContent="space-around">
-                            <Grid item>
-                              <CardMedia
-                                component="img"
-                                image={pdf}
-                                height={50}
-                                width={100}
-                                alt="PDF Icon"
-                              />
-                            </Grid>
-                            <Grid item xs>
-                              <Typography variant='h4'>Chapter-03</Typography>
-                              <Typography variant='h5'>JavaScript Development <FileDownloadOutlinedIcon sx={{ marginBottom: "-5px" }} /></Typography>
-                            </Grid>
-                          </Grid>
-                        </Paper>
-                        <Paper variant="outlined" sx={{ borderColor: "black", padding: matches ? '20px' : '10px' }}>
-                          <Grid container alignItems="center" justifyContent="space-around">
-                            <Grid item>
-                              <CardMedia
-                                component="img"
-                                image={pdf}
-                                height={50}
-                                width={100}
-                                alt="PDF Icon"
-                              />
-                            </Grid>
-                            <Grid item xs>
-                              <Typography variant='h4'>Chapter-03</Typography>
-                              <Typography variant='h5'>JavaScript Development <FileDownloadOutlinedIcon sx={{ marginBottom: "-5px" }} /></Typography>
-                            </Grid>
-                          </Grid>
-                        </Paper>
-                      </Paper>
-                    </Stack>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
       </Grid>
-    </PadPaper>
+      <Box >
+        <Box sx={{ padding: "15px 20px 20px 50px", backgroundColor: "white", border: "1px solid #C3C3C3", borderRadius: "10px" }}>
+          <Grid>
+            <ArrowBackIcon sx={{ marginBottom: "20px" }} />
+            <Box display={'flex'} justifyContent={'space-between'}>
+              <Typography variant="h1" sx={{ paddingBottom: "20px" }}>UX</Typography>
+              <Typography variant="body2" sx={{ color: '#979797', fontFamily: 'Poppins', fontSize: '14px', fontStyle: 'italic', fontWeight: 500, lineHeight: '22px' }}>
+                Held on: 23 April 2024
+              </Typography>
+            </Box>
+            <Typography variant="h1" sx={{ paddingBottom: "10px", color: 'var(--Gray-600, #6C757D)', fontFamily: 'Poppins', fontSize: '20px', fontWeight: 500, lineHeight: '32px' }}>UX Class 13022024</Typography>
+            <Typography variant="h1" sx={{ paddingBottom: '40px', color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 400, lineHeight: '16px' }}>
+              User experience (UX) is the overall experience a user has when interacting with a product or service. UX design is the process of creating products that provide meaningful experiences for users.
+            </Typography>
+          </Grid>
+          <Box sx={{ display: "flex", justifyContent: "space-between", gap: "30px" }}>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Typography variant="h1" sx={{ paddingBottom: "10px", color: 'var(--Gray-600, #6C757D)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 400, lineHeight: '16px' }}>Course</Typography>
+              <Typography variant="h1" sx={{ paddingBottom: '40px', color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: 500, lineHeight: '24px' }}>Advanced Certification in UI UX Design</Typography>
+            </Box>
+            <Box sx={{ display: "flex" }}>
+              <Box sx={{ marginRight: '10px', marginLeft: '-120px' }}>
+                <Typography variant="h1" sx={{ paddingBottom: "10px", color: 'var(--Gray-500, #ADB5BD)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 600, lineHeight: '16px' }}>Batch</Typography>
+                <Typography variant="h1" sx={{ paddingBottom: '40px', color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: 500, lineHeight: '24px' }}>#3022024</Typography>
+              </Box>
+              <Box sx={{ marginRight: '10px', marginLeft: '10px' }}>
+                <Typography variant="h1" sx={{ paddingBottom: "10px", color: 'var(--Gray-500, #ADB5BD)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 600, lineHeight: '16px' }}>Batch Name</Typography>
+                <Typography variant="h1" sx={{ paddingBottom: '40px', color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: 500, lineHeight: '24px' }}>UX Design team</Typography>
+              </Box>
+              <Box sx={{ marginRight: '10px', marginLeft: '10px' }}>
+                <Typography variant="h1" sx={{ paddingBottom: "10px", color: 'var(--Gray-500, #ADB5BD)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 600, lineHeight: '16px' }}>Duration</Typography>
+                <Typography variant="h1" sx={{ paddingBottom: '40px', color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: 500, lineHeight: '24px' }}>1 : 24 : 36</Typography>
+              </Box>
+            </Box>
+            <Box sx={{ display: "flex" }}>
+              <Box sx={{ marginRight: '10px', marginLeft: '-120px' }}>
+                <Typography variant="h1" sx={{ paddingBottom: "10px", color: 'var(--Gray-500, #ADB5BD)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 600, lineHeight: '16px' }}>Date</Typography>
+                <Typography variant="h1" sx={{ paddingBottom: '40px', color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: 500, lineHeight: '24px' }}>#13 Feb 2024</Typography>
+              </Box>
+              <Box sx={{ marginRight: '10px', marginLeft: '10px' }}>
+                <Typography variant="h1" sx={{ paddingBottom: "10px", color: 'var(--Gray-500, #ADB5BD)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 600, lineHeight: '16px' }}>Start At</Typography>
+                <Typography variant="h1" sx={{ paddingBottom: '40px', color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: 500, lineHeight: '24px' }}>10 : 30 AM</Typography>
+              </Box>
+              <Box sx={{ marginRight: '10px', marginLeft: '10px', gap: "40px" }}>
+                <Typography variant="h1" sx={{ paddingBottom: "10px", color: 'var(--Gray-500, #ADB5BD)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 600, lineHeight: '16px' }}>End At</Typography>
+                <Typography variant="h1" sx={{ paddingBottom: '40px', color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontSize: '16px', fontWeight: 500, lineHeight: '24px' }}>11 : 30 AM</Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Typography variant="h1" sx={{ paddingBottom: "10px", color: 'var(--Gray-500, #ADB5BD)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 600, lineHeight: '16px' }}>Instructors</Typography>
+              <AvatarGroup max={4} total={24}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.png" />
+                <Avatar alt="Travis Howard" src="/static/images/avatar/2.png" />
+                <Avatar alt="Agnes Walker" src="/static/images/avatar/3.png" />
+                <Avatar alt="Trevor Henderson" src="/static/images/avatar/4.png" />
+                <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.png" />
+                <Avatar alt="Trevor Henderson" src="/static/images/avatar/6.png" />
+              </AvatarGroup>
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                Jerome Bell and 5 more
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Typography variant="h1" sx={{ paddingBottom: "10px", color: '#ADB5BD', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 600, lineHeight: '16px' }}>Coordinator</Typography>
+              <AvatarGroup max={4} total={24}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.png" />
+                <Avatar alt="Travis Howard" src="/static/images/avatar/2.png" />
+                <Avatar alt="Agnes Walker" src="/static/images/avatar/3.png" />
+                <Avatar alt="Trevor Henderson" src="/static/images/avatar/4.png" />
+                <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.png" />
+                <Avatar alt="Trevor Henderson" src="/static/images/avatar/6.png" />
+              </AvatarGroup>
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                Jerome Bell and 5 more
+              </Typography>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: '20px' }}>
+              <Typography variant="h1" sx={{ paddingBottom: "10px", color: 'var(--Gray-500, #ADB5BD)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 600, lineHeight: '16px' }}>Students</Typography>
+              <AvatarGroup max={4} total={24}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.png" />
+                <Avatar alt="Travis Howard" src="/static/images/avatar/2.png" />
+                <Avatar alt="Agnes Walker" src="/static/images/avatar/3.png" />
+                <Avatar alt="Trevor Henderson" src="/static/images/avatar/4.png" />
+                <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.png" />
+                <Avatar alt="Trevor Henderson" src="/static/images/avatar/6.png" />
+              </AvatarGroup>
+              <Typography variant="body2" sx={{ mt: 1 }}>
+                Jerome Bell and 5 more
+              </Typography>
+            </Box>
+          </Box>
+
+          <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", gap: '20px' }}>
+            <Typography variant="h1" sx={{ paddingBottom: "10px", color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 600, lineHeight: '14px' }}>Study Materials</Typography>
+            <Box sx={{ display: "flex", gap: "10px" }}>
+              {studyMaterials.map((material, index) => (
+                <Box key={index} sx={{ display: "flex", ml: "10px", border: "1px solid #ccc", borderRadius: "5px" }}>
+                  <Box>
+                    <StudyMaterialIcon />
+                  </Box>
+                  <Box>
+                    <Typography variant="body1" sx={{ width: '86.316px', height: '24px', flexShrink: 0, color: '#000', textAlign: 'justify', fontFamily: 'Lato', fontSize: '16px', fontWeight: '700', lineHeight: 'normal' }}>
+                      {material.title}
+                    </Typography>
+                    <Typography variant="body2" sx={{ width: '186px', height: '18px', flexShrink: 0, color: '#000', textAlign: 'justify', fontFamily: 'Lato', fontSize: '12px', fontWeight: '300', lineHeight: 'normal' }}>
+                      {material.description}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ marginLeft: "auto" }}>
+                    <IconButton>
+                      <DownloadIcon />
+                    </IconButton>
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+
+        </Box>
+      </Box>
+
+    </StudentClassLayout>
   );
 }

@@ -3,14 +3,14 @@ import CourseDetails from "../courseDetails"
 import CourseChapters from "../courseChapter"
 
 
-const About = () => {
+const About = ({Course}) => {
     return(
         <Grid xs={12} container sx={{ padding: "40px"}} >
             <Grid item xs={6}>
-              <CourseDetails />
+              <CourseDetails Course={Course} />
             </Grid>
             <Grid xs={6} >
-              <CourseChapters />
+              <CourseChapters Chapters={Course?.coursemodules} />
             </Grid>
         </Grid>
     )

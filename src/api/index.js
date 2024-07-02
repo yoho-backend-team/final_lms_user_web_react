@@ -14,6 +14,18 @@ class Client {
     attendance: {
       get: (params) => httpClient.get(`${HTTP_END_POINTS.Instructor.attendance.get}${params.userId}`),
     },
+    course : {
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.course.get,params)
+    },
+    class : {
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.class.get,params)
+    },
+    community : {
+      get : () => httpClient.get(HTTP_END_POINTS.Instructor.community.get)
+    },
+    payment : {
+      get : () => httpClient.get(HTTP_END_POINTS.Instructor.payments.getSalaries)
+    }
   };
 }
 

@@ -1,6 +1,5 @@
-import * as React from "react";
+import React, {useEffect} from "react";
 import AppBar from "@mui/material/AppBar";
-// import List from "@mui/material";
 import {
   Box,
   List,
@@ -14,62 +13,49 @@ import {
   Badge,
   MenuItem,
   Drawer,
-  //   Divider,
   Menu,
-  //   List,
-  //   ListItem,
-  //   ListItemButton,
-  //   ListItemText,
   Grid,
   Avatar,
-  //   List,
+  Button,
+  Typography,
 } from "@mui/material";
-import logo from "assets/images/logo.png";
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import { Menu as MenuIcon } from "@mui/icons-material";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import { Button, Typography } from "@mui/material";
-// import ListItemIcon from "@mui/material/ListItemIcon";
-import { Ballot, Diversity1, Home, Person } from "@mui/icons-material";
+import {
+  NotificationsOutlined as NotificationsOutlinedIcon,
+  AccountCircle,
+  Mail as MailIcon,
+  Notifications as NotificationsIcon,
+  Ballot,
+  Diversity1,
+  Home,
+  Person,
+} from "@mui/icons-material";
 import { useTheme } from "@emotion/react";
-import StudentNavLinks from "./StudentNavLinks";
+import logo from "assets/images/logo.png";
 import InstructorNavLinks from "./InstructorNavLinks";
-import { checkUser } from "store/atoms/authorized-atom";
-// import { colorModeContext, tokens } from "../../assets/Styles/theme";
+import { checkUser, getInstructorDetails } from "store/atoms/authorized-atom";
+import { useTabResponsive } from "utils/tabResponsive";
+import { getImageUrl } from "utils/common/imageUtlils";
 
 export default function InstructorNavBar() {
   const theme = useTheme();
-
-  //   const colors = tokens(theme.palette.mode);
-  //   const colorMode = React.useContext(colorModeContext);
-
-  const [open, setOpen] = React.useState(false);
+  const { tabView } = useTabResponsive();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const [instructor,setInstructor] = React.useState(checkUser().userDetails)
+  const [instructor, setInstructor] = React.useState(checkUser().userDetails);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
+  useEffect(()=>{
+  const user = getInstructorDetails()
+  setInstructor(user)
+  },[])
+  console.log(instructor,'instructor')
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -97,126 +83,8 @@ export default function InstructorNavBar() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem >Log Out</MenuItem>
+      <MenuItem>Log Out</MenuItem>
     </Menu>
-  );
-
-  const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      sx={{
-        "& .MuiPaper-root.MuiPopover-paper.MuiMenu-paper": {
-          borderRadius: 5,
-          boxShadow: "none",
-          backgroundColor: theme.palette.primary.main,
-          color: "whitesmoke",
-        },
-      }}
-      // sx={{
-      //   "&.MuiPopover-paper .MuiPaper-root .MuiMenu-paper": {
-      //     backgroundColor: "yellow !important",
-      //   },
-      // }}
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-      <MenuItem>
-       <p>Log Out</p>
-      </MenuItem>
-    </Menu>
-  );
-
-
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
-  const DrawerList = (
-    <Box>
-      <Box sx={{ mt: 1, p: 2 }}>
-        <img src={logo} height={100} />
-      </Box>
-      <Box role="presentation" onClick={toggleDrawer(false)} p={1}>
-        <List>
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>
-                <Home />
-              </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>
-                <Ballot />
-              </ListItemIcon>
-
-              <ListItemText primary="Products" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>
-                <Person />
-              </ListItemIcon>
-              <ListItemText primary="Contact" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>
-                <Diversity1 />
-              </ListItemIcon>
-              <ListItemText primary="About" />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Divider />
-      </Box>
-    </Box>
   );
 
   return (
@@ -230,132 +98,62 @@ export default function InstructorNavBar() {
         }}
       >
         <Toolbar>
-          <Grid
-            container
-            sx={{
-              display: { xs: "flex", md: "none", alignItems: "center" },
-            }}
-          >
-            <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="open drawer"
-                onClick={toggleDrawer(true)}
-              >
-                <MenuIcon sx={{ color: theme.palette.primary.main }} />
-              </IconButton>
-              <Box sx={{ display: { xs: "none", md: "block" } }}>
-                <img src={logo} alt="logo" height={10} />
+          <Grid container alignItems="center" sx={{ flexWrap: tabView ?"nowrap" : "wrap"}}>
+            <Grid item xs={4} md={4} sx={{ display: "flex", alignItems: "center" }}>
+              <Box sx={{ display: { xs: "flex", md: "flex" }, justifyContent:  "start"  }}>
+                <img src={logo} alt="logo" height={40} />
               </Box>
             </Grid>
-            <Grid xs={8} sx={{ display: "flex", justifyContent: "end" }}>
-              <IconButton
-                size="large"
-                aria-label="show more"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon sx={{ color: theme.palette.primary.main }} />
-              </IconButton>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            alignItems="center"
-            sx={{ display: { sm: "flex", xs: "none" } }}
-          >
-            <Grid item md={4}>
-              {" "}
-              <Box
-                variant="h5"
-                component="div"
-                sx={{ display: { xs: "none", sm: "block" } }}
-              >
-                <img src={logo} alt="logo" height={70} />
-              </Box>
-            </Grid>
-
             <InstructorNavLinks />
-            <Grid item md={4} sx={{ justifyContent: "end", display: {xs: "none", md: "flex"} }}>
-              {" "}
-              <Box>
-                <IconButton size="sm" sx={{ color: "white", P: 0 }}>
-                  <Badge badgeContent={17} color="error">
-                    <NotificationsOutlinedIcon
-                      sx={{ color: theme.palette.dark.main }}
-                    />
-                  </Badge>
-                </IconButton>
-                <Button
-                  sx={{
-                    background: "none",
-                    boxShadow: "none",
-                    color: "white",
-                    textTransform: "none",
-                    gap: 1,
-                  }}
-                  size="medium"
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={menuId}
-                  aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
-                  disableRipple
-                >
-                  <Avatar src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" />
-                  <Box>
-                    <Box>
-                      <Typography
-                        sx={{
-                          fontSize: 17,
-                          fontFamily: "poppins",
-                          fontWeight: "600",
-                          display: {
-                            xs: "none",
-                            sm: "none",
-                            md: "none",
-                            lg: "block",
-                          },
-                        }}
-                      >
-                        {instructor?.full_name}
-                      </Typography>
-                    </Box>
-                    <Box>
-                      {" "}
-                      <Box>
-                        <Typography
-                          sx={{
-                            display: {
-                              xs: "none",
-                              sm: "none",
-                              md: "none",
-                              lg: "block",
-                            },
-                          }}
-                        >
-                          {"(you)"} ID: {instructor?.id}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Button>
-              </Box>
+            <Grid item xs={8} md={4} sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <IconButton size="large" sx={{ color: "white" }}>
+                <Badge badgeContent={17} color="error">
+                  <NotificationsOutlinedIcon sx={{ color: theme.palette.dark.main }} />
+                </Badge>
+              </IconButton>
+              <Button
+                sx={{
+                  background: "none",
+                  boxShadow: "none",
+                  color: "white",
+                  textTransform: "none",
+                  gap: tabView ? 0 : 1,
+                  padding : tabView && "0px",
+                }}
+                size="medium"
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                disableRipple
+              >
+                <Avatar src={getImageUrl(instructor?.image)} />
+                <Box>
+                  <Typography
+                    sx={{
+                      fontSize: 17,
+                      fontFamily: "Poppins",
+                      fontWeight: 600,
+                      display: { xs: "none", lg: "block" },
+                    }}
+                  >
+                    {instructor?.full_name}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      display: { xs: "none", lg: "block" },
+                    }}
+                  >
+                    (you) ID: {instructor?.id}
+                  </Typography>
+                </Box>
+              </Button>
             </Grid>
           </Grid>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
       {renderMenu}
-      <div>
-        <Drawer open={open} onClose={toggleDrawer(false)}>
-          {DrawerList}
-        </Drawer>
-      </div>
     </Box>
   );
 }

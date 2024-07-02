@@ -13,6 +13,7 @@ const ClassLayout = ({ children }) => {
         width: '100vw',
         height: '100vh',
         padding: 4,
+        overflow : "auto"
       }}
     >
       {children}

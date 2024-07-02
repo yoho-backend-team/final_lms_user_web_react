@@ -5,6 +5,7 @@ import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import TimeIcon from '../icons/TimeIcon';
 import DurationIcon from "../icons/DurationIcon";
 import { Link, useNavigate } from 'react-router-dom';
+import {formatDate,formatTime} from "../../../../../utils/formatDate"
 
 const ClassCard = ({ cls,style }) => {
   const navigate = useNavigate()
@@ -17,10 +18,10 @@ const ClassCard = ({ cls,style }) => {
         <Grid item xs={3}>
           <Box>
             <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-              {cls.title}
+              {cls?.class_name}
             </Typography>
             <Typography variant="body2" sx={{ color: 'gray' }}>
-              {cls.subject}
+              {cls?.course?.course_name}
             </Typography>
           </Box>
         </Grid>
@@ -29,7 +30,7 @@ const ClassCard = ({ cls,style }) => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <CalendarTodayOutlinedIcon color={style.calendarColor} />
             <Typography variant="body2" sx={{color:"gray"}} >
-              {cls.date}
+              {formatDate(cls.start_date)}
             </Typography>
           </Box>
         </Grid>
@@ -38,7 +39,7 @@ const ClassCard = ({ cls,style }) => {
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
             <AccessTimeOutlinedIcon color={style.timerColor} />
             <Typography variant="body2" sx={{color:"gray"}} >
-              {cls.time}
+              {formatTime(cls.start_time)}
             </Typography>
           </Box>
         </Grid>
@@ -46,13 +47,13 @@ const ClassCard = ({ cls,style }) => {
         <Grid item xs={2} sx={{ display: 'flex', alignItems: 'center', color: 'gray', justifyContent: 'center' }} >
           <Box sx={{backgroundColor:style.durationColor,borderRadius:"26px"}}>
             <Typography variant="body2" sx={{ ml: 1,color:style?.durationTextColor,px:"16px",py:"8px",fontWeight:600,lineHeight:"22px",fontSize:"14px"}}>
-              {cls.duration}
+              {cls.duration ? cls.duration : "45 Min"}
             </Typography>
           </Box>
         </Grid>
 
         <Grid item xs={3} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Button componet={Link} href={"/instructor/class/"+cls.id} to={"/instructor/class/"+cls.id} variant="contained" sx={{ backgroundColor: '#5611B1', color: 'white' }}>
+          <Button componet={Link} href={"/instructor/class/"+cls.uuid} to={"/instructor/class/"+cls.id} variant="contained" sx={{ backgroundColor: '#5611B1', color: 'white' }}>
             View Class
           </Button>
         </Grid>
