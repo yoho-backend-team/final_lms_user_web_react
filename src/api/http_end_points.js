@@ -46,6 +46,7 @@ const generateEndpoints = () => {
   const institutestudent = instituteIdStudent();
   const branchstudent = branchIdStudent();
 
+  
   return {
     Student: {
       auth: {
@@ -57,6 +58,16 @@ const generateEndpoints = () => {
       },
       
     },
+    common : {
+       file : {
+        upload : "/upload/"
+       }
+    },
+    common : {
+       file : {
+        upload : "/upload/"
+       }
+    },
     Instructor: {
       auth: {
         login: "/institutes/auth/teaching-staff/login",
@@ -64,19 +75,26 @@ const generateEndpoints = () => {
         log_out: "/institutes/auth/teaching-staff/logout"
       },
       attendance: {
-        get: "/institutes/attendance/staff/"
+        get: "/institutes/attendance/staff/",
+        class_attendance : "/institutes/attedance/class/"
       },
       course: {
-        get: `/institutes/${institute}/branches/${branch}/course/${course}`
+        get: `/institutes/${institute}/branches/${branch}/course/${course}`,
       },
       class: {
-        get: `/institutes/class/${course}`
+        get: `/institutes/class/${course}`,
+        getwithId : `/institutes/class/course/`,
+        update : `/institutes/class/`
       },
       community : {
         get : `/institutes/community/course/${course}`
       },
       payments : {
         getSalaries : "/institutes/payments/staff-salary/salary"
+      },
+      ticket : {
+        create : "/institutes/staff/ticket",
+        get : "/institutes/staff/ticket/all",
       }
     }
   };
