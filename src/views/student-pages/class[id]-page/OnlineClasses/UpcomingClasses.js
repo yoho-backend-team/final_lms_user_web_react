@@ -4,9 +4,9 @@ import {
   Grid, 
   Typography, 
   Card, 
-  Button, 
+  Button,
   Avatar, 
-  Box, 
+  Box,
   CardContent, 
   Popover, 
   AvatarGroup, 
@@ -25,16 +25,17 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import back from 'assets/images/pages/background_1.png';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import StudentClassLayout from 'features/student-pages/classes-page/components/layout';
+import { useNavigate } from 'react-router-dom';
 
 
 const breadcrumbs = [
   <Link 
     underline="hover" 
     key="1" 
-    sx={{ 
-      color: '#484848', 
-      fontFamily: 'Poppins', 
-      fontSize: '28px', 
+    sx={{
+      color: '#484848',
+      fontFamily: 'Poppins',
+      fontSize: '28px',
       fontStyle: 'normal', 
       fontWeight: 700, 
       lineHeight: '22px'
@@ -107,7 +108,12 @@ const PadPaper = styled(Paper)(({ theme }) => ({
 
 export default function OnlineUpcomingClasses() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const matches = useMediaQuery('(min-width:600px)');
+
+  const handleBackClick = () => {
+    navigate(-1); // This navigates to the previous page
+  };
 
   return (
     <StudentClassLayout >
@@ -121,7 +127,9 @@ export default function OnlineUpcomingClasses() {
       <Box sx={{ padding: "20px 0px 10px 40px"}} >
         <Box sx={{ padding: "15px 20px 20px 50px", backgroundColor:"white", border:"1px solid #C3C3C3", borderRadius:"10px"}} >
           <Grid>
-            <ArrowBackIcon sx={{mb:"20px"}}/>
+          <ArrowBackIcon sx={{ marginBottom: "20px",zIndex:"1000",cursor:"pointer" }}
+            onClick={handleBackClick} 
+            style={{ cursor: 'pointer' }} />
             <Typography variant="h1" sx={{pb:"20px"}} >UX</Typography>
             <Typography variant="h1" sx={{pb:"10px", color: 'var(--Gray-600, #6C757D)', fontFamily: 'Poppins', fontSize: '20px', fontStyle: 'normal', fontWeight: 500, lineHeight: '32px'}} >UX Class 13022024</Typography>
             <Typography variant="h1" sx={{pb: '40px', color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontSize: '14px', fontStyle: 'normal', fontWeight: 400, lineHeight: '16px'}} >User experience (UX) is the overall experience a user has when interacting with a product or service. UX design is the process of creating products that provide meaningful experiences for users.</Typography>

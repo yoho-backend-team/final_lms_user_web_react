@@ -963,7 +963,7 @@ const Payment = () => {
       </Typography>
       <Button
         component={Link}
-        to='/student/create-ticket'
+        to='/student/pay'
         variant="contained"
         style={{
           width: "212px",

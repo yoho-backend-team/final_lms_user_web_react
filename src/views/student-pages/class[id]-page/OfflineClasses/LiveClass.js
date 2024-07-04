@@ -39,7 +39,7 @@ export default function LiveClasses() {
       href="/material-ui/getting-started/installation/"
       onClick={handleClick}
     >
-      Live Class
+      Upcoming class
     </Link>,
     <Link
       underline="hover"
@@ -64,7 +64,6 @@ export default function LiveClasses() {
     backgroundPosition: "center",
     backgroundSize: "cover"
   }));
-
   return (
     <PadPaper>
       <Grid container spacing={2}>

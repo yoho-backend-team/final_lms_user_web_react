@@ -7,6 +7,7 @@ import InstructorAuthLayout from "layout/InstructorAuthLayout";
 import InstructorLayout from "layout/InstructorLayout";
 import { checkUserLoggedIn,checkUser,getInstructorDetails } from "store/atoms/authorized-atom";
 import { role_to_details } from "lib/constants";
+import Payment from "payment";
 
 // Auth Pages
 const LoginPage = Loadable(lazy(() => import("views/auth-pages/login-page")));
@@ -40,6 +41,7 @@ const StudentOnlineUpcomingClassesView = Loadable(lazy(() => import("features/st
 const StudentOnlineLiveClassesView = Loadable(lazy(() => import("features/student-pages/classes-page/components/Classes/OnlineClasses/LiveClass/LiveClass")));
 const StudentOnlineCompletedClassesView = Loadable(lazy(() => import("features/student-pages/classes-page/components/Classes/OnlineClasses/Completed Classes/CompletedClasses")));
 
+const StudentPayPage = Loadable(lazy(()=> import("features/student-pages/payments-page/components/pay")))
 const StudentProfilePage = Loadable(lazy(() => import("views/student-pages/profile-page")));
 const StudentCreateTicketPage = Loadable(lazy(() => import("views/student-pages/create-ticket-page")));
 const StudentTicketViewPage = Loadable(lazy(() => import("views/student-pages/tickets-page/ticket[id]-page")));
@@ -120,6 +122,7 @@ const ApplicationRoutes = () => {
             <Route path="student/tickets/:id" element={<StudentTicketViewPage />} />
             <Route path="student/profile" element={<StudentProfilePage />} />
             <Route path="student/create-ticket" element={<StudentCreateTicketPage />} />
+            <Route path="student/pay" element={<StudentPayPage />} />
             <Route path="student/OfflineUpcomingClasses" element={<StudentOfflineUpcomingClassesView />} />
             <Route path="student/OfflineLiveClasses" element={<StudentOfflineLiveClassesView />} />
             <Route path="student/OfflineCompletedClasses" element={<StudentOfflineCompletedClassesView />} />

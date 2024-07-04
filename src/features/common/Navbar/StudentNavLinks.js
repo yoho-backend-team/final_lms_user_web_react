@@ -55,7 +55,7 @@ const StudentNavLinks = ({ student }) => {
     useEffect(() => {
         const current = nav_items.find(item => item.to === currentPath);
         if (current) {
-            setSelected(current.id); // Update selected state with current id
+            setSelected(current?.id);
         }
     }, [currentPath, nav_items]);
 
@@ -87,7 +87,7 @@ const StudentNavLinks = ({ student }) => {
             >
                 {nav_items.map((item) => (
                     <Box
-                        key={item.id}
+                        key={item?.id}
                         sx={{
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -98,11 +98,11 @@ const StudentNavLinks = ({ student }) => {
                         component={Link}
                         to={item.to}
                         onClick={() => {
-                            setSelected(item.student.id); // Update selected state on click
+                            setSelected(item.student?.id); // Update selected state on click
                         }}
                     >
                         <Box sx={{ textAlign: 'center', pt: 5 }}>
-                            <Icon icon={item.icon} color={selected === item.id ? '#0D6EFD' : '#6C757D'} />
+                            <Icon icon={item.icon} color={selected === item?.id ? '#0D6EFD' : '#6C757D'} />
                         </Box>
                         <Typography
                             variant='h5'
@@ -110,7 +110,7 @@ const StudentNavLinks = ({ student }) => {
                                 textDecoration: "none",
                                 textAlign: 'center',
                                 fontWeight: '500',
-                                color: selected === item.id ? '#0D6EFD' : '#6C757D',
+                                color: selected === item?.id ? '#0D6EFD' : '#6C757D',
                                 fontSize: '14px',
                                 fontFamily: "poppins",
                                 lineHeight: '22px'
@@ -118,7 +118,7 @@ const StudentNavLinks = ({ student }) => {
                         >
                             {item.name}
                         </Typography>
-                        {item.id === selected && (
+                        {item?.id === selected && (
                             <img src={nav_selected_image} style={{ marginTop: -34, height: 50 }} alt="nav selected" />
                         )}
                     </Box>

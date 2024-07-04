@@ -196,16 +196,16 @@ const Main = () => {
             {classType === "Online" && (
               <>
                 <TabPanel value="1">
-                  <StudentOnlineUpcoming/>
+                  <StudentOnlineUpcoming classType={"online"} />
                 </TabPanel>
                 <TabPanel value="2">
-                  <StudentOnlineCompletedClass />
+                  <StudentOnlineCompletedClass classType={"online"} />
                 </TabPanel>
                 <TabPanel value="3">
-                  <StudentOnlineClassHistory />
+                  <StudentOnlineClassHistory classType={"online"} />
                 </TabPanel>
                 <TabPanel value="4">
-                  <StudentOnlineLiveClasses />
+                  <StudentOnlineLiveClasses classType={"online"} />
                 </TabPanel>
               </>
             )}

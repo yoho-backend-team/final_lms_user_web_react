@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const CourseSlice = createSlice({
-    name : "instructorCourse",
+
+const ClassesSlice = createSlice({
+    name : "instructorClasses",
     initialState : {
         data : [],
         loading : true
     },
     reducers : {
-        setCourse : (state,action) => {
+        setClasses : (state,action) => {
             state.data = action.payload
         },
         setLoading : (state,action) => {
@@ -16,5 +17,5 @@ const CourseSlice = createSlice({
     }
 })
 
-export const { setCourse,setLoading } = CourseSlice.actions
-export default CourseSlice.reducer
+export const { setClasses,setLoading } = ClassesSlice.actions
+export default ClassesSlice.reducer

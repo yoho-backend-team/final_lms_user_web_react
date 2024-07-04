@@ -4,48 +4,26 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Link } from "react-router-dom";
+import { getAllClasses } from "../../redux/thunks";
+import { formatTime,formatDate } from "../../../../../../../utils/formatDate"
+import { useDispatch,useSelector } from "react-redux";
+import { selectClasses } from "../../redux/selectors";
 
-// Mock API call
-const fetchLiveClasses = async () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([
-        {
-          id: 1,
-          title: "Basics of User Experience",
-          subtitle: "UX Design",
-          date: "14 Feb 2024",
-          startTime: "10:30AM",
-          duration: "1hr 5 min",
-        },
-        {
-          id: 2,
-          title: "Advanced User Experience",
-          subtitle: "UX Design",
-          date: "15 Mar 2024",
-          startTime: "12:00PM",
-          duration: "1hr 30 min",
-        },
-        {
-          id: 3,
-          title: "Intermediate User Experience",
-          subtitle: "UX Design",
-          date: "16 Apr 2024",
-          startTime: "11:00AM",
-          duration: "1hr",
-        },
-      ]);
-    }, 1000);
-  });
-};
 
-function StudentOnlineLiveClasses() {
+function StudentOnlineLiveClasses({classType}) {
   const [liveClasses, setLiveClasses] = useState([]);
   const matches = useMediaQuery("(min-width:600px)");
+  const dispatch = useDispatch()
+  const classes = useSelector(selectClasses)
+  console.log(classes)
+  
+  
+  useEffect( () => {
+    const data = { userType:classType }
+     dispatch(getAllClasses(data))
+  }, [dispatch]);
 
-  useEffect(() => {
-    fetchLiveClasses().then(setLiveClasses);
-  }, []);
+
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -56,8 +34,8 @@ function StudentOnlineLiveClasses() {
 
   return (
     <>
-      {liveClasses.map((item) => (
-        <Grid item xs={12} key={item.id} sx={{ marginTop: 2 }}>
+      {classes.map((item) => (
+        <Grid item xs={12} key={item?.id} sx={{ marginTop: 2 }}>
           <Item>
             <Box
               sx={{
@@ -80,7 +58,7 @@ function StudentOnlineLiveClasses() {
                     lineHeight: '22px',
                   }}
                 >
-                  {item.title}
+                  {item?.course?.course_name}
                 </Typography>
                 <Typography
                   variant="subtitle2"
@@ -93,7 +71,7 @@ function StudentOnlineLiveClasses() {
                     lineHeight: '16px',
                   }}
                 >
-                  {item.subtitle}
+                  {item?.class_name}
                 </Typography>
               </Box>
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
@@ -108,7 +86,7 @@ function StudentOnlineLiveClasses() {
                     lineHeight: '22px',
                   }}
                 >
-                  <CalendarTodayIcon style={{ marginBottom: "-5px" }} /> {item.date}
+                  <CalendarTodayIcon style={{ marginBottom: "-5px" }} /> {formatDate(item?.start_date)}
                 </Typography>
               </Box>
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
@@ -123,7 +101,7 @@ function StudentOnlineLiveClasses() {
                     lineHeight: '22px',
                   }}
                 >
-                  <AccessTimeIcon style={{ marginBottom: "-5px" }} /> Start at: {item.startTime}
+                  <AccessTimeIcon style={{ marginBottom: "-5px" }} /> Start at: {formatTime(item?.start_time)}
                 </Typography>
               </Box>
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
@@ -136,11 +114,11 @@ function StudentOnlineLiveClasses() {
                     fontStyle: 'normal',
                     fontWeight: 600,
                     lineHeight: '22px',
-                    borderradius: '26px',
+                    borderRadius: '26px',
                     background: 'rgba(61, 139, 253, 0.22)',
                   }}
                 >
-                  {item.duration}
+                  {item?.course?.duration}
                 </Typography>
               </Box>
               <Box>
@@ -153,7 +131,7 @@ function StudentOnlineLiveClasses() {
                     fontStyle: 'normal',
                     fontWeight: 500,
                     lineHeight: '22px',
-                    borderradius: '24px',
+                    borderRadius: '24px',
                     background: '#FFF',
                     display: 'flex',
                     width: '113px',
