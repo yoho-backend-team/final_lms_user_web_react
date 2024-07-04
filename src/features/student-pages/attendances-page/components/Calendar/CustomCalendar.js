@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import React, { useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -21,8 +20,6 @@ import {
 import design from "../../../../../assets/images/icons/studentattendance.png"
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import client from "../../../../../api/index"
-import { getStudentBranchDetails, getStudentInstituteDetails } from 'store/atoms/authorized-atom';
 import client from "../../../../../api/index"
 import { getStudentBranchDetails, getStudentInstituteDetails } from 'store/atoms/authorized-atom';
 
@@ -66,7 +63,7 @@ function StudentAttendance() {
     const status = event.target.value;
     setGlobalAttendance(status);
 
-    const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedMonth );
+    const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedCalenderMonth );
     const newAttendance = {};
     for (let i = 1; i <= daysInMonth; i++) {
       newAttendance[i] = status;
@@ -127,7 +124,6 @@ function StudentAttendance() {
                   gap: '8.765px',
                   flexShrink: 0
                 }}            
-                }}            
               >
                 {attendanceStatus}
               </Button>
@@ -139,20 +135,6 @@ function StudentAttendance() {
 
     return days;
   };
-
-
-  useEffect(()=>{
-  const getAttedance = async () => {
-   
-   const institute = getStudentInstituteDetails()
-   const branch = getStudentBranchDetails()
-   const data = { institute: institute,branch:branch}
-   const response = client.Student.attendance(data)
-   console.log(response,"response")
-  }
-  getAttedance()
-  },[])
-
 
 
   useEffect(()=>{
