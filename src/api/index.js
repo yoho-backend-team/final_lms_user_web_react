@@ -5,16 +5,13 @@ class Client {
   Student = {
     login: (data) => httpClient.post(HTTP_END_POINTS.Student.auth.login, data),
     verifyOtp : (data) => httpClient.post(HTTP_END_POINTS.Student.auth.verify_otp,data),
-<<<<<<< HEAD
     course : {
       get : (params) => httpClient.get(HTTP_END_POINTS.Student.course.get,params)
     },
     class : {
       get : (params) => httpClient.get(HTTP_END_POINTS.Student.class.get,params)
     },
-=======
     attendance : (params) => httpClient.get(HTTP_END_POINTS.Student.attendance,params)
->>>>>>> eba8bb5e155608da69af8dc6ec287615bdc19852
   };
 
   common = {

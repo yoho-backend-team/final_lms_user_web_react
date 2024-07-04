@@ -1,5 +1,6 @@
 import { instructorDetails , Student } from "lib/constants";
 import Cookies from "js-cookie";
+import { studentDetails } from "lib/constants";
 
 const getUserDetails = () => {
   const user = Cookies.get(instructorDetails);
@@ -78,7 +79,6 @@ const generateEndpoints = () => {
 
   const student = getStudentDetails()
   const studentCourse = studentCourseId()
-  console.log(student,"student")
 
   return {
     Student: {
@@ -95,7 +95,9 @@ const generateEndpoints = () => {
       attendance: {
         get: `/attendance/students/?${institutestudent}/${branchstudent}`
       },
-      
+      community : {
+        get : `/institutes/community/course/${course1}`
+      },
     },
     common : {
        file : {
