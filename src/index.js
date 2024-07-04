@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 
 // third party
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 // project imports
@@ -13,12 +13,14 @@ import './index.css'
 import '../src/assets/scss/style.scss';
 import ErrorBoundary from '../src/components/ErrorBoundary';
 import ToastProvider from '../src/components/ToastProvider';
+import { SpinnerProvider } from 'context/SpinnerProvider';
 
 // ==============================|| REACT DOM RENDER  ||============================== //
 
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 root.render(
+  <SpinnerProvider>
   <Provider store={store}>
     <BrowserRouter>
       <ErrorBoundary>
@@ -28,6 +30,7 @@ root.render(
       </ErrorBoundary>
     </BrowserRouter>
   </Provider>
+  </SpinnerProvider>
 );
 
 // If you want your app to work offline and load faster, you can change
