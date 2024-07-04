@@ -8,6 +8,8 @@ import MuteNotificationModel from './Models/MuteNotification';
 import ReportModel from './Models/ReportDialog';
 import AddWallpaper from './Models/WallPaperModel';
 import MediaModel from './Models/Media';
+import { getImageUrl } from 'utils/common/imageUtlils';
+import { imagePlaceholder, profilePlaceholder } from 'utils/placeholders';
 
 const ChatHeader = ({ currentChat }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -61,19 +63,26 @@ const ChatHeader = ({ currentChat }) => {
     >
       <Grid container alignItems="center" spacing={2}>
         <Grid item>
-          <Avatar sx={{ width: 40, height: 40 }} src={currentChat.image} variant='square' />
+          <Avatar sx={{ width: 40, height: 40 }} src={currentChat?.batch?.course?.image ? getImageUrl(currentChat?.batch?.course?.image):imagePlaceholder} variant='square' />
         </Grid>
         <Grid item>
           <Typography variant="h6" sx={{ fontWeight: 700 }}>
-            {currentChat.batch_name}
+            {currentChat?.batch?.batch_name}
           </Typography>
         </Grid>
       </Grid>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <AvatarGroup max={3}>
-          <Avatar alt="User 1" src={CommunityUser1} />
-          <Avatar alt="User 2" src={CommunityUser2} />
-          <Avatar alt="User 3" src={CommunityUser3} />
+        <AvatarGroup max={3} total={currentChat?.users?.length+currentChat?.admin?.length} >
+          {
+            currentChat?.users?.map((user)=>
+            <Avatar alt={user?.full_name} src={user?.image? getImageUrl(user?.image):profilePlaceholder} />
+            )
+          }
+          {
+            currentChat?.admin?.map((user)=>
+            <Avatar alt={user?.full_name} src={user?.image? getImageUrl(user?.image):profilePlaceholder} />
+            )
+          }
         </AvatarGroup>
         <IconButton>
           <CallIcon />
