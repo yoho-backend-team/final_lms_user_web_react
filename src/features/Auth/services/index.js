@@ -12,7 +12,6 @@ export const useInstructorLogin = () => {
     try {
       const response = await Client.Instructor.login(data);
       const { step, email, token ,user} = response?.data;
-      console.log(response);
 
       if (step === "otp") {
         setLoginStep("otp");
@@ -63,7 +62,6 @@ export const useVerifyOTP = () => {
       try {
       const response = await Client.Student.login(data) 
       const { step, email, token ,user} = response?.data;
-      console.log(response,step,step === "otp");
 
       if (step === "otp") {
         setLoginStep("otp");

@@ -13,7 +13,7 @@ const ClassTabs = ({ tabs, value, handleChange }) => {
         aria-label="secondary tabs example"
       >
         {tabs.map((tab) => (
-          <Tab key={tab.id} label={tab.title} value={tab.id} />
+          <Tab key={tab.id} label={tab.title} value={tab.value} />
         ))}
       </Tabs>
     </Card>

@@ -74,7 +74,6 @@ const ApplicationRoutes = () => {
 
   const RequireAuth = () => {
     const role = getRoleFromPath();
-    console.log(role,"role")
     if (!isLoggedIn(role)) {
       return <Navigate to={`/${role}/login`} replace />;
     }

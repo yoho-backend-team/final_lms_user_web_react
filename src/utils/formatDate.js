@@ -12,3 +12,36 @@ export const formatTime = (iosString) => {
     const format = { hour: "numeric", minute: "numeric", hours12: true}
     return date.toLocaleTimeString('en-US',format)
 }
+
+export const getTimeDifference = (start,end) => {
+    const startTime = new Date(start)
+    const endTime =  new Date(end)
+
+    const diffMs = endTime - startTime
+
+    const diffHours = Math.floor(diffMs/( 1000*60*60))
+    const diffMins = Math.floor((diffMs % (1000*60*60)) / (1000*60))
+    return `${diffHours}:${diffMins} Min`
+}
+
+export const getIsTimeValid = (startDate,startTime) => {
+    const now = new Date();
+
+    const startDateTime = new Date(startDate);
+    const startTimeDate = new Date(startTime);
+
+    const combinedDateTime = new Date(
+        startDateTime.getFullYear(),
+        startDateTime.getMonth(),
+        startDateTime.getDate(),
+        startTimeDate.getHours(),
+        startTimeDate.getMinutes(),
+        startTimeDate.getSeconds()
+    );
+
+    const isToday = now.toDateString() === combinedDateTime.toDateString();
+
+    const isNotInPast = now <= combinedDateTime;
+
+    return isToday && isNotInPast;
+}
