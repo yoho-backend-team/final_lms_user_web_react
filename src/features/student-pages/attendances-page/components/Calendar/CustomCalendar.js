@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -20,6 +20,8 @@ import {
 import design from "../../../../../assets/images/icons/studentattendance.png"
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import client from "../../../../../api/index"
+import { getStudentBranchDetails, getStudentInstituteDetails } from 'store/atoms/authorized-atom';
 
 
 function StudentAttendance() {
@@ -43,17 +45,11 @@ function StudentAttendance() {
     'May', 'June', 'July', 'August',
     'September', 'October', 'November', 'December'
   ];
-
+  
   const attendanceOptions = ['Present', 'Absent'];
 
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
-  };
-
-  const handleAttendanceChange = (day) => {
-    const currentStatus = attendance[day];
-    const newStatus = currentStatus === 'Present' ? 'Absent' : 'Present';
-    setAttendance({ ...attendance, [day]: newStatus });
   };
 
   const handleGlobalAttendanceChange = (event) => {
@@ -113,8 +109,7 @@ function StudentAttendance() {
                   alignItems: 'center',
                   gap: '8.765px',
                   flexShrink: 0
-                }}
-                onClick={() => handleAttendanceChange(i)}
+                }}            
               >
                 {attendanceStatus}
               </Button>
@@ -126,6 +121,20 @@ function StudentAttendance() {
 
     return days;
   };
+
+
+  useEffect(()=>{
+  const getAttedance = async () => {
+   
+   const institute = getStudentInstituteDetails()
+   const branch = getStudentBranchDetails()
+   const data = { institute: institute,branch:branch}
+   const response = client.Student.attendance(data)
+   console.log(response,"response")
+  }
+  getAttedance()
+  },[])
+
 
   return (
     <StyledPaper elevation={3}>
@@ -394,7 +403,7 @@ function StudentAttendance() {
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "center",
-                  alignItems: "center",
+                  alignItems: "center", 
                   padding: "9px 24px",
                   gap: "8px",
                   boxShadow: "0px 6px 34px -8px #0D6EFD",
