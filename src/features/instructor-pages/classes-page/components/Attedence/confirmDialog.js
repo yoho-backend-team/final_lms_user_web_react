@@ -1,6 +1,6 @@
 import { Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText, Button, Stack, Box } from "@mui/material";
 
-const AttendanceConfirmDialog = ({ open, onClose, title }) => {
+const AttendanceConfirmDialog = ({ open, onClose, title, presentCount,absentCount,onSubmit }) => {
     return (
         <Dialog
            
@@ -46,7 +46,7 @@ const AttendanceConfirmDialog = ({ open, onClose, title }) => {
                         Total Present
                     </DialogContentText>
                     <DialogContentText sx={{ color: "#495057", fontSize: "24px", fontWeight: 700, lineHeight: "32px" }} >
-                        42
+                        {presentCount}
                     </DialogContentText>
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: "column", gap: "8px" }} >
@@ -54,7 +54,7 @@ const AttendanceConfirmDialog = ({ open, onClose, title }) => {
                         Total Absent
                     </DialogContentText>
                     <DialogContentText sx={{ color: "#495057", fontSize: "24px", fontWeight: 700, lineHeight: "32px" }} >
-                        05
+                        {absentCount}
                     </DialogContentText>
                 </Box>
             </Box>
@@ -90,6 +90,7 @@ const AttendanceConfirmDialog = ({ open, onClose, title }) => {
                             fontWeight: 500,
                             lineHeight: "22px"
                         }}
+                        onClick={onSubmit}
                     >
                         Save
                     </Button>
