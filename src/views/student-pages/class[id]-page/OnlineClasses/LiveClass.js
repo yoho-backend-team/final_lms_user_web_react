@@ -30,7 +30,7 @@ export default function OnlineLiveClasses() {
       Classes
     </Typography>,
     <Link underline="hover" key="2" color="inherit" href="/" onClick={handleClick}>
-      Online class
+      Offline class
     </Link>,
     <Link
       underline="hover"
@@ -39,7 +39,7 @@ export default function OnlineLiveClasses() {
       href="/material-ui/getting-started/installation/"
       onClick={handleClick}
     >
-      Live Class
+      Upcoming class
     </Link>,
     <Link
       underline="hover"
@@ -64,7 +64,6 @@ export default function OnlineLiveClasses() {
     backgroundPosition: "center",
     backgroundSize: "cover"
   }));
-
   return (
     <PadPaper>
       <Grid container spacing={2}>

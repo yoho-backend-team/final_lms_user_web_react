@@ -9,6 +9,8 @@ import StudyMaterialIcon from 'assets/icons/study-material-icon';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import back from 'assets/images/pages/background_1.png';
 import StudentClassLayout from 'features/student-pages/classes-page/components/layout';
+import { useNavigate } from 'react-router-dom';
+
 
 const breadcrumbs = [
   <Link key="1" sx={{ color: '#484848', fontFamily: 'Poppins', fontSize: '28px', fontWeight: 700, lineHeight: '22px' }} color="inherit" href="/">
@@ -38,10 +40,16 @@ const PadPaper = styled(Paper)(({ theme }) => ({
   backgroundSize: "cover"
 }));
 
+
 export default function OnlineUpcomingClasses() {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const matches = useMediaQuery('(min-width:600px)');
 
+  const handleBackClick = () => {
+    navigate(-1); // This navigates to the previous page
+  };
   return (
     <StudentClassLayout >
       <Grid container spacing={2} sx={{ paddingLeft:"44px",paddingBottom:"35px"}} >
@@ -54,7 +62,9 @@ export default function OnlineUpcomingClasses() {
       <Box >
         <Box sx={{ padding: "15px 20px 20px 50px", backgroundColor: "white", border: "1px solid #C3C3C3", borderRadius: "10px" }}>
           <Grid>
-            <ArrowBackIcon sx={{ marginBottom: "20px" }} />
+            <ArrowBackIcon sx={{ marginBottom: "20px",zIndex:"1000",cursor:"pointer" }}
+            onClick={handleBackClick} 
+            style={{ cursor: 'pointer' }} />
             <Box display={'flex'} justifyContent={'space-between'}>
               <Typography variant="h1" sx={{ paddingBottom: "20px" }}>UX</Typography>
               <Typography variant="body2" sx={{ color: '#979797', fontFamily: 'Poppins', fontSize: '14px', fontStyle: 'italic', fontWeight: 500, lineHeight: '22px' }}>

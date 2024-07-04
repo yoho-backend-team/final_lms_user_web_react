@@ -1,5 +1,5 @@
 import { setLoading,setClasses } from "./slices"
-import { getAllClasses as getClassDetails } from "../services"
+import { getAllClasses as getClassDetails } from "../../../services/index"
 
 export const getAllClasses = (data) => async(dispatch) => {
     try {
@@ -8,7 +8,7 @@ export const getAllClasses = (data) => async(dispatch) => {
     dispatch(setClasses(response))      
     } catch (error) {
       console.log(error)
-      return error 
+      throw new Error(error)
     }finally{
         dispatch(setLoading(false))
     }

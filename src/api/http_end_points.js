@@ -1,4 +1,4 @@
-import { instructorDetails } from "lib/constants";
+import { instructorDetails , Student } from "lib/constants";
 import Cookies from "js-cookie";
 
 const getUserDetails = () => {
@@ -22,17 +22,56 @@ const courseId = () => {
   return userDetails?.userDetail?.course?.[0];
 };
 
+const getStudentDetails = () => {
+  const user = Cookies.get(Student)
+  const userDetail = user ? JSON.parse(user) : user;
+  return userDetail?.userDetails;
+}
+const instituteStudentId = () => {
+  const userDetails = getStudentDetails();
+  return userDetails?.institute_id?._id;
+};
+
+const branchStudentId = () => {
+  const userDetails = getStudentDetails();
+  return userDetails?.branch_id?._id;
+};
+
+const courseStudentId = () => {
+  const userDetails = getStudentDetails();
+  return userDetails?.userDetail?.course;
+};
+const studentCourseId = () => {
+  const user = getStudentDetails()
+  return user?.userDetail?.course
+}
+
 const generateEndpoints = () => {
   const institute = instituteId();
   const branch = branchId();
   const course = courseId();
+  
+  
+    const institute1 = instituteStudentId();
+    const branch1 = branchStudentId();
+    const course1 = courseStudentId();
+
+  const student = getStudentDetails()
+  const studentCourse = studentCourseId()
+  console.log(student,"student")
 
   return {
     Student: {
       auth: {
         login: "/institutes/auth/student/login",
         verify_otp: "/institutes/auth/student/verify-otp"
-      }
+      },
+      course: {
+        get: `/institutes/${institute1}/branches/${branch1}/course/${course1}`
+      },
+      class: {
+        get: `/institutes/class/${studentCourse}`
+      },
     },
     Instructor: {
       auth: {
@@ -56,9 +95,11 @@ const generateEndpoints = () => {
         getSalaries : "/institutes/payments/staff-salary/salary"
       }
     }
-  };
+  }
+  
 };
 
 const HTTP_END_POINTS = generateEndpoints();
+
 
 export default HTTP_END_POINTS;
