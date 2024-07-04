@@ -85,7 +85,6 @@ const Attendance = () => {
       try {
         setLoading(true);
         const user = getInstructorDetails();
-        console.log(user,"user")
         const response = await Client.Instructor.attendance.get({ userId: user.uuid });  
         setAttendance(response?.data);
         setLoading(false);

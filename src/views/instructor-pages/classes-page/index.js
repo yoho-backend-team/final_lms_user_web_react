@@ -13,24 +13,24 @@ import { selectClasses, selectLoading } from 'features/instructor-pages/classes-
 import ClassLoader from 'components/ui/loaders/classLoading';
 
 const ClassesPage = () => {
-  const [value, setValue] = useState('1');
+  const [value, setValue] = useState('upcoming');
   const [classType, setClassType] = useState('online');
   const dispatch = useDispatch();
   const classes = useSelector(selectClasses);
   const loading = useSelector(selectLoading);
 
   const tabs = [
-    { id: '1', title: 'Upcoming Classes' },
-    { id: '2', title: 'Completed Classes' },
-    { id: '3', title: 'Class History' },
-    { id: '4', title: 'Live Class' },
+    { id: '1', title: 'Upcoming Classes', value: "upcoming" },
+    { id: '2', title: 'Completed Classes', value: "completed" },
+    { id: '3', title: 'Class History', value: "history" },
+    { id: '4', title: 'Live Class', value: "live" },
   ];
 
   const renderComponents = {
-    '1': <UpcomingClassList data={classes} />,
-    '2': <CompletedClassList data={classes} />,
-    '3': <ClassHistory data={classes} />,
-    '4': <LiveClassList data={classes} />
+    'upcoming': <UpcomingClassList data={classes} classType={classType} />,
+    'completed': <CompletedClassList data={classes} classType={classType} />,
+    'history': <ClassHistory data={classes} classType={classType} />,
+    'live': <LiveClassList data={classes} classType={classType} />
   };
 
   const classTypes = [
@@ -40,7 +40,7 @@ const ClassesPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = { userType: classType };
+      const data = { userType: classType, classType: value };
       await dispatch(getAllClasses(data));
     };
 
@@ -49,11 +49,13 @@ const ClassesPage = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    const data = { userType: classType, classType: newValue }
+    dispatch(getAllClasses(data))
   };
 
   const handleClassTypeChange = (event) => {
     setClassType(event.target.value);
-    const filter = { userType: event.target.value };
+    const filter = { userType: event.target.value, classType: value };
     dispatch(getAllClasses(filter));
   };
 
@@ -78,7 +80,7 @@ const ClassesPage = () => {
             <Grid item xs={8} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
               <Box sx={{ px: '40px', py: '20px', display: 'flex', flexDirection: 'row', gap: 2 }}>
                 <Typography variant="h6" sx={{ fontSize: '20px', fontWeight: 500, lineHeight: '32px', color: '#495057' }}>
-                  Online Classes
+                  {classType === 'online' ? 'Online Classes' : 'Offline Classes'}
                 </Typography>
                 <img src={OfflineClassIcon} alt="online class" />
               </Box>
