@@ -69,6 +69,7 @@ function StudentOnlineLiveClasses({classType}) {
                     fontStyle: 'normal',
                     fontWeight: 400,
                     lineHeight: '16px',
+                    minWidth:'190px'
                   }}
                 >
                   {item?.class_name}

@@ -55,7 +55,7 @@ const StudentNavLinks = ({ student }) => {
     useEffect(() => {
         const current = nav_items.find(item => item.to === currentPath);
         if (current) {
-            setSelected(current?.id);
+            setSelected(current?.id); // Update selected state with current id
         }
     }, [currentPath, nav_items]);
 
@@ -98,7 +98,7 @@ const StudentNavLinks = ({ student }) => {
                         component={Link}
                         to={item.to}
                         onClick={() => {
-                            setSelected(item.student?.id); // Update selected state on click
+                            setSelected(item?.student?.id); // Update selected state on click
                         }}
                     >
                         <Box sx={{ textAlign: 'center', pt: 5 }}>
