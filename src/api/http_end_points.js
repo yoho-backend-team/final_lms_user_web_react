@@ -1,5 +1,6 @@
 import { instructorDetails , Student } from "lib/constants";
 import Cookies from "js-cookie";
+import { studentDetails } from "lib/constants";
 
 const getUserDetails = () => {
   const user = Cookies.get(instructorDetails);
@@ -14,6 +15,23 @@ const instituteId = () => {
 
 const branchId = () => {
   const userDetails = getUserDetails();
+  return userDetails?.branch_id?.uuid;
+};
+
+
+const getUserDetailsStudent = () => {
+  const user = Cookies.get(studentDetails);
+  const userDetail = user ? JSON.parse(user) : user;
+  return userDetail?.userDetails;
+};
+
+const instituteIdStudent = () => {
+  const userDetails = getUserDetailsStudent();
+  return userDetails?.institute_id?.uuid;
+};
+
+const branchIdStudent = () => {
+  const userDetails = getUserDetailsStudent();
   return userDetails?.branch_id?.uuid;
 };
 
@@ -50,6 +68,9 @@ const generateEndpoints = () => {
   const institute = instituteId();
   const branch = branchId();
   const course = courseId();
+  const institutestudent = instituteIdStudent();
+  const branchstudent = branchIdStudent();
+
   
   
     const institute1 = instituteStudentId();
@@ -58,7 +79,6 @@ const generateEndpoints = () => {
 
   const student = getStudentDetails()
   const studentCourse = studentCourseId()
-  console.log(student,"student")
 
   return {
     Student: {
@@ -72,6 +92,22 @@ const generateEndpoints = () => {
       class: {
         get: `/institutes/class/${studentCourse}`
       },
+      attendance: {
+        get: `/attendance/students/?${institutestudent}/${branchstudent}`
+      },
+      community : {
+        get : `/institutes/community/course/${course1}`
+      },
+    },
+    common : {
+       file : {
+        upload : "/upload/"
+       }
+    },
+    common : {
+       file : {
+        upload : "/upload/"
+       }
     },
     Instructor: {
       auth: {
@@ -80,19 +116,26 @@ const generateEndpoints = () => {
         log_out: "/institutes/auth/teaching-staff/logout"
       },
       attendance: {
-        get: "/institutes/attendance/staff/"
+        get: "/institutes/attendance/staff/",
+        class_attendance : "/institutes/attedance/class/"
       },
       course: {
-        get: `/institutes/${institute}/branches/${branch}/course/${course}`
+        get: `/institutes/${institute}/branches/${branch}/course/${course}`,
       },
       class: {
-        get: `/institutes/class/${course}`
+        get: `/institutes/class/${course}`,
+        getwithId : `/institutes/class/course/`,
+        update : `/institutes/class/`
       },
       community : {
         get : `/institutes/community/course/${course}`
       },
       payments : {
         getSalaries : "/institutes/payments/staff-salary/salary"
+      },
+      ticket : {
+        create : "/institutes/staff/ticket",
+        get : "/institutes/staff/ticket/all",
       }
     }
   }

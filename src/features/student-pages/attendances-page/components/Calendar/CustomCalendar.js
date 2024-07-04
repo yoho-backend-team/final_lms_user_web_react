@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -20,6 +20,8 @@ import {
 import design from "../../../../../assets/images/icons/studentattendance.png"
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import client from "../../../../../api/index"
+import { getStudentBranchDetails, getStudentInstituteDetails } from 'store/atoms/authorized-atom';
 
 
 function StudentAttendance() {
@@ -36,6 +38,8 @@ function StudentAttendance() {
 
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [attendance, setAttendance] = useState({});
+  const [selectedCalenderMonth, setSelectedCalenderMonth] = useState(new Date().getMonth());
+
   const [globalAttendance, setGlobalAttendance] = useState('');
 
   const months = [
@@ -43,24 +47,23 @@ function StudentAttendance() {
     'May', 'June', 'July', 'August',
     'September', 'October', 'November', 'December'
   ];
-
+  
+  
   const attendanceOptions = ['Present', 'Absent'];
 
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
   };
 
-  const handleAttendanceChange = (day) => {
-    const currentStatus = attendance[day];
-    const newStatus = currentStatus === 'Present' ? 'Absent' : 'Present';
-    setAttendance({ ...attendance, [day]: newStatus });
+  const handleCalenderMonthChange = (event) => {
+    setSelectedCalenderMonth(event.target.value);
   };
 
   const handleGlobalAttendanceChange = (event) => {
     const status = event.target.value;
     setGlobalAttendance(status);
 
-    const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedMonth);
+    const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedMonth );
     const newAttendance = {};
     for (let i = 1; i <= daysInMonth; i++) {
       newAttendance[i] = status;
@@ -73,12 +76,12 @@ function StudentAttendance() {
   };
 
   const generateDays = () => {
-    const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedMonth);
+    const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedCalenderMonth );
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     const days = [];
     for (let i = 1; i <= daysInMonth; i++) {
-      const date = new Date(new Date().getFullYear(), selectedMonth, i);
+      const date = new Date(new Date().getFullYear(), selectedCalenderMonth, i);
       const dayOfWeek = daysOfWeek[date.getDay()];
       let attendanceStatus = attendance[i] || 'Absent';
       if (dayOfWeek === 'Sunday') {
@@ -87,13 +90,20 @@ function StudentAttendance() {
       const isHoliday = dayOfWeek === 'Sunday';
 
       days.push(
-        <Grid item xs={isSmallScreen ? 12 : 2.2} key={i}>
-          <Card>
-            <CardContent>
+        <Grid item xs={isSmallScreen ? 12 : 2.4} key={i}>
+      <Card sx={{
+            borderRadius: '8.659px',
+            border: '0.5px solid #CDCDCD',
+            flexShrink: 0,
+            boxShadow:'none'
+
+          }}>
+           <CardContent>
               <Typography
                 sx={{
-                  fontSize: "11px",
+                  fontSize: "11.5px",
                   fontWeight: 400,
+                 fontFeatureSettings: "'clig' off, 'liga' off",
                   color: "black",
                   fontFamily: "Poppins",
                   fontStyle: "normal",
@@ -113,8 +123,7 @@ function StudentAttendance() {
                   alignItems: 'center',
                   gap: '8.765px',
                   flexShrink: 0
-                }}
-                onClick={() => handleAttendanceChange(i)}
+                }}            
               >
                 {attendanceStatus}
               </Button>
@@ -126,6 +135,20 @@ function StudentAttendance() {
 
     return days;
   };
+
+
+  useEffect(()=>{
+  const getAttedance = async () => {
+   
+   const institute = getStudentInstituteDetails()
+   const branch = getStudentBranchDetails()
+   const data = { institute: institute,branch:branch}
+   const response = client.Student.attendance(data)
+   console.log(response,"response")
+  }
+  getAttedance()
+  },[])
+
 
   return (
     <StyledPaper elevation={3}>
@@ -394,7 +417,7 @@ function StudentAttendance() {
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "center",
-                  alignItems: "center",
+                  alignItems: "center", 
                   padding: "9px 24px",
                   gap: "8px",
                   boxShadow: "0px 6px 34px -8px #0D6EFD",
@@ -453,7 +476,7 @@ function StudentAttendance() {
               background: "#FFF",
             }}
           >
-            <Select value={selectedMonth} onChange={handleMonthChange}>
+            <Select value={selectedCalenderMonth} onChange={handleCalenderMonthChange}>
               {months.map((month, index) => (
                 <MenuItem key={index} value={index}>
                   {month}

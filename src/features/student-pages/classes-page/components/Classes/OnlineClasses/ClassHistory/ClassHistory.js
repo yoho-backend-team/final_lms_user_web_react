@@ -213,7 +213,8 @@ function StudentOnlineClassHistory() {
                     fontFamily: 'Poppins',
                     fontSize: '10px',
                     fontWeight: 400,
-                    lineHeight: '16px'
+                    lineHeight: '16px',
+                    minWidth:'220px'
                   }}>
                     {item.subtitle}
                   </Typography>
@@ -229,7 +230,7 @@ function StudentOnlineClassHistory() {
                   </Typography>
                 </Box>
                 <Box sx={{ marginBottom: matches ? 0 : 2 }}>
-                  <Typography variant="body2" sx={{ color: 'var(--Gray-600, #6C757D)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 500, lineHeight: '22px' }}>
+                  <Typography variant="body2" sx={{ color: 'var(--Gray-600, #6C757D)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 500, lineHeight: '22px', minWidth: "140px" }}>
                     <HourglassTopIcon />
                     {item.duration}
                   </Typography>

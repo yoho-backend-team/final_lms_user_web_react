@@ -67,6 +67,7 @@ function StudentOnlineUpcomingClasses({classType}) {
                     fontStyle: 'normal',
                     fontWeight: 600,
                     lineHeight: '22px',
+                    minWidth:'150px'
                     
                   }}
                 >
@@ -81,6 +82,7 @@ function StudentOnlineUpcomingClasses({classType}) {
                     fontStyle: 'normal',
                     fontWeight: 400,
                     lineHeight: '16px',
+                    minWidth:'160px'
                   }}
                 >
                   {item?.class_name}
