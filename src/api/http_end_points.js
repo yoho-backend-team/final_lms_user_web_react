@@ -1,4 +1,4 @@
-import { instructorDetails } from "lib/constants";
+import { instructorDetails, studentDetails } from "lib/constants";
 import Cookies from "js-cookie";
 
 const getUserDetails = () => {
@@ -17,6 +17,23 @@ const branchId = () => {
   return userDetails?.branch_id?.uuid;
 };
 
+
+const getUserDetailsStudent = () => {
+  const user = Cookies.get(studentDetails);
+  const userDetail = user ? JSON.parse(user) : user;
+  return userDetail?.userDetails;
+};
+
+const instituteIdStudent = () => {
+  const userDetails = getUserDetailsStudent();
+  return userDetails?.institute_id?.uuid;
+};
+
+const branchIdStudent = () => {
+  const userDetails = getUserDetailsStudent();
+  return userDetails?.branch_id?.uuid;
+};
+
 const courseId = () => {
   const userDetails = getUserDetails();
   return userDetails?.userDetail?.course?.[0];
@@ -26,13 +43,19 @@ const generateEndpoints = () => {
   const institute = instituteId();
   const branch = branchId();
   const course = courseId();
+  const institutestudent = instituteIdStudent();
+  const branchstudent = branchIdStudent();
 
   return {
     Student: {
       auth: {
         login: "/institutes/auth/student/login",
         verify_otp: "/institutes/auth/student/verify-otp"
-      }
+      },
+      attendance: {
+        get: `/attendance/students/?${institutestudent}/${branchstudent}`
+      },
+      
     },
     Instructor: {
       auth: {

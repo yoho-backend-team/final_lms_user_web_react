@@ -205,7 +205,7 @@ const StudentDashboard = () => {
                 <Typography sx={{ color: "grey" }}>Total Class</Typography>
               </Box>
             </Grid>
-            <Grid
+            <Grid                     
               xs={4}
               sx={{
                 justifyContent: "center",
@@ -281,13 +281,13 @@ const StudentDashboard = () => {
       </Grid>
       <Grid item xs={12} sm={4} className="MainGrid-2">
         <Grid item xs={12} px={3} mb={2}>
-          <CourseCard />
+        <PaymentsCard />
         </Grid>
         <Grid item xs={12} px={3} mb={2}>
-          <AttendanceCard />
+          <CourseCard />
         </Grid>
         <Grid item xs={12} px={3}>
-          <PaymentsCard />
+        <AttendanceCard />          
         </Grid>
       </Grid>
       <Grid item xs={12} sm={4} className="MainGrid-3">
