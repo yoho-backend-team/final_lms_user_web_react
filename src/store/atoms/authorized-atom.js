@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { instructorDetails } from "lib/constants";
+import { instructorDetails, Student } from "lib/constants";
 
 
 export const checkUser = (role) => {
@@ -39,4 +39,19 @@ export const useInstitute = () => {
 export const useBranch = () => {
     const branch = getBranchDetails()
     return branch.uuid
+}
+
+export const getStudentDetails = () => {
+    const user = checkUser(Student)
+    return user?.userDetails
+}
+
+export const getStudentInstituteDetails = () => {
+    const user = getStudentDetails()
+    return user.institute_id
+}
+
+export const getStudentBranchDetails = () => {
+    const user = getStudentDetails()
+    return user?.branch_id
 }

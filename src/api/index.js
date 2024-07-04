@@ -4,7 +4,8 @@ import HTTP_END_POINTS from "./http_end_points";
 class Client {
   Student = {
     login: (data) => httpClient.post(HTTP_END_POINTS.Student.auth.login, data),
-    verifyOtp : (data) => httpClient.post(HTTP_END_POINTS.Student.auth.verify_otp,data)
+    verifyOtp : (data) => httpClient.post(HTTP_END_POINTS.Student.auth.verify_otp,data),
+    attendance : (params) => httpClient.get(HTTP_END_POINTS.Student.attendance,params)
   };
 
   Instructor = {
