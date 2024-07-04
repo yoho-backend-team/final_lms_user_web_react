@@ -3,7 +3,7 @@ import { Box, Typography, Avatar, Grid } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { formatDate, formatTime } from 'utils/formatDate';
 
-const AttendanceHeader = ({setShowAttendance,classDetails}) => {
+const AttendanceHeader = ({setShowAttendance,classDetails,presentCount,absentCount}) => {
   console.log(classDetails,"classDetails")
   return (
     <Box sx={{ backgroundColor: '#5611B1', padding: '20px 40px', borderRadius: '10px', color: 'white', width: '100%',borderBottomLeftRadius:"0px",borderBottomRightRadius:"0px" }}>
@@ -53,11 +53,11 @@ const AttendanceHeader = ({setShowAttendance,classDetails}) => {
             </Typography>
           </Box>
             <Box sx={{ display: "flex", flexDirection: "row-reverse", gap: "10px" }}>
-              <Typography variant="h3" sx={{ fontWeight: 600, fontSize: "40px", lineHeight: "50px", color: "white" }}>43</Typography>
+              <Typography variant="h3" sx={{ fontWeight: 600, fontSize: "40px", lineHeight: "50px", color: "white" }}>{presentCount}</Typography>
               <Typography sx={{ fontWeight: 500, fontSize:"14px", lineHeight: "24px", color: "#B28AE7", width: "53px" }} >No of Present</Typography>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "row-reverse", gap: "10px"  }}>
-              <Typography variant="h3" sx={{ fontWeight: 600, fontSize: "40px", lineHeight: "50px", color: "white" }}>5</Typography>
+              <Typography variant="h3" sx={{ fontWeight: 600, fontSize: "40px", lineHeight: "50px", color: "white" }}>{absentCount}</Typography>
               <Typography sx={{ fontWeight: 500, fontSize:"14px", lineHeight: "24px", color: "#B28AE7", width: "53px" }} >No of Absent</Typography>
             </Box>
       </Box>

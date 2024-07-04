@@ -26,13 +26,18 @@ const generateEndpoints = () => {
   const institute = instituteId();
   const branch = branchId();
   const course = courseId();
-
+  
   return {
     Student: {
       auth: {
         login: "/institutes/auth/student/login",
         verify_otp: "/institutes/auth/student/verify-otp"
       }
+    },
+    common : {
+       file : {
+        upload : "/upload/"
+       }
     },
     Instructor: {
       auth: {
@@ -41,14 +46,16 @@ const generateEndpoints = () => {
         log_out: "/institutes/auth/teaching-staff/logout"
       },
       attendance: {
-        get: "/institutes/attendance/staff/"
+        get: "/institutes/attendance/staff/",
+        class_attendance : "/institutes/attedance/class/"
       },
       course: {
-        get: `/institutes/${institute}/branches/${branch}/course/${course}`
+        get: `/institutes/${institute}/branches/${branch}/course/${course}`,
       },
       class: {
         get: `/institutes/class/${course}`,
-        getwithId : `/institutes/class/course/`
+        getwithId : `/institutes/class/course/`,
+        update : `/institutes/class/`
       },
       community : {
         get : `/institutes/community/course/${course}`

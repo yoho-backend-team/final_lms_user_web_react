@@ -11,11 +11,20 @@ import { ClassStudentViewCard,ClassCoordinatorViewCard,ClassInstructorViewCard }
 import { formatDate, formatTime } from 'utils/formatDate';
 import { profilePlaceholder } from 'utils/placeholders';
 import { getImageUrl } from 'utils/common/imageUtlils';
+import { fileUpload, getFile } from 'features/common/upload';
+import toast from 'react-hot-toast';
+import { updateClassDetails } from '../services';
+import StudyMaterialUpload from './model/studyMaterialUpload';
+import NotesUpload from './model/notesUpload';
+import StudyMaterialIcon from 'assets/icons/study-material-icon';
+import SaveAltOutlinedIcon from '@mui/icons-material/SaveAltOutlined';
+import { useSpinner } from 'context/SpinnerProvider';
 
-const ClassCard = ({type,classDetails}) => {
+const ClassCard = ({type,classDetails,getClass}) => {
   const navigate = useNavigate()
-  const fileInputRef = useRef(null)
   const [showAttendance, setShowAttendance] = useState(false);
+  const { showSpinner,hideSpinner } = useSpinner()
+ 
 
   const handleStartAttendance = () => {
     setShowAttendance(true);
@@ -25,13 +34,72 @@ const ClassCard = ({type,classDetails}) => {
         navigate(-1)
   }
 
-  const handleButtonclick = () => {
-    fileInputRef.current.click()
+  const handleFileChange = async(event,setFieldValue) => {
+    try {
+      showSpinner()
+      const files = event.target.files
+      const formData = new FormData()
+      formData.append('file',files[0])
+      const response = await fileUpload(formData) 
+      setFieldValue('file',response?.file)
+      toast.success("notes upload successfully")
+    } catch (error) {
+      toast.error(error?.response?.data?.message)
+    }finally{
+     hideSpinner() 
+    }
   }
 
-  const handleFileChange = (event) => {
-    const files = event.target.files
+  const updateClass = async (values) => {
+    try {
+      showSpinner()
+      const data ={...values,uuid : classDetails?.uuid,type}
+      const response = await updateClassDetails(data)  
+      toast.success("class updated successfully")
+      getClass()
+    } catch (error) {
+      toast.error(error?.message)
+    }finally{
+      hideSpinner()
+    }
   }
+
+  const handleStudyMaterialUpload = async (event,setFieldValue) => {
+    try {
+      showSpinner()
+      const files = event?.target?.files
+      const data = new FormData()
+      data.append('file',files[0]) 
+      const response = await  fileUpload(data)
+      toast.success("study material upload success fully")
+      setFieldValue("file",response?.file)
+    } catch (error){
+      toast.error(error?.message)
+    }finally{
+      hideSpinner()
+    }
+  }
+
+  const handleDownload = async(item) => {
+    try {
+    showSpinner()
+    const url = getImageUrl(item?.file)
+    const response = await getFile(url)
+    const blob = new Blob([response?.data],{ type: response?.headers['content-type']})
+
+    const link = document.createElement('a')
+    link.href = window.URL.createObjectURL(blob)
+    link.download = item.file?.split("/")[2]
+    link.click()
+    
+    window.URL.revokeObjectURL(link.href)
+    } catch (error) {
+      console.log(error,"error")
+    }finally{
+      hideSpinner()
+    }
+  }
+
 
   return (
     <Box sx={{ paddingTop: "40px",width:"100%", overflow : "auto" }}>
@@ -97,22 +165,31 @@ const ClassCard = ({type,classDetails}) => {
                   </Box>
                 </Box>
                 <Typography sx={{ color: "black", fontSize: "20px", fontWeight: 800, lineHeight: "32px" }}>Session Notes</Typography>
-                <Box sx={{ display: "flex", alignItems: "center", gap: "40px" }}>
+                <Box sx={{ display: "flex",gap: "40px", flexDirection: "column" }}>
+                  <Box>
+                  <Box sx={{ display: "flex",pl : "30px",pt:"36px", gap : "20px", flexDirection:"column", width : "max-content", pb : "20px", justifyContent: "flex-start" }} >
+                     {
+                      classDetails?.notes?.map((item) => 
+                        <Box sx={{ display: "flex", padding : "14px 20px 14px 5px",backgroundColor:"#FFFFFF",border:"1px solid #CCCCCC",borderRadius:"8px",gap:"23px"}} >
+                           <Box>
+                              <StudyMaterialIcon />
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection:"column",gap:"10px",justifyContent:"flex-start",alignItems:"start"}} >
+                               <Typography>{item?.title}</Typography>
+                               <Typography>{item?.description}</Typography>
+                            </Box>
+                            <Box sx={{ display: "flex", justifyContent:"flex-end", flexDirection:"column"}} >
+                               <SaveAltOutlinedIcon sx={{ color : "#8E8383", height:"24px", width:"24px", cursor : "pointer" }} onClick={()=>handleDownload(item)} />
+                            </Box>
+                        </Box>
+                      )
+                     }
+                  </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', flexDirection : "row", alignItems: "center", gap: "33px" }} >
                   <Typography sx={{ color: "black", fontSize: "14px", fontWeight: 400, lineHeight: "16px" }}>Once Class Finished Upload Notes</Typography>
-                  <input
-                  type='file'
-                  ref={fileInputRef}
-                  style={{ display: "none"}}
-                  onChange={handleFileChange}
-                  accept='application/pdf'
-                  />
-                  <Button  
-                  onClick={handleButtonclick}
-                  startIcon={
-                  <FileUploadOutlinedIcon 
-                  sx={{ color: "#5611B1" }} 
-                  />} 
-                  sx={{ border: "2px solid #5611B1", borderRadius: "24px" }}>Notes</Button>
+                  <NotesUpload classDetails={classDetails} handleFileChange={handleFileChange} updateClass={updateClass} />
+                  </Box>
                 </Box>
               </Box>
             </Grid>
@@ -191,9 +268,27 @@ const ClassCard = ({type,classDetails}) => {
               </Box>
               <Box sx={{ mt: 4 }}>
                 <Typography variant="h5" sx={{ fontWeight: 800, mb: 2, color : "#000", fontSize:"20px" }}>Study Materials</Typography>
-               <Box sx={{ display: "flex", justifyContent:"center", flexDirection: "column", textAlign: "center",border:"1px solid #C3C3C3",borderRadius:"10px",boxShadow:"0px 0px 64px 0px rgba(0, 0, 0, 0.14)", minHeight:"200px"}} >
-                <Box>
-                  <Button variant="outlined" color="primary" sx={{ mt: 1 }}>Upload Notes</Button>
+               <Box sx={{ display: "flex", justifyContent:"center", flexDirection: "column", textAlign: "center",border:"1px solid #C3C3C3",borderRadius:"10px",boxShadow:"0px 0px 64px 0px rgba(0, 0, 0, 0.14)", minHeight:"200px",maxHeight:"200px",overflow:"auto"}} >
+                <Box sx={{ overflow: "auto"}} >
+                <Box sx={{ display: "flex",pl : "30px",pt:"36px", gap : "20px", flexDirection:"column", width : "max-content", pb : "20px" }} >
+                     {
+                      classDetails?.study_materials?.map((item) => 
+                        <Box sx={{ display: "flex", padding : "14px 20px 14px 5px",backgroundColor:"#FFFFFF",border:"1px solid #CCCCCC",borderRadius:"8px",gap:"23px"}} >
+                           <Box>
+                              <StudyMaterialIcon />
+                            </Box>
+                            <Box sx={{ display: "flex", flexDirection:"column",gap:"10px",justifyContent:"flex-start",alignItems:"start"}} >
+                               <Typography>{item?.title}</Typography>
+                               <Typography>{item?.description}</Typography>
+                            </Box>
+                            <Box sx={{ display: "flex", justifyContent:"flex-end", flexDirection:"column"}} >
+                               <SaveAltOutlinedIcon sx={{ color : "#8E8383", height:"24px", width:"24px", cursor : "pointer" }} onClick={()=>handleDownload(item)} />
+                            </Box>
+                        </Box>
+                      )
+                     }
+                  </Box>
+                  <StudyMaterialUpload classDetails={classDetails} handleFileChange={handleStudyMaterialUpload} updateClass={updateClass} />
                   <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
                     Once the class is finished, please upload the Study Materials.
                   </Typography>
