@@ -1,5 +1,5 @@
 import axios from "axios"
-import { AUTH_TOKEN_KEY,instructorDetails } from "lib/constants"
+import { AUTH_TOKEN_KEY,instructorDetails, studentDetails } from "lib/constants"
 import Cookies from "js-cookie"
 
 const backendUrl = process.env.REACT_APP_BACK_END_URL
@@ -13,12 +13,21 @@ const Axios = axios.create({
 })
 
 Axios.interceptors.request.use((config)=>{
-    const user = Cookies.get(instructorDetails) 
+    const user = Cookies.get(instructorDetails)
+    const student = Cookies.get(studentDetails) 
     
     const token = user ?  JSON.parse(user)?.token : ''
+    const studentToken = student ? JSON.parse(student)?.token : ''
+
+
     if(token){
       config.headers["Authorization"] = `Token ${token ? token :''}`
     }
+
+    if(studentToken){
+       config.headers['Authorization'] = 'Token'
+    }
+
     return config
 })
 

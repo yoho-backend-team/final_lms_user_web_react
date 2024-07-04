@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
@@ -12,15 +12,27 @@ import hours from "../.../../../../../assets/images/icons/hours.svg"
 import Rating from "../components/Rating"
 import courseduration from "../.../../../../../assets/images/icons/courseduration.svg"
 import pdfgroup from "../.../../../../../assets/images/icons/pdfgroup.svg"
+import { getStudentFees } from '../services';
 
 const Payment = () => {
 
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down('xs'));
+  const [feesData, setFeesData] = useState([]);
 
 
   //dummy
   const ratingValue = 4;
+
+  useEffect(() => {
+    const fetchStudentFees= async () => {
+      const data = {};
+      const details = await getStudentFees(data);
+      setFeesData(details);
+    };
+
+    fetchStudentFees();
+  }, []);
 
   const data = [
     { id: 1, text: 'Apr 23', type: 'pending' },

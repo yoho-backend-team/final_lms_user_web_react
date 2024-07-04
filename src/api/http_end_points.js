@@ -1,4 +1,5 @@
 import { instructorDetails , Student } from "lib/constants";
+import { studentDetails  } from "lib/constants";
 import Cookies from "js-cookie";
 
 const getUserDetails = () => {
@@ -94,6 +95,9 @@ const generateEndpoints = () => {
       },
       attendance: {
         get: `/attendance/students/?${institutestudent}/${branchstudent}`
+      },
+      payments : {
+        getFees : "/institutes/payments/student-fee/:id"
       },
       
     },
