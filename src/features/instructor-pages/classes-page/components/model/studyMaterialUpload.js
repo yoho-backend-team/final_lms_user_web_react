@@ -47,7 +47,7 @@ const StudyMaterialUpload = ({classDetails,handleFileChange,updateClass}) => {
               setSubmitting(false);
               const data = { study_materials:{ file : values?.file, title : values?.title, description : values?.description }}
               updateClass(data)
-              handleClose()
+              handleClose() 
             }}
           >
             {({ setFieldValue }) => (

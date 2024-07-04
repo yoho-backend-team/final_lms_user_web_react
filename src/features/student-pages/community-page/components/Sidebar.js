@@ -1,5 +1,7 @@
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { Box, TextField, InputAdornment, Typography } from '@mui/material';
+import { getImageUrl } from 'utils/common/imageUtlils';
+import { imagePlaceholder } from 'utils/placeholders';
 
 const SideBar = ({communities,currentChat,setCurrentChat}) => {
   return (
@@ -55,7 +57,7 @@ const SideBar = ({communities,currentChat,setCurrentChat}) => {
          {
             communities?.map((group)=>(
                 <Box 
-                key={group.id}
+                key={group._id}
                 onClick={()=>setCurrentChat(group)}
                 sx={{
                     display : "flex",
@@ -66,18 +68,18 @@ const SideBar = ({communities,currentChat,setCurrentChat}) => {
                 }}>
                   <Box sx={{display:"flex",gap:"10px"}}>
                   <Box>
-                    <img src={group.image} alt={group.batch_name} />
+                    <img style={{ width: "60px", height:"60px", borderRadius:"50%"}} src={group?.batch?.course?.image ? getImageUrl(group?.batch?.course?.image) : imagePlaceholder } alt={group?.batch?.batch_name} />
                   </Box>
                   <Box sx={{display:"flex",flexDirection:"column",justifyContent:"space-between",py:"10px"}} >
-                     <Typography sx={{color:"#09132C",fontSize:"16px",fontWeight:500,lineHeight:"24px"}} >{group.batch_name}</Typography>
-                     <Typography sx={{color:"#09132C",fontSize:"12px",fontWeight:"400",lineHeight:"16px"}} >{group.last_message}</Typography>
+                     <Typography sx={{color:"#09132C",fontSize:"16px",fontWeight:500,lineHeight:"24px"}} >{group?.batch?.batch_name}</Typography>
+                     <Typography sx={{color:"#09132C",fontSize:"12px",fontWeight:"400",lineHeight:"16px"}} >{group.last_message?group?.last_message:"Haha that's terrifying 😂"}</Typography>
                   </Box>
                   </Box>
                   <Box sx={{display:"flex",flexDirection:"column",justifyContent:"space-between",gap:"10px"}} >
                     <Box>
                     <Typography sx={{color:"#829C99",fontSize:"10px",fontWeight:400,lineHeight:"16px"}}>{group.date}</Typography>
                     </Box>
-                    <Box>{group.chat} </Box>
+                    <Box>{group?.chat} </Box>
                   </Box>
                 </Box>
             ))

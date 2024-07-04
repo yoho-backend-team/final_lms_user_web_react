@@ -11,6 +11,7 @@ import helpReducer from "../features/instructor-pages/help-center-page/redux/sli
 import paymentReducer from "../features/instructor-pages/payments-page/redux/slices"
 import ticketReducer from "../features/instructor-pages/tickets-page/redux/slices"
 import dashboardReducer from "../features/instructor-pages/home-page/redux/slices"
+import studentCommunityReducer from "../features/student-pages/community-page/redux/slices"
 
 // ==============================|| REDUX - MAIN STORE ||============================== //
 
@@ -25,7 +26,8 @@ const store = configureStore({
     instructorHelp : helpReducer,
     instructorPayments : paymentReducer,
     instructorTickets : ticketReducer,
-    instructorDashBoard : dashboardReducer
+    instructorDashBoard : dashboardReducer,
+    studentCommunity : studentCommunityReducer
   }
 });
 // configureStore(reducer);
