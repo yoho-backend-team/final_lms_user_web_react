@@ -43,7 +43,7 @@ const Attendance = ({setShowAttendance,classDetails}) => {
     setAttendance(response)
     const initialPresentCount = response.students.filter(student => student.attedence === 'present').length;
     const initialAbsentCount = response.students.filter(student => student.attedence === 'absent').length;
-    console.log(initialAbsentCount,initialPresentCount,"count",response)
+
     setPresentCount(initialPresentCount);
     setAbsentCount(initialAbsentCount);
     hideSpinner()
@@ -85,7 +85,6 @@ const Attendance = ({setShowAttendance,classDetails}) => {
     try {
     showSpinner()
     const response = await updateAttendanceDetails(attendance) 
-    console.log(response,"response",attendance)
     setAttendance(response)
     toast.success("attendance taked successfully")
     setCancel(false)

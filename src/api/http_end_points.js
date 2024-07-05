@@ -79,7 +79,6 @@ const generateEndpoints = () => {
 
   const student = getStudentDetails()
   const studentCourse = studentCourseId()
-  console.log(student,"student")
 
   return {
     Student: {
@@ -97,9 +96,12 @@ const generateEndpoints = () => {
         get: `/attendance/students/?${institutestudent}/${branchstudent}`
       },
       payments : {
-        getFees : "/institutes/payments/student-fee/:id"
+        getFees : `/institutes/payments/student-fee/${getStudentDetails()?._id}`
       },
       
+      community : {
+        get : `/institutes/community/course/${course1}`
+      },
     },
     common : {
        file : {

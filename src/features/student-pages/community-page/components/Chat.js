@@ -5,6 +5,7 @@ import ChatLog from "./chatLogs";
 import BottomBar from "./bottomBar";
 
 const Chat = ({ currentChat }) => {
+  console.log(currentChat,"currentChat")
   return (
     <Box sx={{ height: "100%", width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
       {
