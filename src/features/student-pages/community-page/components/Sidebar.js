@@ -3,7 +3,17 @@ import { Box, TextField, InputAdornment, Typography } from '@mui/material';
 import { getImageUrl } from 'utils/common/imageUtlils';
 import { imagePlaceholder } from 'utils/placeholders';
 
-const SideBar = ({communities,currentChat,setCurrentChat}) => {
+const SideBar = ({communities,currentChat,setCurrentChat,socket}) => {
+
+  const handleChat = (group) => {
+    setCurrentChat(group)
+    const communituy_id = group?._id
+    console.log(communituy_id,"communityId")
+    socket.emit("join", { group: communituy_id, user : "user" },(error)=>{
+      console.log(error,"error")
+    })
+ }
+
   return (
     <Box>
       <Box 
@@ -58,7 +68,7 @@ const SideBar = ({communities,currentChat,setCurrentChat}) => {
             communities?.map((group)=>(
                 <Box 
                 key={group._id}
-                onClick={()=>setCurrentChat(group)}
+                onClick={()=>handleChat(group)}
                 sx={{
                     display : "flex",
                     padding : "8px",

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, IconButton, TextField, InputAdornment } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import SendIcon from '@mui/icons-material/Send';
@@ -6,10 +6,12 @@ import AddBoxPlusIcon from 'assets/icons/AddBoxPlusIcon';
 import RecordIcon from 'assets/icons/RecordIcon';
 import EmojiIcon from 'assets/icons/EmojiIcon';
 import EmojiPicker from './EmojiPicker';
+import { getInstructorDetails } from 'store/atoms/authorized-atom';
 
 const BottomBar = ({socket}) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [message, setMessage] = useState('');
+  const instructor = getInstructorDetails()
 
   const handleEmojiClick = () => {
     setShowEmojiPicker(!showEmojiPicker);
@@ -20,12 +22,27 @@ const BottomBar = ({socket}) => {
   };
 
   const handleSendClick = () => {
-    console.log('Sending message:', message);
     setMessage('');
-    socket.emit("sendMessage",{message:message,user:"user"},(response)=>{
+    socket.emit("sendMessage",{message:message,user:instructor?._id},(response)=>{
       console.log(response,"response")
     })
   };
+
+  useEffect(()=>{
+    const handleKeyDown = (event) => {
+      if(event?.key === "Enter" || event?.key === 13 ){
+        if(message?.length!==0){
+          handleSendClick()
+        }
+      }
+    }
+
+    window.addEventListener("keydown",handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown',handleKeyDown)
+    }
+  },[handleSendClick])
 
   return (
     <Box
@@ -36,10 +53,10 @@ const BottomBar = ({socket}) => {
         justifyContent: 'flex-end',
         position: 'static',
         bottom: '0',
-        backgroundColor: '#F6F6F6',
+        backgroundColor: '#F6F6F6'
       }}
     >
-      {showEmojiPicker && <EmojiPicker onSelect={handleEmojiSelect} />}
+      {showEmojiPicker && <EmojiPicker onSelect={handleEmojiSelect} handleEmojiClick={handleEmojiClick} />}
       
       <IconButton onClick={handleEmojiClick}>
         <EmojiIcon />

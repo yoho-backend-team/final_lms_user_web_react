@@ -10,6 +10,7 @@ import Client from "../../../api/index";
 import { getInstructorDetails } from 'store/atoms/authorized-atom';
 import { useTabResponsive } from 'utils/tabResponsive';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useSpinner } from 'context/SpinnerProvider';
 
 const useStyles = makeStyles({
   root: {
@@ -75,6 +76,7 @@ const Attendance = () => {
   const [attendance, setAttendance] = useState([]);
   const [loading, setLoading] = useState(false);
   const { tabView } = useTabResponsive()
+  const { showSpinner, hideSpinner } = useSpinner()
 
   const handleChange = (event) => {
     setSelectedMonth(event.target.value);
@@ -83,14 +85,14 @@ const Attendance = () => {
   useEffect(() => {
     const getAttedenceDetails = async () => {
       try {
-        setLoading(true);
+        showSpinner()
         const user = getInstructorDetails();
         const response = await Client.Instructor.attendance.get({ userId: user.uuid });  
         setAttendance(response?.data);
-        setLoading(false);
       } catch (error) {
         console.log(error, "error");
-        setLoading(false);
+      }finally{
+        hideSpinner()
       }
     }
     getAttedenceDetails();

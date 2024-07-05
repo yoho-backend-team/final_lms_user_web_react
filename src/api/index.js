@@ -3,8 +3,8 @@ import HTTP_END_POINTS from "./http_end_points";
 
 class Client {
   Student = {
-    login: (data) => httpClient.post(HTTP_END_POINTS.Student.auth.login, data,"student"),
-    verifyOtp : (data) => httpClient.post(HTTP_END_POINTS.Student.auth.verify_otp,data,"student"),
+    login: (data,params) => httpClient.post(HTTP_END_POINTS.Student.auth.login, data,params,"student"),
+    verifyOtp : (data,params) => httpClient.post(HTTP_END_POINTS.Student.auth.verify_otp,data,params,"student"),
     course : {
       get : (params) => httpClient.get(HTTP_END_POINTS.Student.course.get,params,"student")
     },
@@ -25,8 +25,8 @@ class Client {
   }
 
   Instructor = {
-    login: (data) => httpClient.post(HTTP_END_POINTS.Instructor.auth.login, data,'instructor'),
-    verifyOtp: (data) => httpClient.post(HTTP_END_POINTS.Instructor.auth.verify_otp, data,'instructor'),
+    login: (data,params) => httpClient.post(HTTP_END_POINTS.Instructor.auth.login, data,params,'instructor'),
+    verifyOtp: (data,params) => httpClient.post(HTTP_END_POINTS.Instructor.auth.verify_otp,params,data,'instructor'),
     log_out : (data) => httpClient.post(HTTP_END_POINTS.Instructor.auth.log_out,data,'instructor'),
     attendance: {
       get: (params) => httpClient.get(`${HTTP_END_POINTS.Instructor.attendance.get}${params.userId}`,params,'instructor'),
@@ -42,13 +42,13 @@ class Client {
       update : (data) => httpClient.update(HTTP_END_POINTS.Instructor.class.update+data?.uuid,data,'instructor')
     },
     community : {
-      get : () => httpClient.get(HTTP_END_POINTS.Instructor.community.get,'instructor')
-    },
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.community.get,params,'instructor')
+    }, 
     payment : {
       get : () => httpClient.get(HTTP_END_POINTS.Instructor.payments.getSalaries,'instructor')
     },
     ticket : {
-      create : (data) => httpClient.post(HTTP_END_POINTS.Instructor.ticket.create,data,'instructor'),
+      create : (data,params) => httpClient.post(HTTP_END_POINTS.Instructor.ticket.create,data,params,'instructor'),
       get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.ticket.get,params,'instructor')
     }
   };
