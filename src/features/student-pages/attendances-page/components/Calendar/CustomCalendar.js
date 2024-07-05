@@ -38,6 +38,8 @@ function StudentAttendance() {
 
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [attendance, setAttendance] = useState({});
+  const [selectedCalenderMonth, setSelectedCalenderMonth] = useState(new Date().getMonth());
+
   const [globalAttendance, setGlobalAttendance] = useState('');
 
   const months = [
@@ -46,17 +48,22 @@ function StudentAttendance() {
     'September', 'October', 'November', 'December'
   ];
   
+  
   const attendanceOptions = ['Present', 'Absent'];
 
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
   };
 
+  const handleCalenderMonthChange = (event) => {
+    setSelectedCalenderMonth(event.target.value);
+  };
+
   const handleGlobalAttendanceChange = (event) => {
     const status = event.target.value;
     setGlobalAttendance(status);
 
-    const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedMonth);
+    const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedCalenderMonth );
     const newAttendance = {};
     for (let i = 1; i <= daysInMonth; i++) {
       newAttendance[i] = status;
@@ -69,12 +76,12 @@ function StudentAttendance() {
   };
 
   const generateDays = () => {
-    const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedMonth);
+    const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedCalenderMonth );
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     const days = [];
     for (let i = 1; i <= daysInMonth; i++) {
-      const date = new Date(new Date().getFullYear(), selectedMonth, i);
+      const date = new Date(new Date().getFullYear(), selectedCalenderMonth, i);
       const dayOfWeek = daysOfWeek[date.getDay()];
       let attendanceStatus = attendance[i] || 'Absent';
       if (dayOfWeek === 'Sunday') {
@@ -84,12 +91,19 @@ function StudentAttendance() {
 
       days.push(
         <Grid item xs={isSmallScreen ? 12 : 2.4} key={i}>
-          <Card>
-            <CardContent>
+      <Card sx={{
+            borderRadius: '8.659px',
+            border: '0.5px solid #CDCDCD',
+            flexShrink: 0,
+            boxShadow:'none'
+
+          }}>
+           <CardContent>
               <Typography
                 sx={{
-                  fontSize: "11px",
+                  fontSize: "11.5px",
                   fontWeight: 400,
+                 fontFeatureSettings: "'clig' off, 'liga' off",
                   color: "black",
                   fontFamily: "Poppins",
                   fontStyle: "normal",
@@ -462,7 +476,7 @@ function StudentAttendance() {
               background: "#FFF",
             }}
           >
-            <Select value={selectedMonth} onChange={handleMonthChange}>
+            <Select value={selectedCalenderMonth} onChange={handleCalenderMonthChange}>
               {months.map((month, index) => (
                 <MenuItem key={index} value={index}>
                   {month}

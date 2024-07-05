@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { 
   Grid, 
@@ -26,6 +26,7 @@ import back from 'assets/images/pages/background_1.png';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import StudentClassLayout from 'features/student-pages/classes-page/components/layout';
 import { useNavigate } from 'react-router-dom';
+import { getAllClasses } from 'features/student-pages/classes-page/services';
 
 
 const breadcrumbs = [
@@ -107,13 +108,34 @@ const PadPaper = styled(Paper)(({ theme }) => ({
 }));
 
 export default function OnlineUpcomingClasses() {
-  const { id } = useParams();
+
   const navigate = useNavigate();
   const matches = useMediaQuery('(min-width:600px)');
+  const [upcomingClasses, setUpcomingClasses] = useState([]);
 
   const handleBackClick = () => {
     navigate(-1); // This navigates to the previous page
   };
+
+  useEffect( () => {
+    const update = async () => {
+     await fetchUpcomingClasses()
+    }
+    update()
+   }, []);
+ 
+   const fetchUpcomingClasses = async ({classType}) => {
+     try {
+       const data = { userType:classType }
+       const response = await getAllClasses(data);
+       console.log(response,"response")
+       setUpcomingClasses(response)
+       return response;
+     } catch (error) {
+       console.error("Failed to fetch classes:", error);
+       return [];
+     }
+   };
 
   return (
     <StudentClassLayout >

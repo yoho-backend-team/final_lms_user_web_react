@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Grid, Typography, useMediaQuery } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTheme } from '@emotion/react';
@@ -12,15 +12,32 @@ import hours from "../.../../../../../assets/images/icons/hours.svg"
 import Rating from "../components/Rating"
 import courseduration from "../.../../../../../assets/images/icons/courseduration.svg"
 import pdfgroup from "../.../../../../../assets/images/icons/pdfgroup.svg"
+import { getStudentFees } from '../services';
+import { getImageUrl } from 'utils/common/imageUtlils';
+import { imagePlaceholder } from 'utils/placeholders';
+import { formatDate } from 'utils/formatDate';
+import { getStudentDetails } from 'store/atoms/authorized-atom';
 
 const Payment = () => {
 
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down('xs'));
+  const [feesData, setFeesData] = useState([({ fees: [], totalAmount: 0 })]);
 
 
   //dummy
   const ratingValue = 4;
+
+  useEffect(() => {
+    const fetchStudentFees= async () => {
+      const data = {};
+      const details = await getStudentFees(data);
+      setFeesData(details);
+      console.log(details)
+    };
+
+    fetchStudentFees();
+  }, []);
 
   const data = [
     { id: 1, text: 'Apr 23', type: 'pending' },
@@ -36,6 +53,8 @@ const Payment = () => {
     { id: 3,  text: 'Feb 23' },
 
   ];
+
+  console.log(feesData,"feesData")
 
   
 
@@ -88,7 +107,9 @@ const Payment = () => {
       </Grid>
     </Grid>
         <Grid container spacing={2} sx={{ p: 3 }}>
+          
       <Grid item xs={12} sm={6} md={4} lg={2.4}>
+      
       <Box
           p={2}
           border={1}
@@ -152,11 +173,13 @@ const Payment = () => {
               lineHeight: '24px' 
             }}
           >
-            ₹96,000
+           {feesData?.course_fees}
           </Typography>
         </Box>      
+
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={2.4}>
+      
       <Box
           p={2}
           border={1}
@@ -220,9 +243,10 @@ const Payment = () => {
               lineHeight: '24px'
             }}
           >
-            ₹86,000
+            {feesData?.totalAmount}
           </Typography>
         </Box>
+    
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={2.4}>
       <Box
@@ -288,7 +312,7 @@ const Payment = () => {
               lineHeight: '24px'
             }}
           >
-             ₹16,000
+             ₹{feesData?.pending_payment}
           </Typography>
         </Box>
       </Grid>
@@ -356,7 +380,7 @@ const Payment = () => {
               lineHeight: '24px'
             }}
           >
-             1 month pending
+             {feesData?.payment_status}
           </Typography>
         </Box>      
       </Grid>
@@ -483,8 +507,8 @@ const Payment = () => {
             }}
           >
             <img
-              src={courseImage}
-              alt="courseImage"
+              src={ feesData?.course?.image ? getImageUrl(feesData?.course?.image):imagePlaceholder}
+              alt={feesData?.course?.course_name || "course_name"}
               style={{
                 width: '100%', 
                 height: 'auto', 
@@ -511,7 +535,7 @@ const Payment = () => {
                 lineHeight: '20px',
               }}
             >
-              Java Full Professional Course...
+              {feesData?.course?.course_name}
             </Typography>
             <Typography
               variant="body1"
@@ -554,7 +578,7 @@ const Payment = () => {
                   lineHeight: '9.841px',
                 }}
               >
-                12hrs
+                {feesData?.course?.duration}
               </Typography>
             </Box>
             <Typography
@@ -603,7 +627,7 @@ const Payment = () => {
                   marginRight: '-10px'
                 }}
               >
-                ₹ 3,450
+                ₹ {feesData?.course?.price}
               </Typography>
             </Box>
           </Box>
@@ -616,6 +640,7 @@ const Payment = () => {
       </Grid>
       
       <Grid item xs={12} sm={6} md={4} lg={3}>
+      
 
       <Box
           p={2}         
@@ -674,9 +699,10 @@ const Payment = () => {
               lineHeight: '24px' 
             }}
           >
-           6th Months
+           {feesData?.course?.duration}
           </Typography>
         </Box>
+    
       </Grid>
     </Grid>    
 
@@ -726,7 +752,7 @@ const Payment = () => {
               fontWeight: 400,
               marginLeft: '-2px',
             }}>
-              Janu
+              {getStudentDetails()?.full_name}
             </Typography>
           </Box>
           <Box sx={{
@@ -752,7 +778,7 @@ const Payment = () => {
               fontWeight: 400,
               marginLeft: '-2px',
             }}>
-              JavaScript
+              {feesData?.course?.course_name}
             </Typography>
           </Box>
           <Box sx={{
@@ -778,7 +804,7 @@ const Payment = () => {
               fontWeight: 400,
               marginLeft: '-2px',
             }}>
-              May 2023
+              {formatDate(feesData?.course?.createdAt)}
             </Typography>
           </Box>
         </Box>
@@ -817,7 +843,7 @@ const Payment = () => {
               fontStyle: 'normal',
               fontWeight: 400,
             }}>
-              81,200 INR
+              {feesData?.course_fees} INR
             </Typography>
           </Box>
           <Box sx={{
@@ -892,7 +918,7 @@ const Payment = () => {
               fontStyle: 'normal',
               fontWeight: 400,
             }}>
-              86,000 INR
+              {feesData?.totalAmount} INR
             </Typography>
           </Box>
           <Box sx={{
@@ -917,7 +943,7 @@ const Payment = () => {
               fontStyle: 'normal',
               fontWeight: 400,
             }}>
-              -16,000 INR
+             ₹{feesData?.pending_payment} INR
             </Typography>
           </Box>
 
@@ -992,7 +1018,7 @@ const Payment = () => {
         fontWeight: 400,
         lineHeight: '24px',
       }}>
-        Last Update: 05 May 2023
+        {formatDate(feesData?.course?.updatedAt)}
       </Typography>
       <Typography variant="body1" style={{
         color: '#495057',
@@ -1022,7 +1048,7 @@ const Payment = () => {
   </Typography>
   <div style={{ maxHeight: '300px', overflowY: 'auto', paddingRight: '15px' }}>
       <Grid container spacing={2}>
-        {data.map((item) => (
+        {data?.map((item) => (
           <Grid item xs={12} key={item.id}>
             <div style={{ display: 'flex', alignItems: 'center', padding: '10px', borderBottom: '1px solid #ccc', }}>
               {<img src={pdfgroup} alt="Logo" style={{ width: '15px', height: '19px', marginRight: '10px' }} />}

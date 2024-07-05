@@ -11,11 +11,16 @@ class Client {
     class : {
       get : (params) => httpClient.get(HTTP_END_POINTS.Student.class.get,params,"student")
     },
-    attendance : (params) => httpClient.get(HTTP_END_POINTS.Student.attendance,params,"student"),
+    payment : {
+      get : (params) => httpClient.get(HTTP_END_POINTS.Student.payments.getFees,params,"student")
+    },
+    // attendance : (params) => httpClient.get(HTTP_END_POINTS.Student.attendance,params,"student"),
+    attendance : (params) => httpClient.get(HTTP_END_POINTS.Student.attendance.get,params,"student"),
     community : {
       get : (params) => httpClient.get(HTTP_END_POINTS.Student.community.get,params,"student")
     }
   };
+  
 
   common = {
     file : {

@@ -77,7 +77,8 @@ function StudentOnlineCompletedClasses() {
                   fontSize: '14px',
                   fontStyle: 'normal',
                   fontWeight: 600,
-                  lineHeight: '22px' /* 157.143% */
+                  lineHeight: '22px',
+                  minWidth:'200px'
                 }}>
                   {item.title}
                 </Typography>
@@ -87,7 +88,8 @@ function StudentOnlineCompletedClasses() {
                   fontSize: '10px',
                   fontStyle: 'normal',
                   fontWeight: 400,
-                  lineHeight: '16px' /* 157.143% */
+                  lineHeight: '16px',
+                  minWidth:'270px'
                 }}>
                   {item.subtitle}
                 </Typography>
