@@ -1,6 +1,6 @@
 import { instructorDetails , Student } from "lib/constants";
+import { studentDetails  } from "lib/constants";
 import Cookies from "js-cookie";
-import { studentDetails } from "lib/constants";
 
 const getUserDetails = () => {
   const user = Cookies.get(instructorDetails);
@@ -95,6 +95,10 @@ const generateEndpoints = () => {
       attendance: {
         get: `/attendance/students/?${institutestudent}/${branchstudent}`
       },
+      payments : {
+        getFees : `/institutes/payments/student-fee/${getStudentDetails()?._id}`
+      },
+      
       community : {
         get : `/institutes/community/course/${course1}`
       },
