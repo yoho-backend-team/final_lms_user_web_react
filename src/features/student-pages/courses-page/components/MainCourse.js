@@ -5,7 +5,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import '../../../../App.css';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import courseImage from '../../../../assets/images/dummy/course.jpg';
 import lesson from '../../../../assets/images/icons/course.svg';
 import language from '../../../../assets/images/icons/language.svg';
 import time from '../../../../assets/images/icons/wi_time-12.svg';
@@ -59,15 +58,6 @@ const MainCourse = ( ) => {
   const dynamicData = 'Big Data,Node JS, OOPS, JVM, Web Arch, Angular';
   const items = dynamicData.split(',').map((item) => item.trim());
 
-  const dummyData = [
-    { id: 1, title: 'Chapter-01', description: 'JavaScript Development Workbook' },
-    { id: 2, title: 'Chapter-02', description: 'JavaScript Development Workbook' },
-    { id: 3, title: 'Chapter-03', description: 'JavaScript Development Workbook' },
-    { id: 4, title: 'Chapter-04', description: 'JavaScript Development Workbook' },
-  ];
-
-  const dummyDataa = [{ id: 1, title: 'Chapter-01', description: 'JavaScript Development Workbook' }];
-  console.log(courseDetails,"courseDetails")
   return (
     <div className="main-container">
       <Grid container spacing={2} sx={{ p: 2 }}>
@@ -181,22 +171,53 @@ const MainCourse = ( ) => {
                 <img src={rightnav} alt="rightnav" style={{ width: '24px', height: '24px', cursor: 'pointer' }} onClick={scrollRightStudy} />
               </div>
             </div>
-            <div className="study-material-scroll-container" id="study-material-scroll-container" style={{ display: 'flex', overflowX: 'auto', gap: '10px', paddingTop: '10px' }}>
-              {courseDetails?.studymaterials.map((studymaterials, index) => (
-                <div key={index} style={{ flex: '0 0 auto', textAlign: 'center' }}>
-                  <img src={pdf} alt={`pdf${index}`} style={{ width: '80px', height: '80px', display: 'block', margin: '0 auto' }} />
-                  <Typography variant="body1" sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500 }}>
-                    {studymaterials?.title}
-                  </Typography>
-                  <Typography variant="body1" sx={{ fontFamily: 'Poppins', fontSize: '10px' }}>
-                    {studymaterials?.description}
-                  </Typography>
-                  <a href={studymaterials?.file} download>
-        <img src={down} alt="down" style={{ width: '24px', height: '24px', cursor: 'pointer' }} />
-      </a>
-                </div>
-              ))}
+            <div style={{ overflowX: 'auto' }} id="study-material-scroll-container">
+      <div style={{ display: 'flex', gap: '20px', padding: '20px', maxWidth: 'calc(100% + 20px)' }}>
+        {courseDetails?.studymaterials?.map((studymaterials, index) => (
+          <div key={index} style={{ flex: '0 0 auto', display: 'flex', flexDirection: 'row', alignItems: 'center', width: '322px', height: '80px', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden', position: 'relative' }}>
+            <div style={{ flex: '0 0 auto', width: '62px', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img
+                src={pdf}
+                alt="pdf"
+                style={{
+                  width: '62px',
+                  height: '49px',
+                  padding: '2px',
+                }}
+              />
             </div>
+            <div style={{ flex: '1', padding: '10px' }}>
+              <Typography variant="body1" sx={{ color: 'black', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 'bold' }}>
+              {studymaterials?.title}
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'black', fontFamily: 'Poppins', fontSize: '10px', marginTop: '5px' }}>
+              {studymaterials?.description}
+              </Typography>
+            </div>
+            <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', paddingRight: '10px' }}>
+            <button
+                  style={{
+                    border: 'none',
+                    background: 'none',
+                    cursor: 'pointer',
+                    padding: 0,
+                  }}
+                >
+                  <img
+                    src={down}
+                    alt="down"
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                    }}
+                  />
+                </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+           
           </Grid>
           <Grid item xs={12} sx={{ paddingTop: 2 }}>
             <div style={{ position: 'relative' }}>
@@ -206,24 +227,56 @@ const MainCourse = ( ) => {
               <div style={{ position: 'absolute', top: 0, right: 0 }}>
                 <img src={leftnav} alt="leftnav" style={{ width: '24px', height: '24px', marginRight: '10px', cursor: 'pointer' }} onClick={scrollLeftNotes} />
                 <img src={rightnav} alt="rightnav" style={{ width: '24px', height: '24px', cursor: 'pointer' }} onClick={scrollRightNotes} />
-              </div>
+              </div>   
             </div>
-            <div className="notes-scroll-container" id="notes-scroll-container" style={{ display: 'flex', overflowX: 'auto', gap: '10px', paddingTop: '10px' }}>
-              {courseDetails?.notes.map((notes, index) => 
-                <div key={index} style={{ flex: '0 0 auto', textAlign: 'center' }}>
-                  <img src={pdf} alt={`pdf${index}`} style={{ width: '80px', height: '80px', display: 'block', margin: '0 auto' }} />
-                  <Typography variant="body1" sx={{ fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500 }}>
-                    {notes?.title}
-                  </Typography>
-                  <Typography variant="body1" sx={{ fontFamily: 'Poppins', fontSize: '10px' }}>
-                    {notes?.description}
-                  </Typography>
-                  <a href={notes?.file} download>
-        <img src={down} alt="down" style={{ width: '24px', height: '24px', cursor: 'pointer' }} />
-      </a>
-                </div>
-              )}
+          
+                
+     <div style={{ overflowX: 'auto' }} id="notes-scroll-container">
+      <div style={{ display: 'flex', gap: '20px', padding: '20px', maxWidth: 'calc(100% + 20px)' }}>
+        {courseDetails?.notes?.map((notes, index) =>  (
+          <div key={index} style={{ flex: '0 0 auto', display: 'flex', flexDirection: 'row', alignItems: 'center', width: '322px', height: '80px', border: '1px solid #ccc', borderRadius: '8px', overflow: 'hidden', position: 'relative' }}>
+            <div style={{ flex: '0 0 auto', width: '62px', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img
+                src={pdf}
+                alt="pdf"
+                style={{
+                  width: '62px',
+                  height: '49px',
+                  padding: '2px',
+                }}
+              />
             </div>
+            <div style={{ flex: '1', padding: '10px' }}>
+              <Typography variant="body1" sx={{ color: 'black', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 'bold' }}>
+                   {notes.title}
+              </Typography>
+              <Typography variant="body2" sx={{ color: 'black', fontFamily: 'Poppins', fontSize: '10px', marginTop: '5px' }}>
+                {notes.description}
+              </Typography>
+            </div>
+            <div style={{ flex: '0 0 auto', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', paddingRight: '10px' }}>
+            <button
+                  style={{
+                    border: 'none',
+                    background: 'none',
+                    cursor: 'pointer',
+                    padding: 0,
+                  }}
+                >
+                  <img
+                    src={down}
+                    alt="down"
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                    }}
+                  />
+                </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
           </Grid>
         </Grid>
       </Grid>

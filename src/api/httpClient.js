@@ -95,6 +95,21 @@ class HttpClient {
         });
         return response?.data;
     }
+
+    async update(url,data){
+        const response = await Axios.put(url,data)
+        return response?.data
+    }
+
+    async fileGet(url){
+        const response = Axios.get(url,{"responseType":"blob"})
+        return response
+    }
+
+    async uploadFile(url,data){
+        const response = await Axios.post(url,data,{ headers: { "Content-Type" : "multipart/form-data" }})
+        return response?.data
+    }
 }
 
 export default new HttpClient();
