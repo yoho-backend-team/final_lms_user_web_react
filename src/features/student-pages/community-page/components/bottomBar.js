@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, IconButton, TextField, InputAdornment } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import SendIcon from '@mui/icons-material/Send';
@@ -6,10 +6,12 @@ import AddBoxPlusIcon from 'assets/icons/AddBoxPlusIcon';
 import RecordIcon from 'assets/icons/RecordIcon';
 import EmojiIcon from 'assets/icons/EmojiIcon';
 import EmojiPicker from './EmojiPicker';
+import { getStudentDetails  } from 'store/atoms/authorized-atom';
 
-const BottomBar = () => {
+const BottomBar = ({socket}) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [message, setMessage] = useState('');
+  const student = getStudentDetails()
 
   const handleEmojiClick = () => {
     setShowEmojiPicker(!showEmojiPicker);
@@ -20,9 +22,27 @@ const BottomBar = () => {
   };
 
   const handleSendClick = () => {
-    console.log('Sending message:', message);
+    console.log(message,"message")
+    socket.emit("sendMessage",{message:message,user:student?._id},(response)=>{
+    })
     setMessage('');
   };
+
+  useEffect(()=>{
+    const handleKeyDown = (event) => {
+      if(event?.key === "Enter" || event?.key === 13){
+        if(message?.length !== 0){
+          handleSendClick()
+        }
+      }
+    }
+
+    window.addEventListener('keydown',handleKeyDown)
+
+    return () => {
+      window.removeEventListener("keydown",handleKeyDown)
+    }
+  },[handleSendClick])
 
   return (
     <Box

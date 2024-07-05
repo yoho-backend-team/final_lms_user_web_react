@@ -83,7 +83,7 @@ function StudentAttendance() {
       const isHoliday = dayOfWeek === 'Sunday';
 
       days.push(
-        <Grid item xs={isSmallScreen ? 12 : 2.2} key={i}>
+        <Grid item xs={isSmallScreen ? 12 : 2.4} key={i}>
           <Card>
             <CardContent>
               <Typography

@@ -116,7 +116,7 @@ const generateEndpoints = () => {
         log_out: "/institutes/auth/teaching-staff/logout"
       },
       attendance: {
-        get: "/institutes/attendance/staff/",
+        get: "/institutes/attedance/staff/",
         class_attendance : "/institutes/attedance/class/"
       },
       course: {

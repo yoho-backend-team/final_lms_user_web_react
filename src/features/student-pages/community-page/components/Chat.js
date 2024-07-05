@@ -1,16 +1,31 @@
+import { useState, useEffect } from "react";
 import { Box, Typography, Card } from "@mui/material";
 import ChatHeader from "./ChatHeader";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import ChatLog from "./chatLogs";
 import BottomBar from "./bottomBar";
 
-const Chat = ({ currentChat }) => {
-  console.log(currentChat,"currentChat")
+const Chat = ({ currentChat, socket }) => {
+  const [Messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    const handleMessage = (message) => {
+      console.log(message, "message");
+      setMessages((prev) => [...prev, message]);
+    };
+    
+    socket?.on("message", handleMessage);
+
+    return () => {
+      socket?.off("message", handleMessage); 
+    };
+  }, [socket]);
+  
   return (
-    <Box sx={{ height: "100%", width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
       {
         currentChat ? (
-          <Card sx={{ height: "88vh",width:"100%", display: "flex", flexDirection: "column",boxShadow:"none" }}>
+          <Card sx={{ height: "73vh",width:"100%", display: "flex", flexDirection: "column",boxShadow:"none" }}>
             <ChatHeader currentChat={currentChat} />
             <Box sx={{ padding: "20px", flex: 1, overflowY: "auto" }}>
               <Box sx={{ display: 'flex', alignItems: "center", justifyContent: "center", marginBottom: "20px" }}>
@@ -21,10 +36,10 @@ const Chat = ({ currentChat }) => {
                   </Typography>
                 </Box>
               </Box>
-              <ChatLog />
+              <ChatLog socket={socket} Messages={Messages} />
             </Box>
             <Box sx={{ padding: "10px" }}>
-              <BottomBar />
+              <BottomBar socket={socket} />
             </Box>
           </Card>
         ) : (

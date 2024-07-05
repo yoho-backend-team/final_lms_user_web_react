@@ -36,7 +36,7 @@ const Community = () => {
 
   console.log(communities,"batches")
   return (
-    <Box sx={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "40px" }}>
+    <Box sx={{ height: "85vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "40px" }}>
       <Box
         sx={{
           backgroundColor: "#FFFFFF",
@@ -53,7 +53,7 @@ const Community = () => {
           <Grid item xs={4}>
             <SideBar communities={communities} socket={socket} currentChat={currentChat} setCurrentChat={setCurrentChat} />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={8} sx={{ display: 'flex'}} >
             <Chat currentChat={currentChat} socket={socket} setCurrentChat={setCurrentChat} />
           </Grid>
         </Grid>

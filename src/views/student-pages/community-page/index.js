@@ -9,6 +9,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { getAllStudentCommunities } from "features/student-pages/community-page/redux/thunks";
 import { selectStudentCommunity,selectLoading } from "features/student-pages/community-page/redux/selectors";
 import toast from "react-hot-toast";
+import { io } from "socket.io-client";
 
 const Batches = [
   { batch_name: "Java Class", image: JavaCourseImage , id: "1",chat:<PushPinOutlinedIcon sx={{rotate:"35deg"}}  />,date:"5:14 pm",last_message : "Haha oh man" },
@@ -19,6 +20,7 @@ const CommunityPage = () => {
   const dispatch = useDispatch()
   const communities = useSelector(selectStudentCommunity)
   const [currentChat,setCurrentChat] = useState(null)
+  const [socket,setSocket] = useState(null)
 
   useEffect(()=>{
     const getCommunities = async () => {
@@ -30,9 +32,15 @@ const CommunityPage = () => {
     }
     getCommunities()
   },[dispatch])
+
+  useEffect(() => {
+  const socket = io(process.env.REACT_APP_URL)
+  setSocket(socket)
+  },[])
   console.log(communities,"communites")
+
   return (
-    <Box sx={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "40px" }}>
+    <Box sx={{ height: "85vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "40px" }}>
       <Box
         sx={{
           backgroundColor: "#FFFFFF",
@@ -47,10 +55,10 @@ const CommunityPage = () => {
       >
         <Grid container sx={{ flex: 1 }}>
           <Grid item xs={4}>
-            <SideBar communities={communities} currentChat={currentChat} setCurrentChat={setCurrentChat} />
+            <SideBar communities={communities} socket={socket} currentChat={currentChat} setCurrentChat={setCurrentChat} />
           </Grid>
-          <Grid item xs={8}>
-            <Chat currentChat={currentChat} setCurrentChat={setCurrentChat} />
+          <Grid item xs={8} sx={{ display: 'flex'}} >
+            <Chat currentChat={currentChat} socket={socket} setCurrentChat={setCurrentChat} />
           </Grid>
         </Grid>
       </Box>

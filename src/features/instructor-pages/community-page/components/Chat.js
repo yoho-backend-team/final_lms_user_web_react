@@ -1,4 +1,4 @@
-import { Box, Typography, Card } from "@mui/material";
+import { Box, Typography, Card, Grid } from "@mui/material";
 import ChatHeader from "./ChatHeader";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import ChatLog from "./chatLogs";
@@ -17,16 +17,15 @@ const Chat = ({ currentChat, socket }) => {
     socket?.on("message", handleMessage);
 
     return () => {
-      socket?.off("message", handleMessage); // Clean up the event listener
+      socket?.off("message", handleMessage); 
     };
   }, [socket]);
 
-  console.log(currentChat, "currentChat", Messages);
 
   return (
-    <Box sx={{ height: "100%", width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <Box sx={{  width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
       {currentChat ? (
-        <Card sx={{ height: "88vh", width: "100%", display: "flex", flexDirection: "column", boxShadow: "none" }}>
+        <Card sx={{ height: "73vh", width: "100%", display: "flex", flexDirection: "column", boxShadow: "none" }}>
           <ChatHeader currentChat={currentChat} />
           <Box sx={{ padding: "20px", flex: 1, overflowY: "auto" }}>
             <Box sx={{ display: 'flex', alignItems: "center", justifyContent: "center", marginBottom: "20px" }}>
@@ -44,11 +43,13 @@ const Chat = ({ currentChat, socket }) => {
           </Box>
         </Card>
       ) : (
+        <Grid xs={12} >
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
-          <Typography sx={{ color: "#747474", fontSize: "14px", fontWeight: 500, lineHeight: "24px" }}>
+          <Typography sx={{ color: "#747474", fontSize: "14px", fontWeight: 500, lineHeight: "24px"}}>
             Click chat to send and see messages
           </Typography>
         </Box>
+        </Grid>
       )}
     </Box>
   );
