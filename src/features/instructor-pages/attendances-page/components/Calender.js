@@ -96,7 +96,7 @@ function InstructorAttendance({attendanceData}) {
   };
 
   return (
-    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ height: '66vh', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ flexShrink: 0 }}>
         <Grid container style={{ display: "flex", justifyContent: "space-between"}} sx={{ px: "40px", py: "20px" }}>
           <Grid item style={{ marginBottom: '20px', display: "flex", alignItems: "center" }}>
