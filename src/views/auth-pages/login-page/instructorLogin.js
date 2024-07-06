@@ -1,11 +1,11 @@
-import InstructorLogin from "features/Auth/instructorLogin"
+import InstructorLogin from "features/Auth/instructorLogin";
 
 const InstructorLoginComponent = () => {
-    return(
-        <>
-         <InstructorLogin />
-        </>
-    )
-}
+  return (
+    <>
+      <InstructorLogin />
+    </>
+  );
+};
 
-export default InstructorLoginComponent
+export default InstructorLoginComponent;

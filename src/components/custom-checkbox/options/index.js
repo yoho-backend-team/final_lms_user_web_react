@@ -1,15 +1,22 @@
 // ** MUI Imports
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Checkbox from '@mui/material/Checkbox';
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Checkbox from "@mui/material/Checkbox";
 // import Typography from '@mui/material/Typography';
 // import { StepLabel } from '@mui/material/StepLabel';
 // import CustomTextField from 'components/mui/text-field';
-import { TextField } from '@mui/material';
+import { TextField } from "@mui/material";
 
 const CustomCheckbox = (props) => {
   // ** Props
-  const { data, name, selected, gridProps, handleChange, color = 'primary' } = props;
+  const {
+    data,
+    name,
+    selected,
+    gridProps,
+    handleChange,
+    color = "primary",
+  } = props;
   const { value } = data;
 
   const renderData = () => {
@@ -22,16 +29,21 @@ const CustomCheckbox = (props) => {
         <Box
           sx={{
             p: 4,
-            height: '100%',
-            display: 'flex',
+            height: "100%",
+            display: "flex",
             borderRadius: 1,
-            cursor: 'pointer',
-            position: 'relative',
-            alignItems: 'center',
+            cursor: "pointer",
+            position: "relative",
+            alignItems: "center",
             border: (theme) => `1px solid ${theme.palette.divider}`,
             ...(selected.includes(value)
               ? { borderColor: `${color}.main` }
-              : { '&:hover': { borderColor: (theme) => `rgba(${theme.palette.customColors.main}, 0.25)` } })
+              : {
+                  "&:hover": {
+                    borderColor: (theme) =>
+                      `rgba(${theme.palette.customColors.main}, 0.25)`,
+                  },
+                }),
           }}
         >
           <Checkbox

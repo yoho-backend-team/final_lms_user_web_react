@@ -1,22 +1,21 @@
 // ** React Imports
-import { useState } from 'react';
+import { useState } from "react";
 
 // ** Next Import
 // import Link from 'next/link'
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 // ** MUI Imports
-import Box from '@mui/material/Box';
-import Menu from '@mui/material/Menu';
-import Divider from '@mui/material/Divider';
-import MenuItem from '@mui/material/MenuItem';
-import IconButton from '@mui/material/IconButton';
+import Box from "@mui/material/Box";
+import Menu from "@mui/material/Menu";
+import Divider from "@mui/material/Divider";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
 
 // ** Icon Imports
-import Icon from 'components/icon';
+import Icon from "components/icon";
 
 // ** Hook Import
-
 
 const MenuItemWrapper = ({ children, option }) => {
   if (option.href) {
@@ -28,11 +27,11 @@ const MenuItemWrapper = ({ children, option }) => {
         sx={{
           px: 4,
           py: 1.5,
-          width: '100%',
-          display: 'flex',
-          color: 'inherit',
-          alignItems: 'center',
-          textDecoration: 'none'
+          width: "100%",
+          display: "flex",
+          color: "inherit",
+          alignItems: "center",
+          textDecoration: "none",
         }}
       >
         {children}
@@ -45,14 +44,21 @@ const MenuItemWrapper = ({ children, option }) => {
 
 const OptionsMenu = (props) => {
   // ** Props
-  const { icon, options, menuProps, iconProps, leftAlignMenu, iconButtonProps } = props;
+  const {
+    icon,
+    options,
+    menuProps,
+    iconProps,
+    leftAlignMenu,
+    iconButtonProps,
+  } = props;
 
   // ** State
   const [anchorEl, setAnchorEl] = useState(null);
 
   // ** Hook & Var
 
-  const direction = 'ltr';
+  const direction = "ltr";
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -64,7 +70,11 @@ const OptionsMenu = (props) => {
 
   return (
     <>
-      <IconButton aria-haspopup="true" onClick={handleClick} {...iconButtonProps}>
+      <IconButton
+        aria-haspopup="true"
+        onClick={handleClick}
+        {...iconButtonProps}
+      >
         {icon ? icon : <Icon icon="tabler:dots-vertical" {...iconProps} />}
       </IconButton>
       <Menu
@@ -73,20 +83,28 @@ const OptionsMenu = (props) => {
         onClose={handleClose}
         open={Boolean(anchorEl)}
         {...(!leftAlignMenu && {
-          anchorOrigin: { vertical: 'bottom', horizontal: direction === 'ltr' ? 'right' : 'left' },
-          transformOrigin: { vertical: 'top', horizontal: direction === 'ltr' ? 'right' : 'left' }
+          anchorOrigin: {
+            vertical: "bottom",
+            horizontal: direction === "ltr" ? "right" : "left",
+          },
+          transformOrigin: {
+            vertical: "top",
+            horizontal: direction === "ltr" ? "right" : "left",
+          },
         })}
         {...menuProps}
       >
         {options.map((option, index) => {
-          if (typeof option === 'string') {
+          if (typeof option === "string") {
             return (
               <MenuItem key={index} onClick={handleClose}>
                 {option}
               </MenuItem>
             );
-          } else if ('divider' in option) {
-            return option.divider && <Divider key={index} {...option.dividerProps} />;
+          } else if ("divider" in option) {
+            return (
+              option.divider && <Divider key={index} {...option.dividerProps} />
+            );
           } else {
             return (
               <MenuItem
@@ -95,7 +113,9 @@ const OptionsMenu = (props) => {
                 {...(option.href && { sx: { p: 0 } })}
                 onClick={(e) => {
                   handleClose();
-                  option.menuItemProps && option.menuItemProps.onClick ? option.menuItemProps.onClick(e) : null;
+                  option.menuItemProps && option.menuItemProps.onClick
+                    ? option.menuItemProps.onClick(e)
+                    : null;
                 }}
               >
                 <MenuItemWrapper option={option}>

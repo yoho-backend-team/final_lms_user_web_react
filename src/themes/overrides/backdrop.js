@@ -1,5 +1,5 @@
 // ** Util Import
-import { hexToRGBA } from 'utils/hex-to-rgba';
+import { hexToRGBA } from "utils/hex-to-rgba";
 
 const Backdrop = () => {
   return {
@@ -7,15 +7,15 @@ const Backdrop = () => {
       styleOverrides: {
         root: ({ theme }) => ({
           backgroundColor:
-            theme.palette.mode === 'light'
+            theme.palette.mode === "light"
               ? `rgba(${theme.palette.customColors.main}, 0.7)`
-              : hexToRGBA(theme.palette.background.default, 0.7)
+              : hexToRGBA(theme.palette.background.default, 0.7),
         }),
         invisible: {
-          backgroundColor: 'transparent'
-        }
-      }
-    }
+          backgroundColor: "transparent",
+        },
+      },
+    },
   };
 };
 

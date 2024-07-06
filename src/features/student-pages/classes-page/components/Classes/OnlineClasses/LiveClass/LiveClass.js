@@ -5,25 +5,21 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Link } from "react-router-dom";
 import { getAllClasses } from "../../redux/thunks";
-import { formatTime,formatDate } from "../../../../../../../utils/formatDate"
-import { useDispatch,useSelector } from "react-redux";
+import { formatTime, formatDate } from "../../../../../../../utils/formatDate";
+import { useDispatch, useSelector } from "react-redux";
 import { selectClasses } from "../../redux/selectors";
 
-
-function StudentOnlineLiveClasses({classType}) {
+function StudentOnlineLiveClasses({ classType }) {
   const [liveClasses, setLiveClasses] = useState([]);
   const matches = useMediaQuery("(min-width:600px)");
-  const dispatch = useDispatch()
-  const classes = useSelector(selectClasses)
-  console.log(classes)
-  
-  
-  useEffect( () => {
-    const data = { userType:classType }
-     dispatch(getAllClasses(data))
+  const dispatch = useDispatch();
+  const classes = useSelector(selectClasses);
+  console.log(classes);
+
+  useEffect(() => {
+    const data = { userType: classType };
+    dispatch(getAllClasses(data));
   }, [dispatch]);
-
-
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -50,12 +46,12 @@ function StudentOnlineLiveClasses({classType}) {
                 <Typography
                   variant="h6"
                   sx={{
-                    color: 'var(--Gray-Black, var(--Colour-Neutral-1, #000))',
-                    fontFamily: 'Poppins',
-                    fontSize: '14px',
-                    fontStyle: 'normal',
+                    color: "var(--Gray-Black, var(--Colour-Neutral-1, #000))",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    fontStyle: "normal",
                     fontWeight: 600,
-                    lineHeight: '22px',
+                    lineHeight: "22px",
                   }}
                 >
                   {item?.course?.course_name}
@@ -63,13 +59,13 @@ function StudentOnlineLiveClasses({classType}) {
                 <Typography
                   variant="subtitle2"
                   sx={{
-                    color: 'var(--Gray-Black, var(--Colour-Neutral-1, #000))',
-                    fontFamily: 'Poppins',
-                    fontSize: '10px',
-                    fontStyle: 'normal',
+                    color: "var(--Gray-Black, var(--Colour-Neutral-1, #000))",
+                    fontFamily: "Poppins",
+                    fontSize: "10px",
+                    fontStyle: "normal",
                     fontWeight: 400,
-                    lineHeight: '16px',
-                    minWidth:'190px'
+                    lineHeight: "16px",
+                    minWidth: "190px",
                   }}
                 >
                   {item?.class_name}
@@ -79,44 +75,46 @@ function StudentOnlineLiveClasses({classType}) {
                 <Typography
                   variant="h5"
                   sx={{
-                    color: 'var(--Gray-600, #6C757D)',
-                    fontFamily: 'Poppins',
-                    fontSize: '12px',
-                    fontStyle: 'normal',
+                    color: "var(--Gray-600, #6C757D)",
+                    fontFamily: "Poppins",
+                    fontSize: "12px",
+                    fontStyle: "normal",
                     fontWeight: 500,
-                    lineHeight: '22px',
+                    lineHeight: "22px",
                   }}
                 >
-                  <CalendarTodayIcon style={{ marginBottom: "-5px" }} /> {formatDate(item?.start_date)}
+                  <CalendarTodayIcon style={{ marginBottom: "-5px" }} />{" "}
+                  {formatDate(item?.start_date)}
                 </Typography>
               </Box>
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
                 <Typography
                   variant="h5"
                   sx={{
-                    color: 'var(--Gray-600, #6C757D)',
-                    fontFamily: 'Poppins',
-                    fontSize: '12px',
-                    fontStyle: 'normal',
+                    color: "var(--Gray-600, #6C757D)",
+                    fontFamily: "Poppins",
+                    fontSize: "12px",
+                    fontStyle: "normal",
                     fontWeight: 500,
-                    lineHeight: '22px',
+                    lineHeight: "22px",
                   }}
                 >
-                  <AccessTimeIcon style={{ marginBottom: "-5px" }} /> Start at: {formatTime(item?.start_time)}
+                  <AccessTimeIcon style={{ marginBottom: "-5px" }} /> Start at:{" "}
+                  {formatTime(item?.start_time)}
                 </Typography>
               </Box>
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
                 <Typography
                   variant="h5"
                   sx={{
-                    color: '#0D6EFD',
-                    fontFamily: 'Poppins',
-                    fontSize: '14px',
-                    fontStyle: 'normal',
+                    color: "#0D6EFD",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    fontStyle: "normal",
                     fontWeight: 600,
-                    lineHeight: '22px',
-                    borderRadius: '26px',
-                    background: 'rgba(61, 139, 253, 0.22)',
+                    lineHeight: "22px",
+                    borderRadius: "26px",
+                    background: "rgba(61, 139, 253, 0.22)",
                   }}
                 >
                   {item?.course?.duration}
@@ -126,25 +124,30 @@ function StudentOnlineLiveClasses({classType}) {
                 <Button
                   variant="outlined"
                   sx={{
-                    color: '#0D6EFD',
-                    fontFamily: 'Poppins',
-                    fontSize: '14px',
-                    fontStyle: 'normal',
+                    color: "#0D6EFD",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    fontStyle: "normal",
                     fontWeight: 500,
-                    lineHeight: '22px',
-                    borderRadius: '24px',
-                    background: '#FFF',
-                    display: 'flex',
-                    width: '113px',
-                    height: '40px',
-                    padding: '10px',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    gap: '10px',
+                    lineHeight: "22px",
+                    borderRadius: "24px",
+                    background: "#FFF",
+                    display: "flex",
+                    width: "113px",
+                    height: "40px",
+                    padding: "10px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "10px",
                     flexShrink: 0,
                   }}
                 >
-                  <Link to={`/student/OnlineLiveClass/${item.id}`} style={{ textDecoration: "none" }}>View Class</Link>
+                  <Link
+                    to={`/student/OnlineLiveClass/${item.id}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    View Class
+                  </Link>
                 </Button>
               </Box>
             </Box>

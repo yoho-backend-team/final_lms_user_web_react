@@ -1,26 +1,26 @@
-import PropTypes from 'prop-types';
-import isString from 'lodash/isString';
-import { useDropzone } from 'react-dropzone';
+import PropTypes from "prop-types";
+import isString from "lodash/isString";
+import { useDropzone } from "react-dropzone";
 // @mui
-import { styled } from '@mui/material/styles';
-import { Box } from '@mui/material';
+import { styled } from "@mui/material/styles";
+import { Box } from "@mui/material";
 //
-import Image from 'components/image';
-import RejectionFiles from './RejectionFiles';
-import BlockContent from './BlockContent';
+import Image from "components/image";
+import RejectionFiles from "./RejectionFiles";
+import BlockContent from "./BlockContent";
 
 // ----------------------------------------------------------------------
 
-const DropZoneStyle = styled('div')(({ theme }) => ({
-  outline: 'none',
-  overflow: 'hidden',
-  position: 'relative',
+const DropZoneStyle = styled("div")(({ theme }) => ({
+  outline: "none",
+  overflow: "hidden",
+  position: "relative",
   padding: theme.spacing(2.8, 1),
   borderRadius: theme.shape.borderRadius,
-  transition: theme.transitions.create('padding'),
+  transition: theme.transitions.create("padding"),
   backgroundColor: theme.palette.background.neutral,
   border: `1px dashed ${theme.palette.grey[500_32]}`,
-  '&:hover': { opacity: 0.72, cursor: 'pointer' }
+  "&:hover": { opacity: 0.72, cursor: "pointer" },
 }));
 
 // ----------------------------------------------------------------------
@@ -29,29 +29,41 @@ UploadSingleFile.propTypes = {
   error: PropTypes.bool,
   file: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   helperText: PropTypes.node,
-  sx: PropTypes.object
+  sx: PropTypes.object,
 };
 
-export default function UploadSingleFile({ error = false, file, helperText, sx, ...other }) {
-  const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone({
+export default function UploadSingleFile({
+  error = false,
+  file,
+  helperText,
+  sx,
+  ...other
+}) {
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragReject,
+    fileRejections,
+  } = useDropzone({
     multiple: false,
-    ...other
+    ...other,
   });
 
   return (
-    <Box sx={{ width: '100%', ...sx }}>
+    <Box sx={{ width: "100%", ...sx }}>
       <DropZoneStyle
         {...getRootProps()}
         sx={{
           ...(isDragActive && { opacity: 0.72 }),
           ...((isDragReject || error) && {
-            color: 'error.main',
-            borderColor: 'error.light',
-            bgcolor: 'error.lighter'
+            color: "error.main",
+            borderColor: "error.light",
+            bgcolor: "error.lighter",
           }),
           ...(file && {
-            padding: '12% 0'
-          })
+            padding: "12% 0",
+          }),
         }}
       >
         <input {...getInputProps()} />
@@ -66,15 +78,17 @@ export default function UploadSingleFile({ error = false, file, helperText, sx, 
               top: 8,
               left: 8,
               borderRadius: 1,
-              position: 'absolute',
-              width: 'calc(100% - 16px)',
-              height: 'calc(100% - 16px)'
+              position: "absolute",
+              width: "calc(100% - 16px)",
+              height: "calc(100% - 16px)",
             }}
           />
         )}
       </DropZoneStyle>
 
-      {fileRejections.length > 0 && <RejectionFiles fileRejections={fileRejections} />}
+      {fileRejections.length > 0 && (
+        <RejectionFiles fileRejections={fileRejections} />
+      )}
 
       {helperText && helperText}
     </Box>

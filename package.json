@@ -124,7 +124,6 @@
     ]
   },
   "devDependencies": {
-    "babel-plugin-react-svg": "^3.0.3",
-    "prettier": "^3.3.2"
+    "babel-plugin-react-svg": "^3.0.3"
   }
 }

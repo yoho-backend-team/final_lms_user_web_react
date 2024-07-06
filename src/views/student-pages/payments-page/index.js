@@ -1,10 +1,8 @@
-import React from 'react'
-import Payment from '../../../features/student-pages/payments-page/components/index'
+import React from "react";
+import Payment from "../../../features/student-pages/payments-page/components/index";
 
 const index = () => {
-  return (
-    <Payment />
-  )
-}
+  return <Payment />;
+};
 
-export default index
+export default index;

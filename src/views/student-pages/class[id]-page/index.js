@@ -1,12 +1,7 @@
-
-import React from 'react'
+import React from "react";
 
 const ClassViewPage = () => {
-    return (
-        <>
-      
-        </>
-    )
-}
+  return <></>;
+};
 
-export default ClassViewPage
+export default ClassViewPage;

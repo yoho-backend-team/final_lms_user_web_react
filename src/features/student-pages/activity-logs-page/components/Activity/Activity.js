@@ -1,20 +1,30 @@
-import React from 'react';
-import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
-import { Typography, Card, Grid, useMediaQuery, useTheme, TextField, Select, MenuItem, Box } from '@mui/material';
-import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
-import TimelineDot from '@mui/lab/TimelineDot';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import DeleteIcon from '@mui/icons-material/Delete';
-import KeyIcon from '@mui/icons-material/Key';
-import PersonIcon from '@mui/icons-material/Person';
-import back from '../../../../../assets/images/pages/background_1.png'
+import React from "react";
+import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
+import {
+  Typography,
+  Card,
+  Grid,
+  useMediaQuery,
+  useTheme,
+  TextField,
+  Select,
+  MenuItem,
+  Box,
+} from "@mui/material";
+import Timeline from "@mui/lab/Timeline";
+import TimelineItem from "@mui/lab/TimelineItem";
+import TimelineSeparator from "@mui/lab/TimelineSeparator";
+import TimelineConnector from "@mui/lab/TimelineConnector";
+import TimelineContent from "@mui/lab/TimelineContent";
+import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
+import TimelineDot from "@mui/lab/TimelineDot";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import DeleteIcon from "@mui/icons-material/Delete";
+import KeyIcon from "@mui/icons-material/Key";
+import PersonIcon from "@mui/icons-material/Person";
+import back from "../../../../../assets/images/pages/background_1.png";
 
 function ActivityLog() {
   const StyledPaper = styled(Paper)(({ theme }) => ({
@@ -22,55 +32,84 @@ function ActivityLog() {
     backgroundImage: `url(${back})`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
-    backgroundSize: "cover"
+    backgroundSize: "cover",
   }));
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
- 
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [fromDate, setFromDate] = React.useState(null);
   const [toDate, setToDate] = React.useState(null);
-  const [dateRange, setDateRange] = React.useState('pastWeek');
+  const [dateRange, setDateRange] = React.useState("pastWeek");
 
   const handleDateRangeChange = (event) => {
     setDateRange(event.target.value);
   };
 
   const activities = [
-    { time: '2024-05-18 09:30', icon: <PersonIcon/> , title: 'Account Details', description: 'Event after correct password confirmation' },
-    { time: '2024-05-18 10:00', icon: <DeleteIcon />, title: 'Delete Process', description: 'Because it\'s awesome!' },
-    { time: '2024-05-18 22:00', icon: <KeyIcon />, title: 'Password Change', description: 'Because you need rest' },
+    {
+      time: "2024-05-18 09:30",
+      icon: <PersonIcon />,
+      title: "Account Details",
+      description: "Event after correct password confirmation",
+    },
+    {
+      time: "2024-05-18 10:00",
+      icon: <DeleteIcon />,
+      title: "Delete Process",
+      description: "Because it's awesome!",
+    },
+    {
+      time: "2024-05-18 22:00",
+      icon: <KeyIcon />,
+      title: "Password Change",
+      description: "Because you need rest",
+    },
   ];
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <StyledPaper elevation={3}>
         <Card>
-          <Grid container spacing={2} sx={{ padding: '20px' }}>
-            <Grid item xs={isSmallScreen ? 12 : 6} style={{ display: 'flex', alignItems: 'center' }}>
-              <Typography variant='h3'>Activity Log</Typography>
+          <Grid container spacing={2} sx={{ padding: "20px" }}>
+            <Grid
+              item
+              xs={isSmallScreen ? 12 : 6}
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <Typography variant="h3">Activity Log</Typography>
             </Grid>
-            <Grid item xs={isSmallScreen ? 12 : 6} style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+            <Grid
+              item
+              xs={isSmallScreen ? 12 : 6}
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+              }}
+            >
               <DatePicker
                 label="From"
                 value={fromDate}
                 onChange={(newValue) => setFromDate(newValue)}
-                renderInput={(params) => <TextField {...params} style={{ marginRight: '10px' }} />}
+                renderInput={(params) => (
+                  <TextField {...params} style={{ marginRight: "10px" }} />
+                )}
               />
               <DatePicker
                 label="To"
-                sx={{ml: 2}}
+                sx={{ ml: 2 }}
                 value={toDate}
                 onChange={(newValue) => setToDate(newValue)}
-                renderInput={(params) => <TextField {...params} style={{ marginRight: '10px' }} />}
+                renderInput={(params) => (
+                  <TextField {...params} style={{ marginRight: "10px" }} />
+                )}
               />
               <Select
                 value={dateRange}
                 onChange={handleDateRangeChange}
                 displayEmpty
-                inputProps={{ 'aria-label': 'Date Range' }}
-                style={{ marginLeft: '10px', minWidth: 120 }}
+                inputProps={{ "aria-label": "Date Range" }}
+                style={{ marginLeft: "10px", minWidth: 120 }}
               >
                 <MenuItem value="pastWeek">Past week</MenuItem>
                 <MenuItem value="pastMonth">Past month</MenuItem>
@@ -84,7 +123,7 @@ function ActivityLog() {
                 {activities.map((activity, index) => (
                   <TimelineItem key={index}>
                     <TimelineOppositeContent
-                      sx={{ textAlign: 'right', m: 'auto 0' }}
+                      sx={{ textAlign: "right", m: "auto 0" }}
                       variant="body2"
                       color="text.secondary"
                     >
@@ -92,28 +131,36 @@ function ActivityLog() {
                     </TimelineOppositeContent>
                     <TimelineSeparator>
                       <TimelineConnector />
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <TimelineDot>
-                          {activity.icon}
-                        </TimelineDot>
-                        <Typography variant="body2" sx={{ ml: 1 }}>{activity.title}</Typography>
+                      <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <TimelineDot>{activity.icon}</TimelineDot>
+                        <Typography variant="body2" sx={{ ml: 1 }}>
+                          {activity.title}
+                        </Typography>
                       </Box>
                       <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent sx={{ py: '12px', px: 2 }}>
+                    <TimelineContent sx={{ py: "12px", px: 2 }}>
                       <Box
                         sx={{
                           borderRadius: 2,
-                          bgcolor: theme.palette.mode === 'dark' ? 'grey.800' : 'primary.light',
-                          color: theme.palette.mode === 'dark' ? 'white' : 'black',
+                          bgcolor:
+                            theme.palette.mode === "dark"
+                              ? "grey.800"
+                              : "primary.light",
+                          color:
+                            theme.palette.mode === "dark" ? "white" : "black",
                           p: 2,
-                          maxWidth: '300px',
-                          ml: 'auto',
-                          mb: 2
+                          maxWidth: "300px",
+                          ml: "auto",
+                          mb: 2,
                         }}
                       >
-                        <Typography variant="body1">{activity.description}</Typography>
-                        <Typography variant="body2" color="text.secondary">{activity.time}</Typography>
+                        <Typography variant="body1">
+                          {activity.description}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {activity.time}
+                        </Typography>
                       </Box>
                     </TimelineContent>
                   </TimelineItem>

@@ -8,7 +8,7 @@ const AttendanceCard = () => {
       height: 300,
       type: "radialBar",
     },
-    series: [78 ],
+    series: [78],
     plotOptions: {
       radialBar: {
         hollow: {

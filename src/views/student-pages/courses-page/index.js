@@ -1,12 +1,12 @@
 import Course from "features/student-pages/courses-page/components/MainCourse";
-import React from 'react'
+import React from "react";
 
 const CoursesPage = () => {
   return (
-   <>
-   <Course/>
-   </>
-  )
-}
+    <>
+      <Course />
+    </>
+  );
+};
 
-export default CoursesPage
+export default CoursesPage;
