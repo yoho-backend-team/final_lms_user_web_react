@@ -31,7 +31,7 @@ class Client {
 
   Instructor = {
     login: (data,params) => httpClient.post(HTTP_END_POINTS.Instructor.auth.login, data,params,'instructor'),
-    verifyOtp: (data,params) => httpClient.post(HTTP_END_POINTS.Instructor.auth.verify_otp,params,data,'instructor'),
+    verifyOtp: (data,params) => httpClient.post(HTTP_END_POINTS.Instructor.auth.verify_otp,data,params,'instructor'),
     log_out : (data) => httpClient.post(HTTP_END_POINTS.Instructor.auth.log_out,data,'instructor'),
     attendance: {
       get: (params) => httpClient.get(`${HTTP_END_POINTS.Instructor.attendance.get}${params.userId}`,params,'instructor'),
@@ -50,7 +50,7 @@ class Client {
       get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.community.get,params,'instructor')
     }, 
     payment : {
-      get : () => httpClient.get(HTTP_END_POINTS.Instructor.payments.getSalaries,'instructor')
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.payments.getSalaries,params,'instructor')
     },
     ticket : {
       create : (data,params) => httpClient.post(HTTP_END_POINTS.Instructor.ticket.create,data,params,'instructor'),
