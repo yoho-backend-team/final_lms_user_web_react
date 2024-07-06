@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { 
   Grid, 
   Typography, 
@@ -111,31 +111,39 @@ export default function OnlineUpcomingClasses() {
 
   const navigate = useNavigate();
   const matches = useMediaQuery('(min-width:600px)');
-  const [upcomingClasses, setUpcomingClasses] = useState([]);
+  
+  const { id } = useParams();  // Fetch the id parameter from the URL
+  const location = useLocation();
+  const classDetails = location.state?.classDetails;
+
+  // State to store fetched class details
+  const [fetchedClassDetails, setFetchedClassDetails] = useState(null);
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAllClasses({ _id: id, userType: 'online' });
+        setFetchedClassDetails(response);  
+      } catch (error) {
+        console.error('Failed to fetch class:', error);
+      }
+    };
+
+    if (id) {
+      fetchData();  // Call the fetchData function when id is available
+    }
+  }, [id]);
+  // Log classDetails and location.state for debugging
+  console.log(classDetails, 'classDetails');
+  console.log(location.state, 'location');
+  console.log(fetchedClassDetails, 'fetchedClassDetails');
 
   const handleBackClick = () => {
     navigate(-1); // This navigates to the previous page
   };
 
-  useEffect( () => {
-    const update = async () => {
-     await fetchUpcomingClasses()
-    }
-    update()
-   }, []);
- 
-   const fetchUpcomingClasses = async ({classType}) => {
-     try {
-       const data = { userType:classType }
-       const response = await getAllClasses(data);
-       console.log(response,"response")
-       setUpcomingClasses(response)
-       return response;
-     } catch (error) {
-       console.error("Failed to fetch classes:", error);
-       return [];
-     }
-   };
+
 
   return (
     <StudentClassLayout >
@@ -146,13 +154,15 @@ export default function OnlineUpcomingClasses() {
           </Breadcrumbs>
         </Grid>
       </Grid>
+      {fetchedClassDetails && (
+        <>
       <Box sx={{ padding: "20px 0px 10px 40px"}} >
         <Box sx={{ padding: "15px 20px 20px 50px", backgroundColor:"white", border:"1px solid #C3C3C3", borderRadius:"10px"}} >
           <Grid>
           <ArrowBackIcon sx={{ marginBottom: "20px",zIndex:"1000",cursor:"pointer" }}
             onClick={handleBackClick} 
             style={{ cursor: 'pointer' }} />
-            <Typography variant="h1" sx={{pb:"20px"}} >UX</Typography>
+            <Typography variant="h1" sx={{pb:"20px"}} >{fetchedClassDetails?.course?.course_name}</Typography>
             <Typography variant="h1" sx={{pb:"10px", color: 'var(--Gray-600, #6C757D)', fontFamily: 'Poppins', fontSize: '20px', fontStyle: 'normal', fontWeight: 500, lineHeight: '32px'}} >UX Class 13022024</Typography>
             <Typography variant="h1" sx={{pb: '40px', color: 'var(--Gray-700, #495057)', fontFamily: 'Poppins', fontSize: '14px', fontStyle: 'normal', fontWeight: 400, lineHeight: '16px'}} >User experience (UX) is the overall experience a user has when interacting with a product or service. UX design is the process of creating products that provide meaningful experiences for users.</Typography>
           </Grid>
@@ -247,6 +257,8 @@ export default function OnlineUpcomingClasses() {
           </Box>
         </Box>
       </Box>
+      </>
+      )}
     </StudentClassLayout>
   );
 }
