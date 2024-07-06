@@ -7,7 +7,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import { Grid, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import TicketsCard from "features/student-pages/tickets-page/components/TicketsCard";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const TicketsPage = () => {
   const [value, setValue] = React.useState("1");
@@ -27,7 +27,13 @@ const TicketsPage = () => {
 
               <Grid item md={9} xs={12}>
                 <Grid sx={{ typography: "body1" }}>
-                  <Box sx={{ borderBottom: 1, borderColor: "divider", marginTop: '30px' }}>
+                  <Box
+                    sx={{
+                      borderBottom: 1,
+                      borderColor: "divider",
+                      marginTop: "30px",
+                    }}
+                  >
                     <TabList
                       onChange={handleChange}
                       aria-label="lab API tabs example"
@@ -40,12 +46,14 @@ const TicketsPage = () => {
                 </Grid>
               </Grid>
 
-          <Grid item md={2} xs={12} sx={{zIndex:"1000"}} >
-              <Button variant="contained"component={Link} to="/student/create-ticket">
+              <Grid item md={2} xs={12} sx={{ zIndex: "1000" }}>
+                <Button
+                  variant="contained"
+                  component={Link}
+                  to="/student/create-ticket"
+                >
                   Create Ticket
                 </Button>
-
-   
               </Grid>
             </Grid>
           </Grid>

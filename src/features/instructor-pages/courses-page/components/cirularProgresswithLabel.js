@@ -4,7 +4,11 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 const Progress = ({ value = 0 }) => {
   return (
     <Box position="relative" display="inline-flex">
-      <CircularProgress variant="determinate" sx={{ color : "#23A2CB",rotate:"190deg"}} value={value} />
+      <CircularProgress
+        variant="determinate"
+        sx={{ color: "#23A2CB", rotate: "190deg" }}
+        value={value}
+      />
       <Box
         top={0}
         left={0}
@@ -15,7 +19,12 @@ const Progress = ({ value = 0 }) => {
         justifyContent="center"
         position="absolute"
       >
-        <Typography variant="caption" sx={{ fontWeight : 700, color : "#000000"}} component="div" color="textSecondary">
+        <Typography
+          variant="caption"
+          sx={{ fontWeight: 700, color: "#000000" }}
+          component="div"
+          color="textSecondary"
+        >
           {`${Math.round(value)}%`}
         </Typography>
       </Box>
@@ -24,7 +33,7 @@ const Progress = ({ value = 0 }) => {
 };
 
 const CircularProgressWithLabel = () => {
-  const progressValue = 72; 
+  const progressValue = 72;
 
   return (
     <div>
@@ -33,4 +42,4 @@ const CircularProgressWithLabel = () => {
   );
 };
 
-export default CircularProgressWithLabel
+export default CircularProgressWithLabel;

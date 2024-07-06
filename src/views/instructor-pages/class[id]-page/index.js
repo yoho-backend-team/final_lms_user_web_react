@@ -1,37 +1,40 @@
-import React, {useEffect, useState} from 'react'
-import { useSearchParams ,useLocation, useParams} from 'react-router-dom'
-import ClassCard from 'features/instructor-pages/classes-page/components/classOverview'
-import ClassLayout from 'features/instructor-pages/classes-page/components/classLayout'
-import { getClassDetails } from 'features/instructor-pages/classes-page/services'
-import { useSpinner } from 'context/SpinnerProvider'
+import React, { useEffect, useState } from "react";
+import { useSearchParams, useLocation, useParams } from "react-router-dom";
+import ClassCard from "features/instructor-pages/classes-page/components/classOverview";
+import ClassLayout from "features/instructor-pages/classes-page/components/classLayout";
+import { getClassDetails } from "features/instructor-pages/classes-page/services";
+import { useSpinner } from "context/SpinnerProvider";
 
 const ClassViewPage = () => {
-    const [searchParams] = useSearchParams()
-    const location = useLocation()
-    const { id } = useParams()
-    const classId = location?.state?.id
-    const classType = searchParams.get("type")
-    const [classDetails,setClassDetails] = useState(null)
-    const { showSpinner, hideSpinner } = useSpinner()
+  const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const { id } = useParams();
+  const classId = location?.state?.id;
+  const classType = searchParams.get("type");
+  const [classDetails, setClassDetails] = useState(null);
+  const { showSpinner, hideSpinner } = useSpinner();
 
-    const getClass = async () => {
-        showSpinner()
-        const data = { classType : classType, course : id }
-        const response = await getClassDetails(data)
-        setClassDetails(response)
-        hideSpinner()
-    }
-   
-    useEffect(()=>{
-      getClass()
-    },[])
+  const getClass = async () => {
+    showSpinner();
+    const data = { classType: classType, course: id };
+    const response = await getClassDetails(data);
+    setClassDetails(response);
+    hideSpinner();
+  };
 
+  useEffect(() => {
+    getClass();
+  }, []);
 
-    return (
-        <ClassLayout>
-            <ClassCard type={classType} classDetails={classDetails} getClass={getClass} />
-        </ClassLayout>
-    )
-}
+  return (
+    <ClassLayout>
+      <ClassCard
+        type={classType}
+        classDetails={classDetails}
+        getClass={getClass}
+      />
+    </ClassLayout>
+  );
+};
 
-export default ClassViewPage
+export default ClassViewPage;

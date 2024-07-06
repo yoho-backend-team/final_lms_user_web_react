@@ -1,25 +1,25 @@
-import React from 'react';
-import { Box, Button, TextField, Typography } from '@mui/material';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import React from "react";
+import { Box, Button, TextField, Typography } from "@mui/material";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const formSchema = Yup.object().shape({
-  heading: Yup.string().required('Heading is required'),
-  subLine: Yup.string().required('Sub Line is required'),
-  dateTime: Yup.date().required('Class Date & Time is required'),
-  file: Yup.mixed().required('File is required')
+  heading: Yup.string().required("Heading is required"),
+  subLine: Yup.string().required("Sub Line is required"),
+  dateTime: Yup.date().required("Class Date & Time is required"),
+  file: Yup.mixed().required("File is required"),
 });
 
 const UploadForm = ({ formType }) => {
   const formik = useFormik({
     initialValues: {
-      heading: '',
-      subLine: '',
-      dateTime: '',
-      file: null
+      heading: "",
+      subLine: "",
+      dateTime: "",
+      file: null,
     },
     validationSchema: formSchema,
-    onSubmit: values => {
+    onSubmit: (values) => {
       // handle form submission
       console.log(values);
     },
@@ -28,11 +28,11 @@ const UploadForm = ({ formType }) => {
   return (
     <Box
       sx={{
-        padding: '60px 40px 32px 40px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column'
+        padding: "60px 40px 32px 40px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
       }}
     >
       <Typography variant="h4" component="h1" sx={{ mb: 4 }}>
@@ -85,7 +85,7 @@ const UploadForm = ({ formType }) => {
               id="file"
               name="file"
               onChange={(event) => {
-                formik.setFieldValue('file', event.currentTarget.files[0]);
+                formik.setFieldValue("file", event.currentTarget.files[0]);
               }}
             />
           </Button>
@@ -93,7 +93,7 @@ const UploadForm = ({ formType }) => {
             <Typography color="error">{formik.errors.file}</Typography>
           )}
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Button color="secondary" variant="outlined" type="button">
             Cancel
           </Button>

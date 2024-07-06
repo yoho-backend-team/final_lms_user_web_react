@@ -59,8 +59,8 @@ const HelpCenterView = () => {
               <video
                 controls
                 width="100%"
-                src="https://youtu.be/M9hbj3phdT8?si=UVgdq7ZEtWXwIeWF" 
-                poster="path/to/your/poster.jpg" 
+                src="https://youtu.be/M9hbj3phdT8?si=UVgdq7ZEtWXwIeWF"
+                poster="path/to/your/poster.jpg"
               >
                 Your browser does not support the video tag.
               </video>

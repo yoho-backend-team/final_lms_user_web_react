@@ -1,40 +1,40 @@
 // ** Overrides Imports
-import MuiCard from './overrides/card';
-import MuiChip from './overrides/chip';
-import MuiLink from './overrides/link';
-import MuiList from './overrides/list';
-import MuiMenu from './overrides/menu';
-import MuiTabs from './overrides/tabs';
-import FabButton from './overrides/fab';
-import MuiBadge from './overrides/badge';
-import MuiInput from './overrides/input';
-import MuiTable from './overrides/table';
-import MuiRadio from './overrides/radio';
-import MuiAlerts from './overrides/alerts';
-import MuiButton from './overrides/button';
-import MuiDialog from './overrides/dialog';
-import MuiRating from './overrides/rating';
-import MuiDrawer from './overrides/drawer';
-import MuiSelect from './overrides/select';
-import MuiSlider from './overrides/slider';
-import MuiAvatar from './overrides/avatars';
-import MuiDivider from './overrides/divider';
-import MuiPopover from './overrides/popover';
-import MuiTooltip from './overrides/tooltip';
-import MuiCheckbox from './overrides/checkbox';
-import MuiBackdrop from './overrides/backdrop';
-import MuiDataGrid from './overrides/dataGrid';
-import MuiProgress from './overrides/progress';
-import MuiSnackbar from './overrides/snackbar';
+import MuiCard from "./overrides/card";
+import MuiChip from "./overrides/chip";
+import MuiLink from "./overrides/link";
+import MuiList from "./overrides/list";
+import MuiMenu from "./overrides/menu";
+import MuiTabs from "./overrides/tabs";
+import FabButton from "./overrides/fab";
+import MuiBadge from "./overrides/badge";
+import MuiInput from "./overrides/input";
+import MuiTable from "./overrides/table";
+import MuiRadio from "./overrides/radio";
+import MuiAlerts from "./overrides/alerts";
+import MuiButton from "./overrides/button";
+import MuiDialog from "./overrides/dialog";
+import MuiRating from "./overrides/rating";
+import MuiDrawer from "./overrides/drawer";
+import MuiSelect from "./overrides/select";
+import MuiSlider from "./overrides/slider";
+import MuiAvatar from "./overrides/avatars";
+import MuiDivider from "./overrides/divider";
+import MuiPopover from "./overrides/popover";
+import MuiTooltip from "./overrides/tooltip";
+import MuiCheckbox from "./overrides/checkbox";
+import MuiBackdrop from "./overrides/backdrop";
+import MuiDataGrid from "./overrides/dataGrid";
+import MuiProgress from "./overrides/progress";
+import MuiSnackbar from "./overrides/snackbar";
 // import MuiSwitches from './overrides/switches';
-import MuiTimeline from './overrides/timeline';
-import MuiAccordion from './overrides/accordion';
-import MuiPagination from './overrides/pagination';
-import MuiTypography from './overrides/typography';
-import MuiBreadcrumb from './overrides/breadcrumbs';
-import MuiIconButton from './overrides/icon-button';
-import MuiButtonGroup from './overrides/button-group';
-import MuiAutocomplete from './overrides/autocomplete';
+import MuiTimeline from "./overrides/timeline";
+import MuiAccordion from "./overrides/accordion";
+import MuiPagination from "./overrides/pagination";
+import MuiTypography from "./overrides/typography";
+import MuiBreadcrumb from "./overrides/breadcrumbs";
+import MuiIconButton from "./overrides/icon-button";
+import MuiButtonGroup from "./overrides/button-group";
+import MuiAutocomplete from "./overrides/autocomplete";
 // import MuiToggleButton from './overrides/toggleButton';
 
 // export default function componentStyleOverrides(theme) {
@@ -226,7 +226,7 @@ import MuiAutocomplete from './overrides/autocomplete';
 // }
 
 export default function componentStyleOverrides(theme) {
-  const skin = 'default';
+  const skin = "default";
   const chip = MuiChip();
   const list = MuiList();
   const menu = MuiMenu();
@@ -264,13 +264,13 @@ export default function componentStyleOverrides(theme) {
       MuiPaper: {
         styleOverrides: {
           root: {
-            backgroundImage: 'none'
+            backgroundImage: "none",
           },
           rounded: {
-            borderRadius: `${theme?.customization?.borderRadius}px`
-          }
-        }
-      }
+            borderRadius: `${theme?.customization?.borderRadius}px`,
+          },
+        },
+      },
     },
     chip,
     list,
@@ -308,7 +308,7 @@ export default function componentStyleOverrides(theme) {
     buttonGroup,
     autocomplete,
     MuiIconButton,
-    MuiTypography
+    MuiTypography,
     // MuiToggleButton
   );
 }

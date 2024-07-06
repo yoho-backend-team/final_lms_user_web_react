@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid, Skeleton } from '@mui/material';
+import { Card, CardContent, Grid, Skeleton } from "@mui/material";
 // import CustomAvatar from 'components/mui/avatar';
 // import ReactApexCharts from 'react-apexcharts';
 // import { gridSpacing } from 'store/constant';
@@ -12,7 +12,7 @@ const FaqSkeleton = () => {
           <CardContent>
             <Grid container spacing={3} direction="column">
               <Grid item paddingBottom={2}>
-                <Grid container display={'flex'}>
+                <Grid container display={"flex"}>
                   <Grid item xs={12} sm={6}>
                     <Skeleton variant="rectangle" height={50} width="100%" />
                   </Grid>
@@ -34,7 +34,9 @@ const FaqSkeleton = () => {
               ))}
             </Grid>
           </CardContent>
-          <CardContent sx={{ p: 1.25, display: 'flex', pt: 0, justifyContent: 'center' }}>
+          <CardContent
+            sx={{ p: 1.25, display: "flex", pt: 0, justifyContent: "center" }}
+          >
             <Skeleton variant="rectangular" height={25} width={65} />
           </CardContent>
         </Card>

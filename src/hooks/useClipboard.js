@@ -1,11 +1,11 @@
 // ** React Imports
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef } from "react";
 
 // ** Third Party Imports
-import copy from 'clipboard-copy';
+import copy from "clipboard-copy";
 
 const isInputLike = (node) => {
-  return node && (node.nodeName === 'TEXTAREA' || node.nodeName === 'INPUT');
+  return node && (node.nodeName === "TEXTAREA" || node.nodeName === "INPUT");
 };
 
 const useClipboard = (options = {}) => {
@@ -35,7 +35,7 @@ const useClipboard = (options = {}) => {
   };
 
   const copyHandler = useCallback((text) => {
-    if (typeof text === 'string') {
+    if (typeof text === "string") {
       clipboardCopy(text);
     } else if (targetRef.current) {
       clipboardCopy(targetRef.current.value);
@@ -45,7 +45,7 @@ const useClipboard = (options = {}) => {
 
   return {
     copy: copyHandler,
-    target: targetRef
+    target: targetRef,
   };
 };
 
