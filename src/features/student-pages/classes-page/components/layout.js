@@ -1,30 +1,26 @@
-import { Box } from "@mui/material"
+import { Box } from "@mui/material";
 
-
-
-const StudentClassLayout = ({children}) => {
-
-
-return(
+const StudentClassLayout = ({ children }) => {
+  return (
     <Box
-    sx={{
+      sx={{
         width: "100vw",
-        height : "100vh",
-        overflow : "auto",
-        backgroundColor : "#F2F2F2"
-    }}
+        height: "100vh",
+        overflow: "auto",
+        backgroundColor: "#F2F2F2",
+      }}
     >
-        <Box 
+      <Box
         sx={{
-        padding : "67px 40px 40px 40px",
-        width : "100vw",
-        height : "100vh"
+          padding: "67px 40px 40px 40px",
+          width: "100vw",
+          height: "100vh",
         }}
-        >
+      >
         {children}
-        </Box>
+      </Box>
     </Box>
-)}
+  );
+};
 
-
-export default StudentClassLayout
+export default StudentClassLayout;

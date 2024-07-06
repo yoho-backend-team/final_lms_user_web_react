@@ -6,36 +6,32 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { Link } from "react-router-dom";
 import backgroundimg from "../../../../../../../assets/images/background.png";
 import { getAllClasses } from "../../../../services/index";
-import { formatTime,formatDate } from "../../../../../../../utils/formatDate"
+import { formatTime, formatDate } from "../../../../../../../utils/formatDate";
 
-
-
-
-
-function StudentOnlineUpcomingClasses({classType}) {
+function StudentOnlineUpcomingClasses({ classType }) {
   const [upcomingClasses, setUpcomingClasses] = useState([]);
   const matches = useMediaQuery("(min-width:600px)");
 
-  useEffect( () => {
-   const update = async () => {
-    await fetchUpcomingClasses()
-   }
-   update()
+  useEffect(() => {
+    const update = async () => {
+      await fetchUpcomingClasses();
+    };
+    update();
   }, []);
 
   const fetchUpcomingClasses = async () => {
     try {
-      const data = { userType:classType }
+      const data = { userType: classType };
       const response = await getAllClasses(data);
-      console.log(response,"response")
-      setUpcomingClasses(response)
+      console.log(response, "response");
+      setUpcomingClasses(response);
       return response;
     } catch (error) {
       console.error("Failed to fetch classes:", error);
       return [];
     }
   };
-  
+
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -61,14 +57,13 @@ function StudentOnlineUpcomingClasses({classType}) {
                 <Typography
                   variant="h6"
                   sx={{
-                    color: 'var(--Gray-Black, var(--Colour-Neutral-1, #000))',
-                    fontFamily: 'Poppins',
-                    fontSize: '14px',
-                    fontStyle: 'normal',
+                    color: "var(--Gray-Black, var(--Colour-Neutral-1, #000))",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    fontStyle: "normal",
                     fontWeight: 600,
-                    lineHeight: '22px',
-                    minWidth:'150px'
-                    
+                    lineHeight: "22px",
+                    minWidth: "150px",
                   }}
                 >
                   {item?.course?.course_name}
@@ -76,13 +71,13 @@ function StudentOnlineUpcomingClasses({classType}) {
                 <Typography
                   variant="subtitle2"
                   sx={{
-                    color: 'var(--Gray-Black, var(--Colour-Neutral-1, #000))',
-                    fontFamily: 'Poppins',
-                    fontSize: '10px',
-                    fontStyle: 'normal',
+                    color: "var(--Gray-Black, var(--Colour-Neutral-1, #000))",
+                    fontFamily: "Poppins",
+                    fontSize: "10px",
+                    fontStyle: "normal",
                     fontWeight: 400,
-                    lineHeight: '16px',
-                    minWidth:'160px'
+                    lineHeight: "16px",
+                    minWidth: "160px",
                   }}
                 >
                   {item?.class_name}
@@ -92,15 +87,16 @@ function StudentOnlineUpcomingClasses({classType}) {
                 <Typography
                   variant="h5"
                   sx={{
-                    color: 'var(--Gray-600, #6C757D)',
-                    fontFamily: 'Poppins',
-                    fontSize: '12px',
-                    fontStyle: 'normal',
+                    color: "var(--Gray-600, #6C757D)",
+                    fontFamily: "Poppins",
+                    fontSize: "12px",
+                    fontStyle: "normal",
                     fontWeight: 500,
-                    lineHeight: '22px',
+                    lineHeight: "22px",
                   }}
                 >
-                  <CalendarTodayIcon style={{ marginBottom: "-5px" }} /> {formatDate(item?.start_date)}
+                  <CalendarTodayIcon style={{ marginBottom: "-5px" }} />{" "}
+                  {formatDate(item?.start_date)}
                 </Typography>
               </Box>
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
@@ -109,12 +105,12 @@ function StudentOnlineUpcomingClasses({classType}) {
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    color: 'var(--Gray-600, #6C757D)',
-                    fontFamily: 'Poppins',
-                    fontSize: '12px',
-                    fontStyle: 'normal',
+                    color: "var(--Gray-600, #6C757D)",
+                    fontFamily: "Poppins",
+                    fontSize: "12px",
+                    fontStyle: "normal",
                     fontWeight: 500,
-                    lineHeight: '22px',
+                    lineHeight: "22px",
                   }}
                 >
                   <AccessTimeIcon /> Ends at: {formatTime(item?.end_time)}
@@ -124,14 +120,14 @@ function StudentOnlineUpcomingClasses({classType}) {
                 <Typography
                   variant="h5"
                   sx={{
-                    color: '#0D6EFD',
-                    fontFamily: 'Poppins',
-                    fontSize: '14px',
-                    fontStyle: 'normal',
+                    color: "#0D6EFD",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    fontStyle: "normal",
                     fontWeight: 600,
-                    lineHeight: '22px',
-                    borderRadius: '26px',
-                    background: 'rgba(61, 139, 253, 0.22)',
+                    lineHeight: "22px",
+                    borderRadius: "26px",
+                    background: "rgba(61, 139, 253, 0.22)",
                   }}
                 >
                   {item?.course?.duration}
@@ -141,25 +137,30 @@ function StudentOnlineUpcomingClasses({classType}) {
                 <Button
                   variant="outlined"
                   sx={{
-                    color: '#0D6EFD',
-                    fontFamily: 'Poppins',
-                    fontSize: '14px',
-                    fontStyle: 'normal',
+                    color: "#0D6EFD",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    fontStyle: "normal",
                     fontWeight: 500,
-                    lineHeight: '22px',
-                    borderRadius: '24px',
-                    background: '#FFF',
-                    display: 'flex',
-                    width: '113px',
-                    height: '40px',
-                    padding: '10px',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    gap: '10px',
+                    lineHeight: "22px",
+                    borderRadius: "24px",
+                    background: "#FFF",
+                    display: "flex",
+                    width: "113px",
+                    height: "40px",
+                    padding: "10px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "10px",
                     flexShrink: 0,
                   }}
+                  component={Link}
+                  to={{
+                    pathname: `/student/OnlineUpcomingClass/${item.uuid}`,
+                  }}
+                  style={{ textDecoration: "none" }}
                 >
-                  <Link to={`/student/OnlineUpcomingClass/${item.id}`} style={{ textDecoration: "none" }}>View Class</Link>
+                  View Class
                 </Button>
               </Box>
             </Box>

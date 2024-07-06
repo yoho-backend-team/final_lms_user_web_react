@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const CreateTicketPage = () => {
-  return (
-    <div>CreateTicketPage</div>
-  )
-}
+  return <div>CreateTicketPage</div>;
+};
 
-export default CreateTicketPage
+export default CreateTicketPage;

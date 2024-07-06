@@ -1,15 +1,15 @@
 export default {
   MuiPaper: {
     defaultProps: {
-      elevation: 0
+      elevation: 0,
     },
     styleOverrides: {
       root: {
-        backgroundImage: 'none'
+        backgroundImage: "none",
       },
       rounded: {
-        borderRadius: `${theme?.customization?.borderRadius}px`
-      }
-    }
-  }
+        borderRadius: `${theme?.customization?.borderRadius}px`,
+      },
+    },
+  },
 };

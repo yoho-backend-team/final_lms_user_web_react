@@ -1,23 +1,22 @@
-import NavBar from 'features/common/Navbar'
-import Footer from 'features/common/footer/footer'
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import NavBar from "features/common/Navbar";
+import Footer from "features/common/footer/footer";
+import React from "react";
+import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
   return (
-
     <div className="App">
       <header className="header">
-      <NavBar />
+        <NavBar />
       </header>
-      <main className="main" style={{overflow:"auto"}}  >
-      <Outlet />
+      <main className="main" style={{ overflow: "auto" }}>
+        <Outlet />
       </main>
       <footer className="footer">
-      <Footer />
+        <Footer />
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;

@@ -1,14 +1,14 @@
 import { Box } from "@mui/material";
 
-const AddStudyMaterialLayout = ({children}) => {
+const AddStudyMaterialLayout = ({ children }) => {
   return (
     <Box
       sx={{
         width: "100vw",
         height: "100vh",
-        boxSizing: "border-box", 
+        boxSizing: "border-box",
         padding: "60px 40px 32px 40px",
-        overflow: "auto" 
+        overflow: "auto",
       }}
     >
       <Box
@@ -19,7 +19,7 @@ const AddStudyMaterialLayout = ({children}) => {
           width: "100%",
           height: "100%",
           boxSizing: "border-box",
-          overflow: "auto" 
+          overflow: "auto",
         }}
       >
         {children}

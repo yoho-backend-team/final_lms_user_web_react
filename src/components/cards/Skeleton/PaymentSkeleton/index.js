@@ -1,7 +1,7 @@
-import { Skeleton } from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Grid from '@mui/material/Grid';
+import { Skeleton } from "@mui/material";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
 
 const PaymentSkeleton = () => {
   return (
@@ -12,7 +12,7 @@ const PaymentSkeleton = () => {
             <CardContent>
               <Grid container spacing={2} direction="column">
                 <Grid item paddingBottom={2}>
-                  <Grid container display={'flex'}>
+                  <Grid container display={"flex"}>
                     <Grid item xs={12} sm={6}>
                       <Skeleton variant="rectangle" height={50} width="100%" />
                     </Grid>
@@ -34,7 +34,9 @@ const PaymentSkeleton = () => {
                 ))}
               </Grid>
             </CardContent>
-            <CardContent sx={{ p: 1.25, display: 'flex', pt: 0, justifyContent: 'center' }}>
+            <CardContent
+              sx={{ p: 1.25, display: "flex", pt: 0, justifyContent: "center" }}
+            >
               <Skeleton variant="rectangular" height={25} width={65} />
             </CardContent>
           </Card>

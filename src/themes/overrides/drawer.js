@@ -3,10 +3,10 @@ const Drawer = (skin) => {
     MuiDrawer: {
       styleOverrides: {
         paper: ({ theme }) => ({
-          boxShadow: theme.shadows[skin === 'default' ? 0 : 0]
-        })
-      }
-    }
+          boxShadow: theme.shadows[skin === "default" ? 0 : 0],
+        }),
+      },
+    },
   };
 };
 

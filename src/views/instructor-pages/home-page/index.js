@@ -1,5 +1,5 @@
-import { Card, Grid ,Box, Avatar, Typography, Button} from "@mui/material"
-import { StudentBg, StudentProfile ,UpdateCardBg} from "utils/images"
+import { Card, Grid, Box, Avatar, Typography, Button } from "@mui/material";
+import { StudentBg, StudentProfile, UpdateCardBg } from "utils/images";
 import {
   Assessment,
   CheckCircle,
@@ -7,81 +7,93 @@ import {
   NearbyError,
   Podcasts,
 } from "@mui/icons-material";
-import AttendanceCard from "features/student-pages/home-page/components/AttendanceCard"
-import UpdatesCard from "features/student-pages/home-page/components/UpdatesCard"
+import AttendanceCard from "features/student-pages/home-page/components/AttendanceCard";
+import UpdatesCard from "features/student-pages/home-page/components/UpdatesCard";
 import { useTheme } from "@emotion/react";
 import TicketCard from "features/instructor-pages/home-page/components/TicketCard";
 import CourseCard from "features/instructor-pages/home-page/components/courseCard";
 import CourseProgressCard from "features/instructor-pages/home-page/components/courseProgressCard";
 import { useTabResponsive } from "utils/tabResponsive";
-import { getBranchDetails, getInstituteDetails } from "store/atoms/authorized-atom";
-
+import {
+  getBranchDetails,
+  getInstituteDetails,
+} from "store/atoms/authorized-atom";
 
 const InstructorDashBoard = () => {
-  const theme = useTheme()
-  const { tabView } = useTabResponsive()
-  
-   return(
-    <Grid container p={tabView ? 4 : 8} sx={{p:{xs:2,sm:tabView?"40px 10px 10px 10px":5}}} gap={ tabView ? "0px" : 5}>
-        <Grid item xs={ tabView ? 6 : 3} >
-          <Card>
-             <Box>
-               <img 
-               src={StudentBg}
-               alt="student"
-               style={{height:75,width:"100%"}} 
-               />
-             </Box>
-             <Grid
-             sx={{
-              display :"flex",
-              alignContent:"center",
-              justifyContent:"space-between"
-             }}
-             >
-               <Grid xs={8} >
-                 <Box p={2} sx={{mt:-5}}>
-                   <Avatar 
-                   src={StudentProfile}
-                   variant="square"
-                   sx={{borderRadius:1}}
-                   />
-                 
-                 <Box>
+  const theme = useTheme();
+  const { tabView } = useTabResponsive();
+
+  return (
+    <Grid
+      container
+      p={tabView ? 4 : 8}
+      sx={{ p: { xs: 2, sm: tabView ? "40px 10px 10px 10px" : 5 } }}
+      gap={tabView ? "0px" : 5}
+    >
+      <Grid item xs={tabView ? 6 : 3}>
+        <Card>
+          <Box>
+            <img
+              src={StudentBg}
+              alt="student"
+              style={{ height: 75, width: "100%" }}
+            />
+          </Box>
+          <Grid
+            sx={{
+              display: "flex",
+              alignContent: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Grid xs={8}>
+              <Box p={2} sx={{ mt: -5 }}>
+                <Avatar
+                  src={StudentProfile}
+                  variant="square"
+                  sx={{ borderRadius: 1 }}
+                />
+
+                <Box>
                   <Typography
-                  variant="h5"
-                  sx={{
-                    color:"black",
-                    fontFamily:"sans-serif",
-                    fontWeight:600
-                  }}
+                    variant="h5"
+                    sx={{
+                      color: "black",
+                      fontFamily: "sans-serif",
+                      fontWeight: 600,
+                    }}
                   >
                     Preethi Nair
                   </Typography>
-                 
-                 <Box sx={{display:"flex",mt:1}} >
-                   <Typography
-                    sx={{
-                      color:"black",
-                      fontFamily:"poppins",
-                      fontSize:12,
-                      mr:1,
-                    }}
-                   >
-                     Trainee ID : 
-                   </Typography>
-                   <Typography>
-                   LMSTRN231
-                   </Typography>
-                 </Box>
-                 </Box>
-                 </Box>
-               </Grid>
-               <Grid xs={4}>
-                 <Button variant="contained" color="primary" size="medium" sx={{p:1,px:2,borderRadius:5}} >Edit Profile</Button>
-               </Grid>
-             </Grid>
-             <Grid container>
+
+                  <Box sx={{ display: "flex", mt: 1 }}>
+                    <Typography
+                      sx={{
+                        color: "black",
+                        fontFamily: "poppins",
+                        fontSize: 12,
+                        mr: 1,
+                      }}
+                    >
+                      Trainee ID :
+                    </Typography>
+                    <Typography>LMSTRN231</Typography>
+                  </Box>
+                </Box>
+              </Box>
+            </Grid>
+            <Grid xs={4}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="medium"
+                sx={{ p: 1, px: 2, borderRadius: 5 }}
+              >
+                Edit Profile
+              </Button>
+            </Grid>
+          </Grid>
+          <Grid container>
             <Grid item xs={12} alignItems="center">
               {" "}
               <Typography variant="h4" sx={{ mb: 1, mx: { xs: 3, sm: 5 } }}>
@@ -247,34 +259,31 @@ const InstructorDashBoard = () => {
               </Grid>
             </Card>
           </Box>
-          </Card>
-          {
-           tabView ? <CourseProgressCard /> : <TicketCard />}
-        </Grid>
-      {
-        !tabView &&
+        </Card>
+        {tabView ? <CourseProgressCard /> : <TicketCard />}
+      </Grid>
+      {!tabView && (
         <Grid item sm={4}>
           <AttendanceCard />
           <CourseProgressCard />
-        </Grid> 
-      }
-      {
-        !tabView &&
-        <Grid item sm={4}>
-        <Card>
-           <UpdatesCard image={UpdateCardBg} />
-        </Card>
-      </Grid>
-      }
-      { tabView &&
-        <Grid item xs={6}  >
-           <UpdatesCard image={UpdateCardBg} />
-           <AttendanceCard />
-           <TicketCard />
         </Grid>
-      }
+      )}
+      {!tabView && (
+        <Grid item sm={4}>
+          <Card>
+            <UpdatesCard image={UpdateCardBg} />
+          </Card>
+        </Grid>
+      )}
+      {tabView && (
+        <Grid item xs={6}>
+          <UpdatesCard image={UpdateCardBg} />
+          <AttendanceCard />
+          <TicketCard />
+        </Grid>
+      )}
     </Grid>
-   )
-}
+  );
+};
 
-export default InstructorDashBoard
+export default InstructorDashBoard;

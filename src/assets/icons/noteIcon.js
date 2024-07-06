@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const NoteIcon = (props) => (
   <svg width="39" height="39" {...props} viewBox="0 0 39 39" fill="none">
