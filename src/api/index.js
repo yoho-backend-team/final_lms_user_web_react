@@ -9,7 +9,8 @@ class Client {
       get : (params) => httpClient.get(HTTP_END_POINTS.Student.course.get,params,"student")
     },
     class : {
-      get : (params) => httpClient.get(HTTP_END_POINTS.Student.class.get,params,"student")
+      get : (params) => httpClient.get(HTTP_END_POINTS.Student.class.get,params,"student"),
+      getWithId : (params) => httpClient.get(HTTP_END_POINTS.Student.class.getwithId+params.course,params,'student'),
     },
     payment : {
       get : (params) => httpClient.get(HTTP_END_POINTS.Student.payments.getFees,params,"student")

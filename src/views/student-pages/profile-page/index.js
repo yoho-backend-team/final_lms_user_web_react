@@ -16,6 +16,7 @@ import EllipseImage from '../../../assets/Ellipse 1928.png';
 import { useNavigate } from 'react-router-dom';
 import IdCardImage from '../../../Id_card.png';
 import CircularProgress from '@mui/material/CircularProgress';
+import VirtualIDCard from './VirtualIDCard';
 
 const ProfilePage = () => {
   const [isEditMode, setEditMode] = useState(false);
@@ -310,8 +311,8 @@ const ProfilePage = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={4}>
-          {/* Virtual ID */}
+        <Grid item xs={6} md={4} lg={4} >
+          {/* Virtual ID
           <Card sx={{ 
             backgroundColor: '#FFFFFF', 
             borderRadius: 2, 
@@ -348,7 +349,8 @@ const ProfilePage = () => {
         <Typography variant="body1">Course Ends at: 29 May 2024</Typography>
       
     </Box>
-    </Box>
+    </Box> */}
+    <VirtualIDCard />
         </Grid>
       </Grid>
     </Box>

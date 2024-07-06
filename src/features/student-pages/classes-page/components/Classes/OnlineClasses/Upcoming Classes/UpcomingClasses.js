@@ -138,28 +138,34 @@ function StudentOnlineUpcomingClasses({classType}) {
                 </Typography>
               </Box>
               <Box>
-                <Button
+              <Button
                   variant="outlined"
                   sx={{
-                    color: '#0D6EFD',
-                    fontFamily: 'Poppins',
-                    fontSize: '14px',
-                    fontStyle: 'normal',
+                    color: "#0D6EFD",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    fontStyle: "normal",
                     fontWeight: 500,
-                    lineHeight: '22px',
-                    borderRadius: '24px',
-                    background: '#FFF',
-                    display: 'flex',
-                    width: '113px',
-                    height: '40px',
-                    padding: '10px',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    gap: '10px',
+                    lineHeight: "22px",
+                    borderRadius: "24px",
+                    background: "#FFF",
+                    display: "flex",
+                    width: "113px",
+                    height: "40px",
+                    padding: "10px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "10px",
                     flexShrink: 0,
                   }}
+                  component={Link}
+                  to={{
+                    pathname: `/student/OnlineUpcomingClass/${item._id}`,
+                    state: { classDetails: item }, 
+                  }}
+                  style={{ textDecoration: "none" }}
                 >
-                  <Link to={`/student/OnlineUpcomingClass/${item.id}`} style={{ textDecoration: "none" }}>View Class</Link>
+                  View Class
                 </Button>
               </Box>
             </Box>
