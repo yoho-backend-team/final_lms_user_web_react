@@ -140,7 +140,7 @@ function InstructorAttendance({ attendanceData }) {
   };
 
   return (
-    <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    <Box sx={{ height: '66vh', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ flexShrink: 0 }}>
         <Grid
           container
