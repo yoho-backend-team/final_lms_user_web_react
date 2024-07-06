@@ -93,7 +93,8 @@ const generateEndpoints = () => {
         get: `/institutes/class/${studentCourse}`
       },
       attendance: {
-        get: `/attendance/students/?${institutestudent}/${branchstudent}`
+        get: `/institutes/attedance/student-attendance/${student?._id}`,
+        class_attendance : "/attendance/class"
       },
       payments : {
         getFees : `/institutes/payments/student-fee/${getStudentDetails()?._id}`
@@ -120,7 +121,7 @@ const generateEndpoints = () => {
         log_out: "/institutes/auth/teaching-staff/logout"
       },
       attendance: {
-        get: "/institutes/attedance/staff/",
+        get: "/attendance/students",
         class_attendance : "/institutes/attedance/class/"
       },
       course: {

@@ -20,8 +20,9 @@ import {
 import design from "../../../../../assets/images/icons/studentattendance.png"
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import client from "../../../../../api/index"
-import { getStudentBranchDetails, getStudentInstituteDetails } from 'store/atoms/authorized-atom';
+import Client from "../../../../../api/index";
+import { useSpinner } from 'context/SpinnerProvider';
+import { getStudentBranchDetails, getStudentDetails, getStudentInstituteDetails } from 'store/atoms/authorized-atom';
 
 
 function StudentAttendance() {
@@ -41,7 +42,7 @@ function StudentAttendance() {
   const [selectedCalenderMonth, setSelectedCalenderMonth] = useState(new Date().getMonth());
 
   const [globalAttendance, setGlobalAttendance] = useState('');
-
+  const { showSpinner, hideSpinner } = useSpinner()
   const months = [
     'January', 'February', 'March', 'April',
     'May', 'June', 'July', 'August',
@@ -76,18 +77,23 @@ function StudentAttendance() {
   };
 
   const generateDays = () => {
-    const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedCalenderMonth );
+    const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedCalenderMonth);
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
+  
     const days = [];
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(new Date().getFullYear(), selectedCalenderMonth, i);
       const dayOfWeek = daysOfWeek[date.getDay()];
-      let attendanceStatus = attendance[i] || 'Absent';
-      if (dayOfWeek === 'Sunday') {
+  
+      let attendanceStatus = 'Absent'; // Default status
+      if (attendance && attendance[i]) {
+        attendanceStatus = attendance[i];
+      } else if (dayOfWeek === 'Sunday') {
         attendanceStatus = 'Holiday';
       }
+  
       const isHoliday = dayOfWeek === 'Sunday';
+  
 
       days.push(
         <Grid item xs={isSmallScreen ? 12 : 2.4} key={i}>
@@ -136,19 +142,21 @@ function StudentAttendance() {
     return days;
   };
 
+  useEffect(() => {
+    const getAttedence = async () => {
+      try {
+        const user = getStudentDetails();
+        const response = await Client.Student.attendance.get({ instituteId: user.institute_id?.uuid , month:selectedMonth});  
+        setAttendance(response);
+        console.log(response)
+      } catch (error) {
+        console.log(error, "error");
+      }
+    }
+    getAttedence();
+  }, [selectedMonth]);
 
-  useEffect(()=>{
-  const getAttedance = async () => {
-   
-   const institute = getStudentInstituteDetails()
-   const branch = getStudentBranchDetails()
-   const data = { institute: institute,branch:branch}
-   const response = client.Student.attendance(data)
-   console.log(response,"response")
-  }
-  getAttedance()
-  },[])
-
+  console.log(attendance,"attendance")
 
   return (
     <StyledPaper elevation={3}>
@@ -256,7 +264,7 @@ function StudentAttendance() {
                           marginRight: '5px'
                         }}
                       >
-                        24
+                        {attendance?.data?.totalPresentDays}
                       </Typography>
                       <Typography
                         variant='h3'
@@ -283,7 +291,7 @@ function StudentAttendance() {
                           letterSpacing: '0.48px'
                         }}
                       >
-                        29
+                        {attendance?.data?.totalWorkingDays}
                       </Typography>
                     </div>
                   </CardContent>
@@ -326,7 +334,7 @@ function StudentAttendance() {
                         marginRight: '5px'
                       }}
                     >
-                      5
+                      {attendance?.data?.totalAbsentDays}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -369,7 +377,7 @@ function StudentAttendance() {
                           marginRight: '5px'
                         }}
                       >
-                        24
+                        {attendance?.data?.totalPresentDays}
                       </Typography>
                       <Typography
                         variant='h3'
@@ -396,7 +404,7 @@ function StudentAttendance() {
                           letterSpacing: '0.48px'
                         }}
                       >
-                        29
+                        {attendance?.data?.totalWorkingDays}
                       </Typography>
                     </div>
                   </CardContent>
