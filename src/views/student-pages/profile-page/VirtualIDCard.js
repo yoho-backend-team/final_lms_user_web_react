@@ -51,7 +51,7 @@ const VirtualIDCard = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={6} lg={4} xl={3}>
-      <Typography variant="h5" gutterBottom sx={{ width: '137px',color: '#000',fontFamily: 'Poppins',fontSize: '20px',fontStyle: 'normal',fontWeight: 700,lineHeight: '5px', padding: '16px 16px 0 16px', }}>
+      <Typography variant="h5" gutterBottom sx={{ width: '137px',color: '#000',fontFamily: 'Poppins',fontSize: '20px',fontStyle: 'normal',fontWeight: 700,lineHeight: '5px', padding: '16px 16px 0 16px' }}>
               Virtual ID
             </Typography>
         <Box
@@ -126,10 +126,10 @@ const VirtualIDCard = () => {
         </Box>
       </Grid>
       <Grid item xs={12}>
-      <Typography variant="h5" gutterBottom sx={{ minwidth: '137px',color: '#000',fontFamily: 'Poppins',fontSize: '20px',fontStyle: 'normal',fontWeight: 700,lineHeight: '5px', padding: '16px 16px 0 16px', }}>
+      <Typography variant="h5" gutterBottom sx={{ width: '500px',color: '#000',fontFamily: 'Poppins',fontSize: '20px',fontStyle: 'normal',fontWeight: 700,lineHeight: '5px', padding: '16px 16px 0 16px', }}>
          Course Status
       </Typography>
-      <Box sx={{justifyContent:'flex-start'}}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-start',}}>
       <Chart 
               options={options}
               series={options.series}
@@ -144,7 +144,8 @@ const VirtualIDCard = () => {
             fontStyle: 'normal',
             fontWeight: 700,
             lineHeight: 'normal',
-            padding: '0 0 0 16px',
+            padding: '0 0 0 60px',
+            minwidth:'800px'     
         }}>
            Course Ends at : 29 May 2024
         </Typography>      
