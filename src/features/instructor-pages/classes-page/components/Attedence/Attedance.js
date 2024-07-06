@@ -125,31 +125,6 @@ const Attendance = ({setShowAttendance,classDetails}) => {
                     <Typography variant="body2" sx={{ color: "#232323", fontSize: "12px", fontWeight:400, lineHeight: "24px"}} >
                       {student?.student?.id}
                     </Typography>
-                  </Box>
-                  <Box sx={{ display: "inline-flex" }}>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#232323",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                      }}
-                    >
-                      Name:
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#232323",
-                        fontSize: "12px",
-                        fontWeight: 400,
-                        lineHeight: "24px",
-                      }}
-                    >
-                      {student.name}
-                    </Typography>
-                  </Box>
                 </Box>
                 <Box sx={{ display: "inline-flex"}} >
                   <Typography variant="body1" sx={{ color: "#232323", fontSize: "14px", fontWeight:600, lineHeight: "24px"}} >
