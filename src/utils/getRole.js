@@ -1,5 +1,1 @@
-
-
-export const getRole = (url) => {
-    
-}
+export const getRole = (url) => {};

@@ -1,6 +1,6 @@
 // ToastProvider.jsx
-import React from 'react';
-import { Toaster } from 'react-hot-toast';
+import React from "react";
+import { Toaster } from "react-hot-toast";
 
 const ToastProvider = ({ children }) => {
   return (

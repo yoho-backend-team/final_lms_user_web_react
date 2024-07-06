@@ -5,7 +5,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Book, CalendarToday, Groups2, MoneyOff } from "@mui/icons-material";
 
 const UpdatesCard = (props) => {
-  const {image} = props
+  const { image } = props;
   const [value, setValue] = React.useState("today");
 
   const handleChange = (event, newValue) => {
@@ -15,11 +15,7 @@ const UpdatesCard = (props) => {
     <Card sx={{ boxShadow: "none" }}>
       <Grid>
         <Box sx={{ height: 120, overflow: "hidden" }}>
-          <img
-            src={image}
-            alt="banner"
-            style={{ width: "100%" }}
-          />
+          <img src={image} alt="banner" style={{ width: "100%" }} />
         </Box>
         <Box
           px={2}

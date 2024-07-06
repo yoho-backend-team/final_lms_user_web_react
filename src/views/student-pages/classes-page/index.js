@@ -1,12 +1,8 @@
-import MainClasses from '../../../features/student-pages/classes-page/components/Classes/MainClasses/MainClasses'
-import React from 'react'
+import MainClasses from "../../../features/student-pages/classes-page/components/Classes/MainClasses/MainClasses";
+import React from "react";
 
 const ClassesPage = () => {
-  return (
+  return <MainClasses />;
+};
 
-    <MainClasses />
-
-  )
-}
-
-export default ClassesPage
+export default ClassesPage;

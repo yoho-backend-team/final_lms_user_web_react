@@ -119,8 +119,10 @@ function AccountMenu() {
         </Box>
         <Divider />
         <MenuItem sx={{ padding: 0 }} onClick={handleClose}>
-      <Grid container >
-      <Grid item xs={12}
+          <Grid container>
+            <Grid
+              item
+              xs={12}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -134,7 +136,6 @@ function AccountMenu() {
                   display: "flex",
                   alignItems: "center",
                   maxWidth: 300,
-                  
                 }}
               >
                 <Avatar
@@ -142,15 +143,19 @@ function AccountMenu() {
                   src="https://cdn-icons-png.flaticon.com/128/4140/4140037.png"
                   style={{ width: "40px", height: "40px" }}
                 />
-                <Grid item >
+                <Grid item>
                   <Typography variant="h5" sx={{ color: "black" }}>
                     Michael Just purchased
                   </Typography>
-                  <Typography variant="subtitle2" sx={{ color: "black",display:'block' }} noWrap lineHeight={2}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ color: "black", display: "block" }}
+                    noWrap
+                    lineHeight={2}
+                  >
                     Michael Just purchased view in idjdoijoko mjojokoko
                   </Typography>
                 </Grid>
-                
               </Box>
               <Box
                 sx={{
@@ -182,13 +187,13 @@ function AccountMenu() {
                 </Typography>
               </Box>
             </Grid>
-      </Grid>
-            
-          
+          </Grid>
         </MenuItem>
         <MenuItem sx={{ padding: 0 }} onClick={handleClose}>
-      <Grid container >
-      <Grid item xs={12}
+          <Grid container>
+            <Grid
+              item
+              xs={12}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -202,7 +207,6 @@ function AccountMenu() {
                   display: "flex",
                   alignItems: "center",
                   maxWidth: 300,
-                  
                 }}
               >
                 <Avatar
@@ -210,15 +214,19 @@ function AccountMenu() {
                   src="https://cdn-icons-png.flaticon.com/128/4140/4140037.png"
                   style={{ width: "40px", height: "40px" }}
                 />
-                <Grid item >
+                <Grid item>
                   <Typography variant="h5" sx={{ color: "black" }}>
                     Michael Just purchased
                   </Typography>
-                  <Typography variant="subtitle2" sx={{ color: "black",display:'block' }} noWrap lineHeight={2}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ color: "black", display: "block" }}
+                    noWrap
+                    lineHeight={2}
+                  >
                     Michael Just purchased view in idjdoijoko mjojokoko
                   </Typography>
                 </Grid>
-                
               </Box>
               {/* <Box
                 sx={{
@@ -245,12 +253,11 @@ function AccountMenu() {
                     3
                   </Typography>
                 </Box> */}
-                <Typography sx={{ fontSize: "8px", mt: 2.5 }}>
-                  33 Minutes Ago
-                </Typography>
+              <Typography sx={{ fontSize: "8px", mt: 2.5 }}>
+                33 Minutes Ago
+              </Typography>
             </Grid>
-      </Grid>
-          
+          </Grid>
         </MenuItem>
 
         <div

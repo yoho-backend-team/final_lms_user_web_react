@@ -1,16 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Box,
-  Typography, Grid, FormControl, Select, MenuItem, Button, CircularProgress
-} from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { AttedenceMainBg, AttedenceHeaderImg, AttedenceHeader2Img } from 'utils/images';
-import InstructorAttendance from 'features/instructor-pages/attendances-page/components/Calender';
+  Typography,
+  Grid,
+  FormControl,
+  Select,
+  MenuItem,
+  Button,
+  CircularProgress,
+} from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import {
+  AttedenceMainBg,
+  AttedenceHeaderImg,
+  AttedenceHeader2Img,
+} from "utils/images";
+import InstructorAttendance from "features/instructor-pages/attendances-page/components/Calender";
 import Client from "../../../api/index";
-import { getInstructorDetails } from 'store/atoms/authorized-atom';
-import { useTabResponsive } from 'utils/tabResponsive';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { useSpinner } from 'context/SpinnerProvider';
+import { getInstructorDetails } from "store/atoms/authorized-atom";
+import { useTabResponsive } from "utils/tabResponsive";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useSpinner } from "context/SpinnerProvider";
 
 const useStyles = makeStyles({
   root: {
@@ -22,11 +32,11 @@ const useStyles = makeStyles({
     backgroundImage: `url(${AttedenceMainBg})`,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
-    width: '100%',
+    width: "100%",
     height: "100%",
     borderRadius: "18px",
     position: "relative",
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   headerImg: {
     position: "absolute",
@@ -39,8 +49,8 @@ const useStyles = makeStyles({
     color: "white",
     top: "7px",
     right: 0,
-    padding: '5px 10px',
-    borderRadius: '5px',
+    padding: "5px 10px",
+    borderRadius: "5px",
     fontSize: "20px",
     fontWeight: 700,
   },
@@ -50,19 +60,29 @@ const useStyles = makeStyles({
   sidebar: {
     paddingTop: "40px",
     paddingLeft: "31px",
-    overflowY: 'auto',
-    maxHeight: 'calc(100vh - 150px)',
+    overflowY: "auto",
+    maxHeight: "calc(100vh - 150px)",
   },
   content: {
     padding: "20px 20px 20px 0",
-    overflowY: 'auto',
-    maxHeight: 'calc(100vh - 150px)'
-  }
+    overflowY: "auto",
+    maxHeight: "calc(100vh - 150px)",
+  },
 });
 
 const months = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 const getCurrentMonth = () => {
@@ -75,8 +95,8 @@ const Attendance = () => {
   const [selectedMonth, setSelectedMonth] = React.useState(getCurrentMonth());
   const [attendance, setAttendance] = useState([]);
   const [loading, setLoading] = useState(false);
-  const { tabView } = useTabResponsive()
-  const { showSpinner, hideSpinner } = useSpinner()
+  const { tabView } = useTabResponsive();
+  const { showSpinner, hideSpinner } = useSpinner();
 
   const handleChange = (event) => {
     setSelectedMonth(event.target.value);
@@ -85,16 +105,18 @@ const Attendance = () => {
   useEffect(() => {
     const getAttedenceDetails = async () => {
       try {
-        showSpinner()
+        showSpinner();
         const user = getInstructorDetails();
-        const response = await Client.Instructor.attendance.get({ userId: user.uuid });  
+        const response = await Client.Instructor.attendance.get({
+          userId: user.uuid,
+        });
         setAttendance(response?.data);
       } catch (error) {
         console.log(error, "error");
-      }finally{
-        hideSpinner()
+      } finally {
+        hideSpinner();
       }
-    }
+    };
     getAttedenceDetails();
   }, []);
 
@@ -103,90 +125,268 @@ const Attendance = () => {
   }
 
   return (
-    <Box className={classes.root} sx={{ padding : tabView ? "36px 20px 20px 20px": "56px 40px 17px 40px"}} >
+    <Box
+      className={classes.root}
+      sx={{ padding: tabView ? "36px 20px 20px 20px" : "56px 40px 17px 40px" }}
+    >
       <Box className={classes.card}>
-        <Box sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          flexDirection: "row",
-          height: "58px",
-          width: "100%"
-        }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: "row",
+            height: "58px",
+            width: "100%",
+          }}
+        >
           <Box>
-            <Typography sx={{ color: "#282828", fontSize: "24px", fontWeight: 800, lineHeight: "24px", pt: "34px", pl: "31px" }}>
+            <Typography
+              sx={{
+                color: "#282828",
+                fontSize: "24px",
+                fontWeight: 800,
+                lineHeight: "24px",
+                pt: "34px",
+                pl: "31px",
+              }}
+            >
               Attendance
             </Typography>
           </Box>
           <Box className={classes.headerImgContainer}>
-            <img src={AttedenceHeaderImg} className={classes.headerImg} alt="Header 1" />
-            <img src={AttedenceHeader2Img} className={classes.header2Img} alt="Header 2" />
-            <Typography className={classes.monthText}>
-              June 2024
-            </Typography>
+            <img
+              src={AttedenceHeaderImg}
+              className={classes.headerImg}
+              alt="Header 1"
+            />
+            <img
+              src={AttedenceHeader2Img}
+              className={classes.header2Img}
+              alt="Header 2"
+            />
+            <Typography className={classes.monthText}>June 2024</Typography>
           </Box>
         </Box>
         <Grid container>
-          <Grid item xs={ tabView ? 12 : 4} className={classes.sidebar}>
-            <Box sx={{ display: 'flex', flexDirection:"row",justifyContent:"space-between",pr:"40px"}} >
-            <FormControl className={classes.formControl}>
-              <Select
-                id="month-select"
-                size="small"
-                value={selectedMonth}
-                onChange={handleChange}
-                IconComponent={()=>(<ExpandMoreIcon sx={{ color : "black"}}  />)}
-                sx={{ border: "1px solid #5611B1", backgroundColor: "white", borderRadius: "8px", display:"flex", padding:"8px 14px", gap:"8px" }}
+          <Grid item xs={tabView ? 12 : 4} className={classes.sidebar}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                pr: "40px",
+              }}
+            >
+              <FormControl className={classes.formControl}>
+                <Select
+                  id="month-select"
+                  size="small"
+                  value={selectedMonth}
+                  onChange={handleChange}
+                  IconComponent={() => (
+                    <ExpandMoreIcon sx={{ color: "black" }} />
+                  )}
+                  sx={{
+                    border: "1px solid #5611B1",
+                    backgroundColor: "white",
+                    borderRadius: "8px",
+                    display: "flex",
+                    padding: "8px 14px",
+                    gap: "8px",
+                  }}
+                >
+                  {months.map((month, index) => (
+                    <MenuItem key={index} value={month}>
+                      {month}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <Box sx={{ display: tabView ? "flex" : "none" }}>
+                <Button
+                  sx={{
+                    backgroundColor: "#5611B1",
+                    boxShadow: "0px 6px 34px -8px #5611B1",
+                    borderRadius: "8px",
+                    padding: tabView ? "9px 24px" : "9px 82px",
+                    fontSize: "14px",
+                    fontWeight: 500,
+                    color: "#FBFBFB",
+                  }}
+                >
+                  Create Ticket
+                </Button>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                pt: "20px",
+                display: tabView ? "inline-flex" : "flex",
+                gap: "20px",
+                flexWrap: "wrap",
+              }}
+            >
+              <Box
+                sx={{
+                  padding: tabView
+                    ? "36px 20px 20px 20px"
+                    : "36px 35px 36px 27px",
+                  backgroundColor: "#B8FEBF",
+                  borderRadius: "10px",
+                }}
               >
-                {months.map((month, index) => (
-                  <MenuItem key={index} value={month}>{month}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <Box sx={{ display: tabView ? "flex": "none"}} >
-                <Button sx={{ backgroundColor: "#5611B1", boxShadow: "0px 6px 34px -8px #5611B1", borderRadius: "8px", padding: tabView ? "9px 24px" : "9px 82px", fontSize: "14px", fontWeight: 500, color: "#FBFBFB" }}>Create Ticket</Button>
-              </Box>
-            </Box>
-            <Box sx={{ pt: "20px", display: tabView ? "inline-flex" : "flex", gap: "20px",flexWrap:"wrap" }}>
-              <Box sx={{ padding: tabView ? "36px 20px 20px 20px" : "36px 35px 36px 27px", backgroundColor: "#B8FEBF", borderRadius: "10px" }}>
-                <Box sx={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+                <Box
+                  sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
+                >
                   <Box>
-                    <Typography sx={{ color: "#2C9939", fontSize: "20px", fontWeight: 600, lineHeight: "24px" }}>Present days</Typography>
+                    <Typography
+                      sx={{
+                        color: "#2C9939",
+                        fontSize: "20px",
+                        fontWeight: 600,
+                        lineHeight: "24px",
+                      }}
+                    >
+                      Present days
+                    </Typography>
                   </Box>
                   <Box sx={{ display: "inline-flex" }}>
-                    <Typography sx={{ fontSize: "40px", fontWeight: 600, lineHeight: "24px", letterSpacing: "0.8px", color: "blacks" }}>24</Typography>
-                    <Typography sx={{ fontSize: "40px", fontWeight: 600, lineHeight: "24px", letterSpacing: "0.8px", color: "#2C9939" }}>/29</Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "40px",
+                        fontWeight: 600,
+                        lineHeight: "24px",
+                        letterSpacing: "0.8px",
+                        color: "blacks",
+                      }}
+                    >
+                      24
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "40px",
+                        fontWeight: 600,
+                        lineHeight: "24px",
+                        letterSpacing: "0.8px",
+                        color: "#2C9939",
+                      }}
+                    >
+                      /29
+                    </Typography>
                   </Box>
                 </Box>
               </Box>
-              <Box sx={{ padding: "36px 35px 36px 27px", backgroundColor: "#EBACAC", borderRadius: "10px" }}>
-                <Box sx={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+              <Box
+                sx={{
+                  padding: "36px 35px 36px 27px",
+                  backgroundColor: "#EBACAC",
+                  borderRadius: "10px",
+                }}
+              >
+                <Box
+                  sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
+                >
                   <Box>
-                    <Typography sx={{ color: "#A04A4A", fontSize: "20px", fontWeight: 600, lineHeight: "24px" }}>Absent days</Typography>
+                    <Typography
+                      sx={{
+                        color: "#A04A4A",
+                        fontSize: "20px",
+                        fontWeight: 600,
+                        lineHeight: "24px",
+                      }}
+                    >
+                      Absent days
+                    </Typography>
                   </Box>
                   <Box>
-                    <Typography sx={{ fontSize: "40px", fontWeight: 600, lineHeight: "24px", letterSpacing: "0.8px", color: "blacks" }}>5</Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "40px",
+                        fontWeight: 600,
+                        lineHeight: "24px",
+                        letterSpacing: "0.8px",
+                        color: "blacks",
+                      }}
+                    >
+                      5
+                    </Typography>
                   </Box>
                 </Box>
               </Box>
-              <Box sx={{ padding: "36px 35px 36px 27px", backgroundColor: "#FFE896", borderRadius: "10px" }}>
-                <Box sx={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+              <Box
+                sx={{
+                  padding: "36px 35px 36px 27px",
+                  backgroundColor: "#FFE896",
+                  borderRadius: "10px",
+                }}
+              >
+                <Box
+                  sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
+                >
                   <Box>
-                    <Typography sx={{ color: "#9F8015", fontSize: "20px", fontWeight: 600, lineHeight: "24px" }}>Classes Atten</Typography>
+                    <Typography
+                      sx={{
+                        color: "#9F8015",
+                        fontSize: "20px",
+                        fontWeight: 600,
+                        lineHeight: "24px",
+                      }}
+                    >
+                      Classes Atten
+                    </Typography>
                   </Box>
                   <Box sx={{ display: "inline-flex" }}>
-                    <Typography sx={{ fontSize: "40px", fontWeight: 600, lineHeight: "24px", letterSpacing: "0.8px", color: "blacks" }}>27</Typography>
-                    <Typography sx={{ fontSize: "40px", fontWeight: 600, lineHeight: "24px", letterSpacing: "0.8px", color: "#9F8015" }}>/34</Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "40px",
+                        fontWeight: 600,
+                        lineHeight: "24px",
+                        letterSpacing: "0.8px",
+                        color: "blacks",
+                      }}
+                    >
+                      27
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "40px",
+                        fontWeight: 600,
+                        lineHeight: "24px",
+                        letterSpacing: "0.8px",
+                        color: "#9F8015",
+                      }}
+                    >
+                      /34
+                    </Typography>
                   </Box>
                 </Box>
               </Box>
             </Box>
-            <Box sx={{ display: tabView ? "none" : "flex", flexDirection: "column-reverse", pt: "72px" }}>
+            <Box
+              sx={{
+                display: tabView ? "none" : "flex",
+                flexDirection: "column-reverse",
+                pt: "72px",
+              }}
+            >
               <Box>
-                <Button sx={{ backgroundColor: "#5611B1", boxShadow: "0px 6px 34px -8px #5611B1", borderRadius: "8px", padding: "9px 82px", fontSize: "14px", fontWeight: 500, color: "#FBFBFB" }}>Create Ticket</Button>
+                <Button
+                  sx={{
+                    backgroundColor: "#5611B1",
+                    boxShadow: "0px 6px 34px -8px #5611B1",
+                    borderRadius: "8px",
+                    padding: "9px 82px",
+                    fontSize: "14px",
+                    fontWeight: 500,
+                    color: "#FBFBFB",
+                  }}
+                >
+                  Create Ticket
+                </Button>
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={ tabView ? 12 : 8} className={classes.content}>
+          <Grid item xs={tabView ? 12 : 8} className={classes.content}>
             <InstructorAttendance attendanceData={attendance} />
           </Grid>
         </Grid>

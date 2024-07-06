@@ -1,10 +1,10 @@
-import ActivityLog from '../components/Activity/Activity'
+import ActivityLog from "../components/Activity/Activity";
 
-function ActivityLogComponents(){
-    return(
-        <>
-           <ActivityLog/>
-        </>
-    )
+function ActivityLogComponents() {
+  return (
+    <>
+      <ActivityLog />
+    </>
+  );
 }
 export default ActivityLogComponents;

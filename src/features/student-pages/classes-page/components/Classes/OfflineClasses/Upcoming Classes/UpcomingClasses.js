@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Paper, styled, Box, Typography, Grid } from "@mui/material";
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Link } from "react-router-dom";
 
@@ -61,34 +61,58 @@ function StudentOfflineUpcomingClasses() {
               }}
             >
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
-                <Typography variant="h6" sx={{
-                  color: 'var(--Gray-Black, var(--Colour-Neutral-1, #000))',
-                  fontFamily: 'Poppins',
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  lineHeight: '22px'
-                }}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "var(--Gray-Black, var(--Colour-Neutral-1, #000))",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    lineHeight: "22px",
+                  }}
+                >
                   {item.title}
                 </Typography>
-                <Typography variant="subtitle2" sx={{
-                  color: 'var(--Gray-Black, var(--Colour-Neutral-1, #000))',
-                  fontFamily: 'Poppins',
-                  fontSize: '10px',
-                  fontWeight: 400,
-                  lineHeight: '16px'
-                }}>
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    color: "var(--Gray-Black, var(--Colour-Neutral-1, #000))",
+                    fontFamily: "Poppins",
+                    fontSize: "10px",
+                    fontWeight: 400,
+                    lineHeight: "16px",
+                  }}
+                >
                   {item.subtitle}
-                </Typography>
-              </Box>
-              <Box sx={{ marginBottom: matches ? 0 : 2 }}>
-                <Typography variant="h5" sx={{ color: 'var(--Gray-600, #6C757D)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 500, lineHeight: '22px' }}>
-                  <CalendarTodayIcon style={{ marginBottom: "-5px" }} /> {item.date}
                 </Typography>
               </Box>
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
                 <Typography
                   variant="h5"
-                  sx={{ display: "flex", alignItems: "center", color: 'var(--Gray-600, #6C757D)', fontFamily: 'Poppins', fontSize: '12px', fontWeight: 500, lineHeight: '22px' }}
+                  sx={{
+                    color: "var(--Gray-600, #6C757D)",
+                    fontFamily: "Poppins",
+                    fontSize: "12px",
+                    fontWeight: 500,
+                    lineHeight: "22px",
+                  }}
+                >
+                  <CalendarTodayIcon style={{ marginBottom: "-5px" }} />{" "}
+                  {item.date}
+                </Typography>
+              </Box>
+              <Box sx={{ marginBottom: matches ? 0 : 2 }}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    color: "var(--Gray-600, #6C757D)",
+                    fontFamily: "Poppins",
+                    fontSize: "12px",
+                    fontWeight: 500,
+                    lineHeight: "22px",
+                  }}
                 >
                   <AccessTimeIcon /> Ends at: {item.endTime}
                 </Typography>
@@ -97,18 +121,45 @@ function StudentOfflineUpcomingClasses() {
                 <Typography
                   variant="h5"
                   sx={{
-                    color: '#0D6EFD', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 600, lineHeight: '22px', borderRadius: '26px',
-                    background: 'rgba(61, 139, 253, 0.22)'
+                    color: "#0D6EFD",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    lineHeight: "22px",
+                    borderRadius: "26px",
+                    background: "rgba(61, 139, 253, 0.22)",
                   }}
                 >
                   {item.duration}
                 </Typography>
               </Box>
               <Box>
-                <Button variant="outlined" sx={{
-                  color: '#0D6EFD', fontFamily: 'Poppins', fontSize: '14px', fontWeight: 500, lineHeight: '22px', borderRadius: '24px', background: '#FFF', display: 'flex', width: '113px', height: '40px', padding: '10px', justifyContent: 'center', alignItems: 'center', gap: '10px', flexShrink: 0
-                }}>
-                  <Link to={`/student/OnlineUpcomingClass/${item.id}`} style={{ textDecoration: "none" }}>View Class</Link>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    color: "#0D6EFD",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    fontWeight: 500,
+                    lineHeight: "22px",
+                    borderRadius: "24px",
+                    background: "#FFF",
+                    display: "flex",
+                    width: "113px",
+                    height: "40px",
+                    padding: "10px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "10px",
+                    flexShrink: 0,
+                  }}
+                >
+                  <Link
+                    to={`/student/OnlineUpcomingClass/${item.id}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    View Class
+                  </Link>
                 </Button>
               </Box>
             </Box>

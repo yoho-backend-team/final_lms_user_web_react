@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Button, Card, Grid, Typography } from "@mui/material";
 import { Box, Avatar } from "@mui/material";
 import CourseCard from "features/student-pages/home-page/components/CourseCard";
@@ -23,13 +23,13 @@ const StudentDashboard = () => {
     setEditProfileClicked(true);
   };
 
-   // Student details
-   const student = {
+  // Student details
+  const student = {
     name: "Ramakrishnan P",
     profileImage: "https://cdn.tamaggo.com/1663756964157.png",
     studentID: "LMSSTUD1243",
   };
-  
+
   // Render ProfilePage if editProfileClicked is true
   if (editProfileClicked) {
     return <ProfilePage />;
@@ -100,14 +100,14 @@ const StudentDashboard = () => {
             </Grid>
             <Grid xs={4}>
               <Button
-            variant="contained"
-            color="secondary"
-            size="medium"
-            sx={{ p: 1, px: 2, borderRadius: 5 }}
-            onClick={handleEditProfileClick}
-          >
-            Edit Profile
-          </Button>
+                variant="contained"
+                color="secondary"
+                size="medium"
+                sx={{ p: 1, px: 2, borderRadius: 5 }}
+                onClick={handleEditProfileClick}
+              >
+                Edit Profile
+              </Button>
             </Grid>
           </Grid>
 
@@ -205,7 +205,7 @@ const StudentDashboard = () => {
                 <Typography sx={{ color: "grey" }}>Total Class</Typography>
               </Box>
             </Grid>
-            <Grid                     
+            <Grid
               xs={4}
               sx={{
                 justifyContent: "center",
@@ -281,13 +281,13 @@ const StudentDashboard = () => {
       </Grid>
       <Grid item xs={12} sm={4} className="MainGrid-2">
         <Grid item xs={12} px={3} mb={2}>
-        <PaymentsCard />
+          <PaymentsCard />
         </Grid>
         <Grid item xs={12} px={3} mb={2}>
           <CourseCard />
         </Grid>
         <Grid item xs={12} px={3}>
-        <AttendanceCard />          
+          <AttendanceCard />
         </Grid>
       </Grid>
       <Grid item xs={12} sm={4} className="MainGrid-3">

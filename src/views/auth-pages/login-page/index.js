@@ -1,14 +1,11 @@
-
 import React from "react";
 
 import Login from "features/Auth/login";
 
 const LoginPage = () => {
-
-
   return (
     <>
-    <Login/>
+      <Login />
     </>
   );
 };

@@ -1,31 +1,31 @@
 // project imports
-import config from '../config';
+import config from "../config";
 
 // action - state management
-import * as actionTypes from './actions';
+import * as actionTypes from "./actions";
 
 const getInitialDarkModeState = () => {
-  const storedDarkMode = localStorage.getItem('darkMode');
+  const storedDarkMode = localStorage.getItem("darkMode");
   return storedDarkMode ? JSON.parse(storedDarkMode) : false;
 };
 
 const getInitialFontFamilyState = () => {
-  const storedFontFamily = localStorage.getItem('fontFamily');
+  const storedFontFamily = localStorage.getItem("fontFamily");
   return storedFontFamily || config.fontFamily;
 };
 
 const getInitialBorderRadiusState = () => {
-  const storedBorderRadius = localStorage.getItem('borderRadius');
+  const storedBorderRadius = localStorage.getItem("borderRadius");
   return storedBorderRadius || config.borderRadius;
 };
 
 export const initialState = {
   isOpen: [], // for active default menu
-  defaultId: 'default',
+  defaultId: "default",
   fontFamily: getInitialFontFamilyState(),
   borderRadius: getInitialBorderRadiusState(),
   opened: true,
-  darkMode: getInitialDarkModeState()
+  darkMode: getInitialDarkModeState(),
 };
 
 // ==============================|| CUSTOMIZATION REDUCER ||============================== //
@@ -37,33 +37,33 @@ const customizationReducer = (state = initialState, action) => {
       id = action.id;
       return {
         ...state,
-        isOpen: [id]
+        isOpen: [id],
       };
     case actionTypes.SET_MENU:
       return {
         ...state,
-        opened: action.opened
+        opened: action.opened,
       };
     case actionTypes.SET_FONT_FAMILY:
       // Save to local storage
-      localStorage.setItem('fontFamily', action.fontFamily);
+      localStorage.setItem("fontFamily", action.fontFamily);
       return {
         ...state,
-        fontFamily: action.fontFamily
+        fontFamily: action.fontFamily,
       };
     case actionTypes.SET_BORDER_RADIUS:
       // Save to local storage
-      localStorage.setItem('borderRadius', action.borderRadius);
+      localStorage.setItem("borderRadius", action.borderRadius);
       return {
         ...state,
-        borderRadius: action.borderRadius
+        borderRadius: action.borderRadius,
       };
     case actionTypes.TOGGLE_DARK_MODE:
-      localStorage.setItem('darkMode', JSON.stringify(!state.darkMode));
+      localStorage.setItem("darkMode", JSON.stringify(!state.darkMode));
 
       return {
         ...state,
-        darkMode: !state.darkMode
+        darkMode: !state.darkMode,
       };
     default:
       return state;

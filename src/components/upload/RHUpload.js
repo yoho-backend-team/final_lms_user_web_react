@@ -1,17 +1,17 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 // form
-import { useFormContext, Controller } from 'react-hook-form';
+import { useFormContext, Controller } from "react-hook-form";
 // @mui
-import { FormHelperText } from '@mui/material';
+import { FormHelperText } from "@mui/material";
 // type
-import UploadMultiFile from './UploadMultipleFile';
-import UploadSingleFile from './UploadSingleFile';
+import UploadMultiFile from "./UploadMultipleFile";
+import UploadSingleFile from "./UploadSingleFile";
 // ----------------------------------------------------------------------
 
 // ----------------------------------------------------------------------
 
 RHFUploadMultiFile.propTypes = {
-  name: PropTypes.string
+  name: PropTypes.string,
 };
 
 export function RHFUploadMultiFile({ name, ...other }) {
@@ -45,7 +45,7 @@ export function RHFUploadMultiFile({ name, ...other }) {
 }
 
 RHFUploadSingleFile.propTypes = {
-  name: PropTypes.string
+  name: PropTypes.string,
 };
 
 export function RHFUploadSingleFile({ name, ...other }) {

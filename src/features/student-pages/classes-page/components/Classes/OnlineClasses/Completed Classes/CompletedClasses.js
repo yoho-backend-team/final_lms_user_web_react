@@ -71,39 +71,49 @@ function StudentOnlineCompletedClasses() {
               }}
             >
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
-                <Typography variant="h6" sx={{
-                  color: 'var(--Gray-Black, var(--Colour-Neutral-1, #000))',
-                  fontFamily: 'Poppins',
-                  fontSize: '14px',
-                  fontStyle: 'normal',
-                  fontWeight: 600,
-                  lineHeight: '22px',
-                  minWidth:'200px'
-                }}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    color: "var(--Gray-Black, var(--Colour-Neutral-1, #000))",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    fontStyle: "normal",
+                    fontWeight: 600,
+                    lineHeight: "22px",
+                    minWidth: "200px",
+                  }}
+                >
                   {item.title}
                 </Typography>
-                <Typography variant="subtitle2" sx={{
-                  color: 'var(--Gray-Black, var(--Colour-Neutral-1, #000))',
-                  fontFamily: 'Poppins',
-                  fontSize: '10px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: '16px',
-                  minWidth:'270px'
-                }}>
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    color: "var(--Gray-Black, var(--Colour-Neutral-1, #000))",
+                    fontFamily: "Poppins",
+                    fontSize: "10px",
+                    fontStyle: "normal",
+                    fontWeight: 400,
+                    lineHeight: "16px",
+                    minWidth: "270px",
+                  }}
+                >
                   {item.subtitle}
                 </Typography>
               </Box>
               <Box sx={{ marginBottom: matches ? 0 : 2 }}>
-                <Typography variant="h5" sx={{
-                  color: 'var(--Gray-600, #6C757D)',
-                  fontFamily: 'Poppins',
-                  fontSize: '12px',
-                  fontStyle: 'normal',
-                  fontWeight: 500,
-                  lineHeight: '22px'
-                }}>
-                  <CalendarTodayIcon style={{ marginBottom: "-5px" }} /> {item.date}
+                <Typography
+                  variant="h5"
+                  sx={{
+                    color: "var(--Gray-600, #6C757D)",
+                    fontFamily: "Poppins",
+                    fontSize: "12px",
+                    fontStyle: "normal",
+                    fontWeight: 500,
+                    lineHeight: "22px",
+                  }}
+                >
+                  <CalendarTodayIcon style={{ marginBottom: "-5px" }} />{" "}
+                  {item.date}
                 </Typography>
               </Box>
               <Box sx={{ marginBottom: matches ? 0 : 2, display: "flex" }}>
@@ -112,12 +122,12 @@ function StudentOnlineCompletedClasses() {
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    color: 'var(--Gray-600, #6C757D)',
-                    fontFamily: 'Poppins',
-                    fontSize: '12px',
-                    fontStyle: 'normal',
+                    color: "var(--Gray-600, #6C757D)",
+                    fontFamily: "Poppins",
+                    fontSize: "12px",
+                    fontStyle: "normal",
                     fontWeight: 500,
-                    lineHeight: '22px'
+                    lineHeight: "22px",
                   }}
                 >
                   <AccessTimeIcon /> Ends at: {item.endTime}
@@ -127,39 +137,47 @@ function StudentOnlineCompletedClasses() {
                 <Typography
                   variant="h5"
                   sx={{
-                    color: '#FD8F0D',
-                    fontFamily: 'Poppins',
-                    fontSize: '14px',
-                    fontStyle: 'normal',
+                    color: "#FD8F0D",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    fontStyle: "normal",
                     fontWeight: 600,
-                    lineHeight: '22px',
-                    borderradius: '26px',
-                    background: 'rgba(253, 176, 61, 0.22)'
+                    lineHeight: "22px",
+                    borderradius: "26px",
+                    background: "rgba(253, 176, 61, 0.22)",
                   }}
                 >
                   {item.duration}
                 </Typography>
               </Box>
               <Box>
-                <Button variant="outlined" sx={{
-                  color: '#0D6EFD',
-                  fontFamily: 'Poppins',
-                  fontSize: '14px',
-                  fontStyle: 'normal',
-                  fontWeight: 500,
-                  lineHeight: '22px',
-                  borderradius: '24px',
-                  background: '#FFF',
-                  display: 'flex',
-                  width: '113px',
-                  height: '40px',
-                  padding: '10px',
-                  justifycontent: 'center',
-                  alignitems: 'center',
-                  gap: '10px',
-                  flexshrink: 0
-                }}>
-                  <Link to={`/student/OnlineCompleteClass/${item.id}`} style={{ textDecoration: "none" }}>View Class</Link>
+                <Button
+                  variant="outlined"
+                  sx={{
+                    color: "#0D6EFD",
+                    fontFamily: "Poppins",
+                    fontSize: "14px",
+                    fontStyle: "normal",
+                    fontWeight: 500,
+                    lineHeight: "22px",
+                    borderradius: "24px",
+                    background: "#FFF",
+                    display: "flex",
+                    width: "113px",
+                    height: "40px",
+                    padding: "10px",
+                    justifycontent: "center",
+                    alignitems: "center",
+                    gap: "10px",
+                    flexshrink: 0,
+                  }}
+                >
+                  <Link
+                    to={`/student/OnlineCompleteClass/${item.id}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    View Class
+                  </Link>
                 </Button>
               </Box>
             </Box>

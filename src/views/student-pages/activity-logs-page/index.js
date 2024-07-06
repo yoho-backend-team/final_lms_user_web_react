@@ -1,9 +1,7 @@
-import React from 'react'
-import ActivityLog from 'features/student-pages/activity-logs-page/components/Activity/Activity'
+import React from "react";
+import ActivityLog from "features/student-pages/activity-logs-page/components/Activity/Activity";
 const ActivityLogsPage = () => {
-    return (
-       <ActivityLog/>
-    )
-}
+  return <ActivityLog />;
+};
 
-export default ActivityLogsPage
+export default ActivityLogsPage;
