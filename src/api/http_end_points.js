@@ -90,7 +90,8 @@ const generateEndpoints = () => {
         get: `/institutes/${institute1}/branches/${branch1}/course/${course1}`
       },
       class: {
-        get: `/institutes/class/${studentCourse}`
+        get: `/institutes/class/${studentCourse}`,
+        getwithId : `/institutes/class/course/`,
       },
       attendance: {
         get: `/attendance/students/?${institutestudent}/${branchstudent}`
