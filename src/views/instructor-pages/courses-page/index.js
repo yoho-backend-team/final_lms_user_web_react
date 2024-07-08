@@ -4,20 +4,31 @@ import getAndUpdateCourseDetails from "features/instructor-pages/courses-page/re
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectInstructorCourse } from "features/instructor-pages/courses-page/redux/selectors";
+import { useSpinner } from "context/SpinnerProvider";
+import toast from "react-hot-toast";
 
 const CoursePage = () => {
   const dispatch = useDispatch();
   const course = useSelector(selectInstructorCourse);
+  const { showSpinner,hideSpinner } = useSpinner()
 
   const getCourseDetails = (data) => {
-    dispatch(getAndUpdateCourseDetails(data));
+    try {
+      showSpinner()
+      dispatch(getAndUpdateCourseDetails(data));     
+    } catch (error) {
+      toast.error(error?.message)
+    }finally{
+      hideSpinner()
+    }
+   
   };
 
   useEffect(() => {
     const data = {};
     getCourseDetails(data);
   }, [dispatch]);
-  console.log(course, "course");
+  
   return (
     <CourseLayout>
       <CourseViewPage Course={course} />

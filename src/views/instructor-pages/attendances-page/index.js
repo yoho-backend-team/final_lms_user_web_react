@@ -21,6 +21,7 @@ import { getInstructorDetails } from "store/atoms/authorized-atom";
 import { useTabResponsive } from "utils/tabResponsive";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useSpinner } from "context/SpinnerProvider";
+import toast from "react-hot-toast";
 
 const useStyles = makeStyles({
   root: {
@@ -94,30 +95,34 @@ const Attendance = () => {
   const classes = useStyles();
   const [selectedMonth, setSelectedMonth] = React.useState(getCurrentMonth());
   const [attendance, setAttendance] = useState([]);
+  const [ attendance_data,setAttendanceData] = useState([])
   const [loading, setLoading] = useState(false);
   const { tabView } = useTabResponsive();
   const { showSpinner, hideSpinner } = useSpinner();
+  const date = new Date()
 
+  const getAttedenceDetails = async (month) => {
+    try {
+      showSpinner();
+      const user = getInstructorDetails();
+      const response = await Client.Instructor.attendance.get({
+        userId: user.uuid, month: month
+      });
+      setAttendanceData(response?.data)
+    } catch (error) {
+      toast.error(error?.message)
+    } finally {
+      hideSpinner();
+    }
+  };
+  
   const handleChange = (event) => {
     setSelectedMonth(event.target.value);
+    getAttedenceDetails(event.target.value)
   };
 
   useEffect(() => {
-    const getAttedenceDetails = async () => {
-      try {
-        showSpinner();
-        const user = getInstructorDetails();
-        const response = await Client.Instructor.attendance.get({
-          userId: user.uuid,
-        });
-        setAttendance(response?.data);
-      } catch (error) {
-        console.log(error, "error");
-      } finally {
-        hideSpinner();
-      }
-    };
-    getAttedenceDetails();
+    getAttedenceDetails(selectedMonth);
   }, []);
 
   if (loading) {
@@ -164,7 +169,7 @@ const Attendance = () => {
               className={classes.header2Img}
               alt="Header 2"
             />
-            <Typography className={classes.monthText}>June 2024</Typography>
+            <Typography className={classes.monthText}>{selectedMonth}{date.getFullYear()}</Typography>
           </Box>
         </Box>
         <Grid container>
@@ -260,7 +265,7 @@ const Attendance = () => {
                         color: "blacks",
                       }}
                     >
-                      24
+                      {attendance_data?.presentDays}
                     </Typography>
                     <Typography
                       sx={{
@@ -271,7 +276,7 @@ const Attendance = () => {
                         color: "#2C9939",
                       }}
                     >
-                      /29
+                      /{attendance_data?.totalWorkingDays}
                     </Typography>
                   </Box>
                 </Box>
@@ -308,7 +313,7 @@ const Attendance = () => {
                         color: "blacks",
                       }}
                     >
-                      5
+                      {attendance_data?.absentDays}
                     </Typography>
                   </Box>
                 </Box>
@@ -345,7 +350,7 @@ const Attendance = () => {
                         color: "blacks",
                       }}
                     >
-                      27
+                      {attendance_data?.total_class}
                     </Typography>
                     <Typography
                       sx={{
@@ -356,7 +361,7 @@ const Attendance = () => {
                         color: "#9F8015",
                       }}
                     >
-                      /34
+                      /{attendance_data?.total_class}
                     </Typography>
                   </Box>
                 </Box>
@@ -379,6 +384,9 @@ const Attendance = () => {
                     fontSize: "14px",
                     fontWeight: 500,
                     color: "#FBFBFB",
+                    ":hover":{
+                      backgroundColor: "#5611B1",
+                    }
                   }}
                 >
                   Create Ticket
@@ -387,7 +395,7 @@ const Attendance = () => {
             </Box>
           </Grid>
           <Grid item xs={tabView ? 12 : 8} className={classes.content}>
-            <InstructorAttendance attendanceData={attendance} />
+            <InstructorAttendance attendanceData={attendance} getAttedenceDetails={getAttedenceDetails} attendance_data={attendance_data}  />
           </Grid>
         </Grid>
       </Box>

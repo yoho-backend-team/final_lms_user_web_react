@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import back from "../../../../assets/images/pages/background_1.png";
 
-function InstructorAttendance({ attendanceData }) {
+function InstructorAttendance({ attendanceData,getAttedenceDetails, attendance_data }) {
   const StyledPaper = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(5),
     backgroundImage: `url(${back})`,
@@ -77,6 +77,7 @@ function InstructorAttendance({ attendanceData }) {
 
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
+    getAttedenceDetails(months[event?.target?.value])
   };
 
   const handleAttendanceChange = (day) => {
@@ -105,8 +106,10 @@ function InstructorAttendance({ attendanceData }) {
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(new Date().getFullYear(), selectedMonth, i);
       const dayOfWeek = daysOfWeek[date.getDay()];
-      const attendanceStatus = attendance[i] || "Absent";
-
+    
+      const status = attendance_data?.workingDays?.filter((i)=>new Date(i?.date).getDate() === date?.getDate())
+      const attendanceStatus = status?.[0]?.status || "Absent";
+      
       days.push(
         <Grid item xs={2.4} key={i}>
           <Card>
@@ -122,11 +125,11 @@ function InstructorAttendance({ attendanceData }) {
               <Button
                 sx={{
                   backgroundColor:
-                    attendanceStatus === "Present" ? "#14BC10" : "#FF4B4B",
+                  status?.[0]?.status === "present" ? "#14BC10" : "#FF4B4B",
                   padding: "0px",
                   color: "white",
                 }}
-                onClick={() => handleAttendanceChange(i)}
+                // onClick={() => handleAttendanceChange(i)}
               >
                 {attendanceStatus}
               </Button>

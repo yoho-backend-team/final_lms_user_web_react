@@ -212,7 +212,7 @@ const ApplicationRoutes = () => {
   const RequireAuth = () => {
     const role = getRoleFromPath();
     if (!isLoggedIn(role)) {
-      return <Navigate to={`/${role}/login`} replace />;
+      return <Navigate to={`/${role  || 'instructor' }/login`} replace />;
     }
     return <Outlet />;
   };

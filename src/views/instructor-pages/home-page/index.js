@@ -18,6 +18,7 @@ import {
   getBranchDetails,
   getInstituteDetails,
 } from "store/atoms/authorized-atom";
+import { BranchIcon } from "utils/images";
 
 const InstructorDashBoard = () => {
   const theme = useTheme();
@@ -282,6 +283,29 @@ const InstructorDashBoard = () => {
           <TicketCard />
         </Grid>
       )}
+      <Box sx={{ display: 'flex', backdropFilter:"blur(4px)",padding : "25px 60px 26px 58px",background:"#CCCCCC29",borderRadius:"8px", justifyContent: "space-between", width : "inherit" }} >
+          <Box sx={{ padding : "10px 19px", backgroundColor: "#FFFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px",display:"flex", gap: "10px",alignItems: "center"}} >
+              <Typography sx={{ color : "#000000", fontSize:"16px",fontWeight:900}} >Total Course Handling: </Typography>
+              <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight:600}} >3</Typography>
+          </Box>
+          <Box sx={{ padding : "10px 19px", backgroundColor: "#FFFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px",display:"flex", gap: "10px", alignItems: "center"}} >
+            <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight: 900 }} >Batch's Holding: </Typography>
+            <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight: 600}} >4</Typography>
+          </Box>
+          <Box sx={{ padding : "10px 19px", backgroundColor: "#FFFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px",display:"flex", gap: "10px", alignItems: "center"}} >
+            <Box sx={{ display: "inline-flex", gap: "10px"}} >
+              <Typography sx={{ color: "#000000", fontWeight: 900, fontSize: "16px"}} >Branch: </Typography>
+              <Typography sx={{ color : "#000000", fontWeight:  600, fontSize: "16px"}} >Vellore</Typography>
+            </Box>
+            <Box>
+              <img src={BranchIcon} />
+            </Box>
+          </Box>
+          <Box sx={{ padding : "10px 19px", backgroundColor: "#FFFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px",display:"flex", gap: "10px", alignItems: "center"}} >
+            <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight: 900}} >Category: </Typography>
+            <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight: 600}} >Developing & Programming</Typography>
+          </Box>
+      </Box>
     </Grid>
   );
 };
