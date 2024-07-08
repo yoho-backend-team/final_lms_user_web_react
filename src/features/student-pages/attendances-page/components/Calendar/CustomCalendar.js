@@ -89,6 +89,7 @@ function StudentAttendance() {
     return new Date(year, month + 1, 0).getDate();
   };
 
+
   const generateDays = () => {
     const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedCalenderMonth);
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -98,16 +99,25 @@ function StudentAttendance() {
       const date = new Date(new Date().getFullYear(), selectedCalenderMonth, i);
       const dayOfWeek = daysOfWeek[date.getDay()];
   
-      let attendanceStatus = 'Absent'; // Default status
-      if (attendance && attendance[i]) {
-        attendanceStatus = attendance[i];
-      } else if (dayOfWeek === 'Sunday') {
+      let attendanceStatus = '';
+      if (dayOfWeek === 'Sunday') {
         attendanceStatus = 'Holiday';
+      } else {
+        if (attendance && attendance.length > 0) {
+          const dayAttendance = attendance.find(item => new Date(item.date).getDate() === i);
+      
+          if (dayAttendance) {
+            attendanceStatus = dayAttendance.status;
+          } else {
+            attendanceStatus = '';
+          }
+        } else {
+          attendanceStatus = '';
+        }
       }
   
       const isHoliday = dayOfWeek === 'Sunday';
   
-
       days.push(
         <Grid item xs={isSmallScreen ? 12 : 2.4} key={i}>
           <Card
@@ -138,22 +148,26 @@ function StudentAttendance() {
               </Typography>
               <Button
                 sx={{
-                  backgroundColor: isHoliday
-                    ? "#FEFFC4"
-                    : attendanceStatus === "Present"
-                      ? "#D2FDD6"
-                      : "#FDDED2",
-                  color: isHoliday
-                    ? "#BEA000"
-                    : attendanceStatus === "Present"
-                      ? "#14BC10"
-                      : "#FF4B4B",
-                  padding: "5px 9px",
-                  borderRadius: "8.659px",
-                  width: "58px",
-                  height: "18px",
-                  alignItems: "center",
-                  gap: "8.765px",
+                  backgroundColor: attendanceStatus === ''
+                    ? 'white' 
+                    : isHoliday
+                    ? '#FEFFC4'
+                    : attendanceStatus === 'Present'
+                    ? '#D2FDD6'
+                    : '#FDDED2',
+                  color: attendanceStatus === ''
+                    ? '#666666' 
+                    : isHoliday
+                    ? '#BEA000'
+                    : attendanceStatus === 'Present'
+                    ? '#14BC10'
+                    : '#FF4B4B',
+                  padding: '5px 9px',
+                  borderRadius: '8.659px',
+                  width: '58px',
+                  height: '18px',
+                  alignItems: 'center',
+                  gap: '8.765px',
                   flexShrink: 0,
                 }}
               >
@@ -161,26 +175,31 @@ function StudentAttendance() {
               </Button>
             </CardContent>
           </Card>
-        </Grid>,
+        </Grid>
       );
     }
-
+  
     return days;
   };
+  
 
   useEffect(() => {
-    const getAttedence = async () => {
+    const getAttendance = async () => {
       try {
         const user = getStudentDetails();
-        const response = await Client.Student.attendance.get({ instituteId: user.institute_id?.uuid , month:selectedMonth});  
-        setAttendance(response);
-        console.log(response)
+        const response = await Client.Student.attendance.get({
+          instituteId: user.institute_id?.uuid,
+          month: selectedMonth,
+        });
+        setAttendance(response.data.formattedAttendance[months[selectedMonth]]);
       } catch (error) {
-        console.log(error, "error");
+        console.log("Error fetching attendance:", error);
       }
-    }
-    getAttedence();
+    };
+  
+    getAttendance();
   }, [selectedMonth]);
+  
 
   console.log(attendance,"attendance")
 
