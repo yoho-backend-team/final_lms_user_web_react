@@ -142,7 +142,7 @@ export default function OnlineUpcomingClasses() {
       <Grid
         container
         spacing={2}
-        sx={{ paddingLeft: "44px", paddingBottom: "35px" }}
+        sx={{ paddingLeft: "44px", paddingBottom: "10px" }}
       >
         <Grid item xs={12} sx={{ paddingTop: "10px", overflow: "auto" }}>
           <Breadcrumbs
@@ -165,18 +165,33 @@ export default function OnlineUpcomingClasses() {
               }}
             >
               <Grid>
-                <ArrowBackIcon
-                  sx={{
-                    marginBottom: "20px",
-                    zIndex: "1000",
-                    cursor: "pointer",
-                  }}
-                  onClick={handleBackClick}
-                  style={{ cursor: "pointer" }}
-                />
-                <Typography variant="h1" sx={{ pb: "20px" }}>
-                  {fetchedClassDetails?.course?.course_name}
-                </Typography>
+              <div style={{ alignItems: 'center' }}>
+      <ArrowBackIcon
+        sx={{
+          marginBottom: "20px",
+          zIndex: "1000",
+          cursor: "pointer",
+          lineHeight: "16px",
+          marginRight: "10px", // Adjust spacing between icon and text
+        }}
+        onClick={handleBackClick}
+      />
+      <div style={{ flex: 1 }}>
+        <Typography
+          variant="h1"
+          sx={{
+            pb: "10px",
+            border: "1px solid #ccc",
+            padding: "10px",
+            display: "inline-block",
+            whiteSpace: "nowrap", // Prevent text from wrapping
+          }}
+        >
+          {fetchedClassDetails?.course?.course_name}
+        </Typography>
+      </div>
+    </div>
+
                 <Typography
                   variant="h1"
                   sx={{
