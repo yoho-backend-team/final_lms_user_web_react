@@ -42,7 +42,7 @@ const CourseCard = () => {
 
   return (
     <>
-      <Card sx={{ backgroundColor: "#FFE7DA", p: 3, boxShadow: "none" }}>
+      <Card sx={{ backgroundColor: "#FFE7DA", p: 3, boxShadow: "none", maxWidth: "380px" }}>
         <Grid
           container
           sx={{
