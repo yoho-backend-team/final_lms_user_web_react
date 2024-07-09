@@ -92,22 +92,32 @@ function StudentAttendance() {
   const generateDays = () => {
     const daysInMonth = getDaysInMonth(new Date().getFullYear(), selectedCalenderMonth);
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  
+ 
     const days = [];
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(new Date().getFullYear(), selectedCalenderMonth, i);
       const dayOfWeek = daysOfWeek[date.getDay()];
-  
-      let attendanceStatus = 'Absent'; // Default status
-      if (attendance && attendance[i]) {
-        attendanceStatus = attendance[i];
-      } else if (dayOfWeek === 'Sunday') {
+ 
+      let attendanceStatus = '';
+      if (dayOfWeek === 'Sunday') {
         attendanceStatus = 'Holiday';
+      } else {
+        if (attendance && attendance.length > 0) {
+          const month_attendance = attendance?.formattedAttendance?.attendance
+          const dayAttendance = month_attendance.find(item => new Date(item.date).getDate() === i);
+     
+          if (dayAttendance) {
+            attendanceStatus = dayAttendance.status;
+          } else {
+            attendanceStatus = 'absent';
+          }
+        } else {
+          attendanceStatus = 'absent';
+        }
       }
-  
+ 
       const isHoliday = dayOfWeek === 'Sunday';
-  
-
+ 
       days.push(
         <Grid item xs={isSmallScreen ? 12 : 2.4} key={i}>
           <Card
@@ -138,22 +148,26 @@ function StudentAttendance() {
               </Typography>
               <Button
                 sx={{
-                  backgroundColor: isHoliday
-                    ? "#FEFFC4"
-                    : attendanceStatus === "Present"
-                      ? "#D2FDD6"
-                      : "#FDDED2",
-                  color: isHoliday
-                    ? "#BEA000"
-                    : attendanceStatus === "Present"
-                      ? "#14BC10"
-                      : "#FF4B4B",
-                  padding: "5px 9px",
-                  borderRadius: "8.659px",
-                  width: "58px",
-                  height: "18px",
-                  alignItems: "center",
-                  gap: "8.765px",
+                  backgroundColor: attendanceStatus === ''
+                    ? 'white'
+                    : isHoliday
+                    ? '#FEFFC4'
+                    : attendanceStatus === 'Present'
+                    ? '#D2FDD6'
+                    : '#FDDED2',
+                  color: attendanceStatus === ''
+                    ? '#666666'
+                    : isHoliday
+                    ? '#BEA000'
+                    : attendanceStatus === 'Present'
+                    ? '#14BC10'
+                    : '#FF4B4B',
+                  padding: '5px 9px',
+                  borderRadius: '8.659px',
+                  width: '58px',
+                  height: '18px',
+                  alignItems: 'center',
+                  gap: '8.765px',
                   flexShrink: 0,
                 }}
               >
@@ -161,28 +175,29 @@ function StudentAttendance() {
               </Button>
             </CardContent>
           </Card>
-        </Grid>,
+        </Grid>
       );
     }
-
+ 
     return days;
   };
+ 
 
   useEffect(() => {
     const getAttedence = async () => {
       try {
         const user = getStudentDetails();
         const response = await Client.Student.attendance.get({ instituteId: user.institute_id?.uuid , month:selectedMonth});  
-        setAttendance(response);
+        setAttendance(response?.data);
         console.log(response)
       } catch (error) {
         console.log(error, "error");
       }
     }
     getAttedence();
-  }, [selectedMonth]);
+  }, []);
 
-  console.log(attendance,"attendance")
+  console.log(attendance,"attendance",attendance?.formattedAttendance?.[months[selectedMonth]])
 
   return (
     <StyledPaper elevation={3}>
@@ -242,7 +257,7 @@ function StudentAttendance() {
                       minWidth: "200px",
                     }}
                   >
-                    January 2024
+                    {months[selectedMonth]} {new Date().getFullYear()}
                   </Typography>
                 </div>
               </div>
@@ -331,7 +346,7 @@ function StudentAttendance() {
                           letterSpacing: "0.48px",
                         }}
                       >
-                        {attendance?.data?.totalWorkingDays}
+                        {attendance?.totalWorkingDays}
                       </Typography>
                     </div>
                   </CardContent>
@@ -375,7 +390,7 @@ function StudentAttendance() {
                         marginRight: "5px",
                       }}
                     >
-                      {attendance?.data?.totalAbsentDays}
+                      {attendance?.totalAbsentDays}
                     </Typography>
                   </CardContent>
                 </Card>
@@ -420,7 +435,7 @@ function StudentAttendance() {
                           marginRight: "5px",
                         }}
                       >
-                        {attendance?.data?.totalPresentDays}
+                        {attendance?.totalPresentDays}
                       </Typography>
                       <Typography
                         variant="h3"
@@ -620,7 +635,7 @@ function StudentAttendance() {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  March
+                  {months[(selectedMonth - 1 + 12) % 12]}
                 </Typography>
                 <Typography
                   style={{
@@ -635,7 +650,7 @@ function StudentAttendance() {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  April
+                  {months[selectedMonth]}
                 </Typography>
                 <IconButton edge="end" color="inherit" aria-label="next">
                   <NavigateNextIcon />

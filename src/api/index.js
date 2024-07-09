@@ -44,6 +44,21 @@ class Client {
     get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.get}`,params,'student'),
     get_class_attendance: (data) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.class_attendance}/${data.classId}`, { params: data })
   },
+  ticket: {
+    create: (data, params) =>
+      httpClient.post(
+        HTTP_END_POINTS.Student.ticket.create,
+        data,
+        params,
+        "student",
+      ),
+    get: (params) =>
+      httpClient.get(
+        HTTP_END_POINTS.Student.ticket.get,
+        params,
+        "student",
+      ),
+  },
     community : {
       get : (params) => httpClient.get(HTTP_END_POINTS.Student.community.get,params,"student")
     }

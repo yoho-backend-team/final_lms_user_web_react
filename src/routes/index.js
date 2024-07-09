@@ -143,9 +143,9 @@ const StudentOnlineCompletedClassesView = Loadable(
   ),
 );
 
-const StudentPayPage = Loadable(
-  lazy(() => import("features/student-pages/payments-page/components/pay")),
-);
+// const StudentPayPage = Loadable(
+//   lazy(() => import("features/student-pages/payments-page/components/pay")),
+// );
 const StudentProfilePage = Loadable(
   lazy(() => import("views/student-pages/profile-page")),
 );
@@ -299,7 +299,7 @@ const ApplicationRoutes = () => {
               path="student/create-ticket"
               element={<StudentCreateTicketPage />}
             />
-            <Route path="student/pay" element={<StudentPayPage />} />
+            
             <Route
               path="student/OfflineUpcomingClasses"
               element={<StudentOfflineUpcomingClassesView />}
