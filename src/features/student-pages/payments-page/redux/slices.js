@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const PaymentSlice = createSlice({
-  name: "instructorPayments",
+  name: "studentPayments",
   initialState: {
     data: [],
     loading: true,

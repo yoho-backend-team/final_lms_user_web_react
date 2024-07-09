@@ -1,3 +1,3 @@
-export const selectInstructorPayments = (state) =>
-  state.instructorPayments.data;
-export const selectLoading = (state) => state.instructorPayments.loading;
+export const selectStudentPayments = (state) =>
+  state.studentPayments.data;
+export const selectLoading = (state) => state.studentPayments.loading;
