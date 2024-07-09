@@ -17,3 +17,31 @@ export const getClassDetails = async (data) => {
     throw new Error(error);
   }
 };
+
+export const updateClassDetails = async (data) => {
+  try {
+    const response = await Client.Student.class.update(data);
+    return response?.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const getClassAttendanceDetails = async (data) => {
+  try {
+    const response =
+      await Client.Student.attendance.get_class_attendance(data);
+    return response?.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const updateAttendanceDetails = async (data) => {
+  try {
+    const response = await Client.Student.attendance.update(data);
+    return response?.data;
+  } catch (error) {
+    throw new Error(error);
+  }
+};

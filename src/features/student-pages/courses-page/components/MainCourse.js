@@ -21,11 +21,15 @@ import leftnav from "../../../../assets/images/icons/leftnav.svg";
 import rightnav from "../../../../assets/images/icons/rightnav.svg";
 import { getCourseDetails } from "../services/";
 import { getImageUrl } from "utils/common/imageUtlils";
+import { getFile } from "features/common/upload";
 // import Client from "../../../../features/student-pages/courses-page/services/index";
+import { useSpinner } from "context/SpinnerProvider";
+import toast from "react-hot-toast";
 
 const MainCourse = () => {
   const theme = useTheme();
   const matchesXS = useMediaQuery(theme.breakpoints.down("sm"));
+  const {showSpinner,hideSpinner} = useSpinner()
 
   const [courseDetails, setCourseDetails] = useState(null);
 
@@ -60,6 +64,54 @@ const MainCourse = () => {
 
   const dynamicData = "Big Data,Node JS, OOPS, JVM, Web Arch, Angular";
   const items = dynamicData.split(",").map((item) => item.trim());
+  
+  const handleDownload = async (note) => {
+    try {
+      showSpinner()
+      const url = getImageUrl(note?.file)
+      const response = await getFile(url)
+      const blob = new Blob([response?.data],{
+        type: response?.headers["Content-Type"]
+      })
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = note.file?.split("/")[2];
+      link.click();
+
+      window.URL.revokeObjectURL(link.href);
+      
+    } catch (error) {
+     toast.error(error?.message) 
+    }finally{
+      hideSpinner()
+    }
+  
+  };
+
+  
+  const handleStudyMaterialDownload = async (studymaterial) => {
+    try {
+      showSpinner()
+      const url = getImageUrl(studymaterial?.file)
+      const response = await getFile(url)
+      const blob = new Blob([response?.data],{
+        type: response?.headers["Content-Type"]
+      })
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = studymaterial.file?.split("/")[2];
+      link.click();
+
+      window.URL.revokeObjectURL(link.href);
+      
+    } catch (error) {
+     toast.error(error?.message) 
+    }finally{
+      hideSpinner()
+    }
+  
+  };
+
 
   return (
     <div className="main-container">
@@ -437,7 +489,7 @@ const MainCourse = () => {
                   maxWidth: "calc(100% + 20px)",
                 }}
               >
-                {courseDetails?.studymaterials?.map((studymaterials, index) => (
+                {courseDetails?.studymaterials?.map((studymaterial, index) => (
                   <div
                     key={index}
                     style={{
@@ -483,7 +535,7 @@ const MainCourse = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {studymaterials?.title}
+                        {studymaterial?.title}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -494,7 +546,7 @@ const MainCourse = () => {
                           marginTop: "5px",
                         }}
                       >
-                        {studymaterials?.description}
+                        {studymaterial?.description}
                       </Typography>
                     </div>
                     <div
@@ -513,6 +565,7 @@ const MainCourse = () => {
                           cursor: "pointer",
                           padding: 0,
                         }}
+                        onClick={()=>handleStudyMaterialDownload(studymaterial)}
                       >
                         <img
                           src={down}
@@ -574,7 +627,7 @@ const MainCourse = () => {
                   maxWidth: "calc(100% + 20px)",
                 }}
               >
-                {courseDetails?.notes?.map((notes, index) => (
+                {courseDetails?.notes?.map((note, index) => (
                   <div
                     key={index}
                     style={{
@@ -620,7 +673,7 @@ const MainCourse = () => {
                           fontWeight: "bold",
                         }}
                       >
-                        {notes.title}
+                        {note.title}
                       </Typography>
                       <Typography
                         variant="body2"
@@ -631,7 +684,7 @@ const MainCourse = () => {
                           marginTop: "5px",
                         }}
                       >
-                        {notes.description}
+                        {note.description}
                       </Typography>
                     </div>
                     <div
@@ -650,6 +703,7 @@ const MainCourse = () => {
                           cursor: "pointer",
                           padding: 0,
                         }}
+                        onClick={()=>handleDownload(note)}
                       >
                         <img
                           src={down}
