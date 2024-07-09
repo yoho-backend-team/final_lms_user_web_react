@@ -26,7 +26,7 @@ const store = configureStore({
     instructorHelp: helpReducer,
     instructorPayments: paymentReducer,
     instructorTickets: ticketReducer,
-    instructorDashBoard: dashboardReducer,
+    instructorDashboard: dashboardReducer,
     studentCommunity: studentCommunityReducer,
   },
 });

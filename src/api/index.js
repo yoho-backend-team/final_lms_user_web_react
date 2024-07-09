@@ -130,6 +130,9 @@ class Client {
           "instructor",
         ),
     },
+    reports : {
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.reports.get,params,"instructor")
+    }
   };
 }
 
