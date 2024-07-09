@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const AttendanceSlice = createSlice({
-  name: "studentAttendance",
+const ClassesSlice = createSlice({
+  name: "studentClasses",
   initialState: {
     data: [],
     loading: true,
   },
   reducers: {
-    setAttendance: (state, action) => {
+    setClasses: (state, action) => {
       state.data = action.payload;
     },
     setLoading: (state, action) => {
@@ -16,5 +16,5 @@ const AttendanceSlice = createSlice({
   },
 });
 
-export const { setAttendance, setLoading } = AttendanceSlice.actions;
-export default AttendanceSlice.reducer;
+export const { setClasses, setLoading } = ClassesSlice.actions;
+export default ClassesSlice.reducer;

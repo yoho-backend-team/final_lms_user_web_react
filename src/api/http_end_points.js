@@ -144,6 +144,9 @@ const generateEndpoints = () => {
         create: "/institutes/staff/ticket",
         get: "/institutes/staff/ticket/all",
       },
+      reports : {
+        get : "/institutes/reports/users/teaching-staff"
+      }
     },
   };
 };
