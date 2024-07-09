@@ -18,6 +18,8 @@ import StudentHelpCenter from "../features/student-pages/help-center-page/redux/
 import StudentActivityLog from "../features/student-pages/activity-logs-page/redux/slices"
 import StudentTicketReducer from "../features/student-pages/tickets-page/redux/slices"
 
+import StudentClassReducer from "../features/student-pages/classes-page/redux/slices";
+import StudentAttendanceReducer from "../features/student-pages/attendances-page/redux/slices"
 
 // ==============================|| REDUX - MAIN STORE ||============================== //
 
@@ -32,13 +34,15 @@ const store = configureStore({
     instructorHelp: helpReducer,
     instructorPayments: paymentReducer,
     instructorTickets: ticketReducer,
-    instructorDashBoard: dashboardReducer,
+    instructorDashboard: dashboardReducer,
     studentCommunity: studentCommunityReducer,
     studentcourse: StudentCourseReducer,
     studentPayments: StudentPaymentReducer,
     studenthelp: StudentHelpCenter,
     studentsActivityLogs: StudentActivityLog,
-    studentsTickets:StudentTicketReducer
+    studentsTickets:StudentTicketReducer,
+    studentClasses: StudentClassReducer,
+    studentAttendance: StudentAttendanceReducer,
   },
 });
 // configureStore(reducer);

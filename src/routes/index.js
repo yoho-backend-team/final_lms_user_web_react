@@ -2,16 +2,14 @@ import React, { lazy } from "react";
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Loadable from "components/loadable";
 import MainLayout from "layout/MainLayout";
-import AuthLayout from "layout/AuthLayout";
-import InstructorAuthLayout from "layout/InstructorAuthLayout";
+// import AuthLayout from "layout/AuthLayout";
+// import InstructorAuthLayout from "layout/InstructorAuthLayout";
 import InstructorLayout from "layout/InstructorLayout";
 import {
   checkUserLoggedIn,
   checkUser,
-  getInstructorDetails,
 } from "store/atoms/authorized-atom";
 import { role_to_details } from "lib/constants";
-import Payment from "payment";
 
 // Auth Pages
 const LoginPage = Loadable(lazy(() => import("views/auth-pages/login-page")));
@@ -50,98 +48,100 @@ const StudentTicketsPage = Loadable(
 const StudentPaymentsPage = Loadable(
   lazy(() => import("views/student-pages/payments-page")),
 );
+const StudentClassViewPage = Loadable(
+  lazy(() => import("views/student-pages/class[id]-page")),
+);
+// const StudentOfflineUpcomingClassViewPage = Loadable(
+//   lazy(
+//     () =>
+//       import(
+//         "views/student-pages/class[id]-page/OfflineClasses/UpcomingClasses"
+//       ),
+//   ),
+// );
+// const StudentOfflineLiveClassViewPage = Loadable(
+//   lazy(
+//     () => import("views/student-pages/class[id]-page/OfflineClasses/LiveClass"),
+//   ),
+// );
+// const StudentOfflineCompletedClassViewPage = Loadable(
+//   lazy(
+//     () =>
+//       import(
+//         "views/student-pages/class[id]-page/OfflineClasses/CompletedClasses"
+//       ),
+//   ),
+// );
+// const StudentOfflineUpcomingClassesView = Loadable(
+//   lazy(
+//     () =>
+//       import(
+//         "features/student-pages/classes-page/components/Classes/OfflineClasses/Upcoming Classes/UpcomingClasses"
+//       ),
+//   ),
+// );
+// const StudentOfflineLiveClassesView = Loadable(
+//   lazy(
+//     () =>
+//       import(
+//         "features/student-pages/classes-page/components/Classes/OfflineClasses/LiveClass/LiveClass"
+//       ),
+//   ),
+// );
+// const StudentOfflineCompletedClassesView = Loadable(
+//   lazy(
+//     () =>
+//       import(
+//         "features/student-pages/classes-page/components/Classes/OfflineClasses/Completed Classes/CompletedClasses"
+//       ),
+//   ),
+// );
 
-const StudentOfflineUpcomingClassViewPage = Loadable(
-  lazy(
-    () =>
-      import(
-        "views/student-pages/class[id]-page/OfflineClasses/UpcomingClasses"
-      ),
-  ),
-);
-const StudentOfflineLiveClassViewPage = Loadable(
-  lazy(
-    () => import("views/student-pages/class[id]-page/OfflineClasses/LiveClass"),
-  ),
-);
-const StudentOfflineCompletedClassViewPage = Loadable(
-  lazy(
-    () =>
-      import(
-        "views/student-pages/class[id]-page/OfflineClasses/CompletedClasses"
-      ),
-  ),
-);
-const StudentOfflineUpcomingClassesView = Loadable(
-  lazy(
-    () =>
-      import(
-        "features/student-pages/classes-page/components/Classes/OfflineClasses/Upcoming Classes/UpcomingClasses"
-      ),
-  ),
-);
-const StudentOfflineLiveClassesView = Loadable(
-  lazy(
-    () =>
-      import(
-        "features/student-pages/classes-page/components/Classes/OfflineClasses/LiveClass/LiveClass"
-      ),
-  ),
-);
-const StudentOfflineCompletedClassesView = Loadable(
-  lazy(
-    () =>
-      import(
-        "features/student-pages/classes-page/components/Classes/OfflineClasses/Completed Classes/CompletedClasses"
-      ),
-  ),
-);
-
-const StudentOnlineUpcomingClassViewPage = Loadable(
-  lazy(
-    () =>
-      import(
-        "views/student-pages/class[id]-page/OnlineClasses/UpcomingClasses"
-      ),
-  ),
-);
-const StudentOnlineLiveClassViewPage = Loadable(
-  lazy(
-    () => import("views/student-pages/class[id]-page/OnlineClasses/LiveClass"),
-  ),
-);
-const StudentOnlineCompletedClassViewPage = Loadable(
-  lazy(
-    () =>
-      import(
-        "views/student-pages/class[id]-page/OnlineClasses/CompletedClasses"
-      ),
-  ),
-);
-const StudentOnlineUpcomingClassesView = Loadable(
-  lazy(
-    () =>
-      import(
-        "features/student-pages/classes-page/components/Classes/OnlineClasses/Upcoming Classes/UpcomingClasses"
-      ),
-  ),
-);
-const StudentOnlineLiveClassesView = Loadable(
-  lazy(
-    () =>
-      import(
-        "features/student-pages/classes-page/components/Classes/OnlineClasses/LiveClass/LiveClass"
-      ),
-  ),
-);
-const StudentOnlineCompletedClassesView = Loadable(
-  lazy(
-    () =>
-      import(
-        "features/student-pages/classes-page/components/Classes/OnlineClasses/Completed Classes/CompletedClasses"
-      ),
-  ),
-);
+// const StudentOnlineUpcomingClassViewPage = Loadable(
+//   lazy(
+//     () =>
+//       import(
+//         "views/student-pages/class[id]-page/OnlineClasses/UpcomingClasses"
+//       ),
+//   ),
+// );
+// const StudentOnlineLiveClassViewPage = Loadable(
+//   lazy(
+//     () => import("views/student-pages/class[id]-page/OnlineClasses/LiveClass"),
+//   ),
+// );
+// const StudentOnlineCompletedClassViewPage = Loadable(
+//   lazy(
+//     () =>
+//       import(
+//         "views/student-pages/class[id]-page/OnlineClasses/CompletedClasses"
+//       ),
+//   ),
+// );
+// const StudentOnlineUpcomingClassesView = Loadable(
+//   lazy(
+//     () =>
+//       import(
+//         "features/student-pages/classes-page/components/Classes/OnlineClasses/Upcoming Classes/UpcomingClasses"
+//       ),
+//   ),
+// );
+// const StudentOnlineLiveClassesView = Loadable(
+//   lazy(
+//     () =>
+//       import(
+//         "features/student-pages/classes-page/components/Classes/OnlineClasses/LiveClass/LiveClass"
+//       ),
+//   ),
+// );
+// const StudentOnlineCompletedClassesView = Loadable(
+//   lazy(
+//     () =>
+//       import(
+//         "features/student-pages/classes-page/components/Classes/OnlineClasses/Completed Classes/CompletedClasses"
+//       ),
+//   ),
+// );
 
 // const StudentPayPage = Loadable(
 //   lazy(() => import("features/student-pages/payments-page/components/pay")),
@@ -212,7 +212,7 @@ const ApplicationRoutes = () => {
   const RequireAuth = () => {
     const role = getRoleFromPath();
     if (!isLoggedIn(role)) {
-      return <Navigate to={`/${role}/login`} replace />;
+      return <Navigate to={`/${role  || 'instructor' }/login`} replace />;
     }
     return <Outlet />;
   };
@@ -255,7 +255,7 @@ const ApplicationRoutes = () => {
               element={<StudentAttendancesPage />}
             />
             <Route path="student/classes" element={<StudentClassesPage />} />
-            <Route
+            {/* <Route
               path="student/OfflineUpcomingClass/:id"
               element={<StudentOfflineUpcomingClassViewPage />}
             />
@@ -266,7 +266,7 @@ const ApplicationRoutes = () => {
             <Route
               path="student/OfflineCompleteClass/:id"
               element={<StudentOfflineCompletedClassViewPage />}
-            />
+            /> */}
             <Route
               path="student/community"
               element={<StudentCommunityPage />}
@@ -277,7 +277,7 @@ const ApplicationRoutes = () => {
               element={<StudentHelpCenterPage />}
             />
             <Route path="student/payments" element={<StudentPaymentsPage />} />
-            <Route
+            {/* <Route
               path="student/OnlineUpcomingClass/:id"
               element={<StudentOnlineUpcomingClassViewPage />}
             />
@@ -288,7 +288,7 @@ const ApplicationRoutes = () => {
             <Route
               path="student/OnlineCompleteClass/:id"
               element={<StudentOnlineCompletedClassViewPage />}
-            />
+            /> */}
             <Route path="student/tickets" element={<StudentTicketsPage />} />
             <Route
               path="student/tickets/:id"
@@ -301,6 +301,10 @@ const ApplicationRoutes = () => {
             />
             
             <Route
+              path="student/class/:id"
+              element={<StudentClassViewPage />}
+            />
+             {/* <Route
               path="student/OfflineUpcomingClasses"
               element={<StudentOfflineUpcomingClassesView />}
             />
@@ -315,7 +319,7 @@ const ApplicationRoutes = () => {
             <Route
               path="student/OnlineUpcomingClasses"
               element={<StudentOnlineUpcomingClassesView />}
-            />
+            /> 
             <Route
               path="student/OnlineLiveClasses/:id"
               element={<StudentOnlineLiveClassesView />}
@@ -323,7 +327,7 @@ const ApplicationRoutes = () => {
             <Route
               path="student/OnlineCompletedClasses/:id"
               element={<StudentOnlineCompletedClassesView />}
-            />
+            />  */}
           </Route>
         </Route>
         <Route element={<RequireAuth />}>

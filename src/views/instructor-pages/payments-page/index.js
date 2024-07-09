@@ -21,15 +21,41 @@ import {
   selectInstructorPayments,
   selectLoading,
 } from "features/instructor-pages/payments-page/redux/selectors";
+import { useSpinner } from "context/SpinnerProvider";
+import toast from "react-hot-toast";
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 const PaymentInterface = () => {
   const dispatch = useDispatch();
   const salaries = useSelector(selectInstructorPayments);
   const loading = useSelector(selectLoading);
   const { tabView } = useTabResponsive();
+  const { showSpinner,hideSpinner } = useSpinner()
 
   const getSalaryDetails = async () => {
-    dispatch(updateStaffSalaries());
+    try {
+      showSpinner()
+      dispatch(updateStaffSalaries()); 
+    } catch (error) {
+      toast.error(error?.response?.data?.message)
+    }finally{
+      hideSpinner()
+    }
+  
   };
 
   useEffect(() => {
@@ -119,7 +145,7 @@ const PaymentInterface = () => {
               />
             ))}
           </Box>
-          <SalaryDetailsTable />
+          <SalaryDetailsTable data={ salaries } months={months} />
         </Box>
       </Box>
     </>
