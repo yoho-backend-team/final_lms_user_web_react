@@ -77,8 +77,13 @@ const rows = [
   },
 ];
 
-const SalaryDetailsTable = () => {
+const SalaryDetailsTable = ({data,months}) => {
   const classes = useStyles();
+
+  const getMonth = (date) => {
+    const new_date = new Date(date).getMonth()
+    return months[new_date]
+  }
 
   return (
     <Box
@@ -114,13 +119,13 @@ const SalaryDetailsTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.month}>
+            {data.map((row) => (
+              <TableRow key={row.payment_date}>
                 <TableCell component="th" scope="row" className={classes.cell}>
-                  {row.month}
+                  {getMonth(row.payment_date)}
                 </TableCell>
                 <TableCell align="left" className={classes.cell}>
-                  {row.amountReceived}
+                  {row?.salary_amount}
                 </TableCell>
                 <TableCell align="left" className={classes.cell}>
                   {row.workingDays}

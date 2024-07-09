@@ -12,6 +12,8 @@ import paymentReducer from "../features/instructor-pages/payments-page/redux/sli
 import ticketReducer from "../features/instructor-pages/tickets-page/redux/slices";
 import dashboardReducer from "../features/instructor-pages/home-page/redux/slices";
 import studentCommunityReducer from "../features/student-pages/community-page/redux/slices";
+import StudentClassReducer from "../features/student-pages/classes-page/redux/slices";
+import StudentAttendanceReducer from "../features/student-pages/attendances-page/redux/slices"
 
 // ==============================|| REDUX - MAIN STORE ||============================== //
 
@@ -28,6 +30,8 @@ const store = configureStore({
     instructorTickets: ticketReducer,
     instructorDashBoard: dashboardReducer,
     studentCommunity: studentCommunityReducer,
+    studentClasses: StudentClassReducer,
+    studentAttendance: StudentAttendanceReducer,
   },
 });
 // configureStore(reducer);
