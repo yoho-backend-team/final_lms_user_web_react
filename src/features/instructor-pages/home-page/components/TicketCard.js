@@ -66,6 +66,7 @@ const TicketCard = ({ticket}) => {
               py: "34px",
               flexDirection: "column",
               alignItems: "center",
+              height: "100%"
             }}
           >
             <Typography
