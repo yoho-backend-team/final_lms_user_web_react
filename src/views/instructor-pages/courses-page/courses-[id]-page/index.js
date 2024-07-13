@@ -1,13 +1,15 @@
-import CourseLayout from "features/instructor-pages/courses-page/components/courseLayout";
-import CourseViewPage from "features/instructor-pages/courses-page/components/courseViewPage";
-import getAndUpdateCourseDetails from "features/instructor-pages/courses-page/redux/thunks";
+import AddStudyMaterialLayout from "features/instructor-pages/courses-page/add-study-material-page/components/layout";
+import AddStudyMaterialsPage from "features/instructor-pages/courses-page/add-study-material-page/components";
+import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import getAndUpdateCourseDetails from "features/instructor-pages/courses-page/redux/thunks";
+import { useSelector,useDispatch } from "react-redux";
 import { selectInstructorCourse } from "features/instructor-pages/courses-page/redux/selectors";
 import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
 
-const CoursePage = () => {
+const StudyMaterialPage = () => {
+  const { id } = useParams()
   const dispatch = useDispatch();
   const course = useSelector(selectInstructorCourse);
   const { showSpinner,hideSpinner } = useSpinner()
@@ -23,17 +25,21 @@ const CoursePage = () => {
     }
    
   };
+
   console.log(course,"course")
+
   useEffect(() => {
     const data = {};
     getCourseDetails(data);
   }, [dispatch]);
   
   return (
-    <CourseLayout>
-      <CourseViewPage Course={course} />
-    </CourseLayout>
+    <>
+      <AddStudyMaterialLayout>
+        <AddStudyMaterialsPage Course ={ course} getCourseDetails={getCourseDetails} />
+      </AddStudyMaterialLayout>
+    </>
   );
 };
 
-export default CoursePage;
+export default StudyMaterialPage;

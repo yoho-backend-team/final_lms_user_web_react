@@ -14,6 +14,7 @@ export const getFile = async (url) => {
     const response = await Client.common.file.get(url);
     return response;
   } catch (error) {
-    throw new Error(error?.response?.data?.message);
+    const message = error?.response?.data?.message ? error?.response?.data?.message : error?.message
+    throw new Error(message);
   }
 };

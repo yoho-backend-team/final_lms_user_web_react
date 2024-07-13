@@ -78,7 +78,7 @@ const modules = [
   },
 ];
 
-const CourseAndNotesPage = ({ openCourseView, closeCourseView }) => {
+const CourseAndNotesPage = ({ openCourseView, closeCourseView, course }) => {
   const { tabView } = useTabResponsive();
   return (
     <Box sx={{ padding: tabView ? "20px" : "60px" }}>
@@ -118,7 +118,7 @@ const CourseAndNotesPage = ({ openCourseView, closeCourseView }) => {
                 lineHeight: "14px",
               }}
               component={Link}
-              to={"/instructor/StudyMaterialsPage"}
+              to={`/instructor/course/resources/${course?._id}`}
             >
               Add Notes & Videos
             </Typography>
