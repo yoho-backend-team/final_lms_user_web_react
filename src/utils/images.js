@@ -33,4 +33,9 @@ export { default as NavMobileSelectedImage } from "../assets/common/nav-mobile-s
 //auth
 export { default as MobileLoginInstructorBg } from "../assets/instructor/login/mobile-login-instructor-bg.svg";
 
+//dashboard
 export { default as BranchIcon } from "../assets/instructor/dashboard/branch.svg"
+
+//course
+export { default as EditIcon } from "../assets/instructor/course/course-edit.svg"
+export { default as DeleteIcon } from "../assets/instructor/course/course-delete.svg"

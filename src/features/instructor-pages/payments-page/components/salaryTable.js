@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles } from "@mui/styles";
 import {
   Table,
@@ -12,6 +12,7 @@ import {
   Box,
   Typography,
 } from "@mui/material";
+import jsPDF from "jspdf";
 
 const useStyles = makeStyles({
   table: {
@@ -46,44 +47,34 @@ const useStyles = makeStyles({
   },
 });
 
-const rows = [
-  {
-    month: "April",
-    amountReceived: "40,000",
-    workingDays: 28,
-    absent: 3,
-    deductions: "1200 + 3,800",
-  },
-  {
-    month: "March",
-    amountReceived: "43,800",
-    workingDays: 31,
-    absent: 0,
-    deductions: "1200",
-  },
-  {
-    month: "February",
-    amountReceived: "43,800",
-    workingDays: 28,
-    absent: 0,
-    deductions: "1200",
-  },
-  {
-    month: "January",
-    amountReceived: "38,100",
-    workingDays: 26,
-    absent: 5,
-    deductions: "1200 + 4,700",
-  },
-];
 
 const SalaryDetailsTable = ({data,months}) => {
   const classes = useStyles();
+  const [employeeName, setEmployeeName] = useState('chandran');
+  const [designation, setDesignation] = useState('developer');
+  const [monthYear, setMonthYear] = useState('2024 feb');
+  const [earnings, setEarnings] = useState({
+    basicDA: '0',
+    hra: '0',
+    conveyance: 'no salary'
+  });
+  const [deductions, setDeductions] = useState({
+    pf: '0',
+    esi: '0',
+    loan: '0'
+  });
 
   const getMonth = (date) => {
     const new_date = new Date(date).getMonth()
     return months[new_date]
   }
+
+
+  const handleGeneratePDF = (data) => {
+   // const doc = new jsPDF('portrait');
+      console.log(data,"data")
+  //  doc.save(`chandran_salary_slip.pdf`);
+  };
 
   return (
     <Box
@@ -141,7 +132,7 @@ const SalaryDetailsTable = ({data,months}) => {
                   sx={{ border: "none" }}
                   className={classes.cell}
                 >
-                  <Button variant="contained" className={classes.button}>
+                  <Button variant="contained" className={classes.button} onClick={()=>handleGeneratePDF(row)} >
                     Download Slip
                   </Button>
                 </TableCell>

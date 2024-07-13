@@ -36,7 +36,7 @@ const ClassesPage = () => {
     { id: "3", title: "Class History", value: "history" },
     { id: "4", title: "Live Class", value: "live" },
   ];
-
+  
   const renderComponents = {
     upcoming: <UpcomingClassList data={classes} classType={classType} />,
     completed: <CompletedClassList data={classes} classType={classType} />,
