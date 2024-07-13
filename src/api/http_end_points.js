@@ -85,6 +85,7 @@ const generateEndpoints = () => {
       },
       course: {
         get: `/institutes/${institute1}/branches/${branch1}/course/${course1}`,
+        // getwithclass: `/institutes/${institute}/branches/${branch}/course/${course}/classes`
       },
       class: {
         get: `/institutes/class/${studentCourse}`,
@@ -100,6 +101,9 @@ const generateEndpoints = () => {
       ticket: {
         create: "/institutes/student/ticket/create",
         get: "/institutes/student/ticket/getall",
+      },
+      activity: {
+        get: `institutes/user/activity/`,
       },
 
       community: {
@@ -128,6 +132,7 @@ const generateEndpoints = () => {
       },
       course: {
         get: `/institutes/${institute}/branches/${branch}/course/${course}`,
+        
       },
       class: {
         get: `/institutes/class/${course}`,

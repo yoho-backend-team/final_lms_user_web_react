@@ -31,7 +31,7 @@ const validationSchema = yup.object({
   description: yup
     .string("Enter description")
     .required("Description is required"),
-    status:("Opened")
+    status:yup.string("opened")
    
 });
 
@@ -113,7 +113,7 @@ const StudentCreateTicketForm = ({ handleClose }) => {
           branch: student?.branch_id?._id,
           query: values?.problem,
           description: values?.description,
-          status:"Opened",
+          status:"opened",
           user: student?._id,
         };
         const response = await StudentCreateTickets(data);

@@ -14,6 +14,7 @@ import NavigationScroll from "layout/NavigationScroll";
 import { onMessageListener, requestForToken } from "./firebase";
 // ==============================|| APP ||============================== //
 
+
 const App = () => {
   const customization = useSelector((state) => state.customization);
   onMessageListener()

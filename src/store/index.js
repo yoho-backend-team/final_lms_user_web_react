@@ -20,6 +20,7 @@ import StudentTicketReducer from "../features/student-pages/tickets-page/redux/s
 
 import StudentClassReducer from "../features/student-pages/classes-page/redux/slices";
 import StudentAttendanceReducer from "../features/student-pages/attendances-page/redux/slices"
+import StudentActivityReducer from "../features/student-pages/activity-logs-page/redux/slices"
 
 // ==============================|| REDUX - MAIN STORE ||============================== //
 
@@ -43,6 +44,7 @@ const store = configureStore({
     studentsTickets:StudentTicketReducer,
     studentClasses: StudentClassReducer,
     studentAttendance: StudentAttendanceReducer,
+    studentsActivityLogs: StudentActivityReducer
   },
 });
 // configureStore(reducer);
