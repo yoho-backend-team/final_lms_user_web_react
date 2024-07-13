@@ -132,7 +132,14 @@ const generateEndpoints = () => {
       },
       course: {
         get: `/institutes/${institute}/branches/${branch}/course/${course}`,
-        
+        notes : {
+          create : `/institutes/course/note`,
+          update : `/institutes/course/note/update/`,
+          delete : `/institutes/course/note/`
+        },
+        study_material : {
+          index : '/institutes/study-material/'
+        }
       },
       class: {
         get: `/institutes/class/${course}`,

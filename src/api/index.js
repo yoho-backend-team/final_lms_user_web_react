@@ -111,6 +111,16 @@ class Client {
           params,
           "instructor",
         ),
+      notes : {
+        create : (data,params) => httpClient.post(HTTP_END_POINTS.Instructor.course.notes.create,data,params,"instructor"),
+        update : (data) => httpClient.update(HTTP_END_POINTS.Instructor.course.notes.update+data.NoteId,data,"instructor"),
+        delete : (data) => httpClient.delete(HTTP_END_POINTS.Instructor.course.notes.delete+data.id,'instructor')
+      },
+      study_material : {
+        create : (data,params) => httpClient.post(HTTP_END_POINTS.Instructor.course.study_material.index,data,params,"instructor"),
+        update : (data) => httpClient.update(HTTP_END_POINTS.Instructor.course.study_material.index+data.materialId,data,"instructor"),
+        delete : (data) => httpClient.delete(HTTP_END_POINTS.Instructor.course.study_material.index+data?.id,"instructor")
+      }
     },
     class: {
       get: (params) =>

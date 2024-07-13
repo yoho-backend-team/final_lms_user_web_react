@@ -104,9 +104,14 @@ class HttpClient {
     return response?.data;
   }
 
-  async update(url, data) {
-    const response = await Axios.put(url, data);
+  async update(url, data,userType) {
+    const response = await Axios.put(url, data,{headers:{"User-Type":userType}});
     return response?.data;
+  }
+
+  async delete(url,userType){
+    const response = await Axios.delete(url,{ headers:{ "User-Type": userType } })
+    return response?.data
   }
 
   async fileGet(url) {
