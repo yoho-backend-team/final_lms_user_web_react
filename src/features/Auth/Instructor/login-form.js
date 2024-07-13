@@ -17,6 +17,8 @@ import * as yup from "yup";
 import { useInstructorLogin } from "../services";
 import { useNavigate } from "react-router-dom";
 import { useTabResponsive } from "utils/tabResponsive";
+import toast from "react-hot-toast";
+import { useSpinner } from "context/SpinnerProvider";
 
 const validationSchema = yup.object({
   email: yup
@@ -34,6 +36,7 @@ const InstructorLoginForm = () => {
   const instructorLogin = useInstructorLogin();
   const navigate = useNavigate();
   const { tabView } = useTabResponsive();
+  const { showSpinner,hideSpinner} = useSpinner()
 
   const formik = useFormik({
     initialValues: {
@@ -42,10 +45,20 @@ const InstructorLoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      try {
+      showSpinner()
       const response = await instructorLogin(values);
-      console.log(response, "response");
+      console.log(response,"response")
       if (response.success) {
+        toast.success(response?.message)
         navigate("/instructor/home");
+      }else{
+        toast.success(response?.message)
+      }  
+      } catch (error) {
+       toast.error(error?.message) 
+      }finally{
+       hideSpinner()
       }
     },
   });

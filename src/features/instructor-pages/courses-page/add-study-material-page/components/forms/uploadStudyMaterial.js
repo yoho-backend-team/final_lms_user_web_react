@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -13,8 +13,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { makeStyles } from "@mui/styles";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-import NoteIcon from "assets/icons/noteIcon";
 import StudyMaterialIcon from "assets/icons/course/studyMaterialIcon";
+import StudyMaterialList from "./components/materialList";
+import { useSpinner } from "context/SpinnerProvider";
+import toast from "react-hot-toast";
+import { fileUpload } from "features/common/upload";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,10 +48,17 @@ const useStyles = makeStyles((theme) => ({
       margin: 0,
     },
   },
+  fileSelected: {
+    border: "2px solid #00C853",
+    backgroundColor: "#E8F5E9",
+  },
 }));
 
-const UploadStudyMaterials = () => {
+const UploadStudyMaterials = ({ StudyMaterials, getCourseDetails }) => {
   const classes = useStyles();
+  const { showSpinner, hideSpinner } = useSpinner();
+  const [editMode, setEditMode] = useState(false);
+  const [currentMaterial, setCurrentMaterial] = useState(null);
 
   const formik = useFormik({
     initialValues: {
@@ -66,6 +76,21 @@ const UploadStudyMaterials = () => {
     },
   });
 
+  const handleEdit = (material) => {
+    setEditMode(true);
+    setCurrentMaterial(material);
+    formik.setValues({
+      heading: material?.title,
+      subLine: material?.description,
+      file: material?.file,
+    });
+  };
+
+  const handleUnselect = () => {
+    formik.setFieldValue("file", null);
+  };
+
+  console.log(StudyMaterials, "studyMaterials");
   return (
     <Box
       sx={{
@@ -203,7 +228,7 @@ const UploadStudyMaterials = () => {
               Upload Study Materials File
             </FormLabel>
             <Paper
-              className={classes.root}
+              className={`${classes.root} ${formik.values.file ? classes.fileSelected : ""}`}
               variant="outlined"
               sx={{
                 display: "flex",
@@ -216,41 +241,78 @@ const UploadStudyMaterials = () => {
                 type="file"
                 accept=".pdf,.doc,.docx"
                 className={classes.input}
-                onChange={(event) => {
-                  formik.setFieldValue("file", event.currentTarget.files[0]);
+                onChange={async (event) => {
+                  showSpinner();
+                  try {
+                    const file = event?.currentTarget.files[0];
+                    const form_data = new FormData();
+                    form_data.append("file", file);
+                    const response = await fileUpload(form_data);
+                    formik.setFieldValue("file", response?.file);
+                    toast.success("File uploaded successfully");
+                  } catch (error) {
+                    toast.error(error?.message);
+                  } finally {
+                    hideSpinner();
+                  }
                 }}
+                disabled={!!formik.values.file}
               />
               <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
                 <Box>
                   <StudyMaterialIcon />
                 </Box>
-                <Box sx={{ display: "inline-flex", gap: "10px" }}>
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ color: "black", fontSize: "12px", fontWeight: 500 }}
-                    className={classes.text}
-                  >
-                    Drag & Drop file
-                  </Typography>
-                  <Typography
-                    sx={{ color: "#787380", fontSize: "12px", fontWeight: 500 }}
-                  >
-                    or
-                  </Typography>
-                </Box>
-                <Box>
-                  <Button
-                    variant="contained"
-                    className={classes.browseButton}
-                    sx={{
-                      color: "#FFFFFF",
-                      borderRadius: "25px",
-                      backgroundColor: "#5611B1",
-                    }}
-                  >
-                    Browse
-                  </Button>
-                </Box>
+                {formik.values.file ? (
+                  <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <Typography
+                      variant="subtitle1"
+                      sx={{ color: "black", fontSize: "12px", fontWeight: 500 }}
+                      className={classes.text}
+                    >
+                      {formik.values.file.name}
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={handleUnselect}
+                      sx={{
+                        color: "#FFFFFF",
+                        borderRadius: "25px",
+                        backgroundColor: "#E53935",
+                      }}
+                    >
+                      Unselect
+                    </Button>
+                  </Box>
+                ) : (
+                  <Box sx={{ display: "inline-flex", gap: "10px" }}>
+                    <Typography
+                      variant="subtitle1"
+                      sx={{ color: "black", fontSize: "12px", fontWeight: 500 }}
+                      className={classes.text}
+                    >
+                      Drag & Drop file
+                    </Typography>
+                    <Typography
+                      sx={{ color: "#787380", fontSize: "12px", fontWeight: 500 }}
+                    >
+                      or
+                    </Typography>
+                    <Box>
+                      <Button
+                        variant="contained"
+                        className={classes.browseButton}
+                        sx={{
+                          color: "#FFFFFF",
+                          borderRadius: "25px",
+                          backgroundColor: "#5611B1",
+                        }}
+                      >
+                        Browse
+                      </Button>
+                    </Box>
+                  </Box>
+                )}
               </Box>
             </Paper>
             {formik.touched.file && formik.errors.file && (
@@ -296,17 +358,10 @@ const UploadStudyMaterials = () => {
           </Box>
         </form>
       </Box>
-      <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
-      <Box
-        sx={{
-          flexGrow: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Typography>No Uploads</Typography>
+      <Box sx={{ display: "flex" }}>
+        <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
       </Box>
+      <StudyMaterialList materials={StudyMaterials} handleEdit={handleEdit} />
     </Box>
   );
 };

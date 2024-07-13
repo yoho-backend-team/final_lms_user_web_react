@@ -12,7 +12,7 @@ const TicketsPage = () => {
   const dispatch = useDispatch();
   const tickets = useSelector(selectInstructorTickets);
   const loading = useSelector(selectLoading);
-  const [currentType, setCurrentType] = useState("");
+  const [currentType, setCurrentType] = useState(null);
 
   const getTicketsList = (query) => {
     dispatch(getAllTickets(query));

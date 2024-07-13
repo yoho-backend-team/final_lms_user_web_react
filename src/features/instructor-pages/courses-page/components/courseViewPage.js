@@ -117,6 +117,7 @@ const CourseViewPage = ({ Course }) => {
           <CourseAndNotesPage
             openCourseView={openCourseView}
             closeCourseView={closeCourseView}
+            course={Course}
           />
         )}
         {courseView && <SingleCourseView />}

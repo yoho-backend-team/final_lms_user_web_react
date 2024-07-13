@@ -177,7 +177,7 @@ const InstructorCoursePage = Loadable(
 );
 const InstructorStudyMaterialsPage = Loadable(
   lazy(
-    () => import("views/instructor-pages/courses-page/courses-add-page/index"),
+    () => import("views/instructor-pages/courses-page/courses-[id]-page/index"),
   ),
 );
 const InstructorHelpCenterPage = Loadable(
@@ -364,7 +364,7 @@ const ApplicationRoutes = () => {
               element={<InstructorCoursePage />}
             />
             <Route
-              path="instructor/StudyMaterialsPage"
+              path="instructor/course/resources/:id"
               element={<InstructorStudyMaterialsPage />}
             />
             <Route
