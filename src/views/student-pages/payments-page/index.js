@@ -1,8 +1,210 @@
-import React from "react";
-import Payment from "../../../features/student-pages/payments-page/components/index";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Paper,
+  Box,
+  Grid,
+  Button,
+  Divider,
+  Card,
+} from "@mui/material";
+import { PaymentBg } from "utils/images";
+import { useTabResponsive } from "utils/tabResponsive";
+import { useDispatch, useSelector } from "react-redux";
 
-const index = () => {
-  return <Payment />;
+import { useSpinner } from "context/SpinnerProvider";
+import toast from "react-hot-toast";
+import updateStudentFees from "features/student-pages/payments-page/redux/thunks";
+import PaymentCardStudent from "features/student-pages/payments-page/components/PaymentCard";
+import { selectStudentPayments ,selectLoading} from "features/student-pages/payments-page/redux/selectors";
+import { getStudentFees } from "features/student-pages/payments-page/services";
+import CourseStudentDetails from "features/student-pages/payments-page/components/CourseDetails";
+import SalaryIcon from "assets/icons/salaryIcon";
+import EPFIcon from "assets/icons/EPFIcon";
+import TaxIcon from "assets/icons/TaxIcon";
+import SalaryInHandIcon from "assets/icons/salaryHandIcon";
+import PaymentMethodIcon from "assets/icons/paymentMethodIcon";
+
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const PaymentStudentInterface = () => {
+  const dispatch = useDispatch();
+  const Studentfess = useSelector(selectStudentPayments);
+  const loading = useSelector(selectLoading);
+  const { tabView } = useTabResponsive();
+  const { showSpinner,hideSpinner } = useSpinner()
+  const [feesDataStudent, setFeesDataStudent] = useState([{ fees: [], totalAmount: 0 }]);
+
+   const instructorPaymentCardData = [
+    {
+      id: 1,
+      title: "Course Fees",
+      amount: feesDataStudent?.course_fees,
+      icon: <SalaryIcon color="#0D6EFD" />,
+      style: { color: "#000000", bg: "#D7E7FF" },
+    },
+    {
+      id: 2,
+      title: "Amount Paid",
+      amount: feesDataStudent?.totalAmount      ,
+      icon: <EPFIcon color="#009028" />,
+      style: { color: "#009028", bg: "#D2FDD6" },
+    },
+    {
+      id: 3,
+      title: "Pending Payment",
+      amount: feesDataStudent?.pending_payment,
+      icon: <TaxIcon color="#FF0000" />,
+      style: { color: "#FF0000", bg: "#FFDAD8" },
+    },
+    {
+      id: 4,
+      title: "Status",
+      amount: feesDataStudent?.payment_status,
+      icon: <SalaryInHandIcon color="#606060" />,
+      style: { color: "#000000", bg: "#E4E4E4" },
+    },
+    {
+      id: 5,
+      title: "Payment Method",
+      amount: "Online",
+      icon: <PaymentMethodIcon color="#DF9300" />,
+      style: { color: "#0D6EFD", bg: "#F9E8C7" },
+    },
+  ];
+
+  useEffect(() => {
+    const fetchStudentFee = async () => {
+      const data = {};
+      const details = await getStudentFees(data);
+      setFeesDataStudent(details);
+      console.log(details);
+    };
+
+    fetchStudentFee();
+  }, []);
+
+  // const getStudentfeesDetails = async () => {
+  //   try {
+  //     showSpinner()
+  //     dispatch(getStudentFees()); 
+  //   } catch (error) {
+  //     toast.error(error?.response?.data?.message)
+  //   }finally{
+  //     hideSpinner()
+  //   }
+  
+  // };
+
+  // useEffect(() => {
+  //   getStudentfeesDetails();
+  // }, [dispatch]);
+
+  console.log(feesDataStudent, "feesDataStudent")
+  return (
+    <>
+      <Box
+        sx={{
+          mx: tabView ? "0px" : "40px",
+          mt: tabView ? "80px" : "40px",
+          mb: "20px",
+          borderRadius: "25px",
+          boxShadow: tabView ? "none" : "0px 0px 64px 0px rgba(0, 0, 0, 0.10);",
+        }}
+      >
+        <Box
+          sx={{
+            backgroundImage: `url(${PaymentBg})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            width: "100%",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              p: "40px",
+              justifyContent: "space-between",
+            }}
+          >
+            <Box>
+              <Typography
+                sx={{
+                  color: "#151010",
+                  fontSize: "24px",
+                  fontWeight: "700",
+                  lineHeight: "32px",
+                }}
+              >
+                Payment
+              </Typography>
+            </Box>
+            <Box sx={{ textAlign: "end" }}>
+              <Typography
+                sx={{
+                  color: "#0D6EFD",
+                  fontSize: "16px",
+                  fontWeight: "700",
+                  lineHeight: "22px",
+                  textDecoration: "underline",
+                }}
+              >
+                Raise A Ticket?
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: "12px",
+                  fontWeight: "400",
+                  color: "#495057",
+                  lineHeight: "24px",
+                }}
+              >
+                For any Queries, Please Raise your Ticket
+              </Typography>
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              p: tabView ? "20px" : "40px",
+              gap: "46px",
+              flexWrap: "wrap",
+            }}
+          >
+            {instructorPaymentCardData.map((i) => (
+              <PaymentCardStudent
+                title={i.title}
+                amount={i.amount}
+                icon={i.icon}
+                key={i.title}
+                style={i.style}
+              />
+            ))}
+          </Box>
+          <CourseStudentDetails />
+        </Box>
+      </Box>
+    </>
+  );
 };
 
-export default index;
+export default PaymentStudentInterface;

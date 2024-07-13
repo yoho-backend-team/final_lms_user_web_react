@@ -33,6 +33,7 @@ const CourseProgressCard = () => {
           backgroundColor: "#FFDCB3",
           borderColor: "#D39349",
           border: "1px",
+          padding : "20px",
           p: 2,
           flexDirection: "column",
         }}
@@ -71,9 +72,10 @@ const CourseProgressCard = () => {
                     clipPath: "polygon(0 0, 100% 15%, 100% 75%, 0% 100%)",
                     backgroundColor: "white",
                     p: 2,
-                    gap: 25,
+                    gap: "136px",
                     borderRadius: 2,
                     alignItems: "center",
+                    maxWidth: "320px"
                   }}
                 >
                   <Box>
@@ -114,7 +116,7 @@ const CourseProgressCard = () => {
                     clipPath: "polygon(0 15%, 100% 0, 100% 100%, 0 75%);",
                     backgroundColor: "white",
                     p: 2,
-                    gap: 25,
+                    gap: "136px",
                     alignItems: "center",
                   }}
                 >

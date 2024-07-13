@@ -727,3 +727,4 @@ const MainCourse = () => {
 };
 
 export default MainCourse;
+
