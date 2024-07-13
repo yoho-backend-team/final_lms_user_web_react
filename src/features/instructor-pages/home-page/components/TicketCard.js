@@ -1,6 +1,6 @@
 import { Grid, Card, Box, Typography } from "@mui/material";
 
-const TicketCard = () => {
+const TicketCard = ({ticket}) => {
   return (
     <Card sx={{ mt: 5 }}>
       <Grid sx={{ display: "flex", flexDirection: "row" }} xs={12}>
@@ -19,7 +19,7 @@ const TicketCard = () => {
             </Typography>
             <Box sx={{ mt: 2 }}>
               <Typography sx={{ color: "#6D6D6D", fontSize: 12 }}>
-                Total 11
+                Total {ticket?.total}
               </Typography>
               <Typography sx={{ color: "#6D6D6D", fontSize: 12 }}>
                 Ticket Raised
@@ -48,10 +48,10 @@ const TicketCard = () => {
                 textAlign: "cetner",
               }}
             >
-              7
+              {ticket?.closed}
             </Typography>
             <Typography
-              sx={{ color: "#29AA92", fontSize: 14, fontWeight: 200 }}
+              sx={{ color: "#29AA92", fontSize: 14, fontWeight: 700 }}
             >
               Completed
             </Typography>
@@ -66,15 +66,16 @@ const TicketCard = () => {
               py: "34px",
               flexDirection: "column",
               alignItems: "center",
+              height: "100%"
             }}
           >
             <Typography
               sx={{ fontWeight: 800, color: "#FF1B1B", fontSize: 48 }}
             >
-              4
+              { ticket?.opened }
             </Typography>
-            <Typography sx={{ fontWeight: 200, color: "#FF1B1B" }}>
-              completed
+            <Typography sx={{ fontWeight: 700, color: "#FF1B1B" }}>
+              Pending
             </Typography>
           </Box>
         </Grid>

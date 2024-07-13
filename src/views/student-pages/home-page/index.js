@@ -36,7 +36,7 @@ const StudentDashboard = () => {
   }
 
   return (
-    <Grid container p={8} sx={{ p: { xs: 2, sm: 5 } }}>
+    <Grid container p={8} sx={{ p: { xs: 5, sm: 9 } }}>
       <Grid item xs={12} sm={4} className="MainGrid-1">
         <Card sx={{ boxShadow: "none" }}>
           <Box>
@@ -106,7 +106,7 @@ const StudentDashboard = () => {
                 sx={{ p: 1, px: 2, borderRadius: 5 }}
                 onClick={handleEditProfileClick}
               >
-                Edit Profile
+                View Profile
               </Button>
             </Grid>
           </Grid>
@@ -281,13 +281,13 @@ const StudentDashboard = () => {
       </Grid>
       <Grid item xs={12} sm={4} className="MainGrid-2">
         <Grid item xs={12} px={3} mb={2}>
-          <PaymentsCard />
+        <CourseCard />        
         </Grid>
         <Grid item xs={12} px={3} mb={2}>
-          <CourseCard />
+        <AttendanceCard />          
         </Grid>
         <Grid item xs={12} px={3}>
-          <AttendanceCard />
+           <PaymentsCard />
         </Grid>
       </Grid>
       <Grid item xs={12} sm={4} className="MainGrid-3">

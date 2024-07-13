@@ -21,6 +21,16 @@ class Client {
       get: (params) =>
         httpClient.get(HTTP_END_POINTS.Student.course.get, params, "student"),
     },
+    profile: {
+      get: (params) =>
+        httpClient.get(HTTP_END_POINTS.Student.profile.get, params, "student"),
+      update: (data) =>
+        httpClient.update(
+          HTTP_END_POINTS.Student.profile.update,
+          data,
+          "student",
+        ),
+    },
     class: {
       get: (params) =>
         httpClient.get(HTTP_END_POINTS.Student.class.get, params, "student"),
@@ -43,6 +53,21 @@ class Client {
     attendance: {
     get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.get}`,params,'student'),
     get_class_attendance: (data) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.class_attendance}/${data.classId}`, { params: data })
+  },
+  ticket: {
+    create: (data, params) =>
+      httpClient.post(
+        HTTP_END_POINTS.Student.ticket.create,
+        data,
+        params,
+        "student",
+      ),
+    get: (params) =>
+      httpClient.get(
+        HTTP_END_POINTS.Student.ticket.get,
+        params,
+        "student",
+      ),
   },
     community : {
       get : (params) => httpClient.get(HTTP_END_POINTS.Student.community.get,params,"student")
@@ -130,6 +155,9 @@ class Client {
           "instructor",
         ),
     },
+    reports : {
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.reports.get,params,"instructor")
+    }
   };
 }
 

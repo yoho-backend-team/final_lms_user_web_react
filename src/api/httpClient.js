@@ -76,6 +76,7 @@ class HttpClient {
   }
 
   async update(url, data, userType) {
+    console.log(url,data,userType)
     const response = await Axios.put(url, data, {
       headers: {
         "User-Type": userType,
@@ -100,23 +101,6 @@ class HttpClient {
         "Content-Type": "multipart/form-data",
         "User-Type": userType,
       },
-    });
-    return response?.data;
-  }
-
-  async update(url, data) {
-    const response = await Axios.put(url, data);
-    return response?.data;
-  }
-
-  async fileGet(url) {
-    const response = Axios.get(url, { responseType: "blob" });
-    return response;
-  }
-
-  async uploadFile(url, data) {
-    const response = await Axios.post(url, data, {
-      headers: { "Content-Type": "multipart/form-data" },
     });
     return response?.data;
   }

@@ -1,689 +1,278 @@
-import React, { useState } from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Avatar from "@mui/material/Avatar";
-import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
-import StudyMaterialIcon from "assets/icons/study-material-icon";
-import EllipseImage from "../../../assets/Ellipse 1928.png";
-import { useNavigate } from "react-router-dom";
-import IdCardImage from "../../../Id_card.png";
-import CircularProgress from "@mui/material/CircularProgress";
-import VirtualIDCard from "./VirtualIDCard";
+import React, { useEffect, useState } from 'react';
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Avatar,
+  Grid,
+  LinearProgress,
+  IconButton,
+  Button,
+  TextField,
+} from '@mui/material';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import studentheaderpic from "../../../assets/images/background/studentprofile.svg"
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import PersonIcon from '@mui/icons-material/Person';
+import PhoneIcon from '@mui/icons-material/Phone';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import HomeIcon from '@mui/icons-material/Home';
+import MaleIcon from '@mui/icons-material/Male';
+import FemaleIcon from '@mui/icons-material/Female';
+import { getprofilewithId, UpdateprofilewithId } from 'features/student-pages/Profile-page/services';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import BoySharpIcon from '@mui/icons-material/BoySharp';
+import Groups2Icon from '@mui/icons-material/Groups2';
+import BadgeIcon from '@mui/icons-material/Badge';
+import { getImageUrl } from 'utils/common/imageUtlils';
+
 
 const ProfilePage = () => {
-  const [isEditMode, setEditMode] = useState(false);
   const [personalInfo, setPersonalInfo] = useState({
-    firstName: "Janu",
-    lastName: "Janu",
-    email: "janu@design.com",
-    gender: "Female",
-    contact: "9876543210",
-    address: "20/1 Km street, mm nagar chengalpattu",
-    pincode: "897653",
+    first_name: '',
+    last_name: '',
+    email: '',
+    gender: '',
+    contact: '',
+    address: '',
+    pincode: '',
   });
+ const [editing, setEditing] = useState(false);
+ const [editedPersonalInfo, setEditedPersonalInfo] = useState({ ...personalInfo });
 
-  const [documents, setDocuments] = useState([
-    "10th Mark sheet",
-    "12th Mark sheet",
-    "Aadhar Card",
-    "School TC",
-  ]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setPersonalInfo({
-      ...personalInfo,
-      [name]: value,
-    });
+  const getProfile = async () => {
+    try {
+      const response = await getprofilewithId();
+      setPersonalInfo({
+        ...response,
+        contact: response.contact_info.phone_number,
+        address: `${response.contact_info.address1}, ${response.contact_info.city}`,
+        pincode: response.contact_info.pincode,
+      });
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+    }
   };
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    getProfile();
+  }, []);
 
-  const handleDocumentDelete = (index) => {
-    setDocuments(documents.filter((_, i) => i !== index));
+  const editProfile = async () => {
+    try {
+      const updatedData = await UpdateprofilewithId(editedPersonalInfo); 
+      setPersonalInfo(updatedData); 
+      setEditing(false); 
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
   };
+  
 
-  const handleDocumentUpload = () => {
-    setDocuments([...documents, "New Document"]);
-  };
+  console.log(personalInfo, "personalInfo");
+
+  const genderIcon = personalInfo.gender === 'male' ? <MaleIcon /> : <FemaleIcon />;
+
+  const image = getImageUrl(personalInfo.image);
+
+  
+
+  const infoItems = [
+    { icon: <MailOutlineIcon />, label: 'Mail Address', value: personalInfo.email },
+    { icon: <PersonIcon />, label: 'Name', value: `${personalInfo.first_name} ${personalInfo.last_name}` },
+    { icon: genderIcon, label: 'Gender', value: personalInfo.gender },
+    { icon: <PhoneIcon />, label: 'Contact Number', value: personalInfo.contact },
+    { icon: <CalendarTodayIcon />, label: 'Date of Birth', value: personalInfo.dob },
+    { icon: <LocationOnIcon />, label: 'Pin Code', value: personalInfo.pincode },
+    { icon: <HomeIcon />, label: 'Address', value: personalInfo.address },   
+  ];  
+  const Instituteinfo = [
+    { icon: <AutoStoriesIcon />, label: 'Course', value: personalInfo?.userDetail?.course?.course_name },
+    { icon: <Groups2Icon />, label: 'Batch', value: personalInfo?.userDetail?.course?.course_name },
+    { icon: <BoySharpIcon />, label: 'Roll Number', value: personalInfo.userDetail?.id },
+    { icon: <BadgeIcon />, label: 'Student ID', value: personalInfo?.userDetail?.id },    
+  ];
+
 
   return (
-    <Box sx={{ padding: "20px 50px", backgroundColor: "#F4F4F6" }}>
-      <Box
-        sx={{ display: "flex", pt: "60px" }}
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Button
-            startIcon={<ArrowBackIcon />}
-            color="primary"
-            sx={{
-              boxShadow: "none",
-              ":hover": {
-                boxShadow: "none",
-                backgroundColor: "none",
-                color: "#000",
-              },
-            }}
-            onClick={() => navigate("/dashboard")}
-          />
-          <Typography sx={{ color: "#000", ml: 1 }}>
-            Back to Dashboard
-          </Typography>
-        </Box>
-        <Button
-          variant="contained"
-          sx={{
-            borderRadius: 2,
-            cursor: "pointer",
-            color: "white",
-            borderRadius: "8px",
-            backgroundColor: "#0d6efd",
-            boxShadow: "0px 6px 34px -8px #0d6efd",
-          }}
-          onClick={() => {
-            setEditMode(!isEditMode);
-            console.log("clicked");
-          }}
-        >
-          {isEditMode ? "Save" : "Edit"}
-        </Button>
-      </Box>
-
-      <Grid container xs={12} spacing={5}>
-        <Grid item xs={9}>
-          {/* Personal Info */}
-          <Card
-            sx={{
-              backgroundColor: "#FFF",
-              borderRadius: 2,
-              border: "1px solid var(--Gray-300, #DEE2E6)",
-              boxShadow: 2,
-              mb: 2,
-            }}
-          >
-            <CardContent>
-              <Typography
-                variant="h5"
-                gutterBottom
+    <Box sx={{ p: 10 }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={8}>
+          <Card sx={{ mb: 4, position: 'relative' }}>
+            <Box sx={{ position: 'relative' }}>
+              <img
+                src={studentheaderpic}
+                alt="Background"
+                style={{ width: '100%', height: '120px', objectFit: 'cover' }}
+              />
+              <Avatar
+                alt="userimage"
+                src={image}
+                variant="rounded"
                 sx={{
-                  width: "137px",
-                  color: "#000",
-                  fontFamily: "Poppins",
-                  fontSize: "19px",
-                  fontStyle: "normal",
-                  fontWeight: 700,
-                  lineHeight: "32px",
+                  width: 120,
+                  height: 120,
+                  position: 'absolute',
+                  top: 70,
+                  left: 30,
                 }}
-              >
-                Personal Info
-              </Typography>
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Box>
-                  <Typography
-                    variant="body1"
+                
+              />
+                <div style={{ display:'flex',  position: 'absolute', top:140, left:180}}>
+                <Button
+                    variant="contained"
+                    onClick={editing ? editProfile : () => setEditing(true)}
                     sx={{
-                      width: "94px",
-                      color: "var(--Gray-700, #495057)",
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "32px",
+                      borderRadius: '24px',
+                      backgroundColor: editing ? '#4CAF50' : '#0D6EFD',
+                      padding: '8px 18px',
+                      color: 'white',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      lineHeight: '16px',
+                      width: '130px',
+                      height: 'auto',
+                      boxShadow: '0px 6px 34px -8px #A4A4A4',
                     }}
                   >
-                    First Name
-                  </Typography>
-                  {isEditMode ? (
-                    <TextField
-                      name="firstName"
-                      value={personalInfo.firstName}
-                      onChange={handleInputChange}
-                      variant="outlined"
-                      size="small"
-                    />
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Poppins",
-                        fontSize: "12px",
-                        fontStyle: "normal",
-                        fontWeight: 500,
-                        lineHeight: "16px",
-                      }}
-                    >
-                      {personalInfo.firstName}
-                    </Typography>
-                  )}
-                </Box>
-                <Box>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      width: "94px",
-                      color: "var(--Gray-700, #495057)",
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "32px",
-                    }}
-                  >
-                    Last Name
-                  </Typography>
-                  {isEditMode ? (
-                    <TextField
-                      name="lastName"
-                      value={personalInfo.lastName}
-                      onChange={handleInputChange}
-                      variant="outlined"
-                      size="small"
-                    />
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Poppins",
-                        fontSize: "12px",
-                        fontStyle: "normal",
-                        fontWeight: 500,
-                        lineHeight: "16px",
-                      }}
-                    >
-                      {personalInfo.lastName}
-                    </Typography>
-                  )}
-                </Box>
-                <Box>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      width: "94px",
-                      color: "var(--Gray-700, #495057)",
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "32px",
-                    }}
-                  >
-                    Email ID
-                  </Typography>
-                  {isEditMode ? (
-                    <TextField
-                      name="email"
-                      value={personalInfo.email}
-                      onChange={handleInputChange}
-                      variant="outlined"
-                      size="small"
-                    />
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Poppins",
-                        fontSize: "12px",
-                        fontStyle: "normal",
-                        fontWeight: 500,
-                        lineHeight: "16px",
-                      }}
-                    >
-                      {personalInfo.email}
-                    </Typography>
-                  )}
-                </Box>
-                <Box>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      width: "94px",
-                      color: "var(--Gray-700, #495057)",
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "32px",
-                    }}
-                  >
-                    Gender
-                  </Typography>
-                  {isEditMode ? (
-                    <TextField
-                      name="gender"
-                      value={personalInfo.gender}
-                      onChange={handleInputChange}
-                      variant="outlined"
-                      size="small"
-                    />
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Poppins",
-                        fontSize: "12px",
-                        fontStyle: "normal",
-                        fontWeight: 500,
-                        lineHeight: "16px",
-                      }}
-                    >
-                      {personalInfo.gender}
-                    </Typography>
-                  )}
-                </Box>
-                <Box>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      cwidth: "94px",
-                      color: "var(--Gray-700, #495057)",
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "32px",
-                      minWidth: "200px",
-                    }}
-                  >
-                    Contact
-                  </Typography>
-                  {isEditMode ? (
-                    <TextField
-                      name="contact"
-                      value={personalInfo.contact}
-                      onChange={handleInputChange}
-                      variant="outlined"
-                      size="small"
-                    />
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Poppins",
-                        fontSize: "12px",
-                        fontStyle: "normal",
-                        fontWeight: 500,
-                        lineHeight: "16px",
-                      }}
-                    >
-                      {personalInfo.contact}
-                    </Typography>
-                  )}
-                </Box>
-              </Box>
-              <Box sx={{ display: "flex", gap: "60px", pt: "40px" }}>
-                <Box>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      width: "94px",
-                      color: "var(--Gray-700, #495057)",
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "32px",
-                    }}
-                  >
-                    Address
-                  </Typography>
-                  {isEditMode ? (
-                    <TextField
-                      name="address"
-                      value={personalInfo.address}
-                      onChange={handleInputChange}
-                      variant="outlined"
-                      size="small"
-                    />
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Poppins",
-                        fontSize: "12px",
-                        fontStyle: "normal",
-                        fontWeight: 500,
-                        lineHeight: "16px",
-                      }}
-                    >
-                      {personalInfo.address}
-                    </Typography>
-                  )}
-                </Box>
-                <Box>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      width: "94px",
-                      color: "var(--Gray-700, #495057)",
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "32px",
-                    }}
-                  >
-                    Pincode
-                  </Typography>
-                  {isEditMode ? (
-                    <TextField
-                      name="pincode"
-                      value={personalInfo.pincode}
-                      onChange={handleInputChange}
-                      variant="outlined"
-                      size="small"
-                    />
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Poppins",
-                        fontSize: "12px",
-                        fontStyle: "normal",
-                        fontWeight: 500,
-                        lineHeight: "16px",
-                      }}
-                    >
-                      {personalInfo.pincode}
-                    </Typography>
-                  )}
-                </Box>
-              </Box>
-            </CardContent>
-          </Card>
+                    {editing ? 'Save Profile' : 'Edit Profile'}
+                  </Button>
 
-          {/* Academic Info */}
-          <Card
-            sx={{
-              backgroundColor: "#FFFFFF",
-              borderRadius: 2,
-              boxShadow: 2,
-              mb: 2,
-            }}
-          >
-            <CardContent>
-              <Typography
-                variant="h6"
-                gutterBottom
-                sx={{
-                  width: "137px",
-                  color: "#000",
-                  fontFamily: "Poppins",
-                  fontSize: "19px",
-                  fontStyle: "normal",
-                  fontWeight: 700,
-                  lineHeight: "32px",
-                }}
-              >
-                Academics Info
-              </Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={6} md={3}>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      width: "94px",
-                      color: "var(--Gray-700, #495057)",
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "32px",
-                    }}
-                  >
-                    Department
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "#495057",
-                      fontFamily: "Poppins",
-                      fontSize: "12px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "16px",
-                    }}
-                  >
-                    Design Development
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} md={3}>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      width: "94px",
-                      color: "var(--Gray-700, #495057)",
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "32px",
-                    }}
-                  >
-                    Course
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "#495057",
-                      fontFamily: "Poppins",
-                      fontSize: "12px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "16px",
-                    }}
-                  >
-                    UI / UX Design
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} md={3}>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      width: "94px",
-                      color: "var(--Gray-700, #495057)",
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "32px",
-                    }}
-                  >
-                    Batch
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "#495057",
-                      fontFamily: "Poppins",
-                      fontSize: "12px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "16px",
-                    }}
-                  >
-                    Batch "A"
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} md={3}>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      width: "94px",
-                      color: "var(--Gray-700, #495057)",
-                      fontFamily: "Poppins",
-                      fontSize: "15px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "32px",
-                    }}
-                  >
-                    Roll Number
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "#495057",
-                      fontFamily: "Poppins",
-                      fontSize: "12px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "16px",
-                    }}
-                  >
-                    100099
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} md={3}>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      width: "94px",
-                      color: "var(--Gray-700, #495057)",
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "32px",
-                    }}
-                  >
-                    Student ID
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: "#495057",
-                      fontFamily: "Poppins",
-                      fontSize: "12px",
-                      fontStyle: "normal",
-                      fontWeight: 500,
-                      lineHeight: "16px",
-                    }}
-                  >
-                    9niudwybutv7
-                  </Typography>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
+              <IconButton color="primary" href="https://www.linkedin.com/">
+                <LinkedInIcon />
+              </IconButton>
+            </div>
+            </Box>
+            <CardContent sx={{ mt: 10 }}>
+            <Typography variant="body1" sx={{ mb: 2, color:'#000000', fontFamily: 'Nunito Sans', fontSize: '20px', fontWeight: 700, lineHeight: '32px', textAlign: 'left' }}>
+                Personal info
+              </Typography>                          
+                <Grid container spacing={2} justifyContent="space-between">
+                {editing ? (
+                <>
+                  <TextField
+                    label="Email"
+                    value={editedPersonalInfo.email}
+                    onChange={(e) => setEditedPersonalInfo({ ...editedPersonalInfo, email: e.target.value })}
+                  />
+                   <TextField
+                    label="first_name"
+                    value={editedPersonalInfo.first_name}
+                    onChange={(e) => setEditedPersonalInfo({ ...editedPersonalInfo, first_name: e.target.value })}
+                  />
 
-          {/* Documents */}
-          <Card
-            sx={{ backgroundColor: "#FFFFFF", borderRadius: 2, boxShadow: 2 }}
-          >
-            <CardContent>
-              <Typography
-                variant="h6"
-                gutterBottom
-                sx={{
-                  width: "137px",
-                  color: "#000",
-                  fontFamily: "Poppins",
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: 700,
-                  lineHeight: "32px",
-                }}
-              >
-                Documents
-              </Typography>
-              <Grid container spacing={2}>
-                {documents.map((document, index) => (
-                  <Grid item xs={6} md={3} key={index}>
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="space-between"
-                    >
+                </>
+              ) : (
+    
+                <>
+                  {infoItems.map((item, index) => (
+                    <Grid item xs={12} sm={6} md={4} key={index}>
                       <Box display="flex" alignItems="center">
-                        <StudyMaterialIcon />
-                        <Typography sx={{ ml: 1 }}>{document}</Typography>
+                        <div style={{ color: 'black' }}>{item.icon}</div>
+                        <Box ml={1}>
+                          <Typography
+                            sx={{
+                              fontFamily: 'Nunito Sans',
+                              fontSize: '14px',
+                              fontWeight: 700,
+                              lineHeight: '15px',
+                              textAlign: 'left',
+                              color: 'black',
+                            }}
+                          >
+                            {item.value}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            style={{
+                              fontFamily: 'Nunito Sans',
+                              fontSize: '12px',
+                              fontWeight: 600,
+                              lineHeight: '20px',
+                              textAlign: 'left',
+                            }}
+                          >
+                            {item.label}
+                          </Typography>
+                        </Box>
                       </Box>
-                      {isEditMode && (
-                        <IconButton
-                          onClick={() => handleDocumentDelete(index)}
-                          size="small"
-                        >
-                          <DeleteIcon fontSize="small" />
-                        </IconButton>
-                      )}
-                    </Box>
-                  </Grid>
-                ))}
-                {isEditMode && (
-                  <Grid item xs={6} md={3}>
-                    <Button
-                      variant="outlined"
-                      startIcon={<AddIcon />}
-                      onClick={handleDocumentUpload}
-                      size="small"
-                      sx={{ marginTop: 1 }}
-                    >
-                      Upload
-                    </Button>
-                  </Grid>
-                )}
+                    </Grid>
+                  ))}
+                </>
+              )}
               </Grid>
-            </CardContent>
+              <Typography variant="body1" sx={{mt: 4, mb: 2, color:'#000000', fontFamily: 'Nunito Sans', fontSize: '20px', fontWeight: 700, lineHeight: '32px', textAlign: 'left' }}>
+              Institute info
+              </Typography>    
+              <Grid container spacing={2} justifyContent="space-between">
+                    {Instituteinfo.map((item, index) => (
+                      <Grid item xs={12} sm={6} md={3} key={index}> 
+                        <Box display="flex" alignItems="center">
+                          <div style={{ color: 'black'}}>
+                            {item.icon}
+                          </div>
+                          <Box ml={1}>
+                          <Typography sx={{
+                                  fontFamily: 'Nunito Sans',
+                                  fontSize: '14px',
+                                  fontWeight: 700,
+                                  lineHeight: '15px',
+                                  textAlign: 'left',
+                                  color:'black'
+                                }}
+                              >
+                              {item.value} 
+                              </Typography>
+                              <Typography variant="body2" style={{ 
+                                  fontFamily: 'Nunito Sans',
+                                  fontSize: '12px',
+                                  fontWeight: 600,
+                                  lineHeight: '20px',
+                                  textAlign: 'left'
+                              }}>
+                                  {item.label}
+                              </Typography>
+                 
+                          </Box>
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+           </CardContent>
           </Card>
         </Grid>
 
-        <Grid item xs={3}>
-          {/* Virtual ID
-          <Card sx={{ 
-            backgroundColor: '#FFFFFF', 
-            borderRadius: 2, 
-            boxShadow: 2, 
-            mb: 2, 
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center', 
-            padding: 3,
-            border: '1px solid #dee2e6',
-            width: '300px', // Width for ID card
-            height: '350px', // Height for ID card
-          }}>
-            <Typography variant="h5" gutterBottom sx={{ width: '137px',color: '#000',fontFamily: 'Poppins',fontSize: '20px',fontStyle: 'normal',fontWeight: 700,lineHeight: '32px' }}>
-              Virtual ID
-            </Typography>
-            <Avatar alt="Jimmy" src= {IdCardImage} sx={{ width: 100, height: 100, mb: 2 }} />
-            <Typography variant="body1" sx={{ fontWeight: 'bold', mb: 1 }}>Jimmy</Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>Student ID: 9niudwybutv7</Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>Batch: A</Typography>
+        {/* Right Side - Academic Info, Current Chapter/Topic, and Progress (30%) */}
+        <Grid item xs={12} md={4}>
+        
+          <Box sx={{ p: 2, mb: 2 }}>
+             <Typography variant="body1" sx={{mb: 2, color:'#000000', fontFamily: 'Nunito Sans', fontSize: '20px', fontWeight: 700, lineHeight: '32px', textAlign: 'left' }}>
+               Academic Info
+              </Typography> 
+            <Typography variant="body2">Total Percentage: 75%</Typography>
+            <Typography variant="body2">Projects Assigned: 2</Typography>
+            <Typography variant="body2">Pending Course: 4</Typography>
+          </Box>
+          <Card sx={{ p: 2, mb: 2 }}>
+            <Typography variant="h6">Current Chapter / Topic</Typography>
+            <Typography variant="body2">Chapter 2</Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Box sx={{ width: '100%', mr: 1 }}>
+                <LinearProgress variant="determinate" value={72} />
+              </Box>
+              <Box sx={{ minWidth: 35 }}>
+                <Typography variant="body2" color="textSecondary">{`72%`}</Typography>
+              </Box>
+            </Box>
           </Card>
-        <Box sx={{ display:"flex", flexDirection:"row", justifyContent:"center",alignItems:"center"}} >
-          <Box sx={{ textAlign: 'left',  minWidth: 250, mr: 2 }}>
-      
-        <Typography variant="h6" gutterBottom sx={{ color: '#000',fontFamily: 'Lato',fontSize: '20px',fontStyle: 'normal',fontWeight: 700,lineHeight: 'normal', textAlign: 'left', mt: 0 }}>
-          Course Status
-          </Typography>
-         <CircularProgress 
-         variant="determinate"
-         sx={{ rotate:"180deg"}}
-         size={"196px"}
-         value={75}
-         />
-        <Typography variant="body1">Course Ends at: 29 May 2024</Typography>
-      
-    </Box>
-    </Box> */}
-          <VirtualIDCard />
+          <Card sx={{ p: 2 }}>
+            <Typography variant="h6">Progress</Typography>
+            <img src="https://via.placeholder.com/400x200" alt="Progress Chart" style={{ width: '100%' }} />
+          </Card>
+        
         </Grid>
       </Grid>
     </Box>
