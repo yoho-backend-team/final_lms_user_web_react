@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -22,68 +22,40 @@ import { styled } from "@mui/system";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-
+import Client from "../../../../api/index";
+import { getAllStudentActivity } from "../services";
+import { formatDate, formatTime } from "utils/formatDate";
+import DeleteSweepOutlinedIcon from '@mui/icons-material/DeleteSweepOutlined';
 const StudentActivityLog = () => {
   const [page, setPage] = useState(1);
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [fromDate, setFromDate] = useState(new Date());
+  const [toDate, setToDate] = useState(new Date());
   const [week, setWeek] = useState("Past Week");
+  const [activityLogs, setActivityLogs] = useState([]);
   const rowsPerPage = 5;
 
+  useEffect(() => {
+    const fetchActivityLogs = async () => {
+      try {
+        const data = {
+          fromDate,
+          toDate,
+          week,
+        };
+        const logs = await getAllStudentActivity(data);
+        setActivityLogs(logs);
+        
+      } catch (error) {
+        console.error("Error fetching activity logs:", error);
+      }
+    };
+
+    fetchActivityLogs();
+  }, [fromDate, toDate, week]);
+  console.log(activityLogs,"activity")
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
-  const activityLogs = [
-    {
-      id: 1,
-      type: "Accessing the Account details",
-      status: "Success",
-      date: "11-07-2023",
-      time: "4:30 am",
-      user: "ABC",
-    },
-    {
-      id: 2,
-      type: "Accessing the Account details",
-      status: "Failed",
-      date: "11-07-2023",
-      time: "4:30 am",
-      user: "ABC",
-    },
-    {
-      id: 3,
-      type: "Delete Process",
-      status: "Success",
-      date: "11-07-2023",
-      time: "4:30 am",
-      user: "ABC",
-    },
-    {
-      id: 4,
-      type: "Delete Process",
-      status: "Failed",
-      date: "11-07-2023",
-      time: "4:30 am",
-      user: "ABC",
-    },
-    {
-      id: 5,
-      type: "Password Change",
-      status: "Success",
-      date: "11-07-2023",
-      time: "4:30 am",
-      user: "ABC",
-    },
-    {
-      id: 6,
-      type: "Password Change",
-      status: "Failed",
-      date: "11-07-2023",
-      time: "4:30 am",
-      user: "ABC",
-    },
-  ];
 
   const paginatedLogs = activityLogs.slice(
     (page - 1) * rowsPerPage,
@@ -97,7 +69,7 @@ const StudentActivityLog = () => {
       case "Failed":
         return <CancelIcon color="error" />;
       default:
-        return <AccessTimeIcon color="action" />;
+        return <DeleteSweepOutlinedIcon sx={{ color: 'red' }} />;
     }
   };
 
@@ -190,15 +162,15 @@ const StudentActivityLog = () => {
             <Paper sx={{ boxShadow: "none" }}>
               <Box sx={{ maxHeight: 500, overflow: "auto", padding: 2 }}>
                 <Timeline position="right" sx={{ alignItems: "flex-start" }}>
-                  {paginatedLogs.map((log, index) => (
+                  {activityLogs.map((log, index) => (
                     <TimelineItem key={log.id}>
                       <TimelineOppositeContent>
                         <Typography variant="body2" color="textSecondary">
-                          {log.date}
+                          {formatDate(log?.updatedAt)}
                         </Typography>
                       </TimelineOppositeContent>
                       <TimelineSeparator>
-                        <TimelineDot>{getStatusIcon(log.status)}</TimelineDot>
+                        <TimelineDot>{getStatusIcon(log.action)}</TimelineDot>
                         {index < paginatedLogs.length - 1 && (
                           <TimelineConnector />
                         )}
@@ -207,7 +179,7 @@ const StudentActivityLog = () => {
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
                           <Box>
                             <Typography variant="h6" component="span">
-                              {log.type}
+                              {log.details}
                             </Typography>
                           </Box>
                           <Box
@@ -219,9 +191,9 @@ const StudentActivityLog = () => {
                             }}
                           >
                             <Typography variant="body2" color="textSecondary">
-                              Time: {log.time} | User: {log.user}
+                              Time: {formatTime(log?.createdAt)} | User: {log?.user?.full_name  }
                             </Typography>
-                            <Typography>{log.status}</Typography>
+                            <Typography>{log.action}</Typography>
                           </Box>
                         </Box>
                       </TimelineContent>

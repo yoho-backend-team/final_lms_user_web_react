@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Typography, Tab, Tabs, Button, Grid, Modal } from "@mui/material";
-import { TicketBg } from "utils/images";
+import {TicketBg2} from "utils/images"
 import { useTabResponsive } from "utils/tabResponsive";
 import TicketLoader from "components/ui/loaders/ticketLoader";
 import StudentTicketCard from "./TicketsCard";
@@ -47,7 +47,7 @@ const StudentDataTicketsPage = ({
     <>
       <Box
         sx={{
-          backgroundImage: `url(${TicketBg})`,
+          backgroundImage: `url(${TicketBg2})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           height: "100vh",

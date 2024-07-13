@@ -7,6 +7,7 @@ import CertificateIcon from "assets/icons/certificateIcon";
 import LanguageIcon from "assets/icons/languageIcon";
 import { getImageUrl } from "utils/common/imageUtlils";
 import CircularProgressWithStudentLabel from "./cirularProgresswitjLabel.js";
+import { formatDate } from "utils/formatDate.js";
 
 const CourseStudentDetails = ({ Course }) => {
   const Benefits = [
@@ -59,7 +60,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontWeight: 600,
               }}
             >
-              Purchased on:
+              Purchased on: 
             </span>
             <span
               style={{
@@ -69,7 +70,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontWeight: 600,
               }}
             >
-              23 Jan 2024
+              {formatDate(Course.createdAt)}
             </span>
           </Typography>
         </Box>
@@ -137,7 +138,7 @@ const CourseStudentDetails = ({ Course }) => {
                 lineHeight: "10px",
               }}
             >
-              12hrs
+              {Course.duration}hrs
             </span>
           </Typography>
         </Box>
