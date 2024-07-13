@@ -35,7 +35,7 @@ const chapters = [
   },
 ];
 
-const CourseStudentChapters = ({ Chapters }) => {
+const CourseStudentChapters = ({ Chapters , Course}) => {
   return (
     <Box sx={{ pl: "91px", pr: "50px", height: "80vh", overflowY: "auto" }}>
       <Box
