@@ -38,6 +38,7 @@ const CoursePage = () => {
     getCourseDetails(data);
   }, [dispatch]);
   
+  console.log(course , "course")
   return (
     <>
       <CourseStudentLayout>
