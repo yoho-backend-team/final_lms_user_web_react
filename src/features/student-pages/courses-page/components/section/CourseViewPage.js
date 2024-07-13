@@ -18,6 +18,43 @@ import { formatDate, formatTime } from "utils/formatDate";
 
 const SingleCourseStudentView = ({ Course }) => {
   const classes = Course?.batches[0]?.classes || [];
+  const classes2 = Course?.studymaterials || [];
+  const classes3 = Course?.notes || [];
+  console.log(classes2, "classes2")
+  const downloadPdf = () => {
+    
+    const pdfContent = '...'; 
+    const blob = new Blob([pdfContent], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${classes2?.title}.pdf`; 
+    document.body.appendChild(a);
+    a.click();
+
+    
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+  const downloadNotesPdf = () => {
+    
+    const pdfContent = '...'; 
+    const blob = new Blob([pdfContent], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${classes3?.title}.pdf`; 
+    document.body.appendChild(a);
+    a.click();
+
+    
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
   console.log(Course, "Course Student")
   return (
     <Box sx={{ padding: "16px" }}>
@@ -277,7 +314,7 @@ const SingleCourseStudentView = ({ Course }) => {
                             flexDirection: "column",
                           }}
                         >
-                          <SaveAltOutlinedIcon sx={{ color: "#8E8383" }} />
+                          <SaveAltOutlinedIcon sx={{ color: "#8E8383",cursor: "pointer" }} onClick={downloadPdf} />
                         </Box>
                       </Box>
                     </CardContent>
@@ -352,7 +389,7 @@ const SingleCourseStudentView = ({ Course }) => {
                             flexDirection: "column",
                           }}
                         >
-                          <SaveAltOutlinedIcon sx={{ color: "#8E8383" }} />
+                          <SaveAltOutlinedIcon sx={{ color: "#8E8383", cursor:"pointer"  }}onClick={downloadNotesPdf} />
                         </Box>
                       </Box>
                     </CardContent>

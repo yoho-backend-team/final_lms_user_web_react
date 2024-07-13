@@ -105,31 +105,8 @@ const modules = [
                         </Grid>
                       ))}
                       <Grid
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          border: "1px dashed #5611B1",
-                          px: "66px",
-                          borderRadius: "12px",
-                          cursor: "pointer",
-                        }}
+                        
                       >
-                        <Box>
-                          <Typography
-                            sx={{
-                              color: "#5611B1",
-                              fontSize: "16px",
-                              fontWeight: 500,
-                              lineHeight: "14px",
-                            }}
-                            component={Link}
-                            to={"/student/StudyMaterialsPage"}
-                          >
-                            Add Notes & Videos
-                          </Typography>
-                        </Box>
                       </Grid>
                     </Grid>
                     <Box
