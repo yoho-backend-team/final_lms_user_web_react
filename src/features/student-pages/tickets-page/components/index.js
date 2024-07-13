@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Box, Typography, Tab, Tabs, Button, Grid, Modal } from "@mui/material";
-import {TicketBg2} from "utils/images"
+import {TicketBg2, TicketMain} from "utils/images"
 import { useTabResponsive } from "utils/tabResponsive";
 import TicketLoader from "components/ui/loaders/ticketLoader";
 import StudentTicketCard from "./TicketsCard";
 import StudentTicketView from "./TicketView";
 import StudentCreateTicketForm from "./createTicketForm";
+import ImageContainer from "./ImageContainer";
 
 const StudentDataTicketsPage = ({
   data,
@@ -45,15 +46,7 @@ const StudentDataTicketsPage = ({
   console.log(data,"data")
   return (
     <>
-      <Box
-        sx={{
-          backgroundImage: `url(${TicketBg2})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "100vh",
-          overflow: "auto",
-        }}
-      >
+        <ImageContainer >
         <Box
           sx={{ p: tabView ? "62px 40px 20px 38px" : "62px 40px 20px 80px" }}
         >
@@ -138,7 +131,7 @@ const StudentDataTicketsPage = ({
             </>
           )}
         </Box>
-      </Box>
+      </ImageContainer>
     </>
   );
 };

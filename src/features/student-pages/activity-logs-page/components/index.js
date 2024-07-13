@@ -164,11 +164,11 @@ const StudentActivityLog = () => {
                 <Timeline position="right" sx={{ alignItems: "flex-start" }}>
                   {activityLogs.map((log, index) => (
                     <TimelineItem key={log.id}>
-                      <TimelineOppositeContent>
+                      <TimelineOppositeContent> 
                         <Typography variant="body2" color="textSecondary">
-                          {formatDate(log?.updatedAt)}
+                          {formatDate(log?.updatedAt)}  {formatTime(log?.updatedAt)}
                         </Typography>
-                      </TimelineOppositeContent>
+                        </TimelineOppositeContent>
                       <TimelineSeparator>
                         <TimelineDot>{getStatusIcon(log.action)}</TimelineDot>
                         {index < paginatedLogs.length - 1 && (
@@ -178,8 +178,15 @@ const StudentActivityLog = () => {
                       <TimelineContent>
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
                           <Box>
-                            <Typography variant="h6" component="span">
-                              {log.details}
+                            <Typography variant="h5" component="span" sx={{
+                              color: '#495057',
+                              fontfamily: 'Poppins',
+                              fontsize: '14px',
+                              fontstyle: 'normal',
+                              fontweight: '700',
+                              lineheight: '24px',
+                              }}>
+                                   {log.details}
                             </Typography>
                           </Box>
                           <Box
