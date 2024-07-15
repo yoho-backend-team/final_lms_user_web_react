@@ -6,27 +6,27 @@ const CourseLayout = ({ children }) => {
     <Grid
       container
       sx={{
-        width: '100vw',
-        height: '100vh',
+        width: "100vw",
+        height: "100vh",
         padding: "58px 40px 40px 40px",
       }}
     >
       <Box
         sx={{
           background: `url(${CourseBg})`,
-          backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
-          width: '100%',
-          height: '100%',
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          width: "100%",
+          height: "100%",
           border: "1px solid #C3C3C3",
           borderRadius: "18px",
-          overflow: 'auto',
+          overflow: "auto",
         }}
       >
         {children}
       </Box>
     </Grid>
-  )
-}
+  );
+};
 
 export default CourseLayout;

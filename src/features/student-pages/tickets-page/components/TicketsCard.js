@@ -1,94 +1,137 @@
-import React from 'react';
-import { Card, Typography, CardContent, Box, Grid, Button } from '@mui/material';
-import Chip from 'components/mui/chip';
-import Icon from 'components/icon';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Box, Typography, Grid, Button } from "@mui/material";
+import SubWayPinIcon from "assets/icons/subWayPinIcon";
 
-// import IconifyIcon from 'components/icon';
-import IconButton from '@mui/material/IconButton';
+const StudentTicketCard = ({
+  ticketNumber,
+  query,
+  description,
+  status,
+  date,
+  id,
+  handleTicketViewOpen,
+  _id,
+}) => {
+  const statusColor = {
+    opened: "#008375",
+    closed: "#EBA13A",
+  };
 
-const TicketsCard = () => {
-  const dummyData = [
-    {
-      ticketNumber: 'Ticket #1234567890',
-      date: 'Jully 10',
-      title: 'Attendance Issue',
-      description: 'This is a system generated payslip and does not require signature.29/1, Chennai, Tamil Nadu - 600117'
-    },
-    {
-      ticketNumber: 'Ticket #5555555555',
-      date: 'June 30',
-      title: 'Attendance Issue',
-      description: 'This is a system generated payslip and does not require signature.29/1, Chennai, Tamil Nadu - 600117'
-    },
-    {
-      ticketNumber: 'Ticket #22222222222',
-      date: 'April 10',
-      title: 'Attendance Issue',
-      description: 'This is a system generated payslip and does not require signature.29/1, Chennai, Tamil Nadu - 600117'
-    },
-    {
-      ticketNumber: 'Ticket #3333333333',
-      date: 'December 20',
-      title: 'Attendance Issue',
-      description: 'This is a system generated payslip and does not require signature.29/1, Chennai, Tamil Nadu - 600117'
-    },
-    {
-      ticketNumber: 'Ticket #666666666',
-      date: 'Feb 25',
-      title: 'Attendance Issue',
-      description: 'This is a system generated payslip and does not require signature.29/1, Chennai, Tamil Nadu - 600117'
-    }
-    // Add more dummy data as needed
-  ];
+  const convertDate = (iosString) => {
+    const new_date = new Date(iosString);
+    return new_date.toLocaleDateString("en-US");
+  };
+
+  
 
   return (
-    <Grid container spacing={2}> 
-      {dummyData.map((data, index) => (
-        <Grid item xs={12} sm={6} md={4} key={index}>
-           <Link to={`1`} style={{ textDecoration: 'none' }}>
-          <Card sx={{ mb: 1 }}>
-            <CardContent sx={{p:2 }}>
-              <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography variant="h4">{data.ticketNumber}</Typography>
-                <Typography variant="subtitle1">
-                  <Chip rounded label="Jan 01" skin="light" color="primary" />
-                </Typography>
-              </Box>
-              <Box sx={{ mt: 1 }}>
-                <Box>
-                  <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-                    {data.title}
-                  </Typography>
-                </Box>
-                <Box sx={{ mt: 1.75 }}>
-                  <Typography variant="body1">
-                    {data.description}
-                  </Typography>
-                </Box>
-              </Box>
+    <Grid
+      item
+      xs={12}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        background: "#FFF",
+        borderRadius: "16px",
+        p: "16px",
+        boxShadow: "0px 2.4px 25px 0px rgba(160, 170, 255, 0.24)",
+      }}
+    >
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box>
+          <Typography
+            sx={{
+              color: "#495057",
+              fontSize: "16px",
+              fontWeight: 700,
+              lineHeight: "24px",
+            }}
+          >
+            {ticketNumber ? ticketNumber : _id}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            borderRadius: "8px",
+            backgroundColor: "#DFC7FF",
+            color: "#5611B1",
+            padding: "9px 24px",
+          }}
+        >
+          <Typography sx={{ color: "#5611B1" }}>{convertDate(date)}</Typography>
+        </Box>
+      </Box>
 
-              <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Box sx={{display:'flex',justifyContent:'center',alignItems: 'center' }}>
-                  <IconButton  aria-label="capture screenshot" color="primary">
-                    <Icon icon="subway:pin" fontSize="1.25rem" />
-                  </IconButton>
-                  <Typography>05</Typography>
-                </Box> 
+      <Box>
+        <Typography
+          sx={{
+            color: "#495057",
+            fontWeight: "700",
+            lineHeight: "24px",
+            fontSize: "14px",
+          }}
+        >
+          {query}
+        </Typography>
+      </Box>
 
-                <Box>
-                  <Button size="small" variant="contained" sx={{px:2}}>
-                    Opened
-                  </Button>
-                </Box>
-              </Box>
-            </CardContent>
-          </Card>
-          </Link>
-        </Grid>
-      ))}
+      <Box
+        sx={{
+          pt: "13px",
+          display: "flex",
+          justifyContent: "flex-start",
+          width: "296px",
+          maxHeight: "60px",
+        }}
+      >
+        <Typography
+          sx={{
+            color: "#6C757D",
+            fontSize: "16px",
+            lineHeight: "22px",
+            fontWeight: "500",
+            height: "66px",
+            maxHeight: "60px",
+            overflow: "auto",
+          }}
+        >
+          {description}
+        </Typography>
+      </Box>
+
+      <Box
+        sx={{ display: "flex", justifyContent: "space-between", pt: "21px" }}
+      >
+        <Box sx={{ display: "flex", gap: "4px", alignItems: "center" }}>
+          <SubWayPinIcon color={"black"} />
+          <Typography
+            sx={{
+              fontSize: "15px",
+              fontWeight: "400",
+              lineHeight: "14px",
+              color: "#020202",
+            }}
+          >
+            {id}
+          </Typography>
+        </Box>
+        <Box>
+          <Button
+            onClick={() => handleTicketViewOpen()}
+            variant="contained"
+            sx={{
+              color: "white",
+              borderRadius: "8px",
+              backgroundColor: statusColor[status],
+              padding: "9px 24px",
+            }}
+          >
+            {status}
+          </Button>
+        </Box>
+      </Box>
     </Grid>
   );
 };
 
-export default TicketsCard;
+export default StudentTicketCard;

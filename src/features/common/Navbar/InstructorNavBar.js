@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import {
   Box,
@@ -51,11 +51,11 @@ export default function InstructorNavBar() {
     setAnchorEl(null);
   };
 
-  useEffect(()=>{
-  const user = getInstructorDetails()
-  setInstructor(user)
-  },[])
-  console.log(instructor,'instructor')
+  useEffect(() => {
+    const user = getInstructorDetails();
+    setInstructor(user);
+  }, []);
+  console.log(instructor, "instructor");
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -98,17 +98,38 @@ export default function InstructorNavBar() {
         }}
       >
         <Toolbar>
-          <Grid container alignItems="center" sx={{ flexWrap: tabView ?"nowrap" : "wrap"}}>
-            <Grid item xs={4} md={4} sx={{ display: "flex", alignItems: "center" }}>
-              <Box sx={{ display: { xs: "flex", md: "flex" }, justifyContent:  "start"  }}>
+          <Grid
+            container
+            alignItems="center"
+            sx={{ flexWrap: tabView ? "nowrap" : "wrap" }}
+          >
+            <Grid
+              item
+              xs={4}
+              md={4}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              <Box
+                sx={{
+                  display: { xs: "flex", md: "flex" },
+                  justifyContent: "start",
+                }}
+              >
                 <img src={logo} alt="logo" height={40} />
               </Box>
             </Grid>
             <InstructorNavLinks />
-            <Grid item xs={8} md={4} sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <Grid
+              item
+              xs={8}
+              md={4}
+              sx={{ display: "flex", justifyContent: "flex-end" }}
+            >
               <IconButton size="large" sx={{ color: "white" }}>
                 <Badge badgeContent={17} color="error">
-                  <NotificationsOutlinedIcon sx={{ color: theme.palette.dark.main }} />
+                  <NotificationsOutlinedIcon
+                    sx={{ color: theme.palette.dark.main }}
+                  />
                 </Badge>
               </IconButton>
               <Button
@@ -118,7 +139,7 @@ export default function InstructorNavBar() {
                   color: "white",
                   textTransform: "none",
                   gap: tabView ? 0 : 1,
-                  padding : tabView && "0px",
+                  padding: tabView && "0px",
                 }}
                 size="medium"
                 edge="end"

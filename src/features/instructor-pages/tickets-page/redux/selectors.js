@@ -1,2 +1,2 @@
-export const selectInstructorTickets = (state) => state.instructorTickets.data
-export const selectLoading = (state) => state.instructorTickets.loading
+export const selectInstructorTickets = (state) => state.instructorTickets.data;
+export const selectLoading = (state) => state.instructorTickets.loading;

@@ -3,10 +3,10 @@ const FabButton = () => {
     MuiFab: {
       styleOverrides: {
         default: ({ theme }) => ({
-          color: theme.palette.text.primary
-        })
-      }
-    }
+          color: theme.palette.text.primary,
+        }),
+      },
+    },
   };
 };
 

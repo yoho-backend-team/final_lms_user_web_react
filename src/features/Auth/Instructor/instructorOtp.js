@@ -5,8 +5,10 @@ import { Box, styled } from "@mui/system";
 import { useTheme } from "@emotion/react";
 import { useState, useEffect } from "react";
 import { Typography, Button } from "@mui/material";
-import {useVerifyOTP} from "../services/index"
+import { useVerifyOTP } from "../services/index";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useSpinner } from "context/SpinnerProvider";
 
 const InputElement = styled("input")(
   ({ theme }) => `
@@ -54,11 +56,12 @@ const InputElement = styled("input")(
   &:focus-visible {
     outline: 0;
   }
-`
+`,
 );
 
 function OTP({ separator, length, value, onChange }) {
   const inputRefs = React.useRef(new Array(length).fill(null));
+ 
 
   const focusInput = (targetIndex) => {
     const targetInput = inputRefs.current[targetIndex];
@@ -189,7 +192,11 @@ function OTP({ separator, length, value, onChange }) {
             slots={{
               input: InputElement,
             }}
-            style={{ border: "1.213px solid #A8A8A8", background: "#FFFFFF", borderRadius: '8px' }}
+            style={{
+              border: "1.213px solid #A8A8A8",
+              background: "#FFFFFF",
+              borderRadius: "8px",
+            }}
             aria-label={`Digit ${index + 1} of OTP`}
             slotProps={{
               input: {
@@ -224,7 +231,8 @@ export default function InstructorOTPInput() {
   const [error, setError] = useState("");
   const theme = useTheme();
   const verifyOTP = useVerifyOTP();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { showSpinner,hideSpinner} = useSpinner()
 
   useEffect(() => {
     if (timeLeft === 0) return;
@@ -244,14 +252,20 @@ export default function InstructorOTPInput() {
   const handleVerify = async () => {
     if (otp.length < 6 || otp.includes(" ")) {
       setError("Please enter all OTP digits.");
+      toast.error("Please enter all OTP digits.")
       return;
     }
     setError("");
     try {
-    await verifyOTP(otp);
-    navigate("/instructor/home")
+      showSpinner()
+      const response = await verifyOTP(otp);
+      toast.success(response?.message)
+      navigate("/instructor/home");
     } catch (error) {
       setError("Invalid OTP. Please try again.");
+      toast.error(error?.message)
+    }finally{
+      hideSpinner()
     }
   };
 
@@ -266,13 +280,13 @@ export default function InstructorOTPInput() {
       }}
     >
       <Box>
-        <Typography 
+        <Typography
           sx={{
             color: "#242424",
             fontSize: "31px",
             fontWeight: 700,
             lineHeight: "30px",
-            textAlign: 'center'
+            textAlign: "center",
           }}
         >
           Enter the Code that sent to your entered mail iD
@@ -284,18 +298,42 @@ export default function InstructorOTPInput() {
           {error}
         </Typography>
       )}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', width: "100%", px: "40px", pt: "32px" }} >
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+          px: "40px",
+          pt: "32px",
+        }}
+      >
         <Box>
-          <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 700, lineHeight: "21px" }} >
-            {Math.floor(timeLeft / 60)}:
-            {timeLeft % 60 < 10 ? "0" : ""}
+          <Typography
+            sx={{
+              color: "#000000",
+              fontSize: "16px",
+              fontWeight: 700,
+              lineHeight: "21px",
+            }}
+          >
+            {Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? "0" : ""}
             {timeLeft % 60}
           </Typography>
           {timeLeft === 0 && (
             <Button
               variant="outlined"
               onClick={handleResend}
-              sx={{ mt: 2, borderRadius: 5, color: "#8D8E90", fontSize: "14px", textDecoration: "underline", fontWeight: 700, border: "none", ":hover": { border: 'none', backgroundColor: "#F8F7FA" }, padding: "0px" }}
+              sx={{
+                mt: 2,
+                borderRadius: 5,
+                color: "#8D8E90",
+                fontSize: "14px",
+                textDecoration: "underline",
+                fontWeight: 700,
+                border: "none",
+                ":hover": { border: "none", backgroundColor: "#F8F7FA" },
+                padding: "0px",
+              }}
             >
               Resend
             </Button>
@@ -304,7 +342,17 @@ export default function InstructorOTPInput() {
         <Box>
           <Button
             sx={{
-              backgroundColor: "#5611B1", color: "white", borderRadius: "36px", boxShadow: "0px 8.582px 26.405px -5.281px rgba(13, 110, 253, 0.23)", fontSize: "13px", fontWeight: 700, lineHeight: "15px", width: "101px", height: "37px", ":hover": { backgroundColor: "#5611B1" }
+              backgroundColor: "#5611B1",
+              color: "white",
+              borderRadius: "36px",
+              boxShadow:
+                "0px 8.582px 26.405px -5.281px rgba(13, 110, 253, 0.23)",
+              fontSize: "13px",
+              fontWeight: 700,
+              lineHeight: "15px",
+              width: "101px",
+              height: "37px",
+              ":hover": { backgroundColor: "#5611B1" },
             }}
             onClick={handleVerify}
           >

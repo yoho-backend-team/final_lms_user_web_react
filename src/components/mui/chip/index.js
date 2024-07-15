@@ -1,11 +1,11 @@
 // ** MUI Imports
-import MuiChip from '@mui/material/Chip';
+import MuiChip from "@mui/material/Chip";
 
 // ** Third Party Imports
-import clsx from 'clsx';
+import clsx from "clsx";
 
 // ** Hooks Imports
-import useBgColor from 'hooks/useBgColor';
+import useBgColor from "hooks/useBgColor";
 
 const Chip = (props) => {
   // ** Props
@@ -20,7 +20,7 @@ const Chip = (props) => {
     success: { ...bgColors.successLight },
     error: { ...bgColors.errorLight },
     warning: { ...bgColors.warningLight },
-    info: { ...bgColors.infoLight }
+    info: { ...bgColors.infoLight },
   };
   const propsToPass = { ...props };
   propsToPass.rounded = undefined;
@@ -30,10 +30,10 @@ const Chip = (props) => {
       {...propsToPass}
       variant="filled"
       className={clsx({
-        'MuiChip-rounded': rounded,
-        'MuiChip-light': skin === 'light'
+        "MuiChip-rounded": rounded,
+        "MuiChip-light": skin === "light",
       })}
-      sx={skin === 'light' && color ? Object.assign(colors[color], sx) : sx}
+      sx={skin === "light" && color ? Object.assign(colors[color], sx) : sx}
     />
   );
 };

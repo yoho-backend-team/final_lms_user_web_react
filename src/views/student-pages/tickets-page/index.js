@@ -1,61 +1,47 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import TabContext from "@mui/lab/TabContext";
-import TabList from "@mui/lab/TabList";
-import TabPanel from "@mui/lab/TabPanel";
-import { Grid, Typography } from "@mui/material";
-import Button from "@mui/material/Button";
-import TicketsCard from "features/student-pages/tickets-page/components/TicketsCard";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectStudentTickets,
+  selectLoading,
+} from "features/student-pages/tickets-page/redux/selectors";
+import { useEffect } from "react";
+import StudentDataTicketsPage from "features/student-pages/tickets-page/components";
+import getAllStudentTickets from "features/student-pages/tickets-page/redux/thunks";
 
-const TicketsPage = () => {
-  const [value, setValue] = React.useState("1");
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+const StudentTicketsPage = () => {
+  const dispatch = useDispatch();
+  const tickets = useSelector(selectStudentTickets);
+  const loading = useSelector(selectLoading);
+  const [currentType, setCurrentType] = useState("");
+
+  const getTicketsList = (query) => {
+    dispatch(getAllStudentTickets(query));
   };
+
+  useEffect(() => {
+    const data = { status: currentType? currentType: null };
+    getTicketsList(data);
+    console.log(data,"Currentype")
+  }, [dispatch]);
+  
+  const handleTicketRefetch = (type) => {
+    setCurrentType(type);
+    const data = { status: type };
+    getTicketsList(data);
+    
+  };
+
+  
+  console.log(tickets)
   return (
-    <Box sx={{ m: 4 }}>
-      <TabContext value={value}>
-        <Grid container>
-          <Grid item xs={12}>
-            <Grid container spacing={3} sx={{ p: 2, alignItems: "flex-start" }}>
-              <Grid item md={1} xs={12} sx={{ mt: 2 }}>
-                <Typography variant="h2">Ticket</Typography>
-              </Grid>
-
-              <Grid item md={9} xs={12}>
-                <Grid sx={{ typography: "body1" }}>
-                  <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                    <TabList
-                      onChange={handleChange}
-                      aria-label="lab API tabs example"
-                    >
-                      <Tab label="All" value="1" />
-                      <Tab label="Open" value="2" />
-                      <Tab label="Close" value="3" />
-                    </TabList>
-                  </Box>
-                </Grid>
-              </Grid>
-
-              <Grid item md={2} xs={12}>
-                <Button variant="contained">Create Ticket</Button>
-              </Grid>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={12}>
-            <TabPanel value="1">
-              <TicketsCard />
-            </TabPanel>
-            <TabPanel value="2">Item Two</TabPanel>
-            <TabPanel value="3">Item Three</TabPanel>
-          </Grid>
-        </Grid>
-      </TabContext>
-    </Box>
+    <StudentDataTicketsPage
+      data={tickets}
+      setCurrentType={setCurrentType}
+      handleTicketRefetch={handleTicketRefetch}
+      loading={loading}
+    />
   );
 };
 
-export default TicketsPage;
+export default StudentTicketsPage;

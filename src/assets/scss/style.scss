@@ -1,8 +1,8 @@
 // color variants
-@import 'themes-vars.module.scss';
+@import "themes-vars.module.scss";
 
 // third-party
-@import '~react-perfect-scrollbar/dist/css/styles.css';
+@import "~react-perfect-scrollbar/dist/css/styles.css";
 
 // ==============================|| LIGHT BOX ||============================== //
 .fullscreen .react-images__blanket {
@@ -141,7 +141,8 @@
   color: #7367f0;
   font-weight: 800;
 }
-.css-ysibbi-MuiButtonBase-root-MuiListItemButton-root.Mui-selected .MuiListItemIcon-root {
+.css-ysibbi-MuiButtonBase-root-MuiListItemButton-root.Mui-selected
+  .MuiListItemIcon-root {
   color: #7367f0 !important;
 }
 
@@ -278,7 +279,7 @@
 }
 
 .connect::before {
-  content: '';
+  content: "";
   width: 10px;
   height: 10px;
   text-align: center;
@@ -292,7 +293,7 @@
 }
 
 .connect::after {
-  content: '';
+  content: "";
   width: 10px;
   height: 10px;
   text-align: center;
