@@ -2,41 +2,63 @@ import { Box, Grid } from "@mui/material";
 import { JavaCourseImage, SqlCourseImage } from "utils/images";
 import SideBar from "features/instructor-pages/community-page/components/Sidebar";
 import Chat from "features/instructor-pages/community-page/components/Chat";
-import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined';
-import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
+import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
+import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
 import { useState, useEffect } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectInstructorCommunities } from "features/instructor-pages/community-page/redux/selectors";
 import getandAddCommunity from "features/instructor-pages/community-page/redux/thunks";
 import { io } from "socket.io-client";
 
 const Batches = [
-  { batch_name: "Java Class", image: JavaCourseImage , id: "1",chat:<PushPinOutlinedIcon sx={{rotate:"35deg"}}  />,date:"5:14 pm",last_message : "Haha oh man" },
-  { batch_name: "SQL", image: SqlCourseImage , id: "2",chat : <DoneAllOutlinedIcon sx={{color:"#2361FF"}} />,date:"7:38 am",last_message:"Haha that's terrifying 😂" },
+  {
+    batch_name: "Java Class",
+    image: JavaCourseImage,
+    id: "1",
+    chat: <PushPinOutlinedIcon sx={{ rotate: "35deg" }} />,
+    date: "5:14 pm",
+    last_message: "Haha oh man",
+  },
+  {
+    batch_name: "SQL",
+    image: SqlCourseImage,
+    id: "2",
+    chat: <DoneAllOutlinedIcon sx={{ color: "#2361FF" }} />,
+    date: "7:38 am",
+    last_message: "Haha that's terrifying 😂",
+  },
 ];
 
 const Community = () => {
-  const dispatch = useDispatch()
-  const communities = useSelector(selectInstructorCommunities)
-  const [currentChat,setCurrentChat] = useState(null)
-  const [socket,setSocket] = useState(null)
+  const dispatch = useDispatch();
+  const communities = useSelector(selectInstructorCommunities);
+  const [currentChat, setCurrentChat] = useState(null);
+  const [socket, setSocket] = useState(null);
 
   const getAllCommunities = () => {
-    dispatch(getandAddCommunity())
-  }
+    dispatch(getandAddCommunity());
+  };
 
-  useEffect(()=>{
-    getAllCommunities()
-  },[dispatch])
+  useEffect(() => {
+    getAllCommunities();
+  }, [dispatch]);
 
-  useEffect(()=>{
-    const socket = io(process.env.REACT_APP_URL)
-    setSocket(socket)
-  },[])
+  useEffect(() => {
+    const socket = io(process.env.REACT_APP_URL);
+    setSocket(socket);
+  }, []);
 
-  console.log(communities,"batches")
+  console.log(communities, "batches");
   return (
-    <Box sx={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center", padding: "40px" }}>
+    <Box
+      sx={{
+        height: "85vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "40px",
+      }}
+    >
       <Box
         sx={{
           backgroundColor: "#FFFFFF",
@@ -51,10 +73,19 @@ const Community = () => {
       >
         <Grid container sx={{ flex: 1 }}>
           <Grid item xs={4}>
-            <SideBar communities={communities} socket={socket} currentChat={currentChat} setCurrentChat={setCurrentChat} />
+            <SideBar
+              communities={communities}
+              socket={socket}
+              currentChat={currentChat}
+              setCurrentChat={setCurrentChat}
+            />
           </Grid>
-          <Grid item xs={8}>
-            <Chat currentChat={currentChat} socket={socket} setCurrentChat={setCurrentChat} />
+          <Grid item xs={8} sx={{ display: "flex" }}>
+            <Chat
+              currentChat={currentChat}
+              socket={socket}
+              setCurrentChat={setCurrentChat}
+            />
           </Grid>
         </Grid>
       </Box>

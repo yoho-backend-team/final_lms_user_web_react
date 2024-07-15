@@ -169,11 +169,11 @@ export default function NavBar() {
   };
 
   const getRouteLinks = () => {
-    if(auth.role==="instructor"){
-      return <InstructorNavLinks />
+    if (auth.role === "instructor") {
+      return <InstructorNavLinks />;
     }
-    return <StudentNavLinks />
-  }
+    return <StudentNavLinks />;
+  };
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);

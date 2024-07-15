@@ -11,29 +11,49 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow
-} from '@mui/material';
+  TableRow,
+} from "@mui/material";
 
 const AddGroupSkeleton = () => (
   <>
-    <Card scroll="body" sx={{ height: '100vh' }}>
+    <Card scroll="body" sx={{ height: "100vh" }}>
       <CardHeader
         sx={{
-          pb: '0',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          textAlign: 'center',
-          px: (theme) => [`${theme.spacing(3)} !important`, `${theme.spacing(3)} !important`],
-          pt: (theme) => [`${theme.spacing(3)} !important`, `${theme.spacing(5)} !important`]
+          pb: "0",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+          px: (theme) => [
+            `${theme.spacing(3)} !important`,
+            `${theme.spacing(3)} !important`,
+          ],
+          pt: (theme) => [
+            `${theme.spacing(3)} !important`,
+            `${theme.spacing(5)} !important`,
+          ],
         }}
         title={
-          <Box sx={{ textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Box
+            sx={{
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Skeleton variant="text" width={200} />
           </Box>
         }
         subheader={
-          <Box sx={{ textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Box
+            sx={{
+              textAlign: "center",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Skeleton variant="text" width={200} />
           </Box>
         }
@@ -54,7 +74,14 @@ const AddGroupSkeleton = () => (
             <TableHead>
               <TableRow>
                 <TableCell>
-                  <Box sx={{ display: 'flex', whiteSpace: 'nowrap', alignItems: 'center', textTransform: 'capitalize' }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      whiteSpace: "nowrap",
+                      alignItems: "center",
+                      textTransform: "capitalize",
+                    }}
+                  >
                     <Skeleton variant="text" width={150} />
                   </Box>
                 </TableCell>
@@ -73,7 +100,14 @@ const AddGroupSkeleton = () => (
               {Array.from({ length: 20 }).map((_, index) => (
                 <TableRow key={index}>
                   <TableCell>
-                    <Box sx={{ display: 'flex', whiteSpace: 'nowrap', alignItems: 'center', textTransform: 'capitalize' }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        whiteSpace: "nowrap",
+                        alignItems: "center",
+                        textTransform: "capitalize",
+                      }}
+                    >
                       <Skeleton variant="text" width={150} />
                     </Box>
                   </TableCell>

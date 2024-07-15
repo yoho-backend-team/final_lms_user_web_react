@@ -1,4 +1,11 @@
-import { Box, Card, CardContent, Grid, Skeleton, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Skeleton,
+  Typography,
+} from "@mui/material";
 
 const TicketsCardsSkeleton = () => {
   return (
@@ -8,9 +15,18 @@ const TicketsCardsSkeleton = () => {
           <Grid item xs={12} md={6} lg={4} key={index}>
             <Card sx={{ minHeight: 220, mt: 4 }}>
               <CardContent>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Skeleton variant="circular" sx={{ mr: 2.2, height: 42, width: 42 }} />
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Skeleton
+                      variant="circular"
+                      sx={{ mr: 2.2, height: 42, width: 42 }}
+                    />
                     <Box>
                       <Typography variant="h5">
                         <Skeleton variant="text" width={100} />
@@ -20,7 +36,7 @@ const TicketsCardsSkeleton = () => {
                       </Typography>
                     </Box>
                   </Box>
-                  <Box sx={{  }}>
+                  <Box sx={{}}>
                     <Typography>
                       <Skeleton variant="text" width={70} />
                     </Typography>
@@ -32,10 +48,16 @@ const TicketsCardsSkeleton = () => {
                     <Skeleton variant="text" width={200} />
                   </Typography>
                 </Box>
-                <Box sx={{ mt: 2.75, display: 'flex', alignItems: 'center' }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Skeleton variant="rounded" sx={{ mr: 2.5, height: 30, width: 100 }} />
-                    <Skeleton variant="rounded" sx={{ mr: 2.5, height: 30, width: 100 }} />
+                <Box sx={{ mt: 2.75, display: "flex", alignItems: "center" }}>
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Skeleton
+                      variant="rounded"
+                      sx={{ mr: 2.5, height: 30, width: 100 }}
+                    />
+                    <Skeleton
+                      variant="rounded"
+                      sx={{ mr: 2.5, height: 30, width: 100 }}
+                    />
                   </Box>
                 </Box>
               </CardContent>

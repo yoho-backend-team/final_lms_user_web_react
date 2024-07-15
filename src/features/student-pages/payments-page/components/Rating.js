@@ -1,6 +1,6 @@
-import React from 'react';
-import colorstar from "../../../../assets/images/icons/filledstar.svg"
-import uncolorstar from "../../../../assets/images/icons/emptystar.svg"
+import React from "react";
+import colorstar from "../../../../assets/images/icons/filledstar.svg";
+import uncolorstar from "../../../../assets/images/icons/emptystar.svg";
 
 const Rating = ({ rating }) => {
   const totalStars = 5;
@@ -11,12 +11,12 @@ const Rating = ({ rating }) => {
   const emptyStar = uncolorstar;
 
   const starStyle = {
-    width: '12.916px',
-    height: '12.916px',
+    width: "12.916px",
+    height: "12.916px",
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center' }}>
+    <div style={{ display: "flex", alignItems: "center" }}>
       {[...Array(filledStars)].map((_, index) => (
         <img
           key={`filled-${index}`}

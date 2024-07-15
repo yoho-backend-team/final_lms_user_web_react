@@ -1,25 +1,33 @@
 // ** React Imports
-import { useState } from 'react';
+import { useState } from "react";
 
 // ** MUI Imports
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import Typography from '@mui/material/Typography';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import Typography from "@mui/material/Typography";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 
 // ** Icon Imports
-import Icon from 'components/icon';
+import Icon from "components/icon";
 
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const DeleteDialog = (props) => {
   // ** Props
-  const { open, setOpen, handleSubmit, description, title, successDescription, failureDescription } = props;
+  const {
+    open,
+    setOpen,
+    handleSubmit,
+    description,
+    title,
+    successDescription,
+    failureDescription,
+  } = props;
 
   // ** States
-  const [userInput, setUserInput] = useState('yes');
+  const [userInput, setUserInput] = useState("yes");
   const [secondDialogOpen, setSecondDialogOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const handleSecondDialogClose = () => setSecondDialogOpen(false);
@@ -32,25 +40,36 @@ const DeleteDialog = (props) => {
 
   return (
     <>
-      <Dialog fullWidth open={open} onClose={handleClose} sx={{ '& .MuiPaper-root': { width: '100%', maxWidth: 512 } }}>
+      <Dialog
+        fullWidth
+        open={open}
+        onClose={handleClose}
+        sx={{ "& .MuiPaper-root": { width: "100%", maxWidth: 512 } }}
+      >
         <DialogContent
           sx={{
-            px: (theme) => [`${theme.spacing(5)} !important`, `${theme.spacing(10)} !important`],
-            pt: (theme) => [`${theme.spacing(3)} !important`, `${theme.spacing(5)} !important`]
+            px: (theme) => [
+              `${theme.spacing(5)} !important`,
+              `${theme.spacing(10)} !important`,
+            ],
+            pt: (theme) => [
+              `${theme.spacing(3)} !important`,
+              `${theme.spacing(5)} !important`,
+            ],
           }}
         >
           <Box
             sx={{
-              display: 'flex',
-              textAlign: 'center',
-              alignItems: 'center',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              '& svg': { mb: 5, color: 'warning.main' }
+              display: "flex",
+              textAlign: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              justifyContent: "center",
+              "& svg": { mb: 5, color: "warning.main" },
             }}
           >
             <Icon icon="tabler:alert-circle" fontSize="5.5rem" />
-            <Typography variant="h4" sx={{ mb: 3, color: 'text.secondary' }}>
+            <Typography variant="h4" sx={{ mb: 3, color: "text.secondary" }}>
               Are you sure?
             </Typography>
             <Typography>{description}!</Typography>
@@ -58,9 +77,15 @@ const DeleteDialog = (props) => {
         </DialogContent>
         <DialogActions
           sx={{
-            justifyContent: 'center',
-            px: (theme) => [`${theme.spacing(5)} !important`, `${theme.spacing(10)} !important`],
-            pb: (theme) => [`${theme.spacing(5)} !important`, `${theme.spacing(8)} !important`]
+            justifyContent: "center",
+            px: (theme) => [
+              `${theme.spacing(5)} !important`,
+              `${theme.spacing(10)} !important`,
+            ],
+            pb: (theme) => [
+              `${theme.spacing(5)} !important`,
+              `${theme.spacing(8)} !important`,
+            ],
           }}
         >
           <Button
@@ -68,12 +93,16 @@ const DeleteDialog = (props) => {
             sx={{ mr: 2 }}
             onClick={() => {
               handleSubmit();
-              handleConfirmation('yes');
+              handleConfirmation("yes");
             }}
           >
             Yes, {title}!
           </Button>
-          <Button variant="tonal" color="secondary" onClick={() => handleConfirmation('cancel')}>
+          <Button
+            variant="tonal"
+            color="secondary"
+            onClick={() => handleConfirmation("cancel")}
+          >
             Cancel
           </Button>
         </DialogActions>
@@ -82,34 +111,53 @@ const DeleteDialog = (props) => {
         fullWidth
         open={secondDialogOpen}
         onClose={handleSecondDialogClose}
-        sx={{ '& .MuiPaper-root': { width: '100%', maxWidth: 512 } }}
+        sx={{ "& .MuiPaper-root": { width: "100%", maxWidth: 512 } }}
       >
         <DialogContent
           sx={{
-            px: (theme) => [`${theme.spacing(5)} !important`, `${theme.spacing(10)} !important`],
-            pt: (theme) => [`${theme.spacing(3)} !important`, `${theme.spacing(5)} !important`]
+            px: (theme) => [
+              `${theme.spacing(5)} !important`,
+              `${theme.spacing(10)} !important`,
+            ],
+            pt: (theme) => [
+              `${theme.spacing(3)} !important`,
+              `${theme.spacing(5)} !important`,
+            ],
           }}
         >
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-              '& svg': {
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+              "& svg": {
                 mb: 5,
-                color: userInput === 'yes' ? 'success.main' : 'error.main'
-              }
+                color: userInput === "yes" ? "success.main" : "error.main",
+              },
             }}
           >
-            <Icon fontSize="5.5rem" icon={userInput === 'yes' ? 'tabler:circle-check' : 'tabler:circle-x'} />
+            <Icon
+              fontSize="5.5rem"
+              icon={
+                userInput === "yes" ? "tabler:circle-check" : "tabler:circle-x"
+              }
+            />
             <Typography variant="h4" sx={{ mb: 3 }}>
-              {userInput === 'yes' ? 'Success!' : 'Cancelled'}
+              {userInput === "yes" ? "Success!" : "Cancelled"}
             </Typography>
-            <Typography>{userInput === 'yes' ? successDescription : `${failureDescription} :)`}</Typography>
+            <Typography>
+              {userInput === "yes"
+                ? successDescription
+                : `${failureDescription} :)`}
+            </Typography>
           </Box>
         </DialogContent>
-        <DialogActions sx={{ justifyContent: 'center', mb: 3 }}>
-          <Button variant="contained" color="success" onClick={handleSecondDialogClose}>
+        <DialogActions sx={{ justifyContent: "center", mb: 3 }}>
+          <Button
+            variant="contained"
+            color="success"
+            onClick={handleSecondDialogClose}
+          >
             OK
           </Button>
         </DialogActions>
@@ -125,7 +173,7 @@ DeleteDialog.propTypes = {
   handleSubmit: PropTypes.any,
   description: PropTypes.any,
   successDescription: PropTypes.any,
-  failureDescription: PropTypes.any
+  failureDescription: PropTypes.any,
 };
 
 export default DeleteDialog;

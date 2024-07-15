@@ -2,6 +2,7 @@ import { Grid, Typography } from "@mui/material";
 import React from "react";
 import Chart from "react-apexcharts";
 import { Card } from "@mui/material";
+
 const CourseCard = () => {
   const options = {
     chart: {
@@ -41,7 +42,7 @@ const CourseCard = () => {
 
   return (
     <>
-      <Card sx={{ backgroundColor: "#FFE7DA", p: 3,boxShadow:'none' }}>
+      <Card sx={{ backgroundColor: "#FFE7DA", p: 3, boxShadow: "none", maxWidth: "380px" }}>
         <Grid
           container
           sx={{

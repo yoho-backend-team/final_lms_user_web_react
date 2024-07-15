@@ -3,12 +3,15 @@ const Snackbar = (skin) => {
     MuiSnackbarContent: {
       styleOverrides: {
         root: ({ theme }) => ({
-          ...(skin === 'bordered' && { boxShadow: 'none' }),
+          ...(skin === "bordered" && { boxShadow: "none" }),
           backgroundColor: `rgb(${theme.palette.customColors.main})`,
-          color: theme.palette.common[theme.palette.mode === 'light' ? 'white' : 'black']
-        })
-      }
-    }
+          color:
+            theme.palette.common[
+              theme.palette.mode === "light" ? "white" : "black"
+            ],
+        }),
+      },
+    },
   };
 };
 

@@ -2,13 +2,15 @@ import { Grid, Typography } from "@mui/material";
 import React from "react";
 import Chart from "react-apexcharts";
 import { Card, Box } from "@mui/material";
-const AttendanceCard = () => {
+import { AttedenceBg } from "utils/images";
+
+const AttendanceCard = ({Attendance}) => {
   const options = {
     chart: {
       height: 300,
       type: "radialBar",
     },
-    series: [78 ],
+    series: [78],
     plotOptions: {
       radialBar: {
         hollow: {
@@ -39,9 +41,19 @@ const AttendanceCard = () => {
     labels: [""],
   };
 
+  const current_month = new Date().getMonth()
+  const attendance_data = Attendance?.find((atten ) => atten.month === current_month )
+  console.log(attendance_data,"data")
   return (
     <>
-      <Card sx={{ backgroundColor: "#d1c0fd", p: 3, boxShadow: "none" }}>
+      <Card 
+      sx={{
+        p: 3, boxShadow: "none", 
+        background: `url("${AttedenceBg}")`,
+        backgroundSize: "cover", 
+        width: "369px",
+        height: "202px",
+        }}>
         <Grid
           container
           sx={{

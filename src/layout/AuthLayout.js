@@ -1,14 +1,14 @@
-import { Grid } from '@mui/material'
-import React from 'react'
+import { Grid } from "@mui/material";
+import React from "react";
 import logo from "assets/images/logo.png";
 import AuthFrame from "assets/images/auth/AuthFrame.png";
-import {Box,Typography,} from '@mui/material';
-import { useTheme } from '@emotion/react';
-import Login from 'features/Auth/login';
-import { Outlet } from 'react-router-dom';
+import { Box, Typography } from "@mui/material";
+import { useTheme } from "@emotion/react";
+import Login from "features/Auth/login";
+import { Outlet } from "react-router-dom";
 
-const AuthLayout = ({children}) => {
-  const theme = useTheme()
+const AuthLayout = ({ children }) => {
+  const theme = useTheme();
   return (
     <Grid container sx={{ display: { xs: "block", sm: "flex" } }}>
       <Grid
@@ -71,7 +71,7 @@ const AuthLayout = ({children}) => {
         {children}
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
-export default AuthLayout   
+export default AuthLayout;

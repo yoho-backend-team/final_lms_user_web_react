@@ -87,6 +87,8 @@
     "react-router": "6.3.0",
     "react-router-dom": "^6.23.0",
     "react-scripts": "5.0.1",
+    "react-to-print": "^2.15.1",
+    "react-toastify": "^10.0.5",
     "react-view-pdf": "^1.0.0",
     "recharts": "2.5.0",
     "redux": "^4.2.0",
@@ -124,7 +126,6 @@
     ]
   },
   "devDependencies": {
-    "babel-plugin-react-svg": "^3.0.3",
-    "prettier": "^3.3.2"
+    "babel-plugin-react-svg": "^3.0.3"
   }
 }
