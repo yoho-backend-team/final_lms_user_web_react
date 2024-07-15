@@ -114,12 +114,12 @@ const CourseStudentViewPage = ({ Course }) => {
         </Box>
         {currentTab === "1" && <About Course={Course} />}
         {currentTab === "2" && !courseView && (
-          <CourseAndNotesStudentPage
+          <CourseAndNotesStudentPage Course={Course}
             openCourseView={openCourseView}
             closeCourseView={closeCourseView}
           />
         )}
-        {courseView && <SingleCourseStudentView />}
+        {courseView && <SingleCourseStudentView Course={Course} />}
       </Box>
     </Box>
   );

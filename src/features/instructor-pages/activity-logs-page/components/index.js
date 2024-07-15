@@ -5,12 +5,13 @@ import {
   TextField,
   MenuItem,
   Pagination,
+  PaginationItem,
   Paper,
   FormControl,
   FormLabel,
 } from "@mui/material";
 import {
-  Timeline,
+  // Timeline,
   TimelineItem,
   TimelineSeparator,
   TimelineConnector,
@@ -22,6 +23,15 @@ import { styled } from "@mui/system";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import CustomPagination from "./customPaginaton";
+import TimelineComponent from "./Timeline";
+
+const styledInput = styled('input')({
+  padding : "11.8px 14.8px 12px 14.8px",
+  border : "0.74px solid #C1C1C1",
+  borderRadius : "11px",
+  background : "#FFFFFF"
+})
 
 const ActivityLog = () => {
   const [page, setPage] = useState(1);
@@ -29,10 +39,7 @@ const ActivityLog = () => {
   const [toDate, setToDate] = useState("");
   const [week, setWeek] = useState("Past Week");
   const rowsPerPage = 5;
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  const count = 23;
 
   const activityLogs = [
     {
@@ -90,16 +97,6 @@ const ActivityLog = () => {
     page * rowsPerPage,
   );
 
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case "Success":
-        return <CheckCircleIcon color="primary" />;
-      case "Failed":
-        return <CancelIcon color="error" />;
-      default:
-        return <AccessTimeIcon color="action" />;
-    }
-  };
 
   return (
     <>
@@ -146,13 +143,14 @@ const ActivityLog = () => {
                   alignItems: "center",
                 }}
               >
-                <FormLabel>From</FormLabel>
+                <FormLabel sx={{ color: "#232323",fontWeight:400,fontSize:"12.8px"}} >From</FormLabel>
                 <TextField
                   type="date"
                   value={fromDate}
                   onChange={(e) => setFromDate(e.target.value)}
-                  sx={{ marginRight: 2 }}
+                  sx={{ marginRight: 2}}
                   InputLabelProps={{ shrink: true }}
+                  InputProps={{ inputComponent: styledInput}}
                 />
               </FormControl>
               <FormControl
@@ -163,13 +161,14 @@ const ActivityLog = () => {
                   alignItems: "center",
                 }}
               >
-                <FormLabel>To</FormLabel>
+                <FormLabel sx={{ color: "#232323",fontWeight:400,fontSize:"12.8px"}} >To</FormLabel>
                 <TextField
                   type="date"
                   value={toDate}
                   onChange={(e) => setToDate(e.target.value)}
                   sx={{ marginRight: 2 }}
                   InputLabelProps={{ shrink: true }}
+                  InputProps={{ inputComponent: styledInput }}
                 />
               </FormControl>
               <FormControl>
@@ -187,59 +186,13 @@ const ActivityLog = () => {
             </Box>
           </Box>
           <Box>
+         
             <Paper sx={{ boxShadow: "none" }}>
               <Box sx={{ maxHeight: 500, overflow: "auto", padding: 2 }}>
-                <Timeline position="right" sx={{ alignItems: "flex-start" }}>
-                  {paginatedLogs.map((log, index) => (
-                    <TimelineItem key={log.id}>
-                      <TimelineOppositeContent>
-                        <Typography variant="body2" color="textSecondary">
-                          {log.date}
-                        </Typography>
-                      </TimelineOppositeContent>
-                      <TimelineSeparator>
-                        <TimelineDot>{getStatusIcon(log.status)}</TimelineDot>
-                        {index < paginatedLogs.length - 1 && (
-                          <TimelineConnector />
-                        )}
-                      </TimelineSeparator>
-                      <TimelineContent>
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
-                          <Box>
-                            <Typography variant="h6" component="span">
-                              {log.type}
-                            </Typography>
-                          </Box>
-                          <Box
-                            sx={{
-                              borderTop: "1px solid #e0e0e0",
-                              marginTop: 1,
-                              paddingTop: 1,
-                              overflowY: "auto",
-                            }}
-                          >
-                            <Typography variant="body2" color="textSecondary">
-                              Time: {log.time} | User: {log.user}
-                            </Typography>
-                            <Typography>{log.status}</Typography>
-                          </Box>
-                        </Box>
-                      </TimelineContent>
-                    </TimelineItem>
-                  ))}
-                </Timeline>
+                <TimelineComponent />
               </Box>
+              <CustomPagination totalPages={count} currentPage={page} setCurrentPage={setPage} />
             </Paper>
-            <Box
-              sx={{ display: "flex", justifyContent: "flex-end", pr: "35px" }}
-            >
-              <Pagination
-                count={Math.ceil(activityLogs.length / rowsPerPage)}
-                page={page}
-                onChange={handleChangePage}
-                sx={{ marginTop: 2 }}
-              />
-            </Box>
           </Box>
         </Box>
       </Box>

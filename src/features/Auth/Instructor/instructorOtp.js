@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 import { Typography, Button } from "@mui/material";
 import { useVerifyOTP } from "../services/index";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useSpinner } from "context/SpinnerProvider";
 
 const InputElement = styled("input")(
   ({ theme }) => `
@@ -59,6 +61,7 @@ const InputElement = styled("input")(
 
 function OTP({ separator, length, value, onChange }) {
   const inputRefs = React.useRef(new Array(length).fill(null));
+ 
 
   const focusInput = (targetIndex) => {
     const targetInput = inputRefs.current[targetIndex];
@@ -229,6 +232,7 @@ export default function InstructorOTPInput() {
   const theme = useTheme();
   const verifyOTP = useVerifyOTP();
   const navigate = useNavigate();
+  const { showSpinner,hideSpinner} = useSpinner()
 
   useEffect(() => {
     if (timeLeft === 0) return;
@@ -248,14 +252,20 @@ export default function InstructorOTPInput() {
   const handleVerify = async () => {
     if (otp.length < 6 || otp.includes(" ")) {
       setError("Please enter all OTP digits.");
+      toast.error("Please enter all OTP digits.")
       return;
     }
     setError("");
     try {
-      await verifyOTP(otp);
+      showSpinner()
+      const response = await verifyOTP(otp);
+      toast.success(response?.message)
       navigate("/instructor/home");
     } catch (error) {
       setError("Invalid OTP. Please try again.");
+      toast.error(error?.message)
+    }finally{
+      hideSpinner()
     }
   };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -14,6 +14,19 @@ import { makeStyles } from "@mui/styles";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import Divider from "@mui/material/Divider";
 import NoteIcon from "assets/icons/noteIcon";
+import toast from "react-hot-toast";
+import { getImageUrl } from "utils/common/imageUtlils";
+import { fileUpload, getFile } from "features/common/upload";
+import { useSpinner } from "context/SpinnerProvider";
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
+import CourseEditIcon from "assets/icons/course/EditIcon";
+import CourseDeleteIcon from "assets/icons/course/DeletIcon";
+import { createNotes, deleteCourseNotes, updateCourseNotes } from "../../services";
+import { getInstructorDetails } from "store/atoms/authorized-atom";
+import DeleteModel from "./components/deleteModel";
+import NoteList from "./components/noteList";
+import { handleDownload } from "utils/downloadHelpers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,9 +35,7 @@ const useStyles = makeStyles((theme) => ({
     minHeight: "140px",
     alignItems: "center",
     padding: theme.spacing(3),
-    border: "2px dashed #5611B1",
     borderRadius: "14px",
-    backgroundColor: "#E7DCF6",
     cursor: "pointer",
     "&:hover": {
       backgroundColor: "#E7DCF6",
@@ -44,10 +55,47 @@ const useStyles = makeStyles((theme) => ({
       border: "none",
     },
   },
+  note: {
+    display: 'flex',
+    justifyContent: 'flex-start',
+    width : "60%",
+    flexDirection: "column",
+    position: 'relative',
+    "&:hover $actions": {
+      display: 'flex',
+      gap: "20px"
+    },
+  },
+  noteContent: {
+    display: "flex",
+    padding: "14px 20px 14px 5px",
+    backgroundColor: "#FFFFFF",
+    border: "1px solid #CCC",
+    borderRadius: "8px",
+    gap: "23px",
+    minWidth: "320px",
+    "&:hover":{
+      boxShadow : "0 0 4px rgba(0, 0, 0, 0.5)"
+    }
+  },
+  actions: {
+    display: 'none',
+    paddingTop : "20px",
+    paddingBottom : "20px"
+    // position: 'absolute',
+    // top: '10px',
+    // right: '10px',
+    // gap: '10px',
+  },
 }));
 
-const UploadNotes = () => {
+const UploadNotes = ({ Notes , getCourseDetails}) => {
   const classes = useStyles();
+  const { showSpinner, hideSpinner } = useSpinner();
+  const [editMode, setEditMode] = useState(false);
+  const [currentNote, setCurrentNote] = useState(null);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [noteToDelete, setNoteToDelete] = useState(null);
 
   const formik = useFormik({
     initialValues: {
@@ -57,13 +105,83 @@ const UploadNotes = () => {
     },
     validationSchema: Yup.object({
       heading: Yup.string().required("Heading is required"),
-      subLine: Yup.string().required("Sub Line is required"),
-      file: Yup.mixed().required("File is required"),
+      subLine: Yup.string().required("Description is required"),
+      file: Yup.mixed().required("Note is required"),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      if (editMode) {
+        try {
+        showSpinner()
+        const data = { NoteId: currentNote?.uuid , title : values?.heading, description: values?.subLine, file : values?.file}
+        const response = await updateCourseNotes(data)
+        formik.resetForm();
+        setEditMode(false);
+        setCurrentNote(null);
+        await getCourseDetails()
+        toast.success("note update successfully") 
+        } catch (error) {
+          toast.error(error?.message)
+        }finally{
+          hideSpinner()
+        }
+      } else {
+        try {
+          showSpinner()
+          const instructor = getInstructorDetails()
+          const data = {
+            institute : instructor?.institute_id?.uuid , 
+            branch : instructor?.branch_id?.uuid ,
+            course : instructor?.userDetail?.course?.[0],
+            title : values?.heading,
+            description : values?.subLine,
+            file : values?.file
+          }
+          const response = await createNotes(data)
+          formik.resetForm();
+          setEditMode(false);
+          setCurrentNote(null);
+          await getCourseDetails()
+          toast.success(response?.message)
+          console.log("Creating note:", values);  
+        } catch (error) {
+          toast.error(error?.message)
+        }finally{
+          hideSpinner()
+        }
+      }
     },
   });
+
+  const handleEdit = (note) => {
+    setEditMode(true);
+    setCurrentNote(note);
+    formik.setValues({
+      heading: note.title,
+      subLine: note.description,
+      file: note.file,
+    });
+  };
+
+  const handleDelete = (note) => {
+    setNoteToDelete(note);
+    setOpenDeleteDialog(true);
+  };
+
+  const confirmDelete = async () => {
+    try {
+    showSpinner()
+    const response = await deleteCourseNotes({id:noteToDelete?.uuid})
+    toast.success("note deleted successfully")
+    await getCourseDetails()
+    setOpenDeleteDialog(false);
+    setNoteToDelete(null);  
+    } catch (error) {
+     toast.error(error?.message) 
+    }finally{
+      hideSpinner()
+    }
+  };
+
 
   return (
     <Box
@@ -88,7 +206,7 @@ const UploadNotes = () => {
             lineHeight: "24px",
           }}
         >
-          Upload Notes
+          {editMode ? "Edit Note" : "Upload Notes"}
         </Typography>
         <form
           onSubmit={formik.handleSubmit}
@@ -155,13 +273,13 @@ const UploadNotes = () => {
                 pb: "6px",
               }}
             >
-              Sub Line
+              Description
             </FormLabel>
             <TextField
               fullWidth
               id="subLine"
               name="subLine"
-              placeholder="Enter sub line"
+              placeholder="Enter description"
               value={formik.values.subLine}
               onChange={formik.handleChange}
               error={formik.touched.subLine && Boolean(formik.errors.subLine)}
@@ -214,6 +332,8 @@ const UploadNotes = () => {
                 justifyContent: "center",
                 alignContent: "center",
                 alignItems: "center",
+                border: `2px dashed ${ formik.values.file ? "#11B181" : "#5611B1"}`,
+                backgroundColor: ` ${formik?.values?.file ? "#DCF6E8" : "#E7DCF6" }`,
               }}
               variant="outlined"
               component="label"
@@ -222,15 +342,35 @@ const UploadNotes = () => {
                 type="file"
                 accept=".pdf,.doc,.docx"
                 className={classes.input}
-                onChange={(event) => {
-                  formik.setFieldValue("file", event.currentTarget.files[0]);
+                disabled={ formik.values.file ? true : false}
+                onChange={async(event) => {
+                  try {
+                    showSpinner()
+                    const file = event.currentTarget.files[0]
+                    const form_data = new FormData()
+                    form_data.append("file",file)
+                    const response = await fileUpload(form_data)
+                    formik.setFieldValue("file", response?.file); 
+                    toast.success("file uploaded successfully")
+                  } catch (error) {
+                    toast.error(error?.message)
+                  }finally{
+                    hideSpinner()
+                  }
                 }}
               />
               <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
                 <Box>
-                  <NoteIcon fill={"#5611B1"} />
+                  { formik.values.file ? <PictureAsPdfOutlinedIcon sx={{ color: "#11B181"}} /> :  <NoteIcon fill={"#5611B1"} />}
                 </Box>
                 <Box sx={{ display: "flex", gap: "10px" }}>
+                  {
+                  formik?.values?.file ? 
+                  <Typography>
+                     {formik.values?.file?.split("/")[2]}
+                  </Typography>
+                  :
+                  <>
                   <Typography
                     variant="subtitle1"
                     sx={{ color: "black", fontSize: "12px", fontWeight: 500 }}
@@ -243,8 +383,10 @@ const UploadNotes = () => {
                   >
                     or
                   </Typography>
+                  </>
+}
                 </Box>
-                <Button
+                {!formik?.values?.file &&<Button
                   variant="contained"
                   component="span"
                   className={classes.browseButton}
@@ -256,6 +398,7 @@ const UploadNotes = () => {
                 >
                   Browse
                 </Button>
+                }
               </Box>
             </Paper>
             {formik.touched.file && formik.errors.file && (
@@ -281,6 +424,11 @@ const UploadNotes = () => {
                 fontWeight: 500,
               }}
               type="button"
+              onClick={() => {
+                formik.resetForm();
+                setEditMode(false);
+                setCurrentNote(null);
+              }}
             >
               Cancel
             </Button>
@@ -296,24 +444,41 @@ const UploadNotes = () => {
               }}
               endIcon={<FileUploadOutlinedIcon sx={{ color: "white" }} />}
             >
-              Upload
+              {editMode ? "Update" : "Upload"}
             </Button>
           </Box>
         </form>
       </Box>
-      <Box>
+      <Box sx={{ display: "flex" }}>
         <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
       </Box>
-      <Box
-        sx={{
-          flexGrow: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Typography>No Uploads</Typography>
+      <Box sx={{ flexGrow: 1, height: "80vh", overflow: "auto" }}>
+        {Notes ? (
+          <NoteList 
+          Notes={Notes?Notes : []}
+          handleEdit={handleEdit}
+          handleDelete={handleDelete}
+          handleDownload={handleDownload}
+          />
+        ) : (
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography>No Uploads</Typography>
+          </Box>
+        )}
       </Box>
+      <DeleteModel
+      openDeleteDialog={openDeleteDialog}
+      setOpenDeleteDialog={setOpenDeleteDialog}
+      confirmDelete={confirmDelete}
+      title={"Are you sure you want to delete this note ? "}
+      />
     </Box>
   );
 };
