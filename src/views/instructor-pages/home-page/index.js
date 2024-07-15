@@ -122,7 +122,7 @@ const InstructorDashBoard = () => {
                 size="medium"
                 sx={{ p: 1, px: 2, borderRadius: 5 }}
               >
-                Edit Profile
+                View Profile
               </Button>
             </Grid>
           </Grid>

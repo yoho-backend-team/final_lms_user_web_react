@@ -6,7 +6,7 @@ import UploadNotes from "./forms/uploadNotes";
 import UploadStudyMaterials from "./forms/uploadStudyMaterial";
 import UploadVideos from "./forms/uploadVideos";
 
-const AddStudyMaterialsPage = () => {
+const AddStudyMaterialsPage = ({Course,getCourseDetails}) => {
   const navigate = useNavigate();
   const [currentTab, setCurrentTab] = useState("1");
 
@@ -25,7 +25,7 @@ const AddStudyMaterialsPage = () => {
   const handleBack = () => {
     navigate(-1);
   };
-
+  console.log(Course,"course")
   return (
     <Box>
       <Box
@@ -68,8 +68,8 @@ const AddStudyMaterialsPage = () => {
       </Box>
       <Box>
         {currentTab === "1" && <UploadVideos />}
-        {currentTab === "2" && <UploadStudyMaterials />}
-        {currentTab === "3" && <UploadNotes />}
+        {currentTab === "2" && <UploadStudyMaterials StudyMaterials={Course?.studymaterials} getCourseDetails={getCourseDetails} />}
+        {currentTab === "3" && <UploadNotes Notes={Course?.notes} getCourseDetails={getCourseDetails} />}
       </Box>
     </Box>
   );

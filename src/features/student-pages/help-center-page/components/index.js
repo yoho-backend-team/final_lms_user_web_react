@@ -188,7 +188,9 @@ const StudentHelpCenter = () => {
             </Typography>
           </Box>
           <Box sx={{ display: "flex", gap: "40px" }}>
-            <Box sx={{ display: "inline-flex", gap: "5px" }}>
+          <a href="https://wa.me/1234567890" style={{ textDecoration: 'none', color: 'inherit' }} target="_blank" rel="noopener noreferrer">
+
+            <Box sx={{ display: "inline-flex", gap: "5px", cursor:"pointer" }}>
               <ChatIcon />
               <Typography
                 sx={{
@@ -201,7 +203,9 @@ const StudentHelpCenter = () => {
                 Chat
               </Typography>
             </Box>
-            <Box sx={{ display: "inline-flex", gap: "5px" }}>
+            </a>
+            <a href="tel:+1234567890" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Box sx={{ display: "inline-flex", gap: "5px" ,cursor: "pointer"}}>
               <CallOutlinedIcon />
               <Typography
                 sx={{
@@ -214,7 +218,9 @@ const StudentHelpCenter = () => {
                 Call
               </Typography>
             </Box>
-            <Box sx={{ display: "inline-flex", gap: "5px" }}>
+            </a>
+            <a href="mailto:example@example.com" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Box sx={{ display: "inline-flex", gap: "5px",cursor: "pointer" }}>
               <EmailOutlinedIcon />
               <Typography
                 sx={{
@@ -227,6 +233,7 @@ const StudentHelpCenter = () => {
                 Mail
               </Typography>
             </Box>
+            </a>
           </Box>
         </Box>
       </Box>

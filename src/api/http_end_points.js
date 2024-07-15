@@ -92,6 +92,7 @@ const generateEndpoints = () => {
       },
       course: {
         get: `/institutes/${institute1}/branches/${branch1}/course/${course1}`,
+        // getwithclass: `/institutes/${institute}/branches/${branch}/course/${course}/classes`
       },
       class: {
         get: `/institutes/class/${studentCourse}`,
@@ -108,6 +109,10 @@ const generateEndpoints = () => {
         create: "/institutes/student/ticket/create",
         get: "/institutes/student/ticket/getall",
       },
+      activity: {
+        get: `institutes/user/activity/`,
+      },
+
       community: {
         get: `/institutes/community/course/${course1}`,
       },
@@ -138,6 +143,14 @@ const generateEndpoints = () => {
       },
       course: {
         get: `/institutes/${institute}/branches/${branch}/course/${course}`,
+        notes : {
+          create : `/institutes/course/note`,
+          update : `/institutes/course/note/update/`,
+          delete : `/institutes/course/note/`
+        },
+        study_material : {
+          index : '/institutes/study-material/'
+        }
       },
       class: {
         get: `/institutes/class/${course}`,

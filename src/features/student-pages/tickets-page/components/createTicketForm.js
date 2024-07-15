@@ -31,8 +31,10 @@ const validationSchema = yup.object({
   description: yup
     .string("Enter description")
     .required("Description is required"),
+    status:yup.string("opened")
    
 });
+
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -101,6 +103,7 @@ const StudentCreateTicketForm = ({ handleClose }) => {
       problem: "",
       description: "",
     file: "",
+    status:"",
     },
     onSubmit: async (values) => {
       try {
@@ -110,6 +113,7 @@ const StudentCreateTicketForm = ({ handleClose }) => {
           branch: student?.branch_id?._id,
           query: values?.problem,
           description: values?.description,
+          status:"opened",
           user: student?._id,
         };
         const response = await StudentCreateTickets(data);

@@ -136,7 +136,7 @@ function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data })
               </Button>
             </CardContent>
           </Card>
-        </Grid>,
+        </Grid>
       );
     }
  

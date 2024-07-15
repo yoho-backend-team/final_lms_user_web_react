@@ -19,11 +19,12 @@ export const useInstructorLogin = () => {
     async (data) => {
       try {
         const response = await Client.Instructor.login(data);
-        const { step, email, token, user } = response?.data;
+        const { step, email, token, user} = response?.data;
 
         if (step === "otp") {
           setLoginStep("otp");
           setOtpAtom({ email, token });
+          return { message: response?.message }
         } else {
           setOtpAtom({ email: null, token: null, otp: "" });
           setInstructorAtom({
@@ -33,11 +34,13 @@ export const useInstructorLogin = () => {
             role: "instructor",
           });
           setLoginStep("login");
-          return { success: true };
+          return { success: true , message:response?.message};
         }
       } catch (error) {
         console.error("Login error:", error);
-        return error;
+        const error_message = error?.response?.data?.message
+        console.log(error_message,"errorMessage")
+        throw new Error(error_message)
       }
     },
     [setLoginStep, setOtpAtom],
@@ -125,6 +128,7 @@ export const useStudentOtpVerify = () => {
         role: "student",
       });
       setLoginStep("login");
+      return {message: response?.message}
     } catch (error) {
       throw error;
     }
