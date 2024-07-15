@@ -279,7 +279,7 @@ const ApplicationRoutes = () => {
             <Route path="student/payments" element={<StudentPaymentsPage />} />
             {/* <Route
               path="student/OnlineUpcomingClass/:id"
-              element={<StudentOnlineUpcomingClassViewPage />}
+              element={<StudentOnlineUpcomingClassViewPage />}6
             />
             <Route
               path="student/OnlineLiveClass/:id"
