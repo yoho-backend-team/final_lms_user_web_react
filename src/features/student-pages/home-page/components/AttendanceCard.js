@@ -55,7 +55,7 @@ const AttendanceCard = ({ Attendance }) => {
         backgroundImage: `url(${AttedenceBg})`,  
         backgroundSize: "150% 170%",
         backgroundPosition: "center", 
-        height:'170px'
+        height:'auto'
       }}
     >
       <Grid
@@ -84,7 +84,6 @@ const AttendanceCard = ({ Attendance }) => {
             sx={{
               fontWeight: "semi-bold",
               fontFamily: "poppins",
-              fontWeight: 500,
               color: "#6245af",
             }}
           >

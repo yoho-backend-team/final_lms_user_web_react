@@ -14,6 +14,8 @@ import AttendanceCard from "features/student-pages/home-page/components/Attendan
 import PaymentsCard from "features/student-pages/home-page/components/PaymentsCard";
 import UpdatesCard from "features/student-pages/home-page/components/UpdatesCard";
 import ProfilePage from "../../../views/student-pages/profile-page/index.js";
+import TicketStatusCard from "features/student-pages/home-page/components/TicketStatusCard.js";
+import studentheaderpic from "../../../assets/images/background/studentprofile.svg"
 
 const StudentDashboard = () => {
   const theme = useTheme();
@@ -41,9 +43,9 @@ const StudentDashboard = () => {
         <Card sx={{ boxShadow: "none" }}>
           <Box>
             <img
-              src="https://w0.peakpx.com/wallpaper/23/429/HD-wallpaper-blue-abstract-lines-background-banner-background-on-lovepik.jpg"
+              src={studentheaderpic}
               alt="account-banner"
-              style={{ height: 100, width: "100%" }}
+              style={{ height: 80, width: "100%" }}
             />
           </Box>
           <Grid
@@ -278,6 +280,9 @@ const StudentDashboard = () => {
             </Card>
           </Box>
         </Card>
+        <Grid item xs={12}>
+        <TicketStatusCard />
+        </Grid>
       </Grid>
       <Grid item xs={12} sm={4} className="MainGrid-2">
         <Grid item xs={12} px={3} mb={2}>
