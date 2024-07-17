@@ -14,7 +14,7 @@ const UpdatesCard = (props) => {
   return (
     <Card sx={{ boxShadow: "none" }}>
       <Grid>
-        <Box sx={{ height: 120, overflow: "hidden" }}>
+        <Box sx={{ height: 105, overflow: "hidden" }}>
           <img src={image} alt="banner" style={{ width: "100%" }} />
         </Box>
         <Box

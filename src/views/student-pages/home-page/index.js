@@ -1,14 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Grid, Typography } from "@mui/material";
 import { Box, Avatar } from "@mui/material";
 import CourseCard from "features/student-pages/home-page/components/CourseCard";
-import {
-  Assessment,
-  CheckCircle,
-  Devices,
-  NearbyError,
-  Podcasts,
-} from "@mui/icons-material";
 import { useTheme } from "@emotion/react";
 import AttendanceCard from "features/student-pages/home-page/components/AttendanceCard";
 import PaymentsCard from "features/student-pages/home-page/components/PaymentsCard";
@@ -16,26 +9,131 @@ import UpdatesCard from "features/student-pages/home-page/components/UpdatesCard
 import ProfilePage from "../../../views/student-pages/profile-page/index.js";
 import TicketStatusCard from "features/student-pages/home-page/components/TicketStatusCard.js";
 import studentheaderpic from "../../../assets/images/background/studentprofile.svg"
+import { getprofilewithId } from "features/student-pages/Profile-page/services/index.js";
+import { getImageUrl } from "utils/common/imageUtlils.js";
+import { BranchIcon } from "utils/images";
+import { useSpinner } from "context/SpinnerProvider.js";
+import { useDispatch,useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import studentdashboardimage from ".././../../assets/images/background/studentdashboardupdate.svg"
+import dashboardtotalclass from ".././../../assets/images/icons/dashboardtotalclass.svg"
+import completedclass from ".././../../assets/images/icons/completedclass.svg"
+import pendingclass from ".././../../assets/images/icons/pendingclass.svg"
+import liveclass from ".././../../assets/images/icons/liveclass.svg"
+import offlineclass from ".././../../assets/images/icons/offlineclass.svg"
+import { selectLoading, selectStudentDashboard } from "features/student-pages/home-page/redux/selectors.js";
+import getAllReports from "features/student-pages/home-page/redux/thunks.js";
+
+
+
 
 const StudentDashboard = () => {
   const theme = useTheme();
   const [editProfileClicked, setEditProfileClicked] = useState(false);
+  const [personalInfo, setPersonalInfo] = useState({ 
+    full_name: '',
+    id: '',
+    image: '', });
+
+    const dispatch = useDispatch()
+    const reports = useSelector(selectStudentDashboard); 
+    const loading = useSelector(selectLoading);
+    const { showSpinner, hideSpinner } = useSpinner()
+
 
   const handleEditProfileClick = () => {
     setEditProfileClicked(true);
   };
 
-  // Student details
-  const student = {
-    name: "Ramakrishnan P",
-    profileImage: "https://cdn.tamaggo.com/1663756964157.png",
-    studentID: "LMSSTUD1243",
+
+  
+  const getProfile = async () => {
+    try {
+      const response = await getprofilewithId();
+      setPersonalInfo(response);
+       } catch (error) {
+      console.error('Error fetching profile:', error);
+    }
   };
 
-  // Render ProfilePage if editProfileClicked is true
-  if (editProfileClicked) {
-    return <ProfilePage />;
-  }
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+  console.log(personalInfo,"personalInfor")
+  const image = getImageUrl(personalInfo.image);
+
+
+  const student = {
+    name: personalInfo.full_name,
+    profileImage: image,
+    studentID: personalInfo.id,
+  };
+
+
+
+  const fetchReports = async () => {
+    try {
+      showSpinner();
+      await dispatch(getAllReports());
+    } catch (error) {
+      toast.error(error?.message);
+    } finally {
+      hideSpinner();
+    }
+  };
+  
+  useEffect(() => {
+    fetchReports();
+  }, [dispatch]);
+ 
+
+  const instituteimage = getImageUrl(reports?.institute?.image);
+
+    // Render ProfilePage if editProfileClicked is true
+    if (editProfileClicked) {
+      return <ProfilePage />;
+    }
+  
+  
+    
+  console.log(reports,"reports",loading)
+
+
+
+const classesData = [
+  {
+    title: 'Total Class',
+    value: reports?.classes?.[0]?.total,
+    icon: <img src={dashboardtotalclass} alt="Total Class" />, 
+  },
+  {
+    title: 'Completed',
+    value: reports?.classes?.[0]?.online_class?.completed + reports?.classes?.[0]?.offline_class?.completed,
+    icon: <img src={completedclass} alt="completed class" />,
+  },
+  {
+    title: 'Pending',
+    value: reports?.classes?.[0]?.online_class.pending + reports?.classes?.[0]?.offline_class.pending,
+    icon: <img src={pendingclass} alt="Pending Class" />,
+  },
+  {
+    title: 'Live Class',
+    value: reports?.classes?.[0]?.offline_class?.total,
+    icon: <img src={liveclass} alt="Live class" />,
+  },
+  {
+    title: 'Online Class',
+    value: reports?.classes?.[0]?.online_class?.total,
+    icon: <img src={offlineclass} alt="Online Class" />,
+  },
+  {
+    title: 'Offline Class',
+    value: reports?.classes?.[0]?.offline_class?.total,
+    icon: <img src={offlineclass} alt="Offline Class" />,
+  },
+];
+  
 
   return (
     <Grid container p={8} sx={{ p: { xs: 5, sm: 9 } }}>
@@ -115,115 +213,85 @@ const StudentDashboard = () => {
 
           <Grid container>
             <Grid item xs={12} alignItems="center">
-              {" "}
-              <Typography variant="h4" sx={{ mb: 1, mx: { xs: 3, sm: 5 } }}>
-                Class
-              </Typography>
+            <Typography
+                    variant="h4"
+                    sx={{
+                      color: 'black',
+                      fontFamily: 'Nunito Sans',
+                      fontSize: '18px',
+                      fontStyle: 'normal',
+                      fontWeight: 900,
+                      lineHeight: 'normal',
+                      mb: 1, 
+                      mx: { xs: 3, sm: 5 }, 
+                    }}
+                  >
+                    Class
+                  </Typography>
             </Grid>
 
-            <Grid
-              xs={4}
-              sx={{
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-                mb: 2,
-              }}
-            >
-              {" "}
-              <Box>
-                <Box display="flex" alignItems="center">
-                  <Typography variant="h2">146</Typography>
-                  <Assessment color="secondary" />
-                </Box>
-                <Typography sx={{ color: "grey" }}>Total Class</Typography>
-              </Box>
-            </Grid>
-            <Grid
-              xs={4}
-              sx={{
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-                mb: 2,
-              }}
-            >
-              <Box>
-                <Box display="flex" alignItems="center" gap={2}>
-                  <Typography variant="h2">56</Typography>
-                  <CheckCircle color="secondary" />
-                </Box>
-                <Typography sx={{ color: "grey" }}>Completed</Typography>
-              </Box>
-            </Grid>
-            <Grid
-              xs={4}
-              sx={{
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-                mb: 2,
-              }}
-            >
-              <Box>
-                <Box display="flex" alignItems="center" gap={2}>
-                  <Typography variant="h2">90</Typography>
-                  <NearbyError color="secondary" />
-                </Box>
-                <Typography sx={{ color: "grey" }}>Pending</Typography>
-              </Box>
-            </Grid>
-            <Grid
-              xs={4}
-              sx={{
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-                mb: 2,
-              }}
-            >
-              <Box>
-                <Box display="flex" alignItems="center" gap={2}>
-                  <Typography variant="h2">1</Typography>
-                  <Podcasts color="secondary" />
-                </Box>
-                <Typography sx={{ color: "grey" }}>Live Class</Typography>
-              </Box>
-            </Grid>
-            <Grid
-              xs={4}
-              sx={{
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-                mb: 2,
-              }}
-            >
-              <Box>
-                <Box display="flex" alignItems="center" gap={2}>
-                  <Typography variant="h2">146</Typography>
-                  <Assessment color="secondary" />
-                </Box>
-                <Typography sx={{ color: "grey" }}>Total Class</Typography>
-              </Box>
-            </Grid>
-            <Grid
-              xs={4}
-              sx={{
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-                mb: 2,
-              }}
-            >
-              <Box>
-                <Box display="flex" alignItems="center" gap={2}>
-                  <Typography variant="h2">123</Typography>
-                  <Devices color="secondary" />
-                </Box>
-                <Typography sx={{ color: "grey" }}>Online Class</Typography>
-              </Box>
-            </Grid>
+            <Grid container spacing={2}>
+                  {classesData.map((item, index) => (
+                    <Grid item xs={4} key={index}>
+                      <Box
+                        sx={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          mb: 2,
+                          mt:1,
+                        }}
+                      >
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          gap={2}
+                        >
+                         <Typography
+                          variant="h2"
+                          sx={{
+                            color: 'var(--Colour-Neutral-1, #000)',
+                            fontFeatureSettings: "'clig' off, 'liga' off",
+                            fontFamily: 'Poppins',
+                            fontSize: '20.921px',
+                            fontStyle: 'normal',
+                            fontWeight: 600,
+                            lineHeight: 'normal',
+                            letterSpacing: '-0.785px',
+                            textTransform: 'uppercase',
+                          }}
+                        >
+                          {item.value}
+                        </Typography>
+                        <div style={{ width: 24, height: 24 }}>
+                        {item.icon}
+                        </div>
+                      </Box>
+                      <Typography
+                        sx={{
+                          color: "#8E8E8E",
+                          fontFeatureSettings: "'clig' off, 'liga' off",
+                          fontFamily: 'Poppins',
+                          fontSize: '12px',
+                          fontStyle: 'normal',
+                          fontWeight: 500,
+                          lineHeight: 'normal',
+                        }}
+                      >
+                        {item.title}
+                      </Typography>
+ 
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>                     
+
+
+
+
+
+           
           </Grid>
           <Box sx={{ px: 2 }}>
             <Card
@@ -263,7 +331,7 @@ const StudentDashboard = () => {
                       mt: 2,
                     }}
                   >
-                    Rajalakshmi Institute, Vellore
+                     {reports?.institute?.institute_name}, Vellore
                   </Typography>
                 </Grid>
                 <Grid
@@ -272,7 +340,7 @@ const StudentDashboard = () => {
                   sx={{ justifyContent: "center", display: "flex" }}
                 >
                   <Avatar
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSebBO174VR6evP4d1N0W5M8GdBBsCvzQKF4vjlfgBva26Doib78Zcc084ekRdejEZ_HnQ&usqp=CAU"
+                    src={instituteimage}
                     sx={{ height: 100, width: 100, backgroundColor: "white" }}
                   ></Avatar>
                 </Grid>
@@ -284,7 +352,7 @@ const StudentDashboard = () => {
         <TicketStatusCard />
         </Grid>
       </Grid>
-      <Grid item xs={12} sm={4} className="MainGrid-2">
+      <Grid item xs={12} sm={6} md={5.5} lg={2} xl={4} className="MainGrid-2">
         <Grid item xs={12} px={3} mb={2}>
         <CourseCard />        
         </Grid>
@@ -295,10 +363,38 @@ const StudentDashboard = () => {
            <PaymentsCard />
         </Grid>
       </Grid>
-      <Grid item xs={12} sm={4} className="MainGrid-3">
-        <UpdatesCard image={"https://i.postimg.cc/qq8XHVBg/Frame-28674.png"} />
+      <Grid item xs={12} sm={4} md={8} lg={2} xl={4} className="MainGrid-3">
+        <UpdatesCard image={studentdashboardimage} />
       </Grid>
+
+      <Box sx={{ display: 'flex', backdropFilter:"blur(4px)",padding : "25px 60px 26px 58px",background:"#CCCCCC29",borderRadius:"8px", justifyContent: "space-between", width : "inherit",marginTop:'20px' }} >
+          <Box sx={{ padding : "10px 19px", backgroundColor: "#FFFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px",display:"flex", gap: "10px",alignItems: "center"}} >
+              <Typography sx={{ color : "#000000", fontSize:"16px",fontWeight:900}} >Course name: </Typography>
+              <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight:600}} >{personalInfo?.userDetail?.course?.course_name}</Typography>
+          </Box>
+          <Box sx={{ padding : "10px 19px", backgroundColor: "#FFFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px",display:"flex", gap: "10px", alignItems: "center"}} >
+            <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight: 900 }} >Total Instructors: </Typography>
+            <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight: 600}} >{personalInfo?.courses?.length}</Typography>
+          </Box>
+          <Box sx={{ padding : "10px 19px", backgroundColor: "#FFFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px",display:"flex", gap: "10px", alignItems: "center"}} >
+            <Box sx={{ display: "inline-flex", gap: "10px"}} >
+              <Typography sx={{ color: "#000000", fontWeight: 900, fontSize: "16px"}} >Branch: </Typography>
+              <Typography sx={{ color : "#000000", fontWeight:  600, fontSize: "16px"}} >{reports?.branch?.branch_identity}</Typography>
+            </Box>
+            <Box>
+              <img src={BranchIcon} alt="branchicon"/>
+            </Box>
+          </Box>
+          <Box sx={{ padding : "10px 19px", backgroundColor: "#FFFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px",display:"flex", gap: "10px", alignItems: "center"}} >
+            <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight: 900}} >Projects: </Typography>
+            <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight: 600}} >{personalInfo?.courses?.[0]?.course?.category?.category_name}</Typography>
+          </Box>
+      </Box>
+
+
+
     </Grid>
+    
   );
 };
 

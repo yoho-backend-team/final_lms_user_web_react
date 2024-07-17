@@ -112,7 +112,9 @@ const generateEndpoints = () => {
       activity: {
         get: `institutes/user/activity/`,
       },
-
+      reports : {
+        get : "/institutes/reports/users/student",
+      },
       community: {
         get: `/institutes/community/course/${course1}`,
       },

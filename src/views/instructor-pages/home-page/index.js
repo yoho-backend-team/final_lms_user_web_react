@@ -16,7 +16,7 @@ import CourseProgressCard from "features/instructor-pages/home-page/components/c
 import { useTabResponsive } from "utils/tabResponsive";
 import {
   getBranchDetails,
-  getInstituteDetails,
+  getInstituteDetails,  
 } from "store/atoms/authorized-atom";
 import { BranchIcon } from "utils/images";
 import Client from "../../../api/index"
