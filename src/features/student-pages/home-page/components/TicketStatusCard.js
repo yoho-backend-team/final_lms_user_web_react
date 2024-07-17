@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Typography, Card, CardContent } from '@mui/material';
 import { styled } from '@mui/system';
+import { useSpinner } from 'context/SpinnerProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import getAllReports from '../redux/thunks';
+import { selectStudentDashboard } from '../redux/selectors';
 
 const GradientCard = styled(Card)(({ theme }) => ({
   borderRadius: '8px',
@@ -9,8 +14,8 @@ const GradientCard = styled(Card)(({ theme }) => ({
   boxShadow: '0px 0px 63px 0px rgba(0, 0, 0, 0.10)',
   width: '100%', 
   maxWidth: '464px',  
-  height: '140px',
-  marginTop: '20px',
+  height: '150px',
+  marginTop: '30px',
   padding: '5px',
   [theme.breakpoints.up('sm')]: {
     padding: '10px', 
@@ -47,6 +52,32 @@ const StatusItem = styled(Box)(({ theme, bgColor }) => ({
   }));
 
 const TicketStatusCard = () => {
+
+  
+  const dispatch = useDispatch()
+  const reports = useSelector(selectStudentDashboard); 
+  const { showSpinner, hideSpinner } = useSpinner()
+
+
+  const fetchReports = async () => {
+    try {
+      showSpinner();
+      await dispatch(getAllReports());
+    } catch (error) {
+      toast.error(error?.message);
+    } finally {
+      hideSpinner();
+    }
+  };
+  
+  useEffect(() => {
+    fetchReports();
+  }, [dispatch]);
+ 
+
+
+
+
   return (
     <GradientCard>
       <CardContent>
@@ -71,7 +102,7 @@ const TicketStatusCard = () => {
             letterSpacing: '-0.3px',
             color: '#454545'
           }}>
-            Total 11 Ticket Raised
+            Total  {reports?.tickets?.total} Ticket Raised
           </Typography>
         </Header>
         <StatusBox>
@@ -84,7 +115,7 @@ const TicketStatusCard = () => {
               fontSize: '40px',
               margin: '-35px'
             }}>
-              7
+              {reports?.tickets?.closed}              
             </Typography>
             <Typography variant="body1" component="div" sx={{
               color: '#317064',
@@ -106,7 +137,7 @@ const TicketStatusCard = () => {
               fontSize: '40px',
               margin: '-35px'
             }}>
-              4
+               {reports?.tickets?.opened}  
             </Typography>
             <Typography variant="body1" component="div" sx={{
               color: '#954444',

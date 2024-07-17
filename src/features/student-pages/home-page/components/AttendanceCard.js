@@ -1,16 +1,47 @@
 import { Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import Chart from "react-apexcharts";
 import { Card, Box } from "@mui/material";
 import AttedenceBg from "../../../../assets/images/icons/attendancecard.svg"
+import { useSpinner } from 'context/SpinnerProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import getAllReports from '../redux/thunks';
+import { selectStudentDashboard } from '../redux/selectors';
 
 const AttendanceCard = ({ Attendance }) => {
+
+    
+  const dispatch = useDispatch()
+  const reports = useSelector(selectStudentDashboard); 
+  const { showSpinner, hideSpinner } = useSpinner()
+
+
+  const fetchReports = async () => {
+    try {
+      showSpinner();
+      await dispatch(getAllReports());
+    } catch (error) {
+      toast.error(error?.message);
+    } finally {
+      hideSpinner();
+    }
+  };
+  
+  useEffect(() => {
+    fetchReports();
+  }, [dispatch]);
+ 
+
+
+
+
   const options = {
     chart: {
       height: 300,
       type: "radialBar",
     },
-    series: [75], 
+    series: reports?.attendance?.[0]?.total?.percentage ? [reports.attendance?.[0]?.total?.percentage] : [0],
     plotOptions: {
       radialBar: {
         hollow: {
@@ -53,7 +84,7 @@ const AttendanceCard = ({ Attendance }) => {
         background: "#EFEFFF",
         borderRadius: "8px",
         backgroundImage: `url(${AttedenceBg})`,  
-        backgroundSize: "150% 170%",
+        backgroundSize: "130% 170%",
         backgroundPosition: "center", 
         height:'auto'
       }}
@@ -70,85 +101,105 @@ const AttendanceCard = ({ Attendance }) => {
           xs={12}
           sx={{ justifyContent: "space-between", display: "flex" }}
         >
-          <Typography
-            variant="h4"
-            sx={{
-              fontWeight: "bold",
-              fontFamily: "poppins",
-              color: "#6245af",
-            }}
-          >
-            Attendance
-          </Typography>
-          <Typography
-            sx={{
-              fontWeight: "semi-bold",
-              fontFamily: "poppins",
-              color: "#6245af",
-            }}
-          >
-            Overall
-          </Typography>
+       <Typography
+              variant="h4"
+              sx={{
+                color: '#442189', 
+                fontFamily: 'Nunito Sans', 
+                fontSize: '20px', 
+                fontStyle: 'normal', 
+                fontWeight: 900, 
+                lineHeight: 'normal', 
+              }}
+            >
+              Attendance
+            </Typography>
+            <Typography
+              sx={{
+                color: '#2F0C77', 
+                fontFamily: 'Nunito Sans', 
+                fontSize: '14px', 
+                fontStyle: 'normal', 
+                fontWeight: 700, 
+                lineHeight: 'normal', 
+              }}
+            >
+              Overall
+            </Typography>
+
         </Grid>
+
         <Grid item xs={8}>
-          <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
-            <Box
-              sx={{
-                height: 15,
-                width: 15,
-                borderRadius: "100%",
-                backgroundColor: "#00cd00",
-              }}
-            ></Box>
-            <Typography
-              sx={{
-                fontFamily: "poppins",
-                fontWeight: 500,
-                color: "#6245af",
-              }}
-            >
-              Overall {options.series}% Attendance
-            </Typography>
-          </Box>
-          <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
-            <Box
-              sx={{
-                height: 15,
-                width: 15,
-                borderRadius: "100%",
-                backgroundColor: "#FFFF00",
-              }}
-            ></Box>
-            <Typography
-              sx={{
-                fontFamily: "poppins",
-                fontWeight: 500,
-                color: "#6245af",
-              }}
-            >
-              12% Attendance Remaining
-            </Typography>
-          </Box>
-          <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
-            <Box
-              sx={{
-                height: 15,
-                width: 15,
-                borderRadius: "100%",
-                backgroundColor: "#FF0000",
-              }}
-            ></Box>
-            <Typography
-              sx={{
-                fontFamily: "poppins",
-                fontWeight: 500,
-                color: "#6245af",
-              }}
-            >
-              10% Days Absent
-            </Typography>
-          </Box>
-        </Grid>
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
+              <Box
+                sx={{
+                  height: 16,
+                  width: 16,
+                  borderRadius: '100%',
+                  backgroundColor: '#32D445',
+                }}
+              />
+              <Typography
+                sx={{
+                  color: '#2F0C77',
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  lineHeight: 'normal',
+                }}
+              >
+                Overall {options.series}% Attendance
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
+              <Box
+                sx={{
+                  height: 16,
+                  width: 16,
+                  borderRadius: '100%',
+                  backgroundColor: '#F6C92A',
+                }}
+              />
+              <Typography
+                sx={{
+                  color: '#2F0C77',
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  lineHeight: 'normal',
+                }}
+              >
+                {reports.attendance?.[0]?.present?.percentage}% Attendance Remaining
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
+              <Box
+                sx={{
+                  height: 16,
+                  width: 16,
+                  borderRadius: '100%',
+                  backgroundColor: '#FF1B1B',
+                }}
+              />
+              <Typography
+                sx={{
+                  color: '#2F0C77',
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  lineHeight: 'normal',
+                }}
+              >
+                {reports.attendance?.[0]?.absent?.percentage}% Days Absent
+              </Typography>
+            </Box>
+          </Grid>
+
+       
+
         <Grid item xs={4}>
           <Chart
             options={options}

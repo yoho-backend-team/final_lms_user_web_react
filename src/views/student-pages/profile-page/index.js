@@ -38,10 +38,12 @@ import percentage from "../../../assets/images/icons/percentage.svg"
 import pendingcourse from "../../../assets/images/icons/pendingcourse.svg"
 import { CircularProgressWithLabel } from './CircularProgress';
 import ProgressChart from './Charts';
+import { useSpinner } from 'context/SpinnerProvider';
 
 const ProfilePage = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('xs'));
+  const { showSpinner, hideSpinner } = useSpinner()
 
   const [personalInfo, setPersonalInfo] = useState({
     first_name: '',
@@ -61,8 +63,10 @@ const ProfilePage = () => {
 
   const navigate = useNavigate();
 
+
   const getProfile = async () => {
     try {
+      showSpinner();
       const response = await getprofilewithId();
       setPersonalInfo({
         ...response,
@@ -80,7 +84,9 @@ const ProfilePage = () => {
       });
     } catch (error) {
       console.error('Error fetching profile:', error);
-    }
+    } finally {
+    hideSpinner();
+  }
   };
 
   useEffect(() => {
@@ -172,7 +178,7 @@ const ProfilePage = () => {
   console.log(personalInfo, "personalInfo")
 
   const handleNavigateBack = () => {
-    navigate(-1); 
+    navigate("student/home"); 
   };
 
   const handleCancelEdit = () => {

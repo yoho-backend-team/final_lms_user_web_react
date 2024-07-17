@@ -70,6 +70,9 @@ class Client {
       ),
   },
 
+  reports : {
+    get : (params) => httpClient.get(HTTP_END_POINTS.Student.reports.get,params,'student')
+  },
   activity: {
     get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.activity.get}`,params,'student'),
   },
