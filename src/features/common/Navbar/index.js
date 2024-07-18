@@ -38,6 +38,8 @@ import { useTheme } from "@emotion/react";
 import StudentNavLinks from "./StudentNavLinks";
 import InstructorNavLinks from "./InstructorNavLinks";
 // import { colorModeContext, tokens } from "../../assets/Styles/theme";
+import Cookies from 'js-cookie';
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
   const theme = useTheme();
@@ -50,6 +52,7 @@ export default function NavBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const navigate = useNavigate();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -66,6 +69,20 @@ export default function NavBar() {
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+
+
+  const handleLogout = () => {
+    Cookies.remove('student');
+    Cookies.remove('instructor');
+    navigate('/student/login'); 
+    handleMenuClose();
+  };
+
+  const handleProfile = () => {
+    navigate('/student/profile'); 
+    handleMenuClose();
   };
 
   const menuId = "primary-search-account-menu";
@@ -93,8 +110,10 @@ export default function NavBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleProfile}>Profile</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+
+
     </Menu>
   );
 

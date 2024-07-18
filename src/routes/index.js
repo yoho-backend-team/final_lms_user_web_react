@@ -17,10 +17,10 @@ const InstructorLogin = Loadable(
   lazy(() => import("views/auth-pages/login-page/instructorLogin")),
 );
 
+
 // Error Pages
 const ErrorPage404 = Loadable(lazy(() => import("views/error-pages/404-page")));
 
-// Student Pages
 const StudentHomePage = Loadable(
   lazy(() => import("views/student-pages/home-page")),
 );
@@ -159,7 +159,7 @@ const StudentTicketViewPage = Loadable(
 // Instructor Pages
 const InstructorHomePage = Loadable(
   lazy(() => import("views/instructor-pages/home-page")),
-);
+);  
 const InstructorActivityLogsPage = Loadable(
   lazy(() => import("views/instructor-pages/activity-logs-page")),
 );

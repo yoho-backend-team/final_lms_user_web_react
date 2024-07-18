@@ -131,10 +131,9 @@ const PaymentStudentInterface = () => {
       >
         <Box
           sx={{
-            backgroundImage: `url(${PaymentBg})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
+            backgroundColor:'white',
             width: "100%",
+            borderRadius:'24px'
           }}
         >
           <Box
