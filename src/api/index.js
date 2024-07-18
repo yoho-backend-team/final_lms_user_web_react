@@ -20,8 +20,16 @@ class Client {
     course: {
       get: (params) =>
         httpClient.get(HTTP_END_POINTS.Student.course.get, params, "student"),
-      // getwithClass: (params) =>
-      //   httpClient.get(HTTP_END_POINTS.Student.course.getwithclass, params, "student"),
+    },
+    profile: {
+      get: (params) =>
+        httpClient.get(HTTP_END_POINTS.Student.profile.get, params, "student"),
+      update: (data) =>
+        httpClient.update(
+          HTTP_END_POINTS.Student.profile.update,
+          data,
+          "student",
+        ),
     },
     class: {
       get: (params) =>
@@ -62,6 +70,9 @@ class Client {
       ),
   },
 
+  reports : {
+    get : (params) => httpClient.get(HTTP_END_POINTS.Student.reports.get,params,'student')
+  },
   activity: {
     get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.activity.get}`,params,'student'),
   },

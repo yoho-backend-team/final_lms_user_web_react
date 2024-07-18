@@ -1,16 +1,47 @@
 import { Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import Chart from "react-apexcharts";
 import { Card, Box } from "@mui/material";
-import { AttedenceBg } from "utils/images";
+import AttedenceBg from "../../../../assets/images/icons/attendancecard.svg"
+import { useSpinner } from 'context/SpinnerProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+import getAllReports from '../redux/thunks';
+import { selectStudentDashboard } from '../redux/selectors';
 
-const AttendanceCard = ({Attendance}) => {
+const AttendanceCard = ({ Attendance }) => {
+
+    
+  const dispatch = useDispatch()
+  const reports = useSelector(selectStudentDashboard); 
+  const { showSpinner, hideSpinner } = useSpinner()
+
+
+  const fetchReports = async () => {
+    try {
+      showSpinner();
+      await dispatch(getAllReports());
+    } catch (error) {
+      toast.error(error?.message);
+    } finally {
+      hideSpinner();
+    }
+  };
+  
+  useEffect(() => {
+    fetchReports();
+  }, [dispatch]);
+ 
+
+
+
+
   const options = {
     chart: {
       height: 300,
       type: "radialBar",
     },
-    series: [78],
+    series: reports?.attendance?.[0]?.total?.percentage ? [reports.attendance?.[0]?.total?.percentage] : [0],
     plotOptions: {
       radialBar: {
         hollow: {
@@ -41,122 +72,144 @@ const AttendanceCard = ({Attendance}) => {
     labels: [""],
   };
 
-  const current_month = new Date().getMonth()
-  const attendance_data = Attendance?.find((atten ) => atten.month === current_month )
-  console.log(attendance_data,"data")
+  const current_month = new Date().getMonth();
+  const attendance_data = Attendance?.find((atten) => atten.month === current_month);
+  console.log(attendance_data, "data");
+
   return (
-    <>
-      <Card 
+    <Card
       sx={{
-        p: 3, boxShadow: "none", 
-        background: `url("${AttedenceBg}")`,
-        backgroundSize: "cover", 
-        width: "369px",
-        height: "202px",
-        }}>
+        p: 3,
+        boxShadow: "none",
+        background: "#EFEFFF",
+        borderRadius: "8px",
+        backgroundImage: `url(${AttedenceBg})`,  
+        backgroundSize: "130% 170%",
+        backgroundPosition: "center", 
+        height:'auto'
+      }}
+    >
+      <Grid
+        container
+        sx={{
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+        }}
+      >
         <Grid
-          container
-          sx={{
-            justifyContent: "center",
-            alignItems: "center",
-            display: "flex",
-          }}
+          xs={12}
+          sx={{ justifyContent: "space-between", display: "flex" }}
         >
-          <Grid
-            xs={12}
-            sx={{ justifyContent: "space-between", display: "flex" }}
-          >
-            <Typography
+       <Typography
               variant="h4"
               sx={{
-                fontWeight: "bold",
-                fontFamily: "poppins",
-                color: "#6245af",
+                color: '#442189', 
+                fontFamily: 'Nunito Sans', 
+                fontSize: '20px', 
+                fontStyle: 'normal', 
+                fontWeight: 900, 
+                lineHeight: 'normal', 
               }}
             >
               Attendance
             </Typography>
             <Typography
               sx={{
-                fontWeight: "semi-bold",
-                fontFamily: "poppins",
-                fontWeight: 500,
-                color: "#6245af",
+                color: '#2F0C77', 
+                fontFamily: 'Nunito Sans', 
+                fontSize: '14px', 
+                fontStyle: 'normal', 
+                fontWeight: 700, 
+                lineHeight: 'normal', 
               }}
             >
-              OverAll
+              Overall
             </Typography>
-          </Grid>
-          <Grid item xs={8}>
-            <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
-              <Box
-                sx={{
-                  height: 15,
-                  width: 15,
-                  borderRadius: "100%",
-                  backgroundColor: "#00cd00",
-                }}
-              ></Box>
-              <Typography
-                sx={{
-                  fontFamily: "poppins",
-                  fontWeight: 500,
-                  color: "#6245af",
-                }}
-              >
-                OverAll 78% Attendance
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
-              <Box
-                sx={{
-                  height: 15,
-                  width: 15,
-                  borderRadius: "100%",
-                  backgroundColor: "#FFFF00",
-                }}
-              ></Box>
-              <Typography
-                sx={{
-                  fontFamily: "poppins",
-                  fontWeight: 500,
-                  color: "#6245af",
-                }}
-              >
-                12% Attendance Remaining
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
-              <Box
-                sx={{
-                  height: 15,
-                  width: 15,
-                  borderRadius: "100%",
-                  backgroundColor: "#FF0000",
-                }}
-              ></Box>
-              <Typography
-                sx={{
-                  fontFamily: "poppins",
-                  fontWeight: 500,
-                  color: "#6245af",
-                }}
-              >
-                10% Days Absent
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={4}>
-            <Chart
-              options={options}
-              series={options.series}
-              type="radialBar"
-              height={150}
-            />
-          </Grid>
+
         </Grid>
-      </Card>
-    </>
+
+        <Grid item xs={8}>
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
+              <Box
+                sx={{
+                  height: 16,
+                  width: 16,
+                  borderRadius: '100%',
+                  backgroundColor: '#32D445',
+                }}
+              />
+              <Typography
+                sx={{
+                  color: '#2F0C77',
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  lineHeight: 'normal',
+                }}
+              >
+                Overall {options.series}% Attendance
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
+              <Box
+                sx={{
+                  height: 16,
+                  width: 16,
+                  borderRadius: '100%',
+                  backgroundColor: '#F6C92A',
+                }}
+              />
+              <Typography
+                sx={{
+                  color: '#2F0C77',
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  lineHeight: 'normal',
+                }}
+              >
+                {reports.attendance?.[0]?.present?.percentage}% Attendance Remaining
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1 }}>
+              <Box
+                sx={{
+                  height: 16,
+                  width: 16,
+                  borderRadius: '100%',
+                  backgroundColor: '#FF1B1B',
+                }}
+              />
+              <Typography
+                sx={{
+                  color: '#2F0C77',
+                  fontFamily: 'Inter',
+                  fontSize: 14,
+                  fontStyle: 'normal',
+                  fontWeight: 500,
+                  lineHeight: 'normal',
+                }}
+              >
+                {reports.attendance?.[0]?.absent?.percentage}% Days Absent
+              </Typography>
+            </Box>
+          </Grid>
+
+       
+
+        <Grid item xs={4}>
+          <Chart
+            options={options}
+            series={options.series}
+            type="radialBar"
+            height={150}
+          />
+        </Grid>
+      </Grid>
+    </Card>
   );
 };
 

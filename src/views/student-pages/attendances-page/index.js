@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 import {
   Box,
   Typography,
@@ -213,6 +214,8 @@ const Attendance = () => {
               </FormControl>
               <Box sx={{ display: tabView ? "flex" : "none" }}>
                 <Button
+                 component={Link}
+                 to="/student/create-ticket"
                   sx={{
                     backgroundColor: "#5611B1",
                     boxShadow: "0px 6px 34px -8px #5611B1",
@@ -380,6 +383,8 @@ const Attendance = () => {
             >
               <Box>
                 <Button
+                  component={Link}
+                  to="/student/create-ticket"
                   sx={{
                     backgroundColor: "#5611B1",
                     boxShadow: "0px 6px 34px -8px #5611B1",
