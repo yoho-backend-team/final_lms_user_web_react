@@ -1,6 +1,3 @@
-
-
-
 import { Grid, Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTabResponsive } from "utils/tabResponsive";
@@ -20,7 +17,6 @@ const modules = [
   },
   {
     id: 2,
-
     style: {
       card: "118deg, #CF75FF 1.82%, #670BC3 97.62%",
       color: "#801FBB",
@@ -68,7 +64,7 @@ const modules = [
 
 
               
-  const CourseAndNotesStudentPage = ({ Course, openCourseView, closeCourseView }) => {
+  const CourseAndNotesStudentPage = ({ Course, openCourseView, closeCourseView, selectedClass }) => {
   const { tabView } = useTabResponsive();
    console.log (Course, "Course Details")
     const classes = Course?.batches[0]?.classes || [];
@@ -84,7 +80,7 @@ const modules = [
                 return (
                   <Box sx={{ padding: tabView ? "20px" : "60px" }}>
                     <Grid container xs={12} gap={tabView ? "60px" : "20px"}>
-                    {classes.map((module) => (
+                    {classes?.map((module) => (
                         <Grid item key={module.id} xs={12} md={6} lg={4}>
                           <CourseStudentModuleCard
                             id={module.id}
@@ -101,6 +97,7 @@ const modules = [
                             progress={module.progress}
                             closeCourseView={closeCourseView}
                             openCourseView={openCourseView}
+                            module={module}
                           />
                         </Grid>
                       ))}

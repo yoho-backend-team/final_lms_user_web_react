@@ -105,6 +105,10 @@ const generateEndpoints = () => {
       activity: {
         get: `institutes/user/activity/`,
       },
+      faq: {
+        // get: `institutes/faq/category?instituteid=${getStudentDetails()?.institute_id?.uuid}&branchid=${getStudentDetails()?.branch_id?.uuid}`,
+        get: `institutes/faq/all`,
+      },
 
       community: {
         get: `/institutes/community/course/${course1}`,

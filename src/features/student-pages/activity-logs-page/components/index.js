@@ -9,69 +9,76 @@ import {
   FormControl,
   FormLabel,
 } from "@mui/material";
-import {
-  Timeline,
-  TimelineItem,
-  TimelineSeparator,
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-} from "@mui/lab";
-import { TimelineOppositeContent } from "@mui/lab";
 import { styled } from "@mui/system";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import CancelIcon from "@mui/icons-material/Cancel";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import Client from "../../../../api/index";
-import { getAllStudentActivity } from "../services";
-import { formatDate, formatTime } from "utils/formatDate";
-import DeleteSweepOutlinedIcon from '@mui/icons-material/DeleteSweepOutlined';
-const StudentActivityLog = () => {
+import CustomPagination from "./customPagination";
+import TimelineComponent from "./Timeline";
+import { getAllStudentActivity } from '../services';
+import { formatDate, formatTime } from 'utils/formatDate';
+
+const styledInput = styled('input')({
+  padding: "11.8px 14.8px 12px 14.8px",
+  border: "0.74px solid #C1C1C1",
+  borderRadius: "11px",
+  background: "#FFFFFF"
+});
+
+const ActivityStudentLog = () => {
   const [page, setPage] = useState(1);
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const [week, setWeek] = useState("Past Week");
   const [activityLogs, setActivityLogs] = useState([]);
+  const [filteredLogs, setFilteredLogs] = useState([]);
   const rowsPerPage = 5;
 
   useEffect(() => {
     const fetchActivityLogs = async () => {
       try {
-        const data = {
-          fromDate,
-          toDate,
-          week,
-        };
-        const logs = await getAllStudentActivity(data);
+        const logs = await getAllStudentActivity();
         setActivityLogs(logs);
-        
       } catch (error) {
         console.error("Error fetching activity logs:", error);
       }
     };
 
     fetchActivityLogs();
-  }, [fromDate, toDate, week]);
-  console.log(activityLogs,"activity")
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+  }, []);
 
-  const paginatedLogs = activityLogs.slice(
+  useEffect(() => {
+    const filterLogs = () => {
+      let filtered = [...activityLogs];
+
+      if (fromDate && toDate) {
+        filtered = filtered.filter(log => {
+          const logDate = new Date(log.date);
+          return logDate >= new Date(fromDate) && logDate <= new Date(toDate);
+        });
+      }
+
+      if (week === "Past Week") {
+        const pastWeek = new Date();
+        pastWeek.setDate(pastWeek.getDate() - 7);
+        filtered = filtered.filter(log => new Date(log.date) >= pastWeek);
+      } else if (week === "Past Month") {
+        const pastMonth = new Date();
+        pastMonth.setMonth(pastMonth.getMonth() - 1);
+        filtered = filtered.filter(log => new Date(log.date) >= pastMonth);
+      } else if (week === "Past Year") {
+        const pastYear = new Date();
+        pastYear.setFullYear(pastYear.getFullYear() - 1);
+        filtered = filtered.filter(log => new Date(log.date) >= pastYear);
+      }
+
+      setFilteredLogs(filtered);
+    };
+
+    filterLogs();
+  }, [fromDate, toDate, week, activityLogs]);
+
+  const paginatedLogs = filteredLogs.slice(
     (page - 1) * rowsPerPage,
-    page * rowsPerPage,
+    page * rowsPerPage
   );
-
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case "Success":
-        return <CheckCircleIcon color="primary" />;
-      case "Failed":
-        return <CancelIcon color="error" />;
-      default:
-        return <DeleteSweepOutlinedIcon sx={{ color: 'red' }} />;
-    }
-  };
 
   return (
     <>
@@ -118,13 +125,14 @@ const StudentActivityLog = () => {
                   alignItems: "center",
                 }}
               >
-                <FormLabel>From</FormLabel>
+                <FormLabel sx={{ color: "#232323", fontWeight: 400, fontSize: "12.8px" }}>From</FormLabel>
                 <TextField
                   type="date"
                   value={fromDate}
                   onChange={(e) => setFromDate(e.target.value)}
                   sx={{ marginRight: 2 }}
                   InputLabelProps={{ shrink: true }}
+                  InputProps={{ inputComponent: styledInput }}
                 />
               </FormControl>
               <FormControl
@@ -135,13 +143,14 @@ const StudentActivityLog = () => {
                   alignItems: "center",
                 }}
               >
-                <FormLabel>To</FormLabel>
+                <FormLabel sx={{ color: "#232323", fontWeight: 400, fontSize: "12.8px" }}>To</FormLabel>
                 <TextField
                   type="date"
                   value={toDate}
                   onChange={(e) => setToDate(e.target.value)}
                   sx={{ marginRight: 2 }}
                   InputLabelProps={{ shrink: true }}
+                  InputProps={{ inputComponent: styledInput }}
                 />
               </FormControl>
               <FormControl>
@@ -161,64 +170,10 @@ const StudentActivityLog = () => {
           <Box>
             <Paper sx={{ boxShadow: "none" }}>
               <Box sx={{ maxHeight: 500, overflow: "auto", padding: 2 }}>
-                <Timeline position="right" sx={{ alignItems: "flex-start" }}>
-                  {activityLogs.map((log, index) => (
-                    <TimelineItem key={log.id}>
-                      <TimelineOppositeContent> 
-                        <Typography variant="body2" color="textSecondary">
-                          {formatDate(log?.updatedAt)}  {formatTime(log?.updatedAt)}
-                        </Typography>
-                        </TimelineOppositeContent>
-                      <TimelineSeparator>
-                        <TimelineDot>{getStatusIcon(log.action)}</TimelineDot>
-                        {index < paginatedLogs.length - 1 && (
-                          <TimelineConnector />
-                        )}
-                      </TimelineSeparator>
-                      <TimelineContent>
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
-                          <Box>
-                            <Typography variant="h5" component="span" sx={{
-                              color: '#495057',
-                              fontfamily: 'Poppins',
-                              fontsize: '14px',
-                              fontstyle: 'normal',
-                              fontweight: '700',
-                              lineheight: '24px',
-                              }}>
-                                   {log.details}
-                            </Typography>
-                          </Box>
-                          <Box
-                            sx={{
-                              borderTop: "1px solid #e0e0e0",
-                              marginTop: 1,
-                              paddingTop: 1,
-                              overflowY: "auto",
-                            }}
-                          >
-                            <Typography variant="body2" color="textSecondary">
-                              Time: {formatTime(log?.createdAt)} | User: {log?.user?.full_name  }
-                            </Typography>
-                            <Typography>{log.action}</Typography>
-                          </Box>
-                        </Box>
-                      </TimelineContent>
-                    </TimelineItem>
-                  ))}
-                </Timeline>
+                <TimelineComponent logs={paginatedLogs} />
               </Box>
+              <CustomPagination totalPages={Math.ceil(filteredLogs.length / rowsPerPage)} currentPage={page} setCurrentPage={setPage} />
             </Paper>
-            <Box
-              sx={{ display: "flex", justifyContent: "flex-end", pr: "35px" }}
-            >
-              <Pagination
-                count={Math.ceil(activityLogs.length / rowsPerPage)}
-                page={page}
-                onChange={handleChangePage}
-                sx={{ marginTop: 2 }}
-              />
-            </Box>
           </Box>
         </Box>
       </Box>
@@ -233,4 +188,4 @@ const TopBar = styled(Box)({
   marginBottom: "16px",
 });
 
-export default StudentActivityLog;
+export default ActivityStudentLog;

@@ -1,7 +1,9 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-const StudentHelpCard = ({ section, title, setView }) => {
+const StudentHelpCard = ({ section, title, setView ,handleTabClick}) => {
+  
+  
   return (
     <Box sx={{ borderRadius: "24px", marginBottom: 2, width: "100%" }}>
       <Box
@@ -14,7 +16,6 @@ const StudentHelpCard = ({ section, title, setView }) => {
         }}
       >
         <Typography
-          variant="span"
           sx={{
             padding: "5px",
             backgroundColor: "#F0F0F0",
@@ -23,6 +24,7 @@ const StudentHelpCard = ({ section, title, setView }) => {
             fontWeight: 400,
             lineHeight: "19px",
             maxWidth: "25px",
+            display: "inline-block",
           }}
         >
           {section}
@@ -51,8 +53,7 @@ const StudentHelpCard = ({ section, title, setView }) => {
         }}
       >
         <Typography
-          onClick={() => setView(true)}
-          variant="span"
+          onClick={handleTabClick}
           sx={{
             fontSize: "14px",
             fontWeight: 500,
@@ -61,10 +62,12 @@ const StudentHelpCard = ({ section, title, setView }) => {
             backgroundColor: "#F0F0F0",
             borderRadius: "24px",
             cursor: "pointer",
+            display: "inline-block",
           }}
         >
           Click to view
         </Typography>
+        
       </Box>
     </Box>
   );

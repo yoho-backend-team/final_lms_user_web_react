@@ -44,7 +44,7 @@ const store = configureStore({
     studentsTickets:StudentTicketReducer,
     studentClasses: StudentClassReducer,
     studentAttendance: StudentAttendanceReducer,
-    studentsActivityLogs: StudentActivityReducer
+    studentsActivityLogs: StudentActivityReducer,
   },
 });
 // configureStore(reducer);

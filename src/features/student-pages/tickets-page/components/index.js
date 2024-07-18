@@ -17,13 +17,21 @@ const StudentDataTicketsPage = ({
   const [value, setValue] = useState("1");
   const [open, setOpen] = useState(false);
   const [ticketView, setTicketView] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState(null);
   const { tabView } = useTabResponsive();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleTicketViewOpen = () => setTicketView(true);
-  const handleTicketViewClose = () => setTicketView(false);
+  // const handleTicketViewOpen = () => setTicketView(true);
+  // const handleTicketViewClose = () => setTicketView(false);
+  const handleTicketViewOpen = (ticketId) => {
+    setSelectedTicket(ticketId);
+  };
+
+  const handleTicketViewClose = () => {
+    setSelectedTicket(null);
+  };
 
   const tab_list = [
     { id: "1", title: "All" },
@@ -50,11 +58,12 @@ const StudentDataTicketsPage = ({
         <Box
           sx={{ p: tabView ? "62px 40px 20px 38px" : "62px 40px 20px 80px" }}
         >
-          {open || ticketView ? (
+          {open || selectedTicket !== null  ? (
             open ? (
               <StudentCreateTicketForm handleClose={handleClose} />
             ) : (
-              <StudentTicketView tickets={data} handleTicketViewClose={handleTicketViewClose} />
+              <StudentTicketView tickets={data.filter((ticket) => ticket.id === selectedTicket)}
+              handleTicketViewClose={handleTicketViewClose} />
             )
           ) : (
             <>
@@ -121,7 +130,9 @@ const StudentDataTicketsPage = ({
                     <Grid item xs={tabView ? 6 : 4} key={index}>
                       <StudentTicketCard
                         {...ticket}
-                        handleTicketViewOpen={handleTicketViewOpen}
+                        handleTicketViewOpen={() =>
+                          handleTicketViewOpen(ticket.id)
+                        }
                         handleTicketViewClose={handleTicketViewClose}
                       />
                     </Grid>

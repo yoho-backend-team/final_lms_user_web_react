@@ -17,10 +17,10 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { formatDate, formatTime } from "utils/formatDate";
 
 const SingleCourseStudentView = ({ Course }) => {
-  const classes = Course?.batches[0]?.classes || [];
-  const classes2 = Course?.studymaterials || [];
-  const classes3 = Course?.notes || [];
-  console.log(classes2, "classes2")
+  // const classes = Course?.batches[0]?.classes || [];
+  // const classes2 = Course?.studymaterials || [];
+  // const classes3 = Course?.notes || [];
+  console.log(Course, "Course")
   const downloadPdf = () => {
     
     const pdfContent = '...'; 
@@ -30,7 +30,7 @@ const SingleCourseStudentView = ({ Course }) => {
     
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${classes2?.title}.pdf`; 
+    a.download = `${Course?.study_materials?.title}.pdf`; 
     document.body.appendChild(a);
     a.click();
 
@@ -47,7 +47,7 @@ const SingleCourseStudentView = ({ Course }) => {
     
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${classes3?.title}.pdf`; 
+    a.download = `${Course?.notes?.title}.pdf`; 
     document.body.appendChild(a);
     a.click();
 
@@ -68,8 +68,8 @@ const SingleCourseStudentView = ({ Course }) => {
             }}
           >
             <Box sx={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-  {classes.map((chapter, index) => (
-    <Box key={index} sx={{ display: "flex", gap: "15px" }}>
+  
+    <Box  sx={{ display: "flex", gap: "15px" }}>
       <Box>
         <Typography
           sx={{
@@ -97,7 +97,7 @@ const SingleCourseStudentView = ({ Course }) => {
           Chapter
         </Typography>
         <Typography sx={{ width: "150px" }}>
-          {chapter?.class_name}
+          {Course?.class_name}
         </Typography>
       </Box>
       <Box>
@@ -113,7 +113,7 @@ const SingleCourseStudentView = ({ Course }) => {
         </Typography>
       </Box>
     </Box>
-  ))}
+ 
 </Box>
               <Box sx={{ display: "flex", gap: "74px" }}>
                 <Box sx={{ display: "inline-flex", gap: "8px" }}>
@@ -140,9 +140,9 @@ const SingleCourseStudentView = ({ Course }) => {
           </Box>
           <Box sx={{ overflowX: "auto", marginTop: "16px" }}>
             <Box sx={{ display: "flex", gap: "16px" }}>
-              {classes.map((chapter) => (
+              
                 <Card
-                  key={chapter}
+                  key={Course}
                   sx={{
                     minWidth: "200px",
                     padding: "15px",
@@ -155,7 +155,7 @@ const SingleCourseStudentView = ({ Course }) => {
                     height="140"
                     sx={{ borderRadius: "9px" }}
                     image={`https://via.placeholder.com/150?text=Chapter+${1}`}
-                    alt={`Chapter ${chapter}`}
+                    alt={`Chapter ${Course}`}
                   />
                   <CardContent sx={{ padding: "0px", pt: "5px" }}>
                     <Box
@@ -175,7 +175,7 @@ const SingleCourseStudentView = ({ Course }) => {
                             lineHeight: "22px",
                           }}
                         >
-                          {chapter?.class_name}
+                          {Course?.class_name}
                         </Typography>
                       </Box>
                       <Box sx={{ display: "flex", gap: "4px" }}>
@@ -201,7 +201,7 @@ const SingleCourseStudentView = ({ Course }) => {
                           lineHeight: "22px",
                         }}
                       >
-                        By {chapter?.instructors[0]?.full_name}
+                        By {Course?.instructors[0]?.full_name}
                       </Typography>
                     </Box>
                     <Box
@@ -224,7 +224,7 @@ const SingleCourseStudentView = ({ Course }) => {
                             lineHeight: "22px",
                           }}
                         >
-                          {formatDate(chapter?.createdAt)}
+                          {formatDate(Course?.createdAt)}
                         </Typography>
                       </Box>
                       <Box sx={{ display: "inline-flex", gap: "5px" }}>
@@ -239,13 +239,13 @@ const SingleCourseStudentView = ({ Course }) => {
                             lineHeight: "22px",
                           }}
                         >
-                         {formatTime(chapter?.createdAt)}
+                         {formatTime(Course?.createdAt)}
                         </Typography>
                       </Box>
                     </Box>
                   </CardContent>
                 </Card>
-              ))}
+            
             </Box>
           </Box>
           <Box sx={{ paddingTop: "16px", pb: "25px" }}>
@@ -263,7 +263,7 @@ const SingleCourseStudentView = ({ Course }) => {
             </Typography>
             <Box sx={{ overflowX: "auto", marginTop: "8px" }}>
               <Box sx={{ display: "flex", gap: "16px" }}>
-                {Course?.studymaterials?.map((course,index) => (
+                {Course?.study_materials?.map((course,index) => (
                   <Card
                   key={{index}}
                     sx={{
@@ -369,7 +369,7 @@ const SingleCourseStudentView = ({ Course }) => {
                               lineHeight: "14px",
                             }}
                           >
-                            {note.title}
+                            {note?.title}
                           </Typography>
                           <Typography
                             variant="body2"

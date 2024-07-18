@@ -9,7 +9,7 @@ export { default as InstructorLoginGroups } from "../assets/instructor/login/obj
 export { default as PaymentBg } from "../assets/instructor/payment/bg.svg";
 export { default as TicketBg } from "../assets/instructor/Ticket/bg.svg";
 export { default as TicketMain } from "../assets/instructor/Ticket/2j37M81CvuiHeUBTFe3GSbp5QXF.svg";
-
+export { default as Viewimage } from "../assets/view.svg";
 export { default as TicketBg2 } from "../assets/instructor/Ticket/bg.svg";
 export { default as CreateTicketRightSideImage } from "../assets/instructor/Ticket/createTicketRImage.svg";
 export { default as SqlCourseImage } from "../assets/instructor/community/sql.svg";
