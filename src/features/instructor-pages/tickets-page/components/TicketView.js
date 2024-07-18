@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Grid,
@@ -15,11 +15,27 @@ import CloseIcon from "@mui/icons-material/Close";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import { formatDate, formatTime } from "utils/formatDate";
+import PdfViewer from "./pdfViewer";
 
-function TicketView({ handleTicketViewClose }) {
-  const handleCloseClick = () => {
-    console.log("Close button clicked");
+function TicketView({ selectedTicket,handleTicketViewClose }) {
+  const [fileView,setFileView] = useState(false)
+  const [file,setFile] = useState(null)
+
+  const statusColor = {
+    opened: "#008375",
+    closed: "#EBA13A",
   };
+
+  const handleFileOpen = (file) => {
+    setFile(file)
+    setFileView(true)
+  }
+
+  const handleFileViewClose = () => {
+    setFile(null)
+    setFileView(false)
+  }
 
   return (
     <>
@@ -55,7 +71,7 @@ function TicketView({ handleTicketViewClose }) {
                   lineHeight: "24px",
                 }}
               >
-                Ticket ID: Ticket #123456789011
+                Ticket ID: Ticket #{selectedTicket?._id}
               </Typography>
             </Box>
 
@@ -107,7 +123,7 @@ function TicketView({ handleTicketViewClose }) {
                   lineHeight: "24px",
                 }}
               >
-                #7 An error occurred while attempting to log into the app
+                #{selectedTicket?.id} {selectedTicket?.query}
               </Typography>
               <Typography
                 sx={{
@@ -131,7 +147,7 @@ function TicketView({ handleTicketViewClose }) {
               >
                 Close ticket
               </Button>
-              <Box>
+              <Box sx={{ display: 'flex', gap: "21px"}} >
                 <Typography
                   sx={{ fontSize: "14px", color: "#495057", fontWeight: 700 }}
                 >
@@ -145,7 +161,7 @@ function TicketView({ handleTicketViewClose }) {
                     lineHeight: "14px",
                   }}
                 >
-                  March 20, 03:00pm
+                  {formatDate(selectedTicket?.createdAt)}{" "}{formatTime(selectedTicket?.createdAt)}
                 </Typography>
               </Box>
             </Box>
@@ -329,14 +345,19 @@ function TicketView({ handleTicketViewClose }) {
                         </Box>
                       </Box>
                     </Box>
-                    <Box
+                    {
+                    selectedTicket?.status === "opened" &&<Box
                       sx={{
                         display: "flex",
                         alignItems: "end",
                         paddingTop: "80px",
                       }}
                     >
-                      <Box>
+                      <Box
+                      sx={{
+                        display : "none"
+                      }}
+                      >
                         <AddBoxOutlinedIcon
                           sx={{
                             color: "#0D6EFD",
@@ -387,6 +408,7 @@ function TicketView({ handleTicketViewClose }) {
                         </IconButton>
                       </Box>
                     </Box>
+                    }
                   </Paper>
                 </Grid>
                 <Grid item xs={12} md={4}>
@@ -422,10 +444,7 @@ function TicketView({ handleTicketViewClose }) {
                           color: "#6C757D",
                         }}
                       >
-                        Concerns have been raised regarding attendance
-                        inconsistencies, requiring attention for resolution.
-                        Concerns have been raised regarding attendance
-                        inconsistencies, requiring attention for resolution.
+                      {selectedTicket?.description}
                       </Typography>
                     </Box>
                     <Box
@@ -452,7 +471,7 @@ function TicketView({ handleTicketViewClose }) {
                           color: "#6C757D",
                         }}
                       >
-                        Attendance
+                        {selectedTicket?.category}
                       </Typography>
                     </Box>
                     <Box
@@ -471,6 +490,13 @@ function TicketView({ handleTicketViewClose }) {
                       >
                         Attachments:
                       </Typography>
+                      <Box 
+                      sx={{
+                        color : "#6C757D",
+                        fontSize : "15px",
+                        fontWeight : 600
+                      }}
+                      >
                       <Typography
                         sx={{
                           fontSize: "14px",
@@ -479,8 +505,12 @@ function TicketView({ handleTicketViewClose }) {
                           color: "#6C757D",
                         }}
                       >
-                        01 Screenshort.PDF
+                        {selectedTicket?.file?.split("/")[2]}
                       </Typography>
+                      <Typography onClick={()=>handleFileOpen(selectedTicket)} sx={{ color: "#5611B1", fontSize: "15px",fontWeight:600,cursor:"pointer"}} >
+                        View
+                      </Typography>
+                      </Box>
                     </Box>
                     <Box
                       sx={{
@@ -510,7 +540,7 @@ function TicketView({ handleTicketViewClose }) {
                           size="small"
                           sx={{
                             color: "white",
-                            backgroundColor: "#F6AB3A",
+                            backgroundColor: statusColor[selectedTicket?.status],
                             border: "1px solid #DEE2E6",
                             borderRadius: "8px",
                             fontSize: "16px",
@@ -519,13 +549,13 @@ function TicketView({ handleTicketViewClose }) {
                             padding: "9px 24px",
                           }}
                         >
-                          opened
+                          {selectedTicket?.status}
                         </Button>
                       </Typography>
                     </Box>
                     <Box
                       sx={{
-                        display: "flex",
+                        display: "none",
                         flexDirection: "column",
                         gap: "10px",
                       }}
@@ -557,6 +587,7 @@ function TicketView({ handleTicketViewClose }) {
           </Card>
         </Box>
       </Box>
+      <PdfViewer open={fileView} pdf={file} handleViewClose={handleFileViewClose} />
     </>
   );
 }
