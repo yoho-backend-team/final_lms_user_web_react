@@ -47,8 +47,8 @@ Axios.interceptors.response.use(
       error.response.status === 401 &&
       error.response.statusText === "Unauthorized"
     ) {
-      Cookies.remove(instructorDetails);
-      Cookies.remove(studentDetails);
+       Cookies.remove(instructorDetails);
+       Cookies.remove(studentDetails);
     }
     return Promise.reject(error);
   },

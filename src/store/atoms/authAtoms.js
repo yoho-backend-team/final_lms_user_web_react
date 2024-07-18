@@ -4,6 +4,7 @@ import { Student, instructorDetails } from "lib/constants";
 
 const setCookieWithExpiry = (key, value) => {
   const expiryDate = new Date(new Date().getTime() + 10 * 60 * 1000);
+  console.log(typeof(expiryDate))
   Cookies.set(key, value, { expires: expiryDate });
 };
 
@@ -26,7 +27,7 @@ export const studentLoginStepAtom = atom(
 );
 
 const initialStudent = () => {
-  const student = Cookies.get("studentUser");
+  const student = Cookies.get(Student);
   return student
     ? JSON.parse(student)
     : { isLoggedIn: false, userDetails: null, token: null, role: null };
@@ -35,7 +36,9 @@ const initialStudent = () => {
 export const studentUserAtom = atom(initialStudent(), (get, set, newUser) => {
   set(studentUserAtom, newUser);
   const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-  Cookies.set(Student, JSON.stringify(newUser), { expires: expiryDate });
+  console.log(studentUserAtom,newUser,typeof(expiryDate))
+  // setCookieWithExpiry(Student,JSON.stringify(newUser))
+  Cookies.set(Student, JSON.stringify(newUser),{ expires: expiryDate});
 });
 
 export const studentOtpAtom = atom(

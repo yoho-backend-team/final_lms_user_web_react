@@ -6,6 +6,7 @@ import TicketCard from "./TicketCard";
 import TicketView from "./TicketView";
 import { useTabResponsive } from "utils/tabResponsive";
 import TicketLoader from "components/ui/loaders/ticketLoader";
+import { useSpinner } from "context/SpinnerProvider";
 
 const InstructorTicketsPage = ({
   data,
@@ -17,24 +18,35 @@ const InstructorTicketsPage = ({
   const [open, setOpen] = useState(false);
   const [ticketView, setTicketView] = useState(false);
   const { tabView } = useTabResponsive();
+  const [selectedTicket,setSelectedTicket] = useState(null)
+  const { showSpinner,hideSpinner} = useSpinner()
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleTicketViewOpen = () => setTicketView(true);
-  const handleTicketViewClose = () => setTicketView(false);
+  const handleTicketViewOpen = (ticket) => {
+    showSpinner()
+    setTicketView(true)
+    setSelectedTicket(ticket)
+    hideSpinner()
+  }
+
+  const handleTicketViewClose = () => {
+    setSelectedTicket(null)
+    setTicketView(false);
+  }
 
   const tab_list = [
     { id: "1", title: "All" },
     { id: "2", title: "Open" },
     { id: "3", title: "Close" },
-  ];
+  ]
 
   const status = {
     1: null,
     2: "opened",
     3: "closed",
-  };
+  }
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -61,7 +73,7 @@ const InstructorTicketsPage = ({
             open ? (
               <CreateTicketForm handleClose={handleClose} />
             ) : (
-              <TicketView handleTicketViewClose={handleTicketViewClose} />
+              <TicketView selectedTicket={selectedTicket} handleTicketViewClose={handleTicketViewClose} />
             )
           ) : (
             <>
@@ -127,7 +139,7 @@ const InstructorTicketsPage = ({
                   data.map((ticket, index) => (
                     <Grid item xs={tabView ? 6 : 4} key={index}>
                       <TicketCard
-                        {...ticket}
+                        ticket={ticket}
                         handleTicketViewOpen={handleTicketViewOpen}
                         handleTicketViewClose={handleTicketViewClose}
                       />
