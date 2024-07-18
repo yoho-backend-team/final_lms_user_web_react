@@ -63,12 +63,19 @@ const studentCourseId = () => {
   return user?.userDetail?.course;
 };
 
+const instituteStudentuuid = () => {
+  const userDetails = getStudentDetails();
+  return userDetails?.institute_id?.uuid;
+};
+
 const generateEndpoints = () => {
   const institute = instituteId();
   const branch = branchId();
   const course = courseId();
   const institutestudent = instituteIdStudent();
   const branchstudent = branchIdStudent();
+
+  const instituteuuid = instituteStudentuuid();
 
   const institute1 = instituteStudentId();
   const branch1 = branchStudentId();
@@ -110,13 +117,20 @@ const generateEndpoints = () => {
         get: `institutes/faq/all`,
       },
 
+      reports : {
+        get : "/institutes/reports/users/student",
+      },
       community: {
         get: `/institutes/community/course/${course1}`,
+      },
+      profile: {
+        get: `/institutes/auth/student/${getStudentDetails()?.uuid}/${instituteuuid}`,
+        update: `/institutes/auth/student/update/${getStudentDetails()?.uuid}`,
       },
     },
     common: {
       file: {
-        upload: "/upload/",
+        upload: "/upload/", 
       },
     },
     common: {
