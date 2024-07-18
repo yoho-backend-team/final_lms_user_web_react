@@ -25,7 +25,9 @@ const Login = () => {
     login: LoginForm,
     otp: OTPInput,
   };
+
   const Component = map_to_form[loginStep];
+  
   return (
     <AuthLayout>
       <Component />

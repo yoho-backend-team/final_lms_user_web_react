@@ -71,9 +71,37 @@ const SalaryDetailsTable = ({data,months}) => {
 
 
   const handleGeneratePDF = (data) => {
-   // const doc = new jsPDF('portrait');
-      console.log(data,"data")
-  //  doc.save(`chandran_salary_slip.pdf`);
+   const doc = new jsPDF('portrait');
+   const pageWidth = doc.internal.pageSize.getWidth();
+   const pageHeight = doc.internal.pageSize.getHeight();
+ 
+   const padding = 5;
+   const margin = 5;
+ 
+   doc.setLineWidth(0.5);
+   doc.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin);
+ 
+   const text = "This is an example of text with borders and padding in jsPDF.";
+   const xPos = margin + padding;
+   const yPos = margin + padding + 10; 
+ 
+   doc.text(text, xPos, yPos);
+ 
+  //  const sectionX = margin;
+  //  const sectionY = yPos + 20; 
+  //  const sectionWidth = pageWidth - 2 * margin;
+  //  const sectionHeight = 50;
+ 
+  //  doc.rect(sectionX, sectionY, sectionWidth, sectionHeight);
+ 
+  //  const sectionPadding = 5;
+  //  const sectionText = "This is another section with its own border and padding.";
+  //  const sectionTextX = sectionX + sectionPadding;
+  //  const sectionTextY = sectionY + sectionPadding + 10;
+ 
+  //  doc.text(sectionText, sectionTextX, sectionTextY);
+ 
+   doc.save(`chandran_salary_slip.pdf`);
   };
 
   return (

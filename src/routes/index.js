@@ -1,165 +1,166 @@
-import React, { lazy } from "react";
-import { Routes, Route, Navigate, Outlet } from "react-router-dom";
-import Loadable from "components/loadable";
-import MainLayout from "layout/MainLayout";
-// import AuthLayout from "layout/AuthLayout";
-// import InstructorAuthLayout from "layout/InstructorAuthLayout";
-import InstructorLayout from "layout/InstructorLayout";
-import {
-  checkUserLoggedIn,
-  checkUser,
-} from "store/atoms/authorized-atom";
-import { role_to_details } from "lib/constants";
+  import React, { lazy } from "react";
+  import { Routes, Route, Navigate, Outlet } from "react-router-dom";
+  import Loadable from "components/loadable";
+  import MainLayout from "layout/MainLayout";
+  // import AuthLayout from "layout/AuthLayout";
+  // import InstructorAuthLayout from "layout/InstructorAuthLayout";
+  import InstructorLayout from "layout/InstructorLayout";
+  import {
+    checkUserLoggedIn,
+    checkUser,
+  } from "store/atoms/authorized-atom";
+  import { role_to_details } from "lib/constants";
 
-// Auth Pages
-const LoginPage = Loadable(lazy(() => import("views/auth-pages/login-page")));
-const InstructorLogin = Loadable(
-  lazy(() => import("views/auth-pages/login-page/instructorLogin")),
-);
+  // Auth Pages
+  const LoginPage = Loadable(lazy(() => import("views/auth-pages/login-page")));
+  const InstructorLogin = Loadable(
+    lazy(() => import("views/auth-pages/login-page/instructorLogin")),
+  );
 
 
-// Error Pages
-const ErrorPage404 = Loadable(lazy(() => import("views/error-pages/404-page")));
+  // Error Pages
+  const ErrorPage404 = Loadable(lazy(() => import("views/error-pages/404-page")));
 
-const StudentHomePage = Loadable(
-  lazy(() => import("views/student-pages/home-page")),
-);
-const StudentActivityLogsPage = Loadable(
-  lazy(() => import("views/student-pages/activity-logs-page")),
-);
-const StudentAttendancesPage = Loadable(
-  lazy(() => import("views/student-pages/attendances-page")),
-);
-const StudentClassesPage = Loadable(
-  lazy(() => import("views/student-pages/classes-page")),
-);
-const StudentCommunityPage = Loadable(
-  lazy(() => import("views/student-pages/community-page")),
-);
-const StudentCoursePage = Loadable(
-  lazy(() => import("views/student-pages/courses-page")),
-);
-const StudentHelpCenterPage = Loadable(
-  lazy(() => import("views/student-pages/help-center-page")),
-);
-const StudentTicketsPage = Loadable(
-  lazy(() => import("views/student-pages/tickets-page")),
-);
-const StudentPaymentsPage = Loadable(
-  lazy(() => import("views/student-pages/payments-page")),
-);
-const StudentClassViewPage = Loadable(
-  lazy(() => import("views/student-pages/class[id]-page")),
-);
-// const StudentOfflineUpcomingClassViewPage = Loadable(
-//   lazy(
-//     () =>
-//       import(
-//         "views/student-pages/class[id]-page/OfflineClasses/UpcomingClasses"
-//       ),
-//   ),
-// );
-// const StudentOfflineLiveClassViewPage = Loadable(
-//   lazy(
-//     () => import("views/student-pages/class[id]-page/OfflineClasses/LiveClass"),
-//   ),
-// );
-// const StudentOfflineCompletedClassViewPage = Loadable(
-//   lazy(
-//     () =>
-//       import(
-//         "views/student-pages/class[id]-page/OfflineClasses/CompletedClasses"
-//       ),
-//   ),
-// );
-// const StudentOfflineUpcomingClassesView = Loadable(
-//   lazy(
-//     () =>
-//       import(
-//         "features/student-pages/classes-page/components/Classes/OfflineClasses/Upcoming Classes/UpcomingClasses"
-//       ),
-//   ),
-// );
-// const StudentOfflineLiveClassesView = Loadable(
-//   lazy(
-//     () =>
-//       import(
-//         "features/student-pages/classes-page/components/Classes/OfflineClasses/LiveClass/LiveClass"
-//       ),
-//   ),
-// );
-// const StudentOfflineCompletedClassesView = Loadable(
-//   lazy(
-//     () =>
-//       import(
-//         "features/student-pages/classes-page/components/Classes/OfflineClasses/Completed Classes/CompletedClasses"
-//       ),
-//   ),
-// );
+  const StudentHomePage = Loadable(
+    lazy(() => import("views/student-pages/home-page")),
+  );
+  const StudentActivityLogsPage = Loadable(
+    lazy(() => import("views/student-pages/activity-logs-page")),
+  );
+  const StudentAttendancesPage = Loadable(
+    lazy(() => import("views/student-pages/attendances-page")),
+  );
+  const StudentClassesPage = Loadable(
+    lazy(() => import("views/student-pages/classes-page")),
+  );
+  const StudentCommunityPage = Loadable(
+    lazy(() => import("views/student-pages/community-page")),
+  );
+  const StudentCoursePage = Loadable(
+    lazy(() => import("views/student-pages/courses-page")),
+  );
+  const StudentHelpCenterPage = Loadable(
+    lazy(() => import("views/student-pages/help-center-page")),
+  );
+  const StudentTicketsPage = Loadable(
+    lazy(() => import("views/student-pages/tickets-page")),
+  );
+  const StudentPaymentsPage = Loadable(
+    lazy(() => import("views/student-pages/payments-page")),
+  );
+  const StudentClassViewPage = Loadable(
+    lazy(() => import("views/student-pages/class[id]-page")),
+  );
+  // const StudentOfflineUpcomingClassViewPage = Loadable(
+  //   lazy(
+  //     () =>
+  //       import(
+  //         "views/student-pages/class[id]-page/OfflineClasses/UpcomingClasses"
+  //       ),
+  //   ),
+  // );
+  // const StudentOfflineLiveClassViewPage = Loadable(
+  //   lazy(
+  //     () => import("views/student-pages/class[id]-page/OfflineClasses/LiveClass"),
+  //   ),
+  // );
+  // const StudentOfflineCompletedClassViewPage = Loadable(
+  //   lazy(
+  //     () =>
+  //       import(
+  //         "views/student-pages/class[id]-page/OfflineClasses/CompletedClasses"
+  //       ),
+  //   ),
+  // );
+  // const StudentOfflineUpcomingClassesView = Loadable(
+  //   lazy(
+  //     () =>
+  //       import(
+  //         "features/student-pages/classes-page/components/Classes/OfflineClasses/Upcoming Classes/UpcomingClasses"
+  //       ),
+  //   ),
+  // );
+  // const StudentOfflineLiveClassesView = Loadable(
+  //   lazy(
+  //     () =>
+  //       import(
+  //         "features/student-pages/classes-page/components/Classes/OfflineClasses/LiveClass/LiveClass"
+  //       ),
+  //   ),
+  // );
+  // const StudentOfflineCompletedClassesView = Loadable(
+  //   lazy(
+  //     () =>
+  //       import(
+  //         "features/student-pages/classes-page/components/Classes/OfflineClasses/Completed Classes/CompletedClasses"
+  //       ),
+  //   ),
+  // );
 
-// const StudentOnlineUpcomingClassViewPage = Loadable(
-//   lazy(
-//     () =>
-//       import(
-//         "views/student-pages/class[id]-page/OnlineClasses/UpcomingClasses"
-//       ),
-//   ),
-// );
-// const StudentOnlineLiveClassViewPage = Loadable(
-//   lazy(
-//     () => import("views/student-pages/class[id]-page/OnlineClasses/LiveClass"),
-//   ),
-// );
-// const StudentOnlineCompletedClassViewPage = Loadable(
-//   lazy(
-//     () =>
-//       import(
-//         "views/student-pages/class[id]-page/OnlineClasses/CompletedClasses"
-//       ),
-//   ),
-// );
-// const StudentOnlineUpcomingClassesView = Loadable(
-//   lazy(
-//     () =>
-//       import(
-//         "features/student-pages/classes-page/components/Classes/OnlineClasses/Upcoming Classes/UpcomingClasses"
-//       ),
-//   ),
-// );
-// const StudentOnlineLiveClassesView = Loadable(
-//   lazy(
-//     () =>
-//       import(
-//         "features/student-pages/classes-page/components/Classes/OnlineClasses/LiveClass/LiveClass"
-//       ),
-//   ),
-// );
-// const StudentOnlineCompletedClassesView = Loadable(
-//   lazy(
-//     () =>
-//       import(
-//         "features/student-pages/classes-page/components/Classes/OnlineClasses/Completed Classes/CompletedClasses"
-//       ),
-//   ),
-// );
+  // const StudentOnlineUpcomingClassViewPage = Loadable(
+  //   lazy(
+  //     () =>
+  //       import(
+  //         "views/student-pages/class[id]-page/OnlineClasses/UpcomingClasses"
+  //       ),
+  //   ),
+  // );
+  // const StudentOnlineLiveClassViewPage = Loadable(
+  //   lazy(
+  //     () => import("views/student-pages/class[id]-page/OnlineClasses/LiveClass"),
+  //   ),
+  // );
+  // const StudentOnlineCompletedClassViewPage = Loadable(
+  //   lazy(
+  //     () =>
+  //       import(
+  //         "views/student-pages/class[id]-page/OnlineClasses/CompletedClasses"
+  //       ),
+  //   ),
+  // );
+  // const StudentOnlineUpcomingClassesView = Loadable(
+  //   lazy(
+  //     () =>
+  //       import(
+  //         "features/student-pages/classes-page/components/Classes/OnlineClasses/Upcoming Classes/UpcomingClasses"
+  //       ),
+  //   ),
+  // );
+  // const StudentOnlineLiveClassesView = Loadable(
+  //   lazy(
+  //     () =>
+  //       import(
+  //         "features/student-pages/classes-page/components/Classes/OnlineClasses/LiveClass/LiveClass"
+  //       ),
+  //   ),
+  // );
+  // const StudentOnlineCompletedClassesView = Loadable(
+  //   lazy(
+  //     () =>
+  //       import(
+  //         "features/student-pages/classes-page/components/Classes/OnlineClasses/Completed Classes/CompletedClasses"
+  //       ),
+  //   ),
+  // );
 
-// const StudentPayPage = Loadable(
-//   lazy(() => import("features/student-pages/payments-page/components/pay")),
-// );
-const StudentProfilePage = Loadable(
-  lazy(() => import("views/student-pages/profile-page")),
-);
-const StudentCreateTicketPage = Loadable(
-  lazy(() => import("views/student-pages/create-ticket-page")),
-);
-const StudentTicketViewPage = Loadable(
-  lazy(() => import("views/student-pages/tickets-page/ticket[id]-page")),
-);
+  const StudentOptionalPayment = Loadable(
+    lazy(() => import("features/student-pages/payments-page/components/Optional/Mainpage")),
+  );
+
+  const StudentProfilePage = Loadable(
+    lazy(() => import("views/student-pages/profile-page")),
+  );
+  const StudentCreateTicketPage = Loadable(
+    lazy(() => import("views/student-pages/create-ticket-page")),
+  );
+  const StudentTicketViewPage = Loadable(
+    lazy(() => import("views/student-pages/tickets-page/ticket[id]-page")),
+  );
 
 // Instructor Pages
 const InstructorHomePage = Loadable(
   lazy(() => import("views/instructor-pages/home-page")),
-);  
+);
 const InstructorActivityLogsPage = Loadable(
   lazy(() => import("views/instructor-pages/activity-logs-page")),
 );
@@ -199,39 +200,39 @@ const InstructorCreateTicketPage = Loadable(
   lazy(() => import("views/student-pages/create-ticket-page")),
 ); // This seems like an error; correct import path should be checked
 
-const getRoleFromPath = () => {
-  const path = window.location.pathname.split("/")?.[1];
-  return role_to_details[path];
-};
-
-const isLoggedIn = (role) => {
-  return checkUserLoggedIn(role);
-};
-
-const ApplicationRoutes = () => {
-  const RequireAuth = () => {
-    const role = getRoleFromPath();
-    if (!isLoggedIn(role)) {
-      return <Navigate to={`/${role  || 'instructor' }/login`} replace />;
-    }
-    return <Outlet />;
+  const getRoleFromPath = () => {
+    const path = window.location.pathname.split("/")?.[1];
+    return role_to_details[path];
   };
 
-  const RoleBasedRoute = ({ allowedRoles, children }) => {
-    const role = getRoleFromPath();
-    if (!allowedRoles.includes(checkUser(role).role)) {
-      return <Navigate to={`/${allowedRoles[0]}/login`} replace />;
-    }
-    return children;
+  const isLoggedIn = (role) => {
+    return checkUserLoggedIn(role);
   };
 
-  const LoginRoute = () => {
-    const role = getRoleFromPath();
-    if (isLoggedIn(role)) {
-      return <Navigate to={`${checkUser(role).role}/home`} replace />;
-    }
-    return <Outlet />;
-  };
+  const ApplicationRoutes = () => {
+    const RequireAuth = () => {
+      const role = getRoleFromPath();
+      if (!isLoggedIn(role)) {
+        return <Navigate to={`/${role  || 'instructor' }/login`} replace />;
+      }
+      return <Outlet />;
+    };
+
+    const RoleBasedRoute = ({ allowedRoles, children }) => {
+      const role = getRoleFromPath();
+      if (!allowedRoles.includes(checkUser(role).role)) {
+        return <Navigate to={`/${allowedRoles[0]}/login`} replace />;
+      }
+      return children;
+    };
+
+    const LoginRoute = () => {
+      const role = getRoleFromPath();
+      if (isLoggedIn(role)) {
+        return <Navigate to={`${checkUser(role).role}/home`} replace />;
+      }
+      return <Outlet />;
+    };
 
   return (
     <Routes>
@@ -399,4 +400,4 @@ const ApplicationRoutes = () => {
   );
 };
 
-export default ApplicationRoutes;
+  export default ApplicationRoutes;

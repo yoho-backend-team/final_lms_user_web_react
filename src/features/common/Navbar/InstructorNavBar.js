@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import {
   Box,
@@ -35,13 +35,18 @@ import InstructorNavLinks from "./InstructorNavLinks";
 import { checkUser, getInstructorDetails } from "store/atoms/authorized-atom";
 import { useTabResponsive } from "utils/tabResponsive";
 import { getImageUrl } from "utils/common/imageUtlils";
+import NotificationListView from "../Components/NotificationListModel";
 
 export default function InstructorNavBar() {
   const theme = useTheme();
   const { tabView } = useTabResponsive();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [anchorE2, setAnchorE2] = React.useState(null)
   const isMenuOpen = Boolean(anchorEl);
+  const isNotificationOpen = Boolean(anchorE2)
+  const notification_id = isNotificationOpen ? "notification-popover" : undefined
   const [instructor, setInstructor] = React.useState(checkUser().userDetails);
+  const [isOpenNotification,setOpenNotification] = React.useState(false)
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -87,6 +92,14 @@ export default function InstructorNavBar() {
     </Menu>
   );
 
+  const handleNotification = (event) => {
+        setAnchorE2(event.currentTarget)
+  } 
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -125,8 +138,13 @@ export default function InstructorNavBar() {
               md={4}
               sx={{ display: "flex", justifyContent: "flex-end" }}
             >
-              <IconButton size="large" sx={{ color: "white" }}>
-                <Badge badgeContent={17} color="error">
+              <IconButton 
+              size="large" 
+              sx={{ color: "white" }} 
+              onClick={handleNotification} 
+              aria-controls={notification_id}
+              >
+                <Badge badgeContent={1} color="error">
                   <NotificationsOutlinedIcon
                     sx={{ color: theme.palette.dark.main }}
                   />
@@ -175,6 +193,7 @@ export default function InstructorNavBar() {
         </Toolbar>
       </AppBar>
       {renderMenu}
+      <NotificationListView id={notification_id} anchorE2={anchorE2} isOpen={isNotificationOpen} setClose={()=>setAnchorE2(null)} />
     </Box>
   );
 }

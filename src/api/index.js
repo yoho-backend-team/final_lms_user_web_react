@@ -92,7 +92,7 @@ class Client {
       upload: (data) =>
         httpClient.uploadFile(HTTP_END_POINTS.common.file.upload, data),
       get: (url) => httpClient.fileGet(url),
-    },
+    }
   };
 
   Instructor = {
@@ -180,6 +180,10 @@ class Client {
     },
     reports : {
       get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.reports.get,params,"instructor")
+    },
+    index: {
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.index.get,params,'instructor'),
+      update : (data) => httpClient.update(HTTP_END_POINTS.Instructor.index.get,data,'instructor')
     }
   };
 }

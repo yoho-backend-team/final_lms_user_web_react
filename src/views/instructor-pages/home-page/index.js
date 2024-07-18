@@ -28,6 +28,7 @@ import { useSpinner } from "context/SpinnerProvider";
 import getAllReports from "features/instructor-pages/home-page/redux/thunks";
 import { profilePlaceholder } from "utils/placeholders";
 import { getImageUrl } from "utils/common/imageUtlils";
+import { Link } from "react-router-dom";
 
 const InstructorDashBoard = () => {
   const dispatch = useDispatch()
@@ -118,6 +119,8 @@ const InstructorDashBoard = () => {
             <Grid xs={4}>
               <Button
                 variant="contained"
+                component = {Link}
+                to={"/instructor/profile"}
                 color="primary"
                 size="medium"
                 sx={{ p: 1, px: 2, borderRadius: 5 }}

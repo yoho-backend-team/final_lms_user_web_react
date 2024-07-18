@@ -172,10 +172,13 @@ const generateEndpoints = () => {
       },
       ticket: {
         create: "/institutes/staff/ticket",
-        get: "/institutes/staff/ticket/all",
+        get: "/institutes/staff/ticket/",
       },
       reports : {
         get : "/institutes/reports/users/teaching-staff"
+      },
+      index : {
+        get : "/institutes/auth/profile/me/"
       }
     },
   };
