@@ -14,6 +14,8 @@ export const getTickets = async (query) => {
     const response = await Client.Instructor.ticket.get(query);
     return response?.data;
   } catch (error) {
+    const message = error?.response?.data?.message ? error?.response?.data?.message : error?.message
     throw new Error(error?.message);
   }
 };
+

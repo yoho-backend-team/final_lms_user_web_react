@@ -38,6 +38,8 @@ export { default as MobileLoginInstructorBg } from "../assets/instructor/login/m
 
 //dashboard
 export { default as BranchIcon } from "../assets/instructor/dashboard/branch.svg"
+export { default as ProfileBackground } from "../assets/instructor/dashboard/profile-bg.svg"
+export { default as NotificationNewViewIcon } from "../assets/instructor/dashboard/solar_maximize-square-3-outline.svg"
 
 //course
 export { default as EditIcon } from "../assets/instructor/course/course-edit.svg"
