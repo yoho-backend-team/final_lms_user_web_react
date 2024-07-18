@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Typography, Grid, Button } from "@mui/material";
 import SubWayPinIcon from "assets/icons/subWayPinIcon";
 
@@ -22,7 +22,18 @@ const StudentTicketCard = ({
     return new_date.toLocaleDateString("en-US");
   };
 
-  
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = ''; // Chrome requires returnValue to be set
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <Grid

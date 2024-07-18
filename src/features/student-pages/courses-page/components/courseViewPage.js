@@ -11,16 +11,18 @@ const CourseStudentViewPage = ({ Course }) => {
   const { tabView } = useTabResponsive();
   const [currentTab, setCurrentTab] = useState("1");
   const [courseView, setCourseView] = useState(false);
+  const [selectedClass,setSelectedClass] = useState(null)
 
   const tabs_list = [
     { id: "1", title: "About" },
     { id: "2", title: "Class/ Notes & Materials" },
   ];
 
-  const openCourseView = () => {
+  const openCourseView = (class_details) => {
     setCourseView(true);
+    setSelectedClass(class_details)
   };
-  const closeCourseView = () => {
+  const closeCourseView = () => { 
     setCourseView(false);
   };
 
@@ -92,34 +94,18 @@ const CourseStudentViewPage = ({ Course }) => {
             </Box>
           </Box>
           <Box sx={{ pr: "40px", display: tabView && "none" }}>
-            {courseView && (
-              <Button
-                size="small"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  lineHeight: "24px",
-                  backgroundColor: "#5611B1",
-                  borderRadius: "24px",
-                  color: "white",
-                  padding: "8px 18px",
-                  ":hover": { backgroundColor: "#5611B1" },
-                }}
-                startIcon={<EditIcon sx={{ color: "white" }} />}
-              >
-                Edit
-              </Button>
-            )}
+            
           </Box>
         </Box>
         {currentTab === "1" && <About Course={Course} />}
-        {currentTab === "2" && !courseView && (
+        {currentTab === "2" && !courseView &&  (
           <CourseAndNotesStudentPage Course={Course}
             openCourseView={openCourseView}
             closeCourseView={closeCourseView}
+            selectedClass={selectedClass}
           />
         )}
-        {courseView && <SingleCourseStudentView Course={Course} />}
+        {courseView && <SingleCourseStudentView Course={selectedClass} />}
       </Box>
     </Box>
   );

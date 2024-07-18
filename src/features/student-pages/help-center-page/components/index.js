@@ -37,12 +37,15 @@ const StudentHelpCenter = () => {
   const [selectedTab, setSelectedTab] = useState("0");
   const [value, setValue] = useState(0);
   const [isView, setView] = useState(false);
+  const [selectedQuery,setSelectedQuery] = useState(null)
   const classes = useStyles();
 
   const handleChange = (event, newValue) => {
     console.log(newValue, "new");
     setValue(newValue);
   };
+
+  
 
   return (
     <>
@@ -310,9 +313,9 @@ const StudentHelpCenter = () => {
         </Box>
       )}
       <Grid container spacing={2} sx={{ marginTop: 2 }}>
-        {value === 0 && !isView && <StudentMailTab setView={setView} />}
+        {value === 0 && !isView && <StudentMailTab setView={setView} setSelectedQuery={setSelectedQuery} />}
       </Grid>
-      {isView && <StudentHelpView />}
+      {isView && <StudentHelpView category={selectedQuery} id={selectedQuery?.id} />}
     </>
   );
 };

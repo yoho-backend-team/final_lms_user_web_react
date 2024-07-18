@@ -13,11 +13,13 @@ const CourseStudentModuleCard = ({
   videos,
   closeCourseView,
   openCourseView,
+  module
 }) => {
   const { tabView } = useTabResponsive();
+  const currentModule = module
   return (
     <Grid
-      onClick={openCourseView}
+      onClick={()=>openCourseView(currentModule)}
       item
       sx={{
         width: "291px",
@@ -100,7 +102,7 @@ const CourseStudentModuleCard = ({
               lineHeight: "22px",
             }}
           >
-            {notes} Notes
+            {notes?.length} Notes
           </Typography>
         </Box>
         <Box sx={{ display: "inline-flex", gap: "5px" }}>

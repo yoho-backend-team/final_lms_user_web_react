@@ -36,6 +36,8 @@ const chapters = [
 ];
 
 const CourseStudentChapters = ({ Chapters , Course}) => {
+// const classes = Course?.batches[0]?.classes|| [];
+
   return (
     <Box sx={{ pl: "91px", pr: "50px", height: "80vh", overflowY: "auto" }}>
       <Box
@@ -61,8 +63,9 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
             lineHeight: "24px",
           }}
         >
-          {Chapters?.length} Chapters
+          {Chapters?.coursemodules?.length} Chapters
         </Typography>
+        <Box>
         <Typography
           sx={{
             color: "#4B4B4B",
@@ -71,10 +74,12 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
             lineHeight: "24px",
           }}
         >
-          146 classes
+          {Chapters?.batches?.[0]?.classes?.length} classes
         </Typography>
+        
+        </Box>
       </Box>
-      {Chapters?.map((chapter, index) => (
+      {Chapters?.coursemodules?.map((chapter, index) => (
         <Paper
           key={index}
           sx={{
