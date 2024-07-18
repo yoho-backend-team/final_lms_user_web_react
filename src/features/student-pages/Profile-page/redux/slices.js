@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const DashboardReducers = createSlice({
-  name: "studentDashboard",
+const ProfileSlice = createSlice({
+  name: "studentProfile",
   initialState: {
     data: [],
     loading: true,
   },
   reducers: {
-    setDashboard: (state, action) => {
+    setProfile: (state, action) => {
       state.data = action.payload;
     },
     setLoading: (state, action) => {
@@ -16,5 +16,7 @@ const DashboardReducers = createSlice({
   },
 });
 
-export const { setDashboard, setLoading } = DashboardReducers.actions;
-export default DashboardReducers.reducer;
+export const { setProfile, setLoading } = ProfileSlice.actions;
+export default ProfileSlice.reducer;
+
+

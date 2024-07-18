@@ -699,7 +699,7 @@ const CourseStudentDetails = () => {
                 </Typography>
                 <Button
                   component={Link}
-                  to="/student/pay"
+                  to="/student/payment/pay"
                   variant="contained"
                   style={{
                     width: "212px",
