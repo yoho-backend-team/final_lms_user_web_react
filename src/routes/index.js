@@ -10,6 +10,7 @@
     checkUser,
   } from "store/atoms/authorized-atom";
   import { role_to_details } from "lib/constants";
+import CourseFrontPage from "features/student-pages/courses-page/components/CourseFrontPage";
 
   // Auth Pages
   const LoginPage = Loadable(lazy(() => import("views/auth-pages/login-page")));
@@ -47,6 +48,9 @@
   );
   const StudentPaymentsPage = Loadable(
     lazy(() => import("views/student-pages/payments-page")),
+  );
+  const StudentFaqPage = Loadable(
+    lazy(() => import("views/student-pages/Faq-page")),
   );
   const StudentClassViewPage = Loadable(
     lazy(() => import("views/student-pages/class[id]-page")),
@@ -272,11 +276,14 @@ const InstructorCreateTicketPage = Loadable(
               path="student/community"
               element={<StudentCommunityPage />}
             />
-            <Route path="student/course" element={<StudentCoursePage />} />
+            <Route path="student/courses" element={<CourseFrontPage />} />
+            <Route path="student/course/:id" element={<StudentCoursePage />} />
+            
             <Route
               path="student/help-center"
               element={<StudentHelpCenterPage />}
             />
+            <Route path="student/Faq" element={<StudentFaqPage/>}/>
             <Route path="student/payments" element={<StudentPaymentsPage />} />
             {/* <Route
               path="student/OnlineUpcomingClass/:id"

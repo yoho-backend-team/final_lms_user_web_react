@@ -16,6 +16,7 @@ const CourseStudentViewPage = ({ Course }) => {
   const tabs_list = [
     { id: "1", title: "About" },
     { id: "2", title: "Class/ Notes & Materials" },
+
   ];
 
   const openCourseView = (class_details) => {
@@ -25,7 +26,7 @@ const CourseStudentViewPage = ({ Course }) => {
   const closeCourseView = () => { 
     setCourseView(false);
   };
-
+console.log(selectedClass,"selectedClass")
   return (
     <Box sx={{ height: "100vh", overflowY: "auto" }}>
       <Box sx={{ pl: "40px", pt: "40px" }}>

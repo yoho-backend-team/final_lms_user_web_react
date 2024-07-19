@@ -38,7 +38,7 @@ const CoursePage = () => {
     getCourseDetails(data);
   }, [dispatch]);
   
-  console.log(course , "course")
+  console.log(course , "course main page")
   return (
     <>
       <CourseStudentLayout>
