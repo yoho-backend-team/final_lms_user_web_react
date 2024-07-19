@@ -18,6 +18,7 @@ import { useFormik } from "formik";
 import { useStudentLogin } from "../services";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
 const validationSchema = yup.object({
   email: yup
@@ -46,7 +47,6 @@ const LoginForm = () => {
         const response = await studentLogin(values);
         console.log(response, "response");
         if (response.success) {
-          console.log(response?.success);
           navigate("/student/home");
         }
       } catch (error) {

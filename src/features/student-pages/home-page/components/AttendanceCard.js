@@ -78,17 +78,22 @@ const AttendanceCard = ({ Attendance }) => {
 
   return (
     <Card
-      sx={{
-        p: 3,
-        boxShadow: "none",
-        background: "#EFEFFF",
-        borderRadius: "8px",
-        backgroundImage: `url(${AttedenceBg})`,  
-        backgroundSize: "130% 170%",
-        backgroundPosition: "center", 
-        height:'auto'
-      }}
-    >
+    sx={{
+      p: 3,
+      boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
+      background: "#EFEFFF",
+      borderRadius: "8px",
+      border: "1px solid #BAA3E8",
+      backgroundImage: `url(${AttedenceBg})`,
+      backgroundSize: "138% 190%",
+      backgroundPosition: "center",
+      height: 'auto',
+      '@media screen and (max-width: 600px)': {
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      },
+    }}
+  >  
       <Grid
         container
         sx={{

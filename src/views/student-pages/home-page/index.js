@@ -28,49 +28,33 @@ import getAllReports from "features/student-pages/home-page/redux/thunks.js";
 
 
 const StudentDashboard = () => {
-  const theme = useTheme();
+  const theme = useTheme(); 
   const [editProfileClicked, setEditProfileClicked] = useState(false);
-  const [personalInfo, setPersonalInfo] = useState({ 
-    full_name: '',
-    id: '',
-    image: '', });
+  const [personalInfo, setPersonalInfo] = useState("");
 
     const dispatch = useDispatch()
     const reports = useSelector(selectStudentDashboard); 
     const loading = useSelector(selectLoading);
     const { showSpinner, hideSpinner } = useSpinner()
 
+    useEffect(() => {
+      const fetchProfile = async () => {
+        try {
+          const response = await getprofilewithId();
+          setPersonalInfo(response);
+        } catch (error) {
+          console.error('Error fetching profile:', error);
+        }
+      };
+  
+      fetchProfile();
+    }, []);
+  
+
 
   const handleEditProfileClick = () => {
     setEditProfileClicked(true);
   };
-
-
-  
-  const getProfile = async () => {
-    try {
-      const response = await getprofilewithId();
-      setPersonalInfo(response);
-       } catch (error) {
-      console.error('Error fetching profile:', error);
-    }
-  };
-
-  useEffect(() => {
-    getProfile();
-  }, []);
-
-  console.log(personalInfo,"personalInfor")
-  const image = getImageUrl(personalInfo.image);
-
-
-  const student = {
-    name: personalInfo.full_name,
-    profileImage: image,
-    studentID: personalInfo.id,
-  };
-
-
 
   const fetchReports = async () => {
     try {
@@ -85,8 +69,21 @@ const StudentDashboard = () => {
   
   useEffect(() => {
     fetchReports();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
- 
+  
+
+  console.log(personalInfo,"personalInfor")
+  const image = getImageUrl(personalInfo.image);
+
+
+  const student = {
+    name: personalInfo.full_name,
+    profileImage: image,
+    studentID: personalInfo.id,
+  };
+
+
 
   const instituteimage = getImageUrl(reports?.institute?.image);
 
@@ -136,7 +133,7 @@ const classesData = [
   
 
   return (
-    <Grid container p={8} sx={{ p: { xs: 5, sm: 9 } }}>
+    <Grid container p={12}>
       <Grid item xs={12} sm={4} className="MainGrid-1">
         <Card sx={{ boxShadow: "none" }}>
           <Box>
@@ -356,7 +353,7 @@ const classesData = [
         <Grid item xs={12} px={3} mb={2}>
         <CourseCard />        
         </Grid>
-        <Grid item xs={12} px={3} mb={2}>
+        <Grid item xs={12} px={3} mb={2}> 
         <AttendanceCard />          
         </Grid>
         <Grid item xs={12} px={3}>

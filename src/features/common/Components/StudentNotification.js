@@ -12,7 +12,7 @@ const notificationsData = [
     { id: 3, title: 'Michael Just Purchased', details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In urna nam purus vulputate.......", read: false },
   ];
 
-const NotificationListView = ({id,anchorE2,isOpen,setClose}) => {
+const StudentNotification = ({id,anchorE2,isOpen,setClose}) => {
     const [ tabValue,setTabValue ] = useState(0)
 
     const handleTabChange = (event, newValue) => {
@@ -117,12 +117,12 @@ const NotificationListView = ({id,anchorE2,isOpen,setClose}) => {
                    />
                  </Tabs>
                 </Box>
-                <Box key={"notification_list"}  sx={{ height: "39vh", overflow: 'auto'}} >
+                <Box sx={{ height: "39vh", overflow: 'auto'}} >
                 <Box >
                   {
-                    filteredNotifications?.map((notifi,index)=>(
+                    filteredNotifications?.map((notifi)=>(
                         <>
-                        <Box key={notifi?.id+notifi?.title+index} sx={{ padding: "13px 24px", display: 'flex', justifyContent: "space-between"}} >
+                        <Box key={notifi?.id} sx={{ padding: "13px 24px", display: 'flex', justifyContent: "space-between"}} >
                             <Box>
                                <Avatar
                                sx={{
@@ -156,4 +156,4 @@ const NotificationListView = ({id,anchorE2,isOpen,setClose}) => {
     )
 }
 
-export default NotificationListView
+export default StudentNotification

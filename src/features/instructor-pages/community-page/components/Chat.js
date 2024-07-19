@@ -14,13 +14,13 @@ const Chat = ({ currentChat, socket }) => {
       setMessages((prev) => [...prev, message]);
     };
 
-    socket?.on("message", handleMessage);
+    socket?.on("newMessage", handleMessage);
 
     return () => {
       socket?.off("message", handleMessage);
     };
   }, [socket]);
-
+  console.log(Messages,"messages")
   return (
     <Box
       sx={{
@@ -72,7 +72,7 @@ const Chat = ({ currentChat, socket }) => {
             <ChatLog socket={socket} Messages={Messages} />
           </Box>
           <Box sx={{ padding: "10px" }}>
-            <BottomBar socket={socket} />
+            <BottomBar socket={socket} community={currentChat} />
           </Box>
         </Card>
       ) : (

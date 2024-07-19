@@ -11,6 +11,7 @@
   } from "store/atoms/authorized-atom";
   import { role_to_details } from "lib/constants";
 import CourseFrontPage from "features/student-pages/courses-page/components/CourseFrontPage";
+import NotificationList from "views/instructor-pages/notification-page";
 
   // Auth Pages
   const LoginPage = Loadable(lazy(() => import("views/auth-pages/login-page")));
@@ -55,6 +56,7 @@ import CourseFrontPage from "features/student-pages/courses-page/components/Cour
   const StudentClassViewPage = Loadable(
     lazy(() => import("views/student-pages/class[id]-page")),
   );
+
   // const StudentOfflineUpcomingClassViewPage = Loadable(
   //   lazy(
   //     () =>
@@ -285,6 +287,9 @@ const InstructorCreateTicketPage = Loadable(
             />
             <Route path="student/Faq" element={<StudentFaqPage/>}/>
             <Route path="student/payments" element={<StudentPaymentsPage />} />
+
+            <Route path="student/payment/pay" element={<StudentOptionalPayment />} />
+
             {/* <Route
               path="student/OnlineUpcomingClass/:id"
               element={<StudentOnlineUpcomingClassViewPage />}
@@ -347,6 +352,7 @@ const InstructorCreateTicketPage = Loadable(
             }
           >
             <Route path="instructor/home" element={<InstructorHomePage />} />
+            <Route  path="instructor/notifications" element={<NotificationList />} />
             <Route
               path="instructor/activity-logs"
               element={<InstructorActivityLogsPage />}
