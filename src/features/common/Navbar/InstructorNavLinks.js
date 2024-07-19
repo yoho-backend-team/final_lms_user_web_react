@@ -90,6 +90,7 @@ const InstructorNavLinks = () => {
           padding: tabView ? "25px 45px 45px 45px" : 7,
           borderBottomLeftRadius: 80,
           borderBottomRightRadius: 80,
+          
         }}
       >
         {nav_items.map((item) => (

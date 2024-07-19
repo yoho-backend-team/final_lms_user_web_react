@@ -15,7 +15,7 @@ const GradientCard = styled(Card)(({ theme }) => ({
   width: '100%', 
   maxWidth: '464px',  
   height: '150px',
-  marginTop: '30px',
+  marginTop: '25px',
   padding: '5px',
   [theme.breakpoints.up('sm')]: {
     padding: '10px', 
