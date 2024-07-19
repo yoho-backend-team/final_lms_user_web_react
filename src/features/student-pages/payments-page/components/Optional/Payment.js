@@ -4,22 +4,19 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import courseImage from "../../../../../assets/images/dummy/course.jpg";
 import hours from "../../../../../assets/images/icons/hours.svg";
 import { getImageUrl } from "utils/common/imageUtlils";
-import Rating from "../Rating";
 import { imagePlaceholder } from "utils/placeholders";
 import { getStudentFees } from "../../services";
 import PaymentMethod from "./PaymentMethod";
 import Verify from "./Verify";
+import Rating from "../Rating";
 
 const Payment = ({activeStep}) => {
 
   const isXs = false;
   const [feesData, setFeesData] = useState("");
 
-
-  const ratingValue = 4;
 
 
   
@@ -54,7 +51,7 @@ const Payment = ({activeStep}) => {
             </Typography>
             <Grid container spacing={2} sx={{ p: 2 }}>
               <Grid item xs={12} sm={8}>
-                <Grid item xs={12} sm={6} md={6} lg={2.4}>
+              <Grid item xs={12} sm={6} md={6} lg={2.4}>
                   <Box
                     p={2}
                     border={1}
@@ -116,6 +113,7 @@ const Payment = ({activeStep}) => {
                           fontStyle: "normal",
                           fontWeight: 400,
                           lineHeight: "20px",
+                          textAlign: "left",
                         }}
                       >
                         {feesData?.course?.course_name}
@@ -132,7 +130,7 @@ const Payment = ({activeStep}) => {
                           textAlign: "left",
                         }}
                       >
-                        By Rajalakshmi Institute
+                      {feesData?.fees?.[0]?.institute_id?.institute_name}
                       </Typography>
                       <Box
                         sx={{
@@ -175,10 +173,11 @@ const Payment = ({activeStep}) => {
                           lineHeight: "9.841px",
                           textDecoration: "line-through",
                           textAlign: "right",
-                          marginRight: "-10px",
+                          marginRight: "-16px",
+                          marginLeft: "159px",
                         }}
                       >
-                        ₹ 5,800
+                        ₹ {feesData?.course?.mrp.toLocaleString()}
                       </Typography>
                       <Box
                         sx={{
@@ -186,7 +185,7 @@ const Payment = ({activeStep}) => {
                           justifyContent: "space-between",
                         }}
                       >
-                        <Rating rating={ratingValue} />
+                       <Rating rating={feesData?.course?.starrating || 0} />
                         <span
                           style={{
                             fontFamily: "Nunito Sans",
@@ -196,7 +195,7 @@ const Payment = ({activeStep}) => {
                             marginLeft: "-20px",
                           }}
                         >
-                          ( 2,387 )
+                          ( {feesData?.course?.ratingnumber.toLocaleString()} )
                         </span>
                         <Typography
                           variant="body1"
@@ -211,7 +210,7 @@ const Payment = ({activeStep}) => {
                             marginRight: "-10px",
                           }}
                         >
-                          ₹ {feesData?.course?.price}
+                          ₹ {feesData?.course?.price.toLocaleString()}
                         </Typography>
                       </Box>
                     </Box>
@@ -230,7 +229,8 @@ const Payment = ({activeStep}) => {
                     fontStyle: "normal",
                     fontWeight: 700,
                     lineHeight: isXs ? "26px" : "32px",
-                    marginRight: '10px' 
+                    marginRight: '10px',
+                    minWidth:'fit-content'
                     }}
                 >
                     Payment Type:
@@ -243,13 +243,14 @@ const Payment = ({activeStep}) => {
                     fontSize: '20px',
                     fontStyle: 'normal',
                     fontWeight: 700,
-                    lineHeight: '33px'
+                    lineHeight: '33px',
+                    minWidth:'fit-content'
                     }}
                 >
                     Full Payment
                 </Typography>
                 </div>
-                <Typography
+                {/* <Typography
                     variant="body1"
                     style={{
                     color: "#151010",
@@ -274,7 +275,7 @@ const Payment = ({activeStep}) => {
                     }}
                 >
                     2024
-                </Typography>
+                </Typography> */}
                 <Typography
                     variant="body1"
                     style={{
@@ -300,7 +301,7 @@ const Payment = ({activeStep}) => {
                 background: '#E4F4E3',
                 }}>
                 <Typography variant="body1" style={{ color: '#038D00', fontFamily: 'Nunito Sans', fontSize: '20px', fontWeight: 700 }}>
-                    67,000 INR
+                {feesData?.pending_payment} INR
                 </Typography>
                 </div>
                 </Grid>

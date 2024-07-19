@@ -51,6 +51,7 @@
   const StudentClassViewPage = Loadable(
     lazy(() => import("views/student-pages/class[id]-page")),
   );
+
   // const StudentOfflineUpcomingClassViewPage = Loadable(
   //   lazy(
   //     () =>
@@ -278,6 +279,9 @@ const InstructorCreateTicketPage = Loadable(
               element={<StudentHelpCenterPage />}
             />
             <Route path="student/payments" element={<StudentPaymentsPage />} />
+
+            <Route path="student/payment/pay" element={<StudentOptionalPayment />} />
+
             {/* <Route
               path="student/OnlineUpcomingClass/:id"
               element={<StudentOnlineUpcomingClassViewPage />}
