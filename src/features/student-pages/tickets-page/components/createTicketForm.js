@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   TextField,
@@ -23,18 +23,19 @@ import { useTabResponsive } from "utils/tabResponsive";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { StudentCreateTickets } from "../services";
-import {  getStudentDetails } from "store/atoms/authorized-atom";
+import { getStudentDetails } from "store/atoms/authorized-atom";
 import toast from "react-hot-toast";
+import { fileUpload } from "features/common/upload";
+import { useSpinner } from "context/SpinnerProvider";
 
 const validationSchema = yup.object({
   problem: yup.string("Select problem").required("Problem is required"),
   description: yup
     .string("Enter description")
     .required("Description is required"),
-    status:yup.string("opened")
-   
+  status: yup.string("opened"),
+  file_upload: yup.string("Attachment"),
 });
-
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -87,6 +88,7 @@ const StudentCreateTicketForm = ({ handleClose }) => {
   const [attachment, setAttachment] = useState(null);
   const [open, setOpen] = useState(false);
   const { tabView } = useTabResponsive();
+  const { showSpinner, hideSpinner } = useSpinner();
 
   const problems = [
     { value: "attendance", label: "Attendance Issue" },
@@ -102,8 +104,8 @@ const StudentCreateTicketForm = ({ handleClose }) => {
     initialValues: {
       problem: "",
       description: "",
-    file: "",
-    status:"",
+      file_upload: "",
+      status: "",
     },
     onSubmit: async (values) => {
       try {
@@ -113,8 +115,9 @@ const StudentCreateTicketForm = ({ handleClose }) => {
           branch: student?.branch_id?._id,
           query: values?.problem,
           description: values?.description,
-          status:"opened",
+          status: "opened",
           user: student?._id,
+          file_upload: attachment || null,
         };
         const response = await StudentCreateTickets(data);
         console.log(response, "response");
@@ -126,8 +129,20 @@ const StudentCreateTicketForm = ({ handleClose }) => {
     },
   });
 
-  const handleAttachmentChange = (event) => {
-    setAttachment(event.target.files[0]);
+  const handleAttachmentChange = async (event) => {
+    try {
+      showSpinner();
+      const file = event.target.files[0];
+      const file_data = new FormData();
+      file_data.append("file", file);
+      const response = await fileUpload(file_data);
+      setAttachment(response?.file);
+      toast.success("Attachment added successfully");
+    } catch (error) {
+      toast.error(error?.message);
+    } finally {
+      hideSpinner();
+    }
   };
 
   const handleOpen = () => setOpen(true);
@@ -136,6 +151,19 @@ const StudentCreateTicketForm = ({ handleClose }) => {
     setOpen(false);
     console.log("Cancel clicked");
   };
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = "Are you sure you want to leave?";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <>
@@ -271,6 +299,16 @@ const StudentCreateTicketForm = ({ handleClose }) => {
                     onChange={handleAttachmentChange}
                   />
                 </Button>
+                {attachment && (
+                  <Typography sx={{ mt: 1 }} color="textSecondary">
+                    File uploaded: {attachment.split("/")[2]}
+                  </Typography>
+                )}
+                {!attachment && (
+                  <Typography sx={{ mt: 1 }} color="textSecondary">
+                    No file uploaded
+                  </Typography>
+                )}
                 <Box
                   sx={{
                     display: "flex",

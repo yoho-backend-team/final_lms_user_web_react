@@ -9,34 +9,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectInstructorCommunities } from "features/instructor-pages/community-page/redux/selectors";
 import getandAddCommunity from "features/instructor-pages/community-page/redux/thunks";
 import { io } from "socket.io-client";
-
-const Batches = [
-  {
-    batch_name: "Java Class",
-    image: JavaCourseImage,
-    id: "1",
-    chat: <PushPinOutlinedIcon sx={{ rotate: "35deg" }} />,
-    date: "5:14 pm",
-    last_message: "Haha oh man",
-  },
-  {
-    batch_name: "SQL",
-    image: SqlCourseImage,
-    id: "2",
-    chat: <DoneAllOutlinedIcon sx={{ color: "#2361FF" }} />,
-    date: "7:38 am",
-    last_message: "Haha that's terrifying 😂",
-  },
-];
+import { useSpinner } from "context/SpinnerProvider";
+import toast from "react-hot-toast";
 
 const Community = () => {
   const dispatch = useDispatch();
   const communities = useSelector(selectInstructorCommunities);
   const [currentChat, setCurrentChat] = useState(null);
   const [socket, setSocket] = useState(null);
+  const { showSpinner, hideSpinner} = useSpinner()
 
   const getAllCommunities = () => {
-    dispatch(getandAddCommunity());
+    try{
+      showSpinner()
+      dispatch(getandAddCommunity());
+    }catch(error){
+      toast.error(error?.message)
+    }finally{
+      hideSpinner()
+    }
   };
 
   useEffect(() => {

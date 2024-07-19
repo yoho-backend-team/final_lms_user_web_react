@@ -9,7 +9,7 @@ const StudentAbout = ({ Course }) => {
         <CourseDetails Course={Course} />
       </Grid>
       <Grid xs={6}>
-        <CourseChapters Chapters={Course?.coursemodules} />
+        <CourseChapters Chapters={Course} />
       </Grid>
     </Grid>
   );

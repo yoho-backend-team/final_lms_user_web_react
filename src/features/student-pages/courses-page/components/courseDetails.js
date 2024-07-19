@@ -168,7 +168,7 @@ const CourseStudentDetails = ({ Course }) => {
                 color: "#000000",
                 fontSize: "16px",
                 fontWeight: 700,
-                lineHeight: "24px",
+                lineHeight: "20px",
               }}
             >
               Durations:
@@ -178,11 +178,11 @@ const CourseStudentDetails = ({ Course }) => {
                 color: "#0051C8",
                 fontSize: "16px",
                 fontWeight: 600,
-                lineHeight: "24px",
+                lineHeight: "20px",
               }}
             >
               {" "}
-              {Course?.duration} months
+              {Course?.duration}months
             </Typography>
           </Box>
           <Box

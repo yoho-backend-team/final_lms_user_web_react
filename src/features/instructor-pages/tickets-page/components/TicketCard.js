@@ -3,14 +3,7 @@ import { Box, Typography, Grid, Button } from "@mui/material";
 import SubWayPinIcon from "assets/icons/subWayPinIcon";
 
 const TicketCard = ({
-  ticketNumber,
-  query,
-  description,
-  status,
-  date,
-  id,
-  handleTicketViewOpen,
-  _id,
+  ticket,handleTicketViewOpen,handleTicketViewClose
 }) => {
   const statusColor = {
     opened: "#008375",
@@ -45,7 +38,7 @@ const TicketCard = ({
               lineHeight: "24px",
             }}
           >
-            {ticketNumber ? ticketNumber : _id}
+            {ticket?.ticketNumber ? ticket?.ticketNumber : ticket?._id}
           </Typography>
         </Box>
         <Box
@@ -56,7 +49,7 @@ const TicketCard = ({
             padding: "9px 24px",
           }}
         >
-          <Typography sx={{ color: "#5611B1" }}>{convertDate(date)}</Typography>
+          <Typography sx={{ color: "#5611B1" }}>{convertDate(ticket?.date)}</Typography>
         </Box>
       </Box>
 
@@ -69,7 +62,7 @@ const TicketCard = ({
             fontSize: "14px",
           }}
         >
-          {query}
+          {ticket?.query}
         </Typography>
       </Box>
 
@@ -93,7 +86,7 @@ const TicketCard = ({
             overflow: "auto",
           }}
         >
-          {description}
+          {ticket?.description}
         </Typography>
       </Box>
 
@@ -110,21 +103,21 @@ const TicketCard = ({
               color: "#020202",
             }}
           >
-            {id}
+            {ticket?.id}
           </Typography>
         </Box>
         <Box>
           <Button
-            onClick={() => handleTicketViewOpen()}
+            onClick={() => handleTicketViewOpen(ticket)}
             variant="contained"
             sx={{
               color: "white",
               borderRadius: "8px",
-              backgroundColor: statusColor[status],
+              backgroundColor: statusColor[ticket?.status],
               padding: "9px 24px",
             }}
           >
-            {status}
+            {ticket?.status}
           </Button>
         </Box>
       </Box>

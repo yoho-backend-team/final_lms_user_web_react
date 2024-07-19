@@ -38,6 +38,12 @@ import { useTheme } from "@emotion/react";
 import StudentNavLinks from "./StudentNavLinks";
 import InstructorNavLinks from "./InstructorNavLinks";
 // import { colorModeContext, tokens } from "../../assets/Styles/theme";
+import Cookies from 'js-cookie';
+import { useNavigate } from "react-router-dom";
+import { checkUser, getStudentDetails } from "store/atoms/authorized-atom";
+import { useEffect } from "react";
+import { getImageUrl } from "utils/common/imageUtlils";
+import StudentNotification from "../Components/StudentNotification";
 
 export default function NavBar() {
   const theme = useTheme();
@@ -50,6 +56,11 @@ export default function NavBar() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [anchorE2, setAnchorE2] = React.useState(null)
+  const isNotificationOpen = Boolean(anchorE2)
+  const notification_id = isNotificationOpen ? "notification-popover" : undefined
+  const navigate = useNavigate();
+  const [student, setStudent] = React.useState(checkUser().userDetails);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -67,6 +78,33 @@ export default function NavBar() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  const handleNotification = (event) => {
+    setAnchorE2(event.currentTarget)
+} 
+
+const handleClose = () => {
+setAnchorEl(null);
+};
+
+
+  const handleLogout = () => {
+    Cookies.remove('student');
+    Cookies.remove('instructor');
+    navigate('/student/login'); 
+    handleMenuClose();
+  };
+
+  const handleProfile = () => {
+    navigate('/student/profile'); 
+    handleMenuClose();
+  };
+
+  useEffect(() => {
+    const user = getStudentDetails();
+    setStudent(user);
+  }, []);
+  console.log(student, "Studentheaderr");
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -93,8 +131,10 @@ export default function NavBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleProfile}>Profile</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+
+
     </Menu>
   );
 
@@ -178,51 +218,7 @@ export default function NavBar() {
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
-  const DrawerList = (
-    <Box>
-      <Box sx={{ mt: 1, p: 2 }}>
-        <img src={logo} height={100} />
-      </Box>
-      <Box role="presentation" onClick={toggleDrawer(false)} p={1}>
-        <List>
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>
-                <Home />
-              </ListItemIcon>
-              <ListItemText primary="Home" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>
-                <Ballot />
-              </ListItemIcon>
-
-              <ListItemText primary="Products" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>
-                <Person />
-              </ListItemIcon>
-              <ListItemText primary="Contact" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton>
-              <ListItemIcon>
-                <Diversity1 />
-              </ListItemIcon>
-              <ListItemText primary="About" />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Divider />
-      </Box>
-    </Box>
-  );
+ 
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -242,31 +238,11 @@ export default function NavBar() {
             }}
           >
             <Grid item xs={4} sx={{ display: "flex", alignItems: "center" }}>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="open drawer"
-                onClick={toggleDrawer(true)}
-              >
-                <MenuIcon sx={{ color: theme.palette.primary.main }} />
-              </IconButton>
               <Box sx={{ display: { xs: "none", md: "block" } }}>
                 <img src={logo} alt="logo" height={10} />
               </Box>
             </Grid>
-            <Grid xs={8} sx={{ display: "flex", justifyContent: "end" }}>
-              <IconButton
-                size="large"
-                aria-label="show more"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon sx={{ color: theme.palette.primary.main }} />
-              </IconButton>
-            </Grid>
+           
           </Grid>
           <Grid
             container
@@ -283,59 +259,16 @@ export default function NavBar() {
                 <img src={logo} alt="logo" height={70} />
               </Box>
             </Grid>
-            {/* <Grid
-              item
-              md={4}
-              sx={{
-                justifyContent: "center",
-                alignItems: "center",
-                display: "flex",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: 3,
-                  ml: 5,
-                  display: { xs: "none", sm: "flex" },
-                }}
-              >
-                <Typography
-                  component={Link}
-                  to="/home"
-                  sx={{ textDecoration: "none" }}
-                >
-                  Home
-                </Typography>
-                <Typography
-                  component={Link}
-                  to="/products"
-                  sx={{ textDecoration: "none" }}
-                >
-                  Products
-                </Typography>
-                <Typography
-                  component={Link}
-                  to="/about"
-                  sx={{ textDecoration: "none" }}
-                >
-                  About
-                </Typography>
-                <Typography
-                  component={Link}
-                  to="/contact"
-                  sx={{ textDecoration: "none" }}
-                >
-                  Contact
-                </Typography>
-              </Box>
-            </Grid> */}
+    
             <StudentNavLinks />
             <Grid item md={4} sx={{ justifyContent: "end", display: "flex" }}>
               {" "}
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                <IconButton size="sm" sx={{ color: "white", P: 0 }}>
-                  <Badge badgeContent={17} color="error">
+                <IconButton size="large" 
+              sx={{ color: "white" }} 
+              onClick={handleNotification} 
+              aria-controls={notification_id} >
+                  <Badge badgeContent={1} color="error">
                     <NotificationsOutlinedIcon
                       sx={{ color: theme.palette.dark.main }}
                     />
@@ -357,7 +290,7 @@ export default function NavBar() {
                   onClick={handleProfileMenuOpen}
                   disableRipple
                 >
-                  <Avatar src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg" />
+                  <Avatar src={getImageUrl(student?.image)} />
                   <Box>
                     <Box>
                       <Typography
@@ -373,7 +306,7 @@ export default function NavBar() {
                           },
                         }}
                       >
-                        Jimmy Tommy
+                       {student?.full_name}
                       </Typography>
                     </Box>
                     <Box>
@@ -389,7 +322,7 @@ export default function NavBar() {
                             },
                           }}
                         >
-                          {"(you)"} ID: Stu23#
+                           (you) ID: {student?.id}
                         </Typography>
                       </Box>
                     </Box>
@@ -400,13 +333,8 @@ export default function NavBar() {
           </Grid>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
-      <div>
-        <Drawer open={open} onClose={toggleDrawer(false)}>
-          {DrawerList}
-        </Drawer>
-      </div>
+      <StudentNotification id={notification_id} anchorE2={anchorE2} isOpen={isNotificationOpen} setClose={()=>setAnchorE2(null)} />
+      
     </Box>
   );
 }

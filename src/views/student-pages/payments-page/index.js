@@ -27,6 +27,7 @@ import EPFIcon from "assets/icons/EPFIcon";
 import TaxIcon from "assets/icons/TaxIcon";
 import SalaryInHandIcon from "assets/icons/salaryHandIcon";
 import PaymentMethodIcon from "assets/icons/paymentMethodIcon";
+import { Link } from "react-router-dom";
 
 
 const months = [
@@ -84,7 +85,7 @@ const PaymentStudentInterface = () => {
     {
       id: 5,
       title: "Payment Method",
-      amount: "Online",
+      amount: feesDataStudent?.fees?.[0]?.payment_method,
       icon: <PaymentMethodIcon color="#DF9300" />,
       style: { color: "#0D6EFD", bg: "#F9E8C7" },
     },
@@ -131,10 +132,9 @@ const PaymentStudentInterface = () => {
       >
         <Box
           sx={{
-            backgroundImage: `url(${PaymentBg})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
+            backgroundColor:'white',
             width: "100%",
+            borderRadius:'24px'
           }}
         >
           <Box
@@ -142,6 +142,7 @@ const PaymentStudentInterface = () => {
               display: "flex",
               flexDirection: "row",
               p: "40px",
+              marginBottom: '-40px',
               justifyContent: "space-between",
             }}
           >
@@ -159,6 +160,9 @@ const PaymentStudentInterface = () => {
             </Box>
             <Box sx={{ textAlign: "end" }}>
               <Typography
+                variant="body1"
+                component={Link}
+                to="/student/create-ticket"
                 sx={{
                   color: "#0D6EFD",
                   fontSize: "16px",

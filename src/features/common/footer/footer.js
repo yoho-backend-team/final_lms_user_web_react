@@ -23,6 +23,9 @@ const Footer = () => {
           <Link to="student/help-center" style={{ textDecoration: "none" }}>
             Help Center
           </Link>
+          <Link to="student/Faq" style={{ textDecoration: "none" }}>
+            Faq
+          </Link>
           <Box sx={{ display: "flex", gap: 2 }}>
             <Box>
               <Link

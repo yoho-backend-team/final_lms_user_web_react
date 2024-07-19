@@ -1,8 +1,7 @@
-import React from "react";
 import { Grid } from "@mui/material";
 import StudentHelpCard from "../helpCard";
-
-
+import { useEffect, useState } from "react";
+import Client from "../../../../../api/index";
 
 const StudentMailData = [
   {
@@ -17,15 +16,42 @@ const StudentMailData = [
   { section: "Mail", title: "Mail topic 6", id: 6 },
 ];
 
-const StudentMailTab = ({ setView }) => {
+
+
+const StudentMailTab = ({ setView ,setSelectedQuery}) => {
+  const [faqCategories, setFaqCategories] = useState([]);
+  
+  
+
+useEffect(() => {
+  const fetchFaqCategories = async () => {
+    try {
+      const response = await Client.Student.faq.get();
+      setFaqCategories(response?.data || []);
+    } catch (error) {
+      console.error("Error fetching FAQ categories:", error.message);
+    }
+  };
+
+  fetchFaqCategories();
+}, []);
+
+const handleTabClick = (new_category) => {
+  setSelectedQuery(new_category)
+  setView(true)
+  console.log(new_category)
+}
+
+console.log(faqCategories,"faq12")
   return (
     <Grid container spacing={2}>
-      {StudentMailData.map((item) => (
+      {faqCategories.map((item) => (
         <Grid item xs={12} sm={6} md={3} key={item.id}>
           <StudentHelpCard
-            section={item.section}
-            title={item.title}
+            section={item.title}
+            title={item.description}
             setView={setView}
+            handleTabClick={handleTabClick}
           />
         </Grid>
       ))}

@@ -90,12 +90,14 @@ export const useStudentLogin = () => {
           setOtpAtom({ email, token });
         } else {
           setOtpAtom({ email: null, token: null, otp: "" });
+          console.log(typeof(email),typeof(token),typeof(user))
           setStudentAtom({
             isLoggedIn: true,
             userDetails: user,
             token: token,
             role: "student",
           });
+          console.log(user,token)
           setLoginStep("login");
           return { success: true };
         }
