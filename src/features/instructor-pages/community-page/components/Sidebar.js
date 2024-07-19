@@ -3,13 +3,15 @@ import { Box, TextField, InputAdornment, Typography } from "@mui/material";
 import { getImageUrl } from "utils/common/imageUtlils";
 import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
 import { useEffect } from "react";
+import { getInstructorDetails } from "store/atoms/authorized-atom";
 
 const SideBar = ({ communities, currentChat, setCurrentChat, socket }) => {
   const handleChat = (group) => {
     setCurrentChat(group);
     const communituy_id = group?._id;
     console.log(communituy_id, "communityId");
-    socket.emit("join", { group: communituy_id, user: "user" }, (error) => {
+    const instructor = getInstructorDetails()
+    socket.emit("joinGroup", { groupId: communituy_id, userId: instructor?._id }, (error) => {
       console.log(error, "error");
     });
   };

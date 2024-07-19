@@ -117,12 +117,12 @@ const NotificationListView = ({id,anchorE2,isOpen,setClose}) => {
                    />
                  </Tabs>
                 </Box>
-                <Box sx={{ height: "39vh", overflow: 'auto'}} >
+                <Box key={"notification_list"}  sx={{ height: "39vh", overflow: 'auto'}} >
                 <Box >
                   {
-                    filteredNotifications?.map((notifi)=>(
+                    filteredNotifications?.map((notifi,index)=>(
                         <>
-                        <Box key={notifi?.id} sx={{ padding: "13px 24px", display: 'flex', justifyContent: "space-between"}} >
+                        <Box key={notifi?.id+notifi?.title+index} sx={{ padding: "13px 24px", display: 'flex', justifyContent: "space-between"}} >
                             <Box>
                                <Avatar
                                sx={{

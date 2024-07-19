@@ -3,32 +3,6 @@ import { Box } from "@mui/material";
 import ClassCard from "../card/ClassCard";
 import FilterHeader from "./FilterCard";
 
-const classes = [
-  {
-    id: "1",
-    title: "Basics of User Experience",
-    subject: "UX Design",
-    date: "29 Feb 2024",
-    time: "10:30 AM",
-    duration: "45min",
-  },
-  {
-    id: "2",
-    title: "Basics of User Experience",
-    subject: "UX Design",
-    date: "30 Feb 2024",
-    time: "10:30 AM",
-    duration: "45min",
-  },
-  {
-    id: "3",
-    title: "Basics of User Experience",
-    subject: "UX Design",
-    date: "31 Feb 2024",
-    time: "10:30 AM",
-    duration: "45min",
-  },
-];
 
 const defaultStyles = {
   calendarColor: "#000000",
