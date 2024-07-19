@@ -8,7 +8,7 @@ import EmojiIcon from "assets/icons/EmojiIcon";
 import EmojiPicker from "./EmojiPicker";
 import { getStudentDetails } from "store/atoms/authorized-atom";
 
-const BottomBar = ({ socket }) => {
+const BottomBar = ({ socket, community }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [message, setMessage] = useState("");
   const student = getStudentDetails();
@@ -25,7 +25,7 @@ const BottomBar = ({ socket }) => {
     console.log(message, "message");
     socket.emit(
       "sendMessage",
-      { message: message, user: student?._id },
+      { groupId : community?._id, content: message, senderId: student?._id },
       (response) => {},
     );
     setMessage("");

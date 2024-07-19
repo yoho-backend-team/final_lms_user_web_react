@@ -35,11 +35,14 @@ import NotesUpload from "./model/notesUpload";
 import StudyMaterialIcon from "assets/icons/study-material-icon";
 import SaveAltOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
 import { useSpinner } from "context/SpinnerProvider";
+import VideoUpload from "./model/videoUpload";
+import VideoCard from "./card/videoCard";
 
-const ClassCard = ({ type, classDetails, getClass }) => {
+const ClassCard = ({ type, classDetails, getClass,group }) => {
   const navigate = useNavigate();
   const [showAttendance, setShowAttendance] = useState(false);
   const { showSpinner, hideSpinner } = useSpinner();
+  const isUpCommingClass = group === "upcoming" ? true : false
 
   const handleStartAttendance = () => {
     setShowAttendance(true);
@@ -116,6 +119,8 @@ const ClassCard = ({ type, classDetails, getClass }) => {
       hideSpinner();
     }
   };
+
+  console.log(classDetails,group,group==="upcoming",typeof(group))
 
   return (
     <Box sx={{ paddingTop: "40px", width: "100%", overflow: "auto" }}>
@@ -352,7 +357,9 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                     Join the class @{formatTime(classDetails?.start_time)}
                   </Typography>
                   <Box sx={{ display: "flex", gap: "72px", pt: "5px" }}>
-                    <Button
+                    {
+                      isUpCommingClass ?
+                      <Button
                       variant="contained"
                       sx={{
                         borderRadius: "24px",
@@ -363,44 +370,55 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                         fontWeight: 600,
                         lineHeight: "24px",
                       }}
-                    >
-                      Host Now
-                    </Button>
+                      >
+                        Host Now
+                      </Button>
+                      :
+                      <Typography sx={{ color:"#828282", fontSize:"14px",fontWeight:400,lineHeight:"32px"}} >Class Finished {formatDate(classDetails?.start_date)} - {formatTime(classDetails?.end_time)}</Typography>
+                    }
                     <Button
-                      variant="outlined"
+                      variant={ isUpCommingClass ? "outlined" : "contained" }
                       onClick={() => handleStartAttendance()}
                       sx={{
                         padding: "8px 18px",
-                        color: "#5611B1",
+                        color: isUpCommingClass ? "#5611B1" : "white" ,
+                        backgroundColor : isUpCommingClass ? "transparent" : "#0D6EFD",
                         fontSize: "14px",
                         fontWeight: 600,
                         lineHeight: "24px",
-                        border: "2px solid #5611B1",
+                        border: `2px solid ${isUpCommingClass ? "#5611B1" : "#0D6EFD" }`,
                         borderRadius: "24px",
+                        ":hover":{
+                          backgroundColor : isUpCommingClass ? "transparent" : "#0D6EFD",
+                        }
                       }}
                     >
-                      Start Attendance
+                      {isUpCommingClass? "Start Attendance": "Attendance Log" }
                     </Button>
                   </Box>
                   <Box sx={{ display: "flex", gap: "80px", pt: "5px" }}>
                     <Box
                       sx={{
-                        display: "inline-flex",
+                        display: isUpCommingClass ? "inline-flex" : "hidden",
                         gap: "10px",
                         width: "200px",
                       }}
                     >
-                      <InfoOutlinedIcon sx={{ color: "#828282" }} />
+                      <InfoOutlinedIcon sx={{ color: "#828282", display: isUpCommingClass ? "block" : "none" }} />
                       <Typography
                         sx={{
+                          display: group !== "upcoming" && "none",
                           color: "#828282",
                           fontSize: "12px",
                           fontWeight: 700,
                           lineHeight: "20px",
                         }}
                       >
-                        Please host the class 10 minutes of the class starting
-                        time
+                        {
+                          isUpCommingClass &&
+                          "Please host the class 10 minutes of the class starting time"
+                        }
+                        
                       </Typography>
                     </Box>
                     <Box sx={{ display: "inline-flex", gap: "10px" }}>
@@ -413,7 +431,12 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                           lineHeight: "20px",
                         }}
                       >
-                        Once started with class please start your attendance
+                        {
+                          isUpCommingClass ?
+                          "Once started with class please start your attendance"
+                          :
+                          "If any Issue in attendance please raise a Ticket"
+                        }
                       </Typography>
                     </Box>
                   </Box>
@@ -425,7 +448,49 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                       lineHeight: "32px",
                     }}
                   >
-                    Session Notes
+                    Session Videos
+                  </Typography>
+                  {
+                    classDetails?.videos?.length !== 0 && 
+                    (
+                      classDetails?.videos?.map((video)=>
+                       <Box sx={{ height: "120px", width: "241px"}} >
+                         <VideoCard url={video?.url} />
+                      </Box>
+                      )
+                    )
+                  }
+                  <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: "33px",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          color: "black",
+                          fontSize: "14px",
+                          fontWeight: 400,
+                          lineHeight: "16px",
+                        }}
+                      >
+                        Once Class Finished Upload Videos
+                      </Typography>
+                     <VideoUpload 
+                     updateClass={updateClass}
+                     />
+                    </Box>
+                  <Typography
+                    sx={{
+                      color: "black",
+                      fontSize: "20px",
+                      fontWeight: 800,
+                      lineHeight: "32px",
+                    }}
+                  >
+                    Notes
                   </Typography>
                   <Box
                     sx={{
@@ -510,7 +575,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                           lineHeight: "16px",
                         }}
                       >
-                        Once Class Finished Upload Notes
+                        Upload Notes
                       </Typography>
                       <NotesUpload
                         classDetails={classDetails}

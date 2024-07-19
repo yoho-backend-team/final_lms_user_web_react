@@ -1,5 +1,6 @@
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Box, TextField, InputAdornment, Typography } from "@mui/material";
+import { getStudentDetails } from "store/atoms/authorized-atom";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder } from "utils/placeholders";
 
@@ -7,8 +8,11 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket }) => {
   const handleChat = (group) => {
     setCurrentChat(group);
     const communituy_id = group?._id;
+    const student = getStudentDetails()
+    
     console.log(communituy_id, "communityId");
-    socket.emit("join", { group: communituy_id, user: "user" }, (error) => {
+
+    socket.emit("joinGroup", { groupId: communituy_id, userId: student?._id }, (error) => {
       console.log(error, "error");
     });
   };

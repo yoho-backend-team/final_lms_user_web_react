@@ -37,11 +37,12 @@ const ClassesPage = () => {
     { id: "4", title: "Live Class", value: "live" },
   ];
   
+  
   const renderComponents = {
-    upcoming: <UpcomingClassList data={classes} classType={classType} />,
-    completed: <CompletedClassList data={classes} classType={classType} />,
-    history: <ClassHistory data={classes} classType={classType} />,
-    live: <LiveClassList data={classes} classType={classType} />,
+    upcoming: <UpcomingClassList data={classes} classType={classType} group={"upcoming"} />,
+    completed: <CompletedClassList data={classes} classType={classType} group={"completed"} />,
+    history: <ClassHistory data={classes} classType={classType} group={"history"} />,
+    live: <LiveClassList data={classes} classType={classType} group={"live"} />,
   };
 
   const classTypes = [
