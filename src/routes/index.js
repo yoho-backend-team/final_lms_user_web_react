@@ -10,6 +10,7 @@
     checkUser,
   } from "store/atoms/authorized-atom";
   import { role_to_details } from "lib/constants";
+import NotificationList from "views/instructor-pages/notification-page";
 
   // Auth Pages
   const LoginPage = Loadable(lazy(() => import("views/auth-pages/login-page")));
@@ -344,6 +345,7 @@ const InstructorCreateTicketPage = Loadable(
             }
           >
             <Route path="instructor/home" element={<InstructorHomePage />} />
+            <Route  path="instructor/notifications" element={<NotificationList />} />
             <Route
               path="instructor/activity-logs"
               element={<InstructorActivityLogsPage />}

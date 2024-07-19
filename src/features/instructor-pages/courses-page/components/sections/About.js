@@ -8,7 +8,7 @@ const About = ({ Course }) => {
       <Grid item xs={6}>
         <CourseDetails Course={Course} />
       </Grid>
-      <Grid xs={6}>
+      <Grid item xs={6}>
         <CourseChapters Chapters={Course?.coursemodules} />
       </Grid>
     </Grid>

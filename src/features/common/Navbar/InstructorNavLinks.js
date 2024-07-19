@@ -110,7 +110,7 @@ const InstructorNavLinks = () => {
             <Box sx={{ textAlign: "center", pt: 5 }}>
               <Icon
                 icon={item.icon}
-                color={selected === item.id ? "#0D6EFD" : "#6C757D"}
+                color={selected === item.id ? "#5611B1" : "#6C757D"}
               />
             </Box>
             <Typography
@@ -119,7 +119,7 @@ const InstructorNavLinks = () => {
                 textDecoration: "none",
                 textAlign: "center",
                 fontWeight: "500",
-                color: selected === item.id ? "#0D6EFD" : "#6C757D",
+                color: selected === item.id ? "#5611B1" : "#6C757D",
                 fontSize: tabView ? "12px" : "14px",
                 fontFamily: "Poppins",
                 lineHeight: "22px",
