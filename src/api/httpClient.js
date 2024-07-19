@@ -47,8 +47,8 @@ Axios.interceptors.response.use(
       error.response.status === 401 &&
       error.response.statusText === "Unauthorized"
     ) {
-      Cookies.remove(instructorDetails);
-      Cookies.remove(studentDetails);
+       Cookies.remove(instructorDetails);
+       Cookies.remove(studentDetails);
     }
     return Promise.reject(error);
   },
@@ -76,6 +76,7 @@ class HttpClient {
   }
 
   async update(url, data, userType) {
+    console.log(url,data,userType)
     const response = await Axios.put(url, data, {
       headers: {
         "User-Type": userType,
@@ -100,28 +101,6 @@ class HttpClient {
         "Content-Type": "multipart/form-data",
         "User-Type": userType,
       },
-    });
-    return response?.data;
-  }
-
-  async update(url, data,userType) {
-    const response = await Axios.put(url, data,{headers:{"User-Type":userType}});
-    return response?.data;
-  }
-
-  async delete(url,userType){
-    const response = await Axios.delete(url,{ headers:{ "User-Type": userType } })
-    return response?.data
-  }
-
-  async fileGet(url) {
-    const response = Axios.get(url, { responseType: "blob" });
-    return response;
-  }
-
-  async uploadFile(url, data) {
-    const response = await Axios.post(url, data, {
-      headers: { "Content-Type": "multipart/form-data" },
     });
     return response?.data;
   }

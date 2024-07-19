@@ -31,7 +31,9 @@ const Login = () => {
     enterNewPassword: EnterNewPasswordPage
 
   };
+
   const Component = map_to_form[loginStep];
+  
   return (
     <AuthLayout>
       <Component />

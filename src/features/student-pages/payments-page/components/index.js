@@ -553,7 +553,7 @@ const Payment = () => {
                           textAlign: "left",
                         }}
                       >
-                        By Rajalakshmi Institute
+                      {feesData?.fees?.[0]?.institute_id?.institute_name}
                       </Typography>
                       <Box
                         sx={{

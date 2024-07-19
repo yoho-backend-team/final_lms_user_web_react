@@ -43,3 +43,26 @@ export const getIsTimeValid = (startDate, startTime) => {
 
   return isToday && isNotInPast;
 };
+
+
+export const isInClassTimeRange = (startDate, startTime, endTime) => {
+  const classStartDate = new Date(startDate);
+  const classStartTime = new Date(startTime);
+  const classEndTime = new Date(endTime);
+
+  const currentDate = new Date();
+
+  const isSameDate = (
+    currentDate.getFullYear() === classStartDate.getFullYear() &&
+    currentDate.getMonth() === classStartDate.getMonth() &&
+    currentDate.getDate() === classStartDate.getDate()
+  );
+
+  
+  const isInRange = (
+    currentDate >= classStartTime &&
+    currentDate <= classEndTime
+  );
+
+  return isSameDate && isInRange && currentDate < classEndTime;
+};

@@ -12,7 +12,7 @@ import {
   getTimeDifference,
 } from "../../../../../utils/formatDate";
 
-const ClassCard = ({ cls, style, type }) => {
+const ClassCard = ({ cls, style, type, group }) => {
   return (
     <Card sx={{ mb: 2, p: 2 }}>
       <Grid
@@ -93,7 +93,7 @@ const ClassCard = ({ cls, style, type }) => {
         <Grid item xs={3} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             component={Link}
-            to={`/instructor/class/${cls.uuid}?type=${type}`}
+            to={`/instructor/class/${cls.uuid}?type=${type}&group=${group}`}
             state={{ id: cls.uuid }}
             variant="contained"
             sx={{ backgroundColor: "#5611B1", color: "white" }}

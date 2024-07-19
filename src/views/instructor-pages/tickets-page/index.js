@@ -7,15 +7,26 @@ import {
 } from "features/instructor-pages/tickets-page/redux/selectors";
 import getAllTickets from "features/instructor-pages/tickets-page/redux/thunks";
 import { useEffect } from "react";
+import { useSpinner } from "context/SpinnerProvider";
+import toast from "react-hot-toast";
 
 const TicketsPage = () => {
   const dispatch = useDispatch();
   const tickets = useSelector(selectInstructorTickets);
   const loading = useSelector(selectLoading);
   const [currentType, setCurrentType] = useState(null);
+  const { showSpinner,hideSpinner } = useSpinner()
 
   const getTicketsList = (query) => {
-    dispatch(getAllTickets(query));
+    try {
+      showSpinner()
+      dispatch(getAllTickets(query));  
+    } catch (error) {
+      console.log(error)
+      toast.error(error?.message)
+    }finally{
+     hideSpinner()
+    }
   };
 
   useEffect(() => {
@@ -28,7 +39,7 @@ const TicketsPage = () => {
     const data = { status: type };
     getTicketsList(data);
   };
-
+   console.log(tickets,"tickets")
   return (
     <InstructorTicketsPage
       data={tickets}

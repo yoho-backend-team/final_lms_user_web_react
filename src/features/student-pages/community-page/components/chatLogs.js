@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Box, Grid, Typography, Avatar } from "@mui/material";
 import { getStudentDetails } from "store/atoms/authorized-atom";
+import { formatTime } from "utils/formatDate";
 
 const ChatLog = ({ socket, Messages }) => {
   const student = getStudentDetails();
@@ -23,7 +24,7 @@ const ChatLog = ({ socket, Messages }) => {
           container
           key={message.id}
           justifyContent={
-            message.user === student?._id ? "flex-end" : "flex-start"
+            message.sender === student?._id ? "flex-end" : "flex-start"
           }
           sx={{ marginBottom: "8px" }}
         >
@@ -35,7 +36,7 @@ const ChatLog = ({ socket, Messages }) => {
                 fontWeight: 400,
                 opacity: "0.7",
                 marginBottom: "10px",
-                textAlign: message.user === student?._id ? "end" : "start",
+                textAlign: message.sender === student?._id ? "end" : "start",
               }}
             >
               {message.time}
@@ -45,7 +46,7 @@ const ChatLog = ({ socket, Messages }) => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems:
-                  message.user === student?._id ? "flex-end" : "flex-start",
+                  message.sender === student?._id ? "flex-end" : "flex-start",
               }}
             >
               <Typography
@@ -53,10 +54,10 @@ const ChatLog = ({ socket, Messages }) => {
                 sx={{
                   wordBreak: "break-word",
                   backgroundColor:
-                    message.user === student?._id ? "#61C554" : "#E8ECEF",
+                    message.sender === student?._id ? "#61C554" : "#E8ECEF",
                   padding: "15px 20px 16px 15px",
                   borderRadius: "10px",
-                  color: message.user === student?._id ? "white" : "#000000",
+                  color: message.sender === student?._id ? "white" : "#000000",
                   fontSize: "14px",
                   fontWeight: 400,
                 }}
@@ -64,6 +65,7 @@ const ChatLog = ({ socket, Messages }) => {
                 {message.message}
               </Typography>
             </Box>
+            <Typography sx={{ color : "#727272", fontSize: "11px", fontWeight: 500, py: "10px", textAlign: message?.sender === student?._id ? "end" : "left"}} >{formatTime(message?.createdAt)}</Typography>
           </Grid>
         </Grid>
       ))}

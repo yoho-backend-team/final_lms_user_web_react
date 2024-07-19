@@ -11,19 +11,24 @@ import {
   getIsTimeValid,
   getTimeDifference,
 } from "../../../../../utils/formatDate";
+import { Viewimage } from "utils/images";
 
 const ClassCard = ({ cls, style, type }) => {
   return (
-    <Card sx={{ mb: 2, p: 2 }}>
+    <Card sx={{ mb: 2}}>
       <Grid
         container
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-        }}
+          backgroundImage: `url(${Viewimage})`,
+            backgroundSize: 'auto',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition : "right"
+                  }}
       >
-        <Grid item xs={3}>
+        <Grid item xs={3} sx={{ p: 2 }}>
           <Box>
             <Typography variant="h6" sx={{ fontWeight: "bold" }}>
               {cls?.class_name}
@@ -89,14 +94,38 @@ const ClassCard = ({ cls, style, type }) => {
             </Typography>
           </Box>
         </Grid>
-
-        <Grid item xs={3} sx={{ display: "flex", justifyContent: "flex-end" }}>
+<Grid
+          item
+          xs={3}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignitems: "center",
+            padding: "10px",
+            gap: "10px",
+flexshrink: 0,
+width: "113px",
+height: "60px"
+           // Adjust this value as needed
+          }}
+        >
           <Button
             component={Link}
             to={`/student/class/${cls.uuid}?type=${type}`}
             state={{ id: cls.uuid }}
             variant="contained"
-            sx={{ backgroundColor: "#5611B1", color: "white" }}
+            sx={{
+              backgroundColor: "#FFF",
+              color: "#0D6EFD",
+              padding: '8px 16px',
+              minWidth: '100px',
+              borderRadius: '8px',
+              fontfamily: "Poppins",
+              fontsize: "14px",
+fontstyle: "normal",
+fontweight: "500",
+lineheight: "22px"
+            }}
           >
             View Class
           </Button>
@@ -105,5 +134,6 @@ const ClassCard = ({ cls, style, type }) => {
     </Card>
   );
 };
+
 
 export default ClassCard;

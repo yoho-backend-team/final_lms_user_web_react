@@ -63,12 +63,19 @@ const studentCourseId = () => {
   return user?.userDetail?.course;
 };
 
+const instituteStudentuuid = () => {
+  const userDetails = getStudentDetails();
+  return userDetails?.institute_id?.uuid;
+};
+
 const generateEndpoints = () => {
   const institute = instituteId();
   const branch = branchId();
   const course = courseId();
   const institutestudent = instituteIdStudent();
   const branchstudent = branchIdStudent();
+
+  const instituteuuid = instituteStudentuuid();
 
   const institute1 = instituteStudentId();
   const branch1 = branchStudentId();
@@ -107,14 +114,25 @@ const generateEndpoints = () => {
       activity: {
         get: `institutes/user/activity/`,
       },
+      faq: {
+        // get: `institutes/faq/category?instituteid=${getStudentDetails()?.institute_id?.uuid}&branchid=${getStudentDetails()?.branch_id?.uuid}`,
+        get: `institutes/faq/all`,
+      },
 
+      reports : {
+        get : "/institutes/reports/users/student",
+      },
       community: {
         get: `/institutes/community/course/${course1}`,
+      },
+      profile: {
+        get: `/institutes/auth/student/${getStudentDetails()?.uuid}/${instituteuuid}`,
+        update: `/institutes/auth/student/update/${getStudentDetails()?.uuid}`,
       },
     },
     common: {
       file: {
-        upload: "/upload/",
+        upload: "/upload/", 
       },
     },
     common: {
@@ -156,11 +174,14 @@ const generateEndpoints = () => {
       },
       ticket: {
         create: "/institutes/staff/ticket",
-        get: "/institutes/staff/ticket/all",
+        get: "/institutes/staff/ticket/",
       },
-      reports: {
-        get: "/institutes/reports/users/teaching-staff",
+      reports : {
+        get : "/institutes/reports/users/teaching-staff"
       },
+      index : {
+        get : "/institutes/auth/profile/me/"
+      }
     },
   };
 };

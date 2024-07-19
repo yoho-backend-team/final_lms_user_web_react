@@ -1,8 +1,5 @@
-
-
-
 import { Grid, Box, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useTabResponsive } from "utils/tabResponsive";
 import CourseStudentModuleCard from "../CourseNotesComponents/courseModuleCard";
 
@@ -20,7 +17,6 @@ const modules = [
   },
   {
     id: 2,
-
     style: {
       card: "118deg, #CF75FF 1.82%, #670BC3 97.62%",
       color: "#801FBB",
@@ -68,10 +64,11 @@ const modules = [
 
 
               
-  const CourseAndNotesStudentPage = ({ Course, openCourseView, closeCourseView }) => {
+  const CourseAndNotesStudentPage = ({ Course, openCourseView, closeCourseView, selectedClass }) => {
   const { tabView } = useTabResponsive();
    console.log (Course, "Course Details")
     const classes = Course?.batches[0]?.classes || [];
+    console.log(Course,"selectedClassselectedClassselectedClass")
                 
   const getRandomStyle = () => {
     const randomIndex = Math.floor(Math.random() * modules.length);
@@ -84,7 +81,7 @@ const modules = [
                 return (
                   <Box sx={{ padding: tabView ? "20px" : "60px" }}>
                     <Grid container xs={12} gap={tabView ? "60px" : "20px"}>
-                    {classes.map((module) => (
+                    {classes?.map((module) => (
                         <Grid item key={module.id} xs={12} md={6} lg={4}>
                           <CourseStudentModuleCard
                             id={module.id}
@@ -101,35 +98,13 @@ const modules = [
                             progress={module.progress}
                             closeCourseView={closeCourseView}
                             openCourseView={openCourseView}
+                            module={module}
                           />
                         </Grid>
                       ))}
                       <Grid
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          border: "1px dashed #5611B1",
-                          px: "66px",
-                          borderRadius: "12px",
-                          cursor: "pointer",
-                        }}
+                        
                       >
-                        <Box>
-                          <Typography
-                            sx={{
-                              color: "#5611B1",
-                              fontSize: "16px",
-                              fontWeight: 500,
-                              lineHeight: "14px",
-                            }}
-                            component={Link}
-                            to={"/student/StudyMaterialsPage"}
-                          >
-                            Add Notes & Videos
-                          </Typography>
-                        </Box>
                       </Grid>
                     </Grid>
                     <Box

@@ -36,7 +36,7 @@ const defaultStyles = {
   durationColor: "rgba(253, 176, 61, 0.22)",
 };
 
-const CompletedClassList = ({ data, classType }) => {
+const CompletedClassList = ({ data, classType,group }) => {
   return (
     <Box sx={{ mt: 3, px: "40px" }}>
       {data.map((cls) => (
@@ -45,6 +45,7 @@ const CompletedClassList = ({ data, classType }) => {
           cls={cls}
           style={defaultStyles}
           type={classType}
+          group={group}
         />
       ))}
     </Box>

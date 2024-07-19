@@ -16,7 +16,7 @@ import CourseProgressCard from "features/instructor-pages/home-page/components/c
 import { useTabResponsive } from "utils/tabResponsive";
 import {
   getBranchDetails,
-  getInstituteDetails,
+  getInstituteDetails,  
 } from "store/atoms/authorized-atom";
 import { BranchIcon } from "utils/images";
 import Client from "../../../api/index"
@@ -28,6 +28,7 @@ import { useSpinner } from "context/SpinnerProvider";
 import getAllReports from "features/instructor-pages/home-page/redux/thunks";
 import { profilePlaceholder } from "utils/placeholders";
 import { getImageUrl } from "utils/common/imageUtlils";
+import { Link } from "react-router-dom";
 
 const InstructorDashBoard = () => {
   const dispatch = useDispatch()
@@ -118,6 +119,8 @@ const InstructorDashBoard = () => {
             <Grid xs={4}>
               <Button
                 variant="contained"
+                component = {Link}
+                to={"/instructor/profile"}
                 color="primary"
                 size="medium"
                 sx={{ p: 1, px: 2, borderRadius: 5 }}

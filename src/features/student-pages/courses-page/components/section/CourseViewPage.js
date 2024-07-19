@@ -17,8 +17,45 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { formatDate, formatTime } from "utils/formatDate";
 
 const SingleCourseStudentView = ({ Course }) => {
-  const classes = Course?.batches[0]?.classes || [];
-  console.log(Course, "Course Student")
+  // const classes = Course?.batches[0]?.classes || [];
+  // const classes2 = Course?.studymaterials || [];
+  // const classes3 = Course?.notes || [];
+  console.log(Course, "Course")
+  const downloadPdf = () => {
+    
+    const pdfContent = '...'; 
+    const blob = new Blob([pdfContent], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${Course?.study_materials?.title}.pdf`; 
+    document.body.appendChild(a);
+    a.click();
+
+    
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+  const downloadNotesPdf = () => {
+    
+    const pdfContent = '...'; 
+    const blob = new Blob([pdfContent], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${Course?.notes?.title}.pdf`; 
+    document.body.appendChild(a);
+    a.click();
+
+    
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+  console.log(Course, "Course Single view Student")
   return (
     <Box sx={{ padding: "16px" }}>
         <Box>
@@ -31,18 +68,20 @@ const SingleCourseStudentView = ({ Course }) => {
             }}
           >
             <Box sx={{ display: "flex", flexDirection: "column", gap: "15px" }}>
-  {classes.map((chapter, index) => (
-    <Box key={index} sx={{ display: "flex", gap: "15px" }}>
+  
+    <Box  sx={{ display: "flex", gap: "25px",p:4,m:2 }}>
       <Box>
         <Typography
           sx={{
             backgroundColor: "#2E80F9",
             borderRadius: "11px",
             padding: "16px 11px",
-            fontSize: "21px",
+            fontfamily: "Poppins",
+            fontSize: "21.087px",
             fontWeight: 600,
-            lineHeight: "14px",
-            color: "white",
+            lineHeight: "14.761px",
+            color: "#FFF",
+            
           }}
         >
           1st
@@ -51,32 +90,40 @@ const SingleCourseStudentView = ({ Course }) => {
       <Box sx={{ display: "inline-flex", flexDirection: "column", gap: "7px" }}>
         <Typography
           sx={{
-            color: "black",
+            fontfamily: "Poppins",
             fontSize: "14px",
             fontWeight: 600,
-            lineHeight: "11px",
+            lineHeight: "11.317px",
+            color: "#000",
           }}
         >
           Chapter
         </Typography>
-        <Typography sx={{ width: "150px" }}>
-          {chapter?.class_name}
+        <Typography sx={{ width: "150px",
+           fontfamily: "Nunito Sans",
+           fontSize: "10.087px",
+           fontWeight: 600,
+           lineHeight: "14px",
+           color: "##000"
+         }}>
+          {Course?.class_name}
         </Typography>
       </Box>
       <Box>
         <Typography
           sx={{
+            fontfamily: "Poppins",
             fontSize: "28px",
             fontWeight: 900,
-            lineHeight: "40px",
-            color: "#000000",
+            lineHeight: "14.761px",
+            color: "#000",
           }}
         >
           97%
         </Typography>
       </Box>
     </Box>
-  ))}
+ 
 </Box>
               <Box sx={{ display: "flex", gap: "74px" }}>
                 <Box sx={{ display: "inline-flex", gap: "8px" }}>
@@ -102,10 +149,10 @@ const SingleCourseStudentView = ({ Course }) => {
               
           </Box>
           <Box sx={{ overflowX: "auto", marginTop: "16px" }}>
-            <Box sx={{ display: "flex", gap: "16px" }}>
-              {classes.map((chapter) => (
+            <Box sx={{ display: "flex", gap: "10px" , p:4, m:2}}>
+              
                 <Card
-                  key={chapter}
+                  key={Course}
                   sx={{
                     minWidth: "200px",
                     padding: "15px",
@@ -118,7 +165,7 @@ const SingleCourseStudentView = ({ Course }) => {
                     height="140"
                     sx={{ borderRadius: "9px" }}
                     image={`https://via.placeholder.com/150?text=Chapter+${1}`}
-                    alt={`Chapter ${chapter}`}
+                    alt={`Chapter ${Course}`}
                   />
                   <CardContent sx={{ padding: "0px", pt: "5px" }}>
                     <Box
@@ -138,7 +185,7 @@ const SingleCourseStudentView = ({ Course }) => {
                             lineHeight: "22px",
                           }}
                         >
-                          {chapter?.class_name}
+                          {Course?.class_name}
                         </Typography>
                       </Box>
                       <Box sx={{ display: "flex", gap: "4px" }}>
@@ -164,7 +211,7 @@ const SingleCourseStudentView = ({ Course }) => {
                           lineHeight: "22px",
                         }}
                       >
-                        By {chapter?.instructors[0]?.full_name}
+                        By {Course?.instructors[0]?.full_name}
                       </Typography>
                     </Box>
                     <Box
@@ -187,7 +234,7 @@ const SingleCourseStudentView = ({ Course }) => {
                             lineHeight: "22px",
                           }}
                         >
-                          {formatDate(chapter?.createdAt)}
+                          {formatDate(Course?.createdAt)}
                         </Typography>
                       </Box>
                       <Box sx={{ display: "inline-flex", gap: "5px" }}>
@@ -202,16 +249,16 @@ const SingleCourseStudentView = ({ Course }) => {
                             lineHeight: "22px",
                           }}
                         >
-                         {formatTime(chapter?.createdAt)}
+                         {formatTime(Course?.createdAt)}
                         </Typography>
                       </Box>
                     </Box>
                   </CardContent>
                 </Card>
-              ))}
+            
             </Box>
           </Box>
-          <Box sx={{ paddingTop: "16px", pb: "25px" }}>
+          <Box sx={{ paddingTop: "16px", pb: "25px" , p:4, m:2}}>
             <Typography
               variant="h6"
               sx={{
@@ -226,7 +273,7 @@ const SingleCourseStudentView = ({ Course }) => {
             </Typography>
             <Box sx={{ overflowX: "auto", marginTop: "8px" }}>
               <Box sx={{ display: "flex", gap: "16px" }}>
-                {Course?.studymaterials?.map((course,index) => (
+                {Course?.study_materials?.map((course,index) => (
                   <Card
                   key={{index}}
                     sx={{
@@ -277,7 +324,7 @@ const SingleCourseStudentView = ({ Course }) => {
                             flexDirection: "column",
                           }}
                         >
-                          <SaveAltOutlinedIcon sx={{ color: "#8E8383" }} />
+                          <SaveAltOutlinedIcon sx={{ color: "#8E8383",cursor: "pointer" }} onClick={downloadPdf} />
                         </Box>
                       </Box>
                     </CardContent>
@@ -286,7 +333,7 @@ const SingleCourseStudentView = ({ Course }) => {
               </Box>
             </Box>
           </Box>
-          <Box sx={{ paddingTop: "16px", pb: "25px" }}>
+          <Box sx={{ paddingTop: "16px", pb: "25px", p:4, m:2 }}>
             <Typography
               variant="h6"
               sx={{
@@ -332,7 +379,7 @@ const SingleCourseStudentView = ({ Course }) => {
                               lineHeight: "14px",
                             }}
                           >
-                            {note.title}
+                            {note?.title}
                           </Typography>
                           <Typography
                             variant="body2"
@@ -352,7 +399,7 @@ const SingleCourseStudentView = ({ Course }) => {
                             flexDirection: "column",
                           }}
                         >
-                          <SaveAltOutlinedIcon sx={{ color: "#8E8383" }} />
+                          <SaveAltOutlinedIcon sx={{ color: "#8E8383", cursor:"pointer"  }}onClick={downloadNotesPdf} />
                         </Box>
                       </Box>
                     </CardContent>

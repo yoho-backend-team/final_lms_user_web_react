@@ -1,14 +1,25 @@
 import Icon from "../../../components/icon";
-import { Grid, Box, Typography, Avatar } from "@mui/material";
+import { Grid, Box, Typography, Avatar, useMediaQuery } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTabResponsive } from "utils/tabResponsive";
+import {
+  NavBg,
+  NavMobileBg,
+  NavSelectedImage,
+  NavMobileSelectedImage,
+} from "utils/images";
 
 const StudentNavLinks = ({ student }) => {
   const location = useLocation();
   const currentPath = location.pathname;
+  const { tabView } = useTabResponsive();
 
   const nav_selected_image = require("../../../assets/images/pages/nav_selected.png");
   const nav_back_image = require("../../../assets/images/pages/nav_back.png");
+
+  const isSmallScreen = useMediaQuery('(max-width: 900px)');
+
 
   // Initialize selected state with a default value
   const [selected, setSelected] = useState(1);
@@ -67,16 +78,18 @@ const StudentNavLinks = ({ student }) => {
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
-        mt: 10,
+        mt: tabView ? 10 : 10,
       }}
     >
       <Box sx={{ position: "absolute" }}>
         <img
-          src={nav_back_image}
+         src={tabView ? NavMobileBg : NavBg}
           style={{
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
+            marginTop: isSmallScreen ? "-64px" : "18px"
+
           }}
           alt="nav background"
         />
@@ -85,12 +98,13 @@ const StudentNavLinks = ({ student }) => {
       <Box
         sx={{
           display: "flex",
-          gap: 5,
+          gap: tabView ? 2 : 5,
           position: "relative",
-          display: { xs: "none", sm: "flex" },
-          padding: 7,
+          padding: tabView ? "25px 45px 45px 45px" : 7,
           borderBottomLeftRadius: 80,
-          borderBottomRightRadius: 80,
+          borderBottomRightRadius: 80,  
+          marginTop: isSmallScreen ? "-64px" : "18px"       
+          
         }}
       >
         {nav_items.map((item) => (
@@ -122,7 +136,7 @@ const StudentNavLinks = ({ student }) => {
                 textAlign: "center",
                 fontWeight: "500",
                 color: selected === item?.id ? "#0D6EFD" : "#6C757D",
-                fontSize: "14px",
+                fontSize: tabView ? "12px" : "14px",
                 fontFamily: "poppins",
                 lineHeight: "22px",
               }}
@@ -138,28 +152,6 @@ const StudentNavLinks = ({ student }) => {
             )}
           </Box>
         ))}
-      </Box>
-
-      {/* Display student's name and profile image */}
-      <Box sx={{ textAlign: "center", mt: 2 }}>
-        {student && (
-          <>
-            <Avatar
-              alt={student.name}
-              src={student.profileImage}
-              sx={{ width: 64, height: 64 }}
-            />
-            <Typography
-              variant="body1"
-              sx={{ fontWeight: "500", mt: 1, color: "#6C757D" }}
-            >
-              {student.name}
-            </Typography>
-            <Typography variant="body2" sx={{ color: "#6C757D" }}>
-              Student ID: {student.studentID}
-            </Typography>
-          </>
-        )}
       </Box>
     </Grid>
   );

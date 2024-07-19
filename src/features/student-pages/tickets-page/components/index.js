@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Box, Typography, Tab, Tabs, Button, Grid, Modal } from "@mui/material";
-import {TicketBg2} from "utils/images"
+import {TicketBg2, TicketMain} from "utils/images"
 import { useTabResponsive } from "utils/tabResponsive";
 import TicketLoader from "components/ui/loaders/ticketLoader";
 import StudentTicketCard from "./TicketsCard";
 import StudentTicketView from "./TicketView";
 import StudentCreateTicketForm from "./createTicketForm";
+import ImageContainer from "./ImageContainer";
 
 const StudentDataTicketsPage = ({
   data,
@@ -16,13 +17,21 @@ const StudentDataTicketsPage = ({
   const [value, setValue] = useState("1");
   const [open, setOpen] = useState(false);
   const [ticketView, setTicketView] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState(null);
   const { tabView } = useTabResponsive();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const handleTicketViewOpen = () => setTicketView(true);
-  const handleTicketViewClose = () => setTicketView(false);
+  // const handleTicketViewOpen = () => setTicketView(true);
+  // const handleTicketViewClose = () => setTicketView(false);
+  const handleTicketViewOpen = (ticketId) => {
+    setSelectedTicket(ticketId);
+  };
+
+  const handleTicketViewClose = () => {
+    setSelectedTicket(null);
+  };
 
   const tab_list = [
     { id: "1", title: "All" },
@@ -45,23 +54,16 @@ const StudentDataTicketsPage = ({
   console.log(data,"data")
   return (
     <>
-      <Box
-        sx={{
-          backgroundImage: `url(${TicketBg2})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          height: "100vh",
-          overflow: "auto",
-        }}
-      >
+        <ImageContainer >
         <Box
           sx={{ p: tabView ? "62px 40px 20px 38px" : "62px 40px 20px 80px" }}
         >
-          {open || ticketView ? (
+          {open || selectedTicket !== null  ? (
             open ? (
               <StudentCreateTicketForm handleClose={handleClose} />
             ) : (
-              <StudentTicketView tickets={data} handleTicketViewClose={handleTicketViewClose} />
+              <StudentTicketView tickets={data.filter((ticket) => ticket.id === selectedTicket)}
+              handleTicketViewClose={handleTicketViewClose} />
             )
           ) : (
             <>
@@ -128,7 +130,9 @@ const StudentDataTicketsPage = ({
                     <Grid item xs={tabView ? 6 : 4} key={index}>
                       <StudentTicketCard
                         {...ticket}
-                        handleTicketViewOpen={handleTicketViewOpen}
+                        handleTicketViewOpen={() =>
+                          handleTicketViewOpen(ticket.id)
+                        }
                         handleTicketViewClose={handleTicketViewClose}
                       />
                     </Grid>
@@ -138,7 +142,7 @@ const StudentDataTicketsPage = ({
             </>
           )}
         </Box>
-      </Box>
+      </ImageContainer>
     </>
   );
 };
