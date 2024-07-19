@@ -11,6 +11,8 @@ const ClassViewPage = () => {
   const { id } = useParams();
   const classId = location?.state?.id;
   const classType = searchParams.get("type");
+  const groupType = searchParams.get("group")
+
   const [classDetails, setClassDetails] = useState(null);
   const { showSpinner, hideSpinner } = useSpinner();
 
@@ -32,6 +34,7 @@ const ClassViewPage = () => {
         type={classType}
         classDetails={classDetails}
         getClass={getClass}
+        group={groupType}
       />
     </ClassLayout>
   );

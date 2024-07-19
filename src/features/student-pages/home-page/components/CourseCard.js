@@ -11,10 +11,9 @@ import { selectStudentDashboard } from '../redux/selectors';
 
 const CourseCard = () => {
     
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const reports = useSelector(selectStudentDashboard); 
-  const { showSpinner, hideSpinner } = useSpinner()
-
+  const { showSpinner, hideSpinner } = useSpinner();
 
   const fetchReports = async () => {
     try {
@@ -31,7 +30,6 @@ const CourseCard = () => {
     fetchReports();
   }, [dispatch]);
  
-
   const options = {
     chart: {
       height: 300,
@@ -69,9 +67,6 @@ const CourseCard = () => {
     labels: [""],
   };
 
-
-
-
   return (
     <Card
       sx={{
@@ -80,7 +75,8 @@ const CourseCard = () => {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         p: 3,
-        boxShadow: "none",
+        boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
+        border: "1px solid #E6AC96",
         position: "relative",
       }}
     >
@@ -116,7 +112,7 @@ const CourseCard = () => {
                   fontWeight: 700,
                   textAlign: "center",
                   minWidth: '65px',
-                  marginLeft:'100px',
+                  marginLeft: '100px',
                   lineHeight: 'normal'
                 }}
               >
@@ -130,18 +126,18 @@ const CourseCard = () => {
                   fontWeight: 400,
                   textAlign: "center",
                   minWidth: '65px',
-                  marginLeft:'100px',
+                  marginLeft: '100px',
                 }}
               >
                 {reports?.classes?.[0]?.total} Class
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
+            <Grid item xs={12} sm={6} md={6} lg={6} sx={{ textAlign: 'center' }}>
               <Chart
                 options={options}
                 series={options.series}
                 type="radialBar"
-                height={150}
+                height={[150, 200, 300]} 
               />
             </Grid>
           </Grid>
