@@ -117,7 +117,7 @@ const CourseStudentModuleCard = ({
               lineHeight: "22px",
             }}
           >
-            {videos} Videos
+            {videos?.length} Videos
           </Typography>
         </Box>
       </Box>

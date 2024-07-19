@@ -55,7 +55,7 @@ const SingleCourseStudentView = ({ Course }) => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
-  console.log(Course, "Course Student")
+  console.log(Course, "Course Single view Student")
   return (
     <Box sx={{ padding: "16px" }}>
         <Box>
@@ -69,17 +69,19 @@ const SingleCourseStudentView = ({ Course }) => {
           >
             <Box sx={{ display: "flex", flexDirection: "column", gap: "15px" }}>
   
-    <Box  sx={{ display: "flex", gap: "15px" }}>
+    <Box  sx={{ display: "flex", gap: "25px",p:4,m:2 }}>
       <Box>
         <Typography
           sx={{
             backgroundColor: "#2E80F9",
             borderRadius: "11px",
             padding: "16px 11px",
-            fontSize: "21px",
+            fontfamily: "Poppins",
+            fontSize: "21.087px",
             fontWeight: 600,
-            lineHeight: "14px",
-            color: "white",
+            lineHeight: "14.761px",
+            color: "#FFF",
+            
           }}
         >
           1st
@@ -88,25 +90,33 @@ const SingleCourseStudentView = ({ Course }) => {
       <Box sx={{ display: "inline-flex", flexDirection: "column", gap: "7px" }}>
         <Typography
           sx={{
-            color: "black",
+            fontfamily: "Poppins",
             fontSize: "14px",
             fontWeight: 600,
-            lineHeight: "11px",
+            lineHeight: "11.317px",
+            color: "#000",
           }}
         >
           Chapter
         </Typography>
-        <Typography sx={{ width: "150px" }}>
+        <Typography sx={{ width: "150px",
+           fontfamily: "Nunito Sans",
+           fontSize: "10.087px",
+           fontWeight: 600,
+           lineHeight: "14px",
+           color: "##000"
+         }}>
           {Course?.class_name}
         </Typography>
       </Box>
       <Box>
         <Typography
           sx={{
+            fontfamily: "Poppins",
             fontSize: "28px",
             fontWeight: 900,
-            lineHeight: "40px",
-            color: "#000000",
+            lineHeight: "14.761px",
+            color: "#000",
           }}
         >
           97%
@@ -139,7 +149,7 @@ const SingleCourseStudentView = ({ Course }) => {
               
           </Box>
           <Box sx={{ overflowX: "auto", marginTop: "16px" }}>
-            <Box sx={{ display: "flex", gap: "16px" }}>
+            <Box sx={{ display: "flex", gap: "10px" , p:4, m:2}}>
               
                 <Card
                   key={Course}
@@ -248,7 +258,7 @@ const SingleCourseStudentView = ({ Course }) => {
             
             </Box>
           </Box>
-          <Box sx={{ paddingTop: "16px", pb: "25px" }}>
+          <Box sx={{ paddingTop: "16px", pb: "25px" , p:4, m:2}}>
             <Typography
               variant="h6"
               sx={{
@@ -323,7 +333,7 @@ const SingleCourseStudentView = ({ Course }) => {
               </Box>
             </Box>
           </Box>
-          <Box sx={{ paddingTop: "16px", pb: "25px" }}>
+          <Box sx={{ paddingTop: "16px", pb: "25px", p:4, m:2 }}>
             <Typography
               variant="h6"
               sx={{
