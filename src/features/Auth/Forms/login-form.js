@@ -18,7 +18,7 @@ import { useFormik } from "formik";
 import { useStudentLogin } from "../services";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import Forgetpassword from '../ForgetPassword.js'
+
 const validationSchema = yup.object({
   email: yup
     .string("Enter your email")
@@ -34,6 +34,7 @@ const LoginForm = () => {
   const theme = useTheme();
   const studentLogin = useStudentLogin();
   const navigate = useNavigate();
+  const [, setLoginStep] = useAtom(studentLoginStepAtom);
 
   const formik = useFormik({
     initialValues: {
@@ -46,7 +47,6 @@ const LoginForm = () => {
         const response = await studentLogin(values);
         console.log(response, "response");
         if (response.success) {
-          console.log(response?.success);
           navigate("/student/home");
         }
       } catch (error) {
@@ -55,6 +55,12 @@ const LoginForm = () => {
       }
     },
   });
+
+  const handleForgetPassword = (e) => {
+        e.preventDefault();
+        setLoginStep("forgetPassword");
+  }
+  
 
   return (
     <Box>
@@ -135,7 +141,7 @@ const LoginForm = () => {
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
             <Typography>Forget Password?</Typography>
-            <Link to="/student/Forgetpassword">Get it</Link>
+            <Link onClick={handleForgetPassword} to="#">Get it</Link>
           </Box>
           <Box sx={{ mt: 8, justifyContent: "center", display: "flex" }}>
             <Typography sx={{ fontSize: 12 }}>
