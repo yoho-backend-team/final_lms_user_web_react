@@ -35,6 +35,7 @@ const LoginForm = () => {
   const theme = useTheme();
   const studentLogin = useStudentLogin();
   const navigate = useNavigate();
+  const [, setLoginStep] = useAtom(studentLoginStepAtom);
 
   const formik = useFormik({
     initialValues: {
@@ -55,6 +56,12 @@ const LoginForm = () => {
       }
     },
   });
+
+  const handleForgetPassword = (e) => {
+        e.preventDefault();
+        setLoginStep("forgetPassword");
+  }
+  
 
   return (
     <Box>
@@ -135,7 +142,7 @@ const LoginForm = () => {
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
             <Typography>Forget Password?</Typography>
-            <Link to="#">Get it</Link>
+            <Link onClick={handleForgetPassword} to="#">Get it</Link>
           </Box>
           <Box sx={{ mt: 8, justifyContent: "center", display: "flex" }}>
             <Typography sx={{ fontSize: 12 }}>

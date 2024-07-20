@@ -1,16 +1,21 @@
-import { Grid } from "@mui/material";
 import React from "react";
-import logo from "assets/images/logo.png";
 import AuthFrame from "assets/images/auth/AuthFrame.png";
-import { Box, Typography } from "@mui/material";
+import { Grid, Box, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import Login from "features/Auth/login";
-import { Outlet } from "react-router-dom";
+import { useTabResponsive } from "utils/tabResponsive";
+import logo from "assets/images/logo.png";
 
 const AuthLayout = ({ children }) => {
   const theme = useTheme();
+  const { tabView } = useTabResponsive();
+
   return (
-    <Grid container sx={{ display: { xs: "block", sm: "flex" } }}>
+    <Grid
+      sx={{
+        display: { xs: "block", sm: "flex" },
+        flexDirection: tabView ? "column" : "row",
+      }}
+    >
       <Grid
         item
         xs={12}
@@ -22,18 +27,20 @@ const AuthLayout = ({ children }) => {
           backgroundPosition: { xs: "center" },
           overflow: "hidden",
           width: "100%",
-          height: { xs: "50vh", sm: "100vh" },
+          height: tabView ? "597px" : "100vh",
         }}
       >
         <Box>
-          <Box sx={{ px: { sm: 10, xs: 2 } }}>
-            <img src={logo} alt="logo" height={100} />
+          <Box sx={{ px: { sm: 10, xs: 2 }, display: tabView && "none" }}>
+            <img
+              src={logo}
+              alt="logo"
+              style={{ bottom: 0, position: "absolute", paddingLeft: "8.5%" }}
+            />
           </Box>
           <Box
             sx={{
               px: { sm: 20, xs: 5 },
-              // py: { xs: 5, sm: 10 },
-              // flexWrap: "wrap",
               justifyContent: "center",
               display: "flex",
             }}
@@ -43,9 +50,10 @@ const AuthLayout = ({ children }) => {
               variant="h1"
               color={theme.palette.common.white}
               sx={{
-                fontSize: { xs: "2em", sm: "4em" },
-                lineHeight: { sm: "5rem" },
+                fontSize: tabView ? "2em" : "4em",
+                lineHeight: tabView ? "4rem" : "5rem",
                 display: "flex",
+                pt: { sm: "15%" },
               }}
             >
               "
@@ -61,9 +69,8 @@ const AuthLayout = ({ children }) => {
         xs={12}
         sm={4}
         sx={{
-          // backgroundColor: theme.palette.common.white,
-          height: { xs: "100%", sm: "100vh" },
-          p: { xs: 1, sm: 5 },
+          height: tabView ? "597px" : "100vh",
+          p: tabView ? 1 : 5,
           justifyContent: "center",
           display: "flex",
         }}
