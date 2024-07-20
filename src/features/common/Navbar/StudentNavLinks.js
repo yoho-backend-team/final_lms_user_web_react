@@ -47,7 +47,7 @@ const StudentNavLinks = ({ student }) => {
       id: 4,
       name: "Courses",
       icon: "mdi:academic-cap-outline",
-      to: "/student/course",
+      to: "/student/courses",
     },
     {
       id: 5,

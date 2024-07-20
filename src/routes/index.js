@@ -41,6 +41,10 @@ import NotificationList from "views/instructor-pages/notification-page";
   const StudentCoursePage = Loadable(
     lazy(() => import("views/student-pages/courses-page")),
   );
+
+  const StudentCourseViewPage = Loadable(
+    lazy(() => import("views/student-pages/courses-page/course[id]-page"))
+  )
   const StudentHelpCenterPage = Loadable(
     lazy(() => import("views/student-pages/help-center-page")),
   );
@@ -278,8 +282,8 @@ const InstructorCreateTicketPage = Loadable(
               path="student/community"
               element={<StudentCommunityPage />}
             />
-            <Route path="student/courses" element={<CourseFrontPage />} />
-            <Route path="student/course/:id" element={<StudentCoursePage />} />
+            <Route path="student/courses" element={< StudentCourseViewPage/>} />
+            <Route path="student/course/:id" element={< StudentCoursePage/>} />
             
             <Route
               path="student/help-center"
