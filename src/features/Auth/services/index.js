@@ -153,7 +153,7 @@ export const useForgetPasswordOtpVerify = () => {
       const { token, user } = response?.data;
       setOtpAtom({ email: null, token: null, otp: "" });
       setStudentAtom({
-        isLoggedIn: true,
+        isLoggedIn: false,
         userDetails: user,
         token: token,
         role: "student",

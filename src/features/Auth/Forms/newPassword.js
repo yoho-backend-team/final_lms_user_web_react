@@ -1,84 +1,140 @@
-import { useState } from "react";
-import { TextField, Button, Typography, Container } from "@mui/material";
-import { styled } from "@mui/system";
-import { useStudentNewPassword } from "../services";
+import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  FormControl,
+  TextField,
+  Typography,
+  Input,
+} from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import toast from "react-hot-toast";
 
-const FullHeightContainer = styled(Container)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  minHeight: "100vh",
-  backgroundColor: "#f5f5f5",
-}));
-
-const Form = styled("form")({
-  display: "flex",
-  flexDirection: "column",
-  gap: "16px",
-  width: "100%",
-  maxWidth: "400px",
-});
-
-const ConfirmButton = styled(Button)(({ theme }) => ({
-  backgroundColor: "#007bff",
-  color: "#fff",
-  "&:hover": {
-    backgroundColor: "#0056b3",
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100vh",
+    backgroundColor: "#f0f0f0",
+  },
+  container: {
+    padding: theme.spacing(4),
+    backgroundColor: "#fff",
+    borderRadius: theme.spacing(1),
+    boxShadow: theme.shadows[3],
+  },
+  button: {
+    marginTop: theme.spacing(2),
   },
 }));
 
-const ForgetPasswordPage = () => {
-  const [newPassword, setNewPassword] = useState("");
+const EnterNewPassword = () => {
+  const classes = useStyles();
+  const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const { resetPassword } = useStudentNewPassword(); 
-
-  const handleNewPasswordChange = (e) => {
-    setNewPassword(e.target.value);
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
   };
 
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (newPassword !== confirmPassword) {
+  const handleSubmit = async (e) => {
+    if (password !== confirmPassword) {
+      console.log(setPassword, "set");
+      console.log(confirmPassword, "confirm");
       alert("Passwords do not match");
       return;
     }
-    resetPassword(newPassword); 
+    try {
+         
+    } catch (error) {
+      console.error("Error resetting password", error);
+    }
   };
 
   return (
-    <FullHeightContainer>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Enter New Password
-      </Typography>
-      <Form onSubmit={handleSubmit}>
-        <TextField
-          label="Enter New Password"
-          type="password"
-          variant="outlined"
-          value={newPassword}
-          onChange={handleNewPasswordChange}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "50px",
+      }}
+    >
+      <Box>
+        <Typography variant="h5" component="h1" sx={{ fontWeight: "bold" ,color: "#242424", fontSize: "1.5rem" }}>
+          Enter New Password
+        </Typography>
+        <Typography
+          variant="body1"
+          gutterBottom
+          sx={{
+            textAlign: "left",
+            width: "100%",
+            fontSize: "12.80px",
+            color: "black",
+            fontWeight: 100,
+            paddingTop: 5,
+          }}
+        >
+          Enter New Password
+        </Typography>
+        <FormControl fullWidth sx={{ maxWidth: 250 }}>
+          <Input
+            type="email"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </FormControl>
+        <Typography
+          variant="body1"
+          gutterBottom
+          sx={{
+            textAlign: "left",
+            width: "100%",
+            fontSize: "12.80px",
+            color: "black",
+            fontWeight: 100,
+            paddingTop: 5,
+          }}
+        >
+          Password
+        </Typography>
+        <FormControl fullWidth sx={{ maxWidth: 250 }}>
+          <Input
+            type="email"
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+          />
+        </FormControl>
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
           fullWidth
-        />
-        <TextField
-          label="Confirm Password"
-          type="password"
-          variant="outlined"
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
-          fullWidth
-        />
-        <ConfirmButton type="submit" variant="contained" fullWidth>
-          Confirm
-        </ConfirmButton>
-      </Form>
-    </FullHeightContainer>
+          sx={{
+            backgroundColor: "#0D6EFD",
+            maxWidth: 100,
+            marginTop: 5,
+            alignSelf: "flex-end",
+            borderRadius: 20,
+            px: 2,
+            py: 1,
+            "&:hover": {
+              backgroundColor: "#0D6EFD",
+            },
+          }}
+        >
+          VERIFY
+        </Button>
+      </Box>
+    </Box>
   );
 };
 
-export default ForgetPasswordPage;
+export default EnterNewPassword;

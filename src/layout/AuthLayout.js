@@ -18,7 +18,7 @@ const AuthLayout = ({ children }) => {
     >
       <Grid
         item
-        xs={12}
+        xs={1}
         sm={8}
         sx={{
           backgroundImage: `url(${AuthFrame})`,
