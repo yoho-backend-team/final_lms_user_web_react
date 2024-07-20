@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { Box, Grid, Typography, Avatar } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { getInstructorDetails } from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
 
@@ -20,6 +20,7 @@ const ChatLog = ({ socket, Messages }) => {
   return (
     <Box sx={{ padding: "16px", height: "100%", overflowY: "auto" }}>
       {Messages?.map((msg) => (
+        <>
         <Grid
           container
           key={msg.id}
@@ -28,53 +29,57 @@ const ChatLog = ({ socket, Messages }) => {
           }
           sx={{ marginBottom: "8px" }}
         >
-          {/* {message.sender === 'other' && (
-           <Grid item>
-             <Avatar sx={{ marginRight: '8px' }}>O</Avatar>
-           </Grid>
-         )} */}
           <Grid item xs={8} sm={7} md={6}>
-            <Typography
-              sx={{
-                color: "#0B3048",
-                fontSize: "12px",
-                fontWeight: 400,
-                opacity: "0.7",
-                marginBottom: "10px",
-                textAlign: msg.sender === instructor?._id ? "end" : "start",
-                //   py : "10px",
-              }}
-            >
-              {msg.date}
-            </Typography>
             <Box
               sx={{
-                // border: message.sender === 'me' ? '1px solid #DCF8C6' : 'none',
                 display: "flex",
                 flexDirection: "column",
-                alignItems:
-                  msg.sender === instructor?._id ? "flex-end" : "flex-start",
+                alignItems: msg.sender === instructor?._id ? "flex-end" : "flex-start",
               }}
             >
-              <Typography
-                variant="body1"
+              <Box
                 sx={{
-                  wordBreak: "break-word",
-                  backgroundColor:
-                    msg.sender === instructor?._id ? "#61C554" : "#E8ECEF",
-                  padding: "15px 20px 16px 15px",
+                  display: "flex",
+                  flexDirection: "column",
+                  backgroundColor: msg.sender === instructor?._id ? "#61C554" : "#E8ECEF",
                   borderRadius: "10px",
-                  color: msg.sender === instructor?._id ? "white" : "#000000",
-                  fontSize: "14px",
-                  fontWeight: 400,
+                  padding: msg.sender === instructor?._id ? "10px 15px" : "4px 15px",
+                  minWidth: "200px",
                 }}
               >
-                {msg.message}
-              </Typography>
+                {msg?.sender !== instructor?._id && (
+                  <Typography sx={{ fontSize: "10px", alignSelf: "start" }}>
+                    {msg.sender_name}
+                  </Typography>
+                )}
+                <Typography
+                  variant="body1"
+                  sx={{
+                    wordBreak: "break-word",
+                    color: msg.sender === instructor?._id ? "white" : "#000000",
+                    fontSize: "14px",
+                    fontWeight: 400,
+                    textAlign: msg.sender === instructor?._id ? "left" : "start",
+                  }}
+                >
+                  {msg.message}
+                </Typography>
+                <Typography
+                  sx={{
+                    color:  msg.sender === instructor?._id ? "white" : "#727272",
+                    fontSize: "11px",
+                    fontWeight: 500,
+                    textAlign: msg.sender === instructor?._id ? "end" : "end",
+                    marginTop: "auto",
+                  }}
+                >
+                  {formatTime(msg?.createdAt)}
+                </Typography>
+              </Box>
             </Box>
-            <Typography sx={{ color : "#727272", fontSize: "11px", fontWeight: 500, py: "10px", textAlign: msg?.sender === instructor?._id ? "end" : "left"}} >{formatTime(msg?.createdAt)}</Typography>
           </Grid>
         </Grid>
+        </>
       ))}
       <div ref={chatRef} />
     </Box>
