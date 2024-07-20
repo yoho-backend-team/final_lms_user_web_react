@@ -69,9 +69,9 @@ const FAQPage = () => {
 
     
   };
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-        console.log(category,"category")
+  const handleCategorySelect = (faqCategories) => {
+    setSelectedCategory(faqCategories);
+        console.log(faqCategories,"faqCategories")
         
   };
   
@@ -88,7 +88,7 @@ const FAQPage = () => {
         </Grid>
       <Grid container xs={12} spacing={3}>
         <Grid item xs={4}  sx={{gap:"10px"}}>
-          <CategoryList categories={categories}  onCategorySelect={handleCategorySelect} />
+          <CategoryList categories={faqCategories}  onCategorySelect={handleCategorySelect} />
         </Grid>
         <Grid item xs={7} >
           <FAQList  category={selectedCategory} faqs={faqCategories} />
