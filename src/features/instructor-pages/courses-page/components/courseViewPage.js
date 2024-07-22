@@ -22,7 +22,7 @@ const CourseViewPage = ({ Course }) => {
   };
   const closeCourseView = () => {
     setCourseView(false);
-  };
+  };  
 
   return (
     <Box sx={{ height: "100vh", overflowY: "auto" }}>
