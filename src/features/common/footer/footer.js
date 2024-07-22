@@ -20,12 +20,14 @@ const Footer = () => {
             mr: 2,
           }}
         >
+           <Box sx={{ display: "flex", gap: 2 }}>
           <Link to="student/help-center" style={{ textDecoration: "none" }}>
             Help Center
           </Link>
           <Link to="student/Faq" style={{ textDecoration: "none" }}>
             Faq
           </Link>
+          </Box>
           <Box sx={{ display: "flex", gap: 2 }}>
             <Box>
               <Link

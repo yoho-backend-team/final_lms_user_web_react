@@ -36,7 +36,7 @@ const App = () => {
         </NavigationScroll>
       </ThemeProvider>
     </StyledEngineProvider>
-  );
+  );  
 };
 
 export default App;
