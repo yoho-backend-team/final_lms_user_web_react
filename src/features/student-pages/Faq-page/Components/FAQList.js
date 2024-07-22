@@ -4,12 +4,18 @@ import FAQItem from './FAQItem';
 
 const FAQList = ({ faqs ,category}) => {
    console.log(faqs,"faqs = []")
+   console.log(category,"category = []")
+
+
   return (
     <>
     <Grid item xs={12}  >
       <Box >
-         <Typography variant="h4" color="balck" sx={{gap:"10px"}}>{category?.title}</Typography>
-         <Typography variant="h5" color="gray">{category?.description}</Typography>
+        <>
+         <Typography variant="h4" color="balck" sx={{gap:"10px", p:1}}>{category?.category_id?.category_name}</Typography>
+         <Typography variant="h5" color="gray">{category?.category_id?.description}</Typography>
+         </>
+        
       </Box>
       <Paper>
         <List>

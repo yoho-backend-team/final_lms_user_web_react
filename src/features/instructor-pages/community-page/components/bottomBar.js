@@ -25,7 +25,7 @@ const BottomBar = ({ socket, community}) => {
     setMessage("");
     socket.emit(
       "sendMessage",
-      { content: message, senderId: instructor?._id, groupId : community?._id  },
+      { content: message, senderId: instructor?._id, groupId : community?._id , name : instructor?.full_name || instructor?.first_name },
       (response) => {
         console.log(response, "response");
       },
