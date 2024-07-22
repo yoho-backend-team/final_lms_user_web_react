@@ -13,11 +13,12 @@ const CourseModuleCard = ({
   videos,
   closeCourseView,
   openCourseView,
+  class_details
 }) => {
   const { tabView } = useTabResponsive();
   return (
     <Grid
-      onClick={openCourseView}
+      onClick={()=>openCourseView(class_details,id)}
       item
       sx={{
         width: "291px",

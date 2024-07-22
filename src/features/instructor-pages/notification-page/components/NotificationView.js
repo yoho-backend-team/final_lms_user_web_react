@@ -1,15 +1,16 @@
 import { Avatar, Box, IconButton, Typography } from "@mui/material"
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { imagePlaceholder } from "utils/placeholders"
+import { imagePlaceholder, profilePlaceholder } from "utils/placeholders"
+import { getImageUrl } from "utils/common/imageUtlils";
 
-const NotificationView = () => {
+const NotificationView = ({selectedNotification}) => {
     return(
            <Box sx={{ height: "90vh", backgroundColor: "#FFF",color:"0px 0px 64px 0px #0000001a",padding: "31px 28px 18px 24px"}} >
               <Box sx={{ display: 'flex', justifyContent: 'space-between'}} >
                  <Box sx={{ display: 'flex', gap:"13px"}} >
                     <Box>
                      <Avatar
-                     src={imagePlaceholder}
+                     src={selectedNotification?.staff?.image ? getImageUrl(selectedNotification?.staff?.image):profilePlaceholder}
                      alt="image"
                      sx={{
                         width : "52px",
@@ -19,8 +20,8 @@ const NotificationView = () => {
                      />
                     </Box>
                     <Box sx={{ display: "flex", flexDirection: "column", gap:"5px"}} >
-                      <Typography sx={{ color: "#000000",fontSize:"16px",fontWeight:700}} >Node JS Class</Typography>
-                      <Typography>Notes for the class</Typography>
+                      <Typography sx={{ color: "#000000",fontSize:"16px",fontWeight:700}} >{selectedNotification?.title}</Typography>
+                      <Typography>{selectedNotification?.body}</Typography>
                     </Box>
                  </Box>
                  <Box sx={{ display: 'flex', gap:"22px", alignItems : "center"}} >
