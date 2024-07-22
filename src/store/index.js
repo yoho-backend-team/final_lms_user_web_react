@@ -17,6 +17,7 @@ import StudentPaymentReducer from "../features/student-pages/payments-page/redux
 import StudentHelpCenter from "../features/student-pages/help-center-page/redux/slices"
 import StudentActivityLog from "../features/student-pages/activity-logs-page/redux/slices"
 import StudentTicketReducer from "../features/student-pages/tickets-page/redux/slices"
+import instructorNotificationReducer from "../features/common/redux/slices"
 
 import StudentClassReducer from "../features/student-pages/classes-page/redux/slices";
 import StudentAttendanceReducer from "../features/student-pages/attendances-page/redux/slices"
@@ -37,6 +38,7 @@ const store = configureStore({
     instructorPayments: paymentReducer,
     instructorTickets: ticketReducer,
     instructorDashboard: dashboardReducer,
+    instructorNotifications : instructorNotificationReducer,
     studentCommunity: studentCommunityReducer,
     studentcourse: StudentCourseReducer,
     studentPayments: StudentPaymentReducer,

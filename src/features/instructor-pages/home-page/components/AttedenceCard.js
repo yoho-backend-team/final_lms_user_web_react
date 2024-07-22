@@ -7,7 +7,7 @@ import { AttedenceBg } from "utils/images";
 const AttendanceCard = ({Attendance}) => {
   const current_month = new Date().getMonth()
   const attendance_data = Attendance?.find((atten ) => atten.month === current_month )
-  console.log(attendance_data,"data")
+  
 
   const options = {
     chart: {

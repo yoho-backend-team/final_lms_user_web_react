@@ -1,8 +1,19 @@
 import { Avatar, Box, IconButton, Input, Tab, Tabs, Typography, InputAdornment } from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
-import { imagePlaceholder } from "utils/placeholders";
+import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
+import { getImageUrl } from "utils/common/imageUtlils";
 
-const NotificationTab = ({tabValue,handleTabChange}) => {
+const NotificationTab = ({tabValue,handleTabChange,notifications,handleNotificationChange}) => {
+    const readCount = notifications?.filter((i) => i.status === "read").length
+    const unreadCount = notifications?.filter((i) => i.status === "unread").length
+
+    const filteredNotifications = notifications?.filter((notification) => {
+      if(tabValue === 0) return true;
+      if(tabValue === 1) return notification.status === "read";
+      if(tabValue === 2) return notification.status === "unread"
+      return true
+    })
+    console.log(filteredNotifications,"filter")
     return(
            <Box sx={{ height: "90vh", backgroundColor: "#FFF",color:"0px 0px 64px 0px #0000001a", borderLeft:"0.776px solid #F8FAFC"}} >
              <Box
@@ -15,7 +26,7 @@ const NotificationTab = ({tabValue,handleTabChange}) => {
              >
               <Box>
                  <Typography sx={{ fontSize: "25px", fontWeight:500}} >Notification</Typography>
-                 <Typography sx={{ fontSize: "11px",color:"#7F7F7F"}} >2445 messages, 2 Unread</Typography>
+                 <Typography sx={{ fontSize: "11px",color:"#7F7F7F"}} >{readCount} messages, {unreadCount} Unread</Typography>
               </Box>
               <Box sx={{ display: 'flex', gap: "13px",width:"100%", justifyContent: 'space-between'}} >   
               <Input
@@ -60,11 +71,13 @@ const NotificationTab = ({tabValue,handleTabChange}) => {
                         <Tab label="Unread" />
                      </Tabs>
                  </Box>
-                 <Box sx={{ display: 'flex', gap: "13px",padding: "18.5px" }} >
+                 {
+                  filteredNotifications?.map((notifi) =>(
+                     <Box sx={{ display: 'flex', gap: "13px",padding: "18.5px", cursor: "pointer" }} onClick={()=>handleNotificationChange(notifi)} >
                      <Box sx={{ display: 'flex', justifyContent: "flex-start", flexDirection: "column"}} >
                        <Avatar 
                         alt="profile"
-                        src={imagePlaceholder}
+                        src={notifi?.staff?.image ? getImageUrl(notifi?.staff?.image):profilePlaceholder}
                         sx={{
                             width: "38px",
                             height : "38px"
@@ -78,7 +91,7 @@ const NotificationTab = ({tabValue,handleTabChange}) => {
                             justifyContent: 'space-between'
                         }} >
                           <Box sx={{ display: 'flex', flexDirection: 'column',gap:"4px"}} >
-                             <Typography sx={{ color : '#000000', fontSize: "14px",fontWeight:400}} >Java Class</Typography>
+                             <Typography sx={{ color : '#000000', fontSize: "14px",fontWeight:400}} >{notifi?.title}</Typography>
                              <Typography sx={{ color : "#0D6EFD",fontSize: '10.8px',fontWeight:400,}} >Starts @2:50pm</Typography>
                           </Box>
                           <Box sx={{ display: 'flex', flexDirection: 'column', gap: "4px"}} >
@@ -88,11 +101,13 @@ const NotificationTab = ({tabValue,handleTabChange}) => {
                         </Box>
                         <Box>
                            <Typography sx={{ color: "#7F7F7F", fontSize: "10px", fontWeight: "400"}} >
-                           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ...
+                           {notifi?.body}
                            </Typography>
                         </Box>
                      </Box>
-                 </Box>
+                     </Box>
+                     ))
+                     }
               </Box>
              </Box>
            </Box>
