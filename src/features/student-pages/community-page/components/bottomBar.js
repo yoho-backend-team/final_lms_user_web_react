@@ -25,7 +25,7 @@ const BottomBar = ({ socket, community }) => {
     console.log(message, "message");
     socket.emit(
       "sendMessage",
-      { groupId : community?._id, content: message, senderId: student?._id },
+      { groupId : community?._id, content: message, senderId: student?._id, name : student?.full_name || student?.first_name  },
       (response) => {},
     );
     setMessage("");
@@ -64,7 +64,7 @@ const BottomBar = ({ socket, community }) => {
       <IconButton onClick={handleEmojiClick}>
         <EmojiIcon />
       </IconButton>
-      <IconButton>
+      <IconButton sx={{ display: "none"}} >
         <AddBoxPlusIcon />
       </IconButton>
       <TextField
@@ -95,7 +95,7 @@ const BottomBar = ({ socket, community }) => {
         }}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end">
+            <InputAdornment position="end" sx={{ display: "none"}} >
               <IconButton>
                 <AttachFileIcon />
               </IconButton>
@@ -106,7 +106,7 @@ const BottomBar = ({ socket, community }) => {
       <IconButton onClick={handleSendClick}>
         <SendIcon sx={{ color: "#000000" }} />
       </IconButton>
-      <IconButton>
+      <IconButton sx={{ display: "none"}} >
         <RecordIcon />
       </IconButton>
     </Box>

@@ -5,8 +5,11 @@ import { Box, styled } from "@mui/system";
 import { useTheme } from "@emotion/react";
 import { useState, useEffect } from "react";
 import { Typography, Button } from "@mui/material";
-import { useStudentOtpVerify } from "../services/index";
+import { useForgetPasswordOtpVerify } from "../services/index";
 import { useNavigate } from "react-router-dom";
+import { useAtom } from "jotai";
+import { studentLoginStepAtom } from "store/atoms/authAtoms";
+
 
 const InputElement = styled("input")(
   ({ theme }) => `
@@ -54,7 +57,7 @@ const InputElement = styled("input")(
   &:focus-visible {
     outline: 0;
   }
-`,
+`
 );
 
 function OTP({ separator, length, value, onChange }) {
@@ -222,12 +225,13 @@ OTP.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
-export default function OTPInput() {
+export default function ForgetPasswordOTPInput() {
   const [otp, setOtp] = React.useState("");
   const [timeLeft, setTimeLeft] = useState(600);
   const [error, setError] = useState("");
+  const [, setLoginStep] = useAtom(studentLoginStepAtom);
   const theme = useTheme();
-  const verifyOTP = useStudentOtpVerify();
+  const verifyOTP = useForgetPasswordOtpVerify();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -244,6 +248,7 @@ export default function OTPInput() {
     console.log("Resending OTP...");
     setTimeLeft(60);
   };
+  
 
   const handleVerify = async () => {
     if (otp.length !== 6 || otp.includes(" ")) {
@@ -251,10 +256,12 @@ export default function OTPInput() {
       return;
     }
     setError("");
+  
     try {
-      console.log("Verifying OTP:", otp); // Add this line to debug
-      await verifyOTP(otp);
-      navigate("/student/home");
+      const response = await verifyOTP(otp);
+      if (response.status === "success") {
+      setLoginStep("enterNewPassword");
+      }
     } catch (error) {
       console.log(error, "error");
       setError("Invalid OTP. Please try again.");
@@ -281,7 +288,7 @@ export default function OTPInput() {
             textAlign: "center",
           }}
         >
-          Enter the Code that sent to your entered mail iD
+          Enter the Code that sent to your entered mail Id
         </Typography>
       </Box>
       <OTP value={otp} onChange={setOtp} length={6} />
@@ -310,6 +317,7 @@ export default function OTPInput() {
           >
             {Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? "0" : ""}
             {timeLeft % 60}
+            
           </Typography>
           {timeLeft === 0 && (
             <Button

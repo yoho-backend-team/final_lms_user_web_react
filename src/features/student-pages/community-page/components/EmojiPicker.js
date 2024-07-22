@@ -6,7 +6,7 @@ const EmojiPicker = ({ onSelect }) => {
     <div
       style={{
         position: "absolute",
-        bottom: "45px",
+        bottom: "176px",
         left: "562px",
         zIndex: "1000",
       }}

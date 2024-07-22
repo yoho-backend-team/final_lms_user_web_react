@@ -29,22 +29,23 @@ const CategoryList = ({ categories, onCategorySelect }) => {
             return null;
         }
       };
+      console.log(categories,"faqCategories?.category_id?")
   return (
     <Box>
-    {categories.map((category, index) => (
+    {categories?.map((category, index) => (
     <Grid item xs={12} p={1}>
       <Box sx={{ minWidth:"300px", padding: "14px 28px", backgroundColor:"white",boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', }} >
       
         <Box sx={{ display: "flex",flexDirection:"center" , gap:"20px",textAlign:'center'}} 
          onClick={() => onCategorySelect(category)} >
-            <ListItemIcon sx={{ minWidth: "auto", mr: 2 }}>
+            {/* <ListItemIcon sx={{ minWidth: "auto", mr: 2 }}>
               {getCategoryIcon(category.title)}
-            </ListItemIcon>
-           <Typography sx={{ color: "black",fontSize:"20px",fontWeight:600, fontFamily:"Poppins"}} >{category?.title}</Typography> 
+            </ListItemIcon> */}
+           <Typography sx={{ color: "black",fontSize:"20px",fontWeight:600, fontFamily:"Poppins"}} >{category?.category_id?.category_name}</Typography> 
           
            
         </Box>
-        <Typography sx={{ color: "gray",fontSize:"14px",fontWeight:400 ,fontFamily:"Poppins"}} >{category?.description}</Typography>
+        <Typography sx={{ color: "gray",fontSize:"14px",fontWeight:400 ,fontFamily:"Poppins"}} >{category?.category_id?.description}</Typography>
       </Box>
     </Grid>
     ))}

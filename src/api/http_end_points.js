@@ -89,6 +89,8 @@ const generateEndpoints = () => {
       auth: {
         login: "/institutes/auth/student/login",
         verify_otp: "/institutes/auth/student/verify-otp",
+        forget_password: "/institutes/auth/profile/forgot-password",
+        reset_password: "/institutes/auth/profile/reset-password",
       },
       course: {
         get: `/institutes/${institute1}/branches/${branch1}/course/${course1}`,
@@ -100,7 +102,7 @@ const generateEndpoints = () => {
       },
       attendance: {
         get: `/institutes/attedance/student-attendance/${student?._id}`,
-        class_attendance : "/attendance/class"
+        class_attendance: "/attendance/class",
       },
       payments: {
         getFees: `/institutes/payments/student-fee/${getStudentDetails()?._id}`,
@@ -150,14 +152,14 @@ const generateEndpoints = () => {
       },
       course: {
         get: `/institutes/${institute}/branches/${branch}/course/${course}`,
-        notes : {
-          create : `/institutes/course/note`,
-          update : `/institutes/course/note/update/`,
-          delete : `/institutes/course/note/`
+        notes: {
+          create: `/institutes/course/note`,
+          update: `/institutes/course/note/update/`,
+          delete: `/institutes/course/note/`,
         },
-        study_material : {
-          index : '/institutes/study-material/'
-        }
+        study_material: {
+          index: "/institutes/study-material/",
+        },
       },
       class: {
         get: `/institutes/class/${course}`,

@@ -45,18 +45,26 @@ const ChatLog = ({ socket, Messages }) => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems:
-                  message.sender === student?._id ? "flex-end" : "flex-start",
+                alignItems:  message.sender === student?._id ? "flex-end" : "flex-start",
               }}
             >
+              <Box
+              sx={{
+                backgroundColor:  message.sender === student?._id ? "#61C554" : "#E8ECEF",
+                padding: "15px 20px 16px 15px",
+                borderRadius: "10px",
+                minWidth : "200px"
+              }}
+              >
+                {message?.sender !== student?._id && (
+                  <Typography sx={{ fontSize: "10px", alignSelf: "start" }}>
+                    {message.sender_name}
+                  </Typography>
+                )}
               <Typography
                 variant="body1"
                 sx={{
                   wordBreak: "break-word",
-                  backgroundColor:
-                    message.sender === student?._id ? "#61C554" : "#E8ECEF",
-                  padding: "15px 20px 16px 15px",
-                  borderRadius: "10px",
                   color: message.sender === student?._id ? "white" : "#000000",
                   fontSize: "14px",
                   fontWeight: 400,
@@ -64,8 +72,9 @@ const ChatLog = ({ socket, Messages }) => {
               >
                 {message.message}
               </Typography>
+              <Typography sx={{ color : "#727272", fontSize: "11px", fontWeight: 500, textAlign: message?.sender === student?._id ? "end" : "end"}} >{formatTime(message?.createdAt)}</Typography>
+              </Box>
             </Box>
-            <Typography sx={{ color : "#727272", fontSize: "11px", fontWeight: 500, py: "10px", textAlign: message?.sender === student?._id ? "end" : "left"}} >{formatTime(message?.createdAt)}</Typography>
           </Grid>
         </Grid>
       ))}
