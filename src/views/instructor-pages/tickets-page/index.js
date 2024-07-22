@@ -40,6 +40,7 @@ const TicketsPage = () => {
     getTicketsList(data);
   };
    console.log(tickets,"tickets")
+   
   return (
     <InstructorTicketsPage
       data={tickets}

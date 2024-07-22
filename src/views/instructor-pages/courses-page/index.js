@@ -30,7 +30,7 @@ const CoursePage = () => {
   }, [dispatch]);
   
   return (
-    <CourseLayout>
+    <CourseLayout>      
       <CourseViewPage Course={course} />
     </CourseLayout>
   );

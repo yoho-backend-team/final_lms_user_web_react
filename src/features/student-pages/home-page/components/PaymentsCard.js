@@ -1,10 +1,26 @@
 import { Avatar, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Box, Button } from "@mui/material";
 import CurrencyRupeeRoundedIcon from "@mui/icons-material/CurrencyRupeeRounded";
 import { Link } from "react-router-dom";
+import { getStudentFees } from "features/student-pages/payments-page/services";
 
 const PaymentsCard = () => {
+
+  const [feesData, setFeesData] = useState([{ fees: [], totalAmount: 0 }]);
+  
+  useEffect(() => {
+    const fetchStudentFees = async () => {
+      const data = {};
+      const details = await getStudentFees(data);
+      setFeesData(details);
+      console.log(details);
+    };
+
+    fetchStudentFees();
+  }, []);
+
+  console.log(feesData, "feesData");
  
   return (
     <>
@@ -107,7 +123,7 @@ const PaymentsCard = () => {
                         lineHeight: 'normal', 
                       }}
                     >
-                      16,000
+                      {feesData?.pending_payment}
                     </Typography>
 
                   </Box>
@@ -133,6 +149,8 @@ const PaymentsCard = () => {
                   Check Payment
                 </Typography>
                 <Button
+                    component={Link}
+                    to="/student/payment/pay"
                     sx={{
                       display: 'inline-flex',         
                       padding: '5px',                
