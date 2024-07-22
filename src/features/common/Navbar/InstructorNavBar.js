@@ -36,6 +36,12 @@ import { checkUser, getInstructorDetails } from "store/atoms/authorized-atom";
 import { useTabResponsive } from "utils/tabResponsive";
 import { getImageUrl } from "utils/common/imageUtlils";
 import NotificationListView from "../Components/NotificationListModel";
+import { getInstructorNotifications } from "features/instructor-pages/home-page/services";
+import { selectNotificationList,selectNotifcationsLoading,selectSelectedNotification} from "features/common/redux/selector"
+import { useDispatch, useSelector } from "react-redux";
+import updateInstructorNotifications from "../redux/thunks";
+import { setSelectedNotification } from "../redux/slices";
+import { useNavigate } from "react-router-dom";
 
 export default function InstructorNavBar() {
   const theme = useTheme();
@@ -46,7 +52,10 @@ export default function InstructorNavBar() {
   const isNotificationOpen = Boolean(anchorE2)
   const notification_id = isNotificationOpen ? "notification-popover" : undefined
   const [instructor, setInstructor] = React.useState(checkUser().userDetails);
-  const [isOpenNotification,setOpenNotification] = React.useState(false)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const Notifications = useSelector(selectNotificationList)
+  const selectedNotification = useSelector(selectSelectedNotification)
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -60,7 +69,18 @@ export default function InstructorNavBar() {
     const user = getInstructorDetails();
     setInstructor(user);
   }, []);
-  console.log(instructor, "instructor");
+
+  useEffect(() => {
+    dispatch(updateInstructorNotifications())
+  },[])
+
+  const handleSelectNotification = (data) => {
+    dispatch(setSelectedNotification(data))
+    setAnchorE2(null)
+    navigate("/instructor/notifications")
+    // window.location.href = "/instructor/notifications"
+  }
+   
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -99,7 +119,7 @@ export default function InstructorNavBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  console.log(Notifications,selectedNotification)
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
@@ -144,7 +164,7 @@ export default function InstructorNavBar() {
               onClick={handleNotification} 
               aria-controls={notification_id}
               >
-                <Badge badgeContent={1} color="error">
+                <Badge badgeContent={Notifications?.filter((i)=>i.status === "unread").length} color="error">
                   <NotificationsOutlinedIcon
                     sx={{ color: theme.palette.dark.main }}
                   />
@@ -193,7 +213,7 @@ export default function InstructorNavBar() {
         </Toolbar>
       </AppBar>
       {renderMenu}
-      <NotificationListView id={notification_id} anchorE2={anchorE2} isOpen={isNotificationOpen} setClose={()=>setAnchorE2(null)} />
+      <NotificationListView handleSelectNotification={handleSelectNotification} id={notification_id} notifications={Notifications} anchorE2={anchorE2} isOpen={isNotificationOpen} setClose={()=>setAnchorE2(null)} />
     </Box>
   );
 }

@@ -231,6 +231,9 @@ class Client {
           "instructor"
         ),
     },
+    notification : {
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.get,params,"instructor")
+    },
     payment: {
       get: (params) =>
         httpClient.get(
