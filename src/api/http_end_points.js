@@ -169,6 +169,9 @@ const generateEndpoints = () => {
       community: {
         get: `/institutes/community/course/${course}`,
       },
+      notification : {
+        get : `/institutes/staff/notifications`
+      },
       payments: {
         getSalaries: "/institutes/payments/staff-salary/salary",
       },

@@ -186,6 +186,9 @@ const InstructorCommunityPage = Loadable(
 const InstructorCoursePage = Loadable(
   lazy(() => import("views/instructor-pages/courses-page")),
 );
+const InstructorCourseViewPage = Loadable(
+  lazy(() => import("views/instructor-pages/courses-page/Mainpage")),
+);
 const InstructorStudyMaterialsPage = Loadable(
   lazy(
     () => import("views/instructor-pages/courses-page/courses-[id]-page/index"),
@@ -380,6 +383,10 @@ const InstructorCreateTicketPage = Loadable(
             <Route
               path="instructor/course"
               element={<InstructorCoursePage />}
+            />
+             <Route
+              path="instructor/course/view"
+              element={<InstructorCourseViewPage />}
             />
             <Route
               path="instructor/course/resources/:id"
