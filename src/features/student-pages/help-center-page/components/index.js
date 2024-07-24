@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -24,6 +24,7 @@ import { InputAdornment } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import StudentHelpView from "./helpView";
 import StudentMailTab from "./tap-pages/mailTab";
+import Client from "../../../../api/index";
 
 
 const useStyles = makeStyles(() => ({
@@ -32,7 +33,18 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const tab_list = [
+  'Mail',
+  'Profile',
+  'Classes',
+  'Password',
+  'Attendance',
+  'Payment',
+  "Login&SignUp"
+  ]
+
 const StudentHelpCenter = () => {
+  const [faqCategories, setFaqCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTab, setSelectedTab] = useState("0");
   const [value, setValue] = useState(0);
@@ -40,12 +52,31 @@ const StudentHelpCenter = () => {
   const [selectedQuery,setSelectedQuery] = useState(null)
   const classes = useStyles();
 
+  useEffect(() => {
+    const fetchFaqCategories = async () => {
+      try {
+        const response = await Client.Student.help.get();
+        setFaqCategories(response?.data || []);
+      } catch (error) {
+        console.error("Error fetching FAQ categories:", error.message);
+      }
+    };
+  
+    fetchFaqCategories();
+  }, []);
+
+
   const handleChange = (event, newValue) => {
     console.log(newValue, "new");
     setValue(newValue);
   };
 
-  
+  const handleSetView = (query) => {
+    setSelectedQuery(query);
+    setView(true);
+  };
+ const filterData = faqCategories?.filter((i) => i.category === tab_list[value])
+  console.log(faqCategories,"selectedQuery",tab_list[value],"query",filterData)
 
   return (
     <>
@@ -135,15 +166,7 @@ const StudentHelpCenter = () => {
                 },
               }}
             >
-              {[
-                "Mail",
-                "Profile",
-                "Classes",
-                "Password",
-                "Attendance",
-                "Payment",
-                "Login & Sign Up",
-              ].map((label, index) => (
+              {tab_list.map((label, index) => (
                 <Tab
                   key={index}
                   label={label}
@@ -271,7 +294,7 @@ const StudentHelpCenter = () => {
               ),
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton
+                  <IconButton onClick={(filterData) => {}}
                     sx={{
                       backgroundColor: "#5611B1",
                       color: "white",
@@ -313,9 +336,10 @@ const StudentHelpCenter = () => {
         </Box>
       )}
       <Grid container spacing={2} sx={{ marginTop: 2 }}>
-        {value === 0 && !isView && <StudentMailTab setView={setView} setSelectedQuery={setSelectedQuery} />}
+        { !isView && <StudentMailTab category = {filterData} setView={handleSetView} setSelectedQuery={selectedQuery?.category} />}
       </Grid>
-      {isView && <StudentHelpView category={selectedQuery} id={selectedQuery?.id} />}
+      {isView && <StudentHelpView categories = {faqCategories} category={selectedQuery} id={selectedQuery?.category
+} />}
     </>
   );
 };

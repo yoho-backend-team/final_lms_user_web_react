@@ -12,25 +12,9 @@ import dummyVideoBg from "../../../../assets/instructor/help-center/dummy-video.
 import Client from "../../../../api/index";
 import StudentMailTab from "./tap-pages/mailTab";
 
-const StudentHelpView = ({category,id}) => {
-  const [faqCategories, setFaqCategories] = useState([]);
-
-  useEffect(() => {
-    const fetchFaqCategories = async () => {
-      try {
-        const response = await Client.Student.faq.get();
-        setFaqCategories(response?.data || []);
-      } catch (error) {
-        console.error("Error fetching FAQ categories:", error.message);
-      }
-    };
-
-    fetchFaqCategories();
-  }, []);
-  
-  
-
-  console.log(faqCategories,"faq")
+const StudentHelpView = ({categories,id}) => {
+  console.log(categories,"categories")
+ 
 
   const items = [
     '"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam',
@@ -51,6 +35,7 @@ const StudentHelpView = ({category,id}) => {
       }}
     >
         <Box key={id} sx={{ padding: "70px" }}>
+        {categories?.map((cate) => (
         <Grid container spacing={5}>
           <Grid item xs={6}>
             <Box
@@ -62,27 +47,33 @@ const StudentHelpView = ({category,id}) => {
                 pb: "40px",
               }}
             >
-              <Typography
-                variant="h3"
-                sx={{
-                  fontSize: "16px",
-                  fontWeight: 700,
-                  lineHeight: "19px",
-                  color: "#000000",
-                }}
-              >
-                {category?.title}
-              </Typography>
-              <Typography
-                sx={{
-                  color: "#321658",
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  lineHeight: "25px",
-                }}
-              >
-                {category?.description}
-              </Typography>
+              
+             
+  <Box key={cate.id} mb={2}>
+    <Typography
+      variant="h3"
+      sx={{
+        fontSize: "16px",
+        fontWeight: 700,
+        lineHeight: "19px",
+        color: "#000000",
+       p :2
+      }}
+    >
+      {cate.question}
+    </Typography>
+    <Typography
+      sx={{
+        color: "#321658",
+        fontSize: "16px",
+        fontWeight: 400,
+        lineHeight: "25px",
+      }}
+    >
+      {cate.answer}
+    </Typography>
+  </Box>
+
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", gap: "30px" }}>
               <Typography
@@ -147,6 +138,7 @@ const StudentHelpView = ({category,id}) => {
             </Box>
           </Grid>
         </Grid>
+        ))}
       </Box>
        {/* <StudentMailTab faqCategories={faqCategories} /> */}
     </Box>

@@ -118,6 +118,9 @@ const generateEndpoints = () => {
         // get: `institutes/faq/category?instituteid=${getStudentDetails()?.institute_id?.uuid}&branchid=${getStudentDetails()?.branch_id?.uuid}`,
         get: `institutes/faq/all`,
       },
+      help: {
+        get: `/helpcenter?instituteid=${instituteuuid}`,
+      },
 
       reports : {
         get : "/institutes/reports/users/student",

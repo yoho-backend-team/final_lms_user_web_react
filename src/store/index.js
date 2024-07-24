@@ -23,6 +23,7 @@ import StudentClassReducer from "../features/student-pages/classes-page/redux/sl
 import StudentAttendanceReducer from "../features/student-pages/attendances-page/redux/slices"
 import StudentActivityReducer from "../features/student-pages/activity-logs-page/redux/slices"
 import StudentdashboardReducer from "../features/student-pages/home-page/redux/slices"
+import InstructorFaqReducer from "../features/instructor-pages/Faq-page/redux/slices"
 
 // ==============================|| REDUX - MAIN STORE ||============================== //
 
@@ -49,6 +50,7 @@ const store = configureStore({
     studentAttendance: StudentAttendanceReducer,
     studentsActivityLogs: StudentActivityReducer,
     studentDashboard:StudentdashboardReducer ,
+    Instructorfaq:InstructorFaqReducer
   },
 });
 // configureStore(reducer);
