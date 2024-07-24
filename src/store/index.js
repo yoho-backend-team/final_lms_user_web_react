@@ -51,11 +51,8 @@ const store = configureStore({
     studentAttendance: StudentAttendanceReducer,
     studentsActivityLogs: StudentActivityReducer,
     studentDashboard:StudentdashboardReducer ,
-<<<<<<< HEAD
-    Instructorfaq:InstructorFaqReducer
-=======
+    Instructorfaq:InstructorFaqReducer,
     studentNotification : studentNotificationReducer
->>>>>>> 0a825afa2b1c3425109873c3bd3f66e16f0bf093
   },
 });
 // configureStore(reducer);
