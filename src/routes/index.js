@@ -166,6 +166,9 @@ import NotificationList from "views/instructor-pages/notification-page";
   const StudentTicketViewPage = Loadable(
     lazy(() => import("views/student-pages/tickets-page/ticket[id]-page")),
   );
+  const StudentNotificationList = Loadable(
+    lazy(() => import("views/student-pages/notification-page/index"))
+  )
 
 // Instructor Pages
 const InstructorHomePage = Loadable(
@@ -260,6 +263,7 @@ const InstructorCreateTicketPage = Loadable(
           >
             <Route path="/" element={<Navigate to="student/home" />} />
             <Route path="student/home" element={<StudentHomePage />} />
+            <Route path="student/notifications" element={<StudentNotificationList />} />
             <Route
               path="student/activity-logs"
               element={<StudentActivityLogsPage />}

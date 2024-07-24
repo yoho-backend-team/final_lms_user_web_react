@@ -111,6 +111,9 @@ const generateEndpoints = () => {
         create: "/institutes/student/ticket/create",
         get: "/institutes/student/ticket/getall",
       },
+      notification : {
+        get : "/institutes/students/notifications/"
+      },
       activity: {
         get: `institutes/user/activity/`,
       },
