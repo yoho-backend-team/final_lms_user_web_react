@@ -19,6 +19,7 @@ import { useStudentLogin } from "../services";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
+import { getErrorMessage } from "utils/common/error";
 
 const validationSchema = yup.object({
   email: yup
@@ -51,8 +52,7 @@ const LoginForm = () => {
           navigate("/student/home");
         }
       } catch (error) {
-        console.log(error, "error");
-        toast.error(error?.message);
+        toast.error(getErrorMessage(error));
       }
     },
   });
