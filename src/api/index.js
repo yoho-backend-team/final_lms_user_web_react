@@ -93,6 +93,9 @@ class Client {
   faq: {
     get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.faq.get}`,params,'student'),
   },
+  help:{
+    get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.help.get}`,params,'student'),
+  },
 
 
     community: {
