@@ -18,6 +18,7 @@ import StudentHelpCenter from "../features/student-pages/help-center-page/redux/
 import StudentActivityLog from "../features/student-pages/activity-logs-page/redux/slices"
 import StudentTicketReducer from "../features/student-pages/tickets-page/redux/slices"
 import instructorNotificationReducer from "../features/common/redux/slices"
+import studentNotificationReducer from "../features/common/redux/studentSlices"
 
 import StudentClassReducer from "../features/student-pages/classes-page/redux/slices";
 import StudentAttendanceReducer from "../features/student-pages/attendances-page/redux/slices"
@@ -50,7 +51,11 @@ const store = configureStore({
     studentAttendance: StudentAttendanceReducer,
     studentsActivityLogs: StudentActivityReducer,
     studentDashboard:StudentdashboardReducer ,
+<<<<<<< HEAD
     Instructorfaq:InstructorFaqReducer
+=======
+    studentNotification : studentNotificationReducer
+>>>>>>> 0a825afa2b1c3425109873c3bd3f66e16f0bf093
   },
 });
 // configureStore(reducer);
