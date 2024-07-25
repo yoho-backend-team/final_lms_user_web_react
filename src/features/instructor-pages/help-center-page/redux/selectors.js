@@ -1,2 +1,2 @@
-export const selectInstructorHelp = (state) => state.instructorHelp.data;
-export const selectLoading = (state) => state.instructorHelp.loading;
+export const selectStudentHelp = (state) => state.studenthelp.data;
+export const selectLoading = (state) => state.studenthelp.loading;

@@ -1,10 +1,10 @@
 import { Grid } from "@mui/material";
-
+import StudentHelpCard from "../helpCard";
 import { useEffect, useState } from "react";
-import InstructorHelpCard from "../helpCard";
+import Client from "../../../../../api/index";
 
 
-const InstructorMailTab = ({ setView, SelectedQuery,category}) => {
+const StudentMailTab = ({ setView, SelectedQuery,category}) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleCategorySelect = (category) => {
@@ -19,7 +19,7 @@ console.log(category,"faq12")
     <Grid container spacing={2}>
       {category?.map((item) => (
         <Grid item xs={12} sm={6} md={3} key={item.id}>
-          <InstructorHelpCard
+          <StudentHelpCard
             section={item.question}
             title={item.answer}
             setView={handleCategorySelect}
@@ -32,4 +32,4 @@ console.log(category,"faq12")
   );
 };
 
-export default InstructorMailTab;
+export default StudentMailTab;
