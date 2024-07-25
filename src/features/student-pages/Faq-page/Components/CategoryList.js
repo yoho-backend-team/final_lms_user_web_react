@@ -46,12 +46,12 @@ const CategoryList = ({ categories, onCategorySelect }) => {
     <Grid item xs={12} p={1}>
       <Box sx={{ minWidth:"300px", padding: "14px 28px", backgroundColor:"white",boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',cursor:"pointer" }} >
       
-        <Box sx={{ display: "flex",flexDirection:"center" , gap:"20px",textAlign:'center'}} 
+        <Box sx={{ display: "flex",flexDirection:"center" , gap:"20px",textAlign:'center', gap:"10px"}} 
          onClick={() => onCategorySelect(category)} >
             {/* <ListItemIcon sx={{ minWidth: "auto", mr: 2 }}>
               {getCategoryIcon(category.title)}
             </ListItemIcon> */}
-           <Typography sx={{ color: "black",fontSize:"20px",fontWeight:600, fontFamily:"Poppins"}} >{category?.category_id?.category_name}</Typography> 
+           <Typography sx={{ color: "black",fontSize:"20px",fontWeight:600, fontFamily:"Poppins",gap:"10px"}} >{category?.category_id?.category_name}</Typography> 
           
            
         </Box>

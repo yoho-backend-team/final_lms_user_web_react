@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-const StudentHelpCard = ({ section, title, setView ,category}) => {
+const InstructorHelpCard = ({ section, title, setView ,category}) => {
   
   
   return (
@@ -73,4 +73,4 @@ const StudentHelpCard = ({ section, title, setView ,category}) => {
   );
 };
 
-export default StudentHelpCard;
+export default InstructorHelpCard;

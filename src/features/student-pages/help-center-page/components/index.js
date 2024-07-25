@@ -22,9 +22,9 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { makeStyles } from "@mui/styles";
 import { InputAdornment } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import StudentHelpView from "./helpView";
-import StudentMailTab from "./tap-pages/mailTab";
 import Client from "../../../../api/index";
+import InstructorHelpView from "./helpView";
+import InstructorMailTab from "./tap-pages/mailTab";
 
 
 const useStyles = makeStyles(() => ({
@@ -43,7 +43,7 @@ const tab_list = [
   "Login&SignUp"
   ]
 
-const StudentHelpCenter = () => {
+const InstructorHelpCenter = () => {
   const [faqCategories, setFaqCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTab, setSelectedTab] = useState("0");
@@ -67,7 +67,6 @@ const StudentHelpCenter = () => {
 
 
   const handleChange = (event, newValue) => {
-    console.log(newValue, "new");
     setValue(newValue);
   };
 
@@ -75,8 +74,18 @@ const StudentHelpCenter = () => {
     setSelectedQuery(query);
     setView(true);
   };
- const filterData = faqCategories?.filter((i) => i.category === tab_list[value])
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+
+ const filterData = faqCategories?.filter((i) =>{
+  const categoryMatches = i.category === tab_list[value]
+ const searchMatches = i.question.toLowerCase().includes(searchQuery.toLowerCase());
+ return categoryMatches && searchMatches;
   console.log(faqCategories,"selectedQuery",tab_list[value],"query",filterData)
+});
 
   return (
     <>
@@ -150,6 +159,7 @@ const StudentHelpCenter = () => {
               classes={classes.root}
               sx={{
                 minHeight: "0",
+                cursor:'no-drop',
                 borderBottom: "none",
                 "& .MuiTabs-indicator": {
                   display: "none",
@@ -170,6 +180,7 @@ const StudentHelpCenter = () => {
                 <Tab
                   key={index}
                   label={label}
+                  disabled={isView}
                   sx={{
                     display: "inline-flex",
                     height: "40px",
@@ -193,6 +204,7 @@ const StudentHelpCenter = () => {
                     "&.Mui-selected": {
                       color: "#FFF",
                       backgroundColor: "#5611B1",
+                      
                     },
                   }}
                 />
@@ -230,7 +242,7 @@ const StudentHelpCenter = () => {
               </Typography>
             </Box>
             </a>
-            <a href="tel:+1234567890" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <a href= {faqCategories?.institute_id?.contact_info?.phone_no} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Box sx={{ display: "inline-flex", gap: "5px" ,cursor: "pointer"}}>
               <CallOutlinedIcon />
               <Typography
@@ -245,7 +257,7 @@ const StudentHelpCenter = () => {
               </Typography>
             </Box>
             </a>
-            <a href="mailto:example@example.com" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <a href={faqCategories?.institute_id?.email} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Box sx={{ display: "inline-flex", gap: "5px",cursor: "pointer" }}>
               <EmailOutlinedIcon />
               <Typography
@@ -285,63 +297,74 @@ const StudentHelpCenter = () => {
             Select your Question that's helps your problem or search instaed
           </Typography>
           <TextField
-            placeholder="Search"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon sx={{ color: "#5611B1" }} />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={(filterData) => {}}
-                    sx={{
-                      backgroundColor: "#5611B1",
-                      color: "white",
-                      padding: "3px",
-                    }}
-                  >
-                    <ArrowForwardIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-              sx: {
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-                "& .MuiInputBase-input::placeholder": {
-                  color: "#5611B1",
-                },
-                height: "40px",
-                padding: "5px 7px 5.924px 10.573px",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-                borderRadius: "29.076px",
-                backgroundColor: "#E9ECEF",
-              },
-            }}
-            sx={{
-              width: "100%",
-              maxWidth: 400,
-              borderRadius: "30px",
-              backgroundColor: "#E9ECEF",
-              border: "transparent",
-              "::placeholder": {
-                color: "#5611B1",
-              },
-            }}
-          />
+        placeholder="Search"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon sx={{ color: "#5611B1" }} />
+            </InputAdornment>
+          ),
+          endAdornment: (
+            <InputAdornment position="end">
+              <IconButton
+                onClick={() => {
+                  const filterData = faqCategories.filter((item) =>
+                    item.question
+                      .toLowerCase()
+                      .includes(searchQuery.toLowerCase())
+                  );
+                  
+                  console.log(filterData,"serach");
+                }}
+                sx={{
+                  backgroundColor: "#5611B1",
+                  color: "white",
+                  padding: "3px",
+                }}
+              >
+                <ArrowForwardIcon />
+              </IconButton>
+            </InputAdornment>
+          ),
+          sx: {
+            "& .MuiOutlinedInput-notchedOutline": {
+              border: "none",
+            },
+            "& .MuiInputBase-input::placeholder": {
+              color: "#5611B1",
+            },
+            height: "40px",
+            padding: "5px 7px 5.924px 10.573px",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+            borderRadius: "29.076px",
+            backgroundColor: "#E9ECEF",
+          },
+        }}
+        sx={{
+          width: "100%",
+          maxWidth: 400,
+          borderRadius: "30px",
+          backgroundColor: "#E9ECEF",
+          border: "transparent",
+          "::placeholder": {
+            color: "#5611B1",
+          },
+        }}
+      />
         </Box>
       )}
       <Grid container spacing={2} sx={{ marginTop: 2 }}>
-        { !isView && <StudentMailTab category = {filterData} setView={handleSetView} setSelectedQuery={selectedQuery?.category} />}
+        { !isView && <InstructorMailTab category = {filterData} setView={handleSetView} SelectedQuery={selectedQuery?.category} />}
       </Grid>
-      {isView && <StudentHelpView categories = {faqCategories} category={selectedQuery} id={selectedQuery?.category
+      {isView && <InstructorHelpView categories = {faqCategories} category={selectedQuery} id={selectedQuery?.category
 } />}
     </>
   );
 };
 
-export default StudentHelpCenter;
+export default InstructorHelpCenter;
