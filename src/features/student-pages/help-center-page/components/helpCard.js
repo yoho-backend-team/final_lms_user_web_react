@@ -42,7 +42,9 @@ const StudentHelpCard = ({ section, title, setView ,category}) => {
         >
           {section}
         </Typography>
+        
       </Box>
+      
       <Box
         sx={{
           backgroundColor: "white",

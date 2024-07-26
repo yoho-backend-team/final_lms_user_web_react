@@ -113,7 +113,8 @@ const generateEndpoints = () => {
         getById: "/institutes/student-ticket/",
       },
       notification : {
-        get : "/institutes/students/notifications/"
+        get : "/institutes/students/notifications/",
+        update_status : '/institutes/students/notifications/status/',
       },
       activity: {
         get: `institutes/user/activity/`,

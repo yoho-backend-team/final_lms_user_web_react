@@ -11,13 +11,10 @@ const InstructorFAQList = ({ faqs, category,selectedCategory  }) => {
 
   return (
     <Grid item xs={12}>
-      <Box>
+      <Box sx={{display:"flex", justifyContent:"center"}}>
         <>
           <Typography variant="h4" color="black" sx={{ gap: "10px", p: 1 }}>
             {category?.category_id?.category_name}
-          </Typography>
-          <Typography variant="h5" color="gray">
-            {category?.category_id?.description}
           </Typography>
         </>
       </Box>

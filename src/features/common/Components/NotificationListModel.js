@@ -119,25 +119,57 @@ const NotificationListView = ({handleSelectNotification,id,anchorE2,isOpen,setCl
                   {
                     filteredNotifications?.map((notifi,index)=>(
                         <>
-                        <Box key={notifi?._id} onClick={() => handleSelectNotification(notifi)} sx={{ padding: "13px 24px", display: 'flex', justifyContent: "space-between", cursor : "pointer"}} >
-                            <Box>
-                               <Avatar
-                               src={notifi?.staff?.image ? getImageUrl(notifi?.staff?.image) : profilePlaceholder}
-                               sx={{
-                                width: "48px",
-                                height : "48px",
-                               }}
-                               />
-                            </Box>
-                            <Box sx={{ display: 'flex', justifyContent: "space-between", flexDirection: 'column',maxWidth:"300px"}} >
-                                <Typography sx={{ color: "#343A40", fontSize: "16px", fontWeight: 500}} >{notifi?.title}</Typography>
-                                <Typography sx={{ color: "#6C757D", fontSize: "12px", fontWeight: 300}} >{notifi?.body}</Typography>
-                            </Box>
-                            <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: "end"}} >
-                                <Typography sx={{ display: "inline-flex", color: "#86929D", fontSize: "9px",fontWeight:700}} >33 Minutes Ago</Typography>
-                            </Box>
+                       <Box
+                        key={notifi?._id}
+                        onClick={() => handleSelectNotification(notifi)}
+                        sx={{
+                          padding: "13px 24px",
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          cursor: 'pointer',
+                          borderBottom: '1px solid #e0e0e0' 
+                        }}
+                      >
+                        <Box sx={{ flexShrink: 0 }}>
+                          <Avatar
+                            src={notifi?.staff?.image ? getImageUrl(notifi?.staff?.image) : profilePlaceholder}
+                            sx={{
+                              width: "48px",
+                              height: "48px",
+                            }}
+                          />
                         </Box>
-                        <Divider />
+                        <Box
+                          sx={{
+                            flex: 1,
+                            marginLeft: "16px",
+                            maxWidth: "calc(100% - 130px)", 
+                            overflow: 'hidden', 
+                          }}
+                        >
+                          <Typography
+                            sx={{ color: "#343A40", fontSize: "16px", fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis' }}
+                            title={notifi?.title} 
+                          >
+                            {notifi?.title}
+                          </Typography>
+                          <Typography
+                            sx={{ color: "#6C757D", fontSize: "12px", fontWeight: 300, overflow: 'hidden', textOverflow: 'ellipsis' }}
+                            title={notifi?.body} 
+                          >
+                            {notifi?.body}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ flexShrink: 0, textAlign: 'right' }}>
+                          <Typography
+                            sx={{ color: "#86929D", fontSize: "9px", fontWeight: 700 }}
+                          >
+                            33 Minutes Ago
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <Divider />
                         </>
                     ))
                   }
