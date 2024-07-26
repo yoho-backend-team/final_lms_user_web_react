@@ -7,15 +7,17 @@ import {
   Input,
   InputLabel,
   Typography,
+  FormHelperText,
 } from "@mui/material";
 import { studentOtpAtom, studentLoginStepAtom } from "store/atoms/authAtoms";
 import { useAtom } from "jotai";
-import axios from "axios"; // Import axios
+import axios from "axios";
 import { useStudentforgetPassword } from "../services";
 import toast from "react-hot-toast";
 
 const ForgetPasswordPage = () => {
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const forgetPassword = useStudentforgetPassword();
   const navigate = useNavigate();
   const [, setLoginStep] = useAtom(studentLoginStepAtom);
@@ -23,9 +25,25 @@ const ForgetPasswordPage = () => {
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+    if (e.target.value) {
+      setEmailError(""); // Clear error message when user starts typing
+    }
+  };
+
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
   };
 
   const handleSubmit = async () => {
+    if (!email) {
+      setEmailError("Enter Mail ID");
+      return;
+    }
+    if (!validateEmail(email)) {
+      setEmailError("Enter a valid email address");
+      return;
+    }
     console.log("Sending reset password email to:", email);
     try {
       const response = await forgetPassword(email);
@@ -34,10 +52,12 @@ const ForgetPasswordPage = () => {
         const { token } = response.data;
         setOtpAtom({ email, token });
         setLoginStep("forgetPassword_Otp");
+      } else {
+        setEmailError("Email not found");
       }
     } catch (error) {
       console.log(error, "error");
-      toast.error(error?.message);
+      toast.error(error?.message || "An error occurred");
     }
   };
 
@@ -90,8 +110,16 @@ const ForgetPasswordPage = () => {
         >
           Enter Mail ID
         </Typography>
-        <FormControl fullWidth sx={{ maxWidth: 250 }}>
-          <Input type="email" value={email} onChange={handleEmailChange} />
+        <FormControl fullWidth sx={{ maxWidth: 250 }} error={!!emailError}>
+          <Input
+            type="email"
+            value={email}
+            onChange={handleEmailChange}
+            aria-describedby="email-error-text"
+          />
+          {emailError && (
+            <FormHelperText id="email-error-text">{emailError}</FormHelperText>
+          )}
         </FormControl>
         <Button
           variant="contained"

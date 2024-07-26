@@ -8,8 +8,8 @@ import { Typography, Button } from "@mui/material";
 import { useForgetPasswordOtpVerify } from "../services/index";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
-import { studentLoginStepAtom } from "store/atoms/authAtoms";
-
+import { studentLoginStepAtom, studentOtpAtom } from "store/atoms/authAtoms";
+//import { studentOtpAtom } from "store/atoms/authAtoms";
 
 const InputElement = styled("input")(
   ({ theme }) => `
@@ -233,6 +233,7 @@ export default function ForgetPasswordOTPInput() {
   const theme = useTheme();
   const verifyOTP = useForgetPasswordOtpVerify();
   const navigate = useNavigate();
+  const [otpAtom, setOtpAtom] = useAtom(studentOtpAtom);
 
   useEffect(() => {
     if (timeLeft === 0) return;
@@ -248,7 +249,6 @@ export default function ForgetPasswordOTPInput() {
     console.log("Resending OTP...");
     setTimeLeft(60);
   };
-  
 
   const handleVerify = async () => {
     if (otp.length !== 6 || otp.includes(" ")) {
@@ -256,11 +256,19 @@ export default function ForgetPasswordOTPInput() {
       return;
     }
     setError("");
-  
+
     try {
       const response = await verifyOTP(otp);
+      console.log(response, "response");
+      const { email, token } = response.data;
+      console.log({ email, token });
       if (response.status === "success") {
-      setLoginStep("enterNewPassword");
+        setOtpAtom({
+          email: otpAtom.email,
+          token: otpAtom.token,
+          otp:otp
+        });
+        setLoginStep("enterNewPassword");
       }
     } catch (error) {
       console.log(error, "error");
@@ -317,7 +325,6 @@ export default function ForgetPasswordOTPInput() {
           >
             {Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? "0" : ""}
             {timeLeft % 60}
-            
           </Typography>
           {timeLeft === 0 && (
             <Button

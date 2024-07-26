@@ -56,12 +56,11 @@ const InputElement = styled("input")(
   &:focus-visible {
     outline: 0;
   }
-`,
+`
 );
 
 function OTP({ separator, length, value, onChange }) {
   const inputRefs = React.useRef(new Array(length).fill(null));
- 
 
   const focusInput = (targetIndex) => {
     const targetInput = inputRefs.current[targetIndex];
@@ -232,7 +231,7 @@ export default function InstructorOTPInput() {
   const theme = useTheme();
   const verifyOTP = useVerifyOTP();
   const navigate = useNavigate();
-  const { showSpinner,hideSpinner} = useSpinner()
+  const { showSpinner, hideSpinner } = useSpinner();
 
   useEffect(() => {
     if (timeLeft === 0) return;
@@ -252,20 +251,20 @@ export default function InstructorOTPInput() {
   const handleVerify = async () => {
     if (otp.length < 6 || otp.includes(" ")) {
       setError("Please enter all OTP digits.");
-      toast.error("Please enter all OTP digits.")
+      toast.error("Please enter all OTP digits.");
       return;
     }
     setError("");
     try {
-      showSpinner()
+      showSpinner();
       const response = await verifyOTP(otp);
-      toast.success(response?.message)
+      toast.success(response?.message);
       navigate("/instructor/home");
     } catch (error) {
       setError("Invalid OTP. Please try again.");
-      toast.error(error?.message)
-    }finally{
-      hideSpinner()
+      toast.error(error?.message);
+    } finally {
+      hideSpinner();
     }
   };
 

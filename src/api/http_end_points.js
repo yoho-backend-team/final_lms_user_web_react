@@ -91,6 +91,7 @@ const generateEndpoints = () => {
         verify_otp: "/institutes/auth/student/verify-otp",
         forget_password: "/institutes/auth/profile/forgot-password",
         reset_password: "/institutes/auth/profile/reset-password",
+        //change_password: "institutes/auth/profile/reset-password",
       },
       course: {
         get: `/institutes/${institute1}/branches/${branch1}/course/${course1}`,
@@ -119,20 +120,22 @@ const generateEndpoints = () => {
         get: `institutes/faq/all`,
       },
 
-      reports : {
-        get : "/institutes/reports/users/student",
+      reports: {
+        get: "/institutes/reports/users/student",
       },
       community: {
         get: `/institutes/community/course/${course1}`,
       },
       profile: {
-        get: `/institutes/auth/student/${getStudentDetails()?.uuid}/${instituteuuid}`,
+        get: `/institutes/auth/student/${
+          getStudentDetails()?.uuid
+        }/${instituteuuid}`,
         update: `/institutes/auth/student/update/${getStudentDetails()?.uuid}`,
       },
     },
     common: {
       file: {
-        upload: "/upload/", 
+        upload: "/upload/",
       },
     },
     common: {
@@ -176,12 +179,12 @@ const generateEndpoints = () => {
         create: "/institutes/staff/ticket",
         get: "/institutes/staff/ticket/",
       },
-      reports : {
-        get : "/institutes/reports/users/teaching-staff"
+      reports: {
+        get: "/institutes/reports/users/teaching-staff",
       },
-      index : {
-        get : "/institutes/auth/profile/me/"
-      }
+      index: {
+        get: "/institutes/auth/profile/me/",
+      },
     },
   };
 };

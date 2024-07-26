@@ -167,6 +167,7 @@ import NotificationList from "views/instructor-pages/notification-page";
     lazy(() => import("views/student-pages/tickets-page/ticket[id]-page")),
   );
 
+
 // Instructor Pages
 const InstructorHomePage = Loadable(
   lazy(() => import("views/instructor-pages/home-page")),
@@ -209,6 +210,9 @@ const InstructorProfilePage = Loadable(
 const InstructorCreateTicketPage = Loadable(
   lazy(() => import("views/student-pages/create-ticket-page")),
 ); // This seems like an error; correct import path should be checked
+
+
+
 
   const getRoleFromPath = () => {
     const path = window.location.pathname.split("/")?.[1];
@@ -282,18 +286,18 @@ const InstructorCreateTicketPage = Loadable(
               path="student/community"
               element={<StudentCommunityPage />}
             />
-            <Route path="student/courses" element={< StudentCourseViewPage/>} />
-            <Route path="student/course/:id" element={< StudentCoursePage/>} />
-            
+            <Route path="student/courses" element={<StudentCourseViewPage />} />
+            <Route path="student/course/:id" element={<StudentCoursePage />} />
             <Route
               path="student/help-center"
               element={<StudentHelpCenterPage />}
             />
-            <Route path="student/Faq" element={<StudentFaqPage/>}/>
+            <Route path="student/Faq" element={<StudentFaqPage />} />
             <Route path="student/payments" element={<StudentPaymentsPage />} />
-
-            <Route path="student/payment/pay" element={<StudentOptionalPayment />} />
-
+            <Route
+              path="student/payment/pay"
+              element={<StudentOptionalPayment />}
+            />
             {/* <Route
               path="student/OnlineUpcomingClass/:id"
               element={<StudentOnlineUpcomingClassViewPage />}6
@@ -316,12 +320,13 @@ const InstructorCreateTicketPage = Loadable(
               path="student/create-ticket"
               element={<StudentCreateTicketPage />}
             />
-            
             <Route
               path="student/class/:id"
               element={<StudentClassViewPage />}
             />
-             {/* <Route
+            
+            {/* Add Reset Password Route */}
+            {/* <Route
               path="student/OfflineUpcomingClasses"
               element={<StudentOfflineUpcomingClassesView />}
             />
@@ -356,7 +361,10 @@ const InstructorCreateTicketPage = Loadable(
             }
           >
             <Route path="instructor/home" element={<InstructorHomePage />} />
-            <Route  path="instructor/notifications" element={<NotificationList />} />
+            <Route
+              path="instructor/notifications"
+              element={<NotificationList />}
+            />
             <Route
               path="instructor/activity-logs"
               element={<InstructorActivityLogsPage />}

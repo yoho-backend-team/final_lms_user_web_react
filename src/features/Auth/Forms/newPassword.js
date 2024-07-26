@@ -3,12 +3,15 @@ import {
   Box,
   Button,
   FormControl,
-  TextField,
-  Typography,
   Input,
+  Typography,
+  FormHelperText,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import toast from "react-hot-toast";
+import { useChangePassword } from "../services";
+import { studentOtpAtom } from "store/atoms/authAtoms";
+import { useAtom } from "jotai";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,28 +35,43 @@ const useStyles = makeStyles((theme) => ({
 
 const EnterNewPassword = () => {
   const classes = useStyles();
+  const changePassword = useChangePassword();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [otpAtom, setOtpAtom] = useAtom(studentOtpAtom);
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+    setPasswordError(""); 
   };
 
   const handleConfirmPasswordChange = (event) => {
     setConfirmPassword(event.target.value);
+    setConfirmPasswordError("");
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
+    if (!password) {
+      setPasswordError("Enter new password");
+      return;
+    }
+    if (!confirmPassword) {
+      setConfirmPasswordError("Enter confirm password");
+      return;
+    }
     if (password !== confirmPassword) {
-      console.log(setPassword, "set");
-      console.log(confirmPassword, "confirm");
-      alert("Passwords do not match");
+      setConfirmPasswordError("Passwords do not match");
       return;
     }
     try {
-         
+      console.log(otpAtom, "otpAtom");
+      const response = await changePassword(confirmPassword);
+      toast.success(response.message);
     } catch (error) {
       console.error("Error resetting password", error);
+      toast.error("Error resetting password");
     }
   };
 
@@ -68,30 +86,13 @@ const EnterNewPassword = () => {
       }}
     >
       <Box>
-        <Typography variant="h5" component="h1" sx={{ fontWeight: "bold" ,color: "#242424", fontSize: "1.5rem" }}>
-          Enter New Password
-        </Typography>
         <Typography
-          variant="body1"
-          gutterBottom
-          sx={{
-            textAlign: "left",
-            width: "100%",
-            fontSize: "12.80px",
-            color: "black",
-            fontWeight: 100,
-            paddingTop: 5,
-          }}
+          variant="h5"
+          component="h1"
+          sx={{ fontWeight: "bold", color: "#242424", fontSize: "1.5rem" }}
         >
           Enter New Password
         </Typography>
-        <FormControl fullWidth sx={{ maxWidth: 250 }}>
-          <Input
-            type="email"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </FormControl>
         <Typography
           variant="body1"
           gutterBottom
@@ -106,12 +107,49 @@ const EnterNewPassword = () => {
         >
           Password
         </Typography>
-        <FormControl fullWidth sx={{ maxWidth: 250 }}>
+        <FormControl fullWidth sx={{ maxWidth: 250 }} error={!!passwordError}>
           <Input
-            type="email"
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+            aria-describedby="password-error-text"
+          />
+          {passwordError && (
+            <FormHelperText id="password-error-text">
+              {passwordError}
+            </FormHelperText>
+          )}
+        </FormControl>
+        <Typography
+          variant="body1"
+          gutterBottom
+          sx={{
+            textAlign: "left",
+            width: "100%",
+            fontSize: "12.80px",
+            color: "black",
+            fontWeight: 100,
+            paddingTop: 5,
+          }}
+        >
+          Confirm Password
+        </Typography>
+        <FormControl
+          fullWidth
+          sx={{ maxWidth: 250 }}
+          error={!!confirmPasswordError}
+        >
+          <Input
+            type="password"
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
+            aria-describedby="confirm-password-error-text"
           />
+          {confirmPasswordError && (
+            <FormHelperText id="confirm-password-error-text">
+              {confirmPasswordError}
+            </FormHelperText>
+          )}
         </FormControl>
         <Button
           variant="contained"
