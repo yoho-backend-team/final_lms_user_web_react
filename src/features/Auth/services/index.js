@@ -168,6 +168,7 @@ export const useForgetPasswordOtpVerify = () => {
 
 export const useStudentforgetPassword = () => {
   const [, setOtpAtom] = useAtom(studentOtpAtom);
+  
   const forgetPassword = async (email) => {
     try {
       const response = await Client.Student.forgetPassword({ email });
@@ -181,17 +182,20 @@ export const useStudentforgetPassword = () => {
   return forgetPassword;
 };
 
-export const useStudentNewPassword = () => {
+export const useChangePassword = () => {
   const [, setLoginStep] = useAtom(studentLoginStepAtom);
-  const [, setOtpAtom] = useAtom(studentOtpAtom);
-
-  const setNewPassword = async ({ email, newPassword, otp }) => {
+  const otpData = useAtomValue(studentOtpAtom);
+  const [otpAtom, setOtpAtom] = useAtom(studentOtpAtom);
+  
+  const changePassword = async (confirm_password) => {
     try {
-      const response = await Client.Student.setNewPassword({
-        email,
-        newPassword,
-        otp,
+      const response = await Client.Student.change_password({
+        email: otpAtom.email,
+        otp: otpAtom.otp,
+        token: otpAtom.token,
+        confirm_password,
       });
+      console.log(response, "Response");
       setOtpAtom({ email: null, token: null, otp: "" });
       setLoginStep("login");
       return { success: true, message: response?.message };
@@ -201,7 +205,7 @@ export const useStudentNewPassword = () => {
     }
   };
 
-  return setNewPassword;
+  return changePassword;
 };
 
 export const useStudentLogout = () => {};

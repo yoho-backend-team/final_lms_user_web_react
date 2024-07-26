@@ -18,5 +18,18 @@ export const getprofilewithId = async (data) => {
     }
   };
 
+  export const changePassword = async (oldPassword, email, newPassword) => {
+    try {
+      const response = await Client.Student.reset_password(
+        oldPassword,
+        email,
+        newPassword
+      );
+      return response;
+    } catch (error) {
+       throw new Error(error?.message);
+    }
+  };
+
   
   
