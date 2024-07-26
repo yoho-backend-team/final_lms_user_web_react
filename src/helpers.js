@@ -22,8 +22,9 @@ async function subscribe(serviceWorker,role,userId,user) {
 
      const endPoint = `${process.env.REACT_APP_BACK_END_URL}notification/subscribe`
      console.log(endPoint,"endPoint")
-     await axios.post(endPoint, {...subscription,user:userId,role:role});
-     Cookies.set(user+"subscription",true,{expires:"1d"})
+     await axios.post(endPoint, {subscription,user:userId,role:role});
+     const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+     Cookies.set(user+"subscription",true,{expires:expiryDate})
   // }
 }
 

@@ -13,7 +13,7 @@ import themes from "./themes";
 import NavigationScroll from "layout/NavigationScroll";
 import { onMessageListener, requestForToken } from "./firebase";
 import { regSw, subscribe } from "helpers";
-import { checkSubscriptionStatus, checkUserLoggedIn, getInstituteDetails, getStudentDetails } from "store/atoms/authorized-atom";
+import { checkSubscriptionStatus, checkUserLoggedIn, getInstituteDetails, getInstructorDetails, getStudentDetails } from "store/atoms/authorized-atom";
 import { instructorDetails, Student } from "lib/constants";
 // ==============================|| APP ||============================== //
 
@@ -45,7 +45,7 @@ const App = () => {
     }
     console.log(checkUserLoggedIn(instructorDetails),checkUserLoggedIn(Student),checkUserLoggedIn(Student)&&!checkSubscriptionStatus(Student+"subscription"))
     if(checkUserLoggedIn(instructorDetails)&&!checkSubscriptionStatus(instructorDetails+"subscription")){
-       const user = getInstituteDetails()
+       const user = getInstructorDetails()
        setupServiceWorkerAndRegisterFunction(user?.role,user?._id,instructorDetails)
     }else if(checkUserLoggedIn(Student)&&!checkSubscriptionStatus(Student+"subscription")){
       const user = getStudentDetails()

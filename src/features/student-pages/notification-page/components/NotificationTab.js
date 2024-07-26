@@ -1,9 +1,9 @@
-import { Avatar, Box, IconButton, Input, Tab, Tabs, Typography, InputAdornment } from "@mui/material"
+import { Avatar, Box, IconButton, Input, Tab, Tabs, Typography, InputAdornment, Grid } from "@mui/material"
 import SearchIcon from '@mui/icons-material/Search';
 import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
 import { getImageUrl } from "utils/common/imageUtlils";
 
-const NotificationTab = ({tabValue,handleTabChange,notifications,handleNotificationChange}) => {
+const NotificationTab = ({tabValue,handleTabChange,notifications,handleNotificationChange,selectedNotification={selectedNotification}}) => {
     const readCount = notifications?.filter((i) => i.status === "read").length
     const unreadCount = notifications?.filter((i) => i.status === "unread").length
 
@@ -63,7 +63,7 @@ const NotificationTab = ({tabValue,handleTabChange,notifications,handleNotificat
                     <SearchIcon sx={{ color: "white", width: "19px", height: "19px"}} />
                  </IconButton>
               </Box>
-              <Box>
+              <Box sx={{ display: "flex", flexDirection : "column", gap: "5px"}} >
                  <Box>
                      <Tabs value={tabValue} onChange={handleTabChange} >
                         <Tab label="All" />
@@ -71,43 +71,48 @@ const NotificationTab = ({tabValue,handleTabChange,notifications,handleNotificat
                         <Tab label="Unread" />
                      </Tabs>
                  </Box>
+                 <Box sx={{ overflow: "auto", height : "50vh"}} >
                  {
                   filteredNotifications?.map((notifi) =>(
-                     <Box sx={{ display: 'flex', gap: "13px",padding: "18.5px", cursor: "pointer" }} onClick={()=>handleNotificationChange(notifi)} >
-                     <Box sx={{ display: 'flex', justifyContent: "flex-start", flexDirection: "column"}} >
+                     <Grid xs={12} sx={{ display: 'flex', gap: "13px",padding: "18.5px", cursor: "pointer",
+                      backgroundColor : notifi?._id === selectedNotification?._id && "#E2E2E2" ,
+                      border : notifi?._id === selectedNotification?._id && "0.776px solid #7f7f7f33",
+                      borderRadius : notifi?._id === selectedNotification?._id && "6.205px"}} onClick={()=>handleNotificationChange(notifi)} >
+                     <Grid xs={2} sx={{ display: 'flex', justifyContent: "flex-start", flexDirection: "column"}} >
                        <Avatar 
                         alt="profile"
-                        src={notifi?.staff?.image ? getImageUrl(notifi?.staff?.image):profilePlaceholder}
+                        src={notifi?.student?.image ? getImageUrl(notifi?.student?.image):profilePlaceholder}
                         sx={{
                             width: "38px",
                             height : "38px"
                         }}
                        />
-                     </Box>
-                     <Box sx={{ display: 'flex', flexDirection: "column",gap:"8px"}} >
-                        <Box sx={{
+                     </Grid>
+                     <Grid xs={7} sx={{ display: 'flex', flexDirection: "column",gap:"8px"}} >
+                        <Grid xs={12} sx={{
                             display: 'flex',
                             flexDirection: "row",
                             justifyContent: 'space-between'
                         }} >
-                          <Box sx={{ display: 'flex', flexDirection: 'column',gap:"4px"}} >
+                          <Grid xs={9} sx={{ display: 'flex', flexDirection: 'column',gap:"4px"}} >
                              <Typography sx={{ color : '#000000', fontSize: "14px",fontWeight:400}} >{notifi?.title}</Typography>
-                             <Typography sx={{ color : "#0D6EFD",fontSize: '10.8px',fontWeight:400,}} >Starts @2:50pm</Typography>
-                          </Box>
-                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: "4px"}} >
+                             {/* <Typography sx={{ color : "#0D6EFD",fontSize: '10.8px',fontWeight:400,}} >Starts @2:50pm</Typography> */}
+                          </Grid>
+                          <Grid xs={3} sx={{ display: 'flex', flexDirection: 'column', gap: "4px"}} >
                               <Typography sx={{ color: '#7F7F7F',fontSize: "9.3px", fontWeight: 400 }} >3:13 PM</Typography>
-                              <Typography sx={{ width: "6.5px",height: "6.5px", borderRadius: "3.5px", backgroundColor: "#006AD4"}} >.</Typography>
-                          </Box>
-                        </Box>
+                              {notifi?.status === "unread" && <Typography sx={{ width: "6.5px",height: "6.5px", borderRadius: "3.5px", backgroundColor: "#006AD4"}} >.</Typography>}
+                          </Grid>
+                        </Grid>
                         <Box>
                            <Typography sx={{ color: "#7F7F7F", fontSize: "10px", fontWeight: "400"}} >
                            {notifi?.body}
                            </Typography>
                         </Box>
-                     </Box>
-                     </Box>
+                     </Grid>
+                     </Grid>
                      ))
                      }
+                     </Box>
               </Box>
              </Box>
            </Box>
