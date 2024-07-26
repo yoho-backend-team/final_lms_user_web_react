@@ -87,7 +87,7 @@ const InstructorNavLinks = () => {
           display: "flex",
           gap: tabView ? 2 : 5,
           position: "relative",
-          padding: tabView ? "25px 45px 45px 45px" : 7,
+          padding: tabView ? "25px 45px 45px 45px" : 0,
           borderBottomLeftRadius: 80,
           borderBottomRightRadius: 80,
           

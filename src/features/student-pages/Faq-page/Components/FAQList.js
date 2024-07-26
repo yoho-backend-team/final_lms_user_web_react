@@ -11,15 +11,12 @@ const FAQList = ({ faqs, category,selectedCategory  }) => {
 
   return (
     <Grid item xs={12}>
-      <Box>
+      <Box sx={{display:"flex", justifyContent:"center"}}>
         <>
           <Typography variant="h4" color="black" sx={{ gap: "10px", p: 1 }}>
             {category?.category_id?.category_name}
           </Typography>
-          <Typography variant="h5" color="gray">
-            {category?.category_id?.description}
-          </Typography>
-        </>
+          </>
       </Box>
       <Paper>
         <List>
@@ -28,8 +25,8 @@ const FAQList = ({ faqs, category,selectedCategory  }) => {
               <FAQItem key={index} faq={faq} />
             ))
           ) : (
-            <Typography variant="h6" color="gray" sx={{ p: 2 }}>
-              No FAQs available for this category.
+            <Typography variant="h3" color="gray" sx={{ p: 2 }}>
+              Select category Whats You Want.
             </Typography>
           )}
         </List>

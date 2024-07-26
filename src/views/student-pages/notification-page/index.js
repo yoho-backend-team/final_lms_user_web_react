@@ -9,6 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectStudentNotifications, selectStudentSelectedNotification } from "features/common/redux/studentSelector";
 import { setStudentSelectedNotification } from "features/common/redux/studentSlices";
+import { useSpinner } from "context/SpinnerProvider";
+import toast from "react-hot-toast";
+import { updateNotificationStatus } from "features/student-pages/notification-page/services";
+import updateInstructorNotifications from "features/common/redux/thunks";
+import getAllStudentNotifications from "features/common/redux/studentThunks";
 
 const StudentNotificationList = () => {
     const navigate = useNavigate();
@@ -16,6 +21,7 @@ const StudentNotificationList = () => {
     const [tabValue, setTabValue] = useState(0);
     const selectedNotification = useSelector(selectStudentSelectedNotification);
     const notificationList = useSelector(selectStudentNotifications);
+    const { showSpinner, hideSpinner } = useSpinner()
 
     const handleTabChange = (event, value) => {
         setTabValue(value);
@@ -25,18 +31,31 @@ const StudentNotificationList = () => {
         navigate(-1); // Adjust navigation as needed
     };
 
-    const handleNotificationChange = (notification) => {
+    const handleNotificationChange = async (notification) => {
         dispatch(setStudentSelectedNotification(notification));
+        if(notification?.status === "unread"){
+            try {
+            showSpinner()
+            const response = await updateNotificationStatus({uuid : notification?.uuid})  
+            dispatch(setStudentSelectedNotification(response));
+            dispatch(getAllStudentNotifications())
+            console.log(response,"response") 
+            } catch (error) {
+              toast.error(error?.message)  
+            }finally{
+                hideSpinner()
+            }
+        }
     };
-
+    console.log(selectedNotification,"selected")
     return (
-        <Box sx={{ padding: "50px 39px 20px 40px" }}>
+        <Box sx={{ padding: "70px 39px 20px 40px", zIndex: 1000 }}>
             <Box sx={{ display: 'flex', justifyContent: "space-between" }}>
                 <IconButton onClick={handleBack} variant="text" sx={{ display: 'flex', gap: "20px", cursor: "pointer", ":hover": { background: "none" } }}>
                     <KeyboardBackspaceSharpIcon sx={{ width: "26px", height: "26px", color: "#000000" }} />
                     <Typography sx={{ color: '#000000', fontSize: "15px", fontWeight: 7000, lineHeight: "24px" }}> Back </Typography>
                 </IconButton>
-                <Box sx={{ display: "flex", gap: "20px", cursor: "pointer" }}>
+                <Box sx={{ display: "none", gap: "20px", cursor: "pointer" }}>
                     <IconButton sx={{ width: "16px", height: "18.5px" }}>
                         <ZoomInMapOutlinedIcon sx={{ color: "#000000" }} />
                     </IconButton>
@@ -52,6 +71,7 @@ const StudentNotificationList = () => {
                         handleTabChange={handleTabChange}
                         notifications={notificationList}
                         handleNotificationChange={handleNotificationChange}
+                        selectedNotification={selectedNotification}
                     />
                 </Grid>
                 <Grid item xs={12} md={9}>

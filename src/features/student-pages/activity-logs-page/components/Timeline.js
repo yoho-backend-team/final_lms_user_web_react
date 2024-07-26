@@ -69,7 +69,6 @@ const TimelineComponent = () => {
       {activityLogs.map((log, index) => {
         const icon = getIcon(log.action);
         const logs = getLogs(log.action, log.user.username);
-        console.log(icon,log)
         return (
           <TimelineItem key={index}>
             <TimelineOppositeContent sx={{ width: "250px", flex: "none" }}>
