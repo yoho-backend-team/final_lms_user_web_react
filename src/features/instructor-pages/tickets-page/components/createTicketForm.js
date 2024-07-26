@@ -85,7 +85,6 @@ const useStyles = makeStyles({
 const CreateTicketForm = ({ handleClose }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [attachment, setAttachment] = useState(null);
   const [open, setOpen] = useState(false);
   const { tabView } = useTabResponsive();
   const { showSpinner,hideSpinner} = useSpinner()
@@ -130,6 +129,7 @@ const CreateTicketForm = ({ handleClose }) => {
         };
         const response = await CreateTickets(data);
         handleClose();
+        console.log(response)
         toast.success("ticket created successfully");
       } catch (error) {
         toast.error(error?.message);

@@ -1,6 +1,6 @@
 import Client from "../../../../api/index";
 
-export const StudentCreateTickets = async (data) => {
+export const CreateTickets = async (data) => {
   try {
     const response = await Client.Student.ticket.create(data);
     return response?.data;
@@ -9,7 +9,7 @@ export const StudentCreateTickets = async (data) => {
   }
 };
 
-export const StudentgetTickets = async (query) => {
+export const getTickets = async (query) => {
   try {
     const response = await Client.Student.ticket.get(query);
     return response?.data;

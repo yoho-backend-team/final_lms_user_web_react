@@ -108,8 +108,9 @@ const generateEndpoints = () => {
         getFees: `/institutes/payments/student-fee/${getStudentDetails()?._id}`,
       },
       ticket: {
-        create: "/institutes/student/ticket/create",
-        get: "/institutes/student/ticket/getall",
+        create: "/institutes/student-ticket/create",
+        get: "/institutes/student-ticket/getall",
+        getById: "/institutes/student-ticket/",
       },
       notification : {
         get : "/institutes/students/notifications/"
