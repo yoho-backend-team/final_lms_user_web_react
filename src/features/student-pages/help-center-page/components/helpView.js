@@ -5,12 +5,16 @@ import {
   Typography,
 } from "@mui/material";
 
-const InstructorHelpView = ({ categories }) => {
-  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
+const StudentHelpView = ({ categories }) => {
+  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(1);
 
   const handleCategoryChange = (index) => {
     setCurrentCategoryIndex(index);
   };
+
+  const currentCategory = categories?.[currentCategoryIndex];
+
+  console.log(currentCategory)
 
   return (
     <Box
@@ -43,7 +47,7 @@ const InstructorHelpView = ({ categories }) => {
                 padding: "2px",
               }}
             >
-              {categories[currentCategoryIndex].question}
+              {currentCategory?.question || "No question available"}
             </Typography>
             <Typography
               sx={{
@@ -53,8 +57,27 @@ const InstructorHelpView = ({ categories }) => {
                 lineHeight: "25px",
               }}
             >
-              {categories[currentCategoryIndex].answer}
-            </Typography>
+              {currentCategory?.answer  || "No answer available"}
+              </Typography>
+            {currentCategory?.videolink && (
+              <Typography
+                component="a"
+                href={currentCategory.videolink}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  color: "#321658",
+                  fontSize: "16px",
+                  fontWeight: 400,
+                  lineHeight: "25px",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                  display: "inline-block",
+                }}
+              >
+                Watch video
+              </Typography>
+            )}
           </Box>
         </Grid>
       </Grid>
@@ -83,4 +106,4 @@ const InstructorHelpView = ({ categories }) => {
   );
 };
 
-export default InstructorHelpView;
+export default StudentHelpView;

@@ -5,7 +5,7 @@ import {
   Typography,
 } from "@mui/material";
 
-const StudentHelpView = ({ categories }) => {
+const InstructorHelpView = ({ categories }) => {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
 
   const handleCategoryChange = (index) => {
@@ -83,4 +83,4 @@ const StudentHelpView = ({ categories }) => {
   );
 };
 
-export default StudentHelpView;
+export default InstructorHelpView;

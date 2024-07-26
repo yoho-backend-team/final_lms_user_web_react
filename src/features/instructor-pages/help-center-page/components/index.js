@@ -22,9 +22,9 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { makeStyles } from "@mui/styles";
 import { InputAdornment } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import StudentHelpView from "./helpView";
-import StudentMailTab from "./tap-pages/mailTab";
 import Client from "../../../../api/index";
+import InstructorHelpView from "./helpView";
+import InstructorMailTab from "./tap-pages/mailTab";
 
 
 const useStyles = makeStyles(() => ({
@@ -43,7 +43,7 @@ const tab_list = [
   "Login&SignUp"
   ]
 
-const StudentHelpCenter = () => {
+const InstructorHelpCenter = () => {
   const [faqCategories, setFaqCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTab, setSelectedTab] = useState("0");
@@ -359,12 +359,12 @@ const StudentHelpCenter = () => {
         </Box>
       )}
       <Grid container spacing={2} sx={{ marginTop: 2 }}>
-        { !isView && <StudentMailTab category = {filterData} setView={handleSetView} SelectedQuery={selectedQuery?.category} />}
+        { !isView && <InstructorMailTab category = {filterData} setView={handleSetView} SelectedQuery={selectedQuery?.category} />}
       </Grid>
-      {isView && <StudentHelpView categories = {faqCategories} category={selectedQuery} id={selectedQuery?.category
+      {isView && <InstructorHelpView categories = {faqCategories} category={selectedQuery} id={selectedQuery?.category
 } />}
     </>
   );
 };
 
-export default StudentHelpCenter;
+export default InstructorHelpCenter;

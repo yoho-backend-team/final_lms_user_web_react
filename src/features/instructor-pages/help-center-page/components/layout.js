@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import { HelpCenterBg } from "utils/images";
 
-const StudentHelpCenterLayout = ({ children }) => {
+const InstructorHelpCenterLayout = ({ children }) => {
   return (
     <Box
       sx={{
@@ -30,4 +30,4 @@ const StudentHelpCenterLayout = ({ children }) => {
   );
 };
 
-export default StudentHelpCenterLayout;
+export default InstructorHelpCenterLayout;
