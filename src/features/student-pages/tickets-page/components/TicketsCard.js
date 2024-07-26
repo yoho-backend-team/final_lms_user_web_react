@@ -1,16 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box, Typography, Grid, Button } from "@mui/material";
 import SubWayPinIcon from "assets/icons/subWayPinIcon";
 
-const StudentTicketCard = ({
-  ticketNumber,
-  query,
-  description,
-  status,
-  date,
-  id,
-  handleTicketViewOpen,
-  _id,
+const TicketCard = ({
+  ticket,handleTicketViewOpen,handleTicketViewClose
 }) => {
   const statusColor = {
     opened: "#008375",
@@ -21,19 +14,6 @@ const StudentTicketCard = ({
     const new_date = new Date(iosString);
     return new_date.toLocaleDateString("en-US");
   };
-
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      event.preventDefault();
-      event.returnValue = ''; // Chrome requires returnValue to be set
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
 
   return (
     <Grid
@@ -58,7 +38,7 @@ const StudentTicketCard = ({
               lineHeight: "24px",
             }}
           >
-            {ticketNumber ? ticketNumber : _id}
+            {ticket?.ticketNumber ? ticket?.ticketNumber : ticket?._id}
           </Typography>
         </Box>
         <Box
@@ -69,7 +49,7 @@ const StudentTicketCard = ({
             padding: "9px 24px",
           }}
         >
-          <Typography sx={{ color: "#5611B1" }}>{convertDate(date)}</Typography>
+          <Typography sx={{ color: "#5611B1" }}>{convertDate(ticket?.date)}</Typography>
         </Box>
       </Box>
 
@@ -82,7 +62,7 @@ const StudentTicketCard = ({
             fontSize: "14px",
           }}
         >
-          {query}
+          {ticket?.query}
         </Typography>
       </Box>
 
@@ -106,7 +86,7 @@ const StudentTicketCard = ({
             overflow: "auto",
           }}
         >
-          {description}
+          {ticket?.description}
         </Typography>
       </Box>
 
@@ -123,21 +103,21 @@ const StudentTicketCard = ({
               color: "#020202",
             }}
           >
-            {id}
+            {ticket?.id}
           </Typography>
         </Box>
         <Box>
           <Button
-            onClick={() => handleTicketViewOpen()}
+            onClick={() => handleTicketViewOpen(ticket)}
             variant="contained"
             sx={{
               color: "white",
               borderRadius: "8px",
-              backgroundColor: statusColor[status],
+              backgroundColor: statusColor[ticket?.status],
               padding: "9px 24px",
             }}
           >
-            {status}
+            {ticket?.status}
           </Button>
         </Box>
       </Box>
@@ -145,4 +125,4 @@ const StudentTicketCard = ({
   );
 };
 
-export default StudentTicketCard;
+export default TicketCard;

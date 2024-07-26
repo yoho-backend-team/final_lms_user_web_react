@@ -164,7 +164,7 @@ import NotificationList from "views/instructor-pages/notification-page";
     lazy(() => import("views/student-pages/create-ticket-page")),
   );
   const StudentTicketViewPage = Loadable(
-    lazy(() => import("views/student-pages/tickets-page/ticket[id]-page")),
+    lazy(() => import("views/student-pages/tickets-page")),
   );
   const StudentNotificationList = Loadable(
     lazy(() => import("views/student-pages/notification-page/index"))

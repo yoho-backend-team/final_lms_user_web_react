@@ -85,6 +85,12 @@ class Client {
         params,
         "student",
       ),
+      getById: (params) =>
+        httpClient.get(
+          HTTP_END_POINTS.Student.ticket.getById + params.id,
+          params,
+          "student"
+        ),
   },
 
   reports : {
