@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-const InstructorHelpCard = ({ section, title, setView ,category}) => {
+const StudentHelpCard = ({ section, title, setView ,category}) => {
   
   
   return (
@@ -42,7 +42,9 @@ const InstructorHelpCard = ({ section, title, setView ,category}) => {
         >
           {section}
         </Typography>
+        
       </Box>
+      
       <Box
         sx={{
           backgroundColor: "white",
@@ -73,4 +75,4 @@ const InstructorHelpCard = ({ section, title, setView ,category}) => {
   );
 };
 
-export default InstructorHelpCard;
+export default StudentHelpCard;
