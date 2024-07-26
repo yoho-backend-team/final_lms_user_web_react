@@ -44,7 +44,7 @@ const NotificationList = () => {
                         <Typography sx={{ color : '#000000', fontSize: "15px", fontWeight: 7000, lineHeight: "24px"}} > Back </Typography>
                      </IconButton>
                   </Box>
-                  <Box sx={{ display: "flex", gap: "20px",cursor:"pointer"}} >
+                  <Box sx={{ display: "none", gap: "20px",cursor:"pointer"}} >
                     <IconButton sx={{ width: "16px", height: "18.5px"}} >
                       <ZoomInMapOutlinedIcon sx={{ color : "#000000"}} />
                     </IconButton>

@@ -2,6 +2,7 @@ import { Avatar, Box, IconButton, Typography } from "@mui/material"
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { imagePlaceholder, profilePlaceholder } from "utils/placeholders"
 import { getImageUrl } from "utils/common/imageUtlils";
+import { formatDate, formatTime } from "utils/formatDate";
 
 const NotificationView = ({selectedNotification}) => {
     return(
@@ -10,7 +11,7 @@ const NotificationView = ({selectedNotification}) => {
                  <Box sx={{ display: 'flex', gap:"13px"}} >
                     <Box>
                      <Avatar
-                     src={selectedNotification?.staff?.image ? getImageUrl(selectedNotification?.staff?.image):profilePlaceholder}
+                     src={selectedNotification?.student?.image ? getImageUrl(selectedNotification?.student?.image):profilePlaceholder}
                      alt="image"
                      sx={{
                         width : "52px",
@@ -29,7 +30,7 @@ const NotificationView = ({selectedNotification}) => {
                        <DeleteOutlineOutlinedIcon sx={{ color: "#7F7F7F"}} />
                     </Box>
                     <Box>
-                      <Typography sx={{ color: "#7F7F7F", fontSize: "11.5px",fontWeight:400}} >20 june 2022 : 9:16AM</Typography>
+                      <Typography sx={{ color: "#7F7F7F", fontSize: "11.5px",fontWeight:400}} >{ selectedNotification?.createdAt ? formatDate(selectedNotification?.createdAt) + "-" + formatTime(selectedNotification?.createdAt) : new Date().toDateString()}</Typography>
                     </Box>
                  </Box>
               </Box>
