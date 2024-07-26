@@ -69,7 +69,8 @@ class Client {
     get_class_attendance: (data) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.class_attendance}/${data.classId}`, { params: data })
   },
   notification : {
-    get : (params) => httpClient.get(HTTP_END_POINTS.Student.notification.get,params,"student")
+    get : (params) => httpClient.get(HTTP_END_POINTS.Student.notification.get,params,"student"),
+    update : (data) => httpClient.update(HTTP_END_POINTS.Student.notification.update_status + data.uuid , data, "student" )
   },
   ticket: {
     create: (data, params) =>
