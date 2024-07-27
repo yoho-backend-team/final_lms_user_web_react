@@ -1,20 +1,8 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 
-const StudentHelpView = ({ categories }) => {
+const StudentHelpView = ({ category }) => {
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(1);
-
-  const handleCategoryChange = (index) => {
-    setCurrentCategoryIndex(index);
-  };
-
-  const currentCategory = categories?.[currentCategoryIndex];
-
-  console.log(currentCategory)
 
   return (
     <Box
@@ -27,7 +15,7 @@ const StudentHelpView = ({ categories }) => {
       }}
     >
       <Grid container spacing={5}>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <Box
             sx={{
               display: "flex",
@@ -45,9 +33,10 @@ const StudentHelpView = ({ categories }) => {
                 lineHeight: "19px",
                 color: "#000000",
                 padding: "2px",
+                 fontFamily:"poppins"
               }}
             >
-              {currentCategory?.question || "No question available"}
+              {category?.question || "No question available"}
             </Typography>
             <Typography
               sx={{
@@ -55,53 +44,81 @@ const StudentHelpView = ({ categories }) => {
                 fontSize: "16px",
                 fontWeight: 400,
                 lineHeight: "25px",
+                 fontFamily:"poppins"
               }}
             >
-              {currentCategory?.answer  || "No answer available"}
-              </Typography>
-            {currentCategory?.videolink && (
-              <Typography
-                component="a"
-                href={currentCategory.videolink}
-                target="_blank"
-                rel="noopener noreferrer"
+              {category?.answer || "No answer available"}
+            </Typography>
+            <Box>
+            <Typography
+                    sx={{
+                      color: "#000",
+                      fontSize: "24px",
+                      fontWeight: 700,
+                      textAlign: "center",
+                      fontFamily:"poppins"
+                    }}
+                  >
+                    Video Link
+                    
+                  </Typography>
+            </Box>
+
+            {category?.videolink && (
+              
+              <Box
                 sx={{
-                  color: "#321658",
-                  fontSize: "16px",
-                  fontWeight: 400,
-                  lineHeight: "25px",
-                  textDecoration: "none",
-                  cursor: "pointer",
-                  display: "inline-block",
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "16/9",
+                  backgroundColor: "#f5f5f5",
+                  borderRadius: "8px",
+                  overflow: "hidden",
                 }}
               >
-                Watch video
-              </Typography>
+                <img
+                  src={category?.videoThumbnail || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIQTqg9NctHPWirUzxWYQHlGusYzURbCLFog&s.jpg"}
+                  alt="Video thumbnail"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => window.open(category.videolink, "_blank")}
+                />
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    borderRadius: "50%",
+                    p: "10px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => window.open(category.videolink, "_blank")}
+                  
+                  
+                >
+                 
+                  <Typography
+                    sx={{
+                      color: "#FFFFFF",
+                      fontSize: "24px",
+                      fontWeight: 700,
+                      textAlign: "center",
+                    }}
+                  >
+                    ▶ React Class 1
+                  </Typography>
+                </Box>
+              </Box>
             )}
           </Box>
         </Grid>
       </Grid>
-
-      {/* Example of navigation buttons */}
-      <Box mt={2} display="flex" justifyContent="center">
-        {categories.map((category, index) => (
-          <button
-            key={category.id}
-            onClick={() => handleCategoryChange(index)}
-            style={{
-              marginRight: "10px",
-              backgroundColor:
-                index === currentCategoryIndex ? "#C3C3C3" : "transparent",
-              border: "none",
-              borderRadius: "5px",
-              padding: "5px 10px",
-              cursor: "pointer",
-            }}
-          >
-           
-          </button>
-        ))}
-      </Box>
     </Box>
   );
 };
