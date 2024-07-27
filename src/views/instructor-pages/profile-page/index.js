@@ -22,7 +22,6 @@ const ProfilePage = () => {
     try{
     showSpinner()
     const response = await getInstructorProfile()
-    console.log(response)
     setInstructor(response) 
     }catch(error){
      toast.error(error?.message)

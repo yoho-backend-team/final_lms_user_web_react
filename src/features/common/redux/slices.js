@@ -16,9 +16,12 @@ const instructorNotifications = createSlice({
         },
         setSelectedNotification : (state,action) => {
             state.selectedNotification = action.payload
-        }
+        },
+        addNotification: (state, action) => {
+            state.data.push(action.payload);
+        },
     }
 })
 
-export const { setNotifications,setLoading,setSelectedNotification} = instructorNotifications.actions
+export const { setNotifications,setLoading,setSelectedNotification,addNotification} = instructorNotifications.actions
 export default instructorNotifications.reducer
