@@ -105,9 +105,9 @@ const ProfilePage = () => {
           pincode: editedPersonalInfo?.pincode,
         }
       }
-      console.log(data,"data")
+      
       const updatedData = await UpdateprofilewithId(data);
-      console.log(updatedData,"updated")
+      
       setPersonalInfo(updatedData);
       setEditing(false);
       navigate("student/home")
@@ -130,7 +130,6 @@ const ProfilePage = () => {
       const formData = new FormData();
       formData.append("file", file); 
       const imageUrl = await fileUpload(formData);
-      console.log(imageUrl,"image")
       setPersonalInfo({
         ...personalInfo,
         image: imageUrl.file,
@@ -146,7 +145,7 @@ const ProfilePage = () => {
       toast.error(error?.message);
     }
   };
-  console.log(personalInfo,"personalInfor")
+  
   const genderIcon = personalInfo.gender === 'male' ? <MaleIcon /> : <FemaleIcon />;
   const image = getImageUrl(personalInfo.image);
 
@@ -175,7 +174,7 @@ const ProfilePage = () => {
   ];
 
 
-  console.log(personalInfo, "personalInfo")
+
 
   const handleNavigateBack = () => {
     navigate("student/home"); 

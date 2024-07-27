@@ -61,7 +61,6 @@ const PaymentInterface = () => {
   useEffect(() => {
     getSalaryDetails();
   }, [dispatch]);
-  console.log(salaries, "salaries");
 
   
   return (
