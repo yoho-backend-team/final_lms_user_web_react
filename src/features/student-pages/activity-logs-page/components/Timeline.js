@@ -9,6 +9,8 @@ import { getAllStudentActivity } from '../services';
 
 const TimelineComponent = () => {
   const [activityLogs, setActivityLogs] = useState([]);
+  
+  
 
   useEffect(() => {
     const fetchActivityLogs = async () => {
@@ -71,8 +73,8 @@ const TimelineComponent = () => {
         const logs = getLogs(log.action, log.user.username);
         return (
           <TimelineItem key={index}>
-            <TimelineOppositeContent sx={{ width: "250px", flex: "none" }}>
-              <Typography variant="body2" sx={{ color: "#495057", fontSize: "12px", fontWeight: 500, lineHeight: "24px" }} color="textSecondary">
+            <TimelineOppositeContent sx={{ width: "250px", flex: "none"}}>
+              <Typography variant="body2" sx={{ color: "#495057", fontSize: "12px", fontWeight: 500, lineHeight: "24px" ,marginRight: "28px",}} color="textSecondary">
                 {formatDate(log?.updatedAt)} {formatTime(log?.updatedAt)}
               </Typography>
             </TimelineOppositeContent>
@@ -81,7 +83,7 @@ const TimelineComponent = () => {
               {index < activityLogs.length - 1 && <TimelineConnector />}
             </TimelineSeparator>
             <TimelineContent>
-              <Typography variant="h6" component="h1" sx={{ color: "#495057", fontSize: "14px", fontWeight: 700, lineHeight: "24px" }}>
+              <Typography variant="h6" component="h1" sx={{ color: "#495057", fontSize: "14px", fontWeight: 700, lineHeight: "24px",mb: "40px"}}>
                 {log.title}
               </Typography>
               {logs.map((logEntry, idx) => (
@@ -90,11 +92,11 @@ const TimelineComponent = () => {
                     <TimelineSeparator sx={{ backgroundColor: "#D9D9D9", height: "1px", width: "91px", flex: "none" }} />
                     <Typography sx={{ border: `4px solid ${idx === 0 ? "#6AF467" : "#F76761"}`, height: "20px", width: "20px", borderRadius: "20px" }}></Typography>
                   </Box>
-                  <Paper elevation={3} style={{ padding: '10px 24px', margin: '10px 0', backgroundColor: "#E7E7E7", borderRadius: "8px", boxShadow: "none" }} key={idx}>
-                    <Typography variant="body2" sx={{color:'#606060',fontfamily: 'Poppins',fontsize: '14px',fontstyle: 'normal',fontweight: '400',lineheight: 'normal'}}>
+                  <Paper elevation={3} style={{ padding: '10px 24px', margin: '10px 0', backgroundColor: "#E7E7E7", borderRadius: "8px", boxShadow: "none"}} key={idx}>
+                    <Typography variant="body2" sx={{color:'#606060',fontfamily: 'Poppins',fontsize: '14px',fontstyle: 'normal',fontweight: '400',lineheight: 'normal',whiteSpace: 'pre-line'}}>
                       {logEntry}
                     </Typography>
-                    <Typography variant="caption" display="block" color="textSecondary" sx={{ textAlign: "end" }}>
+                    <Typography variant="caption" display="block" color="textSecondary" sx={{ textAlign: "end",mb: "10px" }}>
                       {formatDate(log.createdAt)} {formatTime(log.createdAt)}
                     </Typography>
                   </Paper>

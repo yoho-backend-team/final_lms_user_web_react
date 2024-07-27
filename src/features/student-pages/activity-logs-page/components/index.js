@@ -47,34 +47,46 @@ const ActivityStudentLog = () => {
   useEffect(() => {
     const filterLogs = () => {
       let filtered = [...activityLogs];
-
-      if (fromDate && toDate) {
+    
+      // Convert fromDate and toDate to Date objects for comparison
+      const from = fromDate ? new Date(fromDate) : null;
+      const to = toDate ? new Date(toDate) : null;
+    
+      if (from && to) {
         filtered = filtered.filter(log => {
           const logDate = new Date(log.date);
-          return logDate >= new Date(fromDate) && logDate <= new Date(toDate);
+          return logDate >= from && logDate <= to;
         });
       }
-
+    
+      // Handle week-based filtering
+      const now = new Date();
       if (week === "Past Week") {
         const pastWeek = new Date();
-        pastWeek.setDate(pastWeek.getDate() - 7);
+        pastWeek.setDate(now.getDate() - 7);
         filtered = filtered.filter(log => new Date(log.date) >= pastWeek);
       } else if (week === "Past Month") {
         const pastMonth = new Date();
-        pastMonth.setMonth(pastMonth.getMonth() - 1);
+        pastMonth.setMonth(now.getMonth() - 1);
         filtered = filtered.filter(log => new Date(log.date) >= pastMonth);
       } else if (week === "Past Year") {
         const pastYear = new Date();
-        pastYear.setFullYear(pastYear.getFullYear() - 1);
+        pastYear.setFullYear(now.getFullYear() - 1);
         filtered = filtered.filter(log => new Date(log.date) >= pastYear);
       }
-
+    
       setFilteredLogs(filtered);
     };
 
     filterLogs();
   }, [fromDate, toDate, week, activityLogs]);
+console.log("Activity Logs:", activityLogs);
+console.log("From Date:", fromDate);
+console.log("To Date:", toDate);
+console.log("Week Filter:", week);
 
+
+  const totalPages = Math.ceil(filteredLogs.length / rowsPerPage);
   const paginatedLogs = filteredLogs.slice(
     (page - 1) * rowsPerPage,
     page * rowsPerPage
@@ -172,8 +184,8 @@ const ActivityStudentLog = () => {
               <Box sx={{ maxHeight: 500, overflow: "auto", padding: 2 }}>
                 <TimelineComponent logs={paginatedLogs} />
               </Box>
-              <CustomPagination totalPages={Math.ceil(filteredLogs.length / rowsPerPage)} currentPage={page} setCurrentPage={setPage} />
-            </Paper>
+              <CustomPagination totalPages={totalPages} currentPage={page} setCurrentPage={setPage} />
+              </Paper>
           </Box>
         </Box>
       </Box>
