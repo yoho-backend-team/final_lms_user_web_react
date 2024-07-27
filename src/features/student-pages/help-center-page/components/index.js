@@ -79,6 +79,8 @@ const StudentHelpCenter = () => {
     setSearchQuery(event.target.value);
   };
 
+  console.log(selectedQuery,"SelectedQuery")
+
 
  const filterData = faqCategories?.filter((i) =>{
   const categoryMatches = i.category === tab_list[value]
