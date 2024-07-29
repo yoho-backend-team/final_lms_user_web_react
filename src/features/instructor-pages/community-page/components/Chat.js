@@ -19,7 +19,7 @@ const Chat = ({ currentChat, socket }) => {
       socket?.off("message", handleMessage);
     };
   }, [socket]);
-  console.log(Messages,"messages")
+  
   return (
     <Box
       sx={{

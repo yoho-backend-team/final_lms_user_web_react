@@ -25,7 +25,7 @@ const AddStudyMaterialsPage = ({Course,getCourseDetails}) => {
   const handleBack = () => {
     navigate(-1);
   };
-  console.log(Course,"course")
+  
   return (
     <Box>
       <Box

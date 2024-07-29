@@ -10,7 +10,6 @@ const Chat = ({ currentChat, socket }) => {
 
   useEffect(() => {
     const handleMessage = (message) => {
-      console.log(message, "message");
       setMessages((prev) => [...prev, message]);
     };
 

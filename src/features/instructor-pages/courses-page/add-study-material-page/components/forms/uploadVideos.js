@@ -49,7 +49,7 @@ const UploadVideos = () => {
   const classes = useStyles();
 
   const handleFileUpload = (event) => {
-    console.log(event.target.files);
+    
   };
 
   const formik = useFormik({
@@ -68,7 +68,7 @@ const UploadVideos = () => {
       file: Yup.mixed().required("File is required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+    
     },
   });
 

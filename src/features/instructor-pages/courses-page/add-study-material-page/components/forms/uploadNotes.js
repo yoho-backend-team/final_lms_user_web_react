@@ -142,7 +142,6 @@ const UploadNotes = ({ Notes , getCourseDetails}) => {
           setCurrentNote(null);
           await getCourseDetails()
           toast.success(response?.message)
-          console.log("Creating note:", values);  
         } catch (error) {
           toast.error(error?.message)
         }finally{

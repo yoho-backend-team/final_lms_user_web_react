@@ -51,7 +51,7 @@ const StudentHelpCenter = () => {
   const [isView, setView] = useState(false);
   const [selectedQuery,setSelectedQuery] = useState(null)
   const classes = useStyles();
-  console.log(isView,"isView")
+  
   useEffect(() => {
     const fetchFaqCategories = async () => {
       try {
@@ -79,14 +79,12 @@ const StudentHelpCenter = () => {
     setSearchQuery(event.target.value);
   };
 
-  console.log(selectedQuery,"SelectedQuery")
 
 
  const filterData = faqCategories?.filter((i) =>{
   const categoryMatches = i.category === tab_list[value]
  const searchMatches = i.question.toLowerCase().includes(searchQuery.toLowerCase());
  return categoryMatches && searchMatches;
-  console.log(faqCategories,"selectedQuery",tab_list[value],"query",filterData)
 });
 
   return (
@@ -318,7 +316,6 @@ const StudentHelpCenter = () => {
                       .includes(searchQuery.toLowerCase())
                   );
                   
-                  console.log(filterData,"serach");
                 }}
                 sx={{
                   backgroundColor: "#5611B1",

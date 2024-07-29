@@ -39,7 +39,6 @@ export const useInstructorLogin = () => {
       } catch (error) {
         console.error("Login error:", error);
         const error_message = error?.response?.data?.message;
-        console.log(error_message, "errorMessage");
         throw new Error(error_message);
       }
     },
@@ -90,14 +89,12 @@ export const useStudentLogin = () => {
           setOtpAtom({ email, token });
         } else {
           setOtpAtom({ email: null, token: null, otp: "" });
-          console.log(typeof(email),typeof(token),typeof(user))
           setStudentAtom({
             isLoggedIn: true,
             userDetails: user,
             token: token,
             role: "student",
           });
-          console.log(user,token)
           setLoginStep("login");
           return { success: true };
         }

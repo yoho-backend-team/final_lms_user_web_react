@@ -84,7 +84,7 @@ const InstructorHelpCenter = () => {
   const categoryMatches = i.category === tab_list[value]
  const searchMatches = i.question.toLowerCase().includes(searchQuery.toLowerCase());
  return categoryMatches && searchMatches;
-  console.log(faqCategories,"selectedQuery",tab_list[value],"query",filterData)
+  
 });
 
   return (
@@ -315,8 +315,6 @@ const InstructorHelpCenter = () => {
                       .toLowerCase()
                       .includes(searchQuery.toLowerCase())
                   );
-                  
-                  console.log(filterData,"serach");
                 }}
                 sx={{
                   backgroundColor: "#5611B1",

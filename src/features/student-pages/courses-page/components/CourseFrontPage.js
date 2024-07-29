@@ -46,7 +46,6 @@ const CourseFrontPage = ({ Course }) => {
 
    
 
-  console.log(Course,"Frontned")
   
   return (
     <Box sx={{ pr: "60px", overflowY: "auto", maxHeight: "100vh",p:6, m:4}}>

@@ -10,7 +10,6 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket }) => {
     const communituy_id = group?._id;
     const student = getStudentDetails()
     
-    console.log(communituy_id, "communityId");
 
     socket.emit("joinGroup", { groupId: communituy_id, userId: student?._id }, (error) => {
       console.log(error, "error");

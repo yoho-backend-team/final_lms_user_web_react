@@ -23,7 +23,7 @@ const CoursePage = () => {
     }
    
   };
-  console.log(course,"course")
+
   useEffect(() => {
     const data = {};
     getCourseDetails(data);

@@ -21,7 +21,7 @@ const Footer = () => {
           }}
         >
            <Box sx={{ display: "flex", gap: 2 }}>
-          <Link to="student/help-center" style={{ textDecoration: "none" }}>
+          <Link to="student/help-center"  style={{ textDecoration: "none"  }}>
             Help Center
           </Link>
           <Link to="student/Faq" style={{ textDecoration: "none" }}>

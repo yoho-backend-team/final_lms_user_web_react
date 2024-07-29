@@ -48,7 +48,6 @@ const InstructorLoginForm = () => {
       try {
       showSpinner()
       const response = await instructorLogin(values);
-      console.log(response,"response")
       if (response.success) {
         toast.success(response?.message)
         navigate("/instructor/home");
