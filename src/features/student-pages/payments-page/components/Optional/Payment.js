@@ -25,13 +25,11 @@ const Payment = ({activeStep}) => {
       const data = {};
       const details = await getStudentFees(data);
       setFeesData(details);
-      console.log(details);
     };
 
     fetchStudentFees();
   }, []);
 
-  console.log(feesData, "feesData");
 
   return (
       <Grid container spacing={2} sx={{ p: 3, pr:8, pl: 8 }}>   

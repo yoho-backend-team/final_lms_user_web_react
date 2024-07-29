@@ -47,7 +47,6 @@ const LoginForm = () => {
     onSubmit: async (values) => {
       try {
         const response = await studentLogin(values);
-        console.log(response, "response");
         if (response.success) {
           navigate("/student/home");
         }

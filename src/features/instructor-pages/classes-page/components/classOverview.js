@@ -120,7 +120,6 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
     }
   };
 
-  console.log(classDetails,group,group==="upcoming",typeof(group))
 
   return (
     <Box sx={{ paddingTop: "40px", width: "100%", overflow: "auto" }}>

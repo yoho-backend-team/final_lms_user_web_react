@@ -125,7 +125,7 @@ export default function InstructorNavBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log(Notifications,selectedNotification)
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar

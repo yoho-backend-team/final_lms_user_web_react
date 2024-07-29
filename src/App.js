@@ -36,7 +36,6 @@ const App = () => {
     const setupServiceWorkerAndRegisterFunction = async (role,userId,user) => {
       try {
       const registration = await regSw()  
-      console.log("service worker register",registration,registration.active)
      
       if(registration){
         await subscribe(registration,role,userId,user)
@@ -46,12 +45,11 @@ const App = () => {
       }
     }
     const notifiConnect = (user) => {
-      console.log("called")
      socket.emit("joinNotification",{userId:user?._id},(error) => {
       console.log(error,"error")
      })
     }
-    console.log(checkUserLoggedIn(instructorDetails),socket)
+
     if(checkUserLoggedIn(instructorDetails)&&socket){
       const user = getInstructorDetails()
       notifiConnect(user)

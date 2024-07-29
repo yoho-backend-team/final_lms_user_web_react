@@ -21,7 +21,6 @@ const UploadForm = ({ formType }) => {
     validationSchema: formSchema,
     onSubmit: (values) => {
       // handle form submission
-      console.log(values);
     },
   });
 

@@ -10,7 +10,6 @@ const FAQItem = ({ faq }) => {
     setOpen(!open);
   };
 
-  console.log(faq, "faqnew");
 
   return (
     <>

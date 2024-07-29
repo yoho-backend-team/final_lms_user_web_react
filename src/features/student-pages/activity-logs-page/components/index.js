@@ -80,10 +80,6 @@ const ActivityStudentLog = () => {
 
     filterLogs();
   }, [fromDate, toDate, week, activityLogs]);
-console.log("Activity Logs:", activityLogs);
-console.log("From Date:", fromDate);
-console.log("To Date:", toDate);
-console.log("Week Filter:", week);
 
 
   const totalPages = Math.ceil(filteredLogs.length / rowsPerPage);

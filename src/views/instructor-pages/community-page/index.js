@@ -36,7 +36,7 @@ const Community = () => {
   }, [dispatch]);
 
 
-  console.log(communities, "batches");
+  
   return (
     <Box
       sx={{

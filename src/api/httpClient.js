@@ -76,7 +76,7 @@ class HttpClient {
   }
 
   async update(url, data, userType) {
-    console.log(url,data,userType)
+    
     const response = await Axios.put(url, data, {
       headers: {
         "User-Type": userType,
