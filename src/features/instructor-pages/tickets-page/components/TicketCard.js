@@ -19,7 +19,7 @@ const TicketCard = ({
     <Grid
       item
       xs={12}
-      sx={{
+      sx={{ 
         display: "flex",
         flexDirection: "column",
         background: "#FFF",
@@ -38,7 +38,7 @@ const TicketCard = ({
               lineHeight: "24px",
             }}
           >
-            {ticket?.ticketNumber ? ticket?.ticketNumber : ticket?._id}
+            {ticket?.ticket_id}
           </Typography>
         </Box>
         <Box
