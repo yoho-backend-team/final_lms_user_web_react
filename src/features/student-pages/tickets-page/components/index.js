@@ -51,7 +51,6 @@ const StudentTicketsPage = ({
   const handleChange = (e, newValue) => {
     setValue(newValue);
     const statusValue = status[newValue];
-    console.log(statusValue, newValue, "change");
     handleTicketRefetch(statusValue);
   };
 

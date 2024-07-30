@@ -26,7 +26,6 @@
 //       const data = {};
 //       const details = await getStudentFees(data);
 //       setFeesData(details);
-//       console.log(details);
 //     };
 
 //     fetchStudentFees();
@@ -67,7 +66,6 @@
 //   };
 
 
-//   console.log(feesData, "feesData");
 
 //   return (
 //     <Grid container spacing={2} sx={{ p: 3 }}>
@@ -899,7 +897,6 @@ const CourseStudentDetails = () => {
       const data = {};
       const details = await getStudentFees(data);
       setFeesData(details);
-      console.log(details);
     };
 
     fetchStudentFees();
@@ -940,7 +937,6 @@ const CourseStudentDetails = () => {
   };
 
 
-  console.log(feesData, "feesData");
 
   return (
     <Grid container spacing={2} sx={{ p: 3 }}>

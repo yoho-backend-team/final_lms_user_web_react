@@ -14,13 +14,11 @@ const PaymentsCard = () => {
       const data = {};
       const details = await getStudentFees(data);
       setFeesData(details);
-      console.log(details);
     };
 
     fetchStudentFees();
   }, []);
 
-  console.log(feesData, "feesData");
  
   return (
     <>

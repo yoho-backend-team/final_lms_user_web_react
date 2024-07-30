@@ -14,7 +14,8 @@ import "../src/assets/scss/style.scss";
 import ErrorBoundary from "../src/components/ErrorBoundary";
 import ToastProvider from "../src/components/ToastProvider";
 import { SpinnerProvider } from "context/SpinnerProvider";
-
+import { InstructorSocketProvider } from "context/instructorSocket";
+import { StudentSocketProvider } from "context/studentSocket";
 // ==============================|| REACT DOM RENDER  ||============================== //
 
 const container = document.getElementById("root");
@@ -25,7 +26,11 @@ root.render(
       <BrowserRouter>
         <ErrorBoundary>
           <ToastProvider>
-            <App />
+           <InstructorSocketProvider>
+            <StudentSocketProvider> 
+             <App />
+            </StudentSocketProvider>
+           </InstructorSocketProvider>
           </ToastProvider>
         </ErrorBoundary>
       </BrowserRouter>

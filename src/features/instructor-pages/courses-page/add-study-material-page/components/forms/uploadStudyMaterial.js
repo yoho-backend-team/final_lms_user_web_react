@@ -72,7 +72,6 @@ const UploadStudyMaterials = ({ StudyMaterials, getCourseDetails }) => {
       file: Yup.mixed().required("File is required"),
     }),
     onSubmit: (values) => {
-      console.log(values);
     },
   });
 
@@ -90,7 +89,7 @@ const UploadStudyMaterials = ({ StudyMaterials, getCourseDetails }) => {
     formik.setFieldValue("file", null);
   };
 
-  console.log(StudyMaterials, "studyMaterials");
+  
   return (
     <Box
       sx={{

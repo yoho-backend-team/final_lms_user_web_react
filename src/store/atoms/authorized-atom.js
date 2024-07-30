@@ -57,6 +57,5 @@ export const getStudentBranchDetails = () => {
 export const checkSubscriptionStatus = (user) => {
    const status = Cookies.get(user)
    const state = status ? true : false
-   console.log(status,"status",state)
    return state
 }

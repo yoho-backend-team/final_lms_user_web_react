@@ -66,9 +66,8 @@ const modules = [
               
   const CourseAndNotesStudentPage = ({ Course, openCourseView, closeCourseView, selectedClass }) => {
   const { tabView } = useTabResponsive();
-   console.log (Course, "Course Details")
+   
     const classes = Course?.batches[0]?.classes || [];
-    console.log(Course,"selectedClassselectedClassselectedClass")
                 
   const getRandomStyle = () => {
     const randomIndex = Math.floor(Math.random() * modules.length);
@@ -77,7 +76,7 @@ const modules = [
 
           
               
-                console.log(classes , "Course?.batches?.classes")
+                
                 return (
                   <Box sx={{ padding: tabView ? "20px" : "60px"}}>
                     <Grid container xs={12} gap={tabView ? "60px" : "20px"}>

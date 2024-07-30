@@ -42,6 +42,7 @@ import { useDispatch, useSelector } from "react-redux";
 import updateInstructorNotifications from "../redux/thunks";
 import { setSelectedNotification } from "../redux/slices";
 import { useNavigate } from "react-router-dom";
+import { useSocket } from "context/instructorSocket";
 
 export default function InstructorNavBar() {
   const theme = useTheme();
@@ -56,6 +57,7 @@ export default function InstructorNavBar() {
   const dispatch = useDispatch()
   const Notifications = useSelector(selectNotificationList)
   const selectedNotification = useSelector(selectSelectedNotification)
+  const socket = useSocket()
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -67,11 +69,15 @@ export default function InstructorNavBar() {
 
   useEffect(() => {
     const user = getInstructorDetails();
-    setInstructor(user);
+    setInstructor(user)
   }, []);
 
   useEffect(() => {
     dispatch(updateInstructorNotifications())
+  },[])
+
+  useEffect(() => {
+   
   },[])
 
   const handleSelectNotification = (data) => {
@@ -119,7 +125,7 @@ export default function InstructorNavBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log(Notifications,selectedNotification)
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar

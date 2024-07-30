@@ -9,7 +9,7 @@ const AttendanceHeader = ({
   presentCount,
   absentCount,
 }) => {
-  console.log(classDetails, "classDetails");
+  
   return (
     <Box
       sx={{

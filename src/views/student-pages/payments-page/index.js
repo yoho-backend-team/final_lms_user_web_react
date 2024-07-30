@@ -96,7 +96,6 @@ const PaymentStudentInterface = () => {
       const data = {};
       const details = await getStudentFees(data);
       setFeesDataStudent(details);
-      console.log(details);
     };
 
     fetchStudentFee();
@@ -118,7 +117,7 @@ const PaymentStudentInterface = () => {
   //   getStudentfeesDetails();
   // }, [dispatch]);
 
-  console.log(feesDataStudent, "feesDataStudent")
+
   return (
     <>
       <Box

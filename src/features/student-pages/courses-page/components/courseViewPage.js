@@ -26,7 +26,7 @@ const CourseStudentViewPage = ({ Course }) => {
   const closeCourseView = () => { 
     setCourseView(false);
   };
-console.log(selectedClass,"selectedClass")
+
   return (
     <Box sx={{ height: "100vh", overflowY: "auto" }}>
       <Box sx={{ pl: "40px", pt: "40px" }}>

@@ -22,7 +22,6 @@ const TicketsPage = () => {
       showSpinner()
       dispatch(getAllTickets(query));  
     } catch (error) {
-      console.log(error)
       toast.error(error?.message)
     }finally{
      hideSpinner()
@@ -39,7 +38,7 @@ const TicketsPage = () => {
     const data = { status: type };
     getTicketsList(data);
   };
-   console.log(tickets,"tickets")
+  
    
   return (
     <InstructorTicketsPage
