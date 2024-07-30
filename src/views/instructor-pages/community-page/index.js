@@ -11,13 +11,14 @@ import getandAddCommunity from "features/instructor-pages/community-page/redux/t
 import { io } from "socket.io-client";
 import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
+import { useSocket } from "context/instructorSocket";
 
 const Community = () => {
   const dispatch = useDispatch();
   const communities = useSelector(selectInstructorCommunities);
   const [currentChat, setCurrentChat] = useState(null);
-  const [socket, setSocket] = useState(null);
   const { showSpinner, hideSpinner} = useSpinner()
+  const socket = useSocket()
 
   const getAllCommunities = () => {
     try{
@@ -34,12 +35,8 @@ const Community = () => {
     getAllCommunities();
   }, [dispatch]);
 
-  useEffect(() => {
-    const socket = io(process.env.REACT_APP_URL);
-    setSocket(socket);
-  }, []);
 
-  console.log(communities, "batches");
+  
   return (
     <Box
       sx={{

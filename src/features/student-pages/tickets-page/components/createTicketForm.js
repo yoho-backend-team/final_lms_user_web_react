@@ -129,7 +129,6 @@ const StudentCreateTicketForm = ({ handleClose }) => {
         };
         const response = await CreateTickets(data);
         handleClose();
-        console.log(response)
         toast.success("ticket created successfully");
       } catch (error) {
         toast.error(error?.message);

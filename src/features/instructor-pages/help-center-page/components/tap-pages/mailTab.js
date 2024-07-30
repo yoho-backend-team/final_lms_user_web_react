@@ -14,7 +14,7 @@ const InstructorMailTab = ({ setView, SelectedQuery,category}) => {
   
   
  
-console.log(category,"faq12")
+
   return (
     <Grid container spacing={2}>
       {category?.map((item) => (

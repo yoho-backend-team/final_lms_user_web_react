@@ -20,7 +20,7 @@ const NotificationList = () => {
     const handleTabChange = (e,value) => {
       setTabValue(value)
     }
-    console.log(notificationList,selectedNotification)
+    
     const handleBack = () => {
       navigate(-1)
     }

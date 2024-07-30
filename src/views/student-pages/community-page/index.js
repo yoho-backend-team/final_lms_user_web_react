@@ -54,7 +54,7 @@ const CommunityPage = () => {
     const socket = io(process.env.REACT_APP_URL);
     setSocket(socket);
   }, []);
-  console.log(communities, "communites");
+  
 
   return (
     <Box

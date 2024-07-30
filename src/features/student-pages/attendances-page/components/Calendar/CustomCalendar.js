@@ -142,7 +142,7 @@ function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data })
  
     return days;
   };
-  console.log(attendanceData,"attendanceData")
+  
   return (
     <Box sx={{ height: '66vh', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ flexShrink: 0 }}>

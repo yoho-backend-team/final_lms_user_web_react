@@ -8,10 +8,8 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 const CustomPagination = ({ totalPages,currentPage,setCurrentPage }) => {
   
 
-  const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+  const handleChange = (event, value) => {
+    setCurrentPage(value);
   };
 
   const handleNext = () => {
@@ -27,7 +25,7 @@ const CustomPagination = ({ totalPages,currentPage,setCurrentPage }) => {
       <Button
         variant="text"
         color="primary"
-        onClick={handlePrevious}
+        onClick={handleNext}
         sx={{ color: currentPage === 1 ? "#9F9F9F" : "#5611B1",fontSize:"15px",fontWeight:700,lineHeight:"24px",":hover":{background:"none"}}}
         disabled={currentPage === 1}
         startIcon={<ArrowBackIosIcon sx={{ height: "24px", width: "24px"}} />}

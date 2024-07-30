@@ -73,7 +73,6 @@ const StudentDashboard = () => {
   }, [dispatch]);
   
 
-  console.log(personalInfo,"personalInfor")
   const image = getImageUrl(personalInfo.image);
 
 
@@ -92,9 +91,6 @@ const StudentDashboard = () => {
       return <ProfilePage />;
     }
   
-  
-    
-  console.log(reports,"reports",loading)
 
 
 

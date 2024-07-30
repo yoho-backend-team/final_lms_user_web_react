@@ -10,7 +10,6 @@ const Chat = ({ currentChat, socket }) => {
 
   useEffect(() => {
     const handleMessage = (message) => {
-      console.log(message, "message");
       setMessages((prev) => [...prev, message]);
     };
 
@@ -20,7 +19,7 @@ const Chat = ({ currentChat, socket }) => {
       socket?.off("message", handleMessage);
     };
   }, [socket]);
-  console.log(Messages,"messages")
+  
   return (
     <Box
       sx={{

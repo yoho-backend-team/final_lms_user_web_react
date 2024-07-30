@@ -26,7 +26,6 @@ const ClassViewPage = () => {
     getClass();
   }, []);
   
-  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 
   return (
     <ClassLayout>

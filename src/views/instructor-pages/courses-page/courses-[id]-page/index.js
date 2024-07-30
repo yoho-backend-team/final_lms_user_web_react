@@ -26,7 +26,6 @@ const StudyMaterialPage = () => {
    
   };
 
-  console.log(course,"course")
 
   useEffect(() => {
     const data = {};

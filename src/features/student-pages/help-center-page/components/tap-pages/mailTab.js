@@ -12,12 +12,10 @@ const StudentMailTab = ({ setView, SelectedQuery,category}) => {
     setView(category);
   };
 
-  console.log(selectedCategory,"selectedCategory")
 
   
   
  
-console.log(category,"faq12")
   return (
     <Grid container spacing={2}>
       {category?.map((item) => (
