@@ -1173,6 +1173,7 @@ const Payment = () => {
                         <img
                           src={pdfgroup}
                           alt="Logo"
+                          color="white"
                           style={{
                             width: "15px",
                             height: "19px",
