@@ -38,16 +38,17 @@ const TicketCard = ({
               lineHeight: "24px",
             }}
           >
-            {ticket?.ticketNumber ? ticket?.ticketNumber : ticket?._id}
+            Ticket #{ticket?.ticket_id}
           </Typography>
         </Box>
         <Box
-          sx={{
-            borderRadius: "8px",
-            backgroundColor: "#DFC7FF",
-            color: "#5611B1",
-            padding: "9px 24px",
-          }}
+        sx={{
+          color: "#5611B1",
+          borderRadius: "8px",
+          border: "1px solid var(--Blue-500, #0D6EFD)",
+          background: "var(--Blue-100, #CFE2FF)",
+          padding: "9px 24px",
+        }}        
         >
           <Typography sx={{ color: "#5611B1" }}>{convertDate(ticket?.date)}</Typography>
         </Box>
