@@ -214,7 +214,7 @@ const InstructorClassViewPage = Loadable(
   lazy(() => import("views/instructor-pages/class[id]-page")),
 );
 const InstructorProfilePage = Loadable(
-  lazy(() => import("views/student-pages/profile-page")),
+  lazy(() => import("views/instructor-pages/profile-page/index")),
 ); // This seems like an error; correct import path should be checked
 const InstructorCreateTicketPage = Loadable(
   lazy(() => import("views/student-pages/create-ticket-page")),
