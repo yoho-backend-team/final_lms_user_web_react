@@ -23,6 +23,7 @@ import {
 } from "features/instructor-pages/payments-page/redux/selectors";
 import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const months = [
   "January",
@@ -111,6 +112,8 @@ const PaymentInterface = () => {
                   lineHeight: "22px",
                   textDecoration: "underline",
                 }}
+                component={Link}
+                to={"/instructor/tickets?create=true"}
               >
                 Raise A Ticket?
               </Typography>

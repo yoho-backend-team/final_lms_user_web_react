@@ -137,9 +137,8 @@ const InstructorDashBoard = () => {
                 variant="contained"
                 component = {Link}
                 to={"/instructor/profile"}
-                color="primary"
                 size="medium"
-                sx={{ p: 1, px: 2, borderRadius: 5 }}
+                sx={{ p: 1, px: 2, borderRadius: 5, backgroundColor : "#5611B1", ":hover" : { backgroundColor : "#5611B1" } }}
               >
                 View Profile
               </Button>
