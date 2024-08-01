@@ -246,7 +246,6 @@ export default function ForgetPasswordOTPInput() {
   }, [timeLeft]);
 
   const handleResend = () => {
-    console.log("Resending OTP...");
     setTimeLeft(60);
   };
 
@@ -271,7 +270,6 @@ export default function ForgetPasswordOTPInput() {
         setLoginStep("enterNewPassword");
       }
     } catch (error) {
-      console.log(error, "error");
       setError("Invalid OTP. Please try again.");
     }
   };

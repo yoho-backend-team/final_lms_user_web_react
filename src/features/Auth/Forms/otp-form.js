@@ -241,7 +241,6 @@ export default function OTPInput() {
   }, [timeLeft]);
 
   const handleResend = () => {
-    console.log("Resending OTP...");
     setTimeLeft(60);
   };
 
@@ -252,11 +251,9 @@ export default function OTPInput() {
     }
     setError("");
     try {
-      console.log("Verifying OTP:", otp); // Add this line to debug
       await verifyOTP(otp);
       navigate("/student/home");
     } catch (error) {
-      console.log(error, "error");
       setError("Invalid OTP. Please try again.");
     }
   };

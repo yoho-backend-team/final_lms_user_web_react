@@ -29,7 +29,7 @@ const CategoryList = ({ categories, onCategorySelect }) => {
             return null;
         }
       };
-      console.log(categories,"faqCategories?.category_id?")
+      
 
       const uniqueCategories = categories.reduce((acc, current) => {
         const category = acc.find(item => item.category_id.category_name === current.category_id.category_name);

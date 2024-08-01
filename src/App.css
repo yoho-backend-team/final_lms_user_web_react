@@ -54,3 +54,8 @@ body {
   max-width: none;
   border-radius: 24px;
 }
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}

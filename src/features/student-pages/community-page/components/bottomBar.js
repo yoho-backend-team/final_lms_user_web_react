@@ -22,7 +22,7 @@ const BottomBar = ({ socket, community }) => {
   };
 
   const handleSendClick = () => {
-    console.log(message, "message");
+    
     socket.emit(
       "sendMessage",
       { groupId : community?._id, content: message, senderId: student?._id, name : student?.full_name || student?.first_name  },

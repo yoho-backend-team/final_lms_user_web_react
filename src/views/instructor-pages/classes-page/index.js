@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -24,8 +25,12 @@ import {
 import ClassLoader from "components/ui/loaders/classLoading";
 
 const ClassesPage = () => {
-  const [value, setValue] = useState("upcoming");
-  const [classType, setClassType] = useState("online");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+  const [value, setValue] = useState(queryParams.get("tab") || "upcoming");
+  const [classType, setClassType] = useState(queryParams.get("classType") || "online");
+  const [page, setPage] = useState(Number(queryParams.get("page")) || 1);
   const dispatch = useDispatch();
   const classes = useSelector(selectClasses);
   const loading = useSelector(selectLoading);
@@ -36,13 +41,12 @@ const ClassesPage = () => {
     { id: "3", title: "Class History", value: "history" },
     { id: "4", title: "Live Class", value: "live" },
   ];
-  
-  
+
   const renderComponents = {
-    upcoming: <UpcomingClassList data={classes} classType={classType} group={"upcoming"} />,
-    completed: <CompletedClassList data={classes} classType={classType} group={"completed"} />,
-    history: <ClassHistory data={classes} classType={classType} group={"history"} />,
-    live: <LiveClassList data={classes} classType={classType} group={"live"} />,
+    upcoming: <UpcomingClassList data={classes?.data} classType={classType} group={"upcoming"} />,
+    completed: <CompletedClassList data={classes?.data} classType={classType} group={"completed"} />,
+    history: <ClassHistory data={classes?.data} classType={classType} group={"history"} />,
+    live: <LiveClassList data={classes?.data} classType={classType} group={"live"} />,
   };
 
   const classTypes = [
@@ -50,25 +54,34 @@ const ClassesPage = () => {
     { id: "2", title: "offline class", value: "offline" },
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = { userType: classType, classType: value };
-      await dispatch(getAllClasses(data));
-    };
+  const fetchData = async () => {
+    const data = { userType: classType, classType: value, page: page };
+    await dispatch(getAllClasses(data));
+  };
 
+  useEffect(() => {
     fetchData();
-  }, [dispatch, classType]);
+  }, [dispatch, classType, value, page]);
 
   const handleChange = (event, newValue) => {
+    setPage(1);
     setValue(newValue);
-    const data = { userType: classType, classType: newValue };
-    dispatch(getAllClasses(data));
+    navigate(`?tab=${newValue}&classType=${classType}&page=1`);
   };
 
   const handleClassTypeChange = (event) => {
     setClassType(event.target.value);
-    const filter = { userType: event.target.value, classType: value };
-    dispatch(getAllClasses(filter));
+    navigate(`?tab=${value}&classType=${event.target.value}&page=1`);
+  };
+
+  const handleNextChange = () => {
+    setPage(page + 1);
+    navigate(`?tab=${value}&classType=${classType}&page=${page + 1}`);
+  };
+
+  const handlePrevious = () => {
+    setPage(page - 1);
+    navigate(`?tab=${value}&classType=${classType}&page=${page - 1}`);
   };
 
   return (
@@ -158,6 +171,74 @@ const ClassesPage = () => {
         </Card>
 
         {loading ? <ClassLoader /> : renderComponents[value]}
+        {classes?.last_page !== 1 && classes.last_page !== 0 && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "end",
+              py: "40px",
+            }}
+          >
+            <Box sx={{ display: "flex", gap: "40px", alignItems: "center" }}>
+              <Typography
+                onClick={page === 1 ? null : handlePrevious}
+                sx={{
+                  color: page === 1 ? "#B0B0B0" : "#000000",
+                  fontSize: "15px",
+                  fontWeight: 700,
+                  lineHeight: "24px",
+                  cursor: page === 1 ? "not-allowed" : "pointer",
+                }}
+              >
+                Previous
+              </Typography>
+              <Typography
+                onClick={page === classes?.last_page ? null : handleNextChange}
+                sx={{
+                  color: page === classes?.last_page ? "#B0B0B0" : "#000000",
+                  fontSize: "15px",
+                  fontWeight: 700,
+                  lineHeight: "24px",
+                  cursor: page === classes?.last_page ? "not-allowed" : "pointer",
+                }}
+              >
+                Next
+              </Typography>
+              <Box sx={{ display: "inline-flex", gap: "4px" }}>
+                <Typography
+                  sx={{
+                    color: "#000000",
+                    fontSize: "15px",
+                    fontWeight: 700,
+                    lineHeight: "24px",
+                  }}
+                >
+                  {page}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#000000",
+                    fontSize: "15px",
+                    fontWeight: 700,
+                    lineHeight: "24px",
+                  }}
+                >
+                  of
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#000000",
+                    fontSize: "15px",
+                    fontWeight: 700,
+                    lineHeight: "24px",
+                  }}
+                >
+                  {classes?.last_page}
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        )}
       </Box>
     </ClassLayout>
   );

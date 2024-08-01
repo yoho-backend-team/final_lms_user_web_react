@@ -244,7 +244,6 @@ export default function InstructorOTPInput() {
   }, [timeLeft]);
 
   const handleResend = () => {
-    console.log("Resending OTP...");
     setTimeLeft(60);
   };
 

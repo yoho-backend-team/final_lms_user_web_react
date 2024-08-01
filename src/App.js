@@ -15,11 +15,13 @@ import { onMessageListener, requestForToken } from "./firebase";
 import { regSw, subscribe } from "helpers";
 import { checkSubscriptionStatus, checkUserLoggedIn, getInstituteDetails, getInstructorDetails, getStudentDetails } from "store/atoms/authorized-atom";
 import { instructorDetails, Student } from "lib/constants";
+import { useSocket } from "context/instructorSocket";
 // ==============================|| APP ||============================== //
 
 
 const App = () => {
   const customization = useSelector((state) => state.customization);
+  const socket = useSocket()
   // onMessageListener()
   //   .then((payload) => {
   //     console.log(payload);
@@ -34,7 +36,6 @@ const App = () => {
     const setupServiceWorkerAndRegisterFunction = async (role,userId,user) => {
       try {
       const registration = await regSw()  
-      console.log("service worker register",registration,registration.active)
      
       if(registration){
         await subscribe(registration,role,userId,user)
@@ -43,7 +44,19 @@ const App = () => {
         console.log(error)
       }
     }
-    console.log(checkUserLoggedIn(instructorDetails),checkUserLoggedIn(Student),checkUserLoggedIn(Student)&&!checkSubscriptionStatus(Student+"subscription"))
+    const notifiConnect = (user) => {
+     socket.emit("joinNotification",{userId:user?._id},(error) => {
+      console.log(error,"error")
+     })
+    }
+
+    if(checkUserLoggedIn(instructorDetails)&&socket){
+      const user = getInstructorDetails()
+      notifiConnect(user)
+    }else if(checkUserLoggedIn(Student)&&socket){
+      const user = getStudentDetails()
+      notifiConnect(user)
+    }
     if(checkUserLoggedIn(instructorDetails)&&!checkSubscriptionStatus(instructorDetails+"subscription")){
        const user = getInstructorDetails()
        setupServiceWorkerAndRegisterFunction(user?.role,user?._id,instructorDetails)
@@ -51,7 +64,7 @@ const App = () => {
       const user = getStudentDetails()
       setupServiceWorkerAndRegisterFunction(user?.role,user?._id,Student)
     }
-  },[])
+  },[socket])
 
   return (
     <StyledEngineProvider injectFirst>

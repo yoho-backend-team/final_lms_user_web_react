@@ -285,6 +285,9 @@ class Client {
           "instructor"
         ),
     },
+    activity : {
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.activity.get,params,"instructor")
+    },
     index: {
       get: (params) =>
         httpClient.get(

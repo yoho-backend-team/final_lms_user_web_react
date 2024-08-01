@@ -36,7 +36,7 @@ const TicketsPage = () => {
     const data = { status: type };
     getTicketsList(data);
   };
-   console.log(tickets,"tickets")
+  
    
   return (
     <StudentTicketsPage

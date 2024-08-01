@@ -20,7 +20,7 @@ import { useSpinner } from "context/SpinnerProvider";
 
 const SingleCourseView = ({selectedClass,selectedClassId}) => {
   const {showSpinner,hideSpinner} = useSpinner()
-  console.log(selectedClass,"selectedClas")
+  
   return (
     <Box sx={{ padding: "16px" }}>
       <Box

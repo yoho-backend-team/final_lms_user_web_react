@@ -47,7 +47,6 @@ const ForgetPasswordPage = () => {
     console.log("Sending reset password email to:", email);
     try {
       const response = await forgetPassword(email);
-      console.log(response, "response");
       if (response.status === "success") {
         const { token } = response.data;
         setOtpAtom({ email, token });

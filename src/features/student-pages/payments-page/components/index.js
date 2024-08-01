@@ -31,7 +31,6 @@ const Payment = () => {
       const data = {};
       const details = await getStudentFees(data);
       setFeesData(details);
-      console.log(details);
     };
 
     fetchStudentFees();
@@ -51,7 +50,6 @@ const Payment = () => {
     { id: 3, text: "Feb 23" },
   ];
 
-  console.log(feesData, "feesData");
 
   return (
     <div className="main-container">
@@ -1173,6 +1171,7 @@ const Payment = () => {
                         <img
                           src={pdfgroup}
                           alt="Logo"
+                          color="white"
                           style={{
                             width: "15px",
                             height: "19px",

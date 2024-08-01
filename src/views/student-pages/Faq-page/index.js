@@ -24,7 +24,6 @@ const FAQPage = () => {
     fetchFaqCategories();
   }, []);
 
-  console.log(faqCategories,"faqcategory")
 
   const categories = [
     { title: 'Mail',description:'Details Submitted Mail' },
@@ -70,13 +69,9 @@ const FAQPage = () => {
     
   };
   const handleCategorySelect = (faqCategories) => {
-    setSelectedCategory(faqCategories);
-        console.log(faqCategories,"faqCategories")
-        
+    setSelectedCategory(faqCategories);        
   };
   
-  console.log(selectedCategory,"selectcategory")
-
 
   return (
     <Layout>

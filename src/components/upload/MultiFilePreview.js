@@ -50,7 +50,7 @@ export default function MultiFilePreview({
   onRemoveAll,
 }) {
   const hasFile = files.length > 0;
-  console.log(files);
+  
   return (
     <>
       <List disablePadding sx={{ ...(hasFile && { my: 3 }) }}>

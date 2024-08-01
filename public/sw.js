@@ -4,7 +4,7 @@ self.addEventListener('activate', function(event) {
   
   self.addEventListener('push', function(event) {
     const data = event.data ? event.data.json() : {};
-    console.log(data,"data notification")
+    
     const options = {
       body: data.body || 'No body content',
       icon: data.icon || '/default-icon.png',
@@ -15,4 +15,16 @@ self.addEventListener('activate', function(event) {
       self.registration.showNotification(data.title || 'Notification', options)
     );
   });
+
+  self.addEventListener('notificationclick', function(event) {
+    
+
+    const url = event.notification.data && event.notification.data.url;
+    
+    if (url) {
+        event.waitUntil(
+            clients.openWindow(url)
+        );
+    }
+});
   

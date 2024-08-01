@@ -29,7 +29,6 @@
    
 //   };
 
-//   console.log(course,"Allcourse")
 
 //   useEffect(() => {
 //     const data = {};

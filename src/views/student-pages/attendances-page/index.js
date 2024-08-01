@@ -109,7 +109,6 @@ const Attendance = () => {
       const response = await Client.Student.attendance.get({
         userId: user.uuid, month: selectedMonth  , instituteId: user.institute_id?.uuid , user: user?._id     
       });
-      console.log(response,"respoonse")
       setAttendanceData(response?.data)
     } catch (error) {
       toast.error(error?.message)
@@ -130,7 +129,6 @@ const Attendance = () => {
   if (loading) {
     return <CircularProgress />;
   }
-  console.log(attendance_data,"attendance")
 
   const totalClasses = (attendance_data?.onlineClassCount ?? 0) + (attendance_data?.offlineClassCount ?? 0);
 

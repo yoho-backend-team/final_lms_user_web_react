@@ -33,69 +33,12 @@ const styledInput = styled('input')({
   background : "#FFFFFF"
 })
 
-const ActivityLog = () => {
+const ActivityLog = ({data}) => {
   const [page, setPage] = useState(1);
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [week, setWeek] = useState("Past Week");
-  const rowsPerPage = 5;
-  const count = 23;
-
-  const activityLogs = [
-    {
-      id: 1,
-      type: "Accessing the Account details",
-      status: "Success",
-      date: "11-07-2023",
-      time: "4:30 am",
-      user: "ABC",
-    },
-    {
-      id: 2,
-      type: "Accessing the Account details",
-      status: "Failed",
-      date: "11-07-2023",
-      time: "4:30 am",
-      user: "ABC",
-    },
-    {
-      id: 3,
-      type: "Delete Process",
-      status: "Success",
-      date: "11-07-2023",
-      time: "4:30 am",
-      user: "ABC",
-    },
-    {
-      id: 4,
-      type: "Delete Process",
-      status: "Failed",
-      date: "11-07-2023",
-      time: "4:30 am",
-      user: "ABC",
-    },
-    {
-      id: 5,
-      type: "Password Change",
-      status: "Success",
-      date: "11-07-2023",
-      time: "4:30 am",
-      user: "ABC",
-    },
-    {
-      id: 6,
-      type: "Password Change",
-      status: "Failed",
-      date: "11-07-2023",
-      time: "4:30 am",
-      user: "ABC",
-    },
-  ];
-
-  const paginatedLogs = activityLogs.slice(
-    (page - 1) * rowsPerPage,
-    page * rowsPerPage,
-  );
+  
 
 
   return (
@@ -171,7 +114,7 @@ const ActivityLog = () => {
                   InputProps={{ inputComponent: styledInput }}
                 />
               </FormControl>
-              <FormControl>
+              <FormControl sx={{ display : "none"}} >
                 <TextField
                   select
                   value={week}
@@ -189,9 +132,9 @@ const ActivityLog = () => {
          
             <Paper sx={{ boxShadow: "none" }}>
               <Box sx={{ maxHeight: 500, overflow: "auto", padding: 2 }}>
-                <TimelineComponent />
+                <TimelineComponent activity_logs={data?.data} />
               </Box>
-              <CustomPagination totalPages={count} currentPage={page} setCurrentPage={setPage} />
+              <CustomPagination totalPages={data?.pagination?.totalPages} currentPage={data?.pagination?.currentPage} setCurrentPage={setPage} />
             </Paper>
           </Box>
         </Box>
