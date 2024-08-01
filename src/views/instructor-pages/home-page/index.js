@@ -29,6 +29,9 @@ import getAllReports from "features/instructor-pages/home-page/redux/thunks";
 import { profilePlaceholder } from "utils/placeholders";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { Link } from "react-router-dom";
+import { useSocket } from "context/instructorSocket";
+import { setNotifications, addNotification } from "features/common/redux/slices";
+import { selectNotificationList } from "features/common/redux/selector";
 
 const InstructorDashBoard = () => {
   const dispatch = useDispatch()
@@ -37,19 +40,31 @@ const InstructorDashBoard = () => {
   const theme = useTheme();
   const { tabView } = useTabResponsive();
   const { showSpinner, hideSpinner } = useSpinner()
+  const socket = useSocket()
+  const NotificationList = useSelector(selectNotificationList)
 
   const fetchReports = async () => {
     try {
     showSpinner()
     dispatch(getAllReports())
     const response = await Client.Instructor.notification.get()
-    console.log(response,"response")
     } catch (error) {
       toast.error(error?.message)
     }finally{
      hideSpinner()
     }
    }
+
+  useEffect(() => {
+  const handleNotification = (notification) => {
+  dispatch(addNotification(notification))
+  }
+  socket?.on("receiveNotification",handleNotification)
+
+  return () => {
+    socket?.off("receiveNotification",handleNotification)
+  }
+  },[socket])
 
   useEffect(() => {
     fetchReports()
@@ -122,9 +137,8 @@ const InstructorDashBoard = () => {
                 variant="contained"
                 component = {Link}
                 to={"/instructor/profile"}
-                color="primary"
                 size="medium"
-                sx={{ p: 1, px: 2, borderRadius: 5 }}
+                sx={{ p: 1, px: 2, borderRadius: 5, backgroundColor : "#5611B1", ":hover" : { backgroundColor : "#5611B1" } }}
               >
                 View Profile
               </Button>

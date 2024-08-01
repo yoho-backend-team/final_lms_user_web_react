@@ -13,7 +13,7 @@ const NotificationTab = ({tabValue,handleTabChange,notifications,handleNotificat
       if(tabValue === 2) return notification.status === "unread"
       return true
     })
-    console.log(filteredNotifications,"filter")
+  
     return(
            <Box sx={{ height: "90vh", backgroundColor: "#FFF",color:"0px 0px 64px 0px #0000001a", borderLeft:"0.776px solid #F8FAFC"}} >
              <Box

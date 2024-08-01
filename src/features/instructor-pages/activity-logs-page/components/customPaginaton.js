@@ -5,18 +5,20 @@ import Box from '@mui/material/Box';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-const CustomPagination = ({ totalPages,currentPage,setCurrentPage }) => {
+const CustomPagination = ({ totalPages,currentPage,setCurrentPage,updateActivitys }) => {
   
 
-  const handlePrevious = () => {
+  const handlePrevious = async () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      await updateActivitys({page:currentPage - 1})
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+      await updateActivitys({ page : currentPage + 1 })
     }
   };
 

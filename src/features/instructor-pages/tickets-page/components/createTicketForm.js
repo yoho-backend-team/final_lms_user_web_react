@@ -94,7 +94,7 @@ const CreateTicketForm = ({ handleClose }) => {
     { value: "grade", label: "Grade Issue" },
     { value: "material", label: "Course Material" },
     { value: "support", label: "Technical Support" },
-    { value: "feedback", label: "Feedback" },
+    { value: "feedback", label: "Feedback" },         
     { value: "submission", label: "Assignment Submission" },
   ];
 
@@ -129,7 +129,6 @@ const CreateTicketForm = ({ handleClose }) => {
         };
         const response = await CreateTickets(data);
         handleClose();
-        console.log(response)
         toast.success("ticket created successfully");
       } catch (error) {
         toast.error(error?.message);

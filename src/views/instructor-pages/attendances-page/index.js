@@ -22,6 +22,7 @@ import { useTabResponsive } from "utils/tabResponsive";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -99,6 +100,7 @@ const Attendance = () => {
   const [loading, setLoading] = useState(false);
   const { tabView } = useTabResponsive();
   const { showSpinner, hideSpinner } = useSpinner();
+  const navigate = useNavigate()
   const date = new Date()
 
   const getAttedenceDetails = async (month) => {
@@ -120,6 +122,10 @@ const Attendance = () => {
     setSelectedMonth(event.target.value);
     getAttedenceDetails(event.target.value)
   };
+
+  const handleTicketView = () => {
+    navigate(`/instructor/ticket?create=true`)
+  }
 
   useEffect(() => {
     getAttedenceDetails(selectedMonth);
@@ -218,6 +224,9 @@ const Attendance = () => {
                     fontWeight: 500,
                     color: "#FBFBFB",
                   }}
+                  component = {Link}
+                  onClick={handleTicketView}
+                  to={"/instructor/ticket?create=true"}
                 >
                   Create Ticket
                 </Button>
@@ -388,6 +397,8 @@ const Attendance = () => {
                       backgroundColor: "#5611B1",
                     }
                   }}
+                  component = {Link}
+                  to={"/instructor/tickets?create=true"}
                 >
                   Create Ticket
                 </Button>

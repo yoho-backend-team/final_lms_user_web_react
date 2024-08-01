@@ -27,6 +27,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
   };
 
   const handleFileOpen = (file) => {
+    console.log(file,"file")
     setFile(file)
     setFileView(true)
   }

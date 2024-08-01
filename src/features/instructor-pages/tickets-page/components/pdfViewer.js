@@ -8,7 +8,7 @@ import { getImageUrl } from 'utils/common/imageUtlils';
 
 const PdfViewer = ({ open, handleViewClose, pdf }) => {
 
-
+ console.log(pdf,"pdf")
   return (
     <div>
       <Dialog

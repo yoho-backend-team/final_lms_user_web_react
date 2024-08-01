@@ -129,7 +129,6 @@ const StudentCreateTicketForm = ({ handleClose }) => {
         };
         const response = await CreateTickets(data);
         handleClose();
-        console.log(response)
         toast.success("ticket created successfully");
       } catch (error) {
         toast.error(error?.message);
@@ -139,20 +138,28 @@ const StudentCreateTicketForm = ({ handleClose }) => {
 
   const handleAttachmentChange = async (event) => {
     try {
-    showSpinner()
-    const file = event.target.files?.[0]
-    const form_data = new FormData()
-    form_data.append("file",file)
-    const response = await fileUpload(form_data)
-    formik.setFieldValue("file",response?.file)
-    toast.success("file uplaod successfully")
-    }catch (error) {
-     toast.error(error?.message)
-    }finally{
-     hideSpinner()
+      showSpinner();    
+      const file = event.target.files?.[0];
+  
+      if (file) {
+        if (file.type !== 'application/pdf') {
+          toast.error("Only PDF files are allowed.");
+          return;
+        }
+  
+        const form_data = new FormData();
+        form_data.append("file", file);
+        const response = await fileUpload(form_data);  
+        formik.setFieldValue("file", response?.file);
+        toast.success("File uploaded successfully");
+      }
+    } catch (error) {
+      toast.error(error?.message);
+    } finally {
+      hideSpinner();
     }
   };
-
+  
   const handleOpen = () => setOpen(true);
   const handleCloseCancel = () => setOpen(false);
   const handleCancel = () => {
@@ -373,7 +380,8 @@ const StudentCreateTicketForm = ({ handleClose }) => {
                   { formik?.values?.file ? formik?.values?.file?.split("/")[2] : "Upload file"}
                   <VisuallyHiddenInput
                     type="file"
-                    onChange={handleAttachmentChange}
+                    accept=".pdf"
+                    onChange={handleAttachmentChange}   
                   />
 
                 </Button>

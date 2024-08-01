@@ -152,6 +152,9 @@ const generateEndpoints = () => {
       },
     },
     Instructor: {
+      activity : {
+        get : "/institutes/user/activity"
+      },
       auth: {
         login: "/institutes/auth/teaching-staff/login",
         verify_otp: "/institutes/auth/teaching-staff/verify-otp",

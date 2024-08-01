@@ -20,7 +20,7 @@ const SingleCourseStudentView = ({ Course }) => {
   // const classes = Course?.batches[0]?.classes || [];
   // const classes2 = Course?.studymaterials || [];
   // const classes3 = Course?.notes || [];
-  console.log(Course, "Course")
+  
   const downloadPdf = () => {
     
     const pdfContent = '...'; 
@@ -55,7 +55,7 @@ const SingleCourseStudentView = ({ Course }) => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
-  console.log(Course, "Course Single view Student")
+  
   return (
     <Box sx={{ padding: "16px" }}>
         <Box>

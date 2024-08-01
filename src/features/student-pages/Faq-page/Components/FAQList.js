@@ -3,9 +3,7 @@ import { Grid, Paper, List, Typography, Box } from '@mui/material';
 import FAQItem from './FAQItem';
 
 const FAQList = ({ faqs, category,selectedCategory  }) => {
-  console.log(faqs, "faqs = []");
-  console.log(category, "category = []");
-  console.log(selectedCategory, "selectedCategory = []");
+ 
 
   const filteredFaqs = faqs.filter(faq => faq.category_id === category?.category_id);
 

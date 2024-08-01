@@ -120,7 +120,6 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
     }
   };
 
-  console.log(classDetails,group,group==="upcoming",typeof(group))
 
   return (
     <Box sx={{ paddingTop: "40px", width: "100%", overflow: "auto" }}>
@@ -153,13 +152,13 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
           color="inherit"
           href="#"
         >
-          {type} Class
+          {String(type)?.charAt(0).toUpperCase()+type.slice(1)} Class
         </Link>
         <Typography
           color="text.primary"
           sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "22px" }}
         >
-          Upcoming Class
+          {group?.charAt(0).toUpperCase()+group.slice(1)} Class
         </Typography>
       </Breadcrumbs>
       {!showAttendance ? (

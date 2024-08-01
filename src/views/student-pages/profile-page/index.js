@@ -118,11 +118,11 @@ const ProfilePage = () => {
           address1: editedPersonalInfo?.address1,
           address2: editedPersonalInfo?.address2,
           pincode: editedPersonalInfo?.pincode,
-        },
-      };
-      console.log(data, "data");
+        }
+      }
+      
       const updatedData = await UpdateprofilewithId(data);
-      console.log(updatedData, "updated");
+      
       setPersonalInfo(updatedData);
       setEditing(false);
       navigate("student/home");
@@ -240,7 +240,6 @@ const ProfilePage = () => {
       value: "4",
     },
   ];
-
   const handleNavigateBack = () => {
     navigate("student/home");
   };

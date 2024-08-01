@@ -39,7 +39,6 @@ const StudentNotificationList = () => {
             const response = await updateNotificationStatus({uuid : notification?.uuid})  
             dispatch(setStudentSelectedNotification(response));
             dispatch(getAllStudentNotifications())
-            console.log(response,"response") 
             } catch (error) {
               toast.error(error?.message)  
             }finally{
@@ -47,7 +46,7 @@ const StudentNotificationList = () => {
             }
         }
     };
-    console.log(selectedNotification,"selected")
+    
     return (
         <Box sx={{ padding: "70px 39px 20px 40px", zIndex: 1000 }}>
             <Box sx={{ display: 'flex', justifyContent: "space-between" }}>

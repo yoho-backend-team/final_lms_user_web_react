@@ -119,7 +119,7 @@ setAnchorEl(null);
     dispatch(setStudentSelectedNotification(notification))
     navigate("/student/notifications")
   }
-  console.log(notifications,"notifications");
+  
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (

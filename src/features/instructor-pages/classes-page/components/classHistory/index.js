@@ -11,7 +11,7 @@ const defaultStyles = {
   durationColor: "rgba(210, 244, 234, 1)",
 };
 
-const ClassHistory = ({ data, classType }) => {
+const ClassHistory = ({ data, classType, group }) => {
   const [filters, setFilters] = React.useState({
     class: "",
     course: "",
@@ -46,6 +46,7 @@ const ClassHistory = ({ data, classType }) => {
             cls={cls}
             style={defaultStyles}
             type={classType}
+            group={group}
           />
         ))}
       </Box>

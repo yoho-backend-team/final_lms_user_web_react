@@ -51,7 +51,6 @@ const StudentTicketsPage = ({
   const handleChange = (e, newValue) => {
     setValue(newValue);
     const statusValue = status[newValue];
-    console.log(statusValue, newValue, "change");
     handleTicketRefetch(statusValue);
   };
 
@@ -118,14 +117,15 @@ const StudentTicketsPage = ({
                     variant="contained"
                     sx={{
                       color: "white",
-                      backgroundColor: "#5611B1",
                       borderRadius: "8px",
-                      boxShadow: "0px 6px 34px -8px #0D6EFD",
                       padding: "9px 24px",
                       fontWeight: 500,
                       fontSize: "14px",
                       lineHeight: "22px",
-                    }}
+                      border: "1px solid var(--Blue-500, #0D6EFD)",
+                      background: "var(--Blue-500, #0D6EFD)",
+                      boxShadow: "0px 6px 34px -8px #0D6EFD",
+                    }}                    
                   >
                     Create Ticket
                   </Button>

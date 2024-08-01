@@ -5,7 +5,6 @@ async function regSw() {
   if ('serviceWorker' in navigator) {
     const url = `${process.env.PUBLIC_URL}/sw.js`;
     const reg = await navigator.serviceWorker.register(url, { scope: '/' });
-    console.log('Service worker registered:', reg);
     return reg;
   }
   throw new Error('Service worker not supported');
@@ -13,7 +12,7 @@ async function regSw() {
 
 async function subscribe(serviceWorker,role,userId,user) {
   let subscription = await serviceWorker.pushManager.getSubscription();
-  console.log(subscription,"subscription",role,userId)
+
   // if (subscription === null) {
      subscription = await serviceWorker.pushManager.subscribe({
        userVisibleOnly: true,
@@ -21,7 +20,7 @@ async function subscribe(serviceWorker,role,userId,user) {
      });
 
      const endPoint = `${process.env.REACT_APP_BACK_END_URL}notification/subscribe`
-     console.log(endPoint,"endPoint")
+     
      await axios.post(endPoint, {subscription,user:userId,role:role});
      const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
      Cookies.set(user+"subscription",true,{expires:expiryDate})
