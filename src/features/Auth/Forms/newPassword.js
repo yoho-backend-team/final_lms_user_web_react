@@ -13,28 +13,28 @@ import { useChangePassword } from "../services";
 import { studentOtpAtom } from "store/atoms/authAtoms";
 import { useAtom } from "jotai";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100vh",
-    backgroundColor: "#f0f0f0",
-  },
-  container: {
-    padding: theme.spacing(4),
-    backgroundColor: "#fff",
-    borderRadius: theme.spacing(1),
-    boxShadow: theme.shadows[3],
-  },
-  button: {
-    marginTop: theme.spacing(2),
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     display: "flex",
+//     flexDirection: "column",
+//     alignItems: "center",
+//     justifyContent: "center",
+//     height: "100vh",
+//     backgroundColor: "#f0f0f0",
+//   },
+//   container: {
+//     padding: theme.spacing(4),
+//     backgroundColor: "#fff",
+//     borderRadius: theme.spacing(1),
+//     boxShadow: theme.shadows[3],
+//   },
+//   button: {
+//     marginTop: theme.spacing(2),
+//   },
+// }));
 
 const EnterNewPassword = () => {
-  const classes = useStyles();
+   //const classes = useStyles();
   const changePassword = useChangePassword();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -85,7 +85,12 @@ const EnterNewPassword = () => {
         padding: "50px",
       }}
     >
-      <Box>
+      <Box
+        sx={{
+          width: "360.428px",
+          height: "220.021px",
+        }}
+      >
         <Typography
           variant="h5"
           component="h1"

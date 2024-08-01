@@ -42,6 +42,8 @@ const InstructorDashBoard = () => {
     try {
     showSpinner()
     dispatch(getAllReports())
+    const response = await Client.Instructor.notification.get()
+    console.log(response,"response")
     } catch (error) {
       toast.error(error?.message)
     }finally{
@@ -55,7 +57,6 @@ const InstructorDashBoard = () => {
 
  
 
-  console.log(reports,"reports",loading)
   return (
     <Grid
       container

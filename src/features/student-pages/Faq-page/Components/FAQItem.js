@@ -9,28 +9,32 @@ const FAQItem = ({ faq }) => {
   const handleClick = () => {
     setOpen(!open);
   };
-  console.log(faq,"faqnew")
-  
+
+  console.log(faq, "faqnew");
 
   return (
     <>
-      <ListItem button onClick={handleClick} >
-        <ListItemText primary={
-              <Typography variant="h5" color="primary" style={{fontSize:"20px",fontFamily:"Poppins"}}>
-                {faq.title}
-              </Typography>
-            } />
+      <ListItem button onClick={handleClick}>
+        <ListItemText
+          primary={
+            <Typography variant="h5" color="primary" style={{ fontSize: "20px", fontFamily: "Poppins" }}>
+              {faq.title}
+            </Typography>
+          }
+        />
         <IconButton edge="end" onClick={handleClick}>
           {open ? <ExpandLess /> : <ExpandMore />}
         </IconButton>
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <ListItem>
-          <ListItemText secondary={
-              <Typography variant="body1" color="black" style={{fontSize:"15px",fontFamily:"Poppins"}}>
+          <ListItemText
+            secondary={
+              <Typography variant="body1" color="black" style={{ fontSize: "15px", fontFamily: "Poppins" }}>
                 {faq.description}
               </Typography>
-            }/>
+            }
+          />
         </ListItem>
       </Collapse>
     </>

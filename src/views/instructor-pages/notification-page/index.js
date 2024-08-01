@@ -6,17 +6,27 @@ import NotificationView from "features/instructor-pages/notification-page/compon
 import NotificationTab from "features/instructor-pages/notification-page/components/NotificationTab";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { selectNotificationList,selectSelectedNotification } from "features/common/redux/selector";
+import { setNotifications,setSelectedNotification } from "features/common/redux/slices";
 
 const NotificationList = () => {
-    const [tabValue,setTabValue] = useState(0)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [tabValue,setTabValue] = useState(0)
+    const selectedNotification = useSelector(selectSelectedNotification)
+    const notificationList = useSelector(selectNotificationList)
 
     const handleTabChange = (e,value) => {
       setTabValue(value)
     }
-
+    console.log(notificationList,selectedNotification)
     const handleBack = () => {
       navigate(-1)
+    }
+
+    const handleNotificationChange = (notification) => {
+          dispatch(setSelectedNotification(notification))
     }
 
     return(
@@ -34,7 +44,7 @@ const NotificationList = () => {
                         <Typography sx={{ color : '#000000', fontSize: "15px", fontWeight: 7000, lineHeight: "24px"}} > Back </Typography>
                      </IconButton>
                   </Box>
-                  <Box sx={{ display: "flex", gap: "20px",cursor:"pointer"}} >
+                  <Box sx={{ display: "none", gap: "20px",cursor:"pointer"}} >
                     <IconButton sx={{ width: "16px", height: "18.5px"}} >
                       <ZoomInMapOutlinedIcon sx={{ color : "#000000"}} />
                     </IconButton>
@@ -49,11 +59,14 @@ const NotificationList = () => {
                      tabValue = {tabValue}
                      handleTabChange = {handleTabChange}
                      handleBack = {handleBack}
+                     notifications = {notificationList}
+                     handleNotificationChange ={handleNotificationChange}
                      />
                    </Grid>
                    <Grid item xs={8.6}>
                     <NotificationView 
                     handleBack={handleBack}
+                    selectedNotification={selectedNotification}
                     />
                    </Grid>
                </Grid>

@@ -53,3 +53,10 @@ export const getStudentBranchDetails = () => {
   const user = getStudentDetails();
   return user?.branch_id;
 };
+
+export const checkSubscriptionStatus = (user) => {
+   const status = Cookies.get(user)
+   const state = status ? true : false
+   console.log(status,"status",state)
+   return state
+}

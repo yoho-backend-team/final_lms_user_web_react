@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Tab, Tabs, Button, Grid, Modal } from "@mui/material";
+import { Box, Typography, Tab, Tabs, Button, Grid } from "@mui/material";
 import CreateTicketForm from "./createTicketForm";
 import { TicketBg } from "utils/images";
 import TicketCard from "./TicketCard";

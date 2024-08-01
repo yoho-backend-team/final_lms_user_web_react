@@ -2,27 +2,24 @@ import { Box, Divider, Tabs, Tab , IconButton, Popover, Typography, Button, List
 import { useState } from "react";
 import LaunchSharpIcon from '@mui/icons-material/LaunchSharp';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
-import { Avatar } from "precise-ui";
+import {Avatar} from "@mui/material";
 import { borderRadius, height, width } from "@mui/system";
 import { Link } from "react-router-dom";
+import { getImageUrl } from "utils/common/imageUtlils";
+import { profilePlaceholder } from "utils/placeholders";
 
-const notificationsData = [
-    { id: 1, title: 'Michael Just Purchased', details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In urna nam purus vulputate.......", read: false },
-    { id: 2, title: 'Michael Just Purchased', details : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In urna nam purus vulputate.......", read: true },
-    { id: 3, title: 'Michael Just Purchased', details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In urna nam purus vulputate.......", read: false },
-  ];
 
-const NotificationListView = ({id,anchorE2,isOpen,setClose}) => {
+const NotificationListView = ({handleSelectNotification,id,anchorE2,isOpen,setClose,notifications}) => {
     const [ tabValue,setTabValue ] = useState(0)
 
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
     };
 
-    const filteredNotifications = notificationsData.filter((notification) => {
+    const filteredNotifications = notifications?.filter((notification) => {
         if (tabValue === 0) return true;
-        if (tabValue === 1) return notification.read;
-        if (tabValue === 2) return !notification.read;
+        if (tabValue === 1) return notification.status === "read";
+        if (tabValue === 2) return notification.status === "unread";
         return true;
       });
 
@@ -57,7 +54,7 @@ const NotificationListView = ({id,anchorE2,isOpen,setClose}) => {
                    sx={{
                     display: 'flex',
                     justifyContent : "space-between",
-                    padding : "24px"
+                    padding : "24px",
                    }}
                   >
                     <Box sx={{ display: "flex", justifyContent: "center"}} >
@@ -122,24 +119,57 @@ const NotificationListView = ({id,anchorE2,isOpen,setClose}) => {
                   {
                     filteredNotifications?.map((notifi,index)=>(
                         <>
-                        <Box key={notifi?.id+notifi?.title+index} sx={{ padding: "13px 24px", display: 'flex', justifyContent: "space-between"}} >
-                            <Box>
-                               <Avatar
-                               sx={{
-                                width: "48px",
-                                height : "48px",
-                               }}
-                               />
-                            </Box>
-                            <Box sx={{ display: 'flex', justifyContent: "space-between", flexDirection: 'column',maxWidth:"300px"}} >
-                                <Typography sx={{ color: "#343A40", fontSize: "16px", fontWeight: 500}} >{notifi?.title}</Typography>
-                                <Typography sx={{ color: "#6C757D", fontSize: "12px", fontWeight: 300}} >{notifi?.details}</Typography>
-                            </Box>
-                            <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: "end"}} >
-                                <Typography sx={{ display: "inline-flex", color: "#86929D", fontSize: "9px",fontWeight:700}} >33 Minutes Ago</Typography>
-                            </Box>
+                       <Box
+                        key={notifi?._id}
+                        onClick={() => handleSelectNotification(notifi)}
+                        sx={{
+                          padding: "13px 24px",
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          cursor: 'pointer',
+                          borderBottom: '1px solid #e0e0e0' 
+                        }}
+                      >
+                        <Box sx={{ flexShrink: 0 }}>
+                          <Avatar
+                            src={notifi?.staff?.image ? getImageUrl(notifi?.staff?.image) : profilePlaceholder}
+                            sx={{
+                              width: "48px",
+                              height: "48px",
+                            }}
+                          />
                         </Box>
-                        <Divider />
+                        <Box
+                          sx={{
+                            flex: 1,
+                            marginLeft: "16px",
+                            maxWidth: "calc(100% - 130px)", 
+                            overflow: 'hidden', 
+                          }}
+                        >
+                          <Typography
+                            sx={{ color: "#343A40", fontSize: "16px", fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis' }}
+                            title={notifi?.title} 
+                          >
+                            {notifi?.title}
+                          </Typography>
+                          <Typography
+                            sx={{ color: "#6C757D", fontSize: "12px", fontWeight: 300, overflow: 'hidden', textOverflow: 'ellipsis' }}
+                            title={notifi?.body} 
+                          >
+                            {notifi?.body}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ flexShrink: 0, textAlign: 'right' }}>
+                          <Typography
+                            sx={{ color: "#86929D", fontSize: "9px", fontWeight: 700 }}
+                          >
+                            33 Minutes Ago
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <Divider />
                         </>
                     ))
                   }

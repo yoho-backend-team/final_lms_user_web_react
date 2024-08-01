@@ -1710,7 +1710,7 @@ const CourseStudentDetails = () => {
                       <Typography
                         variant="body1"
                         component={Link}
-                        to="/student/create-ticket"
+                        to="/student/payment/view"
                         sx={{
                           display: "inline-flex",
                           padding: "9px 24px",

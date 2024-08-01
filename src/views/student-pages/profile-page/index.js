@@ -44,7 +44,7 @@ import { CircularProgressWithLabel } from "./CircularProgress";
 import ProgressChart from "./Charts";
 import { useSpinner } from "context/SpinnerProvider";
 import PasswordIcon from "@mui/icons-material/Password";
-import EnterNewPassword from './../../../features/Auth/Forms/newPassword';
+import EnterNewPassword from "./../../../features/Auth/Forms/newPassword";
 import Client from "../../../api/index";
 
 const ProfilePage = () => {
@@ -63,10 +63,10 @@ const ProfilePage = () => {
     pincode: "",
     image: "",
   });
-  
-  const [oldPassword, setOldPassword] = useState('');
+
+  const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({
     oldPassword: false,
     newPassword: false,
@@ -76,8 +76,6 @@ const ProfilePage = () => {
   const [editing, setEditing] = useState(false);
 
   const [editedPersonalInfo, setEditedPersonalInfo] = useState({});
-  
-  
 
   const navigate = useNavigate();
 
@@ -107,7 +105,7 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    getProfile();  
+    getProfile();
   }, []);
 
   const editProfile = async () => {
@@ -225,8 +223,6 @@ const ProfilePage = () => {
     },
   ];
 
-  
-
   const AcademicInfo = [
     {
       icon: <img src={percentage} alt="percentage" />,
@@ -245,8 +241,6 @@ const ProfilePage = () => {
     },
   ];
 
-
-
   const handleNavigateBack = () => {
     navigate("student/home");
   };
@@ -262,21 +256,15 @@ const ProfilePage = () => {
       confirmPassword: !confirmPassword,
     };
     setErrors(newErrors);
-
-    if (oldPassword && confirmPassword && newPassword) {
+    if (oldPassword && newPassword) {
       try {
-        // const response = await Client.Student.reset_password({
-        //   oldPassword,
-        //   email,
-        //   confirmPassword,
-        // });
-
         const response = await changePassword({
           oldPassword,
           newPassword,
-          email:"ajaykannan761@gmail.com"
-            });
-        console.log(response);
+          email: editedPersonalInfo.email,
+          confirmPassword,
+        });
+        console.log(response, "responce");
         if (response.status === "success") {
           navigate("/student/login");
           toast.success("Password updated successfully");
@@ -290,9 +278,7 @@ const ProfilePage = () => {
         toast.error(error.message || "Error updating password");
       }
     }
-  }
-
-
+  };
 
   return (
     <Box sx={{ p: 5 }}>
@@ -830,7 +816,6 @@ const ProfilePage = () => {
       </Grid>
     </Box>
   );
-
-}
+};
 
 export default ProfilePage;

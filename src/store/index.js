@@ -17,11 +17,14 @@ import StudentPaymentReducer from "../features/student-pages/payments-page/redux
 import StudentHelpCenter from "../features/student-pages/help-center-page/redux/slices"
 import StudentActivityLog from "../features/student-pages/activity-logs-page/redux/slices"
 import StudentTicketReducer from "../features/student-pages/tickets-page/redux/slices"
+import instructorNotificationReducer from "../features/common/redux/slices"
+import studentNotificationReducer from "../features/common/redux/studentSlices"
 
 import StudentClassReducer from "../features/student-pages/classes-page/redux/slices";
 import StudentAttendanceReducer from "../features/student-pages/attendances-page/redux/slices"
 import StudentActivityReducer from "../features/student-pages/activity-logs-page/redux/slices"
 import StudentdashboardReducer from "../features/student-pages/home-page/redux/slices"
+import InstructorFaqReducer from "../features/instructor-pages/Faq-page/redux/slices"
 
 // ==============================|| REDUX - MAIN STORE ||============================== //
 
@@ -37,6 +40,7 @@ const store = configureStore({
     instructorPayments: paymentReducer,
     instructorTickets: ticketReducer,
     instructorDashboard: dashboardReducer,
+    instructorNotifications : instructorNotificationReducer,
     studentCommunity: studentCommunityReducer,
     studentcourse: StudentCourseReducer,
     studentPayments: StudentPaymentReducer,
@@ -47,6 +51,8 @@ const store = configureStore({
     studentAttendance: StudentAttendanceReducer,
     studentsActivityLogs: StudentActivityReducer,
     studentDashboard:StudentdashboardReducer ,
+    Instructorfaq:InstructorFaqReducer,
+    studentNotification : studentNotificationReducer
   },
 });
 // configureStore(reducer);

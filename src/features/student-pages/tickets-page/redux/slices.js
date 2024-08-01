@@ -1,5 +1,3 @@
-
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const StudentTicketSlice = createSlice({
@@ -20,3 +18,5 @@ const StudentTicketSlice = createSlice({
 
 export const { setTickets, setLoading } = StudentTicketSlice.actions;
 export default StudentTicketSlice.reducer;
+
+

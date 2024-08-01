@@ -79,10 +79,10 @@ const modules = [
               
                 console.log(classes , "Course?.batches?.classes")
                 return (
-                  <Box sx={{ padding: tabView ? "20px" : "60px" }}>
+                  <Box sx={{ padding: tabView ? "20px" : "60px"}}>
                     <Grid container xs={12} gap={tabView ? "60px" : "20px"}>
                     {classes?.map((module) => (
-                        <Grid item key={module.id} xs={12} md={6} lg={4}>
+                        <Grid item key={module.id} xs={2.5}  sx={{display:"flex",flexDirection:"row",justifyContent: "center", alignItems: "center",cursor: "pointer"}}>
                           <CourseStudentModuleCard
                             id={module.id}
                             style={{
@@ -117,12 +117,24 @@ const modules = [
                         height: "100%",
                       }}
                     >
-                      <Typography
-                        sx={{ fontSize: "14px", fontWeight: 600, lineHeight: "24px" }}
-                      >
-                        Click the Card to view Preview Details
-                      </Typography>
+                      
                     </Box>
+                    <Box
+        sx={{
+          display: "flex",
+          justifyItems: "center",
+          width: "100%",
+          py: "20px",
+          justifyContent: "center",
+          height: "100%",
+        }}
+      >
+        <Typography
+          sx={{ fontSize: "14px", fontWeight: 600, lineHeight: "24px" }}
+        >
+          Click the Card to view Preview Details
+        </Typography>
+      </Box>
                   </Box>
                 );
               };

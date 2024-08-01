@@ -162,7 +162,7 @@ const PaymentStudentInterface = () => {
               <Typography
                 variant="body1"
                 component={Link}
-                to="/student/create-ticket"
+                to="/student/tickets"
                 sx={{
                   color: "#0D6EFD",
                   fontSize: "16px",

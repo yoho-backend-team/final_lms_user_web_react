@@ -91,7 +91,7 @@ const generateEndpoints = () => {
         verify_otp: "/institutes/auth/student/verify-otp",
         forget_password: "/institutes/auth/profile/forgot-password",
         reset_password: "/institutes/auth/profile/reset-password",
-        //change_password: "institutes/auth/profile/reset-password",
+        change_password: "institutes/auth/profile/change-password",
       },
       course: {
         get: `/institutes/${institute1}/branches/${branch1}/course/${course1}`,
@@ -109,8 +109,13 @@ const generateEndpoints = () => {
         getFees: `/institutes/payments/student-fee/${getStudentDetails()?._id}`,
       },
       ticket: {
-        create: "/institutes/student/ticket/create",
-        get: "/institutes/student/ticket/getall",
+        create: "/institutes/student-ticket/create",
+        get: "/institutes/student-ticket/getall",
+        getById: "/institutes/student-ticket/",
+      },
+      notification: {
+        get: "/institutes/students/notifications/",
+        update_status: "/institutes/students/notifications/status/",
       },
       activity: {
         get: `institutes/user/activity/`,
@@ -118,6 +123,9 @@ const generateEndpoints = () => {
       faq: {
         // get: `institutes/faq/category?instituteid=${getStudentDetails()?.institute_id?.uuid}&branchid=${getStudentDetails()?.branch_id?.uuid}`,
         get: `institutes/faq/all`,
+      },
+      help: {
+        get: `/helpcenter?instituteid=${instituteuuid}`,
       },
 
       reports: {
@@ -171,6 +179,9 @@ const generateEndpoints = () => {
       },
       community: {
         get: `/institutes/community/course/${course}`,
+      },
+      notification: {
+        get: `/institutes/staff/notifications`,
       },
       payments: {
         getSalaries: "/institutes/payments/staff-salary/salary",

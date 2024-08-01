@@ -2,27 +2,24 @@ import { Box, Divider, Tabs, Tab , IconButton, Popover, Typography, Button, List
 import { useState } from "react";
 import LaunchSharpIcon from '@mui/icons-material/LaunchSharp';
 import CloseSharpIcon from '@mui/icons-material/CloseSharp';
-import { Avatar } from "precise-ui";
+import { Avatar } from "@mui/material"
 import { borderRadius, height, width } from "@mui/system";
 import { Link } from "react-router-dom";
+import { getImageUrl } from "utils/common/imageUtlils";
+import { profilePlaceholder } from "utils/placeholders";
 
-const notificationsData = [
-    { id: 1, title: 'Michael Just Purchased', details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In urna nam purus vulputate.......", read: false },
-    { id: 2, title: 'Michael Just Purchased', details : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In urna nam purus vulputate.......", read: true },
-    { id: 3, title: 'Michael Just Purchased', details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In urna nam purus vulputate.......", read: false },
-  ];
 
-const StudentNotification = ({id,anchorE2,isOpen,setClose}) => {
+const StudentNotification = ({notifications,id,anchorE2,isOpen,setClose,handleNotificationChange}) => {
     const [ tabValue,setTabValue ] = useState(0)
 
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
     };
 
-    const filteredNotifications = notificationsData.filter((notification) => {
+    const filteredNotifications = notifications.filter((notification) => {
         if (tabValue === 0) return true;
-        if (tabValue === 1) return notification.read;
-        if (tabValue === 2) return !notification.read;
+        if (tabValue === 1) return notification.status === "read";
+        if (tabValue === 2) return notification.status === "unread";
         return true;
       });
 
@@ -65,7 +62,7 @@ const StudentNotification = ({id,anchorE2,isOpen,setClose}) => {
                      <Typography sx={{ color: "#495057", fontSize: "24px", fontWeight: 700, lineHeight: "32px"}} >(1)</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: "flex-start",gap:"20px"}} >
-                        <IconButton sx={{ width: "19px", height: "19px"}} onClick={setClose} component={Link} to={"/instructor/notifications"} >
+                        <IconButton sx={{ width: "19px", height: "19px"}} onClick={setClose} component={Link} to={"/student/notifications"} >
                            <LaunchSharpIcon sx={{ height: "19px", width: "19px", color: "#000000"}} /> 
                         </IconButton>
                         <IconButton sx={{ width: "11px", height: "11px"}} onClick={setClose} >
@@ -122,24 +119,42 @@ const StudentNotification = ({id,anchorE2,isOpen,setClose}) => {
                   {
                     filteredNotifications?.map((notifi)=>(
                         <>
-                        <Box key={notifi?.id} sx={{ padding: "13px 24px", display: 'flex', justifyContent: "space-between"}} >
-                            <Box>
-                               <Avatar
-                               sx={{
-                                width: "48px",
-                                height : "48px",
-                               }}
-                               />
-                            </Box>
-                            <Box sx={{ display: 'flex', justifyContent: "space-between", flexDirection: 'column',maxWidth:"300px"}} >
-                                <Typography sx={{ color: "#343A40", fontSize: "16px", fontWeight: 500}} >{notifi?.title}</Typography>
-                                <Typography sx={{ color: "#6C757D", fontSize: "12px", fontWeight: 300}} >{notifi?.details}</Typography>
-                            </Box>
-                            <Box sx={{ display: 'flex', flexDirection: "column", justifyContent: "end"}} >
-                                <Typography sx={{ display: "inline-flex", color: "#86929D", fontSize: "9px",fontWeight:700}} >33 Minutes Ago</Typography>
-                            </Box>
+                       <Box
+                        onClick={() => handleNotificationChange(notifi)}
+                        key={notifi?._id}
+                        sx={{
+                          padding: "13px 24px",
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: "space-between",
+                          cursor: "pointer",
+                          borderBottom: '1px solid #e0e0e0' // Adding a border for better separation
+                        }}
+                      >
+                        <Box sx={{ flexShrink: 0 }}>
+                          <Avatar
+                            sx={{
+                              width: "48px",
+                              height: "48px",
+                            }}
+                            src={notifi?.student?.image ? getImageUrl(notifi?.student?.image) : profilePlaceholder}
+                          />
                         </Box>
-                        <Divider />
+                        <Box sx={{ flex: 1, marginLeft: "16px", maxWidth: "calc(100% - 130px)" }}>
+                          <Typography sx={{ color: "#343A40", fontSize: "16px", fontWeight: 500 }}>
+                            {notifi?.title}
+                          </Typography>
+                          <Typography sx={{ color: "#6C757D", fontSize: "12px", fontWeight: 300 }}>
+                            {notifi?.body}
+                          </Typography>
+                        </Box>
+                        <Box sx={{ flexShrink: 0, textAlign: 'right' }}>
+                          <Typography sx={{ color: "#86929D", fontSize: "9px", fontWeight: 700 }}>
+                            33 Minutes Ago
+                          </Typography>
+                        </Box>
+                      </Box>
+                      <Divider />
                         </>
                     ))
                   }
@@ -147,7 +162,7 @@ const StudentNotification = ({id,anchorE2,isOpen,setClose}) => {
                 </Box>
                 <Divider />
                 <Box sx={{ display: "flex", justifyContent: "end",p:"20px 16px 20px 20px"}} >
-                     <Button onClick={setClose} component={Link} to={"/instructor/notifications"} sx={{ color: "#FBFBFB",backgroundColor:"#5611B1",borderRadius:"8px",boxShadow:"0px 6px 34px -8px #0D6EFD",padding:"9px 24px",":hover":{ backgroundColor:"#5611B1" }}} >
+                     <Button onClick={setClose} component={Link} to={"/student/notifications"} sx={{ color: "#FBFBFB",backgroundColor:"#5611B1",borderRadius:"8px",boxShadow:"0px 6px 34px -8px #0D6EFD",padding:"9px 24px",":hover":{ backgroundColor:"#5611B1" }}} >
                        View all Notifications
                      </Button>
                 </Box>

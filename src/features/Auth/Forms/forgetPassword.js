@@ -26,7 +26,7 @@ const ForgetPasswordPage = () => {
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     if (e.target.value) {
-      setEmailError(""); // Clear error message when user starts typing
+      setEmailError(""); 
     }
   };
 
@@ -73,8 +73,8 @@ const ForgetPasswordPage = () => {
     >
       <Box
         sx={{
-          width: "303.428px",
-          height: "210.021px",
+          width: "360.428px",
+          height: "220.021px",
           flexShrink: 0,
           display: "flex",
           flexDirection: "column",

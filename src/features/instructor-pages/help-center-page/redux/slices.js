@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const HelpSlice = createSlice({
-  name: "instructorHelp",
+export const StudentHelpSlice = createSlice({
+  name: "studenthelp",
   initialState: {
     data: [],
     loading: true,
@@ -16,5 +16,5 @@ export const HelpSlice = createSlice({
   },
 });
 
-export const { setHelps, setLoading } = HelpSlice.actions;
-export default HelpSlice.reducer;
+export const { setHelps, setLoading } = StudentHelpSlice.actions;
+export default StudentHelpSlice.reducer;

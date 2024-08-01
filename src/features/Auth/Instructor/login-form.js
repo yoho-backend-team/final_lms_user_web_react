@@ -19,7 +19,8 @@ import { useNavigate } from "react-router-dom";
 import { useTabResponsive } from "utils/tabResponsive";
 import toast from "react-hot-toast";
 import { useSpinner } from "context/SpinnerProvider";
-
+import { useAtom } from "jotai";
+import {instructorLoginStepAtom} from "store/atoms/authAtoms";
 const validationSchema = yup.object({
   email: yup
     .string("Enter your email")
@@ -37,6 +38,7 @@ const InstructorLoginForm = () => {
   const navigate = useNavigate();
   const { tabView } = useTabResponsive();
   const { showSpinner,hideSpinner} = useSpinner()
+  const [, setLoginStep] = useAtom(instructorLoginStepAtom);
 
   const formik = useFormik({
     initialValues: {
@@ -62,6 +64,12 @@ const InstructorLoginForm = () => {
       }
     },
   });
+
+  const  handleForgetPassword=(e)=>{
+      e.preventDefault();
+      setLoginStep("forgetPassword");
+  }
+
 
   return (
     <Box>
@@ -163,7 +171,7 @@ const InstructorLoginForm = () => {
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
             <Typography>Forget Password?</Typography>
-            <Link to="#">Get it</Link>
+            <Link  to="#" onClick={handleForgetPassword}>Get it</Link>
           </Box>
           <Box sx={{ mt: 8, display: "flex", alignItems: "center", gap: 1 }}>
             <span>
