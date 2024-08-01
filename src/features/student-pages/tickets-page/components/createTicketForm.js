@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   TextField,
@@ -22,19 +22,19 @@ import CancelDialog from "components/modal/cancelModel";
 import { useTabResponsive } from "utils/tabResponsive";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { StudentCreateTickets } from "../services";
+import { CreateTickets } from "../services";
 import { getStudentDetails } from "store/atoms/authorized-atom";
 import toast from "react-hot-toast";
-import { fileUpload } from "features/common/upload";
 import { useSpinner } from "context/SpinnerProvider";
+import { fileUpload } from "features/common/upload";
 
 const validationSchema = yup.object({
   problem: yup.string("Select problem").required("Problem is required"),
+  title : yup.string("Enter Query is required").required("Query is required ") ,
+  priority : yup.string("Select Priority").required("Priority is required"),
   description: yup
     .string("Enter description")
     .required("Description is required"),
-  status: yup.string("opened"),
-  file_upload: yup.string("Attachment"),
 });
 
 const VisuallyHiddenInput = styled("input")({
@@ -85,10 +85,9 @@ const useStyles = makeStyles({
 const StudentCreateTicketForm = ({ handleClose }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [attachment, setAttachment] = useState(null);
   const [open, setOpen] = useState(false);
   const { tabView } = useTabResponsive();
-  const { showSpinner, hideSpinner } = useSpinner();
+  const { showSpinner,hideSpinner} = useSpinner()
 
   const problems = [
     { value: "attendance", label: "Attendance Issue" },
@@ -99,29 +98,38 @@ const StudentCreateTicketForm = ({ handleClose }) => {
     { value: "submission", label: "Assignment Submission" },
   ];
 
+  const priority = [
+    { value: "Low", label: "Low"},
+    { value: "High",label:"High"},
+    { value: "Medium", label: "Medium"},
+    { value: "Urgent", label: "Urgent"}
+  ]
+
   const formik = useFormik({
     validationSchema: validationSchema,
     initialValues: {
       problem: "",
       description: "",
-      file_upload: "",
-      status: "",
+      priority : '',
+      title : "",
+      file: "",
     },
     onSubmit: async (values) => {
       try {
-        const student = getStudentDetails();
+        const instructor = getStudentDetails();
         const data = {
-          institute: student?.institute_id?._id,
-          branch: student?.branch_id?._id,
-          query: values?.problem,
+          institute: instructor?.institute_id?._id,
+          branch: instructor?.branch_id?._id,
+          category: values?.problem,
+          priority:values?.priority,
+          query : values?.title,
           description: values?.description,
-          status: "opened",
-          user: student?._id,
-          file_upload: attachment || null,
+          user: instructor?._id,
+          file : values?.file
         };
-        const response = await StudentCreateTickets(data);
-        console.log(response, "response");
+        const response = await CreateTickets(data);
         handleClose();
+        console.log(response)
         toast.success("ticket created successfully");
       } catch (error) {
         toast.error(error?.message);
@@ -131,17 +139,17 @@ const StudentCreateTicketForm = ({ handleClose }) => {
 
   const handleAttachmentChange = async (event) => {
     try {
-      showSpinner();
-      const file = event.target.files[0];
-      const file_data = new FormData();
-      file_data.append("file", file);
-      const response = await fileUpload(file_data);
-      setAttachment(response?.file);
-      toast.success("Attachment added successfully");
-    } catch (error) {
-      toast.error(error?.message);
-    } finally {
-      hideSpinner();
+    showSpinner()
+    const file = event.target.files?.[0]
+    const form_data = new FormData()
+    form_data.append("file",file)
+    const response = await fileUpload(form_data)
+    formik.setFieldValue("file",response?.file)
+    toast.success("file uplaod successfully")
+    }catch (error) {
+     toast.error(error?.message)
+    }finally{
+     hideSpinner()
     }
   };
 
@@ -149,21 +157,7 @@ const StudentCreateTicketForm = ({ handleClose }) => {
   const handleCloseCancel = () => setOpen(false);
   const handleCancel = () => {
     setOpen(false);
-    console.log("Cancel clicked");
   };
-
-  useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      event.preventDefault();
-      event.returnValue = "Are you sure you want to leave?";
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
 
   return (
     <>
@@ -233,7 +227,7 @@ const StudentCreateTicketForm = ({ handleClose }) => {
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     name="problem"
-                    label="Select your Problem"
+                    label="Select your query type"
                   >
                     {problems.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
@@ -243,6 +237,88 @@ const StudentCreateTicketForm = ({ handleClose }) => {
                   </Select>
                   {formik.touched.problem && formik.errors.problem && (
                     <FormHelperText>{formik.errors.problem}</FormHelperText>
+                  )}
+                </FormControl>
+              </Grid>
+
+              <Grid
+                item
+                xs={6}
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  flexDirection: "column",
+                  gap: "10px",
+                }}
+              >
+                 <FormControl
+                  error={
+                    formik.touched.title &&
+                    Boolean(formik.errors.title)
+                  }
+                  fullWidth
+                >
+                  <InputLabel className={classes.label} shrink>
+                    Query
+                  </InputLabel>
+                  <TextField
+                    name="title"
+                    value={formik.values.title}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    fullWidth
+                    error={
+                      formik.touched.title &&
+                      Boolean(formik.errors.title)
+                    }
+                    helperText={
+                      formik.touched.title && formik.errors.title
+                    }
+                    variant="outlined"
+                    label="query" 
+                  />
+                </FormControl>
+              </Grid>
+
+              <Grid
+                item
+                xs={6}
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  flexDirection: "column",
+                  gap: "10px",
+                }}
+              >
+                <FormControl
+                  variant="outlined"
+                  error={
+                    formik.touched.priority && Boolean(formik.errors.priority)
+                  }
+                  fullWidth
+                >
+                  <InputLabel
+                    className={classes.label}
+                    id="demo-simple-select-label"
+                  >
+                    Priority
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    value={formik.values.priority}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    name="priority"
+                    label="Priority"
+                  >
+                    {priority.map((option) => (
+                      <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {formik.touched.priority && formik.errors.priority && (
+                    <FormHelperText>{formik.errors.priority}</FormHelperText>
                   )}
                 </FormControl>
               </Grid>
@@ -280,7 +356,7 @@ const StudentCreateTicketForm = ({ handleClose }) => {
                   />
                 </FormControl>
               </Box>
-
+              
               <Grid
                 item
                 xs={6}
@@ -290,25 +366,17 @@ const StudentCreateTicketForm = ({ handleClose }) => {
                 <Button
                   component="label"
                   variant="contained"
+                  disabled={ formik?.values?.file ?true : false }
                   startIcon={<CloudUploadIcon sx={{ color: "#5611B1" }} />}
-                  sx={{ backgroundColor: "#DFC7FF", color: "#5611B1" }}
+                  sx={{ backgroundColor: formik?.values?.file ?"#E0EBFA" : "#DFC7FF", color: "#5611B1" }}
                 >
-                  Upload file
+                  { formik?.values?.file ? formik?.values?.file?.split("/")[2] : "Upload file"}
                   <VisuallyHiddenInput
                     type="file"
                     onChange={handleAttachmentChange}
                   />
+
                 </Button>
-                {attachment && (
-                  <Typography sx={{ mt: 1 }} color="textSecondary">
-                    File uploaded: {attachment.split("/")[2]}
-                  </Typography>
-                )}
-                {!attachment && (
-                  <Typography sx={{ mt: 1 }} color="textSecondary">
-                    No file uploaded
-                  </Typography>
-                )}
                 <Box
                   sx={{
                     display: "flex",
@@ -383,3 +451,4 @@ const StudentCreateTicketForm = ({ handleClose }) => {
 };
 
 export default StudentCreateTicketForm;
+

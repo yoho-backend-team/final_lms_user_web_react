@@ -187,13 +187,13 @@ export const useChangePassword = () => {
   const otpData = useAtomValue(studentOtpAtom);
   const [otpAtom, setOtpAtom] = useAtom(studentOtpAtom);
   
-  const changePassword = async (confirm_password) => {
+  const changePassword = async (confirmPassword) => {
     try {
-      const response = await Client.Student.change_password({
+      const response = await Client.Student.reset_password({
         email: otpAtom.email,
         otp: otpAtom.otp,
         token: otpAtom.token,
-        confirm_password,
+        confirmPassword,
       });
       console.log(response, "Response");
       setOtpAtom({ email: null, token: null, otp: "" });
@@ -209,3 +209,76 @@ export const useChangePassword = () => {
 };
 
 export const useStudentLogout = () => {};
+
+
+export const useInstructorforgetPassword = () => {
+  const [, setOtpAtom] = useAtom(studentOtpAtom);
+
+  const forgetPassword = async (email) => {
+    try {
+      const response = await Client.Student.forgetPassword({ email });
+      setOtpAtom({ email, token: null, otp: " " });
+      return response;
+    } catch (error) {
+      console.error("Error during password reset:", error);
+      throw error;
+    }
+  };
+  return forgetPassword;
+};
+
+export const useInstituteForgetPasswordOtpVerify = () => {
+  const [, setLoginStep] = useAtom(instructorLoginStepAtom);
+  const [, setOtpAtom] = useAtom(instructorOtpAtom);
+  const [, setInstructorAtom] = useAtom(instructorUserAtom);
+
+  
+  const otpData = useAtomValue(instructorOtpAtom);
+
+  const verifyOTP = async (otp) => {
+    try {
+      const response = await Client.Student.verifyOtp({
+        ...otpData,
+        otp,
+      });
+      const { token, user } = response?.data;
+      setOtpAtom({ email: null, token: null, otp: "" });
+      setInstructorAtom({
+        isLoggedIn: false,
+        userDetails: user,
+        token: token,
+        role: "instructor",
+      });
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  };
+  return verifyOTP;
+};
+
+export const useInstructorChangePassword = () => {
+  const [, setLoginStep] = useAtom(instructorLoginStepAtom);
+  const [, setInstructorAtom] = useAtom(instructorUserAtom);
+  const [otpAtom, setOtpAtom] = useAtom(instructorOtpAtom);
+
+  const changePassword = async (confirmPassword) => {
+    try {
+      const response = await Client.Student.reset_password({
+        email: otpAtom.email,
+        otp: otpAtom.otp,
+        token: otpAtom.token,
+        confirmPassword,
+      });
+      console.log(response, "Response");
+      setOtpAtom({ email: null, token: null, otp: "" });
+      setLoginStep("login");
+      return { success: true, message: response?.message };
+    } catch (error) {
+      console.error("Error setting new password:", error);
+      throw error;
+    }
+  };
+
+  return changePassword;
+};

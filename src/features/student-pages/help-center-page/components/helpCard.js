@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-const StudentHelpCard = ({ section, title, setView ,handleTabClick}) => {
+const StudentHelpCard = ({ section, title, setView ,category}) => {
   
   
   return (
@@ -27,7 +27,7 @@ const StudentHelpCard = ({ section, title, setView ,handleTabClick}) => {
             display: "inline-block",
           }}
         >
-          {section}
+          {category}
         </Typography>
         <Typography
           sx={{
@@ -40,9 +40,11 @@ const StudentHelpCard = ({ section, title, setView ,handleTabClick}) => {
             pt: "15px",
           }}
         >
-          {title}
+          {section}
         </Typography>
+        
       </Box>
+      
       <Box
         sx={{
           backgroundColor: "white",
@@ -53,7 +55,7 @@ const StudentHelpCard = ({ section, title, setView ,handleTabClick}) => {
         }}
       >
         <Typography
-          onClick={handleTabClick}
+          onClick={() => {setView(category)}}
           sx={{
             fontSize: "14px",
             fontWeight: 500,

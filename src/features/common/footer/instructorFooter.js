@@ -14,12 +14,17 @@ const InstructorFooter = () => {
             mr: 2,
           }}
         >
+          <Box sx={{ display: "flex", gap: 2 }}>
           <Link
             to={"/instructor/help-center"}
-            style={{ textDecoration: "none" }}
+            style={{ textDecoration: "none" ,gap: 2  }}
           >
             Help Center
           </Link>
+          <Link to={"/instructor/Faq"} style={{ textDecoration: "none" }}>
+            FAQ
+          </Link>
+          </Box>
           <Box sx={{ display: "flex", gap: 2 }}>
             <Link
               to={"/instructor/activity-logs"}

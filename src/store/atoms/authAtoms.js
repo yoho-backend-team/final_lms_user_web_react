@@ -16,7 +16,7 @@ const getCookieJSON = (key) => {
     console.error(`Error parsing cookie ${key}:`, e);
     return null;
   }
-};
+}
 
 export const studentLoginStepAtom = atom(
   Cookies.get("studentLoginStep") || "login",

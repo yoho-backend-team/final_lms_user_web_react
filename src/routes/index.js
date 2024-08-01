@@ -164,8 +164,11 @@ import NotificationList from "views/instructor-pages/notification-page";
     lazy(() => import("views/student-pages/create-ticket-page")),
   );
   const StudentTicketViewPage = Loadable(
-    lazy(() => import("views/student-pages/tickets-page/ticket[id]-page")),
+    lazy(() => import("views/student-pages/tickets-page")),
   );
+  const StudentNotificationList = Loadable(
+    lazy(() => import("views/student-pages/notification-page/index"))
+  )
 
 
 // Instructor Pages
@@ -187,10 +190,17 @@ const InstructorCommunityPage = Loadable(
 const InstructorCoursePage = Loadable(
   lazy(() => import("views/instructor-pages/courses-page")),
 );
+const InstructorCourseViewPage = Loadable(
+  lazy(() => import("views/instructor-pages/courses-page/Mainpage")),
+);
 const InstructorStudyMaterialsPage = Loadable(
   lazy(
     () => import("views/instructor-pages/courses-page/courses-[id]-page/index"),
   ),
+);
+
+const InstructorFaqPage = Loadable(
+  lazy(() => import("views/instructor-pages/Faq-page")),
 );
 const InstructorHelpCenterPage = Loadable(
   lazy(() => import("views/instructor-pages/help-center-page")),
@@ -261,6 +271,7 @@ const InstructorCreateTicketPage = Loadable(
           >
             <Route path="/" element={<Navigate to="student/home" />} />
             <Route path="student/home" element={<StudentHomePage />} />
+            <Route path="student/notifications" element={<StudentNotificationList />} />
             <Route
               path="student/activity-logs"
               element={<StudentActivityLogsPage />}
@@ -389,6 +400,10 @@ const InstructorCreateTicketPage = Loadable(
               path="instructor/course"
               element={<InstructorCoursePage />}
             />
+             <Route
+              path="instructor/course/view"
+              element={<InstructorCourseViewPage />}
+            />
             <Route
               path="instructor/course/resources/:id"
               element={<InstructorStudyMaterialsPage />}
@@ -409,6 +424,7 @@ const InstructorCreateTicketPage = Loadable(
               path="instructor/profile"
               element={<InstructorProfilePage />}
             />
+            <Route path="instructor/Faq" element={<InstructorFaqPage/>}/>
             <Route
               path="instructor/create-ticket"
               element={<InstructorCreateTicketPage />}

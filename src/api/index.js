@@ -72,46 +72,48 @@ class Client {
     },
     // attendance : (params) => httpClient.get(HTTP_END_POINTS.Student.attendance,params,"student"),
     attendance: {
-      get: (params) =>
+    get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.get}`,params,'student'),
+    get_class_attendance: (data) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.class_attendance}/${data.classId}`, { params: data })
+  },
+  notification : {
+    get : (params) => httpClient.get(HTTP_END_POINTS.Student.notification.get,params,"student"),
+    update : (data) => httpClient.update(HTTP_END_POINTS.Student.notification.update_status + data.uuid , data, "student" )
+  },
+  ticket: {
+    create: (data, params) =>
+      httpClient.post(
+        HTTP_END_POINTS.Student.ticket.create,
+        data,
+        params,
+        "student",
+      ),
+    get: (params) =>
+      httpClient.get(
+        HTTP_END_POINTS.Student.ticket.get,
+        params,
+        "student",
+      ),
+      getById: (params) =>
         httpClient.get(
-          `${HTTP_END_POINTS.Student.attendance.get}`,
+          HTTP_END_POINTS.Student.ticket.getById + params.id,
           params,
           "student"
         ),
-      get_class_attendance: (data) =>
-        httpClient.get(
-          `${HTTP_END_POINTS.Student.attendance.class_attendance}/${data.classId}`,
-          { params: data }
-        ),
-    },
-    ticket: {
-      create: (data, params) =>
-        httpClient.post(
-          HTTP_END_POINTS.Student.ticket.create,
-          data,
-          params,
-          "student"
-        ),
-      get: (params) =>
-        httpClient.get(HTTP_END_POINTS.Student.ticket.get, params, "student"),
-    },
+  },
 
-    reports: {
-      get: (params) =>
-        httpClient.get(HTTP_END_POINTS.Student.reports.get, params, "student"),
-    },
-    activity: {
-      get: (params) =>
-        httpClient.get(
-          `${HTTP_END_POINTS.Student.activity.get}`,
-          params,
-          "student"
-        ),
-    },
-    faq: {
-      get: (params) =>
-        httpClient.get(`${HTTP_END_POINTS.Student.faq.get}`, params, "student"),
-    },
+  reports : {
+    get : (params) => httpClient.get(HTTP_END_POINTS.Student.reports.get,params,'student')
+  },
+  activity: {
+    get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.activity.get}`,params,'student'),
+  },
+  faq: {
+    get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.faq.get}`,params,'student'),
+  },
+  help:{
+    get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.help.get}`,params,'student'),
+  },
+
 
     community: {
       get: (params) =>
@@ -248,6 +250,9 @@ class Client {
           params,
           "instructor"
         ),
+    },
+    notification : {
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.get,params,"instructor")
     },
     payment: {
       get: (params) =>

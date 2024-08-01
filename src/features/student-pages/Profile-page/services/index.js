@@ -18,12 +18,13 @@ export const getprofilewithId = async (data) => {
     }
   };
 
-  export const changePassword = async (oldPassword, email, newPassword) => {
+  export const changePassword = async (oldPassword, email, newPassword,confirmPassword) => {
     try {
-      const response = await Client.Student.reset_password(
+      const response = await Client.Student.change_password(
         oldPassword,
         email,
-        newPassword
+        newPassword,
+        confirmPassword
       );
       return response;
     } catch (error) {

@@ -14,8 +14,13 @@ import SaveAltOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
 import SandClockIcon from "assets/icons/course/sandClockIcon";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import oridinalSuffix from "utils/course/addOridinalSuffix";
+import { handleDownload } from "utils/downloadHelpers";
+import { useSpinner } from "context/SpinnerProvider";
 
-const SingleCourseView = () => {
+const SingleCourseView = ({selectedClass,selectedClassId}) => {
+  const {showSpinner,hideSpinner} = useSpinner()
+  console.log(selectedClass,"selectedClas")
   return (
     <Box sx={{ padding: "16px" }}>
       <Box
@@ -39,7 +44,7 @@ const SingleCourseView = () => {
                 color: "white",
               }}
             >
-              1st
+              {oridinalSuffix(selectedClassId)}
             </Typography>
           </Box>
           <Box
@@ -56,7 +61,7 @@ const SingleCourseView = () => {
               Chapter
             </Typography>
             <Typography sx={{ width: "150px" }}>
-              Foundation of Python & SQL Basic ...
+              {selectedClass?.class_name}
             </Typography>
           </Box>
           <Box>
@@ -79,7 +84,7 @@ const SingleCourseView = () => {
               <Typography
                 sx={{ fontSize: "13px", fontWeight: 700, lineHeight: "22px" }}
               >
-                2 Notes
+                {selectedClass?.notes?.length} Notes
               </Typography>
             </Typography>
             <Typography sx={{ display: "inline-flex", gap: "8px" }}>
@@ -88,13 +93,13 @@ const SingleCourseView = () => {
                 sx={{ fontSize: "13px", fontWeight: 700, lineHeight: "22px" }}
               >
                 {" "}
-                32 Videos{" "}
+                {selectedClass?.study_materials?.length} Videos{" "}
               </Typography>
             </Typography>
           </Box>
         </Box>
       </Box>
-      <Box sx={{ overflowX: "auto", marginTop: "16px" }}>
+      <Box sx={{ overflowX: "auto", marginTop: "16px", paddingBottom : "10px", display : "none" }}>
         <Box sx={{ display: "flex", gap: "16px" }}>
           {[1, 2, 3, 4, 5, 6, 7].map((chapter) => (
             <Card
@@ -219,9 +224,11 @@ const SingleCourseView = () => {
         </Typography>
         <Box sx={{ overflowX: "auto", marginTop: "8px" }}>
           <Box sx={{ display: "flex", gap: "16px" }}>
-            {[1, 2, 3, 4, 5].map((material) => (
+            {
+            selectedClass?.study_materials && selectedClass?.study_materials.length !== 0 ? (   
+            selectedClass?.study_materials?.map((material) => (
               <Card
-                key={material}
+                key={material?._id}
                 sx={{
                   minWidth: "320px",
                   borderRadius: "8px",
@@ -250,7 +257,7 @@ const SingleCourseView = () => {
                           lineHeight: "14px",
                         }}
                       >
-                        Chapter-{material}
+                        {material?.title}
                       </Typography>
                       <Typography
                         variant="p"
@@ -260,7 +267,7 @@ const SingleCourseView = () => {
                           fontWeight: 300,
                         }}
                       >
-                        JavaScript Development Workbook
+                        {material?.description}
                       </Typography>
                     </Box>
                     <Box
@@ -268,14 +275,40 @@ const SingleCourseView = () => {
                         display: "flex",
                         justifyContent: "center",
                         flexDirection: "column",
+                        cursor : "pointer"
                       }}
+                      onClick={()=>handleDownload(material,showSpinner,hideSpinner)}
                     >
                       <SaveAltOutlinedIcon sx={{ color: "#8E8383" }} />
                     </Box>
                   </Box>
                 </CardContent>
-              </Card>
-            ))}
+              </Card>)))
+            :
+            (<Card
+            sx={{
+              minWidth: "320px",
+              borderRadius: "8px",
+              border: "1px solid #CCC",
+            }}
+          >
+            <CardContent>
+              <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "#000000",
+                    fontSize: "16px",
+                    fontWeight: 700,
+                    lineHeight: "14px",
+                  }}
+                >
+                  No Data Available
+                </Typography>
+              </Box>
+            </CardContent>
+          </Card>)
+            }
           </Box>
         </Box>
       </Box>
@@ -294,9 +327,9 @@ const SingleCourseView = () => {
         </Typography>
         <Box sx={{ overflowX: "auto", marginTop: "8px" }}>
           <Box sx={{ display: "flex", gap: "16px" }}>
-            {[1].map((material) => (
+            {selectedClass?.notes?.map((material) => (
               <Card
-                key={material}
+                key={material?._id}
                 sx={{
                   minWidth: "320px",
                   borderRadius: "8px",
@@ -325,7 +358,7 @@ const SingleCourseView = () => {
                           lineHeight: "14px",
                         }}
                       >
-                        Java Notes
+                        {material?.title}
                       </Typography>
                       <Typography
                         variant="p"
@@ -335,7 +368,7 @@ const SingleCourseView = () => {
                           fontWeight: 300,
                         }}
                       >
-                        Figma is a collaborative design....
+                        {material?.description}
                       </Typography>
                     </Box>
                     <Box
@@ -343,7 +376,9 @@ const SingleCourseView = () => {
                         display: "flex",
                         justifyContent: "center",
                         flexDirection: "column",
+                        cursor : "pointer"
                       }}
+                      onClick={() =>handleDownload(material,showSpinner,hideSpinner)}
                     >
                       <SaveAltOutlinedIcon sx={{ color: "#8E8383" }} />
                     </Box>

@@ -44,9 +44,14 @@ import { checkUser, getStudentDetails } from "store/atoms/authorized-atom";
 import { useEffect } from "react";
 import { getImageUrl } from "utils/common/imageUtlils";
 import StudentNotification from "../Components/StudentNotification";
+import { useDispatch, useSelector } from "react-redux";
+import getAllStudentNotifications from "../redux/studentThunks";
+import { selectStudentNotifications } from "../redux/studentSelector";
+import { setStudentSelectedNotification } from "../redux/studentSlices";
 
 export default function NavBar() {
   const theme = useTheme();
+  const dispatch = useDispatch()
 
   //   const colors = tokens(theme.palette.mode);
   //   const colorMode = React.useContext(colorModeContext);
@@ -61,6 +66,7 @@ export default function NavBar() {
   const notification_id = isNotificationOpen ? "notification-popover" : undefined
   const navigate = useNavigate();
   const [student, setStudent] = React.useState(checkUser().userDetails);
+  const notifications = useSelector(selectStudentNotifications)
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -104,7 +110,16 @@ setAnchorEl(null);
     const user = getStudentDetails();
     setStudent(user);
   }, []);
-  console.log(student, "Studentheaderr");
+
+  useEffect(() => {
+   dispatch(getAllStudentNotifications())
+  },[dispatch])
+
+  const handleNotificationChange = (notification) => {
+    dispatch(setStudentSelectedNotification(notification))
+    navigate("/student/notifications")
+  }
+  console.log(notifications,"notifications");
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -268,7 +283,7 @@ setAnchorEl(null);
               sx={{ color: "white" }} 
               onClick={handleNotification} 
               aria-controls={notification_id} >
-                  <Badge badgeContent={1} color="error">
+                  <Badge badgeContent={notifications?.filter((i) => i.status === "unread").length} color="error">
                     <NotificationsOutlinedIcon
                       sx={{ color: theme.palette.dark.main }}
                     />
@@ -333,7 +348,7 @@ setAnchorEl(null);
           </Grid>
         </Toolbar>
       </AppBar>
-      <StudentNotification id={notification_id} anchorE2={anchorE2} isOpen={isNotificationOpen} setClose={()=>setAnchorE2(null)} />
+      <StudentNotification handleNotificationChange={handleNotificationChange} notifications={notifications} id={notification_id} anchorE2={anchorE2} isOpen={isNotificationOpen} setClose={()=>setAnchorE2(null)} />
       
     </Box>
   );

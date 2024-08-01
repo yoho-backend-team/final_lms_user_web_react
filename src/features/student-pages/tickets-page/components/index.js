@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Box, Typography, Tab, Tabs, Button, Grid, Modal } from "@mui/material";
-import {TicketBg2, TicketMain} from "utils/images"
+import { Box, Typography, Tab, Tabs, Button, Grid} from "@mui/material";
+import CreateTicketForm from "./createTicketForm";
+import { TicketBg } from "utils/images";
 import { useTabResponsive } from "utils/tabResponsive";
 import TicketLoader from "components/ui/loaders/ticketLoader";
-import StudentTicketCard from "./TicketsCard";
-import StudentTicketView from "./TicketView";
-import StudentCreateTicketForm from "./createTicketForm";
-import ImageContainer from "./ImageContainer";
+import { useSpinner } from "context/SpinnerProvider";
+import TicketView from "./TicketView";
+import TicketCard from "./TicketsCard";
 
-const StudentDataTicketsPage = ({
+const StudentTicketsPage = ({
   data,
   setCurrentType,
   handleTicketRefetch,
@@ -17,33 +17,36 @@ const StudentDataTicketsPage = ({
   const [value, setValue] = useState("1");
   const [open, setOpen] = useState(false);
   const [ticketView, setTicketView] = useState(false);
-  const [selectedTicket, setSelectedTicket] = useState(null);
   const { tabView } = useTabResponsive();
+  const [selectedTicket,setSelectedTicket] = useState(null)
+  const { showSpinner,hideSpinner} = useSpinner()
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // const handleTicketViewOpen = () => setTicketView(true);
-  // const handleTicketViewClose = () => setTicketView(false);
-  const handleTicketViewOpen = (ticketId) => {
-    setSelectedTicket(ticketId);
-  };
+  const handleTicketViewOpen = (ticket) => {
+    showSpinner()
+    setTicketView(true)
+    setSelectedTicket(ticket)
+    hideSpinner()
+  }
 
   const handleTicketViewClose = () => {
-    setSelectedTicket(null);
-  };
+    setSelectedTicket(null)
+    setTicketView(false);
+  }
 
   const tab_list = [
     { id: "1", title: "All" },
     { id: "2", title: "Open" },
     { id: "3", title: "Close" },
-  ];
+  ]
 
   const status = {
     1: null,
     2: "opened",
     3: "closed",
-  };
+  }
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -51,19 +54,26 @@ const StudentDataTicketsPage = ({
     console.log(statusValue, newValue, "change");
     handleTicketRefetch(statusValue);
   };
-  console.log(data,"data")
+
   return (
     <>
-        <ImageContainer >
+      <Box
+        sx={{
+          backgroundImage: `url(${TicketBg})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          height: "100vh",
+          overflow: "auto",
+        }}
+      >
         <Box
           sx={{ p: tabView ? "62px 40px 20px 38px" : "62px 40px 20px 80px" }}
         >
-          {open || selectedTicket !== null  ? (
+          {open || ticketView ? (
             open ? (
-              <StudentCreateTicketForm handleClose={handleClose} />
+              <CreateTicketForm handleClose={handleClose} />
             ) : (
-              <StudentTicketView tickets={data.filter((ticket) => ticket.id === selectedTicket)}
-              handleTicketViewClose={handleTicketViewClose} />
+              <TicketView selectedTicket={selectedTicket} handleTicketViewClose={handleTicketViewClose} />
             )
           ) : (
             <>
@@ -128,11 +138,9 @@ const StudentDataTicketsPage = ({
                 ) : (
                   data.map((ticket, index) => (
                     <Grid item xs={tabView ? 6 : 4} key={index}>
-                      <StudentTicketCard
-                        {...ticket}
-                        handleTicketViewOpen={() =>
-                          handleTicketViewOpen(ticket.id)
-                        }
+                      <TicketCard
+                        ticket={ticket}
+                        handleTicketViewOpen={handleTicketViewOpen}
                         handleTicketViewClose={handleTicketViewClose}
                       />
                     </Grid>
@@ -142,9 +150,9 @@ const StudentDataTicketsPage = ({
             </>
           )}
         </Box>
-      </ImageContainer>
+      </Box>
     </>
   );
 };
 
-export default StudentDataTicketsPage;
+export default StudentTicketsPage;
