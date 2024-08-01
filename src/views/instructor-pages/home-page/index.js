@@ -59,10 +59,10 @@ const InstructorDashBoard = () => {
   const handleNotification = (notification) => {
   dispatch(addNotification(notification))
   }
-  socket.on("receiveNotification",handleNotification)
+  socket?.on("receiveNotification",handleNotification)
 
   return () => {
-    socket.off("receiveNotification",handleNotification)
+    socket?.off("receiveNotification",handleNotification)
   }
   },[socket])
 
