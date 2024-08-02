@@ -23,6 +23,7 @@ import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
 import CustomCalendar from "features/student-pages/attendances-page/components/Calendar/CustomCalendar";
 import { getStudentDetails } from "store/atoms/authorized-atom";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -100,6 +101,7 @@ const Attendance = () => {
   const [loading, setLoading] = useState(false);
   const { tabView } = useTabResponsive();
   const { showSpinner, hideSpinner } = useSpinner();
+  const navigate = useNavigate()
   const date = new Date()
 
   const getAttedenceDetails = async (month) => {
@@ -122,6 +124,9 @@ const Attendance = () => {
     getAttedenceDetails(event.target.value)
   };
 
+  const handleview = () =>{
+    navigate(`student/ticket?create=true`)
+  }
   useEffect(() => {
     getAttedenceDetails(selectedMonth);
   }, []);
@@ -131,7 +136,7 @@ const Attendance = () => {
   }
 
   const totalClasses = (attendance_data?.onlineClassCount ?? 0) + (attendance_data?.offlineClassCount ?? 0);
-
+  
   return (
     <Box
       className={classes.root}
@@ -172,7 +177,7 @@ const Attendance = () => {
               className={classes.header2Img}
               alt="Header 2"
             />
-            <Typography className={classes.monthText}>{months[selectedMonth]}{date.getFullYear()}</Typography>
+            <Typography className={classes.monthText}>{months[selectedMonth]} {date.getFullYear()}</Typography>
           </Box>
         </Box>
         <Grid container>
@@ -213,15 +218,16 @@ const Attendance = () => {
               <Box sx={{ display: tabView ? "flex" : "none" }}>
                 <Button
                  component={Link}
-                 to="/student/create-ticket"
+                 onClick={handleview}
+                 to={"/student/ticket?create=true"}
                   sx={{
-                    backgroundColor: "#5611B1",
-                    boxShadow: "0px 6px 34px -8px #5611B1",
+                    backgroundColor: "##0D6EFD",
+                    boxShadow: "0px 6px 34px -8px #0D6EFD",
                     borderRadius: "8px",
                     padding: tabView ? "9px 24px" : "9px 82px",
                     fontSize: "14px",
                     fontWeight: 500,
-                    color: "#FBFBFB",
+                    color: "#0D6EFD",
                   }}
                 >
                   Create Ticket
@@ -382,17 +388,17 @@ const Attendance = () => {
               <Box>
                 <Button
                   component={Link}
-                  to="/student/create-ticket"
+                  to={"/student/tickets?create=true"}
                   sx={{
-                    backgroundColor: "#5611B1",
-                    boxShadow: "0px 6px 34px -8px #5611B1",
+                    backgroundColor: "#0D6EFD",
+                    boxShadow: "0px 6px 34px -8px #0D6EFD",
                     borderRadius: "8px",
                     padding: "9px 82px",
                     fontSize: "14px",
                     fontWeight: 500,
                     color: "#FBFBFB",
                     ":hover":{
-                      backgroundColor: "#5611B1",
+                      backgroundColor: "#0D6EFD",
                     }
                   }}
                 >
