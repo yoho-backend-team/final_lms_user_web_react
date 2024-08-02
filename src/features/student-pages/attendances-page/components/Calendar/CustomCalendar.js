@@ -112,23 +112,38 @@ function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data })
       const attendanceStatus = status?.[0]?.status || "Absent";
       
       days.push(
-        <Grid item xs={2.4} key={i}>
+        <Grid item xs={2.4} key={i} >
           <Card>
-            <CardContent>
-              <Typography sx={{ fontSize: "11px", fontWeight: 300 }}>
+            <CardContent sx={{cursor:'pointer',p: '10px 33px 17px 11px',transition: 'background 0.3s ease',
+    '&:hover': {
+      background: '#0D6EFD'
+    }}}>
+              <Typography sx={{ color: '#000',textalign: 'center',fontfamily: 'Poppins',fontsize: '11.395px',fontstyle: 'normal',fontweight: '300',lineheight: 'normal',pb:"9px",width: '46.064px',height: '12.292px',flexshrink: 0}}>
                 {dayOfWeek}
               </Typography>
               <Typography
-                sx={{ fontSize: "21px", fontWeight: "300", textAlign: "end" }}
+                sx={{ fontSize: "21px", fontWeight: "300", textAlign: "end",fontfamily: 'Poppins',pb:'11px'}}
               >
-                {i}
+                0{i}
               </Typography>
               <Button
                 sx={{
                   backgroundColor:
                   status?.[0]?.status === "present" ? "#14BC10" : "#FF4B4B",
-                  padding: "0px",
+                  padding: "9px",
+                  fontSize:"13px",
+                  fontWeight:500,
+                  lineHeight:'14px',
+                  borderRadius:'9px',
                   color: "white",
+                  fontfamily: "Public Sans",
+                  display: 'flex',
+                  width: '58px',
+                  height: '18px',
+                  padding: '4.383px 8.765px',
+                  alignitems: 'center',
+                  gap: '8.765px',
+                  flexshrink: 0,
                 }}
                 // onClick={() => handleAttendanceChange(i)}
               >
