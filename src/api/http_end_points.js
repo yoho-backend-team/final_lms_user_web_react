@@ -1,11 +1,12 @@
-import { instructorDetails, Student } from "lib/constants";
+import { Instructor_Details, instructorDetails, Student, Student_Details } from "lib/constants";
 import { studentDetails } from "lib/constants";
 import Cookies from "js-cookie";
+import { getAndDecompress } from "utils/auth_helpers";
 
 const getUserDetails = () => {
-  const user = Cookies.get(instructorDetails);
-  const userDetail = user ? JSON.parse(user) : user;
-  return userDetail?.userDetails;
+  const user = getAndDecompress(Instructor_Details)
+  const userDetail = user
+  return userDetail;
 };
 
 const instituteId = () => {
@@ -19,8 +20,8 @@ const branchId = () => {
 };
 
 const getUserDetailsStudent = () => {
-  const user = Cookies.get(studentDetails);
-  const userDetail = user ? JSON.parse(user) : user;
+  const user = getAndDecompress(Student_Details)
+  const userDetail = user;
   return userDetail?.userDetails;
 };
 
@@ -40,9 +41,9 @@ const courseId = () => {
 };
 
 const getStudentDetails = () => {
-  const user = Cookies.get(Student);
-  const userDetail = user ? JSON.parse(user) : user;
-  return userDetail?.userDetails;
+  const user = getAndDecompress(Student_Details)
+  const userDetail = user
+  return userDetail;
 };
 const instituteStudentId = () => {
   const userDetails = getStudentDetails();
@@ -83,7 +84,7 @@ const generateEndpoints = () => {
 
   const student = getStudentDetails();
   const studentCourse = studentCourseId();
-
+  
   return {
     Student: {
       auth: {

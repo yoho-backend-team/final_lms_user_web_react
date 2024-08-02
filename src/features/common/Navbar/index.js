@@ -48,6 +48,7 @@ import { useDispatch, useSelector } from "react-redux";
 import getAllStudentNotifications from "../redux/studentThunks";
 import { selectStudentNotifications } from "../redux/studentSelector";
 import { setStudentSelectedNotification } from "../redux/studentSlices";
+import { Student_Details } from "lib/constants";
 
 export default function NavBar() {
   const theme = useTheme();
@@ -65,7 +66,7 @@ export default function NavBar() {
   const isNotificationOpen = Boolean(anchorE2)
   const notification_id = isNotificationOpen ? "notification-popover" : undefined
   const navigate = useNavigate();
-  const [student, setStudent] = React.useState(checkUser().userDetails);
+  const [student, setStudent] = React.useState(checkUser(Student_Details).userDetails);
   const notifications = useSelector(selectStudentNotifications)
 
   const handleProfileMenuOpen = (event) => {

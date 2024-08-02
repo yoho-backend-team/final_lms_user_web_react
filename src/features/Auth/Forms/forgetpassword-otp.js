@@ -9,6 +9,7 @@ import { useForgetPasswordOtpVerify } from "../services/index";
 import { useNavigate } from "react-router-dom";
 import { useAtom } from "jotai";
 import { studentLoginStepAtom, studentOtpAtom } from "store/atoms/authAtoms";
+import { EnterNewPassword_Step } from "lib/constants";
 //import { studentOtpAtom } from "store/atoms/authAtoms";
 
 const InputElement = styled("input")(
@@ -267,7 +268,7 @@ export default function ForgetPasswordOTPInput() {
           token: otpAtom.token,
           otp:otp
         });
-        setLoginStep("enterNewPassword");
+        setLoginStep(EnterNewPassword_Step);
       }
     } catch (error) {
       setError("Invalid OTP. Please try again.");

@@ -55,7 +55,8 @@ const ActivityLogsPage = () => {
      hideSpinner()
    }
  }
-
+ 
+ 
   return (
     <Box
       sx={{

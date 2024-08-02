@@ -20,6 +20,8 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { getErrorMessage } from "utils/common/error";
+import LZString from "lz-string"
+import { ForgetPassword_Step } from "lib/constants";
 
 const validationSchema = yup.object({
   email: yup
@@ -58,7 +60,7 @@ const LoginForm = () => {
 
   const handleForgetPassword = (e) => {
         e.preventDefault();
-        setLoginStep("forgetPassword");
+        setLoginStep(ForgetPassword_Step);
   }
   
 

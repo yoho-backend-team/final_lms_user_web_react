@@ -43,6 +43,7 @@ import updateInstructorNotifications from "../redux/thunks";
 import { setSelectedNotification } from "../redux/slices";
 import { useNavigate } from "react-router-dom";
 import { useSocket } from "context/instructorSocket";
+import { Instructor_Details } from "lib/constants";
 
 export default function InstructorNavBar() {
   const theme = useTheme();
@@ -52,7 +53,7 @@ export default function InstructorNavBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isNotificationOpen = Boolean(anchorE2)
   const notification_id = isNotificationOpen ? "notification-popover" : undefined
-  const [instructor, setInstructor] = React.useState(checkUser().userDetails);
+  const [instructor, setInstructor] = React.useState(checkUser(Instructor_Details));
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const Notifications = useSelector(selectNotificationList)

@@ -19,21 +19,21 @@ import OTPInput from "./Forms/otp-form.js";
 import ForgetPasswordPage from "./Forms/forgetPassword.js";
 import ForgetPasswordOTPInput from "./Forms/forgetpassword-otp.js"
 import EnterNewPasswordPage from "./Forms/newPassword.js"
+import { EnterNewPassword_Step, ForgetPassword_Otp_Step, ForgetPassword_Step, Login_Step, Otp_Step } from "lib/constants";
 const Login = () => {
   const theme = useTheme();
   const [loginStep, setLoginStep] = useAtom(studentLoginStepAtom);
-
-  const map_to_form = {
-    login: LoginForm,
-    otp: OTPInput,
-    forgetPassword: ForgetPasswordPage,
-    forgetPassword_Otp: ForgetPasswordOTPInput,
-    enterNewPassword: EnterNewPasswordPage
-
-  };
-
-  const Component = map_to_form[loginStep];
   
+  const map_to_form = {
+    [Login_Step]: LoginForm,
+    [Otp_Step]: OTPInput,
+    [ForgetPassword_Step]: ForgetPasswordPage,
+    [ForgetPassword_Otp_Step]: ForgetPasswordOTPInput,
+    [EnterNewPassword_Step]: EnterNewPasswordPage
+  };
+  
+  const Component = map_to_form[loginStep] ?? LoginForm
+  console.log(loginStep,"loginStep",Component)
   return (
     <AuthLayout>
       <Component />

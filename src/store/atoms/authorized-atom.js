@@ -1,23 +1,30 @@
 import Cookies from "js-cookie";
-import { instructorDetails, Student } from "lib/constants";
+import { Instructor_Details, instructorDetails, Student, Student_Details } from "lib/constants";
+import LZString from "lz-string"
+import { getAndDecompress } from "utils/auth_helpers";
 
 export const checkUser = (role) => {
   const user = Cookies.get(role);
   if (!user) {
-    return { isLoggedIn: false, user: null, role: null };
+    return null
   }
-  return JSON.parse(user);
+  return JSON.parse(LZString.decompressFromBase64(user));
 };
 
 export const checkUserLoggedIn = (role) => {
-  const auth = checkUser(role).isLoggedIn;
-  return auth;
+  const auth_state = getAndDecompress(role)
+  return auth_state
 };
 
 export const getInstructorDetails = () => {
-  const user = checkUser(instructorDetails);
-  return user.userDetails;
+  const user = checkUser(Instructor_Details);
+  return user
 };
+
+export const checkUserRole = (role) => {
+  const current_user = getAndDecompress(role)
+  return current_user
+}
 
 export const getInstituteDetails = () => {
   const user = getInstructorDetails();
@@ -40,8 +47,8 @@ export const useBranch = () => {
 };
 
 export const getStudentDetails = () => {
-  const user = checkUser(Student);
-  return user?.userDetails;
+  const user = checkUser(Student_Details);
+  return user
 };
 
 export const getStudentInstituteDetails = () => {
