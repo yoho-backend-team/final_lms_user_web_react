@@ -6,8 +6,9 @@
   import {
     checkUserLoggedIn,
     checkUser,
+    checkUserRole,
   } from "store/atoms/authorized-atom";
-  import { role_to_details } from "lib/constants";
+  import { Instructor_Role, isAuthenticatedInstructor, isAuthenticatedStudent, role_to_details, role_to_routes, Student_Role } from "lib/constants";
 import CourseFrontPage from "features/student-pages/courses-page/components/CourseFrontPage";
 import NotificationList from "views/instructor-pages/notification-page";
 
@@ -140,39 +141,43 @@ const InstructorCreateTicketPage = Loadable(
   };
 
   const ApplicationRoutes = () => {
-    const RequireAuth = () => {
-      const role = getRoleFromPath();
+    const RequireAuth = ({role,path}) => {
+       const current_user = role_to_routes[role]
       if (!isLoggedIn(role)) {
-        return <Navigate to={`/${role  || 'instructor' }/login`} replace />;
+        return <Navigate to={`/${path}/login`} replace />;
       }
       return <Outlet />;
     };
 
     const RoleBasedRoute = ({ allowedRoles, children }) => {
-      const role = getRoleFromPath();
-      if (!allowedRoles.includes(checkUser(role).role)) {
+      if (!allowedRoles.includes(checkUserRole(Instructor_Role))) {
         return <Navigate to={`/${allowedRoles[0]}/login`} replace />;
       }
       return children;
     };
 
-    const LoginRoute = () => {
-      const role = getRoleFromPath();
-      if (isLoggedIn(role)) {
-        return <Navigate to={`${checkUser(role).role}/home`} replace />;
+    const LoginRoute = ({children}) => {
+      if (isLoggedIn(isAuthenticatedInstructor)) {
+        return <Navigate to={`/instructor/home`} replace />;
       }
-      return <Outlet />;
+      return children
     };
+
+    const LoginStudent = ({children}) => {
+      if(isLoggedIn(isAuthenticatedStudent)){
+         return <Navigate to={"/student/home"} replace/> 
+      }
+      return children
+    }
 
   return (
     <Routes>
       <Route>
-        <Route element={<RequireAuth />}>
+        <Route element={<RequireAuth role={isAuthenticatedStudent} path={"student"} />}>
           <Route
             element={
-              <RoleBasedRoute allowedRoles={["student"]}>
+              // <RoleBasedRoute allowedRoles={["student"]} role={Student_Role} >
                 <MainLayout />
-              </RoleBasedRoute>
             }
           >
             <Route path="/" element={<Navigate to="student/home" />} />
@@ -217,12 +222,11 @@ const InstructorCreateTicketPage = Loadable(
             />
           </Route>
         </Route>
-        <Route element={<RequireAuth />}>
+        <Route element={<RequireAuth role={isAuthenticatedInstructor} path={"instructor"} />}>
           <Route
             element={
-              <RoleBasedRoute allowedRoles={["instructor"]}>
-                <InstructorLayout />
-              </RoleBasedRoute>
+              // <RoleBasedRoute  allowedRoles={["instructor"]} role={Instructor_Role} >
+                <InstructorLayout ></InstructorLayout>
             }
           >
             <Route path="instructor/home" element={<InstructorHomePage />} />
@@ -285,9 +289,9 @@ const InstructorCreateTicketPage = Loadable(
             />
           </Route>
         </Route>
-        <Route element={<LoginRoute />}>
-          <Route path="/student/login" element={<LoginPage />} />
-          <Route path="/instructor/login" element={<InstructorLogin />} />
+        <Route>
+          <Route path="/student/login" element={<LoginStudent  children={<LoginPage />} />} />
+          <Route path="/instructor/login" element={<LoginRoute children={<InstructorLogin />}  />} />
           <Route path="*" element={<ErrorPage404 />} />
         </Route>
       </Route>

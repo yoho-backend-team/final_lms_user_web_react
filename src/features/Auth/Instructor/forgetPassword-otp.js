@@ -12,6 +12,7 @@ import {
   instructorLoginStepAtom,
   instructorOtpAtom,
 } from "store/atoms/authAtoms";
+import { EnterNewPassword_Step } from "lib/constants";
 //import { studentOtpAtom } from "store/atoms/authAtoms";
 
 const InputElement = styled("input")(
@@ -271,7 +272,7 @@ export default function ForgetPasswordOTPInput() {
           token: otpAtom.token,
           otp: otp,
         });
-        setLoginStep("enterNewPassword");
+        setLoginStep(EnterNewPassword_Step);
       }
     } catch (error) {
       console.log(error, "error");

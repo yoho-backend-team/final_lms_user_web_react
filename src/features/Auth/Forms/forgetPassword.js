@@ -14,6 +14,7 @@ import { useAtom } from "jotai";
 import axios from "axios";
 import { useStudentforgetPassword } from "../services";
 import toast from "react-hot-toast";
+import { ForgetPassword_Otp_Step } from "lib/constants";
 
 const ForgetPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -50,7 +51,7 @@ const ForgetPasswordPage = () => {
       if (response.status === "success") {
         const { token } = response.data;
         setOtpAtom({ email, token });
-        setLoginStep("forgetPassword_Otp");
+        setLoginStep(ForgetPassword_Otp_Step);
       } else {
         setEmailError("Email not found");
       }

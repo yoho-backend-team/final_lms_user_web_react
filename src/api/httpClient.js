@@ -1,10 +1,15 @@
 import axios from "axios";
 import {
   AUTH_TOKEN_KEY,
+  Instructor_Details,
+  Instructor_Token,
   instructorDetails,
+  Student_Details,
+  Student_Token,
   studentDetails,
 } from "lib/constants";
 import Cookies from "js-cookie";
+import { getAndDecompress } from "utils/auth_helpers";
 
 const backendUrl = process.env.REACT_APP_BACK_END_URL;
 
@@ -17,18 +22,19 @@ const Axios = axios.create({
 });
 
 Axios.interceptors.request.use((config) => {
-  const instructorUser = Cookies.get(instructorDetails);
-  const studentUser = Cookies.get(studentDetails);
+  const instructorUser = getAndDecompress(Instructor_Details)
+  const studentUser = getAndDecompress(Student_Details);
 
   const userType = config.headers["User-Type"];
 
   if (userType === "instructor" && instructorUser) {
-    const instructorToken = JSON.parse(instructorUser)?.token;
+    const instructorToken = getAndDecompress(Instructor_Token);
+  
     if (instructorToken) {
       config.headers["Authorization"] = `Token ${instructorToken}`;
     }
   } else if (userType === "student" && studentUser) {
-    const studentToken = JSON.parse(studentUser)?.token;
+    const studentToken = getAndDecompress(Student_Token);
     if (studentToken) {
       config.headers["Authorization"] = `Token ${studentToken}`;
     }

@@ -21,6 +21,7 @@ import toast from "react-hot-toast";
 import { useSpinner } from "context/SpinnerProvider";
 import { useAtom } from "jotai";
 import {instructorLoginStepAtom} from "store/atoms/authAtoms";
+import { ForgetPassword_Step } from "lib/constants";
 const validationSchema = yup.object({
   email: yup
     .string("Enter your email")
@@ -66,7 +67,7 @@ const InstructorLoginForm = () => {
 
   const  handleForgetPassword=(e)=>{
       e.preventDefault();
-      setLoginStep("forgetPassword");
+      setLoginStep(ForgetPassword_Step);
   }
 
 

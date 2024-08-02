@@ -46,7 +46,6 @@ const TimelineComponent = ({activity_logs}) => {
           <TimelineOppositeContent sx={{ width: "250px",flex:"none"}} >
             <Typography variant="body2" sx={{ color: "#495057",fontSize:"12px",fontWeight:500,lineHeight:"24px" }} color="textSecondary">
               {formatDate(event?.createdAt)}{" "}{formatTime(event?.createdAt)}
-              {console.log(typeof(event.createdAt),typeof(event?.timestamp))}
             </Typography>
           </TimelineOppositeContent>
           <TimelineSeparator>

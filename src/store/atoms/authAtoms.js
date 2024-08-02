@@ -1,6 +1,8 @@
 import { atom } from "jotai";
 import Cookies from "js-cookie";
-import { Student, instructorDetails } from "lib/constants";
+import { InstructorOtp, Instructor_Login_Step, Login_Step, Student, StudentOtp, Student_Login_Step, instructorDetails } from "lib/constants";
+import LZString from "lz-string"
+import { compressAndStore, getAndDecompress } from "utils/auth_helpers";
 
 const setCookieWithExpiry = (key, value) => {
   const expiryDate = new Date(new Date().getTime() + 10 * 60 * 1000);
@@ -18,10 +20,11 @@ const getCookieJSON = (key) => {
 }
 
 export const studentLoginStepAtom = atom(
-  Cookies.get("studentLoginStep") || "login",
+  getAndDecompress(Student_Login_Step,Login_Step) ,
   (get, set, newLoginStep) => {
     set(studentLoginStepAtom, newLoginStep);
-    setCookieWithExpiry("studentLoginStep", newLoginStep);
+    const expiryDate = new Date(new Date().getTime() + 10 * 60 * 1000);
+    compressAndStore(Student_Login_Step,newLoginStep,expiryDate)
   },
 );
 
@@ -40,18 +43,20 @@ export const studentUserAtom = atom(initialStudent(), (get, set, newUser) => {
 });
 
 export const studentOtpAtom = atom(
-  getCookieJSON("studentOtp") || { email: null, token: null },
+  getAndDecompress(StudentOtp) || { email: null, token: null },
   (get, set, newOtp) => {
     set(studentOtpAtom, newOtp);
-    setCookieWithExpiry("studentOtp", JSON.stringify(newOtp));
+    compressAndStore(StudentOtp,newOtp,1/144)
   },
 );
 
 export const instructorLoginStepAtom = atom(
-  Cookies.get("instructorLoginStep") || "login",
+  getAndDecompress(Instructor_Login_Step) || Login_Step,
   (get, set, newLoginStep) => {
     set(instructorLoginStepAtom, newLoginStep);
-    setCookieWithExpiry("instructorLoginStep", newLoginStep);
+    // setCookieWithExpiry("instructorLoginStep", newLoginStep);
+    const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+    compressAndStore(Instructor_Login_Step,newLoginStep,expiryDate)
   },
 );
 
@@ -65,8 +70,9 @@ const initialUserState = () => {
 export const instructorUserAtom = atom(
   initialUserState(),
   (get, set, newUser) => {
-    set(instructorUserAtom, newUser);
+    set(instructorUserAtom, newUser);    
     const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+
     Cookies.set(instructorDetails, JSON.stringify(newUser), {
       expires: expiryDate,
     });
@@ -74,12 +80,10 @@ export const instructorUserAtom = atom(
 );
 
 export const instructorOtpAtom = atom(
-  getCookieJSON("instructorOtp") || { email: null, token: null },
+  getAndDecompress(InstructorOtp,{ email: null, token: null }) ,
   (get, set, newOtpData) => {
     set(instructorOtpAtom, newOtpData);
-    Cookies.set("instructorOtp", JSON.stringify(newOtpData), {
-      expires: 1 / 144,
-    });
+    compressAndStore(InstructorOtp,newOtpData,1/144)
   },
 );
 
