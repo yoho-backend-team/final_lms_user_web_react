@@ -22,8 +22,8 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
   const [file,setFile] = useState(null)
 
   const statusColor = {
-    opened: "#008375",
-    closed: "#EBA13A",
+    opened: "#F6AB3A",
+    closed: "#008375",
   };
 
   const handleFileOpen = (file) => {
@@ -35,6 +35,23 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
     setFile(null)
     setFileView(false)
   }
+
+  const handleCloseTicket = async () => {
+    try {
+      
+      await selectedTicket.closeTicket(selectedTicket._id);
+  
+      
+      alert("Ticket closed successfully!");
+  
+      
+      handleTicketViewClose();
+    } catch (error) {
+      
+      console.error("Error closing ticket:", error);
+      alert("Failed to close the ticket.");
+    }
+  };
 
   return (
     <>
@@ -143,6 +160,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                   fontSize: "12px",
                   fontWeight: 700,
                 }}
+                onClick={handleCloseTicket}
               >
                 Close ticket
               </Button>

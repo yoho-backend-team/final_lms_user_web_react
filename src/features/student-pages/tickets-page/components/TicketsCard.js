@@ -6,14 +6,16 @@ const TicketCard = ({
   ticket,handleTicketViewOpen,handleTicketViewClose
 }) => {
   const statusColor = {
-    opened: "#008375",
-    closed: "#EBA13A",
+    opened: "#F6AB3A",
+    closed: "#008375",
   };
 
   const convertDate = (iosString) => {
     const new_date = new Date(iosString);
     return new_date.toLocaleDateString("en-US");
   };
+
+  
 
   return (
     <Grid
@@ -36,6 +38,7 @@ const TicketCard = ({
               fontSize: "16px",
               fontWeight: 700,
               lineHeight: "24px",
+              fontfamily: 'Poppins'
             }}
           >
             Ticket #{ticket?.ticket_id}
@@ -58,9 +61,10 @@ const TicketCard = ({
         <Typography
           sx={{
             color: "#495057",
-            fontWeight: "700",
+            fontWeight: 700,
             lineHeight: "24px",
             fontSize: "14px",
+            fontfamily: 'Poppins'
           }}
         >
           {ticket?.query}
@@ -79,11 +83,12 @@ const TicketCard = ({
         <Typography
           sx={{
             color: "#6C757D",
-            fontSize: "16px",
+            fontSize: "14px",
             lineHeight: "22px",
             fontWeight: "500",
             height: "66px",
             maxHeight: "60px",
+            fontfamily: 'Poppins',
             overflow: "auto",
           }}
         >
@@ -116,6 +121,7 @@ const TicketCard = ({
               borderRadius: "8px",
               backgroundColor: statusColor[ticket?.status],
               padding: "9px 24px",
+              width: '122px'
             }}
           >
             {ticket?.status}

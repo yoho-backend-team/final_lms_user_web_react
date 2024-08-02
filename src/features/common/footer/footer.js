@@ -1,8 +1,20 @@
-import { Box } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Typography } from "@mui/material";
+import { Link, useLocation } from "react-router-dom";
 import React from "react";
+import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
+import RestoreOutlinedIcon from '@mui/icons-material/RestoreOutlined';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 
 const Footer = () => {
+
+  const location = useLocation()
+
+  const isActive = (current_location) => {
+    const isCurrentLocation = current_location === location.pathname
+    return isCurrentLocation
+  }
+
+
   return (
     <Box
       sx={{
@@ -20,25 +32,35 @@ const Footer = () => {
             mr: 2,
           }}
         >
-           <Box sx={{ display: "flex", gap: 2 }}>
-          <Link to="student/help-center"  style={{ textDecoration: "none"  }}>
-            Help Center
-          </Link>
-          <Link to="student/Faq" style={{ textDecoration: "none" }}>
-            FAQ
-          </Link>
+           <Box sx={{ display: "flex", gap: 5 }}>
+          <Box component={Link} to={"/student/help-center"} sx={{ textDecoration: "none" , display: 'inline-flex', gap: "10px", alignItems : "center"}} >
+            <HelpOutlineOutlinedIcon sx={{ color : isActive("/student/help-center") ? "#5611B1" : "#6C757D" }} />
+            <Typography
+              style={{ gap: 2 , color : isActive("/instructor/help-center") ? "#5611B1" : "#6C757D", fontSize : "14px" }}
+            >
+              Help Center
+            </Typography>
           </Box>
-          <Box sx={{ display: "flex", gap: 2 }}>
-            <Box>
+          <Box sx={{ display: 'inline-flex', gap: "10px", alignItems : "center" }} >
+            <HelpOutlineOutlinedIcon sx={{ color : isActive("/student/Faq") ? "#5611B1" : "#6C757D" }} />
+            <Link to={"/instructor/Faq"} style={{ textDecoration: "none", color : isActive("/instructor/Faq") ? "#5611B1" : "#6C757D" }}>
+              FAQ
+            </Link>
+          </Box>
+          </Box>
+          <Box sx={{ display: "flex", gap: 5 }}>
+            <Box sx={{ display: "inline-flex", gap: "10px", alignItems : "center" }} >
+              <RestoreOutlinedIcon sx={{ color : isActive("/student/activity-logs") ? "#5611B1" : "#6C757D"}} />
               <Link
-                to="student/activity-logs"
-                style={{ textDecoration: "none" }}
+                to={"/student/activity-logs"}
+                style={{ textDecoration: "none", color : isActive("/student/activity-logs") ? "#5611B1" : "#6C757D" }}
               >
                 Activity Log
               </Link>
             </Box>
-            <Box>
-              <Link to="student/tickets" style={{ textDecoration: "none" }}>
+            <Box sx={{ textAlign: "center", display: "inline-flex", gap: "10px", alignContent: "center"}} >
+              <ConfirmationNumberOutlinedIcon sx={{ color : isActive("/student/tickets") ? "#5611B1" : "#6C757D",rotate:"145deg"}} />
+              <Link to={"/student/tickets"} style={{ textDecoration: "none", color :  isActive("/student/tickets") ? "#5611B1" : "#6C757D" }}>
                 Ticket
               </Link>
             </Box>

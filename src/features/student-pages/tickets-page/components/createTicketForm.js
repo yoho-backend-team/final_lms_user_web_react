@@ -247,89 +247,6 @@ const StudentCreateTicketForm = ({ handleClose }) => {
                   )}
                 </FormControl>
               </Grid>
-
-              <Grid
-                item
-                xs={6}
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  flexDirection: "column",
-                  gap: "10px",
-                }}
-              >
-                 <FormControl
-                  error={
-                    formik.touched.title &&
-                    Boolean(formik.errors.title)
-                  }
-                  fullWidth
-                >
-                  <InputLabel className={classes.label} shrink>
-                    Query
-                  </InputLabel>
-                  <TextField
-                    name="title"
-                    value={formik.values.title}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    fullWidth
-                    error={
-                      formik.touched.title &&
-                      Boolean(formik.errors.title)
-                    }
-                    helperText={
-                      formik.touched.title && formik.errors.title
-                    }
-                    variant="outlined"
-                    label="query" 
-                  />
-                </FormControl>
-              </Grid>
-
-              <Grid
-                item
-                xs={6}
-                sx={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  flexDirection: "column",
-                  gap: "10px",
-                }}
-              >
-                <FormControl
-                  variant="outlined"
-                  error={
-                    formik.touched.priority && Boolean(formik.errors.priority)
-                  }
-                  fullWidth
-                >
-                  <InputLabel
-                    className={classes.label}
-                    id="demo-simple-select-label"
-                  >
-                    Priority
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    value={formik.values.priority}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    name="priority"
-                    label="Priority"
-                  >
-                    {priority.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {formik.touched.priority && formik.errors.priority && (
-                    <FormHelperText>{formik.errors.priority}</FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-
               <Box
                 sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
               >
@@ -340,9 +257,9 @@ const StudentCreateTicketForm = ({ handleClose }) => {
                   }
                   fullWidth
                 >
-                  <InputLabel className={classes.label} shrink>
+                  <Typography sx={{fontSize:"16px",fontFamily:"Nunito Sans",fontWeight:600,color:"#606060",lineheight: 'normal',fontStyle:'normal',p:2}}>
                     Description
-                  </InputLabel>
+                  </Typography>
                   <TextField
                     multiline
                     rows={7}
@@ -359,7 +276,7 @@ const StudentCreateTicketForm = ({ handleClose }) => {
                       formik.touched.description && formik.errors.description
                     }
                     variant="outlined"
-                    label="Description" // This should be provided here as well
+                    label="Description"
                   />
                 </FormControl>
               </Box>
