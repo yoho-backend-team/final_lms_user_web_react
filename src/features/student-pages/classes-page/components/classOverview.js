@@ -26,7 +26,7 @@ import StudyMaterialIcon from "assets/icons/study-material-icon";
 import SaveAltOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
 import { useSpinner } from "context/SpinnerProvider";
 
-const ClassCard = ({ type, classDetails, getClass }) => {
+const ClassCard = ({ type, classDetails, getClass, group }) => {
   const navigate = useNavigate();
   const { showSpinner, hideSpinner } = useSpinner();
 
@@ -96,7 +96,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
           color="text.primary"
           sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "22px" }}
         >
-          Upcoming Class
+          {group?.charAt(0).toUpperCase()+group.slice(1)} Class
         </Typography>
       </Breadcrumbs>
         <Box

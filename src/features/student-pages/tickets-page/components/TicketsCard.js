@@ -28,6 +28,7 @@ const TicketCard = ({
         borderRadius: "16px",
         p: "16px",
         boxShadow: "0px 2.4px 25px 0px rgba(160, 170, 255, 0.24)",
+        
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>

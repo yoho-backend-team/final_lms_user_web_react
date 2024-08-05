@@ -37,11 +37,12 @@ const branchIdStudent = () => {
 
 const courseId = () => {
   const userDetails = getUserDetails();
-  return userDetails?.userDetail?.course?.[0];
+  return userDetails?.userDetail?.course;
 };
 
 const getStudentDetails = () => {
   const user = getAndDecompress(Student_Details)
+  console.log(user,"user")
   const userDetail = user
   return userDetail;
 };
@@ -57,6 +58,7 @@ const branchStudentId = () => {
 
 const courseStudentId = () => {
   const userDetails = getStudentDetails();
+  console.log(userDetails,"userDetails")
   return userDetails?.userDetail?.course;
 };
 const studentCourseId = () => {
@@ -81,9 +83,10 @@ const generateEndpoints = () => {
   const institute1 = instituteStudentId();
   const branch1 = branchStudentId();
   const course1 = courseStudentId();
-
+  console.log(course1)
   const student = getStudentDetails();
   const studentCourse = studentCourseId();
+
   
   return {
     Student: {
@@ -99,7 +102,7 @@ const generateEndpoints = () => {
         // getwithclass: `/institutes/${institute}/branches/${branch}/course/${course}/classes`
       },
       class: {
-        get: `/institutes/class/${studentCourse}`,
+        get: `/institutes/class/${course1}`,
         getwithId: `/institutes/class/course/`,
       },
       attendance: {

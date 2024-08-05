@@ -13,7 +13,7 @@ import {
 } from "../../../../../utils/formatDate";
 import { Viewimage } from "utils/images";
 
-const ClassCard = ({ cls, style, type }) => {
+const ClassCard = ({ cls, style, type,group }) => {
   return (
     <Card sx={{ mb: 2}}>
       <Grid
@@ -111,7 +111,7 @@ height: "60px"
         >
           <Button
             component={Link}
-            to={`/student/class/${cls.uuid}?type=${type}`}
+            to={`/student/class/${cls.uuid}?type=${type}&group=${group}`}
             state={{ id: cls.uuid }}
             variant="contained"
             sx={{
