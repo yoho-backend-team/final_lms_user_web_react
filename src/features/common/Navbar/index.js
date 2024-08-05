@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import * as React from "react";
 import AppBar from "@mui/material/AppBar";
+// import List from "@mui/material";
 import {
   Box,
   List,
@@ -13,11 +14,15 @@ import {
   Badge,
   MenuItem,
   Drawer,
+  //   Divider,
   Menu,
+  //   List,
+  //   ListItem,
+  //   ListItemButton,
+  //   ListItemText,
   Grid,
   Avatar,
-  Button,
-  Typography
+  //   List,
 } from "@mui/material";
 import logo from "assets/images/logo.png";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
@@ -26,33 +31,38 @@ import { Menu as MenuIcon } from "@mui/icons-material";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import { Button, Typography } from "@mui/material";
+// import ListItemIcon from "@mui/material/ListItemIcon";
 import { Ballot, Diversity1, Home, Person } from "@mui/icons-material";
 import { useTheme } from "@emotion/react";
 import StudentNavLinks from "./StudentNavLinks";
 import InstructorNavLinks from "./InstructorNavLinks";
+// import { colorModeContext, tokens } from "../../assets/Styles/theme";
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 import { checkUser, getStudentDetails } from "store/atoms/authorized-atom";
+import { useEffect } from "react";
 import { getImageUrl } from "utils/common/imageUtlils";
 import StudentNotification from "../Components/StudentNotification";
 import { useDispatch, useSelector } from "react-redux";
-
-import { selectStudentNotifications } from "../redux/studentSelector";
 import getAllStudentNotifications from "../redux/studentThunks";
+import { selectStudentNotifications } from "../redux/studentSelector";
 import { setStudentSelectedNotification } from "../redux/studentSlices";
 import { Student_Details } from "lib/constants";
 
-
 export default function NavBar() {
   const theme = useTheme();
-  const dispatch = useDispatch();
-  
-  const [open, setOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-  const [anchorE2, setAnchorE2] = useState(null);
+  const dispatch = useDispatch()
+
+  //   const colors = tokens(theme.palette.mode);
+  //   const colorMode = React.useContext(colorModeContext);
+
+  const [open, setOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [anchorE2, setAnchorE2] = React.useState(null)
   const isNotificationOpen = Boolean(anchorE2)
   const notification_id = isNotificationOpen ? "notification-popover" : undefined
   const navigate = useNavigate();
@@ -77,35 +87,46 @@ export default function NavBar() {
   };
 
   const handleNotification = (event) => {
-    setAnchorE2(event.currentTarget);
-  };
+    setAnchorE2(event.currentTarget)
+} 
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+const handleClose = () => {
+setAnchorEl(null);
+};
+
 
   const handleLogout = () => {
     Cookies.remove('student');
     Cookies.remove('instructor');
-    navigate('/student/login');
+    navigate('/student/login'); 
     handleMenuClose();
   };
 
   const handleProfile = () => {
-    navigate('/student/profile');
+    navigate('/student/profile'); 
     handleMenuClose();
   };
 
+  useEffect(() => {
+    const user = getStudentDetails();
+    setStudent(user);
+  }, []);
+
+  useEffect(() => {
+   dispatch(getAllStudentNotifications())
+  },[dispatch])
+
   const handleNotificationChange = (notification) => {
-    dispatch(setStudentSelectedNotification(notification));
-    navigate("/student/notifications");
-  };
+    dispatch(setStudentSelectedNotification(notification))
+    navigate("/student/notifications")
+  }
+  
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       sx={{
-        "& .MuiPaper-root": {
+        "& .MuiPaper-root.MuiPopover-paper.MuiMenu-paper": {
           borderRadius: 2,
           boxShadow: "none",
           backgroundColor: "#00215E",
@@ -128,6 +149,8 @@ export default function NavBar() {
     >
       <MenuItem onClick={handleProfile}>Profile</MenuItem>
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
+
+
     </Menu>
   );
 
@@ -135,13 +158,18 @@ export default function NavBar() {
   const renderMobileMenu = (
     <Menu
       sx={{
-        "& .MuiPaper-root": {
+        "& .MuiPaper-root.MuiPopover-paper.MuiMenu-paper": {
           borderRadius: 5,
           boxShadow: "none",
           backgroundColor: theme.palette.primary.main,
           color: "whitesmoke",
         },
       }}
+      // sx={{
+      //   "&.MuiPopover-paper .MuiPaper-root .MuiMenu-paper": {
+      //     backgroundColor: "yellow !important",
+      //   },
+      // }}
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
         vertical: "top",
@@ -191,21 +219,11 @@ export default function NavBar() {
     </Menu>
   );
 
-  const auth = {
-    isLoggedIn: true,
-    role: "instructor",
-  };
-
-  const getRouteLinks = () => {
-    if (auth.role === "instructor") {
-      return <InstructorNavLinks />;
-    }
-    return <StudentNavLinks />;
-  };
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+ 
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -229,6 +247,7 @@ export default function NavBar() {
                 <img src={logo} alt="logo" height={10} />
               </Box>
             </Grid>
+           
           </Grid>
           <Grid
             container
@@ -245,22 +264,16 @@ export default function NavBar() {
                 <img src={logo} alt="logo" height={70} />
               </Box>
             </Grid>
-
-            {getRouteLinks()}
-
+    
+            <StudentNavLinks />
             <Grid item md={4} sx={{ justifyContent: "end", display: "flex" }}>
               {" "}
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                <IconButton
-                  size="large"
-                  sx={{ color: "white" }}
-                  onClick={handleNotification}
-                  aria-controls={notification_id}
-                >
-                  <Badge
-                    badgeContent={notifications?.filter((i) => i.status === "unread").length}
-                    color="error"
-                  >
+                <IconButton size="large" 
+              sx={{ color: "white" }} 
+              onClick={handleNotification} 
+              aria-controls={notification_id} >
+                  <Badge badgeContent={notifications?.filter((i) => i.status === "unread").length} color="error">
                     <NotificationsOutlinedIcon
                       sx={{ color: theme.palette.dark.main }}
                     />
@@ -298,7 +311,7 @@ export default function NavBar() {
                           },
                         }}
                       >
-                        {student?.full_name}
+                       {student?.full_name}
                       </Typography>
                     </Box>
                     <Box>
@@ -314,7 +327,7 @@ export default function NavBar() {
                             },
                           }}
                         >
-                          (you) ID: {student?.id}
+                           (you) ID: {student?.id}
                         </Typography>
                       </Box>
                     </Box>
@@ -325,16 +338,9 @@ export default function NavBar() {
           </Grid>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
       {renderMenu}
-      <StudentNotification
-        handleNotificationChange={handleNotificationChange}
-        notifications={notifications}
-        id={notification_id}
-        anchorE2={anchorE2}
-        isOpen={isNotificationOpen}
-        setClose={() => setAnchorE2(null)}
-      />
+      <StudentNotification handleNotificationChange={handleNotificationChange} notifications={notifications} id={notification_id} anchorE2={anchorE2} isOpen={isNotificationOpen} setClose={()=>setAnchorE2(null)} />
+      
     </Box>
   );
 }
