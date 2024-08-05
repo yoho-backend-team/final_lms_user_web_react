@@ -36,7 +36,7 @@ const defaultStyles = {
   durationColor: "rgba(61, 139, 253, 0.22)",
 };
 
-const UpcomingClassList = ({ data, classType }) => {
+const UpcomingClassList = ({ data, classType ,group}) => {
   return (
     <Box sx={{ mt: 3, px: "40px" }}>
       {data.map((cls) => (
@@ -45,6 +45,7 @@ const UpcomingClassList = ({ data, classType }) => {
           cls={cls}
           style={defaultStyles}
           type={classType}
+          group={group}
         />
       ))}
     </Box>
