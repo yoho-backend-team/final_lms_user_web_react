@@ -42,10 +42,10 @@ const courseId = () => {
 
 const getStudentDetails = () => {
   const user = getAndDecompress(Student_Details)
-  console.log(user,"user")
   const userDetail = user
   return userDetail;
 };
+ 
 const instituteStudentId = () => {
   const userDetails = getStudentDetails();
   return userDetails?.institute_id?._id;
@@ -58,11 +58,11 @@ const branchStudentId = () => {
 
 const courseStudentId = () => {
   const userDetails = getStudentDetails();
-  console.log(userDetails,"userDetails")
   return userDetails?.userDetail?.course;
 };
 const studentCourseId = () => {
   const user = getStudentDetails();
+  console.log(user,"user")
   return user?.userDetail?.course;
 };
 
@@ -83,10 +83,9 @@ const generateEndpoints = () => {
   const institute1 = instituteStudentId();
   const branch1 = branchStudentId();
   const course1 = courseStudentId();
-  console.log(course1)
+  console.log(course1,"course1")
   const student = getStudentDetails();
   const studentCourse = studentCourseId();
-
   
   return {
     Student: {

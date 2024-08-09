@@ -30,6 +30,8 @@ const TicketsPage = () => {
     }
   };
 
+ 
+
   useEffect(() => {
     const data = { status: currentType, page: currentPage, limit: 10 };
     getTicketsList(data);
@@ -48,6 +50,7 @@ const TicketsPage = () => {
     getTicketsList(data);
   };
 
+ 
   return (
     <StudentTicketsPage
       data={tickets}

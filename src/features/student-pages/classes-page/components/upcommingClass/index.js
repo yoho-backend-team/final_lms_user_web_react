@@ -37,6 +37,7 @@ const defaultStyles = {
 };
 
 const UpcomingClassList = ({ data, classType ,group}) => {
+  console.log(data,"cls")
   return (
     <Box sx={{ mt: 3, px: "40px" }}>
       {data.map((cls) => (
@@ -48,6 +49,7 @@ const UpcomingClassList = ({ data, classType ,group}) => {
           group={group}
         />
       ))}
+      
     </Box>
   );
 };

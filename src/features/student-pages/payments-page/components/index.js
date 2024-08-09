@@ -18,6 +18,7 @@ import { imagePlaceholder } from "utils/placeholders";
 import { formatDate } from "utils/formatDate";
 import { getStudentDetails } from "store/atoms/authorized-atom";
 
+
 const Payment = () => {
   const theme = useTheme();
   const isXs = useMediaQuery(theme.breakpoints.down("xs"));
@@ -36,6 +37,9 @@ const Payment = () => {
     fetchStudentFees();
   }, []);
 
+  console.log(feesData,"feesData")
+
+
   const data = [
     { id: 1, text: "Apr 23", type: "pending" },
     { id: 2, text: "Mar 23", type: "bill receipt" },
@@ -50,6 +54,7 @@ const Payment = () => {
     { id: 3, text: "Feb 23" },
   ];
 
+  console.log(feesData,"feesData")
 
   return (
     <div className="main-container">
@@ -79,7 +84,7 @@ const Payment = () => {
             <Typography
               variant="body1"
               component={Link}
-              to="/student/create-ticket"
+              to="/student/tickets?create=true"
               style={{
                 color: "#0D6EFD",
                 fontFamily: "Nunito Sans",
@@ -1237,6 +1242,7 @@ const Payment = () => {
                   </Grid>
                 ))}
               </Grid>
+              
             </div>
           </Grid>
         </Grid>

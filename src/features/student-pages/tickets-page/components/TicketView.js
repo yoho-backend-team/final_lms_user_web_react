@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef  } from "react";
 import {
   Box,
   Grid,
@@ -16,10 +16,13 @@ import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { formatDate, formatTime } from "utils/formatDate";
 import PdfViewer from "./pdfViewer";
+import SendIconMessage from "assets/icons/SendIconMessage";
 
 function TicketView({ selectedTicket,handleTicketViewClose }) {
   const [fileView,setFileView] = useState(false)
   const [file,setFile] = useState(null)
+  const fileInputRef = useRef(null);
+
 
   const statusColor = {
     opened: "#F6AB3A",
@@ -36,6 +39,22 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
     setFileView(false)
   }
 
+  const handleAttachClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      console.log('Selected file:', file.name);
+      
+      setFile(file);
+      handleFileOpen(file);
+    }
+  };
+
   console.log(selectedTicket,"selectedTicket")
 
   return (
@@ -44,7 +63,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
         <Box sx={{ display: "flex", alignItems: "center" ,padding:"2px"}}>
           <Box>
             <IconButton onClick={handleTicketViewClose}>
-              <ArrowBackIcon sx={{ color: "#000000" }} />
+              <ArrowBackIcon sx={{ color: "#000000",marginRight: "20px" }} />
             </IconButton>
           </Box>
 
@@ -108,7 +127,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
           </Box>
         </Box>
 
-        <Box sx={{ display: "flex",p:"2px",m:2 ,width:"2878px"}}>
+        <Box sx={{ display: "flex",px:"60px",m:0.5,mx: 'auto'}}>
           <Card>
             <Box
               sx={{
@@ -384,14 +403,33 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                     >
                       <Box
                       sx={{
-                        display : "none"
+                        display: 'flex',
+                        width:"60px",
+                        height:"40px",
+                        padding:"12px 24px",
+                        justifyContent: 'center',
+                        gap:"10px",
+                        alignItems:"center"
                       }}
                       >
+                         <input
+                            type="file"
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            onChange={handleFileChange}
+                          />
+                        
                         <AddBoxOutlinedIcon
                           sx={{
                             color: "#0D6EFD",
                             "& path:first-of-type": {
                               color: "#130F26",
+                              display:"flex",
+                              width: '24px',
+                              height:"24px",
+                              padding:"2px",
+                              alignItems:"center",
+                              justifyContent: 'center'
                             },
                           }}
                         />
@@ -420,7 +458,8 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                         InputProps={{
                           endAdornment: (
                             <AttachFileIcon
-                              sx={{ color: "#78787C", rotate: "35deg" }}
+                              sx={{ color: "#78787C", rotate: "35deg" , cursor:"pointer"}}
+                              onClick={handleAttachClick}
                             />
                           ),
                         }}
@@ -430,13 +469,15 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                           display: "flex",
                           justifyContent: "flex-end",
                           pl: "20px",
+                          alignItems: 'center'
                         }}
                       >
                         <IconButton>
-                          <SendIcon sx={{ color: "black" }} />
+                          <SendIconMessage sx={{ color: "black" }} />
                         </IconButton>
                       </Box>
                     </Box>
+                    
                     }
                   </Paper>
                 </Grid>
@@ -532,7 +573,9 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                       sx={{
                         color : "#6C757D",
                         fontSize : "15px",
-                        fontWeight : 600
+                        fontWeight : 600,
+                        display:"flex",
+                         gap: "8px"
                       }}
                       >
                       <Typography
