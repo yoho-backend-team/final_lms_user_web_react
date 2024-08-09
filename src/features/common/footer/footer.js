@@ -36,14 +36,14 @@ const Footer = () => {
           <Box component={Link} to={"/student/help-center"} sx={{ textDecoration: "none" , display: 'inline-flex', gap: "10px", alignItems : "center"}} >
             <HelpOutlineOutlinedIcon sx={{ color : isActive("/student/help-center") ? "#0D6EFD" : "#6C757D" }} />
             <Typography
-              style={{ gap: 2 , color : isActive("/instructor/help-center") ? "#0D6EFD" : "#6C757D", fontSize : "14px" }}
+              style={{ gap: 2 , color : isActive("/student/help-center") ? "#0D6EFD" : "#6C757D", fontSize : "14px" }}
             >
               Help Center
             </Typography>
           </Box>
           <Box sx={{ display: 'inline-flex', gap: "10px", alignItems : "center" }} >
             <HelpOutlineOutlinedIcon sx={{ color : isActive("/student/Faq") ? "#0D6EFD" : "#6C757D" }} />
-            <Link to={"/instructor/Faq"} style={{ textDecoration: "none", color : isActive("/instructor/Faq") ? "#0D6EFD" : "#6C757D" }}>
+            <Link to={"/student/Faq"} style={{ textDecoration: "none", color : isActive("/student/Faq") ? "#0D6EFD" : "#6C757D" }}>
               FAQ
             </Link>
           </Box>

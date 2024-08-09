@@ -9,19 +9,20 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import ClassLayout from "../../../features/instructor-pages/classes-page/components/classLayout";
+import ClassLayout from "../../../features/student-pages/classes-page/components/classLayout";
 import { OfflineClassIcon } from "utils/images";
-import ClassTabs from "../../../features/instructor-pages/classes-page/components/classTabs";
-import UpcomingClassList from "features/instructor-pages/classes-page/components/upcommingClass";
-import CompletedClassList from "features/instructor-pages/classes-page/components/completedClass";
-import LiveClassList from "features/instructor-pages/classes-page/components/liveClass";
-import ClassHistory from "features/instructor-pages/classes-page/components/classHistory";
+import ClassTabs from "../../../features/student-pages/classes-page/components/classTabs";
+import UpcomingClassList from "features/student-pages/classes-page/components/upcommingClass";
+import CompletedClassList from "features/student-pages/classes-page/components/completedClass";
+import LiveClassList from "features/student-pages/classes-page/components/liveClass";
+import ClassHistory from "features/student-pages/classes-page/components/classHistory";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllClasses } from "features/instructor-pages/classes-page/redux/thunks";
+import { getAllClasses } from "features/student-pages/classes-page/redux/thunks";
 import {
   selectClasses,
   selectLoading,
-} from "features/instructor-pages/classes-page/redux/selectors";
+  selectStudentClasses,
+} from "features/student-pages/classes-page/redux/selectors";
 import ClassLoader from "components/ui/loaders/classLoading";
 
 const ClassesPage = () => {
@@ -32,7 +33,7 @@ const ClassesPage = () => {
   const [classType, setClassType] = useState(queryParams.get("classType") || "online");
   const [page, setPage] = useState(Number(queryParams.get("page")) || 1);
   const dispatch = useDispatch();
-  const classes = useSelector(selectClasses);
+  const classes = useSelector(selectStudentClasses);
   const loading = useSelector(selectLoading);
 
   const tabs = [
@@ -42,15 +43,16 @@ const ClassesPage = () => {
     { id: "4", title: "Live Class", value: "live" },
   ];
 
+  console.log(classes.data,"classes")
   const renderComponents = {
-    upcoming: <UpcomingClassList data={classes?.data} classType={classType} group={"upcoming"} />,
-    completed: <CompletedClassList data={classes?.data} classType={classType} group={"completed"} />,
-    history: <ClassHistory data={classes?.data} classType={classType} group={"history"} />,
-    live: <LiveClassList data={classes?.data} classType={classType} group={"live"} />,
+    upcoming: <UpcomingClassList data={classes} classType={classType} group={"upcoming"} />,
+    completed: <CompletedClassList data={classes} classType={classType} group={"completed"} />,
+    history: <ClassHistory data={classes} classType={classType} group={"history"} />,
+    live: <LiveClassList data={classes} classType={classType} group={"live"} />,
   };
 
   const classTypes = [
-    { id: "1", title: "online class", value: "online" },
+    { id: "1", title: "Live Class", value: "online" },
     { id: "2", title: "offline class", value: "offline" },
   ];
 

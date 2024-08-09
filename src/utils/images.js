@@ -3,6 +3,7 @@ export { default as StudentBg } from "../assets/instructor/dashboard/bg.svg";
 export { default as AttedenceBg } from "../assets/instructor/dashboard/attedence_bg.svg";
 export { default as UpdateCardBg } from "../assets/instructor/dashboard/update_card_bg.svg";
 export { default as ClassBg } from "../assets/instructor/class/main-bg.svg";
+export { default as ClassBg1 } from "../assets/instructor/class/ticket-main-bg.svg";
 export { default as OfflineClassIcon } from "../assets/instructor/class/online-class.svg";
 export { default as InstructorLoginBg } from "../assets/instructor/login/login-bg.svg";
 export { default as InstructorLoginGroups } from "../assets/instructor/login/objects.svg";
@@ -10,7 +11,9 @@ export { default as PaymentBg } from "../assets/instructor/payment/bg.svg";
 export { default as TicketBg } from "../assets/instructor/Ticket/bg.svg";
 export { default as TicketDownbg } from "../assets/instructor/Ticket/Ticketdown.svg"
 export { default as TicketMain } from "../assets/instructor/Ticket/2j37M81CvuiHeUBTFe3GSbp5QXF.svg";
-export { default as Viewimage } from "../assets/view.svg";
+export { default as Viewimage } from "../assets/view_1.svg";
+export { default as Viewimage1 } from "../assets/view.svg";
+export { default as Viewimage2 } from "../assets/view_2.svg";
 export { default as TicketBg2 } from "../assets/instructor/Ticket/bg.svg";
 export { default as CreateTicketRightSideImage } from "../assets/instructor/Ticket/createTicketRImage.svg";
 export { default as SqlCourseImage } from "../assets/instructor/community/sql.svg";
@@ -27,6 +30,7 @@ export { default as ClassCoordinatorViewCard } from "../assets/instructor/class/
 export { default as CourseBg } from "../assets/instructor/course/course_bg.svg";
 export { default as CourseCardBg } from "../assets/instructor/course/course-card.svg";
 export { default as HelpCenterBg } from "../assets/instructor/help-center/bg.svg";
+export { default as ClassBackroundBg } from "../assets/instructor/class/class-backround.svg";
 
 //nav
 export { default as NavBg } from "../assets/common/nav.svg";

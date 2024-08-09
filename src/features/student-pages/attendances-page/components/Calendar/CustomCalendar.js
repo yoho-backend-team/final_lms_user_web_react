@@ -3,6 +3,7 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import {
   MenuItem,
   Select,
@@ -124,7 +125,7 @@ function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data })
               <Typography
                 sx={{ fontSize: "21px", fontWeight: "300", textAlign: "end",fontfamily: 'Poppins',pb:'11px'}}
               >
-                0{i}
+                {i}
               </Typography>
               <Button
                 sx={{
@@ -175,21 +176,25 @@ function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data })
             }}    
           >
             <Typography variant="h4">Calendar View</Typography>
-            <FormControl style={{ marginLeft: "5px" }}>
+            <FormControl style={{ marginLeft: "7px" }}>
               <Select
                 value={selectedMonth}
                 onChange={handleMonthChange}
                 size="small"
                 sx={{
-                  color: "#5611B1",
-                  backgroundColor: "#DFC7FF",
+                  color: "#1976d2",
+                  backgroundColor: "#E3EEFF",
                   fontSize: "16px",
                   fontWeight: 600,
                   lineHeight: "24px",
-                  minWidth: "89px",
+                  minWidth: "99px",
                   maxWidth: "89px",
+                  '.MuiSelect-icon': {
+            color: '#1976d2',
+          },
                 }}
                 variant="outlined"
+                IconComponent={ArrowDropDownIcon}
               >
                 {months.map((month, index) => (
                   <MenuItem key={index} value={index}>

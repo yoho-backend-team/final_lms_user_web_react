@@ -241,7 +241,7 @@ const ProfilePage = () => {
     },
   ];
   const handleNavigateBack = () => {
-    navigate("student/home");
+    navigate('/');
   };
 
   const handleCancelEdit = () => {
@@ -296,9 +296,9 @@ const ProfilePage = () => {
             cursor: "pointer",
             marginTop: isSmallScreen ? "auto" : "36px",
           }}
-          onClick={handleNavigateBack}
+          
         >
-          <KeyboardBackspaceIcon style={{ marginRight: "5px" }} /> Back to
+          <KeyboardBackspaceIcon onClick={handleNavigateBack} style={{ marginRight: "5px" }} /> Back to
           Dashboard
         </Typography>
       </Grid>

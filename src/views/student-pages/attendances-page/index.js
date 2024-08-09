@@ -125,7 +125,7 @@ const Attendance = () => {
   };
 
   const handleview = () =>{
-    navigate(`student/ticket?create=true`)
+    navigate(`student/tickets?create=true`)
   }
   useEffect(() => {
     getAttedenceDetails(selectedMonth);
@@ -219,7 +219,7 @@ const Attendance = () => {
                 <Button
                  component={Link}
                  onClick={handleview}
-                 to={"/student/ticket?create=true"}
+                 to={"/student/tickets?create=true"}
                   sx={{
                     backgroundColor: "##0D6EFD",
                     boxShadow: "0px 6px 34px -8px #0D6EFD",

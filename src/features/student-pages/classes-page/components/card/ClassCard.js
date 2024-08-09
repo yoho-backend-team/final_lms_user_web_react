@@ -11,9 +11,20 @@ import {
   getIsTimeValid,
   getTimeDifference,
 } from "../../../../../utils/formatDate";
-import { Viewimage } from "utils/images";
+import { Viewimage, Viewimage1, Viewimage2 } from "utils/images";
+
+
+const groupImages = {
+  upcoming: Viewimage1,
+  completed: Viewimage,
+  history: Viewimage,
+  live: Viewimage2,
+};
 
 const ClassCard = ({ cls, style, type,group }) => {
+
+  const backgroundImage = groupImages[group] || Viewimage;
+
   return (
     <Card sx={{ mb: 2}}>
       <Grid
@@ -22,7 +33,7 @@ const ClassCard = ({ cls, style, type,group }) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          backgroundImage: `url(${Viewimage})`,
+          backgroundImage: `url(${backgroundImage})`,
             backgroundSize: 'auto',
             backgroundRepeat: 'no-repeat',
             backgroundPosition : "right"
@@ -30,10 +41,10 @@ const ClassCard = ({ cls, style, type,group }) => {
       >
         <Grid item xs={3} sx={{ p: 2 }}>
           <Box>
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            <Typography variant="h6" sx={{ fontWeight: 600 , color:"#000",fontFamily:"Poppins",fontSize:"14px",lineHeight:"22px"}}>
               {cls?.class_name}
             </Typography>
-            <Typography variant="body2" sx={{ color: "gray" }}>
+            <Typography variant="body2" sx={{ fontWeight: 400 , color:"#000",fontFamily:"Poppins",fontSize:"10px",lineHeight:"16px" }}>
               {cls?.course?.course_name}
             </Typography>
           </Box>
@@ -50,7 +61,7 @@ const ClassCard = ({ cls, style, type,group }) => {
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <CalendarTodayOutlinedIcon color={style.calendarColor} />
-            <Typography variant="body2" sx={{ color: "gray" }}>
+            <Typography variant="body2" sx={{ color: "#6C757D",fontFamily:"Poppins",fontSize:"12px",lineHeight:"22px",fontWeight:500 }}>
               {formatDate(cls.start_date)}
             </Typography>
           </Box>
@@ -59,7 +70,7 @@ const ClassCard = ({ cls, style, type,group }) => {
         <Grid item xs={2}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <AccessTimeOutlinedIcon color={style.timerColor} />
-            <Typography variant="body2" sx={{ color: "gray" }}>
+            <Typography variant="body2" sx={{ color: "#6C757D",fontFamily:"Poppins",fontSize:"12px",lineHeight:"22px",fontWeight:500 }}>
               {formatTime(cls.start_time)}
             </Typography>
           </Box>
@@ -94,21 +105,8 @@ const ClassCard = ({ cls, style, type,group }) => {
             </Typography>
           </Box>
         </Grid>
-<Grid
-          item
-          xs={3}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignitems: "center",
-            padding: "10px",
-            gap: "10px",
-flexshrink: 0,
-width: "113px",
-height: "60px"
-           // Adjust this value as needed
-          }}
-        >
+        <Grid item xs={3} sx={{ display: "flex", justifyContent: "flex-end" , paddingRight:"30px"}}>
+          
           <Button
             component={Link}
             to={`/student/class/${cls.uuid}?type=${type}&group=${group}`}
@@ -122,13 +120,14 @@ height: "60px"
               borderRadius: '8px',
               fontfamily: "Poppins",
               fontsize: "14px",
-fontstyle: "normal",
-fontweight: "500",
-lineheight: "22px"
+              fontstyle: "normal",
+              fontweight: "500",
+              lineheight: "22px"
             }}
           >
             View Class
           </Button>
+        
         </Grid>
       </Grid>
     </Card>
