@@ -10,7 +10,7 @@ const defaultStyles = {
   durationColor: "rgba(61, 139, 253, 0.22)",
 };
 
-const LiveClassList = ({ data, classType }) => {
+const LiveClassList = ({ data, classType,group }) => {
   return (
     <Box sx={{ mt: 3, px: "40px" }}>
       {data.map((cls) => (
@@ -19,6 +19,7 @@ const LiveClassList = ({ data, classType }) => {
           cls={cls}
           style={defaultStyles}
           type={classType}
+          group={group}
         />
       ))}
     </Box>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useRef  } from "react";
 import {
   Box,
   Grid,
@@ -16,10 +16,13 @@ import SendIcon from "@mui/icons-material/Send";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import { formatDate, formatTime } from "utils/formatDate";
 import PdfViewer from "./pdfViewer";
+import SendIconMessage from "assets/icons/SendIconMessage";
 
 function TicketView({ selectedTicket,handleTicketViewClose }) {
   const [fileView,setFileView] = useState(false)
   const [file,setFile] = useState(null)
+  const fileInputRef = useRef(null);
+
 
   const statusColor = {
     opened: "#F6AB3A",
@@ -36,30 +39,31 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
     setFileView(false)
   }
 
-  const handleCloseTicket = async () => {
-    try {
-      
-      await selectedTicket.closeTicket(selectedTicket._id);
-  
-      
-      alert("Ticket closed successfully!");
-  
-      
-      handleTicketViewClose();
-    } catch (error) {
-      
-      console.error("Error closing ticket:", error);
-      alert("Failed to close the ticket.");
+  const handleAttachClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
   };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      console.log('Selected file:', file.name);
+      
+      setFile(file);
+      handleFileOpen(file);
+    }
+  };
+
+  console.log(selectedTicket,"selectedTicket")
 
   return (
     <>
       <Box>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ display: "flex", alignItems: "center" ,padding:"2px"}}>
           <Box>
             <IconButton onClick={handleTicketViewClose}>
-              <ArrowBackIcon sx={{ color: "#000000" }} />
+              <ArrowBackIcon sx={{ color: "#000000",marginRight: "20px" }} />
             </IconButton>
           </Box>
 
@@ -74,7 +78,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
               sx={{ display: "inline-flex", alignItems: "center", gap: "37px" }}
             >
               <Typography
-                sx={{ fontSize: "24px", lineHeight: "22px", fontWeight: 700 }}
+                sx={{ fontSize: "24px", lineHeight: "22px", fontWeight: 700,fontFamily:"Nunito Sans" }}
               >
                 Ticket
               </Typography>
@@ -85,9 +89,10 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                   fontSize: "16px",
                   fontWeight: 700,
                   lineHeight: "24px",
+                  fontFamily:"Nunito Sans"
                 }}
               >
-                Ticket ID: Ticket #{selectedTicket?._id}
+                Ticket ID: Ticket #{selectedTicket?.ticket_id}
               </Typography>
             </Box>
 
@@ -99,6 +104,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                 mb: 2,
               }}
             >
+              {selectedTicket?.status === "opened" && (
               <Button
                 variant="contained"
                 sx={{
@@ -116,11 +122,12 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
               >
                 Request For Close
               </Button>
+              )}
             </Box>
           </Box>
         </Box>
 
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Box sx={{ display: "flex",px:"60px",m:0.5,mx: 'auto'}}>
           <Card>
             <Box
               sx={{
@@ -128,6 +135,9 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                padding:"20px",
+                
+                
               }}
             >
               <Typography
@@ -137,9 +147,10 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                   fontSize: "17px",
                   fontWeight: "700",
                   lineHeight: "24px",
+                  fontFamily:"Nunito Sans"
                 }}
               >
-                #{selectedTicket?.id} {selectedTicket?.query}
+                #{selectedTicket?.ticket_id} {selectedTicket?.query}
               </Typography>
               <Typography
                 sx={{
@@ -147,6 +158,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                   fontSize: "12px",
                   fontWeight: "700",
                   lineHeight: "24px",
+                  fontFamily:"Nunito Sans"
                 }}
               >
                 Show activates
@@ -154,28 +166,30 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
               <Button
                 size="small"
                 sx={{
-                  color: "black",
+                  color: "#000",
                   backgroundColor: "#DADADA",
                   padding: "10px",
                   fontSize: "12px",
                   fontWeight: 700,
+                  lineHeight:"14px",
+                  fontFamily:"Nunito Sans"
                 }}
-                onClick={handleCloseTicket}
               >
                 Close ticket
               </Button>
               <Box sx={{ display: 'flex', gap: "21px"}} >
                 <Typography
-                  sx={{ fontSize: "14px", color: "#495057", fontWeight: 700 }}
+                  sx={{ fontSize: "14px", color: "#495057", fontWeight: 700,fontFamily:"Nunito Sans" }}
                 >
                   Raised Date & time:
                 </Typography>
                 <Typography
                   sx={{
-                    color: "#5611B1",
+                    color: "#0D6EFD",
                     fontSize: "15px",
                     fontWeight: "600",
                     lineHeight: "14px",
+                    fontFamily:"Nunito Sans"
                   }}
                 >
                   {formatDate(selectedTicket?.createdAt)}{" "}{formatTime(selectedTicket?.createdAt)}
@@ -198,10 +212,11 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                         >
                           <Typography
                             sx={{
-                              color: "black",
+                              color: "#000",
                               fontSize: "14px",
                               fontWeight: 700,
                               lineHeight: "24px",
+                              fontFamily:"Nunito Sans"
                             }}
                           >
                             Oliver Smith
@@ -212,6 +227,8 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                               fontSize: "10px",
                               fontWeight: 400,
                               lineHeight: "15px",
+                              fontFamily:"Poppins",
+                              width: '198px'
                             }}
                           >
                             Monday May, 2023 3:00 PM. 9 days ago
@@ -225,6 +242,8 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                               fontWeight: "500",
                               lineHeight: "15px",
                               pb: "40px",
+                              fontFamily:"Poppins",
+                              width: '529px'
                             }}
                           >
                             Concerns have been raised regarding attendance
@@ -235,10 +254,12 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                         </Box>
                         <Box
                           sx={{
-                            backgroundColor: "#DFC7FF",
+                            backgroundColor: "#DAE9FF",
                             borderRadius: "8px",
                             padding: "18px 13px 18px 30px",
                             mb: "40px",
+                            width:"620px",
+                            height:"90px"
                           }}
                         >
                           <Box
@@ -254,6 +275,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                                 fontSize: "14px",
                                 fontWeight: 700,
                                 lineHeight: "24px",
+                                fontFamily:"Nunito Sans"
                               }}
                             >
                               Oliver Smith
@@ -264,6 +286,8 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                                 fontSize: "10px",
                                 fontWeight: 400,
                                 lineHeight: "15px",
+                                width: '198px',
+                                fontFamily:"Poppins"
                               }}
                             >
                               Monday May, 2023 3:00 PM. 9 days ago
@@ -275,6 +299,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                               fontSize: "12px",
                               fontWeight: "500",
                               lineHeight: "15px",
+                              fontFamily: "Poppins",
                             }}
                           >
                             Checked the log and found the customer paid the
@@ -298,6 +323,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                               fontSize: "14px",
                               fontWeight: 700,
                               lineHeight: "24px",
+                              fontFamily:"Nunito Sans"
                             }}
                           >
                             Oliver Smith
@@ -308,6 +334,8 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                               fontSize: "10px",
                               fontWeight: 400,
                               lineHeight: "15px",
+                              width: '198px',
+                              fontFamily:"Poppins"
                             }}
                           >
                             Monday May, 2023 3:00 PM. 9 days ago
@@ -321,6 +349,9 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                               fontWeight: "500",
                               lineHeight: "15px",
                               pb: "40px",
+                              width:"529px",
+                              fontfamily: 'Poppins'
+
                             }}
                           >
                             Concerns have been raised regarding attendance
@@ -372,14 +403,33 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                     >
                       <Box
                       sx={{
-                        display : "none"
+                        display: 'flex',
+                        width:"60px",
+                        height:"40px",
+                        padding:"12px 24px",
+                        justifyContent: 'center',
+                        gap:"10px",
+                        alignItems:"center"
                       }}
                       >
+                         <input
+                            type="file"
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            onChange={handleFileChange}
+                          />
+                        
                         <AddBoxOutlinedIcon
                           sx={{
                             color: "#0D6EFD",
                             "& path:first-of-type": {
                               color: "#130F26",
+                              display:"flex",
+                              width: '24px',
+                              height:"24px",
+                              padding:"2px",
+                              alignItems:"center",
+                              justifyContent: 'center'
                             },
                           }}
                         />
@@ -408,7 +458,8 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                         InputProps={{
                           endAdornment: (
                             <AttachFileIcon
-                              sx={{ color: "#78787C", rotate: "35deg" }}
+                              sx={{ color: "#78787C", rotate: "35deg" , cursor:"pointer"}}
+                              onClick={handleAttachClick}
                             />
                           ),
                         }}
@@ -418,13 +469,15 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                           display: "flex",
                           justifyContent: "flex-end",
                           pl: "20px",
+                          alignItems: 'center'
                         }}
                       >
                         <IconButton>
-                          <SendIcon sx={{ color: "black" }} />
+                          <SendIconMessage sx={{ color: "black" }} />
                         </IconButton>
                       </Box>
                     </Box>
+                    
                     }
                   </Paper>
                 </Grid>
@@ -449,6 +502,8 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                           fontSize: "14px",
                           fontWeight: 800,
                           lineHeight: "24px",
+                          color:'#000',
+                          fontFamily:"Nunito Sans"
                         }}
                       >
                         Issue Description:
@@ -456,9 +511,11 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                       <Typography
                         sx={{
                           fontSize: "14px",
-                          fontWeight: "600",
+                          fontWeight: 600,
                           lineHeight: "22px",
                           color: "#6C757D",
+                          fontFamily:"Nunito Sans",
+                         
                         }}
                       >
                       {selectedTicket?.description}
@@ -476,6 +533,8 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                           fontSize: "14px",
                           fontWeight: 800,
                           lineHeight: "24px",
+                          color:'#000',
+                          fontFamily:"Nunito Sans"
                         }}
                       >
                         Issue Category:{" "}
@@ -486,6 +545,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                           fontWeight: "600",
                           lineHeight: "22px",
                           color: "#6C757D",
+                          fontFamily:"Nunito Sans"
                         }}
                       >
                         {selectedTicket?.category}
@@ -503,6 +563,8 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                           fontSize: "14px",
                           fontWeight: 800,
                           lineHeight: "24px",
+                          color:'#000',
+                          fontFamily:"Nunito Sans"
                         }}
                       >
                         Attachments:
@@ -511,7 +573,9 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                       sx={{
                         color : "#6C757D",
                         fontSize : "15px",
-                        fontWeight : 600
+                        fontWeight : 600,
+                        display:"flex",
+                         gap: "8px"
                       }}
                       >
                       <Typography
@@ -520,11 +584,12 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                           fontWeight: "600",
                           lineHeight: "22px",
                           color: "#6C757D",
+                          fontFamily:"Nunito Sans"
                         }}
                       >
                         {selectedTicket?.file?.split("/")[2]}
                       </Typography>
-                      <Typography onClick={()=>handleFileOpen(selectedTicket)} sx={{ color: "#5611B1", fontSize: "15px",fontWeight:600,cursor:"pointer"}} >
+                      <Typography onClick={()=>handleFileOpen(selectedTicket)} sx={{ color: "#0051C8", fontSize: "15px",fontWeight:600,cursor:"pointer",textDecorationLine:"underline"}} >
                         View
                       </Typography>
                       </Box>
@@ -541,6 +606,8 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                           fontSize: "14px",
                           fontWeight: 800,
                           lineHeight: "24px",
+                          color:'#000',
+                          fontFamily:"Nunito Sans"
                         }}
                       >
                         Status:
@@ -572,7 +639,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                     </Box>
                     <Box
                       sx={{
-                        display: "none",
+                        display: "flex",
                         flexDirection: "column",
                         gap: "10px",
                       }}
@@ -582,6 +649,8 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                           fontSize: "14px",
                           fontWeight: 800,
                           lineHeight: "24px",
+                          color:'#000',
+                          fontFamily:"Nunito Sans"
                         }}
                       >
                         Attempt:
@@ -590,8 +659,9 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                         sx={{
                           fontSize: "14px",
                           fontWeight: "600",
-                          lineHeight: "22px",
-                          color: "#6C757D",
+                          lineHeight: "24px",
+                          color: "#000",
+                          fontFamily:"Nunito Sans"
                         }}
                       >
                         1

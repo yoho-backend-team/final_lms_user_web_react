@@ -69,8 +69,8 @@ const modules = [
    
     const classes = Course?.batches[0]?.classes || [];
                 
-  const getRandomStyle = () => {
-    const randomIndex = Math.floor(Math.random() * modules.length);
+  const getRandomStyle = (index) => {
+    const randomIndex = index % Course?.batches?.[0]?.classes?.length;
     return modules[randomIndex].style;
   };
 
@@ -80,16 +80,11 @@ const modules = [
                 return (
                   <Box sx={{ padding: tabView ? "20px" : "60px"}}>
                     <Grid container xs={12} gap={tabView ? "60px" : "20px"}>
-                    {classes?.map((module) => (
+                    {classes?.map((module,index) => (
                         <Grid item key={module.id} xs={2.5}  sx={{display:"flex",flexDirection:"row",justifyContent: "center", alignItems: "center",cursor: "pointer"}}>
                           <CourseStudentModuleCard
-                            id={module.id}
-                            style={{
-                              background: getRandomStyle().background,
-                              color: getRandomStyle().color,
-                              card: getRandomStyle().card,
-              
-                            }}
+                            id={index+1}
+                            style={getRandomStyle(index)}
                       
                             title={module.class_name}
                             notes={module.notes}

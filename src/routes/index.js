@@ -128,7 +128,7 @@ const InstructorCreateTicketPage = Loadable(lazy(() => import("views/student-pag
               element={<StudentCommunityPage />}
             />
             <Route path="student/courses" element={<StudentCourseViewPage />} />
-            <Route path="student/course/:id" element={<StudentCoursePage />} />
+            <Route path="student/courses/:id" element={<StudentCoursePage />} />
             <Route
               path="student/help-center"
               element={<StudentHelpCenterPage />}

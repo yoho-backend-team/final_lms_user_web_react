@@ -26,7 +26,7 @@ import StudyMaterialIcon from "assets/icons/study-material-icon";
 import SaveAltOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
 import { useSpinner } from "context/SpinnerProvider";
 
-const ClassCard = ({ type, classDetails, getClass }) => {
+const ClassCard = ({ type, classDetails, getClass, group }) => {
   const navigate = useNavigate();
   const { showSpinner, hideSpinner } = useSpinner();
 
@@ -96,7 +96,18 @@ const ClassCard = ({ type, classDetails, getClass }) => {
           color="text.primary"
           sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "22px" }}
         >
-          Upcoming Class
+          {group?.charAt(0).toUpperCase()+group.slice(1)} Class
+        </Typography>
+        <Typography
+          color="text.primary"
+          sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "22px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            maxWidth: "200px"
+          }}
+        >
+          {classDetails?.class_name}
         </Typography>
       </Breadcrumbs>
         <Box
@@ -120,6 +131,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                   sx={{
                     color: "#ADB5BD",
                     fontSize: "16px",
+                    fontFamily:"Poppins",
                     fontWeight: 600,
                     lineHeight: "16px",
                     pr: 1,
@@ -133,6 +145,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                     fontSize: "16px",
                     fontWeight: 600,
                     lineHeight: "24px",
+                    fontFamily:"Poppins",
                   }}
                 >
                   #{classDetails?.batch?.id}
@@ -150,6 +163,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                       color: "#000",
                       fontSize: "20px",
                       lineHeight: "16px",
+                      fontFamily:"Nunito Sans",
                     }}
                   >
                     Class Details
@@ -162,6 +176,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                       color: "#495057",
                       fontSize: "20px",
                       lineHeight: "32px",
+                      fontFamily:"Nunito Sans",
                     }}
                   >
                     {classDetails?.class_name}
@@ -174,6 +189,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                       lineHeight: "16px",
                       color: "#6C757D",
                       pr: "171px",
+                      fontFamily:"Nunito Sans",
                     }}
                   >
                     {classDetails?.course?.description}
@@ -189,7 +205,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                       sx={{
                         gap: "40px",
                         display: "flex",
-                        backgroundColor: "#DFC7FF",
+                        backgroundColor: "#BCE1F1",
                         borderRadius: "16px",
                         padding: "26px 38px",
                       }}
@@ -203,6 +219,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                             fontWeight: 600,
                             lineHeight: "16px",
                             pb: "6px",
+                            fontFamily:"Poppins",
                           }}
                         >
                           Date
@@ -213,7 +230,8 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                             fontWeight: 500,
                             fontSize: "16px",
                             lineHeight: "24px",
-                            color: "#7149A5",
+                            color: "#427A92",
+                            fontFamily:"Poppins",
                           }}
                         >
                           {formatDate(classDetails?.start_date)}
@@ -225,6 +243,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                           sx={{
                             color: "#000",
                             fontSize: "16px",
+                            fontFamily:"Poppins",
                             fontWeight: 600,
                             lineHeight: "16px",
                             pb: "6px",
@@ -238,7 +257,8 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                             fontWeight: 500,
                             fontSize: "16px",
                             lineHeight: "24px",
-                            color: "#7149A5",
+                            color: "#427A92",
+                            fontFamily:"Poppins",
                           }}
                         >
                           {formatTime(classDetails?.start_time)}
@@ -252,6 +272,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                             fontSize: "16px",
                             fontWeight: 600,
                             lineHeight: "16px",
+                            fontFamily:"Poppins",
                             pb: "6px",
                           }}
                         >
@@ -263,10 +284,38 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                             fontWeight: 500,
                             fontSize: "16px",
                             lineHeight: "24px",
-                            color: "#7149A5",
+                            color: "#427A92",
+                            fontFamily:"Poppins",
                           }}
                         >
                           {formatTime(classDetails?.end_time)}
+                        </Typography>
+                      </Box>
+                      <Box>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: "#000",
+                            fontSize: "16px",
+                            fontWeight: 600,
+                            lineHeight: "16px",
+                            fontFamily:"Poppins",
+                            pb: "6px",
+                          }}
+                        >
+                          Duration
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            fontWeight: 500,
+                            fontSize: "16px",
+                            lineHeight: "24px",
+                            color: "#427A92",
+                            fontFamily:"Poppins",
+                          }}
+                        >
+                          {classDetails?.course?.duration} hrs
                         </Typography>
                       </Box>
                     </Box>
@@ -281,6 +330,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
           fontSize: "20px",
           fontWeight: 800,
           lineHeight: "32px",
+          fontFamily:"Nunito Sans",
           pb: "10px",
         }}
       >
@@ -292,6 +342,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
               color: "#828282",
               fontSize: "14px",
               fontWeight: 600,
+              fontFamily:"Nunito Sans",
               lineHeight: "32px",
             }}
           >
@@ -324,11 +375,12 @@ const ClassCard = ({ type, classDetails, getClass }) => {
               disabled
               sx={{
                 padding: "8px 18px",
-                color: "#5611B1",
+                color: "#0D6EFD",
                 fontSize: "14px",
                 fontWeight: 600,
                 lineHeight: "24px",
                 border: "2px solid #5611B1",
+                fontFamily:"Nunito Sans",
                 borderRadius: "24px",
               }}
             >
@@ -345,6 +397,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                   fontSize: "11px",
                   fontWeight: 400,
                   lineHeight: "20px",
+                  fontFamily:"Nunito Sans",
                 }}
               >
                 Make sure your presence in the class & If you are unable to attend, please inform the coordinator.
@@ -358,6 +411,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                   fontSize: "11px",
                   fontWeight: 400,
                   lineHeight: "20px",
+                  fontFamily:"Nunito Sans",
                 }}
               >
                 If any Issue in attendance please raise a Ticket
@@ -373,6 +427,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                 fontSize: "20px",
                 fontWeight: 800,
                 lineHeight: "32px",
+                fontFamily:"Nunito Sans",
                 pb: "10px",
               }}
             >
@@ -386,7 +441,8 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                   fontSize: "14px",
                   fontWeight: 600,
                   lineHeight: "32px",
-                  marginRight: "10px"
+                  marginRight: "10px",
+                  fontFamily:"Poppins",
                 }}
               >
                 Class Finished @{formatTime(classDetails?.end_time)}
@@ -398,7 +454,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                 to="/student/attendances"
                 sx={{
                   padding: "8px 18px",
-                  color: "#5611B1",
+                  color: "#0D6EFD",
                   fontSize: "14px",
                   fontWeight: 600,
                   lineHeight: "24px",
@@ -418,6 +474,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                   fontSize: "11px",
                   fontWeight: 400,
                   lineHeight: "20px",
+                  fontFamily:"Poppins",
                 }}
               >
                 If any Issue in attendance please raise a Ticket
@@ -435,6 +492,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                       fontSize: "20px",
                       fontWeight: 800,
                       lineHeight: "32px",
+                      fontFamily:"Nunito Sans",
                     }}
                   >
                     Session Notes
@@ -466,6 +524,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
             fontSize: "14px",
             fontWeight: 400,
             lineHeight: "16px",
+            fontFamily:"Nunito Sans",
           }}
         >
           Once Class Finished Videos will be uploaded
@@ -525,7 +584,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
               </Grid>
               <Grid item xs={8} md={6}>
                 <Box>
-                  <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
+                  <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2,fontFamily:"Nunito Sans", }}>
                     Other Details
                   </Typography>
                   <Box sx={{ display: "flex", gap: "40px", mb: 2 }}>
@@ -543,6 +602,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                           fontSize: "14px",
                           fontWeight: 600,
                           lineHeight: "16px",
+                          fontFamily:"Poppins",
                           p: "20px",
                         }}
                       >
@@ -575,6 +635,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                           fontSize: "12px",
                           lineHeight: "16px",
                           color: "#435D85",
+                          fontFamily:"Poppins",
                           p: "20px",
                         }}
                       >
@@ -596,6 +657,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                           fontSize: "14px",
                           fontWeight: 600,
                           lineHeight: "16px",
+                          fontFamily:"Poppins",
                           p: "20px",
                         }}
                       >
@@ -626,6 +688,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                           fontSize: "12px",
                           lineHeight: "16px",
                           color: "#435D85",
+                          fontFamily:"Poppins",
                           p: "20px",
                         }}
                       >
@@ -652,6 +715,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                           fontSize: "14px",
                           fontWeight: 600,
                           lineHeight: "16px",
+                          fontFamily:"Poppins",
                           pb: "10px",
                         }}
                       >
@@ -678,6 +742,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                           color: "#91642E",
                           fontWeight: 500,
                           fontSize: "12px",
+                          fontFamily:"Poppins",
                           lineHeight: "16px",
                           pt: "10px",
                         }}
@@ -695,6 +760,7 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                       mb: 2,
                       color: "#000",
                       fontSize: "20px",
+                      fontFamily:"Nunito Sans",
                     }}
                   >
                     Study Materials
@@ -760,8 +826,8 @@ const ClassCard = ({ type, classDetails, getClass }) => {
                                 alignItems: "start",
                               }}
                             >
-                              <Typography>{item?.title}</Typography>
-                              <Typography>{item?.description}</Typography>
+                              <Typography sx={{fontFamily:"Lato",fontSize:"12px",fontWeight:300}}>{item?.title}</Typography>
+                              <Typography sx={{fontFamily:"Lato",fontSize:"12px",fontWeight:300}}>{item?.description}</Typography>
                             </Box>
                             <Box
                               sx={{

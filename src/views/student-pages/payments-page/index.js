@@ -22,12 +22,17 @@ import PaymentCardStudent from "features/student-pages/payments-page/components/
 import { selectStudentPayments ,selectLoading} from "features/student-pages/payments-page/redux/selectors";
 import { getStudentFees } from "features/student-pages/payments-page/services";
 import CourseStudentDetails from "features/student-pages/payments-page/components/CourseDetails";
-import SalaryIcon from "assets/icons/salaryIcon";
+import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import EPFIcon from "assets/icons/EPFIcon";
 import TaxIcon from "assets/icons/TaxIcon";
 import SalaryInHandIcon from "assets/icons/salaryHandIcon";
 import PaymentMethodIcon from "assets/icons/paymentMethodIcon";
+import PendingActionsOutlinedIcon from '@mui/icons-material/PendingActionsOutlined';
 import { Link } from "react-router-dom";
+import PaymentIcon from "assets/icons/datetimepayIcon";
+import StatusIcon from "assets/icons/StatusIcon";
+import ParkPayment from "assets/icons/ParkPaymentIcon";
+
 
 
 const months = [
@@ -58,35 +63,35 @@ const PaymentStudentInterface = () => {
       id: 1,
       title: "Course Fees",
       amount: feesDataStudent?.course_fees,
-      icon: <SalaryIcon color="#0D6EFD" />,
+      icon: <AccountBalanceWalletOutlinedIcon color="primary" />,
       style: { color: "#000000", bg: "#D7E7FF" },
     },
     {
       id: 2,
       title: "Amount Paid",
       amount: feesDataStudent?.totalAmount      ,
-      icon: <EPFIcon color="#009028" />,
+      icon: <PaymentIcon color="primary" />,
       style: { color: "#009028", bg: "#D2FDD6" },
     },
     {
       id: 3,
       title: "Pending Payment",
       amount: feesDataStudent?.pending_payment,
-      icon: <TaxIcon color="#FF0000" />,
-      style: { color: "#FF0000", bg: "#FFDAD8" },
+      icon: <PendingActionsOutlinedIcon sx={{color:"#F00" }}/>,
+      style: {  bg: "#FFDAD8" },
     },
     {
       id: 4,
       title: "Status",
       amount: feesDataStudent?.payment_status,
-      icon: <SalaryInHandIcon color="#606060" />,
+      icon: <StatusIcon color="#606060" />,
       style: { color: "#000000", bg: "#E4E4E4" },
     },
     {
       id: 5,
       title: "Payment Method",
       amount: feesDataStudent?.fees?.[0]?.payment_method,
-      icon: <PaymentMethodIcon color="#DF9300" />,
+      icon: <ParkPayment color="#DF9300" />,
       style: { color: "#0D6EFD", bg: "#F9E8C7" },
     },
   ];

@@ -107,7 +107,7 @@ const CourseFrontPage = ({ Course }) => {
                 ))}
               </Tabs>
               <Box sx={{ pb: "27px", p: 6 }}>
-  <Link to="/student/course/:id">
+  <Link to="/student/courses/:id">
     <img
       src={getImageUrl(Course?.image)}
       style={{ width: "363px", height: "160px", borderRadius: "25px" }}

@@ -56,6 +56,8 @@
     "formik": "^2.4.6",
     "framer-motion": "^6.3.16",
     "html2canvas": "^1.4.1",
+    "html2pdf": "^0.0.11",
+    "html2pdf.js": "^0.10.2",
     "jotai": "^2.8.3",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "8.5.1",

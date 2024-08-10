@@ -37,7 +37,7 @@ const branchIdStudent = () => {
 
 const courseId = () => {
   const userDetails = getUserDetails();
-  return userDetails?.userDetail?.course?.[0];
+  return userDetails?.userDetail?.course;
 };
 
 const getStudentDetails = () => {
@@ -45,6 +45,7 @@ const getStudentDetails = () => {
   const userDetail = user
   return userDetail;
 };
+ 
 const instituteStudentId = () => {
   const userDetails = getStudentDetails();
   return userDetails?.institute_id?._id;
@@ -61,6 +62,7 @@ const courseStudentId = () => {
 };
 const studentCourseId = () => {
   const user = getStudentDetails();
+  console.log(user,"user")
   return user?.userDetail?.course;
 };
 
@@ -81,7 +83,7 @@ const generateEndpoints = () => {
   const institute1 = instituteStudentId();
   const branch1 = branchStudentId();
   const course1 = courseStudentId();
-
+  console.log(course1,"course1")
   const student = getStudentDetails();
   const studentCourse = studentCourseId();
   
@@ -99,7 +101,7 @@ const generateEndpoints = () => {
         // getwithclass: `/institutes/${institute}/branches/${branch}/course/${course}/classes`
       },
       class: {
-        get: `/institutes/class/${studentCourse}`,
+        get: `/institutes/class/${course1}`,
         getwithId: `/institutes/class/course/`,
       },
       attendance: {
