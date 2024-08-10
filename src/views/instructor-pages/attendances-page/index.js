@@ -97,6 +97,7 @@ const Attendance = () => {
   const [selectedMonth, setSelectedMonth] = React.useState(getCurrentMonth());
   const [attendance, setAttendance] = useState([]);
   const [ attendance_data,setAttendanceData] = useState([])
+  const [attendance_report,setAttendance_report] = useState(null)
   const [loading, setLoading] = useState(false);
   const { tabView } = useTabResponsive();
   const { showSpinner, hideSpinner } = useSpinner();
@@ -104,6 +105,38 @@ const Attendance = () => {
   const date = new Date()
 
   const getAttedenceDetails = async (month) => {
+    try {
+      showSpinner();
+      const user = getInstructorDetails();
+      const response = await Client.Instructor.attendance.get({
+        userId: user.uuid, month: month
+      });
+      setAttendance_report(response?.data)
+      setAttendanceData(response?.data)
+    } catch (error) {
+      toast.error(error?.message)
+    } finally {
+      hideSpinner();
+    }
+  };
+
+  const handleUpdateReports = async (month) => {
+    try {
+      showSpinner();
+      const user = getInstructorDetails();
+      const response = await Client.Instructor.attendance.get({
+        userId: user.uuid, month: month
+      });
+      setAttendance_report(response?.data)
+      setAttendanceData(response?.data)
+    } catch (error) {
+      toast.error(error?.message)
+    } finally {
+      hideSpinner();
+    }
+  };
+
+  const handleUpdateDetails = async (month) => {
     try {
       showSpinner();
       const user = getInstructorDetails();
@@ -121,6 +154,7 @@ const Attendance = () => {
   const handleChange = (event) => {
     setSelectedMonth(event.target.value);
     getAttedenceDetails(event.target.value)
+    handleUpdateReports(event.target.value)
   };
 
   const handleTicketView = () => {
@@ -175,7 +209,7 @@ const Attendance = () => {
               className={classes.header2Img}
               alt="Header 2"
             />
-            <Typography className={classes.monthText}>{selectedMonth}{date.getFullYear()}</Typography>
+            <Typography className={classes.monthText}>{selectedMonth}{"  "}{date.getFullYear()}</Typography>
           </Box>
         </Box>
         <Grid container>
@@ -274,7 +308,7 @@ const Attendance = () => {
                         color: "blacks",
                       }}
                     >
-                      {attendance_data?.presentDays}
+                      {attendance_report?.presentDays}
                     </Typography>
                     <Typography
                       sx={{
@@ -285,7 +319,7 @@ const Attendance = () => {
                         color: "#2C9939",
                       }}
                     >
-                      /{attendance_data?.totalWorkingDays}
+                      /{attendance_report?.totalWorkingDays}
                     </Typography>
                   </Box>
                 </Box>
@@ -322,7 +356,7 @@ const Attendance = () => {
                         color: "blacks",
                       }}
                     >
-                      {attendance_data?.absentDays}
+                      {attendance_report?.absentDays}
                     </Typography>
                   </Box>
                 </Box>
@@ -359,7 +393,7 @@ const Attendance = () => {
                         color: "blacks",
                       }}
                     >
-                      {attendance_data?.total_class}
+                      {attendance_report?.total_class}
                     </Typography>
                     <Typography
                       sx={{
@@ -370,7 +404,7 @@ const Attendance = () => {
                         color: "#9F8015",
                       }}
                     >
-                      /{attendance_data?.total_class}
+                      /{attendance_report?.total_class}
                     </Typography>
                   </Box>
                 </Box>
@@ -406,7 +440,7 @@ const Attendance = () => {
             </Box>
           </Grid>
           <Grid item xs={tabView ? 12 : 8} className={classes.content}>
-            <InstructorAttendance attendanceData={attendance} getAttedenceDetails={getAttedenceDetails} attendance_data={attendance_data}  />
+            <InstructorAttendance attendanceData={attendance} getAttedenceDetails={getAttedenceDetails} attendance_data={attendance_data} handleUpdateDetails={handleUpdateDetails}  />
           </Grid>
         </Grid>
       </Box>

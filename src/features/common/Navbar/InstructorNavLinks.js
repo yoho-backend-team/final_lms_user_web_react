@@ -6,7 +6,7 @@ import {
   NavBg,
   NavMobileBg,
   NavSelectedImage,
-  NavMobileSelectedImage,
+  NavMobileSelectedImage,NavReplace
 } from "utils/images";
 import Icon from "../../../components/icon";
 
@@ -39,7 +39,7 @@ const InstructorNavLinks = () => {
       id: 4,
       name: "Courses",
       icon: "mdi:academic-cap-outline",
-      to: "/instructor/course",
+      to: "/instructor/courses",
     },
     {
       id: 5,
@@ -68,16 +68,17 @@ const InstructorNavLinks = () => {
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
-        mt: tabView ? 10 : 10,
+        mt: tabView ? 10 : 0,
       }}
     >
       <Box sx={{ position: "absolute" }}>
         <img
-          src={tabView ? NavMobileBg : NavBg}
+          src={tabView ? NavMobileBg : NavReplace}
           style={{
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
+            filter: "drop-shadow(0px 0px 12px rgba(0, 0, 0, 0.14))",
           }}
           alt="nav background"
         />
@@ -107,7 +108,7 @@ const InstructorNavLinks = () => {
             to={item.to}
             onClick={() => setSelected(item.id)}
           >
-            <Box sx={{ textAlign: "center", pt: 5 }}>
+            <Box sx={{ textAlign: "center", pt: "104px" }}>
               <Icon
                 icon={item.icon}
                 color={selected === item.id ? "#5611B1" : "#6C757D"}
@@ -130,7 +131,7 @@ const InstructorNavLinks = () => {
             {item.id === selected && (
               <img
                 src={tabView ? NavSelectedImage : NavSelectedImage}
-                style={{ marginTop: -34, height: 50 }}
+                style={{ marginTop: -50, height: 50 }}
                 alt="nav selected"
               />
             )}

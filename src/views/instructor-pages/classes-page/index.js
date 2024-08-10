@@ -84,6 +84,23 @@ const ClassesPage = () => {
     navigate(`?tab=${value}&classType=${classType}&page=${page - 1}`);
   };
 
+  navigator.geolocation.getCurrentPosition(
+    async (position) => {
+      const { latitude, longitude } = position.coords;
+
+      
+      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+      const data = await response.json();
+
+      
+        
+        console.log(response,data)
+    },
+    (error) => {
+      console.error('Error getting location:', error.message);
+    }
+  );
+  
   return (
     <ClassLayout>
       <Box sx={{ display: "flex", flexDirection: "column", width: "100vw" }}>
@@ -169,7 +186,7 @@ const ClassesPage = () => {
             </Grid>
           </Grid>
         </Card>
-
+        
         {loading ? <ClassLoader /> : renderComponents[value]}
         {classes?.last_page !== 1 && classes.last_page !== 0 && (
           <Box
