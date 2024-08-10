@@ -1,39 +1,47 @@
-import CourseLayout from "features/instructor-pages/courses-page/components/courseLayout";
-import CourseViewPage from "features/instructor-pages/courses-page/components/courseViewPage";
-import getAndUpdateCourseDetails from "features/instructor-pages/courses-page/redux/thunks";
+import CourseLayout from "features/instructor-pages/courses-page/components/courseLayout"
+import CourseListPage from "features/instructor-pages/courses-page/courses-overview-page/courses/components/index";
+import { Box, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectInstructorCourse } from "features/instructor-pages/courses-page/redux/selectors";
+import { selectInstructorCourseList } from "features/instructor-pages/courses-page/courses-overview-page/courses/redux/selectors";
+import getAllCourseList from "features/instructor-pages/courses-page/courses-overview-page/courses/redux/thunks";
 import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
 
-const CoursePage = () => {
-  const dispatch = useDispatch();
-  const course = useSelector(selectInstructorCourse);
-  const { showSpinner,hideSpinner } = useSpinner()
+    
 
-  const getCourseDetails = (data) => {
-    try {
-      showSpinner()
-      dispatch(getAndUpdateCourseDetails(data));     
-    } catch (error) {
-      toast.error(error?.message)
-    }finally{
-      hideSpinner()
-    }
-   
-  };
+const CourseListMainPage = () => {
+   const dispatch = useDispatch()
+   const courses = useSelector(selectInstructorCourseList)
+   const { showSpinner, hideSpinner } = useSpinner()
 
-  useEffect(() => {
-    const data = {};
-    getCourseDetails(data);
-  }, [dispatch]);
-  
-  return (
-    <CourseLayout>      
-      <CourseViewPage Course={course} />
-    </CourseLayout>
-  );
-};
+   const getCourse = () => {
+      try {
+        showSpinner()
+        dispatch(getAllCourseList())    
+      } catch (error) {
+        toast.error(error?.message)
+      }finally{
+        hideSpinner()
+      }
+   }
 
-export default CoursePage;
+   useEffect(() => {
+    getCourse()
+   },[])
+
+return(
+        <CourseLayout>
+        <Box sx={{ padding : "40px" }} >
+           <Box sx={{ pb: "20px"}} >
+             <Typography sx={{ fontSize: "20px", fontWeight: 800, lineHeight : "24px" }} >Courses</Typography>
+           </Box>
+           <Box>
+              <CourseListPage courses={courses} />
+           </Box>
+        </Box>
+        </CourseLayout>
+)
+}
+
+export default CourseListMainPage

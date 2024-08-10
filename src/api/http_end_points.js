@@ -138,7 +138,7 @@ const generateEndpoints = () => {
       profile: {
         get: `/institutes/auth/student/${
           getStudentDetails()?.uuid
-        }/${instituteuuid}`,
+        }/students/${instituteuuid}`,
         update: `/institutes/auth/student/update/${getStudentDetails()?.uuid}`,
       },
     },
@@ -165,8 +165,11 @@ const generateEndpoints = () => {
         get: "/institutes/attedance/staff/",
         class_attendance: "/institutes/attedance/class/",
       },
+      course_list : {
+        get : `/institutes/${institute}/branches/${branch}/teaching-staff/courses`
+      },
       course: {
-        get: `/institutes/${institute}/branches/${branch}/course/${course}`,
+        get: `/institutes/${institute}/branches/${branch}/course/`,
         notes: {
           create: `/institutes/course/note`,
           update: `/institutes/course/note/update/`,
@@ -175,6 +178,9 @@ const generateEndpoints = () => {
         study_material: {
           index: "/institutes/study-material/",
         },
+        batches : {
+          get : `/institutes/${institute}/branches/${branch}/courses/`
+        }
       },
       class: {
         get: `/institutes/class/${course}`,

@@ -174,10 +174,13 @@ class Client {
           "instructor"
         ),
     },
+    course_list : {
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.course_list.get,params,"instructor")
+    },
     course: {
       get: (params) =>
         httpClient.get(
-          HTTP_END_POINTS.Instructor.course.get,
+          HTTP_END_POINTS.Instructor.course.get+params.course,
           params,
           "instructor"
         ),
@@ -222,14 +225,12 @@ class Client {
             "instructor"
           ),
       },
+      bathes : {
+        get : (data) => httpClient.get(HTTP_END_POINTS.Instructor.course.batches.get+data?.course+"/batches/",{},"instructor")
+      }
     },
     class: {
-      get: (params) =>
-        httpClient.get(
-          HTTP_END_POINTS.Instructor.class.get,
-          params,
-          "instructor"
-        ),
+      get: (params) =>  httpClient.get(HTTP_END_POINTS.Instructor.class.get,params,"instructor"),
       getWithId: (params) =>
         httpClient.get(
           HTTP_END_POINTS.Instructor.class.getwithId + params.course,

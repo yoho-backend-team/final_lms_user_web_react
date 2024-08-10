@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UploadNotes = ({ Notes , getCourseDetails}) => {
+const UploadNotes = ({ Notes , getCourseDetails,course}) => {
   const classes = useStyles();
   const { showSpinner, hideSpinner } = useSpinner();
   const [editMode, setEditMode] = useState(false);
@@ -117,7 +117,7 @@ const UploadNotes = ({ Notes , getCourseDetails}) => {
         formik.resetForm();
         setEditMode(false);
         setCurrentNote(null);
-        await getCourseDetails()
+        await getCourseDetails({course:course})
         toast.success("note update successfully") 
         } catch (error) {
           toast.error(error?.message)
@@ -140,7 +140,7 @@ const UploadNotes = ({ Notes , getCourseDetails}) => {
           formik.resetForm();
           setEditMode(false);
           setCurrentNote(null);
-          await getCourseDetails()
+          await getCourseDetails({course:course})
           toast.success(response?.message)
         } catch (error) {
           toast.error(error?.message)
@@ -171,7 +171,7 @@ const UploadNotes = ({ Notes , getCourseDetails}) => {
     showSpinner()
     const response = await deleteCourseNotes({id:noteToDelete?.uuid})
     toast.success("note deleted successfully")
-    await getCourseDetails()
+    await getCourseDetails({course:course})
     setOpenDeleteDialog(false);
     setNoteToDelete(null);  
     } catch (error) {
@@ -187,7 +187,7 @@ const UploadNotes = ({ Notes , getCourseDetails}) => {
       sx={{
         display: "flex",
         width: "100%",
-        px: "80px",
+        px: "20px",
         pt: "20px",
         overflow: "auto",
         pb: "60px",
@@ -231,6 +231,9 @@ const UploadNotes = ({ Notes , getCourseDetails}) => {
               placeholder="Enter heading"
               value={formik.values.heading}
               onChange={formik.handleChange}
+              InputProps={{
+                style: { boxShadow: "none" },
+              }}
               sx={{
                 border:
                   formik.touched.heading && Boolean(formik.errors.heading)
@@ -239,14 +242,15 @@ const UploadNotes = ({ Notes , getCourseDetails}) => {
                 borderRadius: "32px",
                 boxShadow: "none",
                 "& .MuiInputBase-input::placeholder": {
-                  color: "#B1B1B1",
+                  // color: "black",
                   fontSize: "14px",
                   fontWeight: 700,
                   lineHeight: "24px",
+                   color : "black"
                 },
                 "& fieldset": {
                   border: "1.4px solid #BDBDBD",
-                  borderRadius: "32px",
+                  borderRadius: "32px"
                 },
                 "& .MuiFormHelperText-root": {
                   border: "none",
@@ -294,14 +298,14 @@ const UploadNotes = ({ Notes , getCourseDetails}) => {
                 borderRadius: "32px",
                 boxShadow: "none",
                 "& .MuiInputBase-input::placeholder": {
-                  color: "#B1B1B1",
+                  // color: "#B1B1B1",
                   fontSize: "14px",
                   fontWeight: 700,
                   lineHeight: "24px",
                 },
                 "& fieldset": {
                   border: "1.4px solid #BDBDBD",
-                  borderRadius: "32px",
+                  borderRadius: "32px"
                 },
                 ":focus": {
                   boxShadow: "none",

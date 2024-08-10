@@ -1,4 +1,4 @@
-import Client from "../../../../api/index";
+import Client from "../../../../../api/index";
 
 export const getCourseDetails = async (data) => {
   try {

@@ -16,8 +16,11 @@ import {
   Box,
 } from "@mui/material";
 import back from "../../../../assets/images/pages/background_1.png";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
-function InstructorAttendance({ attendanceData,getAttedenceDetails, attendance_data }) {
+function InstructorAttendance({ attendanceData,getAttedenceDetails, attendance_data ,handleUpdateDetails}) {
   const StyledPaper = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(5),
     backgroundImage: `url(${back})`,
@@ -78,7 +81,8 @@ function InstructorAttendance({ attendanceData,getAttedenceDetails, attendance_d
 
   const handleMonthChange = (event) => {
     setSelectedMonth(event.target.value);
-    getAttedenceDetails(months[event?.target?.value])
+    handleUpdateDetails(months[event?.target?.value])
+    handleUpdateDetails(months[event.target.value])
   };
 
   const handleAttendanceChange = (day) => {
@@ -113,13 +117,17 @@ function InstructorAttendance({ attendanceData,getAttedenceDetails, attendance_d
       
       days.push(
         <Grid item xs={2.4} key={i}>
-          <Card>
+          <Card sx={{ ":hover":{
+            backgroundColor : "#5611B1",
+            color : "white",
+            cursor : "pointer"
+          } }} >
             <CardContent>
-              <Typography sx={{ fontSize: "11px", fontWeight: 300 }}>
+              <Typography sx={{ fontSize: "11px", fontWeight: 300, color : "inherit" }}>
                 {dayOfWeek}
               </Typography>
               <Typography
-                sx={{ fontSize: "21px", fontWeight: "300", textAlign: "end" }}
+                sx={{ fontSize: "21px", fontWeight: "300", textAlign: "end", color : "inherit" }}
               >
                 {i}
               </Typography>
@@ -129,6 +137,9 @@ function InstructorAttendance({ attendanceData,getAttedenceDetails, attendance_d
                   status?.[0]?.status === "present" ? "#14BC10" : "#FF4B4B",
                   padding: "0px",
                   color: "white",
+                  ":hover":{
+                    backgroundColor: status?.[0]?.status === "present" ? "#14BC10" : "#FF4B4B",
+                  }
                 }}
                 // onClick={() => handleAttendanceChange(i)}
               >
@@ -143,8 +154,30 @@ function InstructorAttendance({ attendanceData,getAttedenceDetails, attendance_d
     return days;
   };
 
+  const handleNextMonth = () => {
+    if(selectedMonth!==11){
+      setSelectedMonth(selectedMonth+1)
+      handleUpdateDetails(months[selectedMonth+1])
+    }else{
+      setSelectedMonth(0)
+      handleUpdateDetails(months[0])
+    }
+  }
+
+  const handlePreviousMonth = () => {
+    if(selectedMonth !== 1){
+      setSelectedMonth(selectedMonth-1)
+      handleUpdateDetails(months[selectedMonth-1])
+    }else{
+      setSelectedMonth(0)
+      handleUpdateDetails(months[0])
+    }
+  }
+
+
+
   return (
-    <Box sx={{ height: '66vh', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ height:  '66vh', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ flexShrink: 0 }}>
         <Grid
           container
@@ -162,6 +195,7 @@ function InstructorAttendance({ attendanceData,getAttedenceDetails, attendance_d
             <Typography variant="h4">Calendar View</Typography>
             <FormControl style={{ marginLeft: "5px" }}>
               <Select
+                IconComponent={() => <ExpandMoreIcon sx={{ color : "#5611B1"}} /> }
                 value={selectedMonth}
                 onChange={handleMonthChange}
                 size="small"
@@ -172,7 +206,26 @@ function InstructorAttendance({ attendanceData,getAttedenceDetails, attendance_d
                   fontWeight: 600,
                   lineHeight: "24px",
                   minWidth: "89px",
-                  maxWidth: "89px",
+                  '& .MuiSelect-icon': {
+                    top: '50%', 
+                    right: '10px', 
+                    color: "#0D6EFD",
+                  },
+                  "&.MuiSelect-nativeInput	":{
+                     border : "none"
+                  },
+                  '& .MuiSelect-select': {
+                    padding: '5px 10px',
+                    display : "flex",
+                    justifyContent : "center", 
+                    boxShadow : "none"
+                  },
+                  '& .MuiInputBase-root': {
+                    padding: '0px', 
+                  },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    border: 'none',
+                  }
                 }}
                 variant="outlined"
               >
@@ -190,6 +243,16 @@ function InstructorAttendance({ attendanceData,getAttedenceDetails, attendance_d
         <Grid container spacing={2}>
           {generateDays()}
         </Grid>
+      </Box>
+      <Box sx={{ display: 'flex', justifyContent: "flex-end", gap: "40px", verticalAlign: "end",pt:"40px",px:"25px"}} >
+         <Box sx={{ display: selectedMonth ? "flex" : "none",cursor: "pointer"}} onClick={handlePreviousMonth} >
+            <KeyboardArrowLeftIcon  sx={{ width : "24px", height : "24px"}} />
+            <Typography sx={{ color : "#5611B1", fontSize: "15px", fontWeight : 700, lineHeight : "24px"}} >{months[selectedMonth-1]}</Typography>
+         </Box>
+         <Box sx={{ display: 'flex',cursor: "pointer"}} onClick={handleNextMonth} >
+            <Typography  sx={{ color : "#5611B1", fontSize: "15px", fontWeight : 700, lineHeight : "24px"}} >{months[selectedMonth]}</Typography>
+            <ChevronRightIcon sx={{ width : "24px", height : "24px", cursor: "pointer"}} />
+         </Box>
       </Box>
     </Box>
   );

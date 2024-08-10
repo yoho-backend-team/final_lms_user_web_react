@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-const StudyMaterialList = ({materials,handleEdit}) => {
+const StudyMaterialList = ({materials,handleEdit,handleDelete}) => {
     const { showSpinner,hideSpinner} = useSpinner()
     const classes = useStyles()
     return(
@@ -108,7 +108,7 @@ const StudyMaterialList = ({materials,handleEdit}) => {
                             <IconButton sx={{ width: "40px", height: "40px", borderRadius: "22px",backgroundColor: "#5611B1",":hover":{ backgroundColor: "#5611B1"}}} onClick={() => handleEdit(material) }>
                               <CourseEditIcon  color= "#5611B1" />
                             </IconButton>
-                            <IconButton sx={{ width: "40px", height: "40px", borderRadius: "22px", backgroundColor: "#BF0000",":hover":{backgroundColor:"#BF0000"}}} onClick={() => {}}>
+                            <IconButton sx={{ width: "40px", height: "40px", borderRadius: "22px", backgroundColor: "#BF0000",":hover":{backgroundColor:"#BF0000"}}} onClick={() => handleDelete(material)}>
                               <CourseDeleteIcon sx={{ color: "#FF0000" }} />
                             </IconButton>
                         </Box>

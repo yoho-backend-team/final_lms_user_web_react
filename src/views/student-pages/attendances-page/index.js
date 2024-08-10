@@ -15,6 +15,8 @@ import {
   AttedenceMainBg,
   AttedenceHeaderImg,
   AttedenceHeader2Img,
+  StudentAttendanceHeader,
+  StudentAttendanceHeader2
 } from "utils/images";
 import Client from "../../../api/index";
 import { useTabResponsive } from "utils/tabResponsive";
@@ -168,16 +170,16 @@ const Attendance = () => {
           </Box>
           <Box className={classes.headerImgContainer}>
             <img
-              src={AttedenceHeaderImg}
+              src={StudentAttendanceHeader}
               className={classes.headerImg}
               alt="Header 1"
             />
             <img
-              src={AttedenceHeader2Img}
+              src={StudentAttendanceHeader2}
               className={classes.header2Img}
               alt="Header 2"
             />
-            <Typography className={classes.monthText}>{months[selectedMonth]} {date.getFullYear()}</Typography>
+            <Typography className={classes.monthText}>{months[selectedMonth]}{"  "} {date.getFullYear()}</Typography>
           </Box>
         </Box>
         <Grid container>
@@ -200,7 +202,7 @@ const Attendance = () => {
                     <ExpandMoreIcon sx={{ color: "black" }} />
                   )}
                   sx={{
-                    border: "1px solid #5611B1",
+                    border: "1px solid #0D6EFD",
                     backgroundColor: "white",
                     borderRadius: "8px",
                     display: "flex",
@@ -247,7 +249,7 @@ const Attendance = () => {
                   padding: tabView
                     ? "36px 20px 20px 20px"
                     : "36px 35px 36px 27px",
-                  backgroundColor: "#B8FEBF",
+                  backgroundColor: "#D5FFDA",
                   borderRadius: "10px",
                 }}
               >
@@ -295,7 +297,7 @@ const Attendance = () => {
               <Box
                 sx={{
                   padding: "36px 35px 36px 27px",
-                  backgroundColor: "#EBACAC",
+                  backgroundColor: "#FFD5D5",
                   borderRadius: "10px",
                 }}
               >
@@ -332,7 +334,7 @@ const Attendance = () => {
               <Box
                 sx={{
                   padding: "36px 35px 36px 27px",
-                  backgroundColor: "#FFE896",
+                  backgroundColor: "#FFF5D1",
                   borderRadius: "10px",
                 }}
               >
@@ -408,7 +410,7 @@ const Attendance = () => {
             </Box>
           </Grid>
           <Grid item xs={tabView ? 12 : 8} className={classes.content}>
-            <CustomCalendar attendanceData={attendance} getAttedenceDetails={getAttedenceDetails} attendance_data={attendance_data}  />
+            <CustomCalendar attendanceData={attendance} getAttedenceDetails={getAttedenceDetails} attendance_data={attendance_data}   />
           </Grid>
         </Grid>
       </Box>

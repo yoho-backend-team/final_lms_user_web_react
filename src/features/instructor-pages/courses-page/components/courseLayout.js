@@ -21,6 +21,7 @@ const CourseLayout = ({ children }) => {
           border: "1px solid #C3C3C3",
           borderRadius: "18px",
           overflow: "auto",
+          boxShadow : "0px 0px 64px 0px rgba(0, 0, 0, 0.10)"
         }}
       >
         {children}

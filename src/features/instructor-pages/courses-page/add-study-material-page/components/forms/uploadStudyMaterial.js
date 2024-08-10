@@ -18,6 +18,9 @@ import StudyMaterialList from "./components/materialList";
 import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
 import { fileUpload } from "features/common/upload";
+import { getInstructorDetails } from "store/atoms/authorized-atom";
+import { createStudyMaterial, deleteStudyMaterial, updateStudyMaterial } from "../../services";
+import DeleteDialog from "./components/deleteModel";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,11 +57,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UploadStudyMaterials = ({ StudyMaterials, getCourseDetails }) => {
+const UploadStudyMaterials = ({ StudyMaterials, getCourseDetails ,course}) => {
   const classes = useStyles();
   const { showSpinner, hideSpinner } = useSpinner();
   const [editMode, setEditMode] = useState(false);
   const [currentMaterial, setCurrentMaterial] = useState(null);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [materialToDelete, setMaterialToDelete] = useState(null);
 
   const formik = useFormik({
     initialValues: {
@@ -71,9 +76,47 @@ const UploadStudyMaterials = ({ StudyMaterials, getCourseDetails }) => {
       subLine: Yup.string().required("Sub Line is required"),
       file: Yup.mixed().required("File is required"),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      if(editMode){
+        try {
+        showSpinner()  
+        const data = { materialId: currentMaterial?.uuid, title: values?.heading, description : values?.subLine, file: values?.file }
+        const response = await updateStudyMaterial(data)
+        formik.resetForm()
+        setEditMode(false)
+        setCurrentMaterial(null)
+        await getCourseDetails({ course: course })
+        toast.success("study material update successfully")
+        } catch (error) {
+          toast.error(error?.message)
+        }finally{
+          hideSpinner()
+        }
+      }else{
+        try {
+        showSpinner()
+        const instructor = getInstructorDetails()
+        const data = {
+          institute : instructor?.institute_id?.uuid,
+          branch : instructor?.branch_id?.uuid,
+          course :  course,
+          title : values?.heading,
+          description : values?.subLine,
+          file : values?.file
+        } 
+        const response = await createStudyMaterial(data)
+        formik.resetForm() 
+        toast.success(response?.message)
+        await getCourseDetails({course:course})
+        } catch (error) {
+          toast.error(error?.message)
+        }finally{
+          hideSpinner()
+        }
+      }
     },
   });
+
 
   const handleEdit = (material) => {
     setEditMode(true);
@@ -89,13 +132,32 @@ const UploadStudyMaterials = ({ StudyMaterials, getCourseDetails }) => {
     formik.setFieldValue("file", null);
   };
 
+  const handleDelete = (material) => {
+        setMaterialToDelete(material)
+        setOpenDeleteDialog(true)
+  }
+
+  const confirmDelete = async () => {
+     try {
+     showSpinner()
+     const response = await deleteStudyMaterial({ id: materialToDelete?.uuid })
+     toast.success("study material deleted successfully")
+     await getCourseDetails({ course: course })
+     setMaterialToDelete(null)
+     setOpenDeleteDialog(false)
+     } catch (error) {
+       toast.error(error?.message)
+     }finally{
+      hideSpinner()
+     }
+  }
   
   return (
     <Box
       sx={{
         display: "flex",
         width: "100%",
-        px: "80px",
+        px: "20px",
         pt: "20px",
         overflow: "auto",
         pb: "60px",
@@ -259,7 +321,7 @@ const UploadStudyMaterials = ({ StudyMaterials, getCourseDetails }) => {
               />
               <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
                 <Box>
-                  <StudyMaterialIcon />
+                  <StudyMaterialIcon/>
                 </Box>
                 {formik.values.file ? (
                   <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -337,6 +399,11 @@ const UploadStudyMaterials = ({ StudyMaterials, getCourseDetails }) => {
                 fontWeight: 500,
               }}
               type="button"
+              onClick={() => {
+                  formik.resetForm()
+                  setEditMode(false)
+                  setCurrentMaterial(null) }
+              }
             >
               Cancel
             </Button>
@@ -352,7 +419,7 @@ const UploadStudyMaterials = ({ StudyMaterials, getCourseDetails }) => {
               }}
               endIcon={<FileUploadOutlinedIcon sx={{ color: "white" }} />}
             >
-              Upload
+              { editMode ? "Update" : "Upload"}
             </Button>
           </Box>
         </form>
@@ -360,7 +427,13 @@ const UploadStudyMaterials = ({ StudyMaterials, getCourseDetails }) => {
       <Box sx={{ display: "flex" }}>
         <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
       </Box>
-      <StudyMaterialList materials={StudyMaterials} handleEdit={handleEdit} />
+      <StudyMaterialList materials={StudyMaterials} handleEdit={handleEdit} handleDelete={handleDelete} />
+      <DeleteDialog
+       openDeleteDialog={openDeleteDialog}
+       setOpenDeleteDialog={setOpenDeleteDialog}
+       confirmDelete={confirmDelete}
+       title={"Are you sure want to delete?"}
+      />
     </Box>
   );
 };

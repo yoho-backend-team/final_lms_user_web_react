@@ -30,6 +30,7 @@ export { default as HelpCenterBg } from "../assets/instructor/help-center/bg.svg
 //nav
 export { default as NavBg } from "../assets/common/nav.svg";
 export { default as NavMobileBg } from "../assets/common/mobile-nav.svg";
+export { default as NavReplace } from "../assets/common/nav-1.svg"
 export { default as NavSelectedImage } from "../assets/common/nav-selected-image.svg";
 export { default as NavMobileSelectedImage } from "../assets/common/nav-mobile-selected-image.svg";
 
@@ -44,3 +45,7 @@ export { default as NotificationNewViewIcon } from "../assets/instructor/dashboa
 //course
 export { default as EditIcon } from "../assets/instructor/course/course-edit.svg"
 export { default as DeleteIcon } from "../assets/instructor/course/course-delete.svg"
+
+//student - Attendance 
+export { default as StudentAttendanceHeader } from "../assets/students/attendance/Attendance_Header.svg"
+export { default as StudentAttendanceHeader2 } from "../assets/students/attendance/attedence_header_2.svg"

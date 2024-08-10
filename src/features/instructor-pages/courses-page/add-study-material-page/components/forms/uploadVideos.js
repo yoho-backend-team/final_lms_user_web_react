@@ -77,7 +77,7 @@ const UploadVideos = () => {
       sx={{
         display: "flex",
         width: "100%",
-        px: "80px",
+        px: "20px",
         pt: "20px",
         overflow: "auto",
         pb: "60px",

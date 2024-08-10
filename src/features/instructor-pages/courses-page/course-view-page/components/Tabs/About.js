@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
-import CourseDetails from "../courseDetails";
-import CourseChapters from "../courseChapter";
+import CourseDetails from "../About/courseDetails";
+import CourseChapters from "../About/courseChapter";
 
 const About = ({ Course }) => {
   return (

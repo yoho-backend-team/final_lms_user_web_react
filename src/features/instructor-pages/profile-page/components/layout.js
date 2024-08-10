@@ -22,16 +22,14 @@ const ProfileLayout = ({children,handleBack}) => {
             width : "100%"
           }}
           >
-          <Box sx={{ py: "10px",px:"8px", zIndex: "1000"}} onClick={handleBack} >
-            <KeyboardBackspaceOutlinedIcon sx={{ height: '24px', width: "24px", cursor: "pointer"}}  />
-          </Box>
           <Box
           sx={{
                backgroundColor : "#FFFFFF",
                width : "100%",
                height : "100%",
-               borderRadius : "18px",
-               border : "1px solid #C3C3C3",
+               borderRadius : "12px",
+              //  border : "1px solid #C3C3C3",
+              boxShadow : 1,
                overflow : "auto"
           }}
           >
