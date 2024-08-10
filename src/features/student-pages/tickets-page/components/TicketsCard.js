@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Grid, Button } from "@mui/material";
 import SubWayPinIcon from "assets/icons/subWayPinIcon";
+import { formatDate, formatDateandmonth } from "utils/formatDate";
 
 const TicketCard = ({
   ticket,handleTicketViewOpen,handleTicketViewClose
@@ -28,6 +29,7 @@ const TicketCard = ({
         borderRadius: "16px",
         p: "16px",
         boxShadow: "0px 2.4px 25px 0px rgba(160, 170, 255, 0.24)",
+        
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -53,7 +55,7 @@ const TicketCard = ({
           padding: "9px 24px",
         }}        
         >
-          <Typography sx={{ color: "#5611B1" }}>{convertDate(ticket?.date)}</Typography>
+          <Typography sx={{ color: "#5611B1" }}>{formatDateandmonth(ticket?.date)}</Typography>
         </Box>
       </Box>
 
