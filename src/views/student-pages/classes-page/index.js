@@ -45,7 +45,7 @@ const ClassesPage = () => {
 
   console.log(classes.data,"classes")
   const renderComponents = {
-    upcoming: <UpcomingClassList data={classes} classType={classType} group={"upcoming"} />,
+    upcoming: <UpcomingClassList data={classes} classType={classType} group={"upcoming"}  />,
     completed: <CompletedClassList data={classes} classType={classType} group={"completed"} />,
     history: <ClassHistory data={classes} classType={classType} group={"history"} />,
     live: <LiveClassList data={classes} classType={classType} group={"live"} />,
@@ -130,18 +130,20 @@ const ClassesPage = () => {
                     lineHeight: "32px",
                     color: "#495057",
                   }}
+                  
                 >
                   {classType === "online"
                     ? "Online Classes"
                     : "Offline Classes"}
                 </Typography>
-                <img src={OfflineClassIcon} alt="online class" />
+                <img src={OfflineClassIcon} alt="Live Class" />
               </Box>
               <Box>
                 <ClassTabs
                   tabs={tabs}
                   value={value}
                   handleChange={handleChange}
+                  tabIndex={1}
                 />
               </Box>
             </Grid>
@@ -156,6 +158,8 @@ const ClassesPage = () => {
                 px: "20px",
                 alignItems: "center",
               }}
+              tabIndex={2}
+              
             >
               <Box>
                 <FormControl>
@@ -191,6 +195,7 @@ const ClassesPage = () => {
                   lineHeight: "24px",
                   cursor: page === 1 ? "not-allowed" : "pointer",
                 }}
+                tabIndex={2}
               >
                 Previous
               </Typography>
@@ -203,6 +208,7 @@ const ClassesPage = () => {
                   lineHeight: "24px",
                   cursor: page === classes?.last_page ? "not-allowed" : "pointer",
                 }}
+                tabIndex={3}
               >
                 Next
               </Typography>

@@ -31,6 +31,7 @@ export { default as CourseBg } from "../assets/instructor/course/course_bg.svg";
 export { default as CourseCardBg } from "../assets/instructor/course/course-card.svg";
 export { default as HelpCenterBg } from "../assets/instructor/help-center/bg.svg";
 export { default as ClassBackroundBg } from "../assets/instructor/class/class-backround.svg";
+export { default as CourseStudent } from "../assets/instructor/course/course_student.svg";
 
 //nav
 export { default as NavBg } from "../assets/common/nav.svg";

@@ -229,6 +229,7 @@ const Attendance = () => {
                     fontWeight: 500,
                     color: "#0D6EFD",
                   }}
+                  tabIndex={1}
                 >
                   Create Ticket
                 </Button>
@@ -261,7 +262,9 @@ const Attendance = () => {
                         fontSize: "20px",
                         fontWeight: 600,
                         lineHeight: "24px",
+                        fontFamily:"Nunito Sans"
                       }}
+                      tabIndex={1}
                     >
                       Present days
                     </Typography>
@@ -273,7 +276,8 @@ const Attendance = () => {
                         fontWeight: 600,
                         lineHeight: "24px",
                         letterSpacing: "0.8px",
-                        color: "blacks",
+                        color: "#000",
+                        fontFamily:"Barlow Condensed"
                       }}
                     >
                       {attendance_data?.totalPresentDays}
@@ -285,7 +289,9 @@ const Attendance = () => {
                         lineHeight: "24px",
                         letterSpacing: "0.8px",
                         color: "#2C9939",
+                        fontFamily:"Barlow Condensed"
                       }}
+                      
                     >
                       /{attendance_data?.totalWorkingDays}
                     </Typography>
@@ -309,7 +315,9 @@ const Attendance = () => {
                         fontSize: "20px",
                         fontWeight: 600,
                         lineHeight: "24px",
+                        fontFamily:"Nunito Sans"
                       }}
+                      
                     >
                       Absent days
                     </Typography>
@@ -321,7 +329,8 @@ const Attendance = () => {
                         fontWeight: 600,
                         lineHeight: "24px",
                         letterSpacing: "0.8px",
-                        color: "blacks",
+                       color: "#000",
+                        fontFamily:"Barlow Condensed"
                       }}
                     >
                       {attendance_data?.totalAbsentDays}
@@ -346,7 +355,9 @@ const Attendance = () => {
                         fontSize: "20px",
                         fontWeight: 600,
                         lineHeight: "24px",
+                       fontFamily:"Nunito Sans"
                       }}
+                     
                     >
                       Classes Atten
                     </Typography>
@@ -358,7 +369,8 @@ const Attendance = () => {
                         fontWeight: 600,
                         lineHeight: "24px",
                         letterSpacing: "0.8px",
-                        color: "blacks",
+                       color: "#000",
+                        fontFamily:"Barlow Condensed"
                       }}
                     >
                       {attendance_data?.attendedClassCount}
@@ -369,7 +381,8 @@ const Attendance = () => {
                         fontWeight: 600,
                         lineHeight: "24px",
                         letterSpacing: "0.8px",
-                        color: "#9F8015",
+                         color: "#9F8015",
+                        fontFamily:"Barlow Condensed"
                       }}
                     >
                       /{totalClasses}
@@ -396,11 +409,13 @@ const Attendance = () => {
                     padding: "9px 82px",
                     fontSize: "14px",
                     fontWeight: 500,
+                    fontFamily:"Poppins",
                     color: "#FBFBFB",
                     ":hover":{
                       backgroundColor: "#0D6EFD",
                     }
                   }}
+                  tabIndex={2}
                 >
                   Create Ticket
                 </Button>

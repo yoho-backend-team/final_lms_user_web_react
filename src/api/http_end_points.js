@@ -95,6 +95,7 @@ const generateEndpoints = () => {
         forget_password: "/institutes/auth/profile/forgot-password",
         reset_password: "/institutes/auth/profile/reset-password",
         change_password: "institutes/auth/profile/change-password",
+        logout: "institutes/auth/student/logout"
       },
       course: {
         get: `/institutes/${institute1}/branches/${branch1}/course/${course1}`,
@@ -138,9 +139,7 @@ const generateEndpoints = () => {
         get: `/institutes/community/course/${course1}`,
       },
       profile: {
-        get: `/institutes/auth/student/${
-          getStudentDetails()?.uuid
-        }/${instituteuuid}`,
+        get: `institutes/auth/profile/me/`,
         update: `/institutes/auth/student/update/${getStudentDetails()?.uuid}`,
       },
     },

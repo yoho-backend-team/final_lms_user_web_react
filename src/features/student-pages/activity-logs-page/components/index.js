@@ -141,6 +141,7 @@ const ActivityStudentLog = () => {
                   sx={{ marginRight: 2 }}
                   InputLabelProps={{ shrink: true }}
                   InputProps={{ inputComponent: styledInput }}
+                  tabIndex={1}
                 />
               </FormControl>
               <FormControl
@@ -159,6 +160,7 @@ const ActivityStudentLog = () => {
                   sx={{ marginRight: 2 }}
                   InputLabelProps={{ shrink: true }}
                   InputProps={{ inputComponent: styledInput }}
+                  tabIndex={2}
                 />
               </FormControl>
               <FormControl>
@@ -166,7 +168,8 @@ const ActivityStudentLog = () => {
                   select
                   value={week}
                   onChange={(e) => setWeek(e.target.value)}
-                  sx={{ width: 150 }}
+                  sx={{ width: 150}}
+                  tabIndex={3}
                 >
                   <MenuItem value="Past Week">Past Week</MenuItem>
                   <MenuItem value="Past Month">Past Month</MenuItem>

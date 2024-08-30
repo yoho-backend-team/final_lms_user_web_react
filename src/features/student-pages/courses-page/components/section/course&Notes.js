@@ -81,7 +81,7 @@ const modules = [
                   <Box sx={{ padding: tabView ? "20px" : "60px"}}>
                     <Grid container xs={12} gap={tabView ? "60px" : "20px"}>
                     {classes?.map((module,index) => (
-                        <Grid item key={module.id} xs={2.5}  sx={{display:"flex",flexDirection:"row",justifyContent: "center", alignItems: "center",cursor: "pointer"}}>
+                        <Grid item key={module.id} xs={2.5}  sx={{display:"flex",flexDirection:"row",justifyContent: "center", alignItems: "center",cursor: "pointer"}} tabIndex={1}>
                           <CourseStudentModuleCard
                             id={index+1}
                             style={getRandomStyle(index)}
@@ -93,6 +93,8 @@ const modules = [
                             closeCourseView={closeCourseView}
                             openCourseView={openCourseView}
                             module={module}
+                            class_details ={module}
+                            
                           />
                         </Grid>
                       ))}

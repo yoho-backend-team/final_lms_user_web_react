@@ -132,6 +132,7 @@ const PaymentStudentInterface = () => {
           mb: "20px",
           borderRadius: "25px",
           boxShadow: tabView ? "none" : "0px 0px 64px 0px rgba(0, 0, 0, 0.10);",
+          
         }}
       >
         <Box
