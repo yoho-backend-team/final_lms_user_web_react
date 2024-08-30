@@ -5,7 +5,6 @@ const StudyMaterialIcon = () => (
     viewBox="0 0 62 49"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    throwIfNamespace={false}
     xmlnsXlink="http://www.w3.org/1999/xlink"
   >
     <rect width="62" height="49" rx="5" fill="url(#pattern0_479_20155)" />

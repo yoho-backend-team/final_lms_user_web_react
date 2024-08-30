@@ -6,7 +6,7 @@ import attendanceReducer from "../features/instructor-pages/attendances-page/red
 import classesReducer from "../features/instructor-pages/classes-page/redux/slices";
 import activityLogReducer from "../features/instructor-pages/activity-logs-page/redux/slices";
 import communityReducer from "../features/instructor-pages/community-page/redux/slices";
-import courseReducer from "../features/instructor-pages/courses-page/redux/slices";
+import courseReducer from "../features/instructor-pages/courses-page/course-view-page/redux/slices";
 import helpReducer from "../features/instructor-pages/help-center-page/redux/slices";
 import paymentReducer from "../features/instructor-pages/payments-page/redux/slices";
 import ticketReducer from "../features/instructor-pages/tickets-page/redux/slices";
@@ -25,6 +25,7 @@ import StudentAttendanceReducer from "../features/student-pages/attendances-page
 import StudentActivityReducer from "../features/student-pages/activity-logs-page/redux/slices"
 import StudentdashboardReducer from "../features/student-pages/home-page/redux/slices"
 import InstructorFaqReducer from "../features/instructor-pages/Faq-page/redux/slices"
+import InstructorCourseListReducer from "../features/instructor-pages/courses-page/courses-overview-page/courses/redux/slices"
 
 // ==============================|| REDUX - MAIN STORE ||============================== //
 
@@ -41,6 +42,7 @@ const store = configureStore({
     instructorTickets: ticketReducer,
     instructorDashboard: dashboardReducer,
     instructorNotifications : instructorNotificationReducer,
+    instructorCourseList : InstructorCourseListReducer,
     studentCommunity: studentCommunityReducer,
     studentcourse: StudentCourseReducer,
     studentPayments: StudentPaymentReducer,

@@ -91,6 +91,11 @@ class HttpClient {
     return response?.data;
   }
 
+  async delete(url,userType){
+    const response = await Axios.delete(url,{ headers:{ "User-Type": userType } })
+    return response?.data
+  }
+
   async fileGet(url, userType) {
     const response = Axios.get(url, {
       responseType: "blob",

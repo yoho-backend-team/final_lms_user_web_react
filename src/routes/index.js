@@ -5,128 +5,59 @@
   import InstructorLayout from "layout/InstructorLayout";
   import {
     checkUserLoggedIn,
-    checkUser,
     checkUserRole,
   } from "store/atoms/authorized-atom";
-  import { Instructor_Role, isAuthenticatedInstructor, isAuthenticatedStudent, role_to_details, role_to_routes, Student_Role } from "lib/constants";
-import CourseFrontPage from "features/student-pages/courses-page/components/CourseFrontPage";
+  import { Instructor_Role, isAuthenticatedInstructor, isAuthenticatedStudent, role_to_details, role_to_routes} from "lib/constants";
 import NotificationList from "views/instructor-pages/notification-page";
 
   // Auth Pages
-  const LoginPage = Loadable(lazy(() => import("views/auth-pages/login-page")));
-  const InstructorLogin = Loadable(
-    lazy(() => import("views/auth-pages/login-page/instructorLogin")),
-  );
+  const LoginPage = Loadable(lazy(() => import("views/auth-pages/login-page")))
+  const InstructorLogin = Loadable(lazy(() => import("views/auth-pages/login-page/instructorLogin")))
 
 
   // Error Pages
   const ErrorPage404 = Loadable(lazy(() => import("views/error-pages/404-page")));
 
-  const StudentHomePage = Loadable(
-    lazy(() => import("views/student-pages/home-page")),
-  );
-  const StudentActivityLogsPage = Loadable(
-    lazy(() => import("views/student-pages/activity-logs-page")),
-  );
-  const StudentAttendancesPage = Loadable(
-    lazy(() => import("views/student-pages/attendances-page")),
-  );
-  const StudentClassesPage = Loadable(
-    lazy(() => import("views/student-pages/classes-page")),
-  );
-  const StudentCommunityPage = Loadable(
-    lazy(() => import("views/student-pages/community-page")),
-  );
-  const StudentCoursePage = Loadable(
-    lazy(() => import("views/student-pages/courses-page")),
-  );
+  const StudentHomePage = Loadable(lazy(() => import("views/student-pages/home-page")))
+  const StudentActivityLogsPage = Loadable(lazy(() => import("views/student-pages/activity-logs-page")))
+  const StudentAttendancesPage = Loadable(lazy(() => import("views/student-pages/attendances-page")))
+  const StudentClassesPage = Loadable(lazy(() => import("views/student-pages/classes-page")))
+  const StudentCommunityPage = Loadable(lazy(() => import("views/student-pages/community-page")))
+  const StudentCoursePage = Loadable(lazy(() => import("views/student-pages/courses-page")))
 
-  const StudentCourseViewPage = Loadable(
-    lazy(() => import("views/student-pages/courses-page/course[id]-page"))
-  )
-  const StudentHelpCenterPage = Loadable(
-    lazy(() => import("views/student-pages/help-center-page")),
-  );
-  const StudentTicketsPage = Loadable(
-    lazy(() => import("views/student-pages/tickets-page")),
-  );
-  const StudentPaymentsPage = Loadable(
-    lazy(() => import("views/student-pages/payments-page")),
-  );
-  const StudentFaqPage = Loadable(
-    lazy(() => import("views/student-pages/Faq-page")),
-  );
-  const StudentClassViewPage = Loadable(
-    lazy(() => import("views/student-pages/class[id]-page")),
-  );
+  const StudentCourseViewPage = Loadable(lazy(() => import("views/student-pages/courses-page/course[id]-page")))
+  const StudentHelpCenterPage = Loadable(lazy(() => import("views/student-pages/help-center-page")))
+  const StudentTicketsPage = Loadable(lazy(() => import("views/student-pages/tickets-page")))
+  const StudentPaymentsPage = Loadable(lazy(() => import("views/student-pages/payments-page")))
+  const StudentFaqPage = Loadable(lazy(() => import("views/student-pages/Faq-page")))
+  const StudentClassViewPage = Loadable(lazy(() => import("views/student-pages/class[id]-page")))
 
-  const StudentOptionalPayment = Loadable(
-    lazy(() => import("features/student-pages/payments-page/components/Optional/Mainpage")),
-  );
+  const StudentOptionalPayment = Loadable(lazy(() => import("features/student-pages/payments-page/components/Optional/Mainpage")))
 
-  const StudentProfilePage = Loadable(
-    lazy(() => import("views/student-pages/profile-page")),
-  );
-  const StudentCreateTicketPage = Loadable(
-    lazy(() => import("views/student-pages/create-ticket-page")),
-  );
-  const StudentTicketViewPage = Loadable(
-    lazy(() => import("views/student-pages/tickets-page")),
-  );
-  const StudentNotificationList = Loadable(
-    lazy(() => import("views/student-pages/notification-page/index"))
-  )
+  const StudentProfilePage = Loadable(lazy(() => import("views/student-pages/profile-page")))
+  const StudentCreateTicketPage = Loadable(lazy(() => import("views/student-pages/create-ticket-page")))
+  const StudentTicketViewPage = Loadable(lazy(() => import("views/student-pages/tickets-page")))
+  const StudentNotificationList = Loadable(lazy(() => import("views/student-pages/notification-page/index")))
 
 
 // Instructor Pages
-const InstructorHomePage = Loadable(
-  lazy(() => import("views/instructor-pages/home-page")),
-);
-const InstructorActivityLogsPage = Loadable(
-  lazy(() => import("views/instructor-pages/activity-logs-page")),
-);
-const InstructorAttendancesPage = Loadable(
-  lazy(() => import("views/instructor-pages/attendances-page")),
-);
-const InstructorClassesPage = Loadable(
-  lazy(() => import("views/instructor-pages/classes-page")),
-);
-const InstructorCommunityPage = Loadable(
-  lazy(() => import("views/instructor-pages/community-page")),
-);
-const InstructorCoursePage = Loadable(
-  lazy(() => import("views/instructor-pages/courses-page")),
-);
-const InstructorCourseViewPage = Loadable(
-  lazy(() => import("views/instructor-pages/courses-page/Mainpage")),
-);
-const InstructorStudyMaterialsPage = Loadable(
-  lazy(
-    () => import("views/instructor-pages/courses-page/courses-[id]-page/index"),
-  ),
-);
+const InstructorHomePage = Loadable(lazy(() => import("views/instructor-pages/home-page")))
+const InstructorActivityLogsPage = Loadable(lazy(() => import("views/instructor-pages/activity-logs-page")))
+const InstructorAttendancesPage = Loadable(lazy(() => import("views/instructor-pages/attendances-page")))
+const InstructorClassesPage = Loadable(lazy(() => import("views/instructor-pages/classes-page")))
+const InstructorCommunityPage = Loadable(lazy(() => import("views/instructor-pages/community-page")))
+const InstructorCourseListPage = Loadable(lazy(() => import("views/instructor-pages/courses-page/index")))
+const InstructorCoursePage = Loadable(lazy(() => import("views/instructor-pages/courses-page/courses-[id]-page/index")))
+const InstructorCourseViewPage = Loadable(lazy(() => import("views/instructor-pages/courses-page/courses-[id]-page/Mainpage")))
+// const InstructorStudyMaterialsPage = Loadable(lazy(() => import("views/instructor-pages/courses/notes-material-[id]-page/index")))
 
-const InstructorFaqPage = Loadable(
-  lazy(() => import("views/instructor-pages/Faq-page")),
-);
-const InstructorHelpCenterPage = Loadable(
-  lazy(() => import("views/instructor-pages/help-center-page")),
-);
-const InstructorTicketsPage = Loadable(
-  lazy(() => import("views/instructor-pages/tickets-page")),
-);
-const InstructorPaymentsPage = Loadable(
-  lazy(() => import("views/instructor-pages/payments-page")),
-);
-const InstructorClassViewPage = Loadable(
-  lazy(() => import("views/instructor-pages/class[id]-page")),
-);
-const InstructorProfilePage = Loadable(
-  lazy(() => import("views/instructor-pages/profile-page/index")),
-); // This seems like an error; correct import path should be checked
-const InstructorCreateTicketPage = Loadable(
-  lazy(() => import("views/student-pages/create-ticket-page")),
-); // This seems like an error; correct import path should be checked
+const InstructorFaqPage = Loadable(lazy(() => import("views/instructor-pages/Faq-page")))
+const InstructorHelpCenterPage = Loadable(lazy(() => import("views/instructor-pages/help-center-page")))
+const InstructorTicketsPage = Loadable(lazy(() => import("views/instructor-pages/tickets-page")))
+const InstructorPaymentsPage = Loadable(lazy(() => import("views/instructor-pages/payments-page")))
+const InstructorClassViewPage = Loadable(lazy(() => import("views/instructor-pages/class[id]-page")))
+const InstructorProfilePage = Loadable(lazy(() => import("views/instructor-pages/profile-page/index")))
+const InstructorCreateTicketPage = Loadable(lazy(() => import("views/student-pages/create-ticket-page")))
 
 
 
@@ -254,18 +185,22 @@ const InstructorCreateTicketPage = Loadable(
               path="instructor/community"
               element={<InstructorCommunityPage />}
             />
+            <Route 
+            path="instructor/courses"
+            element={<InstructorCourseListPage />}
+            />
             <Route
-              path="instructor/course"
+              path="instructor/course/:courseId"
               element={<InstructorCoursePage />}
             />
              <Route
               path="instructor/course/view"
               element={<InstructorCourseViewPage />}
             />
-            <Route
-              path="instructor/course/resources/:id"
+            {/* <Route
+              path="instructor/course/notes-materials/:id"
               element={<InstructorStudyMaterialsPage />}
-            />
+            /> */}
             <Route
               path="instructor/help-center"
               element={<InstructorHelpCenterPage />}

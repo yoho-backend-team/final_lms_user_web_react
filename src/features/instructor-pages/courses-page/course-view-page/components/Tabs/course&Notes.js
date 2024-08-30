@@ -1,4 +1,4 @@
-import CourseModuleCard from "../courseNotesComponents/courseModuelCard";
+import CourseModuleCard from "../Notes&Material/courseModuelCard";
 import { Grid, Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTabResponsive } from "utils/tabResponsive";
