@@ -333,6 +333,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
           fontFamily:"Nunito Sans",
           pb: "10px",
         }}
+        tabIndex={1}
       >
         Class Meeting Link
       </Typography>
@@ -364,6 +365,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                 height: "46px",       
                 boxShadow: "0px 6px 34px -8px #A4A4A4", 
               }}
+              tabIndex={2}
             >
               Join Now
             </Button>
@@ -383,6 +385,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                 fontFamily:"Nunito Sans",
                 borderRadius: "24px",
               }}
+              tabIndex={3}
             >
               Check Attendance
             </Button>
@@ -461,6 +464,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   border: "2px solid #5611B1",
                   borderRadius: "24px",
                 }}
+                tabIndex={4}
               >
                 Check Attendance
               </Button>
@@ -494,6 +498,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                       lineHeight: "32px",
                       fontFamily:"Nunito Sans",
                     }}
+                    
                   >
                     Session Notes
                   </Typography>
@@ -571,6 +576,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                 width: "24px",
                 cursor: "pointer",
               }}
+              tabIndex={5}
               onClick={() => handleDownload(item)}
             />
           </Box>
@@ -844,6 +850,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                                   cursor: "pointer",
                                 }}
                                 onClick={() => handleDownload(item)}
+                                tabIndex={6}
                               />
                             </Box>
                           </Box>

@@ -21,9 +21,7 @@ const CourseStudentDetails = () => {
   const isXs = useMediaQuery(theme.breakpoints.down("xs"));
   const [feesData, setFeesData] = useState([{ fees: [], totalAmount: 0 }]);
   const invoiceRef = useRef();
-  
 
- 
 
   useEffect(() => {
     const fetchStudentFees = async () => {
@@ -84,7 +82,8 @@ const CourseStudentDetails = () => {
   };
 
   return (
-    <Grid container spacing={2} sx={{ p: 3 }}>
+    <>
+    <Grid container spacing={2} sx={{ p: 3}}>
           <Grid item xs={12} sm={7}>
             <Typography
               variant="body1"
@@ -650,6 +649,7 @@ const CourseStudentDetails = () => {
                     sx={{
                       display: "flex",
                       justifyContent: "flex-end",
+                      marginTop: 2
                     }}
                   >
                   
@@ -878,12 +878,14 @@ const CourseStudentDetails = () => {
               </Grid>
               <div style={{ display: 'none' }} >
               <div ref={invoiceRef}>
-          <InvoiceReceipt feesdata={feesData} />
-        </div>
+                      <InvoiceReceipt feesdata={feesData} />
+                    </div>
               </div>
             </div>
           </Grid>
         </Grid>
+                      
+                  </>
   )};
 
 export default CourseStudentDetails;

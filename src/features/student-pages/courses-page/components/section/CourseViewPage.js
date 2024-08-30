@@ -15,11 +15,13 @@ import SandClockIcon from "assets/icons/course/sandClockIcon";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { formatDate, formatTime } from "utils/formatDate";
+import oridinalSuffix from "utils/course/addOridinalSuffix";
 
-const SingleCourseStudentView = ({ Course }) => {
+const SingleCourseStudentView = ({ Course,selectedClassId }) => {
   // const classes = Course?.batches[0]?.classes || [];
   // const classes2 = Course?.studymaterials || [];
-  // const classes3 = Course?.notes || [];
+  const classes3 = Course?.notes[0] || [];
+  console.log(classes3,"classes3")
   
   const downloadPdf = () => {
     
@@ -47,7 +49,7 @@ const SingleCourseStudentView = ({ Course }) => {
     
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${Course?.notes?.title}.pdf`; 
+    a.download = `${classes3?.title}.pdf`; 
     document.body.appendChild(a);
     a.click();
 
@@ -55,6 +57,7 @@ const SingleCourseStudentView = ({ Course }) => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
+
   
   return (
     <Box sx={{ padding: "16px" }}>
@@ -81,10 +84,11 @@ const SingleCourseStudentView = ({ Course }) => {
             fontWeight: 600,
             lineHeight: "14.761px",
             color: "#FFF",
+            fontFamily:"Poppins"
             
           }}
         >
-          1st
+         {oridinalSuffix(selectedClassId)}
         </Typography>
       </Box>
       <Box sx={{ display: "inline-flex", flexDirection: "column", gap: "7px" }}>
@@ -95,6 +99,7 @@ const SingleCourseStudentView = ({ Course }) => {
             fontWeight: 600,
             lineHeight: "11.317px",
             color: "#000",
+           
           }}
         >
           Chapter
@@ -104,7 +109,8 @@ const SingleCourseStudentView = ({ Course }) => {
            fontSize: "10.087px",
            fontWeight: 600,
            lineHeight: "14px",
-           color: "##000"
+           color: "##000",
+           
          }}>
           {Course?.class_name}
         </Typography>
@@ -117,6 +123,7 @@ const SingleCourseStudentView = ({ Course }) => {
             fontWeight: 900,
             lineHeight: "14.761px",
             color: "#000",
+            marginLeft: '-34px',
           }}
         >
           97%
@@ -129,18 +136,19 @@ const SingleCourseStudentView = ({ Course }) => {
                 <Box sx={{ display: "inline-flex", gap: "8px" }}>
                   <NoteIcon width="22px" height="22px" fill="black" />
                   <Typography
-                    sx={{ fontSize: "13px", fontWeight: 700, lineHeight: "22px" }}
+                    sx={{ fontSize: "13px", fontWeight: 700, lineHeight: "22px",fontFamily:"Nunito Sans",lineHeight:"21.825px" }}
                   >
-                    2 Notes
+                    {Course?.notes?.length} Notes
                   </Typography>
                 </Box>
                 <Box sx={{ display: "inline-flex", gap: "8px" }}>
                   <SmartDisplayOutlined sx={{ color: "black" }} />
                   <Typography
-                    sx={{ fontSize: "13px", fontWeight: 700, lineHeight: "22px" }}
-                  >
-                    32 Videos
-                  </Typography>
+                sx={{ fontSize: "13px", fontWeight: 700, lineHeight: "22px" ,fontFamily:"Nunito Sans",lineHeight:"21.825px"}}
+              >
+                {" "}
+                {Course?.study_materials?.length} Videos{" "}
+              </Typography>
                 </Box>
               
               </Box>
@@ -148,7 +156,7 @@ const SingleCourseStudentView = ({ Course }) => {
             </Box>
               
           </Box>
-          <Box sx={{ overflowX: "auto", marginTop: "16px" }}>
+          <Box sx={{ overflowX: "auto", marginTop: "-26px" }}>
             <Box sx={{ display: "flex", gap: "10px" , p:4, m:2}}>
               
                 <Card
@@ -159,6 +167,7 @@ const SingleCourseStudentView = ({ Course }) => {
                     borderRadius: "16px",
                     boxShadow: "0px 5.044px 38.968px 0px rgba(0, 0, 0, 0.19)",
                   }}
+                  tabIndex={1}
                 >
                   <CardMedia
                     component="img"
@@ -258,7 +267,7 @@ const SingleCourseStudentView = ({ Course }) => {
             
             </Box>
           </Box>
-          <Box sx={{ paddingTop: "16px", pb: "25px" , p:4, m:2}}>
+          <Box sx={{ paddingTop: "16px", pb: "25px" , p:4, m:2,marginTop: "-26px"}}>
             <Typography
               variant="h6"
               sx={{
@@ -324,7 +333,7 @@ const SingleCourseStudentView = ({ Course }) => {
                             flexDirection: "column",
                           }}
                         >
-                          <SaveAltOutlinedIcon sx={{ color: "#8E8383",cursor: "pointer" }} onClick={downloadPdf} />
+                          <SaveAltOutlinedIcon sx={{ color: "#8E8383",cursor: "pointer" }} onClick={downloadPdf} tabIndex={2} />
                         </Box>
                       </Box>
                     </CardContent>
@@ -333,7 +342,7 @@ const SingleCourseStudentView = ({ Course }) => {
               </Box>
             </Box>
           </Box>
-          <Box sx={{ paddingTop: "16px", pb: "25px", p:4, m:2 }}>
+          <Box sx={{ paddingTop: "16px", pb: "25px", p:4, m:2 ,marginTop: "-26px"}}>
             <Typography
               variant="h6"
               sx={{
@@ -399,7 +408,7 @@ const SingleCourseStudentView = ({ Course }) => {
                             flexDirection: "column",
                           }}
                         >
-                          <SaveAltOutlinedIcon sx={{ color: "#8E8383", cursor:"pointer"  }}onClick={downloadNotesPdf} />
+                          <SaveAltOutlinedIcon sx={{ color: "#8E8383", cursor:"pointer"  }}onClick={downloadNotesPdf} tabIndex={3} />
                         </Box>
                       </Box>
                     </CardContent>

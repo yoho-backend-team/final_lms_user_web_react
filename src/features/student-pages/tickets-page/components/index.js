@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 // Styles for the scrollable container
 const ScrollableContainer = styled(Box)({
   overflowY: 'auto',
-  maxHeight: 'calc(100vh - 200px)', // Adjust based on header/footer height
+  maxHeight: 'calc(100vh - 200px)',
   padding: '20px',
 });
 

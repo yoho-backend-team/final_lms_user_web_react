@@ -51,6 +51,7 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
             fontSize: "16px",
             fontWeight: 800,
             lineHeight: "24px",
+            fontFamily:"Nunito Sans"
           }}
         >
           Course Chapters / Topics
@@ -61,9 +62,11 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
             fontSize: "14px",
             fontWeight: 700,
             lineHeight: "24px",
+            fontFamily:"Nunito Sans",
+           
           }}
         >
-          {Chapters?.coursemodules?.length} Chapters
+          •  {Chapters?.coursemodules?.length} Chapters
         </Typography>
         <Box>
         <Typography
@@ -72,9 +75,12 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
             fontSize: "14px",
             fontWeight: 700,
             lineHeight: "24px",
+            fontFamily:"Nunito Sans",
+            marginRight:21
+           
           }}
         >
-          {Chapters?.batches?.[0]?.classes?.length} classes
+         •  {Chapters?.batches?.[0]?.classes?.length} Classes
         </Typography>
         
         </Box>
@@ -87,6 +93,8 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
             p: 2,
             background: chapters[index].background,
             padding: "30px",
+            width: '460px',
+            height: '180px'
           }}
         >
           <Box>
@@ -97,6 +105,7 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
                   fontSize: "24px",
                   fontWeight: 800,
                   lineHeight: "27px",
+                  fontFamily:"Nunito Sans"
                 }}
               >
                 {chapter.title}
@@ -113,6 +122,7 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
                     fontSize: "24px",
                     fontWeight: 900,
                     lineHeight: "17px",
+                    fontFamily:"Nunito Sans"
                   }}
                 >
                   12
@@ -123,6 +133,7 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
                     fontSize: "14px",
                     fontWeight: "800",
                     lineHeight: "17px",
+                    fontFamily:"Nunito Sans"
                   }}
                 >
                   classes
@@ -143,6 +154,7 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
                   fontWeight: 700,
                   lineHeight: "17px",
                   minWidth: "138px",
+                  fontFamily:"Nunito Sans"
                 }}
               >
                 {chapter.description}
@@ -154,6 +166,7 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
                   lineHeight: "17px",
                   color: "white",
                   textAlign: "end",
+                  fontFamily:"Nunito Sans"
                 }}
               >
                 Enrolled

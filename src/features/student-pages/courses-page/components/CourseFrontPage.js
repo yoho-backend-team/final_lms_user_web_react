@@ -64,6 +64,7 @@ const CourseFrontPage = ({ Course }) => {
               fontweight: 900,
               lineheight: "24px",
               p:4,
+              marginTop:-8
               
             }}
           >
@@ -80,13 +81,13 @@ const CourseFrontPage = ({ Course }) => {
                     borderBottom: 0,
                   },
                   "& .MuiTabs-indicator": {
-                    backgroundColor: "#5611B1",
+                    backgroundColor: "#0D6EFD",
                   },
                   "& .MuiTab-root": {
                     color: "#000000",
                   },
                   "& .Mui-selected": {
-                    color: "#5611B1",
+                    color: "#0D6EFD",
                   },
                 }}
               >
@@ -99,6 +100,7 @@ const CourseFrontPage = ({ Course }) => {
               fontstyle: 'normal',
               fontweight: 500,
               lineheight: '14px',
+              marginTop:-4
                     }}
                     key={tab.id}
                     value={tab.id}
@@ -124,30 +126,12 @@ const CourseFrontPage = ({ Course }) => {
               fontstyle: "normal",
               fontweight: 800,
               lineheight: "32px",
-              p:1,
-              textAlign:"right"
-        
+              marginLeft:7,
+              marginTop:-2
             
             }}
           >
             {Course?.course_name}
-          </Typography>
-          <Typography
-            sx={{ display: "inline-flex", gap: "5px", alignItems: "center" }}
-          >
-            <StarIcon sx={{ color: "#EEBA02" }} />
-            <span
-              style={{
-                color: "#000000",
-                fontSize: "12px",
-                fontWeight: 700,
-                lineHeight: "13px",
-                p:1,
-              
-              }}
-            >
-              ( 4.0 )
-            </span>
           </Typography>
         </Box>
         <Box
@@ -164,6 +148,7 @@ const CourseFrontPage = ({ Course }) => {
               fontSize: "14px",
               fontWeight: 700,
               lineHeight: "10px",
+              marginLeft:7
             }}
           >
             By Rajalakshmi Institute

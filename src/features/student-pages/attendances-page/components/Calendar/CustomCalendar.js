@@ -193,6 +193,7 @@ function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data })
             color: '#1976d2',
           },
                 }}
+                tabIndex={1}
                 variant="outlined"
                 IconComponent={ArrowDropDownIcon}
               >

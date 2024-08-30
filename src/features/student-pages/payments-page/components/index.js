@@ -57,7 +57,7 @@ const Payment = () => {
   console.log(feesData,"feesData")
 
   return (
-    <div className="main-container">
+    <div className="main-container" style={{display:"none"}}>
       <Grid container spacing={2} sx={{ p: 4 }}>
         <Grid container>
           <Grid item xs={12} sm={6}>

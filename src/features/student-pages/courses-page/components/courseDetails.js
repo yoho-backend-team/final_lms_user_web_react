@@ -47,6 +47,7 @@ const CourseStudentDetails = ({ Course }) => {
               fontSize: "16px",
               fontWeight: 800,
               lineHeight: "24px",
+              fontFamily:"Nunito Sans"
             }}
           >
             Course Details
@@ -58,6 +59,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "12px",
                 lineHeight: "14px",
                 fontWeight: 600,
+                fontFamily:"Poppins"
               }}
             >
               Purchased on: 
@@ -68,6 +70,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "12px",
                 lineHeight: "14px",
                 fontWeight: 600,
+                fontFamily:"Poppins"
               }}
             >
               {formatDate(Course.createdAt)}
@@ -88,6 +91,7 @@ const CourseStudentDetails = ({ Course }) => {
               fontSize: "16px",
               fontWeight: 700,
               lineHeight: "32px",
+              fontFamily:"Nunito Sans"
             }}
           >
             {Course?.course_name}
@@ -101,6 +105,7 @@ const CourseStudentDetails = ({ Course }) => {
                 color: "#000000",
                 fontSize: "12px",
                 fontWeight: 700,
+                fontFamily:"Nunito Sans",
                 lineHeight: "13px",
               }}
             >
@@ -120,11 +125,25 @@ const CourseStudentDetails = ({ Course }) => {
             sx={{
               color: "#000000",
               fontSize: "14px",
-              fontWeight: 700,
+              fontWeight: 400,
               lineHeight: "10px",
+              fontFamily:"Nunito Sans",
+              mr:-1
             }}
           >
-            By Rajalakshmi Institute
+            By
+          </Typography>
+          <Typography
+            sx={{
+              color: "#000000",
+              fontSize: "14px",
+              fontWeight: 700,
+              lineHeight: "10px",
+              fontFamily:"Nunito Sans",
+             
+            }}
+          >
+            Rajalakshmi Institute
           </Typography>
           <Typography
             sx={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
@@ -136,6 +155,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "14px",
                 fontWeight: 600,
                 lineHeight: "10px",
+                fontFamily:"Nunito Sans"
               }}
             >
               {Course.duration}hrs
@@ -149,6 +169,7 @@ const CourseStudentDetails = ({ Course }) => {
               fontSize: "12px",
               fontWeight: 400,
               lineHeight: "16px",
+              fontFamily:"Nunito Sans"
             }}
           >
             {Course?.description}
@@ -169,6 +190,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "16px",
                 fontWeight: 700,
                 lineHeight: "20px",
+                fontFamily:"Nunito Sans"
               }}
             >
               Durations:
@@ -179,6 +201,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "16px",
                 fontWeight: 600,
                 lineHeight: "20px",
+                fontFamily:"Nunito Sans"
               }}
             >
               {" "}
@@ -199,6 +222,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "16px",
                 fontWeight: 700,
                 lineHeight: "24px",
+                fontFamily:"Nunito Sans"
               }}
             >
               Type:
@@ -209,6 +233,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "16px",
                 fontWeight: 600,
                 lineHeight: "24px",
+                fontFamily:"Nunito Sans"
               }}
             >
               {" "}
@@ -216,9 +241,9 @@ const CourseStudentDetails = ({ Course }) => {
             </Typography>
           </Box>
           <Box
-            sx={{ display: "inline-flex", gap: "15px", alignItems: "center" }}
+            sx={{ display: "inline-flex", gap: "15px", alignItems: "center", }}
           >
-            <Typography>Status:</Typography>
+            <Typography sx={{fontFamily:"Nunito Sans",fontWeight:700,fontSize:"16px",color:"#000",lineHeight:"normal"}}>Status:</Typography>
             <CircularProgressWithStudentLabel />
           </Box>
         </Box>
@@ -247,6 +272,7 @@ const CourseStudentDetails = ({ Course }) => {
                   justifyContent: "center",
                   alignItems: "center",
                   borderRadius: "11px",
+                  
                 }}
               >
                 <Typography sx={{ padding: "17px 41px 10px 40px" }}>
@@ -260,6 +286,7 @@ const CourseStudentDetails = ({ Course }) => {
                     lineHeight: "23px",
                     px: "10px",
                     pb: "11px",
+                    fontFamily:"Nunito Sans"
                   }}
                 >
                   {item.title}

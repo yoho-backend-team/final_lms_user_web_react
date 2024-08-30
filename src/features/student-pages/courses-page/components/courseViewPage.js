@@ -12,6 +12,7 @@ const CourseStudentViewPage = ({ Course }) => {
   const [currentTab, setCurrentTab] = useState("1");
   const [courseView, setCourseView] = useState(false);
   const [selectedClass,setSelectedClass] = useState(null)
+  const [selectedClassId,setSelectedClassId] = useState(null)
 
   const tabs_list = [
     { id: "1", title: "About" },
@@ -19,13 +20,18 @@ const CourseStudentViewPage = ({ Course }) => {
 
   ];
 
-  const openCourseView = (class_details) => {
+  const openCourseView = (class_details,id) => {
     setCourseView(true);
     setSelectedClass(class_details)
+    setSelectedClassId(id)
   };
   const closeCourseView = () => { 
     setCourseView(false);
+    setSelectedClass(null)
+    setSelectedClassId(null)
   };
+
+  console.log(selectedClassId,"selectedClassId")
 
   return (
     <Box sx={{ height: "100vh", overflowY: "auto" }}>
@@ -85,6 +91,9 @@ const CourseStudentViewPage = ({ Course }) => {
                       fontSize: "16px",
                       lineHeight: "14px",
                       fontWeight: 500,
+                      color:"#0D6EFD",
+                      fontFamily:"Poppins",
+                      lineHeight:"14px"
                     }}
                     key={tab.id}
                     value={tab.id}
@@ -106,7 +115,7 @@ const CourseStudentViewPage = ({ Course }) => {
             selectedClass={selectedClass}
           />
         )}
-        {courseView && <SingleCourseStudentView Course={selectedClass} />}
+        {courseView && <SingleCourseStudentView Course={selectedClass} selectedClassId={selectedClassId} />}
       </Box>
     </Box>
   );
