@@ -6,7 +6,9 @@ import {
   CardMedia,
   CardContent,
   Button,
+  Avatar,
 } from "@mui/material";
+import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
 import NoteIcon from "assets/icons/noteIcon";
 import SmartDisplayOutlined from "@mui/icons-material/SmartDisplayOutlined";
 import StudyMaterialIcon from "assets/icons/study-material-icon";
@@ -17,12 +19,14 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import oridinalSuffix from "utils/course/addOridinalSuffix";
 import { handleDownload } from "utils/downloadHelpers";
 import { useSpinner } from "context/SpinnerProvider";
+import { EmojiEmotions ,ErrorOutline} from "@mui/icons-material";
+import NoDataFoundIcon from "assets/instructor/course/empty.png"
 
 const SingleCourseView = ({selectedClass,selectedClassId}) => {
   const {showSpinner,hideSpinner} = useSpinner()
   
   return (
-    <Box sx={{ padding: "16px" }}>
+    <Box sx={{ padding: "16px", mt: "20px" }}>
       <Box
         sx={{
           display: "flex",
@@ -218,6 +222,7 @@ const SingleCourseView = ({selectedClass,selectedClassId}) => {
             fontWeight: 600,
             lineHeight: "14px",
             pb: "25px",
+            mt : "10px"
           }}
         >
           Study Materials
@@ -285,29 +290,56 @@ const SingleCourseView = ({selectedClass,selectedClassId}) => {
                 </CardContent>
               </Card>)))
             :
-            (<Card
-            sx={{
-              minWidth: "320px",
-              borderRadius: "8px",
-              border: "1px solid #CCC",
-            }}
-          >
-            <CardContent>
-              <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100px" }}>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "#000000",
-                    fontSize: "16px",
-                    fontWeight: 700,
-                    lineHeight: "14px",
-                  }}
-                >
-                  No Data Available
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>)
+            ( 
+              <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                // alignItems: "center",
+                // justifyContent: "center",
+                borderRadius: "8px",
+                backgroundColor: "#F9F9F9",
+                padding: "20px",
+                textAlign: "center",
+              }}
+            >
+               <Avatar
+              src={NoDataFoundIcon}
+              sx={{ width: "100px", height: "100px"}}
+              variant="square"
+              />
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#888",
+                  fontSize: "16px",
+                  fontWeight: 400,
+                  lineHeight: "24px",
+                }}
+              >
+                No Data Found
+              </Typography>
+            </Box>
+            //   <Box
+            //   display="flex"
+            //   flexDirection="column"
+            //   alignItems="center"
+            //   justifyContent="center"
+            //   height="100%"
+            //   sx={{
+            //     backgroundColor : "white"
+            //   }}
+            // > 
+            //   <Avatar
+            //   src={NoDataFoundIcon}
+            //   sx={{ width: "100px", height: "100px"}}
+            //   variant="square"
+            //   />
+
+            //   <Typography variant="h4" color="textSecondary" marginTop={"4px"}>
+            //   </Typography>
+            // </Box>
+          )
             }
           </Box>
         </Box>

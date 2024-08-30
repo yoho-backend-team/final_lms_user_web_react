@@ -1,23 +1,26 @@
 import { Box, Tabs, Tab, Typography, Button } from "@mui/material";
 import ArrowBack from "@mui/icons-material/ArrowBack";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import About from "./sections/About";
-import CourseAndNotesPage from "./sections/course&Notes";
-import SingleCourseView from "./sections/CourseViewPage";
+import About from "./Tabs/About";
+import SingleCourseView from "./Tabs/CourseViewPage";
 import { useTabResponsive } from "utils/tabResponsive";
 import EditIcon from "assets/icons/editIcon";
+import BatchClassListViewPage from "../../components/classListView";
+import BatchesPage from "./Tabs/Batches";
+import StudyMaterialPage from "../notes-material-[id]-page";
 
-const CourseViewPage = ({ Course }) => {
+
+const CourseViewPage = ({ Course, handleBack, getCourseDetails }) => {
   const { tabView } = useTabResponsive();
-  const [currentTab, setCurrentTab] = useState("1");
+  const location = useLocation()
+  const navigate = useNavigate()
+  const queryParams = new URLSearchParams(location.search)
+  const [currentTab, setCurrentTab] = useState( queryParams.get("tab") || "1");
   const [courseView, setCourseView] = useState(false);
   const [selectedClass,setSelectedClass] = useState(null)
+  const [selectedBatch,setSelectedBatch] = useState(null)
   const [selectedClassId,setSelectedClassId] = useState(null)
-
-  const tabs_list = [
-    { id: "1", title: "About" },
-    { id: "2", title: "Class/ Notes & Materials" },
-  ];
 
   const openCourseView = (class_details,id) => {
     setCourseView(true);
@@ -28,7 +31,13 @@ const CourseViewPage = ({ Course }) => {
     setCourseView(false);
     setSelectedClass(null)
     setSelectedClassId(null)
+    setSelectedBatch(null)
+    handleBack()
   };
+
+  const handleTabChange = (e,value) => {
+      setCurrentTab(value)
+  } 
 
   return (
     <Box sx={{ height: "100vh", overflowY: "auto" }}>
@@ -37,7 +46,10 @@ const CourseViewPage = ({ Course }) => {
           <Box
             sx={{ display: "inline-flex", gap: "30px", alignItems: "center" }}
           >
-            {!courseView ? (
+              <ArrowBack
+                sx={{ color: "black", cursor: "pointer" }}
+                onClick={closeCourseView}
+              />
               <Typography
                 sx={{
                   color: "#000000",
@@ -48,12 +60,6 @@ const CourseViewPage = ({ Course }) => {
               >
                 Course
               </Typography>
-            ) : (
-              <ArrowBack
-                sx={{ color: "black", cursor: "pointer" }}
-                onClick={closeCourseView}
-              />
-            )}
           </Box>
           <Box>
             <Box
@@ -65,7 +71,7 @@ const CourseViewPage = ({ Course }) => {
             >
               <Tabs
                 value={currentTab}
-                onChange={(e, value) => setCurrentTab(value)}
+                onChange={(e, value) => handleTabChange(e,value)}
                 indicatorColor="primary"
                 sx={{
                   "&.MuiTabs-root:not(.MuiTabs-vertical)": {
@@ -82,8 +88,9 @@ const CourseViewPage = ({ Course }) => {
                   },
                 }}
               > 
-                <Tab value={"1"} label={"About"} sx={{  fontSize: "16px",  lineHeight: "14px", fontWeight: 500, display : courseView && "none"  }} />
-                <Tab value={"2"} label={"Class/ Notes & Materials"} sx={{  fontSize: "16px",  lineHeight: "14px", fontWeight: 500 }} />
+                <Tab value={"1"} label={"About"} sx={{  fontSize: "16px",  lineHeight: "14px", fontWeight: 500}} />
+                <Tab value={"2"} label={"Notes & Materials"} sx={{  fontSize: "16px",  lineHeight: "14px", fontWeight: 500 }} />
+                <Tab value={"3"} label={"Batches"} sx={{  fontSize: "16px",  lineHeight: "14px", fontWeight: 500 }} />
               </Tabs>
             </Box>
           </Box>
@@ -111,14 +118,21 @@ const CourseViewPage = ({ Course }) => {
         </Box>
         {currentTab === "1" && <About Course={Course}  />}
         {currentTab === "2" && !courseView && (
-          <CourseAndNotesPage
-            openCourseView={openCourseView}
-            closeCourseView={closeCourseView}
-            course={Course}
-            setSelectedClass={setSelectedClass}
+          <StudyMaterialPage 
+          course={Course}
+          getCourseDetails={getCourseDetails}
           />
         )}
+        { currentTab === "3" &&  !selectedBatch &&
+          <BatchesPage 
+          openCourseView={openCourseView}
+          closeCourseView={closeCourseView}
+          course={Course}
+          setSelectedBatch={setSelectedBatch}
+          />
+        }
         {courseView && <SingleCourseView selectedClass={selectedClass} selectedClassId={selectedClassId} />}
+        {selectedBatch && !selectedClass && <BatchClassListViewPage classes={selectedBatch?.classes} openCourseView={openCourseView} closeCourseView={closeCourseView} />}
       </Box>
     </Box>
   );

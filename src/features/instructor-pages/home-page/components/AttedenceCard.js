@@ -11,16 +11,17 @@ const AttendanceCard = ({Attendance}) => {
 
   const options = {
     chart: {
-      height: 300,
+      height: "800",
       type: "radialBar",
     },
     series: [attendance_data?.total?.percentage || 76],
-    // colors:["#5611B1"],
+    colors:["#5611B1"],
     plotOptions: {
       radialBar: {
         hollow: {
-          margin: 15,
-          size: "50%",
+          margin: 1,
+          size: "30%",
+          rotate : "90deg"
         },
         dataLabels: {
           showOn: "always",
@@ -92,7 +93,7 @@ const AttendanceCard = ({Attendance}) => {
               OverAll
             </Typography>
           </Grid>
-          <Grid item xs={8} sx={{ mt: "10px"}} >
+          <Grid item xs={7} sx={{ mt: "10px"}} >
             <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
               <Box
                 sx={{
@@ -151,12 +152,12 @@ const AttendanceCard = ({Attendance}) => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={4} sx={{ mt: "10px"}} >
+          <Grid item xs={5} sx={{ mt: "30px"}} >
             <Chart
               options={options}
               series={options.series}
               type="radialBar"
-              height={150}
+              height={300}
             />
           </Grid>
         </Grid>

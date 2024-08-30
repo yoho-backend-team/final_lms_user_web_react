@@ -16,6 +16,9 @@ import {
   Box,
 } from "@mui/material";
 import back from "../../../../../assets/images/pages/background_1.png";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data }) {
   const StyledPaper = styled(Paper)(({ theme }) => ({
@@ -116,14 +119,15 @@ function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data })
         <Grid item xs={2.4} key={i} >
           <Card>
             <CardContent sx={{cursor:'pointer',p: '10px 33px 17px 11px',transition: 'background 0.3s ease',
-    '&:hover': {
-      background: '#0D6EFD'
-    }}}>
-              <Typography sx={{ color: '#000',textalign: 'center',fontfamily: 'Poppins',fontsize: '11.395px',fontstyle: 'normal',fontweight: '300',lineheight: 'normal',pb:"9px",width: '46.064px',height: '12.292px',flexshrink: 0}}>
+              '&:hover': {
+                background: '#0D6EFD',
+                color: "white"
+              }}}>
+              <Typography sx={{ color: "inherit",textalign: 'center',fontfamily: 'Poppins',fontsize: '11.395px',fontstyle: 'normal',fontweight: '300',lineheight: 'normal',pb:"9px",width: '46.064px',height: '12.292px',flexshrink: 0}}>
                 {dayOfWeek}
               </Typography>
               <Typography
-                sx={{ fontSize: "21px", fontWeight: "300", textAlign: "end",fontfamily: 'Poppins',pb:'11px'}}
+                sx={{ color: "inherit", fontSize: "21px", fontWeight: "300", textAlign: "end",fontfamily: 'Poppins',pb:'11px',":hover":{ color: "white"}}}
               >
                 {i}
               </Typography>
@@ -158,9 +162,31 @@ function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data })
  
     return days;
   };
+
+  const handleNextMonth = () => {
+    console.log(selectedMonth)
+    if(selectedMonth!==11){
+      setSelectedMonth(selectedMonth+1)
+      getAttedenceDetails(months[selectedMonth+1])
+    }else{
+      setSelectedMonth(0)
+      getAttedenceDetails(months[0])
+    }
+  }
+
+  const handlePreviousMonth = () => {
+    console.log(selectedMonth)
+    if(selectedMonth !== 1){
+      setSelectedMonth(selectedMonth-1)
+      getAttedenceDetails(months[selectedMonth-1])
+    }else{
+      setSelectedMonth(0)
+      getAttedenceDetails(months[0])
+    }
+  }
   
   return (
-    <Box sx={{ height: '66vh', display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ height: '67vh', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ flexShrink: 0 }}>
         <Grid
           container
@@ -176,26 +202,53 @@ function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data })
             }}    
           >
             <Typography variant="h4">Calendar View</Typography>
-            <FormControl style={{ marginLeft: "7px" }}>
+            <FormControl
+              style={{
+                marginLeft: "11px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
               <Select
+                IconComponent={(props) => <ExpandMoreIcon  sx={{ color: "#0D6EFD" }} />}
                 value={selectedMonth}
                 onChange={handleMonthChange}
                 size="small"
                 sx={{
-                  color: "#1976d2",
-                  backgroundColor: "#E3EEFF",
+                  color: "#0D6EFD",
+                  backgroundColor: "#CCE1FF",
                   fontSize: "16px",
                   fontWeight: 600,
                   lineHeight: "24px",
-                  minWidth: "99px",
-                  maxWidth: "89px",
-                  '.MuiSelect-icon': {
-            color: '#1976d2',
-          },
+                  minWidth: "89px",
+                  padding: "0px", 
+                  border: "none",
+                  borderBottom: "none", 
+                  borderRadius: "8px",
+                  '& .MuiSelect-icon': {
+                    top: '50%', 
+                    right: '10px', 
+                    color: "#0D6EFD",
+                  },
+                  "&.MuiSelect-nativeInput	":{
+                     border : "none"
+                  },
+                  '& .MuiSelect-select': {
+                    padding: '5px 10px',
+                    display : "flex",
+                    justifyContent : "center", 
+                    boxShadow : "none"
+                  },
+                  '& .MuiInputBase-root': {
+                    padding: '0px', 
+                  },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    border: 'none',
+                  }
                 }}
                 tabIndex={1}
                 variant="outlined"
-                IconComponent={ArrowDropDownIcon}
+                iconComponent={ArrowDropDownIcon}
               >
                 {months.map((month, index) => (
                   <MenuItem key={index} value={index}>
@@ -211,6 +264,16 @@ function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data })
         <Grid container spacing={2}>
           {generateDays()}  
         </Grid>
+      </Box>
+      <Box sx={{ display: 'flex', justifyContent: "flex-end", gap: "40px", verticalAlign: "end",pt:"40px",px:"25px"}} >
+         <Box sx={{ display: selectedMonth ? "flex" : "none",cursor: "pointer"}} onClick={handlePreviousMonth} >
+            <KeyboardArrowLeftIcon  sx={{ width : "24px", height : "24px"}} />
+            <Typography sx={{ color : "#0D6EFD", fontSize: "15px", fontWeight : 700, lineHeight : "24px"}} >{months[selectedMonth-1]}</Typography>
+         </Box>
+         <Box sx={{ display: 'flex',cursor: "pointer"}} onClick={handleNextMonth} >
+            <Typography  sx={{ color : "#0D6EFD", fontSize: "15px", fontWeight : 700, lineHeight : "24px"}} >{months[selectedMonth]}</Typography>
+            <ChevronRightIcon sx={{ width : "24px", height : "24px", cursor: "pointer"}} />
+         </Box>
       </Box>
     </Box>
   );

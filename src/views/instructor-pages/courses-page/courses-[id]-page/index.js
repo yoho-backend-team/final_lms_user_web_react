@@ -1,19 +1,20 @@
-import AddStudyMaterialLayout from "features/instructor-pages/courses-page/add-study-material-page/components/layout";
-import AddStudyMaterialsPage from "features/instructor-pages/courses-page/add-study-material-page/components";
-import { useParams } from "react-router-dom";
+import CourseLayout from "features/instructor-pages/courses-page/components/courseLayout";
+import CourseViewPage from "features/instructor-pages/courses-page/course-view-page/components/courseViewPage";
+import getAndUpdateCourseDetails from "features/instructor-pages/courses-page/course-view-page/redux/thunks";
 import { useEffect } from "react";
-import getAndUpdateCourseDetails from "features/instructor-pages/courses-page/redux/thunks";
-import { useSelector,useDispatch } from "react-redux";
-import { selectInstructorCourse } from "features/instructor-pages/courses-page/redux/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { selectInstructorCourse } from "features/instructor-pages/courses-page/course-view-page/redux/selectors";
 import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
+import { useParams, useNavigate } from "react-router-dom";
 
-const StudyMaterialPage = () => {
-  const { id } = useParams()
+const CoursePage = () => {
   const dispatch = useDispatch();
   const course = useSelector(selectInstructorCourse);
+  const navigate = useNavigate()
   const { showSpinner,hideSpinner } = useSpinner()
-
+  const {courseId} = useParams()
+  
   const getCourseDetails = (data) => {
     try {
       showSpinner()
@@ -26,19 +27,20 @@ const StudyMaterialPage = () => {
    
   };
 
-
   useEffect(() => {
-    const data = {};
+    const data = {course:courseId};
     getCourseDetails(data);
   }, [dispatch]);
+
+  const handleBack = () => {
+    navigate(-1)
+  }
   
   return (
-    <>
-      <AddStudyMaterialLayout>
-        <AddStudyMaterialsPage Course ={ course} getCourseDetails={getCourseDetails} />
-      </AddStudyMaterialLayout>
-    </>
+    <CourseLayout>      
+      <CourseViewPage Course={course} handleBack={handleBack} getCourseDetails={getCourseDetails} />
+    </CourseLayout>
   );
 };
 
-export default StudyMaterialPage;
+export default CoursePage;

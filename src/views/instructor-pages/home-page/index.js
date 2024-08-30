@@ -165,7 +165,7 @@ const InstructorDashBoard = () => {
               <Box>
                 <Box display="flex" alignItems="center">
                   <Typography variant="h2">{reports?.classes?.[0]?.total}</Typography>
-                  <Assessment color="secondary" />
+                  <Assessment sx={{ color : "#5611B1"}} />
                 </Box>
                 <Typography sx={{ color: "grey" }}>Total Class</Typography>
               </Box>
@@ -182,7 +182,7 @@ const InstructorDashBoard = () => {
               <Box>
                 <Box display="flex" alignItems="center" gap={2}>
                   <Typography variant="h2">{ reports?.classes?.[0]?.online_class?.completed + reports?.classes?.[0]?.offline_class?.completed }</Typography>
-                  <CheckCircle color="secondary" />
+                  <CheckCircle sx={{ color : "#5611B1"}} />
                 </Box>
                 <Typography sx={{ color: "grey" }}>Completed</Typography>
               </Box>
@@ -199,7 +199,7 @@ const InstructorDashBoard = () => {
               <Box>
                 <Box display="flex" alignItems="center" gap={2}>
                   <Typography variant="h2">{ reports?.classes?.[0]?.online_class.pending + reports?.classes?.[0]?.offline_class.pending }</Typography>
-                  <NearbyError color="secondary" />
+                  <NearbyError sx={{ color: "#5611B1"}} />
                 </Box>
                 <Typography sx={{ color: "grey" }}>Pending</Typography>
               </Box>
@@ -216,7 +216,7 @@ const InstructorDashBoard = () => {
               <Box>
                 <Box display="flex" alignItems="center" gap={2}>
                   <Typography variant="h2">{reports?.classes?.[0]?.offline_class?.total}</Typography>
-                  <Podcasts color="secondary" />
+                  <Podcasts sx={{ color: "#5611B1"}} />
                 </Box>
                 <Typography sx={{ color: "grey" }}>Live Class</Typography>
               </Box>
@@ -233,7 +233,7 @@ const InstructorDashBoard = () => {
               <Box>
                 <Box display="flex" alignItems="center" gap={2}>
                   <Typography variant="h2">{reports?.classes?.[0]?.online_class?.total}</Typography>
-                  <Assessment color="secondary" />
+                  <Assessment sx={{ color: "#5611B1"}} />
                 </Box>
                 <Typography sx={{ color: "grey" }}>Total Class</Typography>
               </Box>
@@ -250,7 +250,7 @@ const InstructorDashBoard = () => {
               <Box>
                 <Box display="flex" alignItems="center" gap={2}>
                   <Typography variant="h2">{reports?.classes?.[0]?.offline_class?.total}</Typography>
-                  <Devices color="secondary" />
+                  <Devices sx={{ color: "#5611B1"}} />
                 </Box>
                 <Typography sx={{ color: "grey" }}>Online Class</Typography>
               </Box>
