@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "@mui/material";
-import { ClassBackroundBg, ClassBg, ClassBg1 } from "utils/images";
+import { ClassBackroundBg, ClassBg1 } from "utils/images";
 
 const ClassLayout = ({ children }) => {
   return (
@@ -13,14 +13,15 @@ const ClassLayout = ({ children }) => {
         width: "100vw",
         height: "100vh",
         padding: 4,
-        overflow: "auto",
+        overflow: "hidden", 
+        position: "relative", 
       }}
     >
       <Grid
-      container
-      sx={{
-        background: `url(${ClassBg1})`,
-        backgroundRepeat: 'no-repeat',
+        container
+        sx={{
+          background: `url(${ClassBg1})`,
+          backgroundRepeat: 'no-repeat',
           backgroundSize: 'contain',
           backgroundPosition: 'bottom center',
           height: '35vh',
@@ -29,8 +30,8 @@ const ClassLayout = ({ children }) => {
           // right : 0,
           position: 'absolute', 
           bottom: 0,
-      }}
-    ></Grid>
+        }}
+      />
       {children}
     </Grid>
   );
