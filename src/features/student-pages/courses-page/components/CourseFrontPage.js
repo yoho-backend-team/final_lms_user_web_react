@@ -154,6 +154,7 @@ const CourseFrontPage = ({ Course }) => {
               fontSize: "14px",
               fontWeight: 700,
               lineHeight: "10px",
+              marginLeft:7
             }}
           >
           LMS

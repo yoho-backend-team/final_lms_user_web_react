@@ -139,9 +139,7 @@ const generateEndpoints = () => {
         get: `/institutes/community/course/${course1}`,
       },
       profile: {
-        get: `/institutes/auth/student/${
-          getStudentDetails()?.uuid
-        }/students/${instituteuuid}`,
+        get: `institutes/auth/profile/me/`,
         update: `/institutes/auth/student/update/${getStudentDetails()?.uuid}`,
       },
     },

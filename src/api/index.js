@@ -39,6 +39,12 @@ class Client {
         params,
         "student"
       ),
+      logout: (data) =>
+        httpClient.post(
+          HTTP_END_POINTS.Student.auth.logout,
+          data,
+          "student"
+        ),
     course: {
       get: (params) =>
         httpClient.get(HTTP_END_POINTS.Student.course.get, params, "student"),

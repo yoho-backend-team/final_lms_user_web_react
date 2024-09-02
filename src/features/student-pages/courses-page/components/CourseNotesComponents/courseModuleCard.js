@@ -13,13 +13,13 @@ const CourseStudentModuleCard = ({
   videos,
   closeCourseView,
   openCourseView,
-  module
+  class_details
 }) => {
   const { tabView } = useTabResponsive();
   const currentModule = module
   return (
     <Grid
-      onClick={()=>openCourseView(currentModule)}
+      onClick={()=>openCourseView(class_details,id)}
       item
       sx={{
         width: "291px",
@@ -40,6 +40,7 @@ const CourseStudentModuleCard = ({
           fontSize: "21px",
           fontWeight: 600,
           lineHeight: "14px",
+          fontFamily:"Poppins"
         }}
       >
         <Typography
@@ -58,6 +59,7 @@ const CourseStudentModuleCard = ({
             fontSize: "16px",
             fontWeight: 600,
             lineHeight: "11px",
+            fontFamily:"Poppins"
           }}
         >
           Chapter
@@ -70,6 +72,7 @@ const CourseStudentModuleCard = ({
             fontSize: "13px",
             fontWeight: 800,
             lineHeight: "22px",
+            fontFamily:"Nunito Sans"
           }}
         >
           {title}
@@ -100,6 +103,7 @@ const CourseStudentModuleCard = ({
               fontSize: "13px",
               fontWeight: 700,
               lineHeight: "22px",
+              fontFamily:"Nunito Sans"
             }}
           >
             {notes?.length} Notes
@@ -115,6 +119,7 @@ const CourseStudentModuleCard = ({
               fontSize: "13px",
               fontWeight: 700,
               lineHeight: "22px",
+              fontFamily:"Nunito Sans"
             }}
           >
             {videos?.length} Videos

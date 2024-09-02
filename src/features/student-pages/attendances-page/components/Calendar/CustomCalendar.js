@@ -245,8 +245,9 @@ function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data })
                     border: 'none',
                   }
                 }}
-                // variant="filled"
-                inputProps={{ 'aria-label': 'Select month' }}
+                tabIndex={1}
+                variant="outlined"
+                iconComponent={ArrowDropDownIcon}
               >
                 {months.map((month, index) => (
                   <MenuItem key={index} value={index}>

@@ -1,150 +1,410 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-import PaymentMethodIcon from 'assets/icons/paymentMethodIcon';
+import html2pdf from 'html2pdf.js';
+import { formatDate, formatTime } from 'utils/formatDate';
+import logo from '../../../../assets/images/logo.png'; 
+import sign from '../../../../assets/sign.png';
+import paid from '../../../../assets/paid.png';
 
-const InvoiceReceipt = forwardRef(({ feesdata = {} }, ref) => { // Default value for feesdata
+
+const InvoiceReceipt = forwardRef(({ feesdata = {} }, ref) => {
   useImperativeHandle(ref, () => ({
     generatePDF: () => {
-      const input = document.getElementById('invoiceReceipt');
-      html2canvas(input).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgWidth = 210;
-        const pageHeight = 295;
-        const imgHeight = canvas.height * imgWidth / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
-
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-
-        while (heightLeft >= 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
-
-        pdf.save('invoice-receipt.pdf');
-      });
+      const element = document.getElementById('invoiceReceipt');
+      const options = {
+        margin: [10, 10, 10, 10],
+        filename: 'invoice-receipt.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+      html2pdf().from(element).set(options).save();
     }
   }));
 
+  const date = new Date();
+  const formattedDate = date.toLocaleDateString();
+  const formattedDateTime = date.toISOString().slice(0, 19).replace('T', ' ');
+
   // Ensure feesdata is treated as an array where needed
   const feesArray = Array.isArray(feesdata.fees) ? feesdata.fees : [];
-  const courseArray = Array.isArray(feesdata) ? feesdata : [];
+  const courseArray = Array.isArray(feesdata.course) ? feesdata : [];
+
+
+
+  const courseFees = parseFloat(feesdata?.course_fees?.replace(/[^0-9.-]+/g, '') || 0);
+  const pendingPayment = parseFloat(feesdata?.pending_payment?.replace(/[^0-9.-]+/g, '') || 0);
+  const paidAmount = courseFees - pendingPayment;
 
   return (
-    <Box ref={ref} id="invoiceReceipt" sx={{ width: '100%', margin: '0 auto', padding: 4, border: '1px solid #ccc', fontFamily: 'Poppins', height: "842px" }}>
+    <Box ref={ref} id="invoiceReceipt" sx={{width: '595px', margin: '0 auto', border: '1px solid #ccc', fontFamily: 'Poppins', height: "842px",background:"#FFF" }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #ccc', paddingBottom: 2 }}>
-        <img src="/path/to/logo.png" alt="Logo" style={{ height: '50px' }} />
-        <Box
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          padding={2}
-        >
-          <Typography variant="h6" color="black" align="center" gutterBottom>
+        <img src={logo} alt="Logo" style={{ height: '50px' }} />
+        <Box display="flex" flexDirection="column" alignItems="center" padding={2} width="100%">
+          <Typography variant="h6" color="black" align="center" gutterBottom fontSize={"14px"} fontWeight={700} fontFamily={"Inter"} sx={{ marginLeft:'-120px' }}>
             Bill Invoice / Receipt
           </Typography>
-          <Box display="flex" alignItems="flex-start" marginBottom={2}>
-            <PaymentMethodIcon />
-            <Box
-              display="flex"
-              flexDirection="column"
-              alignItems="flex-end"
-              width="100%"
-              marginTop={1}
-            >
-              <Typography>Email: marketplace@edutech.in</Typography>
-              <Typography>Contact: 09096431662</Typography>
-              <Typography>Website: www.marketplace.com</Typography>
-            </Box>
+          <Box sx={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start', 
+    marginLeft: 50,
+    marginTop: -5
+}}>
+  <Box sx={{ display: 'flex', flexDirection: 'row',marginLeft:'-120px' }}>
+
+<Typography sx={{ color:"#000",fontFamily:"Inter",fontSize:"9px",fontWeight:600,mr:1 }}>
+        Email:
+    </Typography>
+    <Typography sx={{ color:"#000",fontFamily:"Inter",fontSize:"9px",fontWeight:400 }}>
+        marketplace@edutech.in
+    </Typography>
+</Box>
+
+            
+<Box sx={{ display: 'flex', flexDirection: 'row',marginLeft:'-120px' }}>
+
+<Typography sx={{ color:"#000",fontFamily:"Inter",fontSize:"9px",fontWeight:600,mr:1 }}>
+        Contact:
+    </Typography>
+    <Typography sx={{ color:"#000",fontFamily:"Inter",fontSize:"9px",fontWeight:400 }}>
+        91XXXXXXXXX
+    </Typography>
+</Box>
+<Box sx={{ display: 'flex', flexDirection: 'row',marginLeft:'-120px' }}>
+
+<Typography sx={{ color:"#000",fontFamily:"Inter",fontSize:"9px",fontWeight:600,mr:1 }}>
+        Website:
+    </Typography>
+    <Typography sx={{ color:"#000",fontFamily:"Inter",fontSize:"9px",fontWeight:400 }}>
+        www.marketplace.com
+    </Typography>
+</Box>
           </Box>
         </Box>
       </Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 4 ,padding:2}}>
         <Box>
           {feesArray.map((item, index) => (
             <div key={index}>
-              <Typography variant="h6">Student Details</Typography>
-              <Typography>Name: {item?.student?.full_name}</Typography>
-              <Typography>Student ID: {item?.student?.id}</Typography>
-              <Typography>Mail ID: {item?.student?.email}</Typography>
-              <Typography>Contact: {item?.student?.contact_info?.phone_number}</Typography>
+              <Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"10px",fontWeight:800,lineHeight:"normal",mb:1}}>Student Details</Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+
+<Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"8px",fontWeight:600,mb:0.5,mr:1}}>
+        Name:
+    </Typography>
+    <Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"8px",fontWeight:400,mb:0.5}}>
+        {item?.student?.full_name}
+    </Typography>
+</Box>
+<Box sx={{ display: 'flex', flexDirection: 'row' }}>
+
+<Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"8px",fontWeight:600,mb:0.5,mr:1}}>
+        Student ID:
+    </Typography>
+    <Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"8px",fontWeight:400,mb:0.5}}>
+        {item?.student?.id}
+    </Typography>
+</Box>
+<Box sx={{ display: 'flex', flexDirection: 'row' }}>
+
+<Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"8px",fontWeight:600,mb:0.5,mr:1}}>
+        Mail ID:
+    </Typography>
+    <Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"8px",fontWeight:400,mb:0.5}}>
+       {item?.student?.email}
+    </Typography>
+</Box>
+<Box sx={{ display: 'flex', flexDirection: 'row' }}>
+
+<Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"8px",fontWeight:600,mb:0.5,mr:1}}>
+        Contact:
+    </Typography>
+    <Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"8px",fontWeight:400,mb:0.5}}>
+        {item?.student?.contact_info?.phone_number}
+    </Typography>
+</Box>
             </div>
           ))}
         </Box>
 
         <Box>
-          {courseArray.map((item, index) => (
-            <div key={index}>
-              <Typography variant="h6">Course Details</Typography>
-              <Typography>{item?.course?.course_name}</Typography>
-              <Typography>By {item?.fees?.institute_id?.institute_name}</Typography>
-              <Typography>Duration: {item?.duration?.duration}</Typography>
-            </div>
-          ))}
-        </Box>
-        <Box>
-          <Typography variant="h6">Fees Details</Typography>
-          <Typography>{feesdata?.course_fees}</Typography>
-          <Typography>Pending: {feesdata?.pending_payment}</Typography>
-          <Typography>Paid: {feesdata?.course_fees - feesdata?.pending_payment}</Typography>
-        </Box>
-      </Box>
-
-      <Box sx={{ marginTop: 4 }}>
-        {feesArray.map((item, index) => (
-          <div key={index}>
-            <Typography variant="h6">Paid Amount</Typography>
-            <Typography>{item?.paid_amount}</Typography>
-            <Typography>{item?.paid_amount}</Typography>
+          <div>
+            <Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"10px",fontWeight:800,lineHeight:"normal",p:0.5}}>Course Details</Typography>
+            <Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"10px",fontWeight:400,lineHeight:"5.734px",p:0.5, mb: 1}}>{feesdata?.course?.course_name}</Typography>
+            <Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"9px",fontWeight:600,p:0.5}}>By Rajalakshmi Institute</Typography>
+            <Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"10px",fontWeight:400,lineHeight:"5.734px",p:0.5}}>Duration: {feesdata?.course?.duration}</Typography>
           </div>
-        ))}
+        </Box>
+        <Box >
+          <Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"10px",fontWeight:800,lineHeight:"normal",mb:1}}>Fees Details</Typography>
+          <Typography sx={{color:"#2AAD37",fontFamily:"Nunito Sans",fontSize:"10px",fontWeight:800,lineHeight:"14px",mb:0.5}}>{feesdata?.course_fees}</Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'row' ,mb:0.5}}>
+    <Typography sx={{ color: "#000", fontFamily: "Nunito Sans", fontSize: "10px", fontWeight: 800, lineHeight: "14px",mr: 0.5 }}>
+        Pending: 
+    </Typography>
+    <Typography sx={{ color: "#F00", fontFamily: "Nunito Sans", fontSize: "10px", fontWeight: 800, lineHeight: "14px" }}>
+        {feesdata?.pending_payment}
+    </Typography>
+</Box>
+<Box sx={{ display: 'flex', flexDirection: 'row' }}>
+    <Typography sx={{ color: "#000", fontFamily: "Nunito Sans", fontSize: "10px", fontWeight: 800, lineHeight: "14px", mr: 0.5}}>
+        Paid: 
+    </Typography>
+    <Typography sx={{ color: "#2AAD37", fontFamily: "Nunito Sans", fontSize: "10px", fontWeight: 800, lineHeight: "14px" }}>
+        {paidAmount}
+    </Typography>
+</Box>
+        </Box>
       </Box>
 
-      <TableContainer component={Paper} sx={{ marginTop: 4 }}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Payment Type</TableCell>
-              <TableCell>GST</TableCell>
-              <TableCell>Other Tax</TableCell>
-              <TableCell>Total Amount</TableCell>
-              <TableCell>Cash / Online</TableCell>
-              <TableCell>Payment Method</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            <TableRow>
-              <TableCell>{feesdata?.fees?.payment_method}</TableCell>
-              <TableCell>{feesdata?.gst}</TableCell>
-              <TableCell>{feesdata?.other_tax}</TableCell>
-              <TableCell>{feesdata?.course_fees}</TableCell>
-              <TableCell>{feesdata?.fees?.payment_method}</TableCell>
-              <TableCell>{feesdata?.fees?.payment_method}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Box sx={{ marginTop: -1 ,padding:2}}>
+        <div>
+          <Typography sx={{color:"#000",fontFamily:"Inter",fontSize:"10px",fontWeight:800,lineHeight:"14px",mb: 1}}>Paid Amount {formatDate(formattedDate)}   {formatTime(formattedDateTime)}</Typography>
+          <Typography sx={{color:"#2AAD37",fontFamily:"Inter",fontSize:"10px",fontWeight:800,lineHeight:"14px",mb: 6}}>{paidAmount}</Typography>
+        </div>
+      </Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
-        <Typography>Status:</Typography>
-        <Box sx={{ padding: '10px 20px', backgroundColor: '#d4edda', color: '#155724', border: '1px solid #c3e6cb', borderRadius: 1 }}>
+      <Box sx={{ marginTop: -4 ,padding:2}}>
+        <Typography sx={{color:"#06496E",fontFamily:"Inter",fontSize:"12px",fontWeight:700,lineHeight:"normal",width: '146.736p',mb:3,paddingBottom: "5px",borderBottom: '2px solid #06496E'}}>
+          Transaction
+        </Typography>
+        <TableContainer
+          component={Paper}
+          sx={{
+            width: '540px',
+            flexShrink: 0,
+            backgroundColor: '#FFF9F9',
+          }}
+        >
+          <Table
+            sx={{
+              '& thead': {
+                backgroundColor: '#0051C8',
+              },
+              '& tbody': {
+                backgroundColor: '#ACCDFF',
+              },
+            }}
+           
+          >
+            <TableHead sx={{width: "40.423px",height:" 20.421px",flexshrink: 0,border: '0.477px #FFF9F9'}}>
+              <TableRow>
+                <TableCell align="left"  style={{ 
+      width: '80.423px', 
+      height: '32.421px', 
+      flexShrink: 0,
+      color: '#FFF',
+      fontFamily: 'Inter',
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+      padding: '8px',
+      border: '1px solid #CCC'
+    }}>Payment Type</TableCell>
+                <TableCell align="left"  style={{ 
+      width: '80.423px', 
+      height: '32.421px', 
+      flexShrink: 0,
+      color: '#FFF',
+      fontFamily: 'Inter',
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+      padding: '8px',
+      border: '1px solid #CCC'
+    }}>GST</TableCell>
+                <TableCell align="left"  style={{ 
+      width: '80.423px', 
+      height: '32.421px', 
+      flexShrink: 0,
+      color: '#FFF',
+      fontFamily: 'Inter',
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+      padding: '8px',
+      border: '1px solid #CCC'
+    }}>Other Tax</TableCell>
+                <TableCell align="left"  style={{ 
+      width: '80.423px', 
+      height: '32.421px', 
+      flexShrink: 0,
+      color: '#FFF',
+      fontFamily: 'Inter',
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+      padding: '8px',
+      border: '1px solid #CCC'
+    }}>Total Amount</TableCell>
+                <TableCell align="left"  style={{ 
+      width: '80.423px', 
+      height: '32.421px', 
+      flexShrink: 0,
+      color: '#FFF',
+      fontFamily: 'Inter',
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+      padding: '8px',
+      border: '1px solid #CCC'
+    }}>Cash / Online</TableCell>
+                <TableCell align="left"  style={{ 
+      width: '80.423px', 
+      height: '32.421px', 
+      flexShrink: 0,
+      color: '#FFF',
+      fontFamily: 'Inter',
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+      padding: '8px',
+      border: '1px solid #CCC'
+    }}>Payment Method</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody sx={{width: "40.423px",height:" 20.421px",flexshrink: 0,border: '0.477px #FFF9F9'}}>
+              <TableRow >
+                <TableCell align="left" style={{ 
+      width: '80.423px', 
+      height: '32.421px', 
+      flexShrink: 0,
+      color: '#000',
+      fontFamily: 'Inter',
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+      border:' 0.477px',
+      padding: '8px',
+      border: '1px solid #FFF9F9'
+    }}>Monthly</TableCell>
+                <TableCell align="left" style={{ 
+      width: '80.423px', 
+      height: '32.421px', 
+      flexShrink: 0,
+      color: '#000',
+      fontFamily: 'Inter',
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+      border:' 0.477px',
+      padding: '8px',
+      border: '1px solid #FFF9F9'
+    }}>1800</TableCell>
+                <TableCell align="left" style={{ 
+      width: '80.423px', 
+      height: '32.421px', 
+      flexShrink: 0,
+      color: '#000',
+      fontFamily: 'Inter',
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+      border:' 0.477px',
+      padding: '8px',
+      border: '1px solid #FFF9F9'
+    }}>200</TableCell>
+                <TableCell align="left" style={{ 
+      width: '80.423px', 
+      height: '32.421px', 
+      flexShrink: 0,
+      color: '#000',
+      fontFamily: 'Inter',
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+      border:' 0.477px',
+      padding: '8px',
+      border: '1px solid #FFF9F9'
+    }}>{feesdata?.course_fees}</TableCell>
+                <TableCell align="left" style={{ 
+      width: '80.423px', 
+      height: '32.421px', 
+      flexShrink: 0,
+      color: '#000',
+      fontFamily: 'Inter',
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+      border:' 0.477px',
+      padding: '8px',
+      border: '1px solid #FFF9F9'
+    }}>Online</TableCell>
+                <TableCell align="left" style={{ 
+      width: '80.423px', 
+      height: '32.421px', 
+      flexShrink: 0,
+      color: '#000',
+      fontFamily: 'Inter',
+      fontSize: '10px',
+      fontStyle: 'normal',
+      fontWeight: 400,
+      lineHeight: 'normal',
+      border:' 0.477px',
+      padding: '8px',
+      border: '1px solid #FFF9F9'
+    }}>Gpay</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
+
+      <Box sx={{ display: 'flex',justifyContent: 'flex-end', alignItems: 'center', marginTop: 4,paddingRight:2}}>
+        <Typography sx={{ marginRight: 1,color: "#000",fontFamily :"Nunito Sans",
+fontsize: '10px',
+fontstyle: 'normal',
+fontweight: 800,
+lineheight: '24px' }}>Status:</Typography>
+        <Box sx={{ padding: '10px 20px', backgroundColor: '#D2FDD6', fontFamily :"Nunito Sans",color: '#2AAD37', border: '1px #2AAD37', borderRadius: 5,fontWeight:800,lineHeight:"24px", }}>
           Payment Success
         </Box>
       </Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
-        <Typography>Signature:</Typography>
-        <img src="/path/to/signature.png" alt="Signature" style={{ height: '50px' }} />
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: 4 ,paddingRight:2}}>
+        <Typography sx={{ marginRight: -2,color: "#000",fontFamily :"Nunito Sans",
+fontsize: '10px',
+fontstyle: 'normal',
+fontweight: 800,
+lineheight: '24px',
+mb:8 }}>Signature:</Typography>
+<img 
+    src={sign}
+    alt="Signature" 
+    style={{ height: '50px', marginBottom:-22}}
+  />
+  <img 
+    src={paid} 
+    alt="Paid" 
+    style={{ height: '50px',marginBottom:-22}} 
+  />
+      </Box>
+      
+      <Box sx={{ display: 'flex',justifyContent:"center" ,alignItems: 'center', marginTop: 4 }}>
+        <Typography sx={{ marginRight: 6,color: "#000",fontFamily :"Nunito Sans",
+fontsize: '10px',
+fontstyle: 'normal',
+fontweight: 800,
+lineheight: '24px',
+mb:14 }}>Thank You</Typography>
       </Box>
 
-      <Box sx={{ textAlign: 'center', marginTop: 4, fontSize: 12, color: '#666' }}>
+      <Box sx={{ textAlign: 'center', marginTop: -4, fontSize: 12,fontFamily:"Nunito Sans" ,color: '#000',fontWeight:300,width: '595px',height: '30px',flexshrink: 0,background: "#ACC1E1",display: 'flex',
+    alignItems: 'center',justifyContent: 'center' }}>
         <Typography>All Rights Reserved @2024 Regulations</Typography>
       </Box>
     </Box>

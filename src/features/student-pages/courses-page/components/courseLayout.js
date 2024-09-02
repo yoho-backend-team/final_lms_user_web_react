@@ -1,5 +1,5 @@
 import { Grid, Box } from "@mui/material";
-import { CourseBg } from "utils/images";
+import { CourseBg, CourseStudent } from "utils/images";
 
 const CourseStudentLayout = ({ children }) => {
   return (
@@ -13,7 +13,7 @@ const CourseStudentLayout = ({ children }) => {
     >
       <Box
         sx={{
-          background: `url(${CourseBg})`,
+          background: `url(${CourseStudent})`,
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           width: "100%",
