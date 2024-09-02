@@ -10,6 +10,7 @@ class Client {
         params,
         "student"
       ),
+    logout: (data,params) => httpClient.post(HTTP_END_POINTS.Student.auth.log_out,data,params,"student"),
     verifyOtp: (data, params) =>
       httpClient.post(
         HTTP_END_POINTS.Student.auth.verify_otp,
@@ -148,12 +149,8 @@ class Client {
         params,
         "instructor"
       ),
-    log_out: (data) =>
-      httpClient.post(
-        HTTP_END_POINTS.Instructor.auth.log_out,
-        data,
-        "instructor"
-      ),
+    changePassword : (data,params) => httpClient.post(HTTP_END_POINTS.Instructor.auth.change_password,data,params,"instructor"),
+    log_out: (data) => httpClient.post(HTTP_END_POINTS.Instructor.auth.log_out,data,{},"instructor"),
     attendance: {
       get: (params) =>
         httpClient.get(

@@ -18,6 +18,7 @@ import axios from "axios";
 import { useInstructorforgetPassword } from "../services";
 import toast from "react-hot-toast";
 import { ForgetPassword_Otp_Step } from "lib/constants";
+import { useSpinner } from "context/SpinnerProvider";
 
 const ForgetPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ const ForgetPasswordPage = () => {
   const navigate = useNavigate();
   const [, setLoginStep] = useAtom(instructorLoginStepAtom);
   const [, setOtpAtom] = useAtom(instructorOtpAtom);
+  const {showSpinner,hideSpinner} = useSpinner()
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -48,10 +50,10 @@ const ForgetPasswordPage = () => {
       setEmailError("Enter a valid email address");
       return;
     }
-    console.log("Sending reset password email to:", email);
+    
     try {
       const response = await forgetPassword(email);
-      console.log(response, "response");
+      console.log(response,response?.data)
       if (response.status === "success") {
         const { token } = response.data;
         setOtpAtom({ email, token });
@@ -61,9 +63,15 @@ const ForgetPasswordPage = () => {
       }
     } catch (error) {
       console.log(error, "error");
-      toast.error(error?.message || "An error occurred");
+      toast.error(error || "An error occurred");
     }
   };
+
+  const handleBackLoginStep = () => {
+     showSpinner()
+     setLoginStep(instructorLoginStepAtom)
+     hideSpinner()
+  }
 
   return (
     <Box
@@ -105,6 +113,7 @@ const ForgetPasswordPage = () => {
           gutterBottom
           sx={{
             textAlign: "left",
+            color : "#757575",
             width: "100%",
             fontSize: "12.80px",
             color: "black",
@@ -114,36 +123,40 @@ const ForgetPasswordPage = () => {
         >
           Enter Mail ID
         </Typography>
-        <FormControl fullWidth sx={{ maxWidth: 250 }} error={!!emailError}>
+        <FormControl fullWidth  error={!!emailError}>
           <Input
             type="email"
             value={email}
             onChange={handleEmailChange}
             aria-describedby="email-error-text"
+            sx={{ color: "#212121", fontSize: "16px", fontWeight: 400, lineHeight: "22.5px" }}
           />
           {emailError && (
             <FormHelperText id="email-error-text">{emailError}</FormHelperText>
           )}
         </FormControl>
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
-          fullWidth
-          sx={{
-            backgroundColor: "#0D6EFD",
-            maxWidth: 100,
-            marginTop: 5,
-            alignSelf: "flex-end",
-            borderRadius: 20,
-            px: 2,
-            py: 1,
-            "&:hover": {
-              backgroundColor: "#0D6EFD",
-            },
-          }}
-        >
-          VERIFY
-        </Button>
+        <Box sx={{ display: 'flex',mt:"40px", width: "100%", justifyContent: "space-between", alignItems: "center"}} >
+          <Typography onClick={handleBackLoginStep} sx={{ textDecoration: "underline", cursor: "pointer"}} >Back to Login</Typography>
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            fullWidth
+            sx={{
+              backgroundColor: "#5611B1",
+              maxWidth: 100,
+              alignSelf: "flex-end",
+              borderRadius: 20,
+              px: 2,
+              py: 1,
+              "&:hover": {
+                backgroundColor: "#6302e3",
+                transform : "scale(1.05)"
+              },
+            }}
+          >
+            VERIFY
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

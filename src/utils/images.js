@@ -54,3 +54,10 @@ export { default as DeleteIcon } from "../assets/instructor/course/course-delete
 //student - Attendance 
 export { default as StudentAttendanceHeader } from "../assets/students/attendance/Attendance_Header.svg"
 export { default as StudentAttendanceHeader2 } from "../assets/students/attendance/attedence_header_2.svg"
+
+
+//classes 
+export { default as InstructorUpcommingImage } from "../assets/instructor/class/upcomming.svg"
+export { default as InstructorLiveClass } from "../assets/instructor/class/liveclasses.svg"
+export { default as InstructorHistoryClass } from "../assets/instructor/class/historyClasses.svg"
+export { default as InstructorCompletedClass } from "../assets/instructor/class/completedClass.svg"

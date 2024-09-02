@@ -6,7 +6,7 @@ import {
   NavBg,
   NavMobileBg,
   NavSelectedImage,
-  NavMobileSelectedImage,NavReplace
+  NavReplace
 } from "utils/images";
 import Icon from "../../../components/icon";
 
@@ -56,7 +56,7 @@ const InstructorNavLinks = () => {
   ];
 
   useEffect(() => {
-    const current = nav_items.find((item) => item.to === currentPath);
+    const current = nav_items.find((item) => currentPath.startsWith(item.to));
     setSelected(current?.id);
   }, [currentPath, nav_items]);
 
@@ -91,7 +91,6 @@ const InstructorNavLinks = () => {
           padding: tabView ? "25px 45px 45px 45px" : 0,
           borderBottomLeftRadius: 80,
           borderBottomRightRadius: 80,
-          
         }}
       >
         {nav_items.map((item) => (
@@ -103,15 +102,31 @@ const InstructorNavLinks = () => {
               textDecoration: "none",
               marginTop: -13.3,
               pt: 5,
+              transition: "transform 0.3s ease, color 0.3s ease",
+              "&:hover": {
+                transform: "scale(1.05)",
+                color: "#5611B1",
+              },
             }}
             component={Link}
             to={item.to}
             onClick={() => setSelected(item.id)}
           >
-            <Box sx={{ textAlign: "center", pt: "104px" }}>
+            <Box
+              sx={{
+                textAlign: "center",
+                pt: "104px",
+                transition: "color 0.3s ease",
+                color: selected === item.id ? "#5611B1" : "#6C757D",
+                
+              }}
+            >
               <Icon
                 icon={item.icon}
                 color={selected === item.id ? "#5611B1" : "#6C757D"}
+                sx={{
+                  transition: "color 0.3s ease"
+                }}
               />
             </Box>
             <Typography
@@ -124,6 +139,11 @@ const InstructorNavLinks = () => {
                 fontSize: tabView ? "12px" : "14px",
                 fontFamily: "Poppins",
                 lineHeight: "22px",
+                transition: "color 0.3s ease",
+                "&:hover": {
+                  color: "#5611B1",
+                  fontWeight : "bold"
+                },
               }}
             >
               {item.name}
@@ -131,7 +151,7 @@ const InstructorNavLinks = () => {
             {item.id === selected && (
               <img
                 src={tabView ? NavSelectedImage : NavSelectedImage}
-                style={{ marginTop: -50, height: 50 }}
+                style={{ marginTop: -50, height: 50, transition: "opacity 0.3s ease" }}
                 alt="nav selected"
               />
             )}

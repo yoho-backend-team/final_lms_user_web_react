@@ -1,4 +1,4 @@
-import { instructorDetails } from "lib/constants";
+import { instructorDetails, isAuthenticatedInstructor } from "lib/constants";
 import { useState, useEffect, createContext, useContext } from "react";
 import { io } from "socket.io-client";
 import { checkUserLoggedIn } from "store/atoms/authorized-atom";
@@ -13,9 +13,8 @@ export const InstructorSocketProvider = ({children}) => {
     const [socket,setSocket] = useState(null)
 
     useEffect(() => {
-     const isLoggedIn = checkUserLoggedIn(instructorDetails)
+     const isLoggedIn = checkUserLoggedIn(isAuthenticatedInstructor)
      const url = process.env.REACT_APP_URL
-
      if(isLoggedIn){
 
        const socketIO = io(url)

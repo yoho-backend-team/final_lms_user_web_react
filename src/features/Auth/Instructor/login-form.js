@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTheme } from "@emotion/react";
 import {
   Box,
@@ -9,6 +9,8 @@ import {
   Input,
   Typography,
   FormHelperText,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import { Link } from "react-router-dom";
@@ -22,6 +24,9 @@ import { useSpinner } from "context/SpinnerProvider";
 import { useAtom } from "jotai";
 import {instructorLoginStepAtom} from "store/atoms/authAtoms";
 import { ForgetPassword_Step } from "lib/constants";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+
+
 const validationSchema = yup.object({
   email: yup
     .string("Enter your email")
@@ -40,6 +45,7 @@ const InstructorLoginForm = () => {
   const { tabView } = useTabResponsive();
   const { showSpinner,hideSpinner} = useSpinner()
   const [, setLoginStep] = useAtom(instructorLoginStepAtom);
+  const [showPassword,setShowPassword] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -66,8 +72,10 @@ const InstructorLoginForm = () => {
   });
 
   const  handleForgetPassword=(e)=>{
+      showSpinner()
       e.preventDefault();
       setLoginStep(ForgetPassword_Step);
+      hideSpinner()
   }
 
 
@@ -125,12 +133,20 @@ const InstructorLoginForm = () => {
             >
               <InputLabel>Password</InputLabel>
               <Input
-                type="password"
+                type={ showPassword ?  "text" : "password"}
                 name="password"
                 id="password"
+                sx={{ minWidth: "300px"}}
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                endAdornment={
+                  <InputAdornment position="end" >
+                    <IconButton onClick={() => setShowPassword(!showPassword)} >
+                       {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
                 required
               />
               {formik.touched.password && formik.errors.password && (
@@ -144,10 +160,10 @@ const InstructorLoginForm = () => {
               display: "flex",
               gap: 3,
               mt: 2,
-              justifyContent: "space-between",
+              justifyContent: "flex-end",
             }}
           >
-            <Box sx={{ alignItems: "center", display: "flex" }}>
+            <Box sx={{ alignItems: "center", display: "none" }}>
               <Checkbox
                 sx={{
                   color: "#E5D2FF",

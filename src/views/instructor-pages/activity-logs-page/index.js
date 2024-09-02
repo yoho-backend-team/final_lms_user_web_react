@@ -47,7 +47,6 @@ const ActivityLogsPage = () => {
      showSpinner()
       setToDate(value)
       const createdAt = { $gte : new Date(fromDate).toISOString(), $lte : new Date(value).toISOString()}
-      console.log(typeof(createdAt?.$gte),typeof(createdAt.$lte))
       await updateActivitys({ timestamp : createdAt })
    } catch (error) {
 

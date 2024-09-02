@@ -1,7 +1,7 @@
 import { Box, Tabs, Tab, Typography, Button } from "@mui/material";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import About from "./Tabs/About";
 import SingleCourseView from "./Tabs/CourseViewPage";
 import { useTabResponsive } from "utils/tabResponsive";
@@ -35,9 +35,50 @@ const CourseViewPage = ({ Course, handleBack, getCourseDetails }) => {
     handleBack()
   };
 
+  useEffect(() => {
+    const searchParams = queryParams.get("tab")
+    if( searchParams && searchParams!==currentTab ){
+      setCurrentTab(searchParams)
+    }
+    },[location.search])
+
   const handleTabChange = (e,value) => {
       setCurrentTab(value)
+      queryParams.set("tab",value)
+      navigate(`?${queryParams}`)
   } 
+
+  const handleBack3 = () => {
+     if(selectedBatch){
+        if(selectedClass){
+          setCourseView(false)
+         return  setSelectedClass(null)
+        }
+        setSelectedBatch(null)
+     }else{
+      navigate(-1)
+     }
+  }
+
+  const getTabContent = () => {
+    if (selectedClass) {
+      return "Class Details";
+    }
+  
+    if (selectedBatch) {
+      return "Classes";
+    }
+  
+    switch (currentTab) {
+      case "1":
+        return "Course";
+      case "2":
+        return "Notes & Material";
+      default:
+        return "Batches";
+    }
+  };  
+
 
   return (
     <Box sx={{ height: "100vh", overflowY: "auto" }}>
@@ -48,7 +89,7 @@ const CourseViewPage = ({ Course, handleBack, getCourseDetails }) => {
           >
               <ArrowBack
                 sx={{ color: "black", cursor: "pointer" }}
-                onClick={closeCourseView}
+                onClick={currentTab === "3" ? handleBack3 : closeCourseView}
               />
               <Typography
                 sx={{
@@ -58,7 +99,7 @@ const CourseViewPage = ({ Course, handleBack, getCourseDetails }) => {
                   lineHeight: "24px",
                 }}
               >
-                Course
+                 { getTabContent()}
               </Typography>
           </Box>
           <Box>

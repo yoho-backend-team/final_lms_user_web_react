@@ -120,7 +120,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
     }
   };
 
-
+  console.log(classDetails,"classDetails")
   return (
     <Box sx={{ paddingTop: "40px", width: "100%", overflow: "auto" }}>
       <Breadcrumbs

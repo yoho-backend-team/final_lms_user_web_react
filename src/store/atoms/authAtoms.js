@@ -4,20 +4,6 @@ import { InstructorOtp, Instructor_Login_Step, Login_Step, Student, StudentOtp, 
 import LZString from "lz-string"
 import { compressAndStore, getAndDecompress } from "utils/auth_helpers";
 
-const setCookieWithExpiry = (key, value) => {
-  const expiryDate = new Date(new Date().getTime() + 10 * 60 * 1000);
-  Cookies.set(key, value, { expires: expiryDate });
-};
-
-const getCookieJSON = (key) => {
-  const value = Cookies.get(key);
-  try {
-    return value ? JSON.parse(value) : null;
-  } catch (e) {
-    console.error(`Error parsing cookie ${key}:`, e);
-    return null;
-  }
-}
 
 export const studentLoginStepAtom = atom(
   getAndDecompress(Student_Login_Step,Login_Step) ,

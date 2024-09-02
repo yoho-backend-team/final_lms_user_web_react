@@ -145,7 +145,6 @@ const ProfilePage = () => {
       const formData = new FormData();
       formData.append("file", file);
       const imageUrl = await fileUpload(formData);
-      console.log(imageUrl, "image");
       setPersonalInfo({
         ...personalInfo,
         image: imageUrl.file,
@@ -161,7 +160,7 @@ const ProfilePage = () => {
       toast.error(error?.message);
     }
   };
-  console.log(personalInfo, "personalInfor");
+  
   const genderIcon =
     personalInfo.gender === "male" ? <MaleIcon /> : <FemaleIcon />;
   const image = getImageUrl(personalInfo.image);
@@ -263,7 +262,7 @@ const ProfilePage = () => {
           email: editedPersonalInfo.email,
           confirmPassword,
         });
-        console.log(response, "responce");
+        
         if (response.status === "success") {
           navigate("/student/login");
           toast.success("Password updated successfully");

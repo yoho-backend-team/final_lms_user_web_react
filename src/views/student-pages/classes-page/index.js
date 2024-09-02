@@ -43,7 +43,7 @@ const ClassesPage = () => {
     { id: "4", title: "Live Class", value: "live" },
   ];
 
-  console.log(classes.data,"classes")
+  
   const renderComponents = {
     upcoming: <UpcomingClassList data={classes} classType={classType} group={"upcoming"} />,
     completed: <CompletedClassList data={classes} classType={classType} group={"completed"} />,

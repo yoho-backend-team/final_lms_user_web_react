@@ -65,6 +65,8 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket }) => {
       <Box
         sx={{
           padding: "20px",
+          height : "64vh",
+          overflow : "auto"
         }}
       >
         {communities?.map((group) => (

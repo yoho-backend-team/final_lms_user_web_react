@@ -259,9 +259,9 @@ export default function ForgetPasswordOTPInput() {
 
     try {
       const response = await verifyOTP(otp);
-      console.log(response, "response");
+
       const { email, token } = response.data;
-      console.log({ email, token });
+
       if (response.status === "success") {
         setOtpAtom({
           email: otpAtom.email,

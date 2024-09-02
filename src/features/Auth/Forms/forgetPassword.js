@@ -45,7 +45,7 @@ const ForgetPasswordPage = () => {
       setEmailError("Enter a valid email address");
       return;
     }
-    console.log("Sending reset password email to:", email);
+    
     try {
       const response = await forgetPassword(email);
       if (response.status === "success") {

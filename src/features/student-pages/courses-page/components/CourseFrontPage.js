@@ -48,23 +48,20 @@ const CourseFrontPage = ({ Course }) => {
 
   
   return (
-    <Box sx={{ pr: "60px", overflowY: "auto", maxHeight: "100vh",p:6, m:4}}>
+    <Box sx={{ p: "41px 41px 41px 71px", overflowY: "auto", maxHeight: "100vh"}}>
       <Box sx={{ display: "flex", flexDirection: "column", pr: "90px" }}>
         <Box
           sx={{ display: "flex", justifyContent: "space-between", pb: "20px" }}
         >
-
-          
           <Typography
             sx={{
-              color: "#000",
+              color: "#000000",
               fontfamily: "Nunito Sans",
               fontsize: "40px",
-              fontstyle: "normal",
-              fontweight: 900,
-              lineheight: "24px",
-              p:4,
-              
+              fontSize : "20px",
+              fontWeight : 800,
+              lineHeight : "24px",
+              fontstyle: "normal",              
             }}
           >
             Course List & Details
@@ -72,82 +69,66 @@ const CourseFrontPage = ({ Course }) => {
           
         </Box>
         <Tabs
-                value={currentTabs}
-                onChange={(e, value) => setCurrentTabs(value)}
-                indicatorColor="primary"
-                sx={{
-                  "&.MuiTabs-root:not(.MuiTabs-vertical)": {
-                    borderBottom: 0,
-                  },
-                  "& .MuiTabs-indicator": {
-                    backgroundColor: "#5611B1",
-                  },
-                  "& .MuiTab-root": {
-                    color: "#000000",
-                  },
-                  "& .Mui-selected": {
-                    color: "#5611B1",
-                  },
-                }}
-              >
-                {tabs_list.map((tab) => (
-                  <Tab
-                    sx={{
-                      p:4,
-                      fontfamily: 'Poppins',
-              fontsize: '16px',
-              fontstyle: 'normal',
-              fontweight: 500,
-              lineheight: '14px',
-                    }}
-                    key={tab.id}
-                    value={tab.id}
-                    label={tab.title}
-                  />
-                ))}
-              </Tabs>
-              <Box sx={{ pb: "27px", p: 6 }}>
-  <Link to="/student/courses/:id">
-    <img
-      src={getImageUrl(Course?.image)}
-      style={{ width: "363px", height: "160px", borderRadius: "25px" }}
-      alt="course"
-    />
-  </Link>
-</Box>
-        <Box sx={{ pb: "12px", display: "flex", gap: "21px" }}>
+          value={currentTabs}
+          onChange={(e, value) => setCurrentTabs(value)}
+          indicatorColor="primary"
+          sx={{
+            "&.MuiTabs-root:not(.MuiTabs-vertical)": {
+              borderBottom: 0,
+            },
+            "& .MuiTabs-indicator": {
+              backgroundColor: "#0D6EFD",
+            },
+            "& .MuiTab-root": {
+              color: "#000000",
+            },
+            "& .Mui-selected": {
+              color: "#0D6EFD",
+            },
+            "& .MuiButtonBase-root-MuiTab-root.Mui-selected" : {
+              color : "#0D6EFD"
+            }
+          }}
+        >
+          {tabs_list.map((tab) => (
+            <Tab
+              sx={{
+                p:"20px",
+                fontfamily: 'Poppins',
+                fontSize: '16px',
+                fontStyle: 'normal',
+                fontWeight: 500,
+                lineHeight: '14px',
+              }}
+              key={tab.id}
+              value={tab.id}
+              label={tab.title}
+            />
+          ))}
+        </Tabs>
+        <Box sx={{ pb: "17px", pt: "30px" }}>
+        <Link to="/student/courses/:id">
+          <img
+            src={getImageUrl(Course?.image)}
+            style={{ width: "363px", height: "160px", borderRadius: "25px" }}
+            alt="course"
+          />
+        </Link>
+        </Box>
+        <Box sx={{ display: "flex", gap: "21px" }}>
           <Typography
             sx={{
-              color: "#000",
+              color: "#000000",
               fontfamily: "Nunito Sans",
-              fontsize: "14px",
-              fontstyle: "normal",
-              fontweight: 800,
-              lineheight: "32px",
+              fontSize: "14px",
+              fontStyle: "normal",
+              fontWeight: 700,
+              lineHeight: "32px",
               p:1,
-              textAlign:"right"
-        
-            
+              textAlign:"right"        
             }}
           >
             {Course?.course_name}
-          </Typography>
-          <Typography
-            sx={{ display: "inline-flex", gap: "5px", alignItems: "center" }}
-          >
-            <StarIcon sx={{ color: "#EEBA02" }} />
-            <span
-              style={{
-                color: "#000000",
-                fontSize: "12px",
-                fontWeight: 700,
-                lineHeight: "13px",
-                p:1,
-              
-              }}
-            >
-              ( 4.0 )
-            </span>
           </Typography>
         </Box>
         <Box
@@ -155,9 +136,18 @@ const CourseFrontPage = ({ Course }) => {
             display: "flex",
             gap: "20px",
             alignItems: "center",
-            pb: "21px",
           }}
         >
+          <Typography
+            sx={{
+              color: "#000000",
+              fontSize: "14px",
+              fontWeight: 400,
+              lineHeight: "10px",
+            }}
+          >
+            By
+          </Typography>
           <Typography
             sx={{
               color: "#000000",
@@ -166,7 +156,7 @@ const CourseFrontPage = ({ Course }) => {
               lineHeight: "10px",
             }}
           >
-            By Rajalakshmi Institute
+          LMS
           </Typography>
           <Typography
             sx={{ display: "inline-flex", alignItems: "center", gap: "6px" }}

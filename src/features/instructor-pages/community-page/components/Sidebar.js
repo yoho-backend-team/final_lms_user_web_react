@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { getInstructorDetails } from "store/atoms/authorized-atom";
 
 const SideBar = ({ communities, currentChat, setCurrentChat, socket }) => {
+
   const handleChat = (group) => {
     setCurrentChat(group);
     const communituy_id = group?._id;
@@ -14,7 +15,7 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket }) => {
       console.log(error, "error");
     });
   };
-
+  
   return (
     <Box>
       <Box
@@ -64,9 +65,11 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket }) => {
       <Box
         sx={{
           padding: "20px",
+          height : "64vh",
+          overflow : "auto"
         }}
       >
-        {communities?.map((group) => (
+        {communities&&communities?.map((group) => (
           <Box
             key={group.id}
             onClick={() => handleChat(group)}

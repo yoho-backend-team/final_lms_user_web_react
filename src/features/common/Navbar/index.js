@@ -49,6 +49,9 @@ import getAllStudentNotifications from "../redux/studentThunks";
 import { selectStudentNotifications } from "../redux/studentSelector";
 import { setStudentSelectedNotification } from "../redux/studentSlices";
 import { Student_Details } from "lib/constants";
+import { useStudentLogout } from "features/Auth/services";
+import { useSpinner } from "context/SpinnerProvider";
+import toast from "react-hot-toast";
 
 export default function NavBar() {
   const theme = useTheme();
@@ -68,6 +71,8 @@ export default function NavBar() {
   const navigate = useNavigate();
   const [student, setStudent] = React.useState(checkUser(Student_Details).userDetails);
   const notifications = useSelector(selectStudentNotifications)
+  const studentLogut = useStudentLogout()
+  const { showSpinner, hideSpinner } = useSpinner()
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -95,11 +100,18 @@ setAnchorEl(null);
 };
 
 
-  const handleLogout = () => {
-    Cookies.remove('student');
-    Cookies.remove('instructor');
-    navigate('/student/login'); 
-    handleMenuClose();
+  const handleLogout = async () => {
+    try {
+     showSpinner() 
+     const response = await studentLogut()
+     toast.success(response?.message)
+    } catch (error) {
+      toast.error(error?.message)
+    }finally{
+     hideSpinner()
+     navigate('/student/login'); 
+     handleMenuClose();
+    }
   };
 
   const handleProfile = () => {
