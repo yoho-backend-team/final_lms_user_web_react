@@ -1,127 +1,114 @@
 import { Grid, Typography, Box } from "@mui/material";
-import oridinalSuffix from "utils/course/addOridinalSuffix";
+import { styled } from "@mui/system";
 import SmartDisplayOutlinedIcon from "@mui/icons-material/SmartDisplayOutlined";
-import NoteIcon from "assets/icons/noteIcon";
-import { useTabResponsive } from "utils/tabResponsive";
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import { formatDate } from "utils/formatDate";
+
+// Styled components
+const CardContainer = styled(Grid)(({ theme }) => ({
+  width: '300px',
+  height: '250px',
+  borderRadius: '16px',
+  padding: '25px',
+  background: theme.palette.background.paper,
+  boxShadow: theme.shadows[3],
+  cursor: 'pointer',
+  transition: 'transform 0.3s, box-shadow 0.3s',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  '&:hover': {
+    transform: 'scale(1.05)',
+    boxShadow: theme.shadows[6],
+  },
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  fontSize: '18px',
+  fontWeight: 700,
+  marginBottom: theme.spacing(1),
+}));
+
+const Progress = styled(Typography)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  fontSize: '36px',
+  fontWeight: 700,
+}));
+
+const DateInfo = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: theme.spacing(1),
+  borderRadius: '8px',
+  backgroundColor: theme.palette.grey[100],
+  marginTop: theme.spacing(2),
+}));
+
+const InfoBox = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginTop: theme.spacing(2),
+}));
+
+const InfoItem = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: theme.spacing(1),
+  alignItems: 'center',
+}));
+
+const InfoText = styled(Typography)(({ theme }) => ({
+  color: theme.palette.text.secondary,
+  fontSize: '14px',
+  fontWeight: 500,
+}));
 
 const BatchCard = ({
   id,
-  style,
   title,
   progress,
   classes,
   students,
-  closeCourseView,
-  openCourseView,
   class_details,
   setSelectedBatch
 }) => {
-  const { tabView } = useTabResponsive();
   return (
-    <Grid
-      onClick={()=>setSelectedBatch(class_details)}
+    <CardContainer
+      onClick={() => setSelectedBatch(class_details)}
       item
-      sx={{
-        width: "291px",
-        height: "247px",
-        borderRadius: "12px",
-        padding: "25.867px 23.1px 30.367px 23px",
-        background: `linear-gradient(${style.card})`,
-        cursor: "pointer",
-      }}
+      key={id}
     >
-      <Box
-        sx={{
-          display: "flex",
-          gap: "20px",
-          justifyContent: "flex-start",
-          pb: "24px",
-          alignItems: "center",
-          fontSize: "21px",
-          fontWeight: 600,
-          lineHeight: "14px",
-        }}
-      >
-        <Typography
-          sx={{
-            padding: "10px",
-            backgroundColor: style.background,
-            color: style.color,
-            borderRadius: "12px",
-          }}
-        >
-          {oridinalSuffix(id)}
-        </Typography>
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: "16px",
-            fontWeight: 600,
-            lineHeight: "11px",
-          }}
-        >
-          Batch
-        </Typography>
+      <Box>
+        <Title>{title}</Title>
+        <Progress>{progress}</Progress>
       </Box>
-      <Box sx={{ pb: "24px", display: "flex", gap: "31px" }}>
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: "13px",
-            fontWeight: 800,
-            lineHeight: "22px",
-          }}
-        >
-          {title}
-        </Typography>
-        <Typography
-          sx={{
-            color: "white",
-            fontSize: "38px",
-            fontWeight: 900,
-            lineHeight: "40px",
-          }}
-        >
-          {progress}
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Box sx={{ display: "inline-flex", gap: "5px", alignItems: "center" }}>
-          <NoteIcon color="white" width="22px" heiht="22px" fill="white" />
-          <Typography
-            sx={{
-              color: "white",
-              fontSize: "13px",
-              fontWeight: 700,
-              lineHeight: "22px",
-            }}
-          >
-            {students} Students
-          </Typography>
+
+      <DateInfo>
+        <Box>
+          {/* <Typography variant="body2" color="textSecondary">Start</Typography> */}
+          <Typography variant="subtitle1" color="textPrimary">{ formatDate(class_details?.start_date)}</Typography>
         </Box>
-        <Box sx={{ display: "inline-flex", gap: "5px" }}>
-          <SmartDisplayOutlinedIcon
-            sx={{ color: "white", height: "22px", width: "22px" }}
-          />
-          <Typography
-            sx={{
-              color: "white",
-              fontSize: "13px",
-              fontWeight: 700,
-              lineHeight: "22px",
-            }}
-          >
-            {classes} Classes
-          </Typography>
+        <Box>
+           <Typography >-</Typography>
         </Box>
-      </Box>
-    </Grid>
+        <Box>
+          {/* <Typography variant="body2" color="textSecondary">End</Typography> */}
+          <Typography variant="subtitle1" color="textPrimary">{formatDate(class_details?.end_date)}</Typography>
+        </Box>
+      </DateInfo>
+
+      <InfoBox>
+        <InfoItem>
+          <GroupOutlinedIcon sx={{ color: "primary.main", width: "20px", height: "20px" }} />
+          <InfoText>{students} Students</InfoText>
+        </InfoItem>
+        <InfoItem>
+          <SmartDisplayOutlinedIcon sx={{ color: "primary.main", width: "20px", height: "20px" }} />
+          <InfoText>{classes} Classes</InfoText>
+        </InfoItem>
+      </InfoBox>
+    </CardContainer>
   );
 };
 

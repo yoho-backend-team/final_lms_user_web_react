@@ -23,7 +23,8 @@ const AddStudyMaterialsPage = ({ Course, getCourseDetails }) => {
 
   const handleSectionChange = (section) => {
     setCurrentSection(section);
-    navigate(`?section=${section}`);
+    queryParams.set("section",section)
+    navigate(`?${queryParams}`);
   };
 
   return (

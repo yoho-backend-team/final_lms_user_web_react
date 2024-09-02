@@ -33,7 +33,7 @@ const Login = () => {
   };
   
   const Component = map_to_form[loginStep] ?? LoginForm
-  console.log(loginStep,"loginStep",Component)
+
   return (
     <AuthLayout>
       <Component />

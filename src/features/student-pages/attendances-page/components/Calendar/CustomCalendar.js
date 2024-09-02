@@ -164,7 +164,7 @@ function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data })
   };
 
   const handleNextMonth = () => {
-    console.log(selectedMonth)
+
     if(selectedMonth!==11){
       setSelectedMonth(selectedMonth+1)
       getAttedenceDetails(months[selectedMonth+1])
@@ -175,7 +175,6 @@ function CustomCalendar({ attendanceData,getAttedenceDetails, attendance_data })
   }
 
   const handlePreviousMonth = () => {
-    console.log(selectedMonth)
     if(selectedMonth !== 1){
       setSelectedMonth(selectedMonth-1)
       getAttedenceDetails(months[selectedMonth-1])

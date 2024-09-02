@@ -66,7 +66,6 @@ const EnterNewPassword = () => {
       return;
     }
     try {
-      console.log(otpAtom, "otpAtom");
       const response = await changePassword(confirmPassword);
       toast.success(response.message);
     } catch (error) {

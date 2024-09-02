@@ -2,19 +2,27 @@ import React from "react";
 import { Box, Card, Typography, Button, Grid } from "@mui/material";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
-import TimeIcon from "../icons/TimeIcon";
-import DurationIcon from "../icons/DurationIcon";
 import { Link } from "react-router-dom";
-import {
-  formatDate,
-  formatTime,
-  getIsTimeValid,
-  getTimeDifference,
-} from "../../../../../utils/formatDate";
+import { formatDate, formatTime, getTimeDifference } from "../../../../../utils/formatDate";
 
-const ClassCard = ({ cls, style, type, group }) => {
+const ClassCard = ({ cls, style, type, group, img }) => {
+  
   return (
-    <Card sx={{ mb: 2, p: 2 }}>
+    <Card
+      sx={{
+        mb: 2,
+        p: 2,
+        backgroundImage : `url(${img})`,
+        backgroundPosition : "right",
+        backgroundRepeat : "no-repeat",
+        transition: "all 0.2s ease", 
+        cursor : "pointer",
+        "&:hover": {
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
+          transform: "scale(1.02)", 
+        },
+      }}
+    >
       <Grid
         container
         sx={{
@@ -93,10 +101,17 @@ const ClassCard = ({ cls, style, type, group }) => {
         <Grid item xs={3} sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             component={Link}
-            to={`/instructor/class/${cls.uuid}?type=${type}&group=${group}`}
+            to={`/instructor/classes/${cls.uuid}?type=${type}&group=${group}`}
             state={{ id: cls.uuid }}
             variant="contained"
-            sx={{ backgroundColor: "#5611B1", color: "white" }}
+            sx={{
+              backgroundColor: group === "history" ?  "white" :  "#5611B1",
+              color: group === "history" ?  "#5611B1" : "white",
+              "&:hover": {
+                backgroundColor: group === "history" ? "white" : "#4a0e8d", 
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+              },
+            }}
           >
             View Class
           </Button>

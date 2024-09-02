@@ -74,3 +74,24 @@ export const isInClassTimeRange = (startDate, startTime, endTime) => {
 
   return isSameDate && isInRange && currentDate < classEndTime;
 };
+
+
+export const getYearList = (startYear) => {
+  const currentYear = new Date().getFullYear(); 
+  const years = [];
+
+  for (let year = startYear; year <= currentYear; year++) {
+    years.push(year);
+  }
+
+  return years;
+};
+
+export const getMonthList = () => {
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  
+  return months;
+}

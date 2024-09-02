@@ -23,6 +23,8 @@ import {
   selectLoading,
 } from "features/instructor-pages/classes-page/redux/selectors";
 import ClassLoader from "components/ui/loaders/classLoading";
+import { InstructorCompletedClass, InstructorHistoryClass, InstructorLiveClass, InstructorUpcommingImage } from "utils/images";
+import { useSpinner } from "context/SpinnerProvider";
 
 const ClassesPage = () => {
   const location = useLocation();
@@ -32,31 +34,35 @@ const ClassesPage = () => {
   const [classType, setClassType] = useState(queryParams.get("classType") || "online");
   const [page, setPage] = useState(Number(queryParams.get("page")) || 1);
   const dispatch = useDispatch();
+  const { showSpinner, hideSpinner } = useSpinner()
   const classes = useSelector(selectClasses);
   const loading = useSelector(selectLoading);
+  
 
   const tabs = [
     { id: "1", title: "Upcoming Classes", value: "upcoming" },
     { id: "2", title: "Completed Classes", value: "completed" },
     { id: "3", title: "Class History", value: "history" },
-    { id: "4", title: "Live Class", value: "live" },
+    // { id: "4", title: "Live Class", value: "live" },
   ];
 
   const renderComponents = {
-    upcoming: <UpcomingClassList data={classes?.data} classType={classType} group={"upcoming"} />,
-    completed: <CompletedClassList data={classes?.data} classType={classType} group={"completed"} />,
-    history: <ClassHistory data={classes?.data} classType={classType} group={"history"} />,
-    live: <LiveClassList data={classes?.data} classType={classType} group={"live"} />,
+    upcoming: <UpcomingClassList data={classes?.data} classType={classType} group={"upcoming"} image={InstructorUpcommingImage} />,
+    completed: <CompletedClassList data={classes?.data} classType={classType} group={"completed"} image={InstructorCompletedClass} />,
+    history: <ClassHistory data={classes?.data} classType={classType} group={"history"} image={InstructorHistoryClass} />,
+    // live: <LiveClassList data={classes?.data} classType={classType} group={"live"} image={InstructorLiveClass} />,
   };
 
   const classTypes = [
-    { id: "1", title: "online class", value: "online" },
+    { id: "1", title: "live class", value: "online" },
     { id: "2", title: "offline class", value: "offline" },
   ];
 
   const fetchData = async () => {
+    showSpinner()
     const data = { userType: classType, classType: value, page: page };
     await dispatch(getAllClasses(data));
+    hideSpinner()
   };
 
   useEffect(() => {
@@ -84,27 +90,23 @@ const ClassesPage = () => {
     navigate(`?tab=${value}&classType=${classType}&page=${page - 1}`);
   };
 
-  navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      const { latitude, longitude } = position.coords;
+  // navigator.geolocation.getCurrentPosition(
+  //   async (position) => {
+  //     const { latitude, longitude } = position.coords;
 
       
-      const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
-      const data = await response.json();
-
-      
-        
-        console.log(response,data)
-    },
-    (error) => {
-      console.error('Error getting location:', error.message);
-    }
-  );
+  //     const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+  //     const data = await response.json();
+  //   },
+  //   (error) => {
+  //     console.error('Error getting location:', error.message);
+  //   }
+  // );
   
   return (
     <ClassLayout>
       <Box sx={{ display: "flex", flexDirection: "column", width: "100vw" }}>
-        <Box>
+        <Box sx={{ position: "sticky", top: "0px", overflow: "hidden"}} >
           <Typography
             sx={{
               fontWeight: 700,
@@ -117,7 +119,7 @@ const ClassesPage = () => {
             Classes
           </Typography>
         </Box>
-        <Card>
+        <Card sx={{ position: "sticky", top: "0px", overflow: "hidden"}} >
           <Grid container sx={{ height: "auto", width: "100%" }}>
             <Grid
               item

@@ -7,10 +7,20 @@ import {
   Button,
 } from "@mui/material";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { useEffect, useState } from "react";
+import { getMonthList, getYearList } from "utils/formatDate";
 
-const FilterHeader = ({ filters, onFilterChange, onResetFilters }) => (
-  <Box>
-    <Box sx={{ display: "flex", gap: "20px", mb: 2, px: "50px", mt: 3 }}>
+const FilterHeader = ({ filters, onFilterChange, onResetFilters }) => {
+  const [yearList,setYearList] = useState([])
+  
+
+  useEffect(() => {
+  setYearList(getYearList(2018))
+  },[])
+  
+  return (
+  <Box sx={{  position: "sticky", top: "0px", overflow: "hidden" }} >
+    <Box sx={{ display: "flex", gap: "20px", mb: 2, px: "50px", mt: 3 ,}}>
       <FormControl sx={{ minWidth: 120 }}>
         <InputLabel>All Class</InputLabel>
         <Select
@@ -43,8 +53,11 @@ const FilterHeader = ({ filters, onFilterChange, onResetFilters }) => (
           sx={{ backgroundColor: "white" }}
         >
           <MenuItem value="">All Month</MenuItem>
-          <MenuItem value="january">January</MenuItem>
-          <MenuItem value="february">February</MenuItem>
+          {
+            getMonthList().map((month) => 
+               <MenuItem value={month} key={month} >{month}</MenuItem>
+            )
+          }
         </Select>
       </FormControl>
       <FormControl sx={{ minWidth: 120 }}>
@@ -55,8 +68,11 @@ const FilterHeader = ({ filters, onFilterChange, onResetFilters }) => (
           sx={{ backgroundColor: "white" }}
         >
           <MenuItem value="">All Year</MenuItem>
-          <MenuItem value="2023">2023</MenuItem>
-          <MenuItem value="2024">2024</MenuItem>
+          {
+            yearList?.map((year) => 
+              <MenuItem value={year} id={year}  key={year} >{year}</MenuItem>
+            )
+          }
         </Select>
       </FormControl>
       <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -71,6 +87,6 @@ const FilterHeader = ({ filters, onFilterChange, onResetFilters }) => (
       </Box>
     </Box>
   </Box>
-);
+)}
 
 export default FilterHeader;

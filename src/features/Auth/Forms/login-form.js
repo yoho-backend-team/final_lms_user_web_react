@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import { useTheme } from "@emotion/react";
 import {
@@ -22,6 +22,7 @@ import Cookies from "js-cookie";
 import { getErrorMessage } from "utils/common/error";
 import LZString from "lz-string"
 import { ForgetPassword_Step } from "lib/constants";
+
 
 const validationSchema = yup.object({
   email: yup
@@ -124,10 +125,10 @@ const LoginForm = () => {
               display: "flex",
               gap: 3,
               mt: 2,
-              justifyContent: "center",
+              justifyContent: "flex-end",
             }}
           >
-            <Box sx={{ alignItems: "center", display: "flex" }}>
+            <Box sx={{ alignItems: "center", display: "none" }}>
               <Checkbox />
               <Typography sx={{ fontSize: 12 }}>
                 I accept the terms & conditions

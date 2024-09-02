@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Typography, Button, Grid, Avatar, TextField, FormControl, FormLabel, OutlinedInput, Select, MenuItem } from "@mui/material";
 import ProfileLayout from "features/instructor-pages/profile-page/components/layout";
 import { useSpinner } from "context/SpinnerProvider";
-import { getInstructorProfile, updateInstructorProfile } from "features/instructor-pages/profile-page/services";
+import { changeInstructorPassword, getInstructorProfile, updateInstructorProfile } from "features/instructor-pages/profile-page/services";
 import toast from "react-hot-toast";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder } from "utils/placeholders";
@@ -73,6 +73,7 @@ const ProfilePage = () => {
     }
   };
 
+
   const handleBack = () => {
     navigate(-1);
   };
@@ -93,20 +94,19 @@ const ProfilePage = () => {
             isEditMode ? 
             <>
               <Box sx={{ display: "flex", gap: "20px" }}>
-                <Button variant="outlined" sx={{ color: "red" }} onClick={() => setIsEditMode(false)} >Cancel</Button>
+                <Button variant="contained" size="large" sx={{ color: "white", backgroundColor: "red", ":hover" : { backgroundColor: "#cf0a14"} }} onClick={() => setIsEditMode(false)} >Cancel</Button>
                 <Button
+                  size="large"
+                  variant="contained"
                   sx={{
                     backgroundColor: "#5611B1",
                     color: "#FFFFFF",
                     borderRadius: "8px",
-                    padding: "10px",
-                    fontSize: "10px",
                     fontWeight: 600,
-                    border: "1px solid #D9D9D9"
                   }}
                   onClick={handleUpdateProfile}
                 >
-                  Save profile
+                  Save 
                 </Button>
               </Box>
             </>
@@ -232,6 +232,7 @@ const ProfilePage = () => {
                           <OutlinedInput
                             readOnly={!isEditMode}
                             value={instructor?.contact_info?.[key] || instructor?.[key] || ''}
+                            disabled={  key === "email" && isEditMode }
                             onChange={(e) => setInstructor((prev) => ({ ...prev, contact_info: { ...prev.contact_info, [key]: e.target.value } }))}
                             sx={{
                               borderRadius: "4px",

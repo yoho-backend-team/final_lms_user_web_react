@@ -47,15 +47,11 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      console.log('Selected file:', file.name);
-      
+    if (file) {      
       setFile(file);
       handleFileOpen(file);
     }
   };
-
-  console.log(selectedTicket,"selectedTicket")
 
   return (
     <>

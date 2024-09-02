@@ -35,7 +35,6 @@ const CourseStudentDetails = () => {
     fetchStudentFees();
   }, []);
 
-  console.log(feesData,"feesData")
 
 
   const data = [
