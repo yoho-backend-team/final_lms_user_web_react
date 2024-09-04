@@ -11,7 +11,7 @@ import {
   getIsTimeValid,
   getTimeDifference,
 } from "../../../../../utils/formatDate";
-import { Viewimage, Viewimage1, Viewimage2 } from "utils/images";
+import { Viewimage, Viewimage1, Viewimage2, viewimage4 } from "utils/images";
 
 
 const groupImages = {
@@ -33,11 +33,13 @@ const ClassCard = ({ cls, style, type,group }) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          
           backgroundImage: `url(${backgroundImage})`,
             backgroundSize: 'auto',
             backgroundRepeat: 'no-repeat',
             backgroundPosition : "right"
                   }}
+                  
       >
         <Grid item xs={3} sx={{ p: 2 }}>
           <Box>
