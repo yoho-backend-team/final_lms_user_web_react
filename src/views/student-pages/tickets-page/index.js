@@ -31,7 +31,7 @@ const TicketsPage = () => {
   };
 
  
-
+  console.log(tickets,"tickets")
   useEffect(() => {
     const data = { status: currentType, page: currentPage, limit: 10 };
     getTicketsList(data);

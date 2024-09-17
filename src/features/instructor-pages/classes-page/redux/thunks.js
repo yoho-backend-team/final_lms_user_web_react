@@ -7,7 +7,6 @@ export const getAllClasses = (data) => async (dispatch) => {
     const response = await getClassDetails(data);
     dispatch(setClasses(response));
   } catch (error) {
-    console.log(error);
     return error;
   } finally {
     dispatch(setLoading(false));

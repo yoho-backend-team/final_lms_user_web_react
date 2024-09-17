@@ -4,6 +4,8 @@ import {
   Instructor_Details,
   Instructor_Token,
   instructorDetails,
+  isAuthenticatedInstructor,
+  isAuthenticatedStudent,
   Student_Details,
   Student_Token,
   studentDetails,
@@ -53,9 +55,12 @@ Axios.interceptors.response.use(
       error.response.status === 401 &&
       error.response.statusText === "Unauthorized"
     ) {
-       Cookies.remove(instructorDetails);
-       Cookies.remove(studentDetails);
+       Cookies.remove(isAuthenticatedInstructor)
+       Cookies.remove(isAuthenticatedStudent)
+       Cookies.remove(Instructor_Details);
+       Cookies.remove(Student_Details);
     }
+    console.log(error,"error")
     return Promise.reject(error);
   },
 );

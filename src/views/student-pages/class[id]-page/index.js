@@ -27,7 +27,7 @@ const ClassViewPage = () => {
     getClass();
   }, []);
   
-console.log(groupType, "group")
+
   return (
     <ClassLayout>
       <ClassCard

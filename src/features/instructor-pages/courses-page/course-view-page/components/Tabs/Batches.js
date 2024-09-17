@@ -88,14 +88,15 @@ const BatchesPage = ({ openCourseView, closeCourseView, course ,setSelectedBatch
     getbatchList()
   },[])
   
-  
+  console.log(batches,"batches")
   return (
     <Box sx={{ padding: tabView ? "20px" : "60px" }}>
       <Grid container xs={12} gap={tabView ? "60px" : "20px"}>
         {batches?.map((batch,index) => (
           <Grid item>
             <BatchCard 
-              id={index+1}
+              key={batch?._id + index}
+              id={batch?._id}
               style={getCycledModule(index)}
               title={batch.batch_name}
               students={batch.student.length}

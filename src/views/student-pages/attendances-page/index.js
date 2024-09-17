@@ -111,7 +111,7 @@ const Attendance = () => {
       showSpinner();
       const user = getStudentDetails();
       const response = await Client.Student.attendance.get({
-        userId: user.uuid, month: selectedMonth  , instituteId: user.institute_id?.uuid , user: user?._id     
+        userId: user.uuid, month: month  , instituteId: user.institute_id?.uuid
       });
       setAttendanceData(response?.data)
     } catch (error) {
@@ -138,7 +138,8 @@ const Attendance = () => {
   }
 
   const totalClasses = (attendance_data?.onlineClassCount ?? 0) + (attendance_data?.offlineClassCount ?? 0);
-  
+  console.log(attendance_data,"attendance_data")
+  console.log(totalClasses,"totalClasses")
   return (
     <Box
       className={classes.root}

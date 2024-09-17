@@ -62,7 +62,7 @@ const courseStudentId = () => {
 };
 const studentCourseId = () => {
   const user = getStudentDetails();
-  console.log(user,"user")
+  
   return user?.userDetail?.course;
 };
 
@@ -83,10 +83,10 @@ const generateEndpoints = () => {
   const institute1 = instituteStudentId();
   const branch1 = branchStudentId();
   const course1 = courseStudentId();
-  console.log(course1,"course1")
+  
   const student = getStudentDetails();
   const studentCourse = studentCourseId();
-  
+   
   return {
     Student: {
       auth: {
@@ -95,7 +95,7 @@ const generateEndpoints = () => {
         forget_password: "/institutes/auth/profile/forgot-password",
         reset_password: "/institutes/auth/profile/reset-password",
         change_password: "institutes/auth/profile/change-password",
-        logout: "institutes/auth/student/logout"
+        log_out : "/institutes/auth/student/logout"
       },
       course: {
         get: `/institutes/${institute1}/branches/${branch1}/course/${course1}`,
@@ -106,7 +106,7 @@ const generateEndpoints = () => {
         getwithId: `/institutes/class/course/`,
       },
       attendance: {
-        get: `/institutes/attedance/student-attendance/${student?._id}`,
+        get: "/institutes/attedance/student-attendance/",
         class_attendance: "/attendance/class",
       },
       payments: {
@@ -160,6 +160,7 @@ const generateEndpoints = () => {
       auth: {
         login: "/institutes/auth/teaching-staff/login",
         verify_otp: "/institutes/auth/teaching-staff/verify-otp",
+        change_password : "/institutes/auth/teaching-staff/change-password",
         log_out: "/institutes/auth/teaching-staff/logout",
       },
       attendance: {
@@ -184,12 +185,12 @@ const generateEndpoints = () => {
         }
       },
       class: {
-        get: `/institutes/class/${course}`,
+        get: `/institutes/class/${course?.[0]}`,
         getwithId: `/institutes/class/course/`,
         update: `/institutes/class/`,
       },
       community: {
-        get: `/institutes/community/course/${course}`,
+        get: `/institutes/community/course/${course?.[0]}`,
       },
       notification: {
         get: `/institutes/staff/notifications`,

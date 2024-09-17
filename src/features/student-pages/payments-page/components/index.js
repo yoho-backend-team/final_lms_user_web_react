@@ -37,8 +37,6 @@ const Payment = () => {
     fetchStudentFees();
   }, []);
 
-  console.log(feesData,"feesData")
-
 
   const data = [
     { id: 1, text: "Apr 23", type: "pending" },
@@ -54,7 +52,7 @@ const Payment = () => {
     { id: 3, text: "Feb 23" },
   ];
 
-  console.log(feesData,"feesData")
+  
 
   return (
     <div className="main-container" style={{display:"none"}}>

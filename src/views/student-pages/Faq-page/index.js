@@ -76,8 +76,8 @@ const FAQPage = () => {
   return (
     <Layout>
        <Grid item xs={12}>
-          <Typography variant="h2" gutterBottom align="center">
-          <QuestionAnswerIcon sx={{gap:"10px", width:"50px"}} />
+          <Typography variant="h2" gutterBottom align="center" sx={{fontSize:"32px",fontFamily:"poppins",color:"black"}}>
+          <QuestionAnswerIcon sx={{gap:"10px", width:"100px",}} />
             Frequently Asked Questions   
           </Typography>
         </Grid>

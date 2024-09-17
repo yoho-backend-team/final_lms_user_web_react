@@ -33,7 +33,6 @@ const ClassesPage = () => {
   const [classType, setClassType] = useState(queryParams.get("classType") || "online");
   const [page, setPage] = useState(Number(queryParams.get("page")) || 1);
   const [filters, setFilters] = useState({
-    class: "",
     course: "",
     month: "",
     year: "",
@@ -52,21 +51,18 @@ const ClassesPage = () => {
 
   const handleFilterChange = (filter, value) => {
     setFilters((prev) => ({ ...prev, [filter]: value }));
-    fetchData();
   };
 
-  
   const handleResetFilters = () => {
     setFilters({
-      class: "",
       course: "",
       month: "",
       year: "",
     });
-    fetchData();
   };
 
-  console.log(classes.data,"classes")
+  console.log(classes,"classes")
+  console.log(filters,"filters")
   const renderComponents = {
     upcoming: <UpcomingClassList data={classes} classType={classType} group={"upcoming"}  />,
     completed: <CompletedClassList data={classes} classType={classType} group={"completed"} />,
@@ -99,7 +95,9 @@ const ClassesPage = () => {
 
   useEffect(() => {
     fetchData();
-  }, [dispatch, classType, value, page]);
+  }, [dispatch, classType, value, page, filters]);
+
+  
 
   const handleChange = (event, newValue) => {
     setPage(1);

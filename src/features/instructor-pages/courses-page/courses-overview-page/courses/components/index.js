@@ -41,7 +41,7 @@ const CourseListPage = ({ courses }) => {
   const navigate = useNavigate()
 
   const handleCourseView = (course) => {
-    navigate(`/instructor/course/${course?._id}`)
+    navigate(`/instructor/courses/${course?._id}`)
   }
 
   return (

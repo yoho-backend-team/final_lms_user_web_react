@@ -12,6 +12,8 @@ import { useCallback } from "react";
 import { compressAndStore } from "utils/auth_helpers";
 import { Instructor_Details, Instructor_Role, Instructor_Token, isAuthenticatedInstructor, isAuthenticatedStudent, Login_Step, Otp_Step, Student_Details, Student_Role, Student_Token } from "lib/constants";
 import { InstructorAuthAtom, StudentAuthAtom } from "store/atoms";
+import { getErrorMessage } from "utils/common/error";
+import Cookies from "js-cookie";
 import { loginSuccess, logout  } from "../reducers/actionsCreators";
 
 export const useInstructorLogin = () => {
@@ -231,7 +233,6 @@ export const useChangePassword = () => {
         token: otpAtom.token,
         confirmPassword,
       });
-      console.log(response, "Response");
       setOtpAtom({ email: null, token: null, otp: "" });
       setLoginStep(Login_Step);
       return { success: true, message: response?.message };
@@ -242,38 +243,6 @@ export const useChangePassword = () => {
   };
 
   return changePassword;
-};
-
-export const useStudentLogout = () => {
-  const setLoginStep = useSetAtom(studentLoginStepAtom);
-  const setStudentAtom = useSetAtom(studentUserAtom);
-  const setOtpAtom = useSetAtom(studentOtpAtom);
-  const [, dispatch] = useAtom(StudentAuthAtom);
-
-  const studentLogout = async () => {
-    try {
-      
-      await Client.Student.logout();
-
-    
-      setLoginStep(null);
-      setStudentAtom({ isLoggedIn: false, userDetails: null, token: null, role: null });
-      setOtpAtom({ email: null, token: null, otp: "" });
-
-      // Clear from storage
-      compressAndStore(isAuthenticatedStudent, false, new Date(0));
-      compressAndStore(Student_Details, null, new Date(0));
-      compressAndStore(Student_Token, null, new Date(0));
-      compressAndStore(Student_Role, null, new Date(0));
-
-      dispatch(logout());
-    } catch (error) {
-      console.error("Logout error:", error);
-      // Handle errors if necessary
-    }
-  };
-
-  return studentLogout;
 };
 
 
@@ -288,7 +257,8 @@ export const useInstructorforgetPassword = () => {
       return response;
     } catch (error) {
       console.error("Error during password reset:", error);
-      throw error;
+      const error_message = getErrorMessage(error)
+      throw error_message
     }
   };
   return forgetPassword;
@@ -301,7 +271,6 @@ export const useInstituteForgetPasswordOtpVerify = () => {
 
   
   const otpData = useAtomValue(instructorOtpAtom);
-
   const verifyOTP = async (otp) => {
     try {
       const response = await Client.Student.verifyOtp({
@@ -329,23 +298,65 @@ export const useInstructorChangePassword = () => {
   const [, setInstructorAtom] = useAtom(instructorUserAtom);
   const [otpAtom, setOtpAtom] = useAtom(instructorOtpAtom);
 
-  const changePassword = async (confirmPassword) => {
+  const changePassword = async (data) => {
     try {
       const response = await Client.Student.reset_password({
         email: otpAtom.email,
-        otp: otpAtom.otp,
-        token: otpAtom.token,
-        confirmPassword,
+        // otp: otpAtom.otp,
+        // token: otpAtom.token,
+        new_password : data?.new_password, 
+        confirm_password : data?.confirm_password
       });
-      console.log(response, "Response");
+
       setOtpAtom({ email: null, token: null, otp: "" });
       setLoginStep(Login_Step);
       return { success: true, message: response?.message };
     } catch (error) {
+      const error_message = getErrorMessage(error)
       console.error("Error setting new password:", error);
-      throw error;
+      throw error_message
     }
   };
 
   return changePassword;
 };
+
+export const useInstructorLogout = () => {
+   const [,setLoginStep] = useAtom(instructorLoginStepAtom)
+
+   const instructorLogout = useCallback(
+    async (data) => {
+      try {
+      await Client.Instructor.log_out(data)
+      Cookies.remove(isAuthenticatedInstructor) 
+      Cookies.remove(Instructor_Details)
+      Cookies.remove(Instructor_Token)
+      setLoginStep(Login_Step) 
+      return { success: true, message : "Logout successfully"}
+      } catch (error) {
+        throw new Error(getErrorMessage(error))
+      }
+    },[setLoginStep])
+
+   return instructorLogout
+}
+
+export const useStudentLogout = () => {
+    const [,setLoginStep] = useAtom(studentLoginStepAtom)
+   
+  const studentLogout = useCallback(
+    async(data) => {
+      try {
+       await Client.Student.logout()
+       Cookies.remove(isAuthenticatedStudent)
+       Cookies.remove(Student_Details)
+       Cookies.remove(Student_Token)
+       setLoginStep(Login_Step)
+       return { success: true, message : "Logout successfully"}
+      } catch (error) {
+        throw new Error(getErrorMessage(error))
+      }
+    }
+  )
+  return studentLogout
+}

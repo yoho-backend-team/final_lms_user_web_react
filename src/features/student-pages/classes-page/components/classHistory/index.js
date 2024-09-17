@@ -21,7 +21,7 @@ const ClassHistory = ({ data, classType, filters, onFilterChange, onResetFilters
         onFilterChange={onFilterChange}
         onResetFilters={onResetFilters}
       />
-      <Box sx={{ mt: 3, px: "40px" }}>
+      {/* <Box sx={{ mt: 3, px: "40px" }}>
         {data.map((cls, index) => (
           <ClassCard
             key={cls.id}
@@ -31,7 +31,7 @@ const ClassHistory = ({ data, classType, filters, onFilterChange, onResetFilters
             group={index}
           />
         ))}
-      </Box>
+      </Box> */}
     </>
   );
 };

@@ -11,6 +11,9 @@ const ClassTabs = ({ tabs, value, handleChange }) => {
           cursor: "pointer",
           "& .MuiTabs-indicator": { backgroundColor: "#5611B1" },
           color: "#5611B1",
+          ".Mui-selected": {
+              color : "#5611B1",
+          }
         }}
         textColor="secondary"
         indicatorColor="primary"

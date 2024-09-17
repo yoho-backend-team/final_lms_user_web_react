@@ -91,7 +91,7 @@ const StudentTicketsPage = ({
     handlePageChange(null, prevPage);
     navigate(`?tab=${value}&page=${prevPage}`);
   };
-
+   console.log(data,"StudentTicketsPage")
   return (
     <Box
       sx={{
@@ -161,7 +161,7 @@ const StudentTicketsPage = ({
                   indicatorColor="primary"
                   aria-label="secondary tabs example"
                 >
-                  {tab_list.map((i) => (
+                  {tab_list?.map((i) => (
                     <Tab key={i.id} label={i.title} value={i.id} style={{}} />
                   ))}
                 </Tabs>
@@ -191,7 +191,7 @@ const StudentTicketsPage = ({
               {loading ? (
                 <TicketLoader />
               ) : (
-                data.tickets.map((ticket, index) => (
+                data?.map((ticket, index) => (
                   <Grid item xs={tabView ? 6 : 4} key={index}>
                     <TicketCard
                       ticket={ticket}

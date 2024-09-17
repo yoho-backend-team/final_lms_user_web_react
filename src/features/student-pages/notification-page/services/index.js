@@ -10,3 +10,13 @@ export const updateNotificationStatus = async (data) => {
       throw new Error(message) 
     }
 }
+
+export const getAllNotification = async (data) => {
+  try {
+  const response = await Client.Student.notification.get(data) 
+  return response.data  
+  } catch (error) {
+    const message = getErrorMessage(error) 
+    throw new Error(message) 
+  }
+}
