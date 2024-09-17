@@ -79,7 +79,7 @@ class Client {
     },
     // attendance : (params) => httpClient.get(HTTP_END_POINTS.Student.attendance,params,"student"),
     attendance: {
-    get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.get}`,params,'student'),
+    get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.get}`,params,"student"),
     get_class_attendance: (data) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.class_attendance}/${data.classId}`, { params: data })
   },
   notification : {

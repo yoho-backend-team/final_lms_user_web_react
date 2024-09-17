@@ -7,24 +7,25 @@ import { formatDate, formatTime } from 'utils/formatDate';
 import { getAllStudentActivity } from '../services';
 
 
-const TimelineComponent = () => {
-  const [activityLogs, setActivityLogs] = useState([]);
+const TimelineComponent = ({filterData}) => {
+  
+  // const [activityLogs, setActivityLogs] = useState([]);
   
   
 
-  useEffect(() => {
-    const fetchActivityLogs = async () => {
-      try {
-        const logs = await getAllStudentActivity();
-        setActivityLogs(logs);
-      } catch (error) {
-        console.error("Error fetching activity logs:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchActivityLogs = async () => {
+  //     try {
+  //       const logs = await getAllStudentActivity();
+  //       setActivityLogs(logs);
+  //     } catch (error) {
+  //       console.error("Error fetching activity logs:", error);
+  //     }
+  //   };
     
 
-    fetchActivityLogs();
-  }, []);
+  //   fetchActivityLogs();
+  // }, []);
   const getIcon = (type) => {
     switch (type) {
       case 'login':
@@ -40,37 +41,37 @@ const TimelineComponent = () => {
     }
   };
   
-  const getLogs = (type, username) => {
-    switch (type) {
-      case 'login':
-        return [
-          `The User ${activityLogs[0]?.user?.username} Successfully Login`,
-          `The User ${activityLogs[0]?.user?.username} Failed Login Process`,
-        ];
-      case 'delete':
-        return [
-          `The User ${activityLogs[0]?.user?.username} Successful event after correct password confirmation`,
-          `The User ${activityLogs[0]?.user?.username} Failed event after wrong password confirmation`,
-        ];
-      case 'passwordChange':
-        return [
-          `The User ${activityLogs[0]?.user?.username} Successful event after correct password confirmation`,
-        ];
-      case 'Ticket Create':
-        return [
-          `The User  ${activityLogs[0]?.user?.username} ticket Created Sucessfully,`,
-        ];
-      default:
-        return [];
-    }
-  };
+  // const getLogs = (type, username) => {
+  //   switch (type) {
+  //     case 'login':
+  //       return [
+  //         `The User ${activityLogs[0]?.user?.username} Successfully Login`,
+  //         `The User ${activityLogs[0]?.user?.username} Failed Login Process`,
+  //       ];
+  //     case 'delete':
+  //       return [
+  //         `The User ${activityLogs[0]?.user?.username} Successful event after correct password confirmation`,
+  //         `The User ${activityLogs[0]?.user?.username} Failed event after wrong password confirmation`,
+  //       ];
+  //     case 'passwordChange':
+  //       return [
+  //         `The User ${activityLogs[0]?.user?.username} Successful event after correct password confirmation`,
+  //       ];
+  //     case 'Ticket Create':
+  //       return [
+  //         `The User  ${activityLogs[0]?.user?.username} ticket Created Sucessfully,`,
+  //       ];
+  //     default:
+  //       return [];
+  //   }
+  // };
   
 
   return (
     <Timeline sx={{ width: "80vw" }}>
-      {activityLogs.map((log, index) => {
+      {filterData?.map((log, index) => {
         const icon = getIcon(log.action);
-        const logs = getLogs(log.action, log.user.username);
+        // const logs = getLogs(log.action, log.user.username);
         return (
           <TimelineItem key={index}>
             <TimelineOppositeContent sx={{ width: "250px", flex: "none"}}>
@@ -80,28 +81,28 @@ const TimelineComponent = () => {
             </TimelineOppositeContent>
             <TimelineSeparator>
               {icon}
-              {index < activityLogs.length - 1 && <TimelineConnector />}
+              {index < filterData.length - 1 && <TimelineConnector />}
             </TimelineSeparator>
             <TimelineContent>
               <Typography variant="h6" component="h1" sx={{ color: "#495057", fontSize: "14px", fontWeight: 700, lineHeight: "24px",mb: "40px"}}>
                 {log.title}
               </Typography>
-              {logs.map((logEntry, idx) => (
-                <Box sx={{ display: 'flex', gap: "24px" }} key={idx}>
-                  <Box sx={{ display: "flex", ml: "-33px", justifyContent: "center", alignItems: "center" }}>
-                    <TimelineSeparator sx={{ backgroundColor: "#D9D9D9", height: "1px", width: "91px", flex: "none" }} />
-                    <Typography sx={{ border: `4px solid ${idx === 0 ? "#6AF467" : "#F76761"}`, height: "20px", width: "20px", borderRadius: "20px" }}></Typography>
-                  </Box>
-                  <Paper elevation={3} style={{ padding: '10px 24px', margin: '10px 0', backgroundColor: "#E7E7E7", borderRadius: "8px", boxShadow: "none"}} key={idx}>
-                    <Typography variant="body2" sx={{color:'#606060',fontfamily: 'Poppins',fontsize: '14px',fontstyle: 'normal',fontweight: '400',lineheight: 'normal',whiteSpace: 'pre-line'}}>
-                      {logEntry}
-                    </Typography>
+              
+              <Box sx={{ display: 'flex',gap:"24px"}} >
+            <Box sx={{ display: "flex",ml:"-33px",justifyContent:"center",alignItems:"center"}} >
+            <TimelineSeparator sx={{ backgroundColor: "#D9D9D9", height: "1px", width: "91px",flex:"none"}} />
+            <Typography sx={{ border : `4px solid #6AF467`, height: "20px",width:"20px", borderRadius: "20px"}} ></Typography>
+            </Box>
+              <Paper elevation={3} style={{ padding: '10px 24px' , margin: '10px 0', backgroundColor: "#E7E7E7", borderRadius: "8px", boxShadow: "none",  }} >
+                <Typography variant="body2">
+                {log.title} {log.user.email}
+                </Typography>
                     <Typography variant="caption" display="block" color="textSecondary" sx={{ textAlign: "end",mb: "10px" }}>
                       {formatDate(log.createdAt)} {formatTime(log.createdAt)}
                     </Typography>
                   </Paper>
                 </Box>
-              ))}
+              
             </TimelineContent>
           </TimelineItem>
         );

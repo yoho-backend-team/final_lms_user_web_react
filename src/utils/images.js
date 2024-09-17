@@ -13,7 +13,8 @@ export { default as TicketDownbg } from "../assets/instructor/Ticket/Ticketdown.
 export { default as TicketMain } from "../assets/instructor/Ticket/2j37M81CvuiHeUBTFe3GSbp5QXF.svg";
 export { default as Viewimage } from "../assets/view_1.svg";
 export { default as Viewimage1 } from "../assets/view.svg";
-export { default as Viewimage2 } from "../assets/view_2.svg";
+export { default as Viewimage2 } from "../assets/instructor/class/liveclasses.svg";
+export {default as viewimage4} from "../assets/Group.svg"
 export { default as TicketBg2 } from "../assets/instructor/Ticket/bg.svg";
 export { default as CreateTicketRightSideImage } from "../assets/instructor/Ticket/createTicketRImage.svg";
 export { default as SqlCourseImage } from "../assets/instructor/community/sql.svg";

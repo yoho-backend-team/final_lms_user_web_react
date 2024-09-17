@@ -151,18 +151,6 @@ const ActivityLogsPage = () => {
           InputLabelProps={{ shrink: true }}
         />
       </FormControl>
-            <FormControl sx={{ display: "none" }}>
-              <TextField
-                select
-                value={week}
-                onChange={(e) => setWeek(e.target.value)}
-                sx={{ width: 150 }}
-              >
-                <MenuItem value="Past Week">Past Week</MenuItem>
-                <MenuItem value="Past Month">Past Month</MenuItem>
-                <MenuItem value="Past Year">Past Year</MenuItem>
-              </TextField>
-            </FormControl>
           </Box>
         </Box>
         <Box>

@@ -1,72 +1,52 @@
-import { Box, Typography,Tabs, Tab, } from "@mui/material";
-import { CourseCardBg } from "utils/images";
-import StarIcon from "@mui/icons-material/Star";
-import UpdateIcon from "@mui/icons-material/Update";
-import NoteIcon from "assets/icons/noteIcon";
-import CertificateIcon from "assets/icons/certificateIcon";
-import LanguageIcon from "assets/icons/languageIcon";
-import { getImageUrl } from "utils/common/imageUtlils";
-import { formatDate } from "utils/formatDate.js";
-import CourseStudentViewPage from "./courseViewPage";
+import { Box, Typography, Tabs, Tab, IconButton } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import UpdateIcon from "@mui/icons-material/Update";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { getImageUrl } from "utils/common/imageUtlils";
+
+// Utility function to determine if a course is completed based on the end date
+const isCompleted = (endDate) => {
+  const currentDate = new Date();
+  return new Date(endDate) < currentDate;
+};
 
 const CourseFrontPage = ({ Course }) => {
   const [currentTabs, setCurrentTabs] = useState("1");
-  const Benefits = [
-    {
-      icon: <LanguageIcon color="white" />,
-      id: "benifit1",
-      title: "English & Tamil",
-      background: "#5F1AA4",
-      shadow: "0px 0px 50px 0px rgba(95, 26, 164, 0.63)",
-    },
-    {
-      icon: <CertificateIcon color="white" padding="17px 41px 10px 40px" />,
-      id: "benifit2",
-      title: "3 Certificates",
-      background: "#0051C8",
-      shadow: "0px 0px 50px 0px rgba(0, 81, 200, 0.63)",
-    },
-    {
-      icon: (
-        <NoteIcon color="white" fill={"white"} padding="17px 41px 10px 40px" />
-      ),
-      id: "benifit3",
-      title: "Notes",
-      background: "#0F8D0D",
-      shadow: "0px 0px 50px 0px rgba(15, 141, 13, 0.63)",
-    },
-  ];
+  const navigate = useNavigate();
+
+  const courses = Array.isArray(Course?.batches) ? Course.batches : [];
+  const currentCourses = courses.filter((course) => !isCompleted(course?.end_date));
+  const completedCourses = courses.filter((course) => isCompleted(course?.end_date));
 
   const tabs_list = [
-    { id: "1", title: "Current Course" },
-   { id: "2", title: "Completed" },
- ];
-
-   
+    { id: "1", title: "Current Course", disabled: currentCourses.length === 0 },
+    { id: "2", title: "Completed", disabled: completedCourses.length === 0 },
+  ];
 
   
+  const imageUrl = getImageUrl(Course?.image);
+
   return (
-    <Box sx={{ p: "41px 41px 41px 71px", overflowY: "auto", maxHeight: "100vh"}}>
+    <Box sx={{ p: "41px 41px 41px 71px", overflowY: "auto", maxHeight: "100vh" }}>
       <Box sx={{ display: "flex", flexDirection: "column", pr: "90px" }}>
-        <Box
-          sx={{ display: "flex", justifyContent: "space-between", pb: "20px" }}
-        >
+        <Box sx={{ display: "flex", alignItems: 'center', pb: "20px" }}>
+          <IconButton onClick={() => navigate(-1)} sx={{ mr: 2 }}>
+            <ArrowBackIcon />
+          </IconButton>
           <Typography
             sx={{
               color: "#000000",
-              fontfamily: "Nunito Sans",
-              fontsize: "40px",
-              fontSize : "20px",
-              fontWeight : 800,
-              lineHeight : "24px",
-              fontstyle: "normal",              
+              fontFamily: "Nunito Sans",
+              fontSize: "20px",
+              fontWeight: 800,
+              lineHeight: "24px",
+              fontStyle: "normal",
+              flexGrow: 1
             }}
           >
             Course List & Details
           </Typography>
-          
         </Box>
         <Tabs
           value={currentTabs}
@@ -85,99 +65,199 @@ const CourseFrontPage = ({ Course }) => {
             "& .Mui-selected": {
               color: "#0D6EFD",
             },
-            "& .MuiButtonBase-root-MuiTab-root.Mui-selected" : {
-              color : "#0D6EFD"
-            }
           }}
         >
           {tabs_list.map((tab) => (
             <Tab
+              key={tab.id}
+              value={tab.id}
+              label={tab.title}
+              // disabled={tab.disabled}
               sx={{
-                p:"20px",
-                fontfamily: 'Poppins',
+                p: "20px",
+                fontFamily: 'Poppins',
                 fontSize: '16px',
                 fontStyle: 'normal',
                 fontWeight: 500,
                 lineHeight: '14px',
               }}
-              key={tab.id}
-              value={tab.id}
-              label={tab.title}
             />
           ))}
         </Tabs>
-        <Box sx={{ pb: "17px", pt: "30px" }}>
-        <Link to="/student/courses/:id">
-          <img
-            src={getImageUrl(Course?.image)}
-            style={{ width: "363px", height: "160px", borderRadius: "25px" }}
-            alt="course"
-          />
-        </Link>
-        </Box>
-        <Box sx={{ display: "flex", gap: "21px" }}>
-          <Typography
-            sx={{
-              color: "#000000",
-              fontfamily: "Nunito Sans",
-              fontSize: "14px",
-              fontStyle: "normal",
-              fontWeight: 700,
-              lineHeight: "32px",
-              p:1,
-              textAlign:"right"        
-            }}
-          >
-            {Course?.course_name}
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            gap: "20px",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              color: "#000000",
-              fontSize: "14px",
-              fontWeight: 400,
-              lineHeight: "10px",
-            }}
-          >
-            By
-          </Typography>
-          <Typography
-            sx={{
-              color: "#000000",
-              fontSize: "14px",
-              fontWeight: 700,
-              lineHeight: "10px",
-              marginLeft:7
-            }}
-          >
-          LMS
-          </Typography>
-          <Typography
-            sx={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
-          >
-            <UpdateIcon sx={{ color: "black" }} />
-            <span
-              style={{
-                color: "#000000",
-                fontSize: "14px",
-                fontWeight: 600,
-                lineHeight: "10px",
-              }}
-            >
-              {Course.duration} Hrs
-            </span>
-            
-          </Typography>
+        
+        {/* Conditionally render image based on the selected tab */}
+        {currentTabs === "1" && currentCourses.length > 0 && (
+          <Box sx={{ pb: "17px", pt: "30px"}}>
+            <Link to="/student/courses/:id">
+            <img
+              src={imageUrl}
+              style={{ width: "363px", height: "160px", borderRadius: "25px" }}
+              alt="current course"
+            />
+            </Link>
           </Box>
+        )}
+        
+        {currentTabs === "2" && completedCourses.length > 0 && (
+          <Box sx={{ pb: "17px", pt: "30px" }}>
+            <Link to="/student/courses/:id">
+            <img
+              src={imageUrl}
+              style={{ width: "363px", height: "160px", borderRadius: "25px" }}
+              alt="completed course"
+            />
+            </Link>
+          </Box>
+        )}
+
+        <Box sx={{ pb: "17px", pt: "30px" }}>
+          {currentTabs === "1" ? (
+            currentCourses.length > 0 ? (
+              currentCourses.map((course) => (
+                <Box key={course.id} sx={{ display: "flex", gap: "21px", flexDirection: "column" }}>
+                  <Typography
+                    sx={{
+                      color: "#000000",
+                      fontFamily: "Nunito Sans",
+                      fontSize: "14px",
+                      fontStyle: "normal",
+                      fontWeight: 700,
+                      lineHeight: "32px",
+                      textAlign: "right",
+                    }}
+                  >
+                    {course.course_name}
+                  </Typography>
+                  <Box sx={{ display: "flex", gap: "20px", alignItems: "center" }}>
+                    <Typography
+                      sx={{
+                        color: "#000000",
+                        fontSize: "14px",
+                        fontWeight: 400,
+                        lineHeight: "10px",
+                      }}
+                    >
+                      By
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: "#000000",
+                        fontSize: "14px",
+                        fontWeight: 700,
+                        lineHeight: "10px",
+                        marginLeft: 7,
+                      }}
+                    >
+                      LMS
+                    </Typography>
+                    <Typography sx={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                      <UpdateIcon sx={{ color: "black" }} />
+                      <span
+                        style={{
+                          color: "#000000",
+                          fontSize: "14px",
+                          fontWeight: 600,
+                          lineHeight: "10px",
+                        }}
+                      >
+                        {course.duration} Hrs
+                      </span>
+                    </Typography>
+                  </Box>
+                </Box>
+              ))
+            ) : (
+              <Typography>No current courses available.</Typography>
+            )
+          ) : completedCourses.length > 0 ? (
+            completedCourses.map((course) => (
+              <Box key={course.id} sx={{ display: "flex", gap: "21px", flexDirection: "column" }}>
+                <Typography
+                  sx={{
+                    color: "#000000",
+                    fontFamily: "Nunito Sans",
+                    fontSize: "14px",
+                    fontStyle: "normal",
+                    fontWeight: 700,
+                    lineHeight: "32px",
+                    textAlign: "left",
+                  }}
+                >
+                  {course.course_name}
+                </Typography>
+                <Box sx={{ display: "flex", gap: "20px", alignItems: "center" }}>
+                  <Typography
+                    sx={{
+                      color: "#000000",
+                      fontSize: "14px",
+                      fontWeight: 400,
+                      lineHeight: "10px",
+                    }}
+                  >
+                    By
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: "#000000",
+                      fontSize: "14px",
+                      fontWeight: 700,
+                      lineHeight: "10px",
+                      marginLeft: 3,
+                    }}
+                  >
+                    LMS
+                  </Typography>
+                  <Typography sx={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                    <UpdateIcon sx={{ color: "black" }} />
+                    <span
+                      style={{
+                        color: "#000000",
+                        fontSize: "14px",
+                        fontWeight: 600,
+                        lineHeight: "10px",
+                      }}
+                    >
+                      {course.duration} Hrs
+                    </span>
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex" }}>
+                  <Typography
+                    sx={{
+                      color: "#000000",
+                      fontFamily: "Nunito Sans",
+                      fontSize: "14px",
+                      fontStyle: "italic",
+                      fontWeight: 700,
+                      lineHeight: "9.841px",
+                      textAlign: "left",
+                      pr: 1,
+                    }}
+                  >
+                    Completed Date :
+                  </Typography>
+                  <Typography
+                    sx={{
+                      color: "#0D6EFD",
+                      fontFamily: "Nunito Sans",
+                      fontSize: "14px",
+                      fontStyle: "italic",
+                      fontWeight: 700,
+                      lineHeight: "9.841px",
+                      textAlign: "left",
+                    }}
+                  >
+                    {course.end_date}
+                  </Typography>
+                </Box>
+              </Box>
+            ))
+          ) : (
+            <Typography>No completed courses available.</Typography>
+          )}
+        </Box>
       </Box>
-      </Box>
+    </Box>
   );
 };
 

@@ -32,6 +32,7 @@ const ClassHistory = ({ data, classType, group, image }) => {
     });
   };
 
+  console.log(data,"data")
   return (
     <>
       <FilterHeader

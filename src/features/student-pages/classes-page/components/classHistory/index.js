@@ -3,7 +3,6 @@ import { Box } from "@mui/material";
 import ClassCard from "../card/ClassCard";
 import FilterHeader from "./FilterCard";
 
-
 const defaultStyles = {
   calendarColor: "#000000",
   timerColor: "#2AAD37",
@@ -11,36 +10,19 @@ const defaultStyles = {
   durationColor: "rgba(210, 244, 234, 1)",
 };
 
-const ClassHistory = ({ data, classType }) => {
-  const [filters, setFilters] = React.useState({
-    class: "",
-    course: "",
-    month: "",
-    year: "",
-  });
-
-  const handleFilterChange = (filter, value) => {
-    setFilters((prev) => ({ ...prev, [filter]: value }));
-  };
-
-  const handleResetFilters = () => {
-    setFilters({
-      class: "",
-      course: "",
-      month: "",
-      year: "",
-    });
-  };
+const ClassHistory = ({ data, classType, filters, onFilterChange, onResetFilters }) => {
 
   return (
     <>
       <FilterHeader
         filters={filters}
-        onFilterChange={handleFilterChange}
-        onResetFilters={handleResetFilters}
+        classType={classType}
+        data={data}
+        onFilterChange={onFilterChange}
+        onResetFilters={onResetFilters}
       />
-      <Box sx={{ mt: 3, px: "40px" }}>
-        {data.map((cls,index) => (
+      {/* <Box sx={{ mt: 3, px: "40px" }}>
+        {data.map((cls, index) => (
           <ClassCard
             key={cls.id}
             cls={cls}
@@ -49,7 +31,7 @@ const ClassHistory = ({ data, classType }) => {
             group={index}
           />
         ))}
-      </Box>
+      </Box> */}
     </>
   );
 };
