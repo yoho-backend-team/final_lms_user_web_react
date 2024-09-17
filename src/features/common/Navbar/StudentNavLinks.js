@@ -8,6 +8,7 @@ import {
   NavMobileBg,
   NavSelectedImage,
   NavMobileSelectedImage,
+  NavReplace
 } from "utils/images";
 
 const StudentNavLinks = ({ student }) => {
@@ -78,12 +79,12 @@ const StudentNavLinks = ({ student }) => {
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
-        mt: tabView ? 10 : 10,
+        mt: tabView ? 10 : 0,
       }}
     >
       <Box sx={{ position: "absolute" }}>
         <img
-         src={tabView ? NavMobileBg : NavBg}
+         src={tabView ? NavMobileBg : NavReplace}
           style={{
             alignItems: "center",
             justifyContent: "center",
@@ -103,7 +104,7 @@ const StudentNavLinks = ({ student }) => {
           padding: tabView ? "25px 45px 45px 45px" : 7,
           borderBottomLeftRadius: 80,
           borderBottomRightRadius: 80,  
-          marginTop: isSmallScreen ? "-64px" : "18px"       
+          marginTop: isSmallScreen ? "-64px" : "80px"       
           
         }}
       >

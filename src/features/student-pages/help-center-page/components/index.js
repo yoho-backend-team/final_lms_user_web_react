@@ -25,6 +25,8 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import StudentHelpView from "./helpView";
 import StudentMailTab from "./tap-pages/mailTab";
 import Client from "../../../../api/index";
+import ClearIcon from '@mui/icons-material/Clear';
+import { useNavigate } from "react-router-dom";
 
 
 const useStyles = makeStyles(() => ({
@@ -50,8 +52,11 @@ const StudentHelpCenter = () => {
   const [value, setValue] = useState(0);
   const [isView, setView] = useState(false);
   const [selectedQuery,setSelectedQuery] = useState(null)
+  const [filteredData, setFilteredData] = useState(faqCategories);
   const classes = useStyles();
-  
+  const navigate = useNavigate();
+
+
   useEffect(() => {
     const fetchFaqCategories = async () => {
       try {
@@ -76,9 +81,25 @@ const StudentHelpCenter = () => {
   };
 
   const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
+    const query = event.target.value;
+    setSearchQuery(query);
+
+    if (query) {
+      const results = faqCategories.filter((i) =>
+        i.question.toLowerCase().includes(query.toLowerCase())
+      );
+      setFilteredData(results);
+    } else {
+      setFilteredData(faqCategories);
+    }
   };
 
+  const handleClearSearch = () => {
+    setSearchQuery('');
+    setFilteredData(faqCategories);
+  };
+
+  console.log(selectedQuery,"SelectedQuery")
 
 
  const filterData = faqCategories?.filter((i) =>{
@@ -97,10 +118,12 @@ const StudentHelpCenter = () => {
         }}
       >
         <Box>
-          <ArrowBackIcon
+        <IconButton
+            onClick={() => navigate(-1)}
             sx={{ color: "black", cursor: "pointer" }}
-            onClick={() => setView(false)}
-          />
+          >
+            <ArrowBackIcon />
+          </IconButton>
         </Box>
         <Box>
           <Box sx={{ display: "flex", gap: "10px" }}>
@@ -308,14 +331,23 @@ const StudentHelpCenter = () => {
           ),
           endAdornment: (
             <InputAdornment position="end">
+              {searchQuery && (
+                <IconButton
+                  onClick={handleClearSearch}
+                  sx={{
+                    backgroundColor: "#5611B1",
+                    color: "white",
+                    padding: "3px",
+                    marginRight: "8px"
+                  
+                  }}
+                >
+                  <ClearIcon />
+                </IconButton>
+              )}
               <IconButton
                 onClick={() => {
-                  const filterData = faqCategories.filter((item) =>
-                    item.question
-                      .toLowerCase()
-                      .includes(searchQuery.toLowerCase())
-                  );
-                  
+                  // This can be used for additional actions on click
                 }}
                 sx={{
                   backgroundColor: "#5611B1",

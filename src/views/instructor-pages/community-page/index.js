@@ -38,6 +38,7 @@ const Community = () => {
 
   
   return (
+    <>
     <Box
       sx={{
         height: "85vh",
@@ -78,6 +79,7 @@ const Community = () => {
         </Grid>
       </Box>
     </Box>
+    </>
   );
 };
 

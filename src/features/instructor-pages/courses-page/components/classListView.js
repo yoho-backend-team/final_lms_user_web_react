@@ -62,7 +62,8 @@ const BatchClassListViewPage = ({classes,openCourseView,closeCourseView}) => {
   const { tabView } = useTabResponsive();
 
   const getCycledModule = (index) => {
-    const modIndex = index % classes?.length;
+    const modIndex = index % modules?.length;
+    console.log(modIndex,modules[modIndex])
     return modules[modIndex];
   };
   

@@ -122,7 +122,7 @@ const PaymentStudentInterface = () => {
   //   getStudentfeesDetails();
   // }, [dispatch]);
 
-
+console.log(feesDataStudent,"feesDataStudent")
   return (
     <>
       <Box

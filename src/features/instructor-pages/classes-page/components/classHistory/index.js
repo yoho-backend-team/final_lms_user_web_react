@@ -11,7 +11,7 @@ const defaultStyles = {
   durationColor: "rgba(210, 244, 234, 1)",
 };
 
-const ClassHistory = ({ data, classType, group }) => {
+const ClassHistory = ({ data, classType, group, image }) => {
   const [filters, setFilters] = React.useState({
     class: "",
     course: "",
@@ -32,6 +32,7 @@ const ClassHistory = ({ data, classType, group }) => {
     });
   };
 
+  console.log(data,"data")
   return (
     <>
       <FilterHeader
@@ -40,13 +41,14 @@ const ClassHistory = ({ data, classType, group }) => {
         onResetFilters={handleResetFilters}
       />
       <Box sx={{ mt: 3, px: "40px" }}>
-        {data.map((cls) => (
+        {data?.map((cls) => (
           <ClassCard
             key={cls.id}
             cls={cls}
             style={defaultStyles}
             type={classType}
             group={group}
+            img={image}
           />
         ))}
       </Box>

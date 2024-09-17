@@ -228,7 +228,7 @@ const CreateTicketForm = ({ handleClose }) => {
                     name="problem"
                     label="Select your query type"
                   >
-                    {problems.map((option) => (
+                    {problems?.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>

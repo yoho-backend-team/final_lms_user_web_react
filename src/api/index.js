@@ -10,6 +10,7 @@ class Client {
         params,
         "student"
       ),
+    logout: (data,params) => httpClient.post(HTTP_END_POINTS.Student.auth.log_out,data,params,"student"),
     verifyOtp: (data, params) =>
       httpClient.post(
         HTTP_END_POINTS.Student.auth.verify_otp,
@@ -78,7 +79,7 @@ class Client {
     },
     // attendance : (params) => httpClient.get(HTTP_END_POINTS.Student.attendance,params,"student"),
     attendance: {
-    get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.get}`,params,'student'),
+    get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.get}`,params,"student"),
     get_class_attendance: (data) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.class_attendance}/${data.classId}`, { params: data })
   },
   notification : {
@@ -154,12 +155,8 @@ class Client {
         params,
         "instructor"
       ),
-    log_out: (data) =>
-      httpClient.post(
-        HTTP_END_POINTS.Instructor.auth.log_out,
-        data,
-        "instructor"
-      ),
+    changePassword : (data,params) => httpClient.post(HTTP_END_POINTS.Instructor.auth.change_password,data,params,"instructor"),
+    log_out: (data) => httpClient.post(HTTP_END_POINTS.Instructor.auth.log_out,data,{},"instructor"),
     attendance: {
       get: (params) =>
         httpClient.get(

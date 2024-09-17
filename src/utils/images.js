@@ -13,7 +13,7 @@ export { default as TicketDownbg } from "../assets/instructor/Ticket/Ticketdown.
 export { default as TicketMain } from "../assets/instructor/Ticket/2j37M81CvuiHeUBTFe3GSbp5QXF.svg";
 export { default as Viewimage } from "../assets/view_1.svg";
 export { default as Viewimage1 } from "../assets/view.svg";
-export { default as Viewimage2 } from "../assets/view_2.svg";
+export { default as Viewimage2 } from "../assets/instructor/class/liveclasses.svg";
 export {default as viewimage4} from "../assets/Group.svg"
 export { default as TicketBg2 } from "../assets/instructor/Ticket/bg.svg";
 export { default as CreateTicketRightSideImage } from "../assets/instructor/Ticket/createTicketRImage.svg";
@@ -56,3 +56,10 @@ export { default as DeleteIcon } from "../assets/instructor/course/course-delete
 //student - Attendance 
 export { default as StudentAttendanceHeader } from "../assets/students/attendance/Attendance_Header.svg"
 export { default as StudentAttendanceHeader2 } from "../assets/students/attendance/attedence_header_2.svg"
+
+
+//classes 
+export { default as InstructorUpcommingImage } from "../assets/instructor/class/upcomming.svg"
+export { default as InstructorLiveClass } from "../assets/instructor/class/liveclasses.svg"
+export { default as InstructorHistoryClass } from "../assets/instructor/class/historyClasses.svg"
+export { default as InstructorCompletedClass } from "../assets/instructor/class/completedClass.svg"

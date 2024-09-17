@@ -26,7 +26,7 @@ const InstructorAuthLayout = ({ children }) => {
         xs={12}
         sm={8}
         sx={{
-          backgroundImage: `url(${tabView ? MobileLoginInstructorBg : InstructorLoginGroups})`,
+          backgroundImage: { xs: `url(${MobileLoginInstructorBg})`, sm: `url(${MobileLoginInstructorBg})`, md: `url(${InstructorLoginGroups})`  },
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: { xs: "center" },
@@ -40,12 +40,14 @@ const InstructorAuthLayout = ({ children }) => {
             <img
               src={objects}
               alt="logo"
-              style={{ bottom: 0, position: "absolute", paddingLeft: "8.5%" }}
+              style={{ bottom: 0, position: "absolute", paddingLeft: "8.5%",maxHeight: "412px", height: "38%" }}
             />
           </Box>
           <Box
             sx={{
               px: { sm: 20, xs: 5 },
+              pr : { sm: "134", md : "127px" },
+              pl : { sm: "194", md : "120px"},
               // py: { xs: 5, sm: 10 },
               // flexWrap: "wrap",
               justifyContent: "center",
@@ -57,10 +59,11 @@ const InstructorAuthLayout = ({ children }) => {
               variant="h1"
               color={theme.palette.common.white}
               sx={{
-                fontSize: tabView ? "2em" : "4em",
-                lineHeight: tabView ? "4rem" : "5rem",
+                fontSize: { xs: "2em", sm: "40px", md : "64px" } ,
+                lineHeight: { xs: "77px", sm: "77px", md: "100px"  },
                 display: "flex",
-                pt: { sm: "15%" },
+                maxHeight : "412px",
+                pt: { xs: "143px" ,sm: "73px", md: "70px" },
               }}
             >
               "

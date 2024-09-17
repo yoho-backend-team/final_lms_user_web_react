@@ -250,7 +250,6 @@ export default function ForgetPasswordOTPInput() {
   }, [timeLeft]);
 
   const handleResend = () => {
-    console.log("Resending OTP...");
     setTimeLeft(60);
   };
 
@@ -263,9 +262,8 @@ export default function ForgetPasswordOTPInput() {
 
     try {
       const response = await verifyOTP(otp);
-      console.log(response, "response");
       const { email, token } = response.data;
-      console.log({ email, token });
+      
       if (response.status === "success") {
         setOtpAtom({
           email: otpAtom.email,
@@ -275,7 +273,6 @@ export default function ForgetPasswordOTPInput() {
         setLoginStep(EnterNewPassword_Step);
       }
     } catch (error) {
-      console.log(error, "error");
       setError("Invalid OTP. Please try again.");
     }
   };
@@ -353,7 +350,7 @@ export default function ForgetPasswordOTPInput() {
         <Box>
           <Button
             sx={{
-              backgroundColor: "#0D6EFD",
+              backgroundColor: "#5611B1",
               color: "white",
               borderRadius: "36px",
               boxShadow:
@@ -363,7 +360,7 @@ export default function ForgetPasswordOTPInput() {
               lineHeight: "15px",
               width: "101px",
               height: "37px",
-              ":hover": { backgroundColor: "#0D6EFD" },
+              ":hover": { backgroundColor: "#5611B1" },
             }}
             onClick={handleVerify}
           >

@@ -24,6 +24,7 @@ import {
 import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import SalarySlip from "./slip";
 
 const months = [
   "January",
@@ -47,6 +48,7 @@ const PaymentInterface = () => {
   const { tabView } = useTabResponsive();
   const { showSpinner,hideSpinner } = useSpinner()
 
+
   const getSalaryDetails = async () => {
     try {
       showSpinner()
@@ -66,13 +68,14 @@ const PaymentInterface = () => {
   
   return (
     <>
+      {/* <SalarySlip /> */}
       <Box
         sx={{
           mx: tabView ? "0px" : "40px",
           mt: tabView ? "80px" : "40px",
           mb: "20px",
           borderRadius: "25px",
-          boxShadow: tabView ? "none" : "0px 0px 64px 0px rgba(0, 0, 0, 0.10);",
+          boxShadow: tabView ? "none" : "0px 0px 64px 0px rgba(0, 0, 0, 0.10);"
         }}
       >
         <Box

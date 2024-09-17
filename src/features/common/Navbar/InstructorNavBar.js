@@ -44,6 +44,9 @@ import { setSelectedNotification } from "../redux/slices";
 import { useNavigate } from "react-router-dom";
 import { useSocket } from "context/instructorSocket";
 import { Instructor_Details } from "lib/constants";
+import { useSpinner } from "context/SpinnerProvider";
+import toast from "react-hot-toast";
+import { useInstructorLogout } from "features/Auth/services";
 
 export default function InstructorNavBar() {
   const theme = useTheme();
@@ -54,11 +57,13 @@ export default function InstructorNavBar() {
   const isNotificationOpen = Boolean(anchorE2)
   const notification_id = isNotificationOpen ? "notification-popover" : undefined
   const [instructor, setInstructor] = React.useState(checkUser(Instructor_Details));
+  const { showSpinner, hideSpinner } = useSpinner()
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const Notifications = useSelector(selectNotificationList)
   const selectedNotification = useSelector(selectSelectedNotification)
   const socket = useSocket()
+  const instructorLogout = useInstructorLogout()
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -87,11 +92,25 @@ export default function InstructorNavBar() {
     navigate("/instructor/notifications")
     // window.location.href = "/instructor/notifications"
   }
+
+  const handleLogout = async () => {
+     try {
+      showSpinner()
+      await instructorLogout()
+      toast.success("Logout sucessfully")
+     } catch (error) {
+       toast.error(error?.message)
+     }finally{
+      hideSpinner()
+      navigate("/instructor/login")
+     }
+  }
    
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       sx={{
+        top: "56px",
         "& .MuiPaper-root.MuiPopover-paper.MuiMenu-paper": {
           borderRadius: 2,
           boxShadow: "none",
@@ -113,9 +132,9 @@ export default function InstructorNavBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem>Log Out</MenuItem>
+      <MenuItem onClick={() => {navigate("/instructor/profile");setAnchorEl(null)}} >Profile</MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
+      <MenuItem onClick={handleLogout} >Log Out</MenuItem>
     </Menu>
   );
 

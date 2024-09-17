@@ -26,6 +26,8 @@ const ClassLayout = ({ children }) => {
           backgroundPosition: 'bottom center',
           height: '35vh',
           width: '100%', 
+          // left : 0,
+          // right : 0,
           position: 'absolute', 
           bottom: 0,
         }}

@@ -10,16 +10,17 @@ const defaultStyles = {
   durationColor: "rgba(61, 139, 253, 0.22)",
 };
 
-const LiveClassList = ({ data, classType, group }) => {
+const LiveClassList = ({ data, classType, group, image }) => {
   return (
     <Box sx={{ mt: 3, px: "40px" }}>
-      {data.map((cls) => (
+      {data?.map((cls) => (
         <ClassCard
           key={cls.id}
           cls={cls}
           style={defaultStyles}
           type={classType}
           group={group}
+          img={image}
         />
       ))}
     </Box>

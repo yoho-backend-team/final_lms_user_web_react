@@ -106,7 +106,8 @@ const TicketsPage = () => {
         backgroundImage: `url(${TicketBg})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        height: "100vh",
+        backgroundAttachment : "fixed",
+        height: "calc(100vh - 113px)",
         overflow: "auto",
       }}
     >
@@ -119,7 +120,7 @@ const TicketsPage = () => {
           )
         ) : (
           <>
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", position: "sticky", top: "63px",zIndex:1000, overflow: "hidden" }}>
               <Box sx={{ display: "flex", gap: "40px" }}>
                 <Typography
                   sx={{
@@ -136,14 +137,20 @@ const TicketsPage = () => {
                   onChange={handleChange}
                   sx={{
                     cursor: "pointer",
-                    "& .MuiTabs-indicator": { backgroundColor: "#5611B1" },
+                    "& .MuiTabs-indicator": { backgroundColor: "#5611B1", color : "#5611B1", fontSize: "14px", fontWeight: 600, lineHeight: "22px" },
                     color: "#5611B1",
+                    "& .Mui-selected" :  {
+                      color : "#5611B1",
+                      fontSize : "14px",
+                      fontWeight : 600,
+                      lineHeight : "22px"
+                    }
                   }}
-                  textColor="secondary"
+                  // textColor="secondary"
                   indicatorColor="primary"
                   aria-label="secondary tabs example"
                 >
-                  {tab_list.map((i) => (
+                  {tab_list?.map((i) => (
                     <Tab key={i.id} label={i.title} value={i.id} />
                   ))}
                 </Tabs>
@@ -166,11 +173,11 @@ const TicketsPage = () => {
               </Button>
             </Box>
 
-            <Grid container spacing={tabView ? 4 : 10} sx={{ pt: "40px" }}>
+            <Grid container spacing={5} sx={{ mt: "40px", height: "calc(100vh - 250px)", overflowY: "auto" }}>
               {loading ? (
                 <TicketLoader />
               ) : (
-                tickets.map((ticket, index) => (
+                tickets?.map((ticket, index) => (
                   <Grid item xs={tabView ? 6 : 4} key={index}>
                     <TicketCard
                       ticket={ticket}
