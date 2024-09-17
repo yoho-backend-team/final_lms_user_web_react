@@ -21,7 +21,7 @@ import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { getErrorMessage } from "utils/common/error";
 import LZString from "lz-string"
-import { ForgetPassword_Step } from "lib/constants";
+import { ForgetPassword_Step, Login_Step, Otp_Step } from "lib/constants";
 
 
 const validationSchema = yup.object({
@@ -70,6 +70,7 @@ const LoginForm = () => {
       <Box sx={{ px: { sm: 5, xs: 1 }, mt: { sm: "15vh", xs: 5 } }}>
         <Typography
           variant="h4"
+          onClick={() => setLoginStep(Otp_Step)}
           sx={{
             fontFamily: "poppins",
             textAlign: "justify",
