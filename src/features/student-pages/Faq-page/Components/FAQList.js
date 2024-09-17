@@ -16,19 +16,19 @@ const FAQList = ({ faqs, category,selectedCategory  }) => {
           </Typography>
           </>
       </Box>
-      <Paper>
+      
         <List>
           {filteredFaqs.length > 0 ? (
             filteredFaqs.map((faq, index) => (
               <FAQItem key={index} faq={faq} />
             ))
           ) : (
-            <Typography variant="h3" color="gray" sx={{ p: 2 }}>
-              Select category Whats You Want.
+            <Typography   sx={{ p: 2,fontFamily:"poppins",fontSize:"24px" ,color:"gray"}}>
+             Do you have a question? We’re here to help. Select category Whats You Want.
             </Typography>
           )}
         </List>
-      </Paper>
+      
     </Grid>
   );
 };

@@ -106,7 +106,7 @@ const generateEndpoints = () => {
         getwithId: `/institutes/class/course/`,
       },
       attendance: {
-        get: `/institutes/attedance/student-attendance/${student?._id}`,
+        get: "/institutes/attedance/student-attendance/",
         class_attendance: "/attendance/class",
       },
       payments: {

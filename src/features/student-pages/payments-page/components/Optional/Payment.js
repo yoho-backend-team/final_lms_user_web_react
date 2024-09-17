@@ -208,7 +208,7 @@ const Payment = ({activeStep}) => {
                             marginRight: "-10px",
                           }}
                         >
-                          ₹ {feesData?.course?.price.toLocaleString()}
+                          ₹ {feesData?.course?.current_price.toLocaleString()}
                         </Typography>
                       </Box>
                     </Box>

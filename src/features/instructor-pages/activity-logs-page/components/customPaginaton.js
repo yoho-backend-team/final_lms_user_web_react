@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -10,17 +10,23 @@ const CustomPagination = ({ totalPages,currentPage,setCurrentPage,updateActivity
 
   const handlePrevious = async () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      await updateActivitys({page:currentPage - 1})
+      const newPage = currentPage - 1;
+      setCurrentPage(newPage);
+      await updateActivitys({ page: newPage });
     }
   };
 
   const handleNext = async () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      await updateActivitys({ page : currentPage + 1 })
+      const newPage = currentPage + 1;
+      setCurrentPage(newPage);
+      await updateActivitys({ page: newPage });
     }
   };
+
+  useEffect(() => {
+    console.log(`Current Page: ${currentPage}`);
+  }, [currentPage]);
 
   return (
     <Box sx={{ 

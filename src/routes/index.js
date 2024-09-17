@@ -33,6 +33,7 @@ import NotificationList from "views/instructor-pages/notification-page";
   const StudentClassViewPage = Loadable(lazy(() => import("views/student-pages/class[id]-page")))
 
   const StudentOptionalPayment = Loadable(lazy(() => import("features/student-pages/payments-page/components/Optional/Mainpage")))
+  const StudentInvoice = Loadable(lazy(() => import("features/student-pages/payments-page/components/InvoiceReceipt")))
 
   const StudentProfilePage = Loadable(lazy(() => import("views/student-pages/profile-page")))
   const StudentCreateTicketPage = Loadable(lazy(() => import("views/student-pages/create-ticket-page")))
@@ -137,6 +138,7 @@ const InstructorCreateTicketPage = Loadable(lazy(() => import("views/student-pag
             <Route path="student/payments" element={<StudentPaymentsPage />} />
 
             <Route path="student/payment/pay" element={<StudentOptionalPayment />} />
+            <Route path="/Invoice" element={<StudentInvoice />} />
             <Route path="student/tickets" element={<StudentTicketsPage />} />
             <Route
               path="student/tickets/:id"

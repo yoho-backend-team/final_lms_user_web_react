@@ -32,9 +32,15 @@ const ClassesPage = () => {
   const [value, setValue] = useState(queryParams.get("tab") || "upcoming");
   const [classType, setClassType] = useState(queryParams.get("classType") || "online");
   const [page, setPage] = useState(Number(queryParams.get("page")) || 1);
+  const [filters, setFilters] = useState({
+    course: "",
+    month: "",
+    year: "",
+  });
   const dispatch = useDispatch();
   const classes = useSelector(selectStudentClasses);
   const loading = useSelector(selectLoading);
+  
 
   const tabs = [
     { id: "1", title: "Upcoming Classes", value: "upcoming" },
@@ -43,11 +49,33 @@ const ClassesPage = () => {
     { id: "4", title: "Live Class", value: "live" },
   ];
 
-  
+  const handleFilterChange = (filter, value) => {
+    setFilters((prev) => ({ ...prev, [filter]: value }));
+  };
+
+  const handleResetFilters = () => {
+    setFilters({
+      course: "",
+      month: "",
+      year: "",
+    });
+  };
+
+  console.log(classes,"classes")
+  console.log(filters,"filters")
   const renderComponents = {
     upcoming: <UpcomingClassList data={classes} classType={classType} group={"upcoming"}  />,
     completed: <CompletedClassList data={classes} classType={classType} group={"completed"} />,
-    history: <ClassHistory data={classes} classType={classType} group={"history"} />,
+    history: (
+      <ClassHistory
+        data={classes}
+        classType={classType}
+        group={"history"}
+        filters={filters}
+        onFilterChange={handleFilterChange}
+        onResetFilters={handleResetFilters}
+      />
+    ),
     live: <LiveClassList data={classes} classType={classType} group={"live"} />,
   };
 
@@ -56,14 +84,20 @@ const ClassesPage = () => {
     { id: "2", title: "offline class", value: "offline" },
   ];
 
+  
+
   const fetchData = async () => {
-    const data = { userType: classType, classType: value, page: page };
+    const data = { userType: classType, classType: value, page: page ,month: filters.month,
+      year: filters.year,
+      course: filters.course,};
     await dispatch(getAllClasses(data));
   };
 
   useEffect(() => {
     fetchData();
-  }, [dispatch, classType, value, page]);
+  }, [dispatch, classType, value, page, filters]);
+
+  
 
   const handleChange = (event, newValue) => {
     setPage(1);

@@ -52,6 +52,7 @@ const Payment = () => {
     { id: 3, text: "Feb 23" },
   ];
 
+  
 
   return (
     <div className="main-container" style={{display:"none"}}>

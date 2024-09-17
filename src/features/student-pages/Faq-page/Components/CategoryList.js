@@ -44,7 +44,7 @@ const CategoryList = ({ categories, onCategorySelect }) => {
     <Box>
     {uniqueCategories?.map((category, index) => (
     <Grid item xs={12} p={1}>
-      <Box sx={{ minWidth:"300px", padding: "14px 28px", backgroundColor:"white",boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',cursor:"pointer" }} >
+      <Box sx={{ minWidth:"300px", padding: "14px 28px", backgroundColor:"#bdbdbd",boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',cursor:"pointer" ,borderRadius: "16px"}} >
       
         <Box sx={{ display: "flex",flexDirection:"center" , gap:"20px",textAlign:'center', gap:"10px"}} 
          onClick={() => onCategorySelect(category)} >

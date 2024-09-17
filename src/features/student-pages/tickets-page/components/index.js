@@ -211,7 +211,7 @@ const StudentTicketsPage = ({
                   fontWeight: 700,
                   fontFamily: "Nunito Sans",
                   lineHeight: "24px",
-                  cursor: currentPage > 1 ? "pointer" : "default",
+                  cursor: currentPage > 1 ? "not-allowed" : "pointer",
                 }}
                 onClick={handlePreviousChange}
               >
@@ -225,7 +225,7 @@ const StudentTicketsPage = ({
                   fontWeight: 700,
                   fontFamily: "Nunito Sans",
                   lineHeight: "24px",
-                  cursor: currentPage < totalPages ? "pointer" : "default",
+                  cursor: currentPage < totalPages ? "not-allowed" : "pointer",
                 }}
                 onClick={handleNextChange}
               >
