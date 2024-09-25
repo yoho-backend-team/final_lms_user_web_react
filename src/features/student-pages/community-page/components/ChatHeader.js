@@ -8,28 +8,22 @@ import {
   AvatarGroup,
   Menu,
   MenuItem,
+  TextField,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   Button,
-  FormControl,
-  FormControlLabel,
-  RadioGroup,
-  Radio,
-  Tab,
-  Tabs,
 } from "@mui/material";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
-import { CommunityUser1, CommunityUser2, CommunityUser3 } from "utils/images";
+import { getImageUrl } from "utils/common/imageUtlils";
+import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
 import CallIcon from "assets/icons/callIcon";
 import SearchIcon from "assets/icons/searchIcon";
 import MuteNotificationModel from "./Models/MuteNotification";
 import ReportModel from "./Models/ReportDialog";
 import AddWallpaper from "./Models/WallPaperModel";
 import MediaModel from "./Models/Media";
-import { getImageUrl } from "utils/common/imageUtlils";
-import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
 
 const ChatHeader = ({ currentChat }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -39,7 +33,8 @@ const ChatHeader = ({ currentChat }) => {
   const [reportOpen, setReportOpen] = useState(false);
   const [wallpaperOpen, setWallpaperOpen] = useState(false);
   const [mediaOpen, setMediaOpen] = useState(false);
-  const [mediaTab, setMediaTab] = useState(0);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -69,6 +64,24 @@ const ChatHeader = ({ currentChat }) => {
     handleMenuClose();
   };
 
+  const handleSearchOpen = () => {
+    setSearchOpen(true);
+  };
+
+  const handleSearchClose = () => {
+    setSearchOpen(false);
+    setSearchText("");
+  };
+
+  const handleCall = () => {
+    
+    console.log("Initiating a call...");
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
   return (
     <Box
       sx={{
@@ -76,7 +89,6 @@ const ChatHeader = ({ currentChat }) => {
         justifyContent: "space-between",
         alignItems: "center",
         padding: "16px",
-        // borderBottom: '1px solid #C3C3C3',
       }}
     >
       <Grid container alignItems="center" spacing={2}>
@@ -104,21 +116,23 @@ const ChatHeader = ({ currentChat }) => {
         >
           {currentChat?.users?.map((user) => (
             <Avatar
+              key={user?.id}
               alt={user?.full_name}
               src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
             />
           ))}
           {currentChat?.admin?.map((user) => (
             <Avatar
+              key={user?.id}
               alt={user?.full_name}
               src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
             />
           ))}
         </AvatarGroup>
-        <IconButton>
+        <IconButton onClick={handleCall}>
           <CallIcon />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={handleSearchOpen}>
           <SearchIcon />
         </IconButton>
         <IconButton
@@ -176,6 +190,31 @@ const ChatHeader = ({ currentChat }) => {
       <ReportModel open={reportOpen} setReportOpen={setReportOpen} />
       <AddWallpaper open={wallpaperOpen} setWallpaperOpen={setWallpaperOpen} />
       <MediaModel open={mediaOpen} setMediaOpen={setMediaOpen} />
+
+      {/* Search Dialog */}
+      <Dialog open={searchOpen} onClose={handleSearchClose}>
+        <DialogTitle>Search</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Search..."
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={searchText}
+            onChange={handleSearchChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleSearchClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleSearchClose} color="primary">
+            Search
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

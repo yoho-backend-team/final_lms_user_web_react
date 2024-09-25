@@ -10,41 +10,77 @@ const FAQItem = ({ faq }) => {
     setOpen(!open);
   };
 
+  console.log(faq,"faq")
 
   return (
     <>
-     <Paper sx={{
-        marginBottom: '8px', 
-        backgroundColor: '#e8eaf6', 
-        borderRadius: '8px', // Optional: Add rounded corners
-        padding: '8px', // Optional: Add some padding
-      }}>
-      <ListItem button onClick={handleClick}>
-       
-        <ListItemText
-          primary={
-            <Typography variant="h5" color="#1a237e" style={{ fontSize: "20px", fontFamily: "Poppins" }}>
-              {faq.title}
-            </Typography>
-          }
-        />
-        <IconButton edge="end" onClick={handleClick}>
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </IconButton>
-      </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <ListItem>
-          <ListItemText
-            secondary={
-              <Typography variant="body1" color="#212121" style={{ fontSize: "15px", fontFamily: "Poppins" ,fontWeight:600}}>
-                {faq.description}
-              </Typography>
-            }
-          />
-        </ListItem>
-       
-      </Collapse>
-      </Paper>
+    <Box sx={{ borderRadius: "24px", marginBottom: 2, width: "30%" }}>
+      <Box
+        sx={{
+          padding: "19.285px",
+          pb: "15px",
+          backgroundColor: "#EDE0FF",
+          borderTopLeftRadius: "24px",
+          borderTopRightRadius: "24px",
+        }}
+      >
+        <Typography
+          sx={{
+            padding: "5px",
+            backgroundColor: "#F0F0F0",
+            color: "#646464",
+            fontSize: "7px",
+            fontWeight: 400,
+            lineHeight: "19px",
+            maxWidth: "25px",
+            display: "inline-block",
+          }}
+        >
+          {faq.title}
+        </Typography>
+        <Typography
+          sx={{
+            color: "#000000",
+            fontSize: "16px",
+            fontWeight: 500,
+            maxHeight: "55px",
+            minHeight: "55px",
+            overflowX: "hidden",
+            pt: "15px",
+          }}
+        >
+          {faq.title}
+        </Typography>
+        
+      </Box>
+      
+      <Box
+        sx={{
+          backgroundColor: "white",
+          borderBottomLeftRadius: "24px",
+          borderBottomRightRadius: "24px",
+          padding: "9.642px 19.285px 19.285px 19.285px",
+          textAlign: "start",
+        }}
+      >
+        <Typography
+          
+          sx={{
+            fontSize: "14px",
+            fontWeight: 500,
+            color: "#efefef",
+            padding: "5px",
+            backgroundColor: "#745576",
+            borderRadius: "24px",
+            cursor: "pointer",
+            display: "inline-block",
+          }}
+        >
+          Click to view
+        </Typography>
+        
+      </Box>
+    </Box>
     </>
   );
 };

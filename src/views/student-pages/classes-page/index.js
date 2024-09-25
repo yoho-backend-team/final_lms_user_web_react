@@ -40,7 +40,6 @@ const ClassesPage = () => {
   const dispatch = useDispatch();
   const classes = useSelector(selectStudentClasses);
   const loading = useSelector(selectLoading);
-  
 
   const tabs = [
     { id: "1", title: "Upcoming Classes", value: "upcoming" },
@@ -61,43 +60,49 @@ const ClassesPage = () => {
     });
   };
 
-  console.log(classes,"classes")
-  console.log(filters,"filters")
   const renderComponents = {
-    upcoming: <UpcomingClassList data={classes} classType={classType} group={"upcoming"}  />,
-    completed: <CompletedClassList data={classes} classType={classType} group={"completed"} />,
-    history: (
-      <ClassHistory
-        data={classes}
-        classType={classType}
-        group={"history"}
-        filters={filters}
-        onFilterChange={handleFilterChange}
-        onResetFilters={handleResetFilters}
-      />
+    upcoming: (
+      <Box sx={{ overflowY: "auto", maxHeight: "400px" }}>
+        <UpcomingClassList data={classes} classType={classType} group={"upcoming"} />
+      </Box>
     ),
-    live: <LiveClassList data={classes} classType={classType} group={"live"} />,
+    completed: (
+      <Box sx={{ overflowY: "auto", maxHeight: "400px" }}>
+        <CompletedClassList data={classes} classType={classType} group={"completed"} />
+      </Box>
+    ),
+    history: (
+      <Box sx={{ overflowY: "auto", maxHeight: "400px" }}>
+        <ClassHistory
+          data={classes}
+          classType={classType}
+          group={"history"}
+          filters={filters}
+          onFilterChange={handleFilterChange}
+          onResetFilters={handleResetFilters}
+        />
+      </Box>
+    ),
+    live: (
+      <Box sx={{ overflowY: "auto", maxHeight: "400px" }}>
+        <LiveClassList data={classes} classType={classType} group={"live"} />
+      </Box>
+    ),
   };
 
   const classTypes = [
     { id: "1", title: "Live Class", value: "online" },
-    { id: "2", title: "offline class", value: "offline" },
+    { id: "2", title: "Offline Class", value: "offline" },
   ];
 
-  
-
   const fetchData = async () => {
-    const data = { userType: classType, classType: value, page: page ,month: filters.month,
-      year: filters.year,
-      course: filters.course,};
+    const data = { userType: classType, classType: value, page: page, month: filters.month, year: filters.year, course: filters.course };
     await dispatch(getAllClasses(data));
   };
 
   useEffect(() => {
     fetchData();
   }, [dispatch, classType, value, page, filters]);
-
-  
 
   const handleChange = (event, newValue) => {
     setPage(1);
@@ -164,11 +169,8 @@ const ClassesPage = () => {
                     lineHeight: "32px",
                     color: "#495057",
                   }}
-                  
                 >
-                  {classType === "online"
-                    ? "Online Classes"
-                    : "Offline Classes"}
+                  {classType === "online" ? "Online Classes" : "Offline Classes"}
                 </Typography>
                 <img src={OfflineClassIcon} alt="Live Class" />
               </Box>
@@ -193,7 +195,6 @@ const ClassesPage = () => {
                 alignItems: "center",
               }}
               tabIndex={2}
-              
             >
               <Box>
                 <FormControl>
@@ -211,6 +212,7 @@ const ClassesPage = () => {
         </Card>
 
         {loading ? <ClassLoader /> : renderComponents[value]}
+
         {classes?.last_page !== 1 && classes.last_page !== 0 && (
           <Box
             sx={{

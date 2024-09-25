@@ -101,6 +101,8 @@ const StudentHelpCenter = () => {
 
   console.log(selectedQuery,"SelectedQuery")
 
+  console.log(faqCategories,"faqCategories")
+
 
  const filterData = faqCategories?.filter((i) =>{
   const categoryMatches = i.category === tab_list[value]

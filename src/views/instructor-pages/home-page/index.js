@@ -70,7 +70,7 @@ const InstructorDashBoard = () => {
     fetchReports()
   },[dispatch])
 
- 
+ console.log(NotificationList,"NotificationList")
 
   return (
     <Grid
@@ -328,7 +328,7 @@ const InstructorDashBoard = () => {
       )}
       {tabView && (
         <Grid item xs={6}>
-          <UpdatesCard image={UpdateCardBg} />
+          <UpdatesCard image={UpdateCardBg} notification = {NotificationList}/>
           <AttendanceCard Attendance = { reports?.attendance } />
           <TicketCard ticket = { reports?.tickets} />
         </Grid>

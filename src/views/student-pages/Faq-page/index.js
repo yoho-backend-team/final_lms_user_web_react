@@ -86,7 +86,7 @@ const FAQPage = () => {
           <CategoryList categories={faqCategories}  onCategorySelect={handleCategorySelect} />
         </Grid>
         <Grid item xs={7} >
-          <FAQList  category={selectedCategory} faqs={faqCategories} />
+          <FAQList  selectedCategory={selectedCategory} faqs={faqCategories} />
         </Grid>
       </Grid>
     </Layout>

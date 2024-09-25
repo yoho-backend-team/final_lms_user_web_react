@@ -88,7 +88,7 @@ const CourseFrontPage = ({ Course }) => {
         {/* Conditionally render image based on the selected tab */}
         {currentTabs === "1" && currentCourses.length > 0 && (
           <Box sx={{ pb: "17px", pt: "30px"}}>
-            <Link to="/student/courses/:id">
+            <Link to={`/student/courses/${Course?._id}`}>
             <img
               src={imageUrl}
               style={{ width: "363px", height: "160px", borderRadius: "25px" }}
@@ -100,7 +100,7 @@ const CourseFrontPage = ({ Course }) => {
         
         {currentTabs === "2" && completedCourses.length > 0 && (
           <Box sx={{ pb: "17px", pt: "30px" }}>
-            <Link to="/student/courses/:id">
+            <Link to={`/student/courses/${Course?._id}`}>
             <img
               src={imageUrl}
               style={{ width: "363px", height: "160px", borderRadius: "25px" }}

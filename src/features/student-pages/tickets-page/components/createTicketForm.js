@@ -26,7 +26,7 @@ import { CreateTickets } from "../services";
 import { getStudentDetails } from "store/atoms/authorized-atom";
 import toast from "react-hot-toast";
 import { useSpinner } from "context/SpinnerProvider";
-import { fileUpload } from "features/common/upload";
+import { fileUpload } from "features/common/upload/index.js";
 
 const validationSchema = yup.object({
   problem: yup.string("Select problem").required("Problem is required"),
@@ -110,22 +110,24 @@ const StudentCreateTicketForm = ({ handleClose }) => {
     initialValues: {
       problem: "",
       description: "",
-      priority : '',
+      priority : 'Low',
       title : "",
       file: "",
     },
+    
     onSubmit: async (values) => {
+      
       try {
         const instructor = getStudentDetails();
         const data = {
           institute: instructor?.institute_id?._id,
           branch: instructor?.branch_id?._id,
           category: values?.problem,
-          priority:values?.priority,
+          priority:'Low',
           query : values?.title,
           description: values?.description,
           user: instructor?._id,
-          file : values?.file
+           file: values?.file
         };
         const response = await CreateTickets(data);
         handleClose();
@@ -165,6 +167,8 @@ const StudentCreateTicketForm = ({ handleClose }) => {
   const handleCancel = () => {
     setOpen(false);
   };
+
+  console.log(formik.errors,"formik")
 
   return (
     <>
@@ -245,6 +249,44 @@ const StudentCreateTicketForm = ({ handleClose }) => {
                   {formik.touched.problem && formik.errors.problem && (
                     <FormHelperText>{formik.errors.problem}</FormHelperText>
                   )}
+                </FormControl>
+              </Grid>
+              <Grid
+                item
+                xs={6}
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  flexDirection: "column",
+                  gap: "10px",
+                }}
+              >
+                 <FormControl
+                  error={
+                    formik.touched.title &&
+                    Boolean(formik.errors.title)
+                  }
+                  fullWidth
+                >
+                  <InputLabel className={classes.label} shrink>
+                    Query
+                  </InputLabel>
+                  <TextField
+                    name="title"
+                    value={formik.values.title}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    fullWidth
+                    error={
+                      formik.touched.title &&
+                      Boolean(formik.errors.title)
+                    }
+                    helperText={
+                      formik.touched.title && formik.errors.title
+                    }
+                    variant="outlined"
+                    label="query" 
+                  />
                 </FormControl>
               </Grid>
               <Box
