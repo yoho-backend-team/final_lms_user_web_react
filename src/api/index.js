@@ -84,7 +84,8 @@ class Client {
   },
   notification : {
     get : (params) => httpClient.get(HTTP_END_POINTS.Student.notification.get,params,"student"),
-    update : (data) => httpClient.update(HTTP_END_POINTS.Student.notification.update_status + data.uuid , data, "student" )
+    update : (data) => httpClient.update(HTTP_END_POINTS.Student.notification.update_status + data.uuid , data, "student" ),
+    delete: (id) => httpClient.delete(HTTP_END_POINTS.Student.notification.delete + id, "student")
   },
   ticket: {
     create: (data, params) =>
@@ -112,7 +113,7 @@ class Client {
     get : (params) => httpClient.get(HTTP_END_POINTS.Student.reports.get,params,'student')
   },
   activity: {
-    get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.activity.get}`,params,'student'),
+    get: (params) => httpClient.get(HTTP_END_POINTS.Student.activity.get,params,'student'),
   },
   faq: {
     get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.faq.get}`,params,'student'),

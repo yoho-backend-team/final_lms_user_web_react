@@ -120,6 +120,7 @@ const generateEndpoints = () => {
       notification: {
         get: "/institutes/students/notifications/",
         update_status: "/institutes/students/notifications/status/",
+         delete:`/institutes/students/notifications/student-notifications/`
       },
       activity: {
         get: `institutes/user/activity/`,
@@ -140,7 +141,8 @@ const generateEndpoints = () => {
       },
       profile: {
         get: `institutes/auth/profile/me/`,
-        update: `/institutes/auth/student/update/${getStudentDetails()?.uuid}`,
+        // update: `/institutes/auth/student/update/${getStudentDetails()?.uuid}`,
+        update: 'institutes/auth/profile/me/'
       },
     },
     common: {
@@ -194,6 +196,7 @@ const generateEndpoints = () => {
       },
       notification: {
         get: `/institutes/staff/notifications`,
+       
       },
       payments: {
         getSalaries: "/institutes/payments/staff-salary/salary",

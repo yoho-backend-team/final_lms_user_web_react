@@ -3,14 +3,19 @@ import { Tab, Grid, Box, Card, Typography, Avatar } from "@mui/material";
 
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Book, CalendarToday, Groups2, MoneyOff } from "@mui/icons-material";
+import { useSelector } from "react-redux";
+import { selectStudentNotifications } from "features/common/redux/studentSelector";
 
-const UpdatesCard = (props) => {
+const UpdatesCard = (props,notification) => {
   const { image } = props;
   const [value, setValue] = React.useState("today");
+  const Notification = useSelector(selectStudentNotifications)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  
   return (
     <Card sx={{ boxShadow: "none" }}>
       <Grid>
@@ -36,7 +41,7 @@ const UpdatesCard = (props) => {
             color="secondary"
             sx={{ fontWeight: 400, fontFamily: "poppins", fontSize: 12 }}
           >
-            12 new messages
+           {Notification.length} new messages
           </Typography>
         </Box>
         <Box className="Tabs" sx={{ width: "100%", typography: "body1" }}>
@@ -93,7 +98,7 @@ const UpdatesCard = (props) => {
                       fontFamily: "poppins",
                     }}
                   >
-                    You have new message in the group chat
+                    {Notification?.[0].body}
                   </Typography>
                   <Typography
                     variant="subtitle2"
@@ -103,7 +108,7 @@ const UpdatesCard = (props) => {
                       fontFamily: "poppins",
                     }}
                   >
-                    "SQL" group chat 22 others messaged
+                    {Notification?.[0].title}
                   </Typography>
                 </Box>
               </Box>
@@ -160,7 +165,7 @@ const UpdatesCard = (props) => {
                       fontFamily: "poppins",
                     }}
                   >
-                    Attendance collected for the day
+                    {Notification?.[1].body}
                   </Typography>
                 </Box>
               </Box>
@@ -180,7 +185,7 @@ const UpdatesCard = (props) => {
                           fontFamily: "poppins",
                         }}
                       >
-                        Attendance
+                       {Notification?.[1].title}
                       </Typography>
                     </Box>
                   </Box>
@@ -216,7 +221,7 @@ const UpdatesCard = (props) => {
                       fontFamily: "poppins",
                     }}
                   >
-                    Attendance collected for the day
+                    {Notification?.[1].body}
                   </Typography>
                 </Box>
               </Box>

@@ -20,3 +20,14 @@ export const getAllNotification = async (data) => {
     throw new Error(message) 
   }
 }
+
+
+export const deleteNotification = async (id) => {
+  try {
+      const response = await Client.Student.notification.delete(id);
+      return response.data;
+  } catch (error) {
+      const message = getErrorMessage(error);
+      throw new Error(message);
+  }
+};

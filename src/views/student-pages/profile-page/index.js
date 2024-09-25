@@ -111,32 +111,35 @@ const ProfilePage = () => {
   const editProfile = async () => {
     try {
       const data = {
-        ...editedPersonalInfo,
+        first_name: editedPersonalInfo.first_name,
+        last_name: editedPersonalInfo.last_name,
+        email: editedPersonalInfo.email,
+        gender: editedPersonalInfo.gender,
         contact_info: {
-          ...editedPersonalInfo?.contact_info,
-          phone_number: editedPersonalInfo?.contact,
-          address1: editedPersonalInfo?.address1,
-          address2: editedPersonalInfo?.address2,
-          pincode: editedPersonalInfo?.pincode,
-        }
-      }
+          phone_number: editedPersonalInfo.contact,
+          address1:editedPersonalInfo.address1,
+          address2:editedPersonalInfo.address2,
+          pincode:editedPersonalInfo.pincode,
+        },
+        image: editedPersonalInfo.image,
+      };
       
       const updatedData = await UpdateprofilewithId(data);
       
       setPersonalInfo(updatedData);
       setEditing(false);
-      navigate("student/home");
-      toast.success("Profile Updated Sucessfully");
+      navigate("/");
+      toast.success("Profile Updated Successfully");
     } catch (error) {
       console.error("Error updating profile:", error);
     }
   };
 
   const handleInputChange = (field, value) => {
-    setEditedPersonalInfo({
-      ...editedPersonalInfo,
+    setEditedPersonalInfo(prevState => ({
+      ...prevState,
       [field]: value,
-    });
+    }));
   };
 
   const fileEditHandler = async (e) => {
@@ -180,7 +183,7 @@ const ProfilePage = () => {
     {
       icon: <PhoneIcon />,
       label: "Contact Number",
-      value: personalInfo.contact,
+      value: personalInfo?.contact_info?.phone_number,
     },
     {
       icon: <CalendarTodayIcon />,
@@ -190,12 +193,12 @@ const ProfilePage = () => {
     {
       icon: <LocationOnIcon />,
       label: "Pin Code",
-      value: personalInfo.pincode,
+      value: personalInfo?.contact_info?.pincode,
     },
     {
       icon: <HomeIcon />,
       label: "Address",
-      value: `${personalInfo.address1}, ${personalInfo.address2}`,
+      value: `${personalInfo?.contact_info?.address1}, ${personalInfo?.contact_info?.address2}`,
     },
   ];
 
@@ -278,6 +281,7 @@ const ProfilePage = () => {
     }
   };
 
+  console.log(personalInfo,"personal",editedPersonalInfo)
   return (
     <Box sx={{ p: 5 }}>
       <Grid item xs={12} sm={6} style={{ textAlign: "left" }}>
@@ -471,6 +475,7 @@ const ProfilePage = () => {
                         label="Email"
                         margin="normal"
                         value={editedPersonalInfo.email}
+                        disabled
                         onChange={(e) =>
                           handleInputChange("email", e.target.value)
                         }
@@ -495,12 +500,13 @@ const ProfilePage = () => {
                         label="Gender"
                         margin="normal"
                         value={editedPersonalInfo.gender}
+                        disabled
                         onChange={(e) =>
                           handleInputChange("gender", e.target.value)
                         }
                       />
                       <TextField
-                        label="Contact"
+                        label="Contact Number"
                         margin="normal"
                         value={editedPersonalInfo.contact}
                         onChange={(e) =>

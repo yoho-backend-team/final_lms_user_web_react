@@ -3,7 +3,10 @@ import { Box, Typography, TextField, Paper, FormControl, FormLabel, CircularProg
 import { styled } from '@mui/system';
 import CustomPagination from './customPagination';
 import TimelineComponent from './Timeline';
-import { getAllStudentActivity } from '../services';
+import { fetchActivityLogs } from '../redux/thunks';
+import { selectStudentActivityLogs } from '../redux/selectors';
+import { useDispatch,useSelector } from 'react-redux';
+import NoDataImage from '../../../../assets/no-data.jpg';
 
 const styledInput = styled('input')({
   padding: '11.8px 14.8px 12px 14.8px',
@@ -21,43 +24,46 @@ const formatDateToISO = (dateStr) => {
 
 const ActivityStudentLog = () => {
   const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
-  const [activityLogs, setActivityLogs] = useState([]);
+  const activityLogs = useSelector(selectStudentActivityLogs);
   const [filteredLogs, setFilteredLogs] = useState([]);
   const [loading, setLoading] = useState(false); 
   const rowsPerPage = 5;
 
+
+  const updateActivitys = async (data) => {
+    dispatch(fetchActivityLogs(data));
+  };
+
   useEffect(() => {
-    const fetchActivityLogs = async () => {
-      setLoading(true); 
-      try {
-        const logs = await getAllStudentActivity();
-        setActivityLogs(logs);
-        setLoading(false); 
-      } catch (error) {
-        console.error('Error fetching activity logs:', error);
-        setLoading(false); 
-      }
-    };
+    updateActivitys();
+  }, [dispatch]);
 
-    fetchActivityLogs();
-  }, []);
 
+  console.log(activityLogs,"v")
  
   useEffect(() => {
     const filterLogs = () => {
-      let filtered = activityLogs;
+      console.log('From Date:', fromDate); // Log fromDate
+      console.log('To Date:', toDate); 
+      let filtered = activityLogs?.data || [];
 
       if (fromDate) {
         const from = new Date(formatDateToISO(fromDate));
         filtered = filtered.filter((log) => new Date(log.createdAt) >= from);
+        console.log('From Date:', filtered); // Log fromDate
+       
+
+        
         
       }
 
       if (toDate) {
         const to = new Date(formatDateToISO(toDate));
         filtered = filtered.filter((log) => new Date(log.createdAt) <= to);
+        console.log('To Date:', filtered); 
         
       }
 
@@ -71,7 +77,7 @@ const ActivityStudentLog = () => {
   
   const paginatedLogs = filteredLogs.slice((page - 1) * rowsPerPage, page * rowsPerPage);
   const totalPages = Math.ceil(filteredLogs.length / rowsPerPage);
-
+console.log(filteredLogs,"paginatedLogs")
   return (
     <>
       <Box
@@ -164,15 +170,25 @@ const ActivityStudentLog = () => {
                   <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
                     <CircularProgress />
                   </Box>
-                ) : (
+                ): paginatedLogs.length > 0 ? (
                   <TimelineComponent logs={paginatedLogs} filterData={filteredLogs} />
-                )}
-              </Box>
+                ) : (
+                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+      <img
+        src={NoDataImage} // Replace with your empty state image path
+        alt="No logs available"
+        style={{ maxWidth: '150px', marginBottom: '16px' }} // Adjust size as needed
+      />
+      <Typography>No logs available for the selected date range.</Typography>
+    </Box>
+  )}
+</Box>
               {!loading && (
                 <CustomPagination
-                  totalPages={totalPages}
-                  currentPage={page}
-                  setCurrentPage={setPage}
+                 totalPages={activityLogs?.pagination?.totalPages}
+              currentPage={activityLogs?.pagination?.currentPage}
+              setCurrentPage={setPage}
+                  updateActivitys={updateActivitys}
                 />
               )}
             </Paper>

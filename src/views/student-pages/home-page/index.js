@@ -23,6 +23,7 @@ import liveclass from ".././../../assets/images/icons/liveclass.svg"
 import offlineclass from ".././../../assets/images/icons/offlineclass.svg"
 import { selectLoading, selectStudentDashboard } from "features/student-pages/home-page/redux/selectors.js";
 import getAllReports from "features/student-pages/home-page/redux/thunks.js";
+import { selectStudentNotifications } from "features/common/redux/studentSelector.js";
 
 
 
@@ -31,6 +32,7 @@ const StudentDashboard = () => {
   const theme = useTheme(); 
   const [editProfileClicked, setEditProfileClicked] = useState(false);
   const [personalInfo, setPersonalInfo] = useState("");
+  const Notification = useSelector(selectStudentNotifications)
 
     const dispatch = useDispatch()
     const reports = useSelector(selectStudentDashboard); 
@@ -126,6 +128,8 @@ const classesData = [
     icon: <img src={offlineclass} alt="Offline Class" />,
   },
 ];
+
+console.log(reports,"reports")
   
 
   return (
@@ -164,8 +168,8 @@ const classesData = [
                       fontFamily: "poppins",
                     }}
                   >
-                    {reports?.user?.full_name}
-                  </Typography>
+                   {reports?.user ? `${reports.user.first_name} ${reports.user.last_name}` : 'Unknown User'}
+                   </Typography>
                   <Box sx={{ display: "flex ", mt: 1 }}>
                     <Typography
                       color="black"
@@ -357,7 +361,7 @@ const classesData = [
         </Grid>
       </Grid>
       <Grid item xs={12} sm={4} md={8} lg={2} xl={4} className="MainGrid-3">
-        <UpdatesCard image={studentdashboardimage} />
+        <UpdatesCard image={studentdashboardimage}  notification={Notification}/>
       </Grid>
 
       <Box sx={{ display: 'flex', backdropFilter:"blur(4px)",padding : "25px 60px 26px 58px",background:"#CCCCCC29",borderRadius:"8px", justifyContent: "space-between", width : "inherit",marginTop:'20px' }} >

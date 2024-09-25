@@ -74,6 +74,8 @@ const StudentTicketsPage = ({
     3: "closed",
   };
 
+  
+
   const handleChange = (e, newValue) => {
     setValue(newValue);
     const statusValue = status[newValue];
@@ -81,13 +83,13 @@ const StudentTicketsPage = ({
   };
 
   const handleNextChange = () => {
-    const nextPage = Math.min(currentPage + 1, totalPages);
+    const nextPage = Math.min(data.currentPage + 1, data.totalPages);
     handlePageChange(null, nextPage);
     navigate(`?tab=${value}&page=${nextPage}`);
   };
 
   const handlePreviousChange = () => {
-    const prevPage = Math.max(currentPage - 1, 1);
+    const prevPage = Math.max(data.currentPage - 1, 1);
     handlePageChange(null, prevPage);
     navigate(`?tab=${value}&page=${prevPage}`);
   };
@@ -191,7 +193,7 @@ const StudentTicketsPage = ({
               {loading ? (
                 <TicketLoader />
               ) : (
-                data?.map((ticket, index) => (
+                data?.tickets?.map((ticket, index) => (
                   <Grid item xs={tabView ? 6 : 4} key={index}>
                     <TicketCard
                       ticket={ticket}
@@ -244,7 +246,7 @@ const StudentTicketsPage = ({
                     lineHeight: "24px",
                   }}
                 >
-                  {currentPage} of {totalPages}
+                  {data.currentPage} of {data.totalPages}
                 </Typography>
               </Box>
             </Box>

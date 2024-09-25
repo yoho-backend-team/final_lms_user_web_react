@@ -65,11 +65,13 @@ const TimelineComponent = ({filterData}) => {
   //       return [];
   //   }
   // };
-  
 
+
+  
+console.log(filterData,"filterDatafilterData")
   return (
     <Timeline sx={{ width: "80vw" }}>
-      {filterData?.map((log, index) => {
+      {filterData.map((log, index) => {
         const icon = getIcon(log.action);
         // const logs = getLogs(log.action, log.user.username);
         return (
