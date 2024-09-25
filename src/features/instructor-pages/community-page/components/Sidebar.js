@@ -4,16 +4,25 @@ import { getImageUrl } from "utils/common/imageUtlils";
 import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
 import { useEffect } from "react";
 import { getInstructorDetails } from "store/atoms/authorized-atom";
+import { getInstructorCommunityMessages } from "../services";
 
-const SideBar = ({ communities, currentChat, setCurrentChat, socket }) => {
+const SideBar = ({ communities, currentChat, setCurrentChat, socket , Messages, setMessages}) => {
 
-  const handleChat = (group) => {
-    setCurrentChat(group);
-    const communituy_id = group?._id;
-    const instructor = getInstructorDetails()
-    socket.emit("joinGroup", { groupId: communituy_id, userId: instructor?._id }, (error) => {
-      console.log(error, "error");
-    });
+  const handleChat = async (group) => {
+    try {
+      setCurrentChat(group);
+      const communituy_id = group?._id;
+      const instructor = getInstructorDetails()
+      const data = { community : communituy_id }
+      const response = await getInstructorCommunityMessages(data)
+      setMessages(response)
+      socket.emit("joinGroup", { groupId: communituy_id, userId: instructor?._id }, (error) => {
+        console.log(error, "error");
+      }); 
+    } catch (error) {
+      
+    }
+    
   };
   
   return (
@@ -115,7 +124,7 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket }) => {
                     lineHeight: "16px",
                   }}
                 >
-                  {group.last_message ? group?.last_message : "Hahah oh man"}
+                  {group.last_message ? group?.last_message?.message : "Hahah oh man"}
                 </Typography>
               </Box>
             </Box>

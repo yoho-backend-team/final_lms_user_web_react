@@ -12,9 +12,9 @@ import { useCallback } from "react";
 import { compressAndStore } from "utils/auth_helpers";
 import { Instructor_Details, Instructor_Role, Instructor_Token, isAuthenticatedInstructor, isAuthenticatedStudent, Login_Step, Otp_Step, Student_Details, Student_Role, Student_Token } from "lib/constants";
 import { InstructorAuthAtom, StudentAuthAtom } from "store/atoms";
+import { loginSuccess } from "../reducers/actionsCreators";
 import { getErrorMessage } from "utils/common/error";
 import Cookies from "js-cookie";
-import { loginSuccess, logout  } from "../reducers/actionsCreators";
 
 export const useInstructorLogin = () => {
   const [, setLoginStep] = useAtom(instructorLoginStepAtom);

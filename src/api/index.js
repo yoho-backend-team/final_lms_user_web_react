@@ -130,6 +130,7 @@ class Client {
           params,
           "student"
         ),
+      get_messages : (params) => httpClient.get(HTTP_END_POINTS.Student.community.get_messages + params?.community,{},"student")
     },
   };
 
@@ -249,23 +250,14 @@ class Client {
         ),
     },
     community: {
-      get: (params) =>
-        httpClient.get(
-          HTTP_END_POINTS.Instructor.community.get,
-          params,
-          "instructor"
-        ),
+      get: (params) => httpClient.get(HTTP_END_POINTS.Instructor.community.get, params,  "instructor"),
+      get_messages : (params) => httpClient.get(HTTP_END_POINTS.Instructor.community.get_messages + params?.community,{},"instructor")
     },
     notification : {
       get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.get,params,"instructor")
     },
     payment: {
-      get: (params) =>
-        httpClient.get(
-          HTTP_END_POINTS.Instructor.payments.getSalaries,
-          params,
-          "instructor"
-        ),
+      get: (params) => httpClient.get( HTTP_END_POINTS.Instructor.payments.getSalaries,  params, "instructor"),
     },
     ticket: {
       create: (data, params) =>

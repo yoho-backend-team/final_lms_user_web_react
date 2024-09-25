@@ -1,9 +1,6 @@
 import { Box, Grid } from "@mui/material";
-import { JavaCourseImage, SqlCourseImage } from "utils/images";
 import SideBar from "features/student-pages/community-page/components/Sidebar";
 import Chat from "features/student-pages/community-page/components/Chat";
-import PushPinOutlinedIcon from "@mui/icons-material/PushPinOutlined";
-import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllStudentCommunities } from "features/student-pages/community-page/redux/thunks";
@@ -14,30 +11,14 @@ import {
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 
-const Batches = [
-  {
-    batch_name: "Java Class",
-    image: JavaCourseImage,
-    id: "1",
-    chat: <PushPinOutlinedIcon sx={{ rotate: "35deg" }} />,
-    date: "5:14 pm",
-    last_message: "Haha oh man",
-  },
-  {
-    batch_name: "SQL",
-    image: SqlCourseImage,
-    id: "2",
-    chat: <DoneAllOutlinedIcon sx={{ color: "#2361FF" }} />,
-    date: "7:38 am",
-    last_message: "Haha that's terrifying 😂",
-  },
-];
 
 const CommunityPage = () => {
   const dispatch = useDispatch();
   const communities = useSelector(selectStudentCommunity);
   const [currentChat, setCurrentChat] = useState(null);
   const [socket, setSocket] = useState(null);
+  const [Messages, setMessages] = useState([]);
+
 
   useEffect(() => {
     const getCommunities = async () => {
@@ -85,6 +66,8 @@ const CommunityPage = () => {
               socket={socket}
               currentChat={currentChat}
               setCurrentChat={setCurrentChat}
+              Messages = { Messages }
+              setMessages = { setMessages}
             />
           </Grid>
           <Grid item xs={8} sx={{ display: "flex" }}>
@@ -92,6 +75,8 @@ const CommunityPage = () => {
               currentChat={currentChat}
               socket={socket}
               setCurrentChat={setCurrentChat}
+              Messages={Messages}
+              setMessages={setMessages}
             />
           </Grid>
         </Grid>

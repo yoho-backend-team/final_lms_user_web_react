@@ -138,6 +138,7 @@ const generateEndpoints = () => {
       },
       community: {
         get: `/institutes/community/course/${course1}`,
+        get_messages : `/institutes/community/messages/all/`
       },
       profile: {
         get: `institutes/auth/profile/me/`,
@@ -193,6 +194,7 @@ const generateEndpoints = () => {
       },
       community: {
         get: `/institutes/community/course/${course?.[0]}`,
+        get_messages : `/institutes/community/messages/all/`
       },
       notification: {
         get: `/institutes/staff/notifications`,

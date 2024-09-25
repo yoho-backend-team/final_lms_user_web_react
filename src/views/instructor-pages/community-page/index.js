@@ -17,6 +17,7 @@ const Community = () => {
   const dispatch = useDispatch();
   const communities = useSelector(selectInstructorCommunities);
   const [currentChat, setCurrentChat] = useState(null);
+  const [Messages, setMessages] = useState([]);
   const { showSpinner, hideSpinner} = useSpinner()
   const socket = useSocket()
 
@@ -67,6 +68,8 @@ const Community = () => {
               socket={socket}
               currentChat={currentChat}
               setCurrentChat={setCurrentChat}
+              Messages = { Messages}
+              setMessages ={ setMessages}
             />
           </Grid>
           <Grid item xs={8} sx={{ display: "flex" }}>
@@ -74,6 +77,8 @@ const Community = () => {
               currentChat={currentChat}
               socket={socket}
               setCurrentChat={setCurrentChat}
+              setMessages={setMessages}
+              Messages={Messages}
             />
           </Grid>
         </Grid>
