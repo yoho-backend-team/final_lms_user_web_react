@@ -3,17 +3,33 @@ import { Box, TextField, InputAdornment, Typography } from "@mui/material";
 import { getStudentDetails } from "store/atoms/authorized-atom";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder } from "utils/placeholders";
+import { getCommunityMessages } from "../services";
+import { useSpinner } from "context/SpinnerProvider";
+import toast from "react-hot-toast";
+import { formatTime } from "utils/formatDate";
+import DoneIcon from '@mui/icons-material/Done';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 
-const SideBar = ({ communities, currentChat, setCurrentChat, socket }) => {
-  const handleChat = (group) => {
-    setCurrentChat(group);
-    const communituy_id = group?._id;
-    const student = getStudentDetails()
-    
+const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages,setMessages }) => {
+  const { showSpinner , hideSpinner } = useSpinner()
+  const student = getStudentDetails()
 
-    socket.emit("joinGroup", { groupId: communituy_id, userId: student?._id }, (error) => {
-      console.log(error, "error");
-    });
+  const handleChat = async (group) => {
+    try {
+      showSpinner()
+      setCurrentChat(group);
+      const communituy_id = group?._id;
+      const student = getStudentDetails()
+      const data = await getCommunityMessages({ community: communituy_id})
+      setMessages(data)
+      socket.emit("joinGroup", { groupId: communituy_id, userId: student?._id }, (error) => {
+        console.log(error, "error");
+      });
+    } catch (error) {
+       toast.error(error?.message)
+    }finally{
+     hideSpinner()
+    }
   };
 
   return (
@@ -78,7 +94,13 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket }) => {
               padding: "8px",
               width: "100%",
               justifyContent: "space-between",
+              backgroundColor : group?._id === currentChat?._id && "#D1E4E8",
+              borderRadius: group?._id === currentChat?._id && "8px",
               cursor: "pointer",
+              ":hover" : {
+                  backgroundColor : "#D1E4E8",
+                  borderRadius: "8px"
+              }
             }}
           >
             <Box sx={{ display: "flex", gap: "10px" }}>
@@ -120,7 +142,7 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket }) => {
                   }}
                 >
                   {group.last_message
-                    ? group?.last_message
+                    ? group?.last_message?.message
                     : "Haha that's terrifying 😂"}
                 </Typography>
               </Box>
@@ -142,10 +164,27 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket }) => {
                     lineHeight: "16px",
                   }}
                 >
-                  {group.date}
+                  { group?.last_message ? formatTime(group?.last_message?.createdAt) : formatTime(new Date())  }
                 </Typography>
               </Box>
-              <Box>{group?.chat} </Box>
+              <Box sx={{ textAlign: "end"}} > 
+              <Typography>
+                   { group?.last_message && group?.last_message?.status?.some(s => s.delivered) && !group?.last_message?.status?.every(s => s.delivered) && (
+                     <DoneIcon sx={{ color: "black", width: "17px", height: "17px" }} />
+                   )}
+                 
+                   {group?.last_message && group?.last_message?.status?.every(s => s.delivered) && !group?.last_message?.status?.every(s => s.read) && (
+                     <DoneAllIcon sx={{  color: "black", width: "17px", height: "17px" }} />
+                   )}
+                 
+                   { group?.last_message && group?.last_message && group?.last_message?.status?.every(s => s.read) && (
+                     <DoneAllIcon sx={{ color: "#0D6EFD", width: "17px", height: "17px" }} />
+                   )}
+                   { !group?.last_message && (
+                     <DoneAllIcon sx={{ color: "#0D6EFD", width: "17px", height: "17px" }} />
+                   )}
+                </Typography>
+              </Box>
             </Box>
           </Box>
         ))}

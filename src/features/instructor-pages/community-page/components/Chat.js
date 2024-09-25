@@ -5,8 +5,8 @@ import ChatLog from "./chatLogs";
 import BottomBar from "./bottomBar";
 import { useEffect, useState } from "react";
 
-const Chat = ({ currentChat, socket }) => {
-  const [Messages, setMessages] = useState([]);
+const Chat = ({ currentChat, socket, Messages, setMessages }) => {
+  
 
   useEffect(() => {
     const handleMessage = (message) => {
