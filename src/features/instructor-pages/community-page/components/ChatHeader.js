@@ -93,7 +93,7 @@ const ChatHeader = ({ currentChat }) => {
           />
         </Grid>
         <Grid item>
-          <Typography variant="h6" sx={{ fontWeight: 700 }}>
+          <Typography variant="h3" sx={{ fontWeight: 700 }}>
             {currentChat.batch_name}
           </Typography>
         </Grid>
