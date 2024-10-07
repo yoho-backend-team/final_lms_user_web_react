@@ -96,9 +96,10 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages,se
               justifyContent: "space-between",
               backgroundColor : group?._id === currentChat?._id && "#D1E4E8",
               borderRadius: group?._id === currentChat?._id && "8px",
+              color : group?._id === currentChat?._id && "white",
               cursor: "pointer",
               ":hover" : {
-                  backgroundColor : "#D1E4E8",
+                  backgroundColor : "#e0e3e4",
                   borderRadius: "8px"
               }
             }}

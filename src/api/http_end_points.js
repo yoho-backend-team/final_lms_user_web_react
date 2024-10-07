@@ -5,17 +5,20 @@ import { getAndDecompress } from "utils/auth_helpers";
 
 const getUserDetails = () => {
   const user = getAndDecompress(Instructor_Details)
+  console.log(user,"user")
   const userDetail = user
   return userDetail;
 };
 
 const instituteId = () => {
   const userDetails = getUserDetails();
+  console.log(userDetails,"userDetails")
   return userDetails?.institute_id?.uuid;
 };
 
 const branchId = () => {
   const userDetails = getUserDetails();
+  console.log(userDetails,"userDetails")
   return userDetails?.branch_id?.uuid;
 };
 
@@ -58,6 +61,7 @@ const branchStudentId = () => {
 
 const courseStudentId = () => {
   const userDetails = getStudentDetails();
+  console.log(userDetails,userDetails?.userDetail?.course)
   return userDetails?.userDetail?.course;
 };
 const studentCourseId = () => {
@@ -79,11 +83,11 @@ const generateEndpoints = () => {
   const branchstudent = branchIdStudent();
 
   const instituteuuid = instituteStudentuuid();
-
+  
   const institute1 = instituteStudentId();
   const branch1 = branchStudentId();
   const course1 = courseStudentId();
-  
+  console.log(course1,"course1")
   const student = getStudentDetails();
   const studentCourse = studentCourseId();
    

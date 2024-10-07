@@ -14,7 +14,7 @@ import NavigationScroll from "layout/NavigationScroll";
 import { onMessageListener, requestForToken } from "./firebase";
 import { regSw, subscribe } from "helpers";
 import { checkSubscriptionStatus, checkUserLoggedIn, getInstituteDetails, getInstructorDetails, getStudentDetails } from "store/atoms/authorized-atom";
-import { instructorDetails, Student } from "lib/constants";
+import { instructorDetails, isAuthenticatedInstructor, isAuthenticatedStudent, Student } from "lib/constants";
 import { useSocket } from "context/instructorSocket";
 // ==============================|| APP ||============================== //
 
@@ -36,8 +36,8 @@ const App = () => {
     const setupServiceWorkerAndRegisterFunction = async (role,userId,user) => {
       try {
       const registration = await regSw()  
-     
-      if(registration){
+      console.log(registration,"registration")
+      if(registration){ 
         await subscribe(registration,role,userId,user)
       }
       } catch (error) {
@@ -45,22 +45,24 @@ const App = () => {
       }
     }
     const notifiConnect = (user) => {
+    console.log(user,socket,"notification")
      socket.emit("joinNotification",{userId:user?._id},(error) => {
       console.log(error,"error")
      })
     }
-
-    if(checkUserLoggedIn(instructorDetails)&&socket){
+    
+    if(checkUserLoggedIn(isAuthenticatedInstructor)&&socket){
       const user = getInstructorDetails()
       notifiConnect(user)
-    }else if(checkUserLoggedIn(Student)&&socket){
+    }else if(checkUserLoggedIn(isAuthenticatedStudent)&&socket){
       const user = getStudentDetails()
       notifiConnect(user)
     }
-    if(checkUserLoggedIn(instructorDetails)&&!checkSubscriptionStatus(instructorDetails+"subscription")){
+
+    if(checkUserLoggedIn(isAuthenticatedInstructor)&&!checkSubscriptionStatus(instructorDetails+"subscription")){
        const user = getInstructorDetails()
        setupServiceWorkerAndRegisterFunction(user?.role,user?._id,instructorDetails)
-    }else if(checkUserLoggedIn(Student)&&!checkSubscriptionStatus(Student+"subscription")){
+    }else if(checkUserLoggedIn(isAuthenticatedStudent)&&!checkSubscriptionStatus(Student+"subscription")){
       const user = getStudentDetails()
       setupServiceWorkerAndRegisterFunction(user?.role,user?._id,Student)
     }
