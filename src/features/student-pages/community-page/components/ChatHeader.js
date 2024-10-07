@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  Tooltip, Badge
 } from "@mui/material";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { getImageUrl } from "utils/common/imageUtlils";
@@ -24,6 +25,7 @@ import MuteNotificationModel from "./Models/MuteNotification";
 import ReportModel from "./Models/ReportDialog";
 import AddWallpaper from "./Models/WallPaperModel";
 import MediaModel from "./Models/Media";
+
 
 const ChatHeader = ({ currentChat }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -104,7 +106,7 @@ const ChatHeader = ({ currentChat }) => {
           />
         </Grid>
         <Grid item>
-          <Typography variant="h6" sx={{ fontWeight: 700 }}>
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
             {currentChat?.batch?.batch_name}
           </Typography>
         </Grid>
@@ -129,12 +131,45 @@ const ChatHeader = ({ currentChat }) => {
             />
           ))}
         </AvatarGroup>
-        <IconButton onClick={handleCall}>
-          <CallIcon />
-        </IconButton>
-        <IconButton onClick={handleSearchOpen}>
-          <SearchIcon />
-        </IconButton>
+        <Tooltip title="Call feature coming soon!">
+          <Badge
+            badgeContent="Soon"
+            sx={{
+              "& .MuiBadge-badge": {
+                backgroundColor: "#f0a500",
+                color: "white",
+                fontSize: "10px",
+                fontWeight: "bold",
+                borderRadius: "4px",
+                padding: "0 4px",
+              },
+            }}
+          >
+            <IconButton onClick={handleCall} disabled>
+              <CallIcon />
+            </IconButton>
+         </Badge>
+        </Tooltip>
+        <Tooltip title="Search feature coming soon!">
+          <Badge
+            badgeContent="Soon"
+            sx={{
+              "& .MuiBadge-badge": {
+                backgroundColor: "#f0a500",
+                color: "white",
+                fontSize: "10px",
+                fontWeight: "bold",
+                borderRadius: "4px",
+                padding: "0 4px",
+              },
+            }}
+          >
+             <IconButton onClick={handleSearchOpen} disabled>
+                <SearchIcon />
+             </IconButton>
+          </Badge>
+        </Tooltip>
+       
         <IconButton
           onClick={handleMenuOpen}
           sx={{ backgroundColor: open ? "#0D6EFD" : "white" }}
@@ -179,10 +214,82 @@ const ChatHeader = ({ currentChat }) => {
             },
           }}
         >
-          <MenuItem onClick={handleMuteOpen}>Mute Notification</MenuItem>
-          <MenuItem onClick={handleReportOpen}>Report</MenuItem>
-          <MenuItem onClick={handleWallpaperOpen}>Wallpaper</MenuItem>
-          <MenuItem onClick={handleMediaOpen}>Group Media</MenuItem>
+           <MenuItem onClick={handleMuteOpen} disabled>
+            Mute Notification
+            <Typography
+              sx={{
+                marginLeft: "auto",
+                fontSize: "12px",
+                color: "#f0a500",
+                fontStyle: "italic",
+                position: "relative",
+                right: "-20px",
+              }}
+            >
+              Coming Soon
+            </Typography>
+          </MenuItem>
+          <MenuItem onClick={handleReportOpen} disabled>
+            Report
+            <Typography
+              sx={{
+                marginLeft: "auto",
+                fontSize: "12px",
+                color: "#f0a500",
+                fontStyle: "italic",
+                position: "relative",
+                right: "-20px",
+              }}
+            >
+              Coming Soon
+            </Typography>
+          </MenuItem>
+          <MenuItem onClick={handleWallpaperOpen} disabled>
+            Wallpaper
+            <Typography
+              sx={{
+                marginLeft: "auto",
+                fontSize: "12px",
+                color: "#f0a500",
+                fontStyle: "italic",
+                position: "relative",
+                right: "-20px",
+              }}
+            >
+              Coming Soon
+            </Typography>
+          </MenuItem>
+          <MenuItem onClick={handleMediaOpen} disabled>
+            Group Media
+            <Typography
+              sx={{
+                marginLeft: "auto",
+                fontSize: "12px",
+                color: "#f0a500",
+                fontStyle: "italic",
+                position: "relative",
+                right: "-20px",
+              }}
+            >
+              Coming Soon
+            </Typography>
+          </MenuItem>
+
+          <MenuItem disabled>
+            Batch
+            <Typography
+              sx={{
+                marginLeft: "auto",
+                fontSize: "12px",
+                color: "#f0a500",
+                fontStyle: "italic",
+                position: "relative",
+                right: "-20px",
+              }}
+            >
+              Coming Soon
+            </Typography>
+          </MenuItem>
         </Menu>
       </Box>
 

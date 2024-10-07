@@ -51,7 +51,7 @@ const Chat = ({ currentChat, socket,setCurrentChat, Messages,setMessages }) => {
               <Box
                 sx={{
                   backgroundColor: "#FEECDC",
-                  display: "flex",
+                  display: "none",
                   width: "482px",
                   px: "24px",
                   py: "12px",

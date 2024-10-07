@@ -5,11 +5,16 @@ import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
 import { useEffect } from "react";
 import { getInstructorDetails } from "store/atoms/authorized-atom";
 import { getInstructorCommunityMessages } from "../services";
+import { useSpinner } from "context/SpinnerProvider";
+import toast from "react-hot-toast";
+import { getErrorMessage } from "utils/common/error";
 
 const SideBar = ({ communities, currentChat, setCurrentChat, socket , Messages, setMessages}) => {
+  const { showSpinner , hideSpinner } = useSpinner()
 
   const handleChat = async (group) => {
     try {
+      showSpinner()
       setCurrentChat(group);
       const communituy_id = group?._id;
       const instructor = getInstructorDetails()
@@ -20,7 +25,10 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket , Messages, 
         console.log(error, "error");
       }); 
     } catch (error) {
-      
+      const error_message = getErrorMessage(error)
+      toast.error(error_message)
+    }finally{
+      hideSpinner()
     }
     
   };
@@ -88,6 +96,14 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket , Messages, 
               width: "100%",
               justifyContent: "space-between",
               cursor: "pointer",
+              backgroundColor : group?._id === currentChat?._id && "#D1E4E8",
+              borderRadius: group?._id === currentChat?._id && "8px",
+              color : group?._id === currentChat?._id && "white",
+              cursor: "pointer",
+              ":hover" : {
+                  backgroundColor : "#e0e3e4",
+                  borderRadius: "8px"
+              }
             }}
           >
             <Box sx={{ display: "flex", gap: "10px" }}>

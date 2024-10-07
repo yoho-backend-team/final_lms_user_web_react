@@ -12,6 +12,7 @@ const BottomBar = ({ socket, community }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [message, setMessage] = useState("");
   const student = getStudentDetails();
+  
 
   const handleEmojiClick = () => {
     setShowEmojiPicker(!showEmojiPicker);
@@ -23,11 +24,11 @@ const BottomBar = ({ socket, community }) => {
 
   const handleSendClick = () => {
     
-    socket.emit(
-      "sendMessage",
-      { groupId : community?._id, content: message, senderId: student?._id, name : student?.full_name || student?.first_name  },
-      (response) => {},
-    );
+    // socket.emit(
+    //   "sendMessage",
+    //   { groupId : community?._id, content: message, senderId: student?._id, name : student?.full_name || student?.first_name  },
+    //   (response) => {},
+    // );
     setMessage("");
   };
 
@@ -73,6 +74,7 @@ const BottomBar = ({ socket, community }) => {
         variant="outlined"
         placeholder="Type a message"
         fullWidth
+        required
         sx={{
           margin: "0 8px",
           backgroundColor: "#fff",
