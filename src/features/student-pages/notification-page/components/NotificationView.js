@@ -1,17 +1,36 @@
-import { Avatar, Box, Typography, IconButton } from "@mui/material";
+import React, { useState } from 'react';
+import { Avatar, Box, Typography, IconButton, Snackbar } from "@mui/material";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import KeyboardBackspaceSharpIcon from '@mui/icons-material/KeyboardBackspaceSharp';
 import { profilePlaceholder } from "utils/placeholders";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { formatDate, formatTime } from "utils/formatDate";
+import { deleteNotification } from '../services';
 
-const NotificationView = ({ handleBack, selectedNotification,handleDelete }) => {
-   const onDeleteClick = () => {
-      if (selectedNotification) {
-          handleDelete(selectedNotification.id);
-      }
-  };
 
+const NotificationView = ({ handleBack, selectedNotification }) => {
+    const [successMessage, setSuccessMessage] = useState('');
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+
+    const handleDelete = async (id) => {
+        try {
+            await deleteNotification({uuid:id});
+            setSuccessMessage('Notification deleted successfully!');
+            setOpenSnackbar(true);
+        } catch (error) {
+            console.error("Error deleting notification:", error);
+        }
+    };
+
+    const onDeleteClick = () => {
+        if (selectedNotification) {
+            handleDelete(selectedNotification.uuid);
+        }
+    };
+
+    const handleSnackbarClose = () => {
+        setOpenSnackbar(false);
+    };
 
     return (
         <Box sx={{ height: "90vh", backgroundColor: "#FFF", padding: "31px 28px 18px 24px" }}>
@@ -47,11 +66,20 @@ const NotificationView = ({ handleBack, selectedNotification,handleDelete }) => 
                     {selectedNotification?.title}
                 </Typography>
             </Box>
+
+            {/* Snackbar for success message */}
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000}
+                onClose={handleSnackbarClose}
+                message={successMessage}
+            />
         </Box>
     );
 };
 
 export default NotificationView;
+
 
 
 // import { Avatar, Box, IconButton, Typography } from "@mui/material"
