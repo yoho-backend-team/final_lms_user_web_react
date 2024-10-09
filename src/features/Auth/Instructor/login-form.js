@@ -49,8 +49,8 @@ const InstructorLoginForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: "vikatis689@luravel.com",
-      password: "Wecandoit@2024",
+      email: "",
+      password: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
