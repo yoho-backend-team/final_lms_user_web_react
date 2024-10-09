@@ -43,18 +43,18 @@ const ClassesPage = () => {
     { id: "1", title: "Upcoming Classes", value: "upcoming" },
     { id: "2", title: "Completed Classes", value: "completed" },
     { id: "3", title: "Class History", value: "history" },
-    // { id: "4", title: "Live Class", value: "live" },
+    { id: "4", title: "Live Class", value: "live" },
   ];
 
   const renderComponents = {
     upcoming: <UpcomingClassList data={classes?.data} classType={classType} group={"upcoming"} image={InstructorUpcommingImage} />,
     completed: <CompletedClassList data={classes?.data} classType={classType} group={"completed"} image={InstructorCompletedClass} />,
     history: <ClassHistory data={classes?.data} classType={classType} group={"history"} image={InstructorHistoryClass} />,
-    // live: <LiveClassList data={classes?.data} classType={classType} group={"live"} image={InstructorLiveClass} />,
+    live: <LiveClassList data={classes?.data} classType={classType} group={"live"} image={InstructorLiveClass} />,
   };
 
   const classTypes = [
-    { id: "1", title: "live class", value: "online" },
+    { id: "1", title: "online class", value: "online" },
     { id: "2", title: "offline class", value: "offline" },
   ];
 
@@ -106,7 +106,7 @@ const ClassesPage = () => {
   return (
     <ClassLayout>
       <Box sx={{ display: "flex", flexDirection: "column", width: "100vw" }}>
-        <Box sx={{ position: "sticky", top: "0px", overflow: "hidden"}} >
+        <Box sx={{ overflow: "hidden"}} >
           <Typography
             sx={{
               fontWeight: 700,
@@ -119,7 +119,7 @@ const ClassesPage = () => {
             Classes
           </Typography>
         </Box>
-        <Card sx={{ position: "sticky", top: "0px", overflow: "hidden"}} >
+        <Card sx={{ overflow: "hidden"}} >
           <Grid container sx={{ height: "auto", width: "100%" }}>
             <Grid
               item

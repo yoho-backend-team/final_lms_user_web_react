@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     minHeight: "140px",
     alignItems: "center",
-    padding: theme.spacing(3),
+    padding: 3,
     border: "2px dashed #5611B1",
     borderRadius: "14px",
     backgroundColor: "#E7DCF6",
@@ -35,13 +35,13 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     fontSize: 48,
-    marginBottom: theme.spacing(1),
+    marginBottom: 1,
   },
   text: {
-    marginBottom: theme.spacing(1),
+    marginBottom: 1,
   },
   browseButton: {
-    marginTop: theme.spacing(2),
+    marginTop: 1,
   },
 }));
 

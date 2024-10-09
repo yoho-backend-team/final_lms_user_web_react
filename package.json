@@ -92,12 +92,14 @@
     "react-redux": "^9.1.2",
     "react-router": "6.3.0",
     "react-router-dom": "^6.23.0",
-    "react-scripts": "^3.0.1",
+    "react-scripts": "^5.0.1",
     "react-to-print": "^2.15.1",
     "react-toastify": "^10.0.5",
     "react-view-pdf": "^1.0.0",
     "recharts": "^2.12.7",
     "redux": "^4.2.0",
+    "sass": "^1.79.4",
+    "sass-loader": "^16.0.2",
     "socket.io-client": "^4.7.5",
     "styled-components": "^6.1.10",
     "stylis": "4.1.4",
@@ -136,6 +138,8 @@
     ]
   },
   "devDependencies": {
-    "babel-plugin-react-svg": "^3.0.3"
+    "@babel/preset-react": "^7.25.7",
+    "babel-plugin-react-svg": "^3.0.3",
+    "resolve-url-loader": "^5.0.0"
   }
 }

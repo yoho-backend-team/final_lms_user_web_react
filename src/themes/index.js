@@ -34,7 +34,7 @@ export const theme = (customization) => {
   const themeOptions = {
     direction: "ltr",
     palette: themePalette(themeOption),
-
+    spacing: (factor) => `${0.25 * factor}rem`,
     mixins: {
       toolbar: {
         minHeight: "48px",
