@@ -28,7 +28,7 @@
     "@mui/system": "5.12.1",
     "@mui/utils": "^5.8.6",
     "@mui/x-data-grid": "6.0.3",
-    "@mui/x-date-pickers": "^7.1.1",
+    "@mui/x-date-pickers": "^7.19.0",
     "@popperjs/core": "2.11.7",
     "@react-pdf-viewer/core": "^3.12.0",
     "@react-pdf/renderer": "^3.4.4",
