@@ -23,6 +23,7 @@ import { getErrorMessage } from "utils/common/error";
 import LZString from "lz-string"
 import { ForgetPassword_Step, Login_Step, Otp_Step } from "lib/constants";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useSpinner } from "context/SpinnerProvider"
 
 
 const validationSchema = yup.object({
@@ -42,6 +43,7 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [, setLoginStep] = useAtom(studentLoginStepAtom);
   const [showPassword,setShowPassword] = useState(false)
+  const { showSpinner, hideSpinner } = useSpinner()
 
   const formik = useFormik({
     initialValues: {
@@ -51,12 +53,15 @@ const LoginForm = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
+        showSpinner()
         const response = await studentLogin(values);
         if (response.success) {
           navigate("/student/home");
         }
       } catch (error) {
         toast.error(getErrorMessage(error));
+      }finally{
+        hideSpinner()
       }
     },
   });
