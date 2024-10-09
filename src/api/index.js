@@ -85,7 +85,7 @@ class Client {
   notification : {
     get : (params) => httpClient.get(HTTP_END_POINTS.Student.notification.get,params,"student"),
     update : (data) => httpClient.update(HTTP_END_POINTS.Student.notification.update_status + data.uuid , data, "student" ),
-    delete: (id) => httpClient.delete(HTTP_END_POINTS.Student.notification.delete + id, "student")
+    delete: (data) => httpClient.delete(HTTP_END_POINTS.Student.notification.delete + data.uuid , data, "student")
   },
   ticket: {
     create: (data, params) =>
