@@ -4,7 +4,6 @@ import { getInstructorDetails } from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
 import DoneIcon from '@mui/icons-material/Done';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
-import MessageIcon from '@mui/icons-material/Message';
 
 const ChatLog = ({ socket, Messages }) => {
   const instructor = getInstructorDetails();
@@ -90,23 +89,6 @@ const ChatLog = ({ socket, Messages }) => {
 
   return (
     <Box sx={{ padding: "16px", height: "100%", overflowY: "auto" }}>
-      {
-        Messages?.length === 0 && (
-          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
-             <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: "10px",alignItems: "center"}}>
-               <Typography>
-                 <MessageIcon sx={{ width: "60px", height: "60px"}} />
-               </Typography>
-               <Typography variant="h1" >
-                 No Chat Messages
-               </Typography>
-               <Typography sx={{ fontSize: "15px"}}>
-                Start conversation to see your messages here 
-               </Typography>
-             </Box>
-          </Box>
-        )
-      }
       {Messages?.map((msg) => (
         <Grid
           container

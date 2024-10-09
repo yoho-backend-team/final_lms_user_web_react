@@ -98,7 +98,7 @@ const UpdatesCard = (props,notification) => {
                       fontFamily: "poppins",
                     }}
                   >
-                    {Notification?.[0]?.body}
+                    {Notification?.[0].body}
                   </Typography>
                   <Typography
                     variant="subtitle2"
@@ -108,7 +108,7 @@ const UpdatesCard = (props,notification) => {
                       fontFamily: "poppins",
                     }}
                   >
-                    {Notification?.[0]?.title}
+                    {Notification?.[0].title}
                   </Typography>
                 </Box>
               </Box>
@@ -165,7 +165,7 @@ const UpdatesCard = (props,notification) => {
                       fontFamily: "poppins",
                     }}
                   >
-                    {Notification?.[1]?.body}
+                    {Notification?.[1].body}
                   </Typography>
                 </Box>
               </Box>
@@ -185,7 +185,7 @@ const UpdatesCard = (props,notification) => {
                           fontFamily: "poppins",
                         }}
                       >
-                       {Notification?.[1]?.title}
+                       {Notification?.[1].title}
                       </Typography>
                     </Box>
                   </Box>
@@ -221,7 +221,7 @@ const UpdatesCard = (props,notification) => {
                       fontFamily: "poppins",
                     }}
                   >
-                    {Notification?.[1]?.body}
+                    {Notification?.[1].body}
                   </Typography>
                 </Box>
               </Box>

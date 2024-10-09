@@ -101,7 +101,7 @@ const StudentNavLinks = ({ student }) => {
           display: "flex",
           gap: tabView ? 2 : 5,
           position: "relative",
-          padding: tabView ? "25px 45px 45px 45px" : 0,
+          padding: tabView ? "25px 45px 45px 45px" : 7,
           borderBottomLeftRadius: 80,
           borderBottomRightRadius: 80,  
           marginTop: isSmallScreen ? "-64px" : "80px"       

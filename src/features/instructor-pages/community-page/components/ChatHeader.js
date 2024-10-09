@@ -8,18 +8,29 @@ import {
   AvatarGroup,
   Menu,
   MenuItem,
-  Tooltip,
-  Badge,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  FormControl,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
+  Tab,
+  Tabs,
 } from "@mui/material";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
+import { CommunityUser1, CommunityUser2, CommunityUser3 } from "utils/images";
 import CallIcon from "assets/icons/callIcon";
 import SearchIcon from "assets/icons/searchIcon";
-import { getImageUrl } from "utils/common/imageUtlils";
-import { profilePlaceholder } from "utils/placeholders";
 import MuteNotificationModel from "./Models/MuteNotification";
 import ReportModel from "./Models/ReportDialog";
 import AddWallpaper from "./Models/WallPaperModel";
 import MediaModel from "./Models/Media";
+import { getImageUrl } from "utils/common/imageUtlils";
+import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
+import { Tooltip } from "@mui/material";
 
 const ChatHeader = ({ currentChat }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -29,6 +40,7 @@ const ChatHeader = ({ currentChat }) => {
   const [reportOpen, setReportOpen] = useState(false);
   const [wallpaperOpen, setWallpaperOpen] = useState(false);
   const [mediaOpen, setMediaOpen] = useState(false);
+  const [mediaTab, setMediaTab] = useState(0);
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -64,13 +76,14 @@ const ChatHeader = ({ currentChat }) => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: "16px"
+        padding: "16px",
+        // borderBottom: '1px solid #C3C3C3',
       }}
     >
       <Grid container alignItems="center" spacing={2}>
         <Grid item>
           <Avatar
-            sx={{ width: 40, height: 40}}
+            sx={{ width: 40, height: 40, borderRadius: "50%" }}
             src={
               currentChat?.batch?.course?.image
                 ? getImageUrl(currentChat?.batch?.course?.image)
@@ -80,16 +93,15 @@ const ChatHeader = ({ currentChat }) => {
           />
         </Grid>
         <Grid item>
-          <Typography variant="h4" sx={{ fontWeight: 700 }}>
-            {currentChat?.batch?.batch_name}
+          <Typography variant="h3" sx={{ fontWeight: 700 }}>
+            {currentChat.batch_name}
           </Typography>
         </Grid>
       </Grid>
-
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
         <AvatarGroup max={3} total={currentChat?.users?.length}>
           {currentChat?.users?.map((user) => (
-            <Tooltip title={user?.full_name} key={user?.id}>
+            <Tooltip title={user?.full_name}>
               <Avatar
                 alt={user?.full_name}
                 src={
@@ -99,53 +111,20 @@ const ChatHeader = ({ currentChat }) => {
             </Tooltip>
           ))}
         </AvatarGroup>
-
-        <Tooltip title="Call feature coming soon!">
-          <Badge
-            badgeContent="Soon"
-            sx={{
-              "& .MuiBadge-badge": {
-                backgroundColor: "#f0a500",
-                color: "white",
-                fontSize: "10px",
-                fontWeight: "bold",
-                borderRadius: "4px",
-                padding: "0 4px",
-              },
-            }}
-          >
-            <IconButton disabled>
-              <CallIcon sx={{ color: "#ccc", fontSize: 24 }} />
-            </IconButton>
-          </Badge>
-        </Tooltip>
-
-        <Tooltip title="Search feature coming soon!">
-          <Badge
-            badgeContent="Soon"
-            sx={{
-              "& .MuiBadge-badge": {
-                backgroundColor: "#f0a500",
-                color: "white",
-                fontSize: "10px",
-                fontWeight: "bold",
-                borderRadius: "4px",
-                padding: "0 4px",
-              },
-            }}
-          >
-            <IconButton disabled>
-              <SearchIcon sx={{ color: "#ccc", fontSize: 24 }} />
-            </IconButton>
-          </Badge>
-        </Tooltip>
-
-        <IconButton onClick={handleMenuOpen}>
+        <IconButton>
+          <CallIcon />
+        </IconButton>
+        <IconButton>
+          <SearchIcon />
+        </IconButton>
+        <IconButton
+          onClick={handleMenuOpen}
+          sx={{ backgroundColor: open ? "#0D6EFD" : "white" }}
+        >
           <ExpandMoreRoundedIcon
             sx={{ color: open ? "white" : "#130F26", cursor: "pointer" }}
           />
         </IconButton>
-
         <Menu
           anchorEl={anchorEl}
           open={open}
@@ -162,88 +141,30 @@ const ChatHeader = ({ currentChat }) => {
             elevation: 0,
             sx: {
               padding: "24px 21px 44px 21px",
-              borderRadius: "16px",
+              borderRadius: "28px",
               border: "1px solid #DCDCDC",
-              boxShadow: "0px 4px 54px rgba(0, 0, 0, 0.25)",
+              boxShadow: "0px 4px 54px 0px rgba(0, 0, 0, 0.25)",
+              "& .MuiMenuItem-root": {
+                padding: "10px",
+                fontSize: "14px",
+                fontWeight: 500,
+                lineHeight: "28px",
+                color: "black",
+                display: "flex",
+                justifyItems: "center",
+                alignItems: "center",
+                "&:hover": {
+                  backgroundColor: "#0D6EFD",
+                  color: "#FFFFFF",
+                },
+              },
             },
           }}
         >
-          <MenuItem onClick={handleMuteOpen} disabled>
-            Mute Notification
-            <Typography
-              sx={{
-                marginLeft: "auto",
-                fontSize: "12px",
-                color: "#f0a500",
-                fontStyle: "italic",
-                position: "relative",
-                right: "-20px",
-              }}
-            >
-              Coming Soon
-            </Typography>
-          </MenuItem>
-          <MenuItem onClick={handleReportOpen} disabled>
-            Report
-            <Typography
-              sx={{
-                marginLeft: "auto",
-                fontSize: "12px",
-                color: "#f0a500",
-                fontStyle: "italic",
-                position: "relative",
-                right: "-20px",
-              }}
-            >
-              Coming Soon
-            </Typography>
-          </MenuItem>
-          <MenuItem onClick={handleWallpaperOpen} disabled>
-            Wallpaper
-            <Typography
-              sx={{
-                marginLeft: "auto",
-                fontSize: "12px",
-                color: "#f0a500",
-                fontStyle: "italic",
-                position: "relative",
-                right: "-20px",
-              }}
-            >
-              Coming Soon
-            </Typography>
-          </MenuItem>
-          <MenuItem onClick={handleMediaOpen} disabled>
-            Group Media
-            <Typography
-              sx={{
-                marginLeft: "auto",
-                fontSize: "12px",
-                color: "#f0a500",
-                fontStyle: "italic",
-                position: "relative",
-                right: "-20px",
-              }}
-            >
-              Coming Soon
-            </Typography>
-          </MenuItem>
-
-          <MenuItem disabled>
-            Batch
-            <Typography
-              sx={{
-                marginLeft: "auto",
-                fontSize: "12px",
-                color: "#f0a500",
-                fontStyle: "italic",
-                position: "relative",
-                right: "-20px",
-              }}
-            >
-              Coming Soon
-            </Typography>
-          </MenuItem>
+          <MenuItem onClick={handleMuteOpen}>Mute Notification</MenuItem>
+          <MenuItem onClick={handleReportOpen}>Report</MenuItem>
+          <MenuItem onClick={handleWallpaperOpen}>Wallpaper</MenuItem>
+          <MenuItem onClick={handleMediaOpen}>Group Media</MenuItem>
         </Menu>
       </Box>
 
