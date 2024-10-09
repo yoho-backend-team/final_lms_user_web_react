@@ -219,6 +219,7 @@ export default function InstructorNavBar() {
                     sx={{
                       fontSize: 17,
                       fontFamily: "Poppins",
+                      color : "black",
                       fontWeight: 600,
                       display: { xs: "none", lg: "block" },
                     }}
@@ -227,7 +228,7 @@ export default function InstructorNavBar() {
                   </Typography>
                   <Typography
                     sx={{
-                      display: { xs: "none", lg: "block" },
+                      display: { xs: "none", lg: "block" },color: "black"
                     }}
                   >
                     (you) ID: {instructor?.id}

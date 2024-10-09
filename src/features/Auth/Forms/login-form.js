@@ -22,6 +22,7 @@ import Cookies from "js-cookie";
 import { getErrorMessage } from "utils/common/error";
 import LZString from "lz-string"
 import { ForgetPassword_Step, Login_Step, Otp_Step } from "lib/constants";
+import { useSpinner } from "context/SpinnerProvider"
 
 
 const validationSchema = yup.object({
@@ -40,6 +41,7 @@ const LoginForm = () => {
   const studentLogin = useStudentLogin();
   const navigate = useNavigate();
   const [, setLoginStep] = useAtom(studentLoginStepAtom);
+  const { showSpinner, hideSpinner} = useSpinner()
 
   const formik = useFormik({
     initialValues: {
@@ -49,12 +51,16 @@ const LoginForm = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
+        showSpinner()
         const response = await studentLogin(values);
         if (response.success) {
           navigate("/student/home");
         }
       } catch (error) {
+        hideSpinner()
         toast.error(getErrorMessage(error));
+      }finally{
+        hideSpinner()
       }
     },
   });

@@ -315,6 +315,7 @@ setAnchorEl(null);
                           fontSize: 17,
                           fontFamily: "poppins",
                           fontWeight: "600",
+                          color : "black",
                           display: {
                             xs: "none",
                             sm: "none",
@@ -337,6 +338,7 @@ setAnchorEl(null);
                               md: "none",
                               lg: "block",
                             },
+                            color : "black"
                           }}
                         >
                            (you) ID: {student?.id}

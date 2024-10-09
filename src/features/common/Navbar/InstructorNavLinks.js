@@ -115,7 +115,7 @@ const InstructorNavLinks = () => {
             <Box
               sx={{
                 textAlign: "center",
-                pt: "104px",
+                pt: "80px",
                 transition: "color 0.3s ease",
                 color: selected === item.id ? "#5611B1" : "#6C757D",
                 
