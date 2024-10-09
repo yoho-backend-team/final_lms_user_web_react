@@ -1,3 +1,4 @@
+import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { Grid, IconButton } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
