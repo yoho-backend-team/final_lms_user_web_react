@@ -41,7 +41,6 @@
     "apexcharts-clevision": "3.28.5",
     "axios": "^1.7.2",
     "axios-mock-adapter": "^1.22.0",
-    "babel-eslint": "10.1.0",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "1.10.5",
     "caniuse-lite": "^1.0.30001581",
@@ -105,16 +104,20 @@
     "stylis-plugin-rtl": "2.1.1",
     "tinycolor2": "^1.6.0",
     "web-vitals": "^2.1.4",
-    "webpack": "^5.95.0",
+    "webpack": "^4.42.0",
     "yup": "^1.4.0"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "no-unused-expressions": "off"
+    },
     "extends": [
       "react-app",
       "react-app/jest"
@@ -133,8 +136,6 @@
     ]
   },
   "devDependencies": {
-    "babel-plugin-react-svg": "^3.0.3",
-    "sass": "^1.79.4",
-    "sass-loader": "^16.0.2"
+    "babel-plugin-react-svg": "^3.0.3"
   }
 }
