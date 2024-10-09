@@ -12,7 +12,7 @@ const ProfilePage = () => {
   const handleLogout = async () => {
     try {
       await studentLogout();
-      navigate("/login"); // Redirect to login page after logout
+      navigate("/login");
       toast.success("Successfully logged out!");
     } catch (error) {
       console.error("Logout error:", error);
