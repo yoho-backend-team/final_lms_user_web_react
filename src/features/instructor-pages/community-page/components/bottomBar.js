@@ -69,7 +69,7 @@ const BottomBar = ({ socket, community}) => {
       <IconButton onClick={handleEmojiClick}>
         <EmojiIcon />
       </IconButton>
-      <IconButton sx={{ display: "none"}}>
+      <IconButton>
         <AddBoxPlusIcon />
       </IconButton>
       <TextField
@@ -100,7 +100,7 @@ const BottomBar = ({ socket, community}) => {
         }}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end" sx={{ display: "none"}}>
+            <InputAdornment position="end">
               <IconButton>
                 <AttachFileIcon />
               </IconButton>
@@ -111,7 +111,7 @@ const BottomBar = ({ socket, community}) => {
       <IconButton onClick={handleSendClick}>
         <SendIcon sx={{ color: "#000000" }} />
       </IconButton>
-      <IconButton sx={{ display: "none"}} >
+      <IconButton>
         <RecordIcon />
       </IconButton>
     </Box>

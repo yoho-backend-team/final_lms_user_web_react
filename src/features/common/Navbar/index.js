@@ -129,16 +129,8 @@ setAnchorEl(null);
   },[dispatch])
 
   const handleNotificationChange = (notification) => {
-    try {
-      showSpinner()
-      dispatch(setStudentSelectedNotification(notification))
-      navigate("/student/notifications")
-      setAnchorE2(null)  
-    } catch (error) {
-      toast.error(error?.message)
-    }finally{
-      hideSpinner()
-    }
+    dispatch(setStudentSelectedNotification(notification))
+    navigate("/student/notifications")
   }
   
 

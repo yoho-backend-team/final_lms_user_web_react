@@ -35,11 +35,11 @@ const ClassHistory = ({ data, classType, group, image }) => {
   console.log(data,"data")
   return (
     <>
-      {/* <FilterHeader
+      <FilterHeader
         filters={filters}
         onFilterChange={handleFilterChange}
         onResetFilters={handleResetFilters}
-      /> */}
+      />
       <Box sx={{ mt: 3, px: "40px" }}>
         {data?.map((cls) => (
           <ClassCard

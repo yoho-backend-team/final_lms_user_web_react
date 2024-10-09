@@ -8,7 +8,7 @@ import {
   FormControl,
   Input,
   Typography,
-  FormHelperText,InputAdornment,IconButton
+  FormHelperText,
 } from "@mui/material";
 import { useAtom } from "jotai";
 import { studentLoginStepAtom } from "store/atoms/authAtoms";
@@ -22,7 +22,6 @@ import Cookies from "js-cookie";
 import { getErrorMessage } from "utils/common/error";
 import LZString from "lz-string"
 import { ForgetPassword_Step, Login_Step, Otp_Step } from "lib/constants";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 
 const validationSchema = yup.object({
@@ -41,7 +40,6 @@ const LoginForm = () => {
   const studentLogin = useStudentLogin();
   const navigate = useNavigate();
   const [, setLoginStep] = useAtom(studentLoginStepAtom);
-  const [showPassword,setShowPassword] = useState(false)
 
   const formik = useFormik({
     initialValues: {
@@ -109,19 +107,12 @@ const LoginForm = () => {
             >
               <InputLabel>Password</InputLabel>
               <Input
-                type={ showPassword ?  "text" : "password"}
+                type="password"
                 id="password"
                 name="password"
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                endAdornment={
-                  <InputAdornment position="end" >
-                    <IconButton onClick={() => setShowPassword(!showPassword)} >
-                       {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
                 required
               />
               {formik.touched.password && formik.errors.password && (
