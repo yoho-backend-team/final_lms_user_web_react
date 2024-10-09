@@ -99,17 +99,17 @@
     "react-view-pdf": "^1.0.0",
     "recharts": "^2.12.7",
     "redux": "^4.2.0",
-    "sass": "^1.77.0",
     "socket.io-client": "^4.7.5",
     "styled-components": "^6.1.10",
     "stylis": "4.1.4",
     "stylis-plugin-rtl": "2.1.1",
     "tinycolor2": "^1.6.0",
     "web-vitals": "^2.1.4",
+    "webpack": "^5.95.0",
     "yup": "^1.4.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -133,6 +133,8 @@
     ]
   },
   "devDependencies": {
-    "babel-plugin-react-svg": "^3.0.3"
+    "babel-plugin-react-svg": "^3.0.3",
+    "sass": "^1.79.4",
+    "sass-loader": "^16.0.2"
   }
 }
