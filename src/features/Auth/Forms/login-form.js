@@ -85,7 +85,7 @@ const LoginForm = () => {
             color: theme.palette.dark.main,
           }}
         >
-          Join & Connect the Fastest Growing Online Community
+          Join & Connect the Fastest Growing Online Community.
         </Typography>
         <form noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
           <Box mt={2}>
