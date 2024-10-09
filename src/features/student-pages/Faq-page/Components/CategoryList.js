@@ -155,6 +155,7 @@ const CategoryList = ({ categories, onCategorySelect }) => {
     ? faqData 
     : faqData.filter(faq => faq.roles.includes(selectedRole));
 
+   console.log(categories,"categories")
   return (
     <div style={{ padding: '20px' }}>
       {/* Role Filter Buttons */}
@@ -182,20 +183,20 @@ const CategoryList = ({ categories, onCategorySelect }) => {
       </div>
 
       
-      <Grid container spacing={2} gap={'120px'} justifyContent={"space-between"} wrap='wrap'>
-  {filteredFAQs.map((faq, index) => (
-    <Grid item xs={12} sm={6} md={4} key={index}>
+      <Grid container spacing={2} justifyContent="space-between">
+  {categories.map((faq, index) => (
+    <Grid item xs={12} sm={6} md={3} key={index}>
         <Card
           elevation={3}
           sx={{
-            minWidth: 300,
+            width:'200%',
+            height:"200px",
             display:"flex",
-            justifyContent: 'center',
             padding: 2,
             margin: '16px',
             transition: 'transform 0.3s',
             '&:hover': {
-              transform: 'scale(1.3)',
+              transform: 'scale(1.05)',
             },
           }}
         >
