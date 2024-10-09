@@ -22,9 +22,9 @@ export const getAllNotification = async (data) => {
 }
 
 
-export const deleteNotification = async (id) => {
+export const deleteNotification = async (data) => {
   try {
-      const response = await Client.Student.notification.delete(id);
+      const response = await Client.Student.notification.delete(data);
       return response.data;
   } catch (error) {
       const message = getErrorMessage(error);
