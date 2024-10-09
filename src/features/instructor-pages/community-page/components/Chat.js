@@ -3,7 +3,7 @@ import ChatHeader from "./ChatHeader";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ChatLog from "./chatLogs";
 import BottomBar from "./bottomBar";
-import { useEffect, useState } from "react";
+import React , { useEffect, useState } from "react";
 
 const Chat = ({ currentChat, socket, Messages, setMessages }) => {
   

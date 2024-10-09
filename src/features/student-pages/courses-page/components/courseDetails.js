@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, Typography } from "@mui/material";
 import { CourseCardBg } from "utils/images";
 import StarIcon from "@mui/icons-material/Star";

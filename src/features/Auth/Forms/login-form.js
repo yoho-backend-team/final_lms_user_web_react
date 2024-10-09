@@ -85,7 +85,7 @@ const LoginForm = () => {
             <FormControl
               fullWidth
               error={formik.touched.email && formik.errors.email}
-            >
+            > 
               <InputLabel>Email or Username</InputLabel>
               <Input
                 id="user-name"
