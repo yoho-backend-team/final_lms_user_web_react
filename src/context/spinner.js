@@ -1,5 +1,6 @@
 import React from "react";
 import { CircularProgress, Backdrop, Typography, Box } from "@mui/material";
+import Gif_Loader from "components/loader/gif_loader";
 
 const Spinner = ({ open, text }) => {
   return (
@@ -11,12 +12,13 @@ const Spinner = ({ open, text }) => {
         backgroundColor: "rgba(0, 0, 0, 0.7)",
       }}
     >
-      <Box display="flex" flexDirection="column" alignItems="center">
-        <CircularProgress color="inherit" />
+      <Gif_Loader />
+      {/* <Box display="flex" flexDirection="column" alignItems="center"> */}
+        {/* <CircularProgress color="inherit" />
         <Typography variant="h6" style={{ marginTop: 10 }}>
           {text}
-        </Typography>
-      </Box>
+        </Typography> */}
+      {/* </Box> */}
     </Backdrop>
   );
 };
