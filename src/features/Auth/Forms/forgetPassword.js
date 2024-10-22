@@ -14,7 +14,9 @@ import { useAtom } from "jotai";
 import axios from "axios";
 import { useStudentforgetPassword } from "../services";
 import toast from "react-hot-toast";
-import { ForgetPassword_Otp_Step } from "lib/constants";
+import { ForgetPassword_Otp_Step, Student_Login_Step } from "lib/constants";
+import { useSpinner } from "context/SpinnerProvider";
+import { getErrorMessage } from "utils/common/error";
 
 const ForgetPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -23,6 +25,7 @@ const ForgetPasswordPage = () => {
   const navigate = useNavigate();
   const [, setLoginStep] = useAtom(studentLoginStepAtom);
   const [, setOtpAtom] = useAtom(studentOtpAtom);
+  const { showSpinner,hideSpinner } = useSpinner()
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -47,6 +50,7 @@ const ForgetPasswordPage = () => {
     }
     
     try {
+      showSpinner()
       const response = await forgetPassword(email);
       if (response.status === "success") {
         const { token } = response.data;
@@ -56,10 +60,23 @@ const ForgetPasswordPage = () => {
         setEmailError("Email not found");
       }
     } catch (error) {
-      console.log(error, "error");
-      toast.error(error?.message || "An error occurred");
+      const error_message = getErrorMessage(error)
+      toast.error(error_message);
+    }finally{
+      hideSpinner()
     }
   };
+
+  const handleBack = () => {
+    try {
+      showSpinner()
+      setLoginStep(Student_Login_Step)     
+    } catch (error) {
+      toast.error("Try again")
+    }finally{
+      hideSpinner()
+    }
+  }
 
   return (
     <Box
@@ -110,7 +127,7 @@ const ForgetPasswordPage = () => {
         >
           Enter Mail ID
         </Typography>
-        <FormControl fullWidth sx={{ maxWidth: 250 }} error={!!emailError}>
+        <FormControl fullWidth  error={!!emailError}>
           <Input
             type="email"
             value={email}
@@ -121,25 +138,28 @@ const ForgetPasswordPage = () => {
             <FormHelperText id="email-error-text">{emailError}</FormHelperText>
           )}
         </FormControl>
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
-          fullWidth
-          sx={{
-            backgroundColor: "#0D6EFD",
-            maxWidth: 100,
-            marginTop: 5,
-            alignSelf: "flex-end",
-            borderRadius: 20,
-            px: 2,
-            py: 1,
-            "&:hover": {
+        <Box sx={{ display: 'flex',mt:"40px", width: "100%", justifyContent: "space-between", alignItems: "center"}} >
+          <Typography onClick={handleBack} sx={{ textDecoration: "underline", cursor: "pointer"}} >Back to Login</Typography>
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            fullWidth
+            sx={{
               backgroundColor: "#0D6EFD",
-            },
-          }}
-        >
-          VERIFY
-        </Button>
+              maxWidth: 100,
+              marginTop: 5,
+              alignSelf: "flex-end",
+              borderRadius: 20,
+              px: 2,
+              py: 1,
+              "&:hover": {
+                backgroundColor: "#0D6EFD",
+              },
+            }}
+          >
+            VERIFY
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
