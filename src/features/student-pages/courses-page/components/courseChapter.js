@@ -39,7 +39,7 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
 // const classes = Course?.batches[0]?.classes|| [];
 
   return (
-    <Box sx={{ pl: "91px", pr: "50px", height: "80vh", overflowY: "auto" }}>
+    <Box sx={{ pl: "91px", pr: "50px", height: "80vh",}}>
       <Box
         sx={{ display: "flex", justifyContent: "space-between", pb: "20px" }}
       >

@@ -110,6 +110,7 @@ export const useStudentLogin = () => {
         if (step === "otp") {
           setLoginStep(Otp_Step);
           setOtpAtom({ email, token });
+          return { message: response?.message }
         } else {
           setOtpAtom({ email: null, token: null, otp: "" });
           // setStudentAtom({

@@ -1,4 +1,5 @@
 import { Card, Grid, Box, Typography, CircularProgress } from "@mui/material";
+import { ProgressBgLeft, ProgressBgRight } from "utils/images";
 
 const CourseProgressCard = () => {
   const batches = [
@@ -25,7 +26,7 @@ const CourseProgressCard = () => {
   };
 
   return (
-    <Card sx={{ mt: 3 }}>
+    <Card sx={{ mt: 3, minHeight: "450px" }}>
       <Grid
         xs={12}
         sx={{
@@ -36,6 +37,8 @@ const CourseProgressCard = () => {
           padding : "20px",
           p: 2,
           flexDirection: "column",
+          height: "100%",
+          minHeight: "450px"
         }}
       >
         <Box>
@@ -69,16 +72,16 @@ const CourseProgressCard = () => {
                   key={item.name}
                   sx={{
                     display: "flex",
-                    clipPath: "polygon(0 0, 100% 15%, 100% 75%, 0% 100%)",
-                    backgroundColor: "white",
-                    p: 2,
+                    // clipPath: "polygon(0 0, 100% 15%, 100% 75%, 0% 100%)",
+                    backgroundImage: `url(${ProgressBgLeft})`,
+                    backgroundSize: "cover",
                     gap: "136px",
                     borderRadius: 2,
                     alignItems: "center",
                     maxWidth: "320px"
                   }}
                 >
-                  <Box>
+                  <Box sx={{ p: 2 }}>
                     <Typography
                       sx={{
                         fontSize: "14px",
@@ -99,7 +102,7 @@ const CourseProgressCard = () => {
                       {item.registered} Registered
                     </Typography>
                   </Box>
-                  <Box>
+                  <Box sx={{ p: 2 }}>
                     <CircularProgress
                       variant="determinate"
                       value={item.progress}
@@ -113,14 +116,15 @@ const CourseProgressCard = () => {
                   key={item.name}
                   sx={{
                     display: "flex",
-                    clipPath: "polygon(0 15%, 100% 0, 100% 100%, 0 75%);",
-                    backgroundColor: "white",
-                    p: 2,
+                    // clipPath: "polygon(0 15%, 100% 0, 100% 100%, 0 75%);",
+                    backgroundImage: `url(${ProgressBgRight})`,
+                    backgroundSize: "cover",
+                    // backgroundColor: "white",
                     gap: "136px",
                     alignItems: "center",
                   }}
                 >
-                  <Box>
+                  <Box sx={{ p: 2 }}>
                     <CircularProgress
                       variant="determinate"
                       value={item.progress}
@@ -128,7 +132,7 @@ const CourseProgressCard = () => {
                       size={75}
                     />
                   </Box>
-                  <Box>
+                  <Box sx={{ p: 2 }}>
                     <Typography
                       sx={{
                         fontSize: "14px",

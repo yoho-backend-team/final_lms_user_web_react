@@ -37,7 +37,7 @@ const CourseStudentDetails = ({ Course }) => {
     },
   ];
   return (
-    <Box sx={{ pr: "60px", overflowY: "auto", maxHeight: "100vh" }}>
+    <Box sx={{ pr: "60px", maxHeight: "100vh" }}>
       <Box sx={{ display: "flex", flexDirection: "column", pr: "90px" }}>
         <Box
           sx={{ display: "flex", justifyContent: "space-between", pb: "20px" }}

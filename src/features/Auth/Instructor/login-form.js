@@ -27,6 +27,7 @@ import { ForgetPassword_Step } from "lib/constants";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 
+
 const validationSchema = yup.object({
   email: yup
     .string("Enter your email")
@@ -96,7 +97,9 @@ const InstructorLoginForm = () => {
             fontFamily: "poppins",
             textAlign: "justify",
             fontSize: 22,
+            mb: 5,
             color: theme.palette.dark.main,
+            textAlign : "center",
           }}
         >
           Join & Connect the Fastest Growing Online Community
@@ -107,7 +110,7 @@ const InstructorLoginForm = () => {
           onSubmit={formik.handleSubmit}
           style={{ minWidth: "380px", maxWidth: "400px" }}
         >
-          <Box mt={2}>
+          <Box mb={5}>
             <FormControl
               fullWidth
               error={formik.touched.email && Boolean(formik.errors.email)}
@@ -116,6 +119,7 @@ const InstructorLoginForm = () => {
               <Input
                 id="user-name"
                 name="email"
+                placeholder="Enter your email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -126,16 +130,18 @@ const InstructorLoginForm = () => {
               )}
             </FormControl>
           </Box>
-          <Box mt={2}>
+          <Box mb={5}>
             <FormControl
               fullWidth
               error={formik.touched.password && Boolean(formik.errors.password)}
             >
               <InputLabel>Password</InputLabel>
               <Input
+                variant={"filled"}
                 type={ showPassword ?  "text" : "password"}
                 name="password"
                 id="password"
+                placeholder=".........."
                 sx={{ minWidth: "300px"}}
                 value={formik.values.password}
                 onChange={formik.handleChange}
@@ -179,15 +185,15 @@ const InstructorLoginForm = () => {
             <Button
               variant="contained"
               size="large"
-              sx={{ borderRadius: 56, backgroundColor: "#5611B1" }}
+              sx={{ borderRadius: 56, backgroundColor: "#5611B1", my: "20px" }}
               type="submit"
             >
               Sign in
             </Button>
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-            <Typography>Forget Password?</Typography>
-            <Link  to="#" onClick={handleForgetPassword}>Get it</Link>
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 2, gap: "5px" }}>
+            <Typography sx={{ fontSize: "0.9375rem",fontWeight: 500,lineHeight: 1.375, color: "#676b7b" }} >Forget Password?</Typography>
+            <Link  to="#" style={{ fontSize: "0.9375", fontWeight: 500, lineHeight: 1.375, color: "#666cff",textDecoration: "none"}} onClick={handleForgetPassword}>Get it</Link>
           </Box>
           <Box sx={{ mt: 8, display: "flex", alignItems: "center", gap: 1 }}>
             <span>

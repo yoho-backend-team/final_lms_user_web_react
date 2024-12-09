@@ -64,6 +64,13 @@ const TicketsPage = () => {
     getTicketsList(data);
   }, [dispatch, currentType]);
 
+  useEffect(() => {
+    if(tickets){
+      const findTicket = tickets?.filter((ticket) => ticket?._id === searchParams.get("view"))
+      setSelectedTicket(findTicket?.[0])
+    }
+  },[ticketView,tickets])
+
   const handleTicketRefetch = (type) => {
     setCurrentType(type);
     const data = { status: type };
@@ -116,7 +123,7 @@ const TicketsPage = () => {
           open ? (
             <CreateTicketForm handleClose={handleClose} />
           ) : (
-            <TicketView selectedTicket={selectedTicket} handleTicketViewClose={handleTicketViewClose} />
+            <TicketView selectedTicket={selectedTicket} handleTicketViewClose={handleTicketViewClose} setSelectedTicket={setSelectedTicket} />
           )
         ) : (
           <>
