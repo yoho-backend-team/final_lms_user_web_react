@@ -24,6 +24,7 @@ import LZString from "lz-string"
 import { ForgetPassword_Step, Login_Step, Otp_Step } from "lib/constants";
 import { useSpinner } from "context/SpinnerProvider"
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import InfoIcon from "@mui/icons-material/Info";
 
 
 const validationSchema = yup.object({
@@ -84,12 +85,14 @@ const LoginForm = () => {
             textAlign: "justify",
             fontSize: 22,
             color: theme.palette.dark.main,
+            textAlign: "center",
+            mb: 5
           }}
         >
           Join & Connect the Fastest Growing Online Community
         </Typography>
         <form noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
-          <Box mt={2}>
+          <Box mb={5}>
             <FormControl
               fullWidth
               error={formik.touched.email && formik.errors.email}
@@ -108,7 +111,7 @@ const LoginForm = () => {
               )}
             </FormControl>
           </Box>
-          <Box mt={2}>
+          <Box mb={5}>
             <FormControl
               fullWidth
               error={formik.errors.password && formik.errors.password}
@@ -140,7 +143,6 @@ const LoginForm = () => {
               alignItems: "center",
               display: "flex",
               gap: 3,
-              mt: 2,
               justifyContent: "flex-end",
             }}
           >
@@ -153,17 +155,28 @@ const LoginForm = () => {
             <Button
               type="submit"
               variant="contained"
-              sx={{ borderRadius: 20, px: 2, py: 1 }}
+              size="large"
+              sx={{ borderRadius: 56, my: "20px" }}
             >
               Sign in
             </Button>
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-            <Typography>Forget Password?</Typography>
-            <Link onClick={handleForgetPassword} to="#">Get it</Link>
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 2, gap: "5px" }}>
+            <Typography sx={{ fontSize: "0.9375rem",fontWeight: 500,lineHeight: 1.375, color: "#676b7b"}}>Forget Password? </Typography>
+            <Link style={{ fontSize: "0.9375", fontWeight: 500, lineHeight: 1.375, color: "#666cff",textDecoration: "none"}} onClick={handleForgetPassword} to="#"> Get it</Link>
           </Box>
-          <Box sx={{ mt: 8, justifyContent: "center", display: "flex" }}>
-            <Typography sx={{ fontSize: 12 }}>
+          <Box sx={{ mt: 8, display: "flex", alignItems: "center", gap: 1 }}>
+            <span>
+              <InfoIcon />
+            </span>
+            <Typography
+              sx={{
+                fontSize: 12,
+                color: "#828282",
+                fontWeight: 400,
+                lineHeight: "32px",
+              }}
+            >
               Enter the mail ID & Password that given by LMS
             </Typography>
           </Box>

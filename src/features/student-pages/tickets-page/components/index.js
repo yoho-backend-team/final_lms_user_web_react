@@ -128,7 +128,7 @@ const StudentTicketsPage = ({
           open ? (
             <CreateTicketForm handleClose={handleClose} />
           ) : (
-            <TicketView selectedTicket={selectedTicket} handleTicketViewClose={handleTicketViewClose} />
+            <TicketView selectedTicket={selectedTicket} setSelectedTicket={setSelectedTicket} handleTicketViewClose={handleTicketViewClose} />
           )
         ) : (
           <ScrollableContainer>

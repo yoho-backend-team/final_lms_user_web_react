@@ -32,7 +32,7 @@ import {
 import { useTheme } from "@emotion/react";
 import logo from "assets/images/logo.png";
 import InstructorNavLinks from "./InstructorNavLinks";
-import { checkUser, getInstructorDetails } from "store/atoms/authorized-atom";
+import { checkUser, getInstituteDetails, getInstructorDetails } from "store/atoms/authorized-atom";
 import { useTabResponsive } from "utils/tabResponsive";
 import { getImageUrl } from "utils/common/imageUtlils";
 import NotificationListView from "../Components/NotificationListModel";
@@ -64,7 +64,8 @@ export default function InstructorNavBar() {
   const selectedNotification = useSelector(selectSelectedNotification)
   const socket = useSocket()
   const instructorLogout = useInstructorLogout()
-
+  const institute_details = getInstituteDetails()
+  console.log(institute_details,"institute")
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -72,7 +73,7 @@ export default function InstructorNavBar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
+  console.log(instructor,"instructor")
   useEffect(() => {
     const user = getInstructorDetails();
     setInstructor(user)
@@ -174,7 +175,8 @@ export default function InstructorNavBar() {
                   justifyContent: "start",
                 }}
               >
-                <img src={logo} alt="logo" height={40} />
+                <img style={{ cursor: "pointer"}} onClick={() => navigate("/instructor/home")} src={getImageUrl(institute_details?.image)} alt={institute_details?.institute_name} height={40} />
+                
               </Box>
             </Grid>
             <InstructorNavLinks />
@@ -228,10 +230,10 @@ export default function InstructorNavBar() {
                   </Typography>
                   <Typography
                     sx={{
-                      display: { xs: "none", lg: "block" },color: "black"
+                      display: { xs: "none", lg: "block" },color: "black",textOverflow: "ellipsis",
                     }}
                   >
-                    (you) ID: {instructor?.id}
+                    ID: {instructor?.userDetail?.staffId}
                   </Typography>
                 </Box>
               </Button>

@@ -1,5 +1,6 @@
 export { default as StudentProfile } from "../assets/instructor/dashboard/profile.svg";
 export { default as StudentBg } from "../assets/instructor/dashboard/bg.svg";
+export { default as StudentBg1 } from "../assets/instructor/dashboard/bg1.jpg";
 export { default as AttedenceBg } from "../assets/instructor/dashboard/attedence_bg.svg";
 export { default as UpdateCardBg } from "../assets/instructor/dashboard/update_card_bg.svg";
 export { default as ClassBg } from "../assets/instructor/class/main-bg.svg";
@@ -63,3 +64,7 @@ export { default as InstructorUpcommingImage } from "../assets/instructor/class/
 export { default as InstructorLiveClass } from "../assets/instructor/class/liveclasses.svg"
 export { default as InstructorHistoryClass } from "../assets/instructor/class/historyClasses.svg"
 export { default as InstructorCompletedClass } from "../assets/instructor/class/completedClass.svg"
+
+
+export { default as ProgressBgLeft } from "../assets/common/dashboard/progress-bg-left.png" 
+export { default as ProgressBgRight } from "../assets/common/dashboard/progress-bg-right.png"

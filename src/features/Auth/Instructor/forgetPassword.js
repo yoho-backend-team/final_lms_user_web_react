@@ -19,6 +19,7 @@ import { useInstructorforgetPassword } from "../services";
 import toast from "react-hot-toast";
 import { ForgetPassword_Otp_Step } from "lib/constants";
 import { useSpinner } from "context/SpinnerProvider";
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 const ForgetPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -129,6 +130,7 @@ const ForgetPasswordPage = () => {
             value={email}
             onChange={handleEmailChange}
             aria-describedby="email-error-text"
+            placeholder="Enter your email"
             sx={{ color: "#212121", fontSize: "16px", fontWeight: 400, lineHeight: "22.5px" }}
           />
           {emailError && (
@@ -136,7 +138,9 @@ const ForgetPasswordPage = () => {
           )}
         </FormControl>
         <Box sx={{ display: 'flex',mt:"40px", width: "100%", justifyContent: "space-between", alignItems: "center"}} >
-          <Typography onClick={handleBackLoginStep} sx={{ textDecoration: "underline", cursor: "pointer"}} >Back to Login</Typography>
+          <Typography onClick={handleBackLoginStep} sx={{ textDecoration: "none", cursor: "pointer",display: "flex", alignContent: "center",color: "#5611B1",fontWeight: 400, fontSize: "0.935rem", ":hover": { color: "#22034a" }}} >
+            <span style={{ mr: "0.375rem"}}><ChevronLeftIcon sx={{ width: "20px", height: "20px"}}/></span>Back to Login
+          </Typography>
           <Button
             variant="contained"
             onClick={handleSubmit}

@@ -1,5 +1,5 @@
 import { Card, Grid, Box, Avatar, Typography, Button } from "@mui/material";
-import { StudentBg, StudentProfile, UpdateCardBg } from "utils/images";
+import { StudentBg, StudentProfile, UpdateCardBg, StudentBg1 } from "utils/images";
 import {
   Assessment,
   CheckCircle,
@@ -16,7 +16,8 @@ import CourseProgressCard from "features/instructor-pages/home-page/components/c
 import { useTabResponsive } from "utils/tabResponsive";
 import {
   getBranchDetails,
-  getInstituteDetails,  
+  getInstituteDetails,
+  getInstructorDetails,  
 } from "store/atoms/authorized-atom";
 import { BranchIcon } from "utils/images";
 import Client from "../../../api/index"
@@ -42,7 +43,8 @@ const InstructorDashBoard = () => {
   const { showSpinner, hideSpinner } = useSpinner()
   const socket = useSocket()
   const NotificationList = useSelector(selectNotificationList)
-
+  const instructor = getInstructorDetails()
+  console.log(instructor,"instructor")
   const fetchReports = async () => {
     try {
     showSpinner()
@@ -76,7 +78,7 @@ const InstructorDashBoard = () => {
     <Grid
       container
       p={tabView ? 4 : 8}
-      sx={{ p: { xs: 2, sm: tabView ? "40px 10px 10px 10px" : "48px 100px 20px 100px" } }}
+      sx={{ p: { xs: 2, sm: tabView ? "40px 10px 10px 10px" : "48px 70px 20px 70px" } }}
       gap={tabView ? "0px" : "30px"}
       xs={12}
     >
@@ -84,9 +86,9 @@ const InstructorDashBoard = () => {
         <Card>
           <Box>
             <img
-              src={StudentBg}
+              src={StudentBg1}
               alt="student"
-              style={{ height: 75, width: "100%" }}
+              style={{ height: "120px", width: "100%", objectFit: "fill" }}
             />
           </Box>
           <Grid
@@ -97,20 +99,22 @@ const InstructorDashBoard = () => {
             }}
           >
             <Grid xs={8}>
-              <Box p={2} sx={{ mt: -5 }}>
+              <Box p={"1.5rem"} sx={{ mt: -15.5 }}>
                 <Avatar
                   src={ reports?.user?.image ? getImageUrl(reports?.user?.image) : profilePlaceholder  }
-                  variant="square"
-                  sx={{ borderRadius: 1 }}
+                  alt={reports?.user?.full_name || "instructor"}
+                  variant="rounded"
+                  sx={{ borderRadius: "5px", width: "80px", height: "80px"}}
                 />
 
                 <Box>
                   <Typography
-                    variant="h5"
+                    variant="h3"
                     sx={{
                       color: "black",
                       fontFamily: "sans-serif",
                       fontWeight: 600,
+                      mt: 2
                     }}
                   >
                     {reports?.user?.full_name}
@@ -121,13 +125,14 @@ const InstructorDashBoard = () => {
                       sx={{
                         color: "black",
                         fontFamily: "poppins",
-                        fontSize: 12,
+                        fontSize: 15,
                         mr: 1,
+                        fontWeight: "bold"
                       }}
                     >
                       Trainee ID :
                     </Typography>
-                    <Typography>LMSTRN231</Typography>
+                    <Typography sx={{ fontSize: 15}}>LMSTRN231</Typography>
                   </Box>
                 </Box>
               </Box>
@@ -135,14 +140,33 @@ const InstructorDashBoard = () => {
             <Grid xs={4}>
               <Button
                 variant="contained"
-                component = {Link}
+                component={Link}
                 to={"/instructor/profile"}
                 size="medium"
-                sx={{ p: 1, px: 2, borderRadius: 5, backgroundColor : "#5611B1", ":hover" : { backgroundColor : "#5611B1" } }}
+                sx={{
+                  p: 3,
+                  px: 4,
+                  mt: "15px",
+                  borderRadius: "8px",
+                  backgroundColor: "#5611B1",
+                  color: "#fff",
+                  fontWeight: "bold",
+                  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  ":hover": {
+                    backgroundColor: "#5611B1",
+                    transform: "scale(1.05)",
+                    boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.3)",
+                  },
+                  ":active": {
+                    transform: "scale(0.98)",
+                  },
+                }}
               >
                 View Profile
               </Button>
             </Grid>
+
           </Grid>
           <Grid container>
             <Grid item xs={12} alignItems="center">

@@ -1,4 +1,4 @@
-import React, { useState,useRef  } from "react";
+import React, { useState,useRef, useEffect  } from "react";
 import {
   Box,
   Grid,
@@ -18,11 +18,18 @@ import { formatDate, formatTime } from "utils/formatDate";
 import PdfViewer from "./pdfViewer";
 import SendIconMessage from "assets/icons/SendIconMessage";
 import MenuKebab from "assets/icons/MenuKebab";
+import { getStudentDetails } from "store/atoms/authorized-atom";
+import toast from "react-hot-toast";
+import { getErrorMessage } from "utils/common/error";
+import socket from "utils/socket";
 
-function TicketView({ selectedTicket,handleTicketViewClose }) {
+function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) {
   const [fileView,setFileView] = useState(false)
   const [file,setFile] = useState(null)
   const fileInputRef = useRef(null);
+  const student = getStudentDetails()
+  const endOfMessageRef = useRef(null)
+  const [message,setMessage] = useState('')
 
 
   const statusColor = {
@@ -52,6 +59,155 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
       setFile(file);
       handleFileOpen(file);
     }
+  };
+
+  useEffect(() => {
+    socket.connect()
+    socket.on("connect",() => {
+      socket.emit("joinTicket",selectedTicket?.uuid)
+    })
+    
+    socket.on("receiveStudentTicketMessage",(new_message) => {
+      setSelectedTicket((prev) => ({...prev,messages:[...prev.messages,new_message]}))
+    })
+    return () => {
+      socket.disconnect()
+      socket.off("receiveStudentTicketMessage")
+    }
+  },[selectedTicket])
+
+  useEffect(() => {
+    if(endOfMessageRef.current){
+     endOfMessageRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+   },[selectedTicket])
+
+  const hanldeSendMessage = () => {
+    try {
+    if(message.trim()){
+      const new_message = {
+        ticket_id : selectedTicket?.uuid,
+        text: message,
+        senderType: "Instituteuserlist",
+        user: student?._id
+      }
+      console.log(new_message)
+      socket.emit('sendStudentTicketMessage',new_message)
+      setMessage('')
+    }else{
+      toast.error("Message can't be empty",{ position: "top-center"})
+    }
+    } catch (error) {
+      toast.error(getErrorMessage(error))
+    }
+  }
+  console.log(selectedTicket,"selectedTicket")
+  const MessageBox = () => {
+    return (
+      <>
+        {selectedTicket?.messages?.map((message, index) => {
+          const currentUser = student?._id === message?.sender;
+         
+          return (
+            <Box key={message?._id + index} sx={{ mb: 2 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: currentUser ? 'row' : 'row',
+                  justifyContent: currentUser ? 'flex-end' : 'flex-start'
+                }}
+              >
+                <Box
+                  sx={{
+                    maxWidth: '70%', // Limit the width of messages
+                    backgroundColor: currentUser ? '#E1FFC7' : '#DFC7FF',
+                    borderRadius: '8px',
+                    padding: '16px',
+                    boxShadow: currentUser ? '0px 0px 8px rgba(0, 200, 83, 0.5)' : '0px 0px 8px rgba(223, 199, 255, 0.5)',
+                    marginBottom: '10px',
+                    minWidth: "250px"
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      pb: '5px',
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: '14px',
+                        color: currentUser ? '#005700' : '#051732',
+                        fontWeight: 700,
+                        lineHeight: '24px',
+                      }}
+                    >
+                      {currentUser ? `${student?.full_name}` : "Oliver Smith"}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: currentUser ? '#005700' : '#051732',
+                        fontSize: '10px',
+                        fontWeight: 400,
+                        lineHeight: '15px',
+                      }}
+                    >
+                      {formatDate(message?.createdAt)} 
+                    </Typography>
+                  </Box>
+                  <Typography
+                    sx={{
+                      color: currentUser ? '#2A2A2A' : '#72767D',
+                      fontSize: '12px',
+                      fontWeight: 500,
+                      lineHeight: '15px',
+                    }}
+                  >
+                    {message?.content}
+                  </Typography>
+                </Box>
+              </Box>
+              { currentUser && index + 1 === selectedTicket?.messages.length && !selectedTicket?.resolved && selectedTicket?.status !== "closed" &&
+              <Box
+               sx={{
+                 display: "flex",
+                 justifyContent: "flex-end",
+                 gap: "20px",
+               }}
+              >
+               <Button
+                 variant="outlined"
+                 
+                 sx={{
+                   border: "1.5px solid #FF0000",
+                   borderRadius: "7px",
+                   padding: "10px",
+                   color: "red",
+                   background: "white",
+                 }}
+               >
+                 Solved
+               </Button>
+               <Button
+                 variant="contained"
+                 sx={{
+                   backgroundColor: "#0D6EFD",
+                   color: "white",
+                   borderRadius: "7px",
+                   padding: "10px",
+                 }}
+               >
+                 No Related
+               </Button>
+              </Box>
+              }
+            </Box>
+          );
+        })}
+        <div ref={endOfMessageRef} />
+      </>
+    );
   };
 
   return (
@@ -125,7 +281,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
       </Box>
 
       <Box sx={{ display:"flex",justifyContent:"center",p:5,paddingTop:2}}>
-        <Card>
+        <Card sx={{ width: "100%"}}>
           <Box
             sx={{
               p: 2,
@@ -198,197 +354,9 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
             <Grid container spacing={2}>
               <Grid item xs={12} md={8}>
                 <Paper sx={{ p: 2, mb: 2 }}>
-                  <Box>
-                    <Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          pb: "15px",
-                        }}
-                      >
-                        <Typography
-                          sx={{
-                            color: "#000",
-                            fontSize: "14px",
-                            fontWeight: 700,
-                            lineHeight: "24px",
-                            fontFamily:"Nunito Sans"
-                          }}
-                        >
-                          Oliver Smith
-                        </Typography>
-                        <Typography
-                          sx={{
-                            color: "black",
-                            fontSize: "10px",
-                            fontWeight: 400,
-                            lineHeight: "15px",
-                            fontFamily:"Poppins",
-                            
-                          }}
-                        >
-                          Monday May, 2023 3:00 PM. 9 days ago
-                        </Typography>
-                      </Box>
-                      <Box>
-                        <Typography
-                          sx={{
-                            color: "#898989",
-                            fontSize: "12px",
-                            fontWeight: "500",
-                            lineHeight: "15px",
-                            pb: "40px",
-                            fontFamily:"Poppins",
-                            
-                          }}
-                        >
-                          Concerns have been raised regarding attendance
-                          inconsistencies, requiring attention for resolution.
-                          Concerns have been raised regarding attendance
-                          inconsistencies, requiring attention for resolution.
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          backgroundColor: "#DAE9FF",
-                          borderRadius: "8px",
-                          padding: "18px 13px 18px 30px",
-                          mb: "40px",
-                          
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            pb: "15px",
-                          }}
-                        >
-                          <Typography
-                            sx={{
-                              color: "#051732",
-                              fontSize: "14px",
-                              fontWeight: 700,
-                              lineHeight: "24px",
-                              fontFamily:"Nunito Sans"
-                            }}
-                          >
-                            Oliver Smith
-                          </Typography>
-                          <Typography
-                            sx={{
-                              color: "#051732",
-                              fontSize: "10px",
-                              fontWeight: 400,
-                              lineHeight: "15px",
-                              
-                              fontFamily:"Poppins"
-                            }}
-                          >
-                            Monday May, 2023 3:00 PM. 9 days ago
-                          </Typography>
-                        </Box>
-                        <Typography
-                          sx={{
-                            color: "#72767D",
-                            fontSize: "12px",
-                            fontWeight: "500",
-                            lineHeight: "15px",
-                            fontFamily: "Poppins",
-                          }}
-                        >
-                          Checked the log and found the customer paid the
-                          subscription for 1 year. order ID. #1234
-                        </Typography>
-                      </Box>
+                <Box sx={{ height: "300px", overflowY: "scroll"}}>
+                      {MessageBox()}
                     </Box>
-                  </Box>
-                  <Box>
-                    <Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          pb: "15px",
-                        }}
-                      >
-                        <Typography
-                          sx={{
-                            color: "black",
-                            fontSize: "14px",
-                            fontWeight: 700,
-                            lineHeight: "24px",
-                            fontFamily:"Nunito Sans"
-                          }}
-                        >
-                          Oliver Smith
-                        </Typography>
-                        <Typography
-                          sx={{
-                            color: "black",
-                            fontSize: "10px",
-                            fontWeight: 400,
-                            lineHeight: "15px",
-                           
-                            fontFamily:"Poppins"
-                          }}
-                        >
-                          Monday May, 2023 3:00 PM. 9 days ago
-                        </Typography>
-                      </Box>
-                      <Box>
-                        <Typography
-                          sx={{
-                            color: "#898989",
-                            fontSize: "12px",
-                            fontWeight: "500",
-                            lineHeight: "15px",
-                            pb: "40px",
-                           
-                            fontfamily: 'Poppins'
-
-                          }}
-                        >
-                          Concerns have been raised regarding attendance
-                          inconsistencies, requiring attention for resolution.
-                          Concerns have been raised regarding attendance
-                          inconsistencies, requiring attention for resolution.
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "flex-start",
-                          gap: "20px",
-                        }}
-                      >
-                        <Button
-                          variant="outlined"
-                          sx={{
-                            border: "1.5px solid #FF0000",
-                            borderRadius: "7px",
-                            padding: "10px",
-                            color: "red",
-                            background: "white",
-                          }}
-                        >
-                          Solved
-                        </Button>
-                        <Button
-                          variant="contained"
-                          sx={{
-                            backgroundColor: "#0D6EFD",
-                            color: "white",
-                            borderRadius: "7px",
-                            padding: "10px",
-                          }}
-                        >
-                          No Related
-                        </Button>
-                      </Box>
-                    </Box>
-                  </Box>
                   {
                   selectedTicket?.status === "opened" &&<Box
                     sx={{
@@ -432,6 +400,8 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                     <TextField
                       variant="outlined"
                       fullWidth
+                      value ={ message}
+                      onChange={(e) => setMessage(e.target.value)}
                       sx={{
                         backgroundColor: "#E8E8E8",
                         px: "24px",
@@ -467,7 +437,7 @@ function TicketView({ selectedTicket,handleTicketViewClose }) {
                         alignItems: 'center'
                       }}
                     >
-                      <IconButton>
+                      <IconButton onClick={hanldeSendMessage} >
                         <SendIconMessage sx={{ color: "black" }} />
                       </IconButton>
                     </Box>

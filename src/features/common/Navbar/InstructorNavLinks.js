@@ -100,12 +100,16 @@ const InstructorNavLinks = () => {
               alignItems: "center",
               justifyContent: "center",
               textDecoration: "none",
-              marginTop: -13.3,
+              marginTop: "-4rem",
               pt: 5,
               transition: "transform 0.3s ease, color 0.3s ease",
               "&:hover": {
                 transform: "scale(1.05)",
-                color: "#5611B1",
+                // color: "#5611B1",
+                "& .hover-target": {
+                  color: "#5611B1",
+                  fontWeight: "bold",
+                },
               },
             }}
             component={Link}
@@ -117,20 +121,25 @@ const InstructorNavLinks = () => {
                 textAlign: "center",
                 pt: "80px",
                 transition: "color 0.3s ease",
-                color: selected === item.id ? "#5611B1" : "#6C757D",
-                
+                color: selected === item.id ? "#5611B1" : "#6C757D", 
               }}
+              className="hover-target"
             >
               <Icon
                 icon={item.icon}
-                color={selected === item.id ? "#5611B1" : "#6C757D"}
+                className="hover-target"
+                // color={selected === item.id ? "#5611B1" : "#6C757D"}
                 sx={{
-                  transition: "color 0.3s ease"
+                  transition: "color 0.3s ease",
+                  ":hover" : {
+                    color: "#5611B1",
+                  }
                 }}
               />
             </Box>
             <Typography
               variant="h5"
+               className="hover-target"
               sx={{
                 textDecoration: "none",
                 textAlign: "center",
@@ -140,10 +149,10 @@ const InstructorNavLinks = () => {
                 fontFamily: "Poppins",
                 lineHeight: "22px",
                 transition: "color 0.3s ease",
-                "&:hover": {
-                  color: "#5611B1",
-                  fontWeight : "bold"
-                },
+                // "&:hover": {
+                //   color: "#5611B1",
+                //   fontWeight : "bold"
+                // },
               }}
             >
               {item.name}
