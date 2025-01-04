@@ -23,9 +23,9 @@ import NotificationList from "views/instructor-pages/notification-page";
   const StudentAttendancesPage = Loadable(lazy(() => import("views/student-pages/attendances-page")))
   const StudentClassesPage = Loadable(lazy(() => import("views/student-pages/classes-page")))
   const StudentCommunityPage = Loadable(lazy(() => import("views/student-pages/community-page")))
-  const StudentCoursePage = Loadable(lazy(() => import("views/student-pages/courses-page")))
+  const StudentCoursePage = Loadable(lazy(() => import("views/student-pages/courses-page/index")))
 
-  const StudentCourseViewPage = Loadable(lazy(() => import("views/student-pages/courses-page/index")))
+  const StudentCourseViewPage = Loadable(lazy(() => import("views/student-pages/courses-page/course[id]-page/index")))
   const StudentHelpCenterPage = Loadable(lazy(() => import("views/student-pages/help-center-page")))
   const StudentTicketsPage = Loadable(lazy(() => import("views/student-pages/tickets-page")))
   const StudentPaymentsPage = Loadable(lazy(() => import("views/student-pages/payments-page")))
@@ -129,7 +129,7 @@ const InstructorCreateTicketPage = Loadable(lazy(() => import("views/student-pag
               element={<StudentCommunityPage />}
             />
             <Route path="student/courses" element={<StudentCourseViewPage />} />
-            {/* <Route path="student/courses/:courseId" element={<StudentCoursePage />} /> */}
+            <Route path="student/courses/:courseId" element={<StudentCoursePage />} />
             <Route
               path="student/help-center"
               element={<StudentHelpCenterPage />}

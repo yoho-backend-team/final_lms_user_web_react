@@ -41,7 +41,7 @@ class Client {
       ),
       logout: (data) =>
         httpClient.post(
-          HTTP_END_POINTS.Student.auth.logout,
+          HTTP_END_POINTS.Student.auth.log_out,{},
           data,
           "student"
         ),
