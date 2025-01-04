@@ -9,6 +9,8 @@ import { useVerifyOTP } from "../services/index";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useSpinner } from "context/SpinnerProvider";
+import { useAtomValue } from "jotai";
+import { instructorOtpAtom } from "store/atoms/authAtoms";
 
 const InputElement = styled("input")(
   ({ theme }) => `
@@ -232,6 +234,7 @@ export default function InstructorOTPInput() {
   const verifyOTP = useVerifyOTP();
   const navigate = useNavigate();
   const { showSpinner, hideSpinner } = useSpinner();
+  const otpData = useAtomValue(instructorOtpAtom)
 
   useEffect(() => {
     if (timeLeft === 0) return;
@@ -288,6 +291,18 @@ export default function InstructorOTPInput() {
           }}
         >
           Enter the Code that sent to your entered mail iD
+        </Typography>
+        <Typography
+          sx={{
+            color: "#242424",
+            fontSize: "20px",
+            fontWeight: 500,
+            lineHeight: "30px",
+            textAlign: "center",
+            my: "10px"
+          }}
+        >
+        Your Otp is - {otpData?.otp}
         </Typography>
       </Box>
       <OTP value={otp} onChange={setOtp} length={6} />

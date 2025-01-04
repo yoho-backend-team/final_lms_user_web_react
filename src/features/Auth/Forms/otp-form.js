@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 import { Typography, Button } from "@mui/material";
 import { useStudentOtpVerify } from "../services/index";
 import { useNavigate } from "react-router-dom";
+import { useAtomValue } from "jotai";
+import { studentOtpAtom } from "store/atoms/authAtoms";
 
 const InputElement = styled("input")(
   ({ theme }) => `
@@ -229,6 +231,7 @@ export default function OTPInput() {
   const theme = useTheme();
   const verifyOTP = useStudentOtpVerify();
   const navigate = useNavigate();
+  const otpData = useAtomValue(studentOtpAtom)
 
   useEffect(() => {
     if (timeLeft === 0) return;
@@ -279,6 +282,18 @@ export default function OTPInput() {
           }}
         >
           Enter the Code that sent to your entered mail iD
+        </Typography>
+        <Typography
+          sx={{
+            color: "#242424",
+            fontSize: "20px",
+            fontWeight: 500,
+            lineHeight: "30px",
+            textAlign: "center",
+            my: "10px"
+          }}
+        >
+          Your otp is - {otpData?.otp}
         </Typography>
       </Box>
       <OTP value={otp} onChange={setOtp} length={6} />

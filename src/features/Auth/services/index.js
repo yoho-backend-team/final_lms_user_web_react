@@ -26,11 +26,11 @@ export const useInstructorLogin = () => {
     async (data) => {
       try {
         const response = await Client.Instructor.login(data);
-        const { step, email, token, user } = response?.data;
+        const { step, email, token, user, otp } = response?.data;
 
         if (step === "otp") {
           setLoginStep(Otp_Step);
-          setOtpAtom({ email, token });
+          setOtpAtom({ email, token, otp });
           return { message: response?.message };
         } else {
           setOtpAtom({ email: null, token: null, otp: "" });
@@ -106,10 +106,10 @@ export const useStudentLogin = () => {
     async (data) => {
       try {
         const response = await Client.Student.login(data);
-        const { step, email, token, user } = response?.data;
+        const { step, email, token, user , otp} = response?.data;
         if (step === "otp") {
           setLoginStep(Otp_Step);
-          setOtpAtom({ email, token });
+          setOtpAtom({ email, token , otp});
           return { message: response?.message }
         } else {
           setOtpAtom({ email: null, token: null, otp: "" });
