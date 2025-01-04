@@ -29,7 +29,7 @@ export const studentUserAtom = atom(initialStudent(), (get, set, newUser) => {
 });
 
 export const studentOtpAtom = atom(
-  getAndDecompress(StudentOtp) || { email: null, token: null },
+  getAndDecompress(StudentOtp) || { email: null, token: null, otp: null },
   (get, set, newOtp) => {
     set(studentOtpAtom, newOtp);
     compressAndStore(StudentOtp,newOtp,1/144)
@@ -66,7 +66,7 @@ export const instructorUserAtom = atom(
 );
 
 export const instructorOtpAtom = atom(
-  getAndDecompress(InstructorOtp,{ email: null, token: null }) ,
+  getAndDecompress(InstructorOtp,{ email: null, token: null, otp: null }) ,
   (get, set, newOtpData) => {
     set(instructorOtpAtom, newOtpData);
     compressAndStore(InstructorOtp,newOtpData,1/144)
