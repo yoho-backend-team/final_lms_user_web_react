@@ -22,13 +22,14 @@ import { getInstructorDetails } from "store/atoms/authorized-atom";
 import { createStudyMaterial, deleteStudyMaterial, updateStudyMaterial } from "../../services";
 import DeleteDialog from "./components/deleteModel";
 
-const useStyles = makeStyles((theme) => ({
+
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     flexDirection: "column",
     minHeight: "140px",
     alignItems: "center",
-    padding: theme.spacing(3),
+    padding: "0.75rem",
     border: "2px dashed #5611B1",
     borderRadius: "14px",
     backgroundColor: "#E7DCF6",
@@ -41,10 +42,10 @@ const useStyles = makeStyles((theme) => ({
     display: "none",
   },
   text: {
-    marginBottom: theme.spacing(1),
+    marginBottom: "0.25rem",
   },
   browseButton: {
-    marginTop: theme.spacing(2),
+    marginTop: "0.5rem",
   },
   helperText: {
     "& .MuiFormHelperText-root": {
@@ -64,7 +65,7 @@ const UploadStudyMaterials = ({ StudyMaterials, getCourseDetails ,course}) => {
   const [currentMaterial, setCurrentMaterial] = useState(null);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [materialToDelete, setMaterialToDelete] = useState(null);
-
+  
   const formik = useFormik({
     initialValues: {
       heading: "",

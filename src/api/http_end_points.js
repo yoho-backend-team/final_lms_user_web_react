@@ -58,6 +58,7 @@ const branchStudentId = () => {
 
 const courseStudentId = () => {
   const userDetails = getStudentDetails();
+  console.log(userDetails,"userDetails")
   return userDetails?.userDetail?.course;
 };
 const studentCourseId = () => {
@@ -83,7 +84,7 @@ const generateEndpoints = () => {
   const institute1 = instituteStudentId();
   const branch1 = branchStudentId();
   const course1 = courseStudentId();
-  
+  console.log(course1,"course")
   const student = getStudentDetails();
   const studentCourse = studentCourseId();
    

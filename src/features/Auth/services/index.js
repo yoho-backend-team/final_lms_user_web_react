@@ -348,13 +348,14 @@ export const useStudentLogout = () => {
   const studentLogout = useCallback(
     async(data) => {
       try {
-       await Client.Student.logout()
+       await Client.Student.logout({})
        Cookies.remove(isAuthenticatedStudent)
        Cookies.remove(Student_Details)
        Cookies.remove(Student_Token)
        setLoginStep(Login_Step)
        return { success: true, message : "Logout successfully"}
       } catch (error) {
+        console.log(error,"error")
         throw new Error(getErrorMessage(error))
       }
     }

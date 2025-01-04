@@ -16,7 +16,7 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
     socket?.on("newMessage", handleMessage);
 
     return () => {
-      socket?.off("message", handleMessage);
+      socket?.off("newMessage", handleMessage);
     };
   }, [socket]);
   
