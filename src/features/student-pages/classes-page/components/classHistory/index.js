@@ -1,6 +1,5 @@
 import React from "react";
 import { Box } from "@mui/material";
-import ClassCard from "../card/ClassCard";
 import FilterHeader from "./FilterCard";
 
 const defaultStyles = {
@@ -11,9 +10,8 @@ const defaultStyles = {
 };
 
 const ClassHistory = ({ data, classType, filters, onFilterChange, onResetFilters }) => {
-
   return (
-    <>
+    <Box>
       <FilterHeader
         filters={filters}
         classType={classType}
@@ -21,18 +19,7 @@ const ClassHistory = ({ data, classType, filters, onFilterChange, onResetFilters
         onFilterChange={onFilterChange}
         onResetFilters={onResetFilters}
       />
-      {/* <Box sx={{ mt: 3, px: "40px" }}>
-        {data.map((cls, index) => (
-          <ClassCard
-            key={cls.id}
-            cls={cls}
-            style={defaultStyles}
-            type={classType}
-            group={index}
-          />
-        ))}
-      </Box> */}
-    </>
+    </Box>
   );
 };
 

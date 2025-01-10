@@ -13,6 +13,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  TextField,
   FormControl,
   FormControlLabel,
   RadioGroup,
@@ -40,6 +41,8 @@ const ChatHeader = ({ currentChat }) => {
   const [reportOpen, setReportOpen] = useState(false);
   const [wallpaperOpen, setWallpaperOpen] = useState(false);
   const [mediaOpen, setMediaOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+   const [searchText, setSearchText] = useState("");
   const [mediaTab, setMediaTab] = useState(0);
 
   const handleMenuOpen = (event) => {
@@ -70,6 +73,26 @@ const ChatHeader = ({ currentChat }) => {
     handleMenuClose();
   };
 
+  const handleSearchOpen = () => {
+    setSearchOpen(true);
+  };
+
+  const handleSearchClose = () => {
+    setSearchOpen(false);
+    setSearchText("");
+  };
+ 
+
+  const handleCall = () => {
+    
+    console.log("Initiating a call...");
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
+
   return (
     <Box
       sx={{
@@ -94,12 +117,12 @@ const ChatHeader = ({ currentChat }) => {
         </Grid>
         <Grid item>
           <Typography variant="h3" sx={{ fontWeight: 700 }}>
-            {currentChat.batch_name}
+            {currentChat?.batch?.batch_name}
           </Typography>
         </Grid>
       </Grid>
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <AvatarGroup max={3} total={currentChat?.users?.length}>
+        <AvatarGroup max={3} total={currentChat?.users?.length+ currentChat?.admin?.length}>
           {currentChat?.users?.map((user) => (
             <Tooltip title={user?.full_name}>
               <Avatar
@@ -111,18 +134,34 @@ const ChatHeader = ({ currentChat }) => {
             </Tooltip>
           ))}
         </AvatarGroup>
-        <IconButton>
+        <IconButton onClick={handleCall}
+         sx={{
+        "&:hover": {
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+          transform: "scale(1.1)",
+          transition: "0.3s ease",
+          background:"grey"
+        },
+      }}>
           <CallIcon />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={handleSearchOpen}
+        sx={{
+        "&:hover": {
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+          transform: "scale(1.1)",
+          transition: "0.3s ease",
+          background:"grey"
+        },
+      }}>
           <SearchIcon />
         </IconButton>
         <IconButton
           onClick={handleMenuOpen}
-          sx={{ backgroundColor: open ? "#0D6EFD" : "white" }}
+          sx={{ backgroundColor: open ? "#0D6EFD" : "grey" }}
         >
           <ExpandMoreRoundedIcon
-            sx={{ color: open ? "white" : "#130F26", cursor: "pointer" }}
+            sx={{ color: open ? "black" : "#130F26", cursor: "pointer" }}
           />
         </IconButton>
         <Menu
@@ -143,7 +182,7 @@ const ChatHeader = ({ currentChat }) => {
               padding: "24px 21px 44px 21px",
               borderRadius: "28px",
               border: "1px solid #DCDCDC",
-              boxShadow: "0px 4px 54px 0px rgba(0, 0, 0, 0.25)",
+              boxShadow: "0px 4px 54px 0px rgba(232, 15, 15, 0.25)",
               "& .MuiMenuItem-root": {
                 padding: "10px",
                 fontSize: "14px",
@@ -154,8 +193,11 @@ const ChatHeader = ({ currentChat }) => {
                 justifyItems: "center",
                 alignItems: "center",
                 "&:hover": {
-                  backgroundColor: "#0D6EFD",
-                  color: "#FFFFFF",
+                  backgroundColor: "gray",
+                  transform: "scale(1.05)", 
+                boxShadow: "0 4px 8px rgba(233, 20, 20, 0.2)",
+                transition: "transform 0.3s ease, background-color 0.3s ease",
+                  color: "blue",
                 },
               },
             },
@@ -172,7 +214,33 @@ const ChatHeader = ({ currentChat }) => {
       <ReportModel open={reportOpen} setReportOpen={setReportOpen} />
       <AddWallpaper open={wallpaperOpen} setWallpaperOpen={setWallpaperOpen} />
       <MediaModel open={mediaOpen} setMediaOpen={setMediaOpen} />
-    </Box>
+
+
+     {/* Search Dialog */}
+          <Dialog open={searchOpen} onClose={handleSearchClose}>
+            <DialogTitle>Search</DialogTitle>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                label="Search..."
+                type="text"
+                fullWidth
+                variant="outlined"
+                value={searchText}
+                onChange={handleSearchChange}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleSearchClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={handleSearchClose} color="primary">
+                Search
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Box>
   );
 };
 
