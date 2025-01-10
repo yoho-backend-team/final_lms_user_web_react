@@ -1,6 +1,7 @@
 import React from "react";
 import { Box } from "@mui/material";
-import ClassCard from "../card/ClassCard";
+import ClassCard, { ClassCardHeader } from "../card/ClassCard";
+
 
 
 const defaultStyles = {
@@ -10,9 +11,12 @@ const defaultStyles = {
   durationColor: "rgba(253, 176, 61, 0.22)",
 };
 
-const CompletedClassList = ({ data, classType,group }) => {
+const CompletedClassList = ({ data, classType,group,image }) => {
   return (
-    <Box sx={{ mt: 3, px: "40px" }}>
+    <Box 
+   
+    sx={{ mt: 3, px: "40px" }}>
+       <ClassCardHeader/>
       {data.map((cls) => (
         <ClassCard
           key={cls.id}
@@ -20,6 +24,7 @@ const CompletedClassList = ({ data, classType,group }) => {
           style={defaultStyles}
           type={classType}
           group={group}
+          img={image}
         />
       ))}
     </Box>

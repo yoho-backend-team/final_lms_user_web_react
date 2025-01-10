@@ -213,7 +213,7 @@ const ClassesPage = () => {
 
         {loading ? <ClassLoader /> : renderComponents[value]}
 
-        {classes?.last_page !== 1 && classes.last_page !== 0 && (
+        {classes?.last_page >1 && (
           <Box
             sx={{
               display: "flex",
