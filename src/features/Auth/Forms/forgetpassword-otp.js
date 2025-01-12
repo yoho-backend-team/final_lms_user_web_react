@@ -1,86 +1,59 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { Input as BaseInput } from "@mui/base/Input";
-import { Box, styled } from "@mui/system";
+import { Box, Typography, Button, CircularProgress } from "@mui/material";
+import { styled } from "@mui/system";
 import { useTheme } from "@emotion/react";
 import { useState, useEffect } from "react";
-import { Typography, Button } from "@mui/material";
-import { useForgetPasswordOtpVerify } from "../services/index";
 import { useNavigate } from "react-router-dom";
-import { useAtom } from "jotai";
-import { studentLoginStepAtom, studentOtpAtom } from "store/atoms/authAtoms";
-import { EnterNewPassword_Step } from "lib/constants";
-//import { studentOtpAtom } from "store/atoms/authAtoms";
+import { useStudentOtpVerify } from "../services/index";
+import { useAtomValue } from "jotai";
+import { studentOtpAtom } from "store/atoms/authAtoms";
 
 const InputElement = styled("input")(
   ({ theme }) => `
   width: 40px;
+  height: 50px;
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 400;
+  font-size: 1rem;
+  font-weight: 500;
   line-height: 1.5;
   padding: 8px 0px;
   border-radius: 8px;
   text-align: center;
-  color: ${
-    theme.palette.mode === "dark"
-      ? theme.palette.primary.main
-      : theme.palette.primary.main
-  };
-  background: ${
-    theme.palette.mode === "dark" ? theme.palette.primary.main : "#fff"
-  };
-  border: 1px solid ${
-    theme.palette.mode === "dark"
-      ? theme.palette.primary.main
-      : theme.palette.primary.main
-  };
-  box-shadow: 0px 2px 4px ${
-    theme.palette.mode === "dark"
-      ? theme.palette.secondary
-      : theme.palette.secondary
-  };
+  color: ${theme.palette.text.primary};
+  background: ${theme.palette.background.paper};
+  border: 2px solid ${theme.palette.primary.main};
+  transition: all 0.3s ease;
 
   &:hover {
-    border-color: ${theme.palette.primary.main};
+    border-color: ${theme.palette.primary.dark};
   }
 
   &:focus {
     border-color: ${theme.palette.primary.main};
-    box-shadow: 0 0 0 3px ${
-      theme.palette.mode === "dark"
-        ? theme.palette.primary.main
-        : theme.palette.primary.main
-    };
+    outline: none;
+    box-shadow: 0 0 0 3px ${theme.palette.primary.light};
   }
 
-  // firefox
   &:focus-visible {
-    outline: 0;
+    outline: none;
   }
-`
+`,
 );
 
 function OTP({ separator, length, value, onChange }) {
   const inputRefs = React.useRef(new Array(length).fill(null));
 
   const focusInput = (targetIndex) => {
-    const targetInput = inputRefs.current[targetIndex];
-    targetInput.focus();
+    inputRefs.current[targetIndex]?.focus();
   };
 
   const selectInput = (targetIndex) => {
-    const targetInput = inputRefs.current[targetIndex];
-    targetInput.select();
+    inputRefs.current[targetIndex]?.select();
   };
 
   const handleKeyDown = (event, currentIndex) => {
     switch (event.key) {
-      case "ArrowUp":
-      case "ArrowDown":
-      case " ":
-        event.preventDefault();
-        break;
       case "ArrowLeft":
         event.preventDefault();
         if (currentIndex > 0) {
@@ -95,29 +68,14 @@ function OTP({ separator, length, value, onChange }) {
           selectInput(currentIndex + 1);
         }
         break;
-      case "Delete":
-        event.preventDefault();
-        onChange((prevOtp) => {
-          const otp =
-            prevOtp.slice(0, currentIndex) + prevOtp.slice(currentIndex + 1);
-          return otp;
-        });
-
-        break;
       case "Backspace":
         event.preventDefault();
         if (currentIndex > 0) {
           focusInput(currentIndex - 1);
           selectInput(currentIndex - 1);
         }
-
-        onChange((prevOtp) => {
-          const otp =
-            prevOtp.slice(0, currentIndex) + prevOtp.slice(currentIndex + 1);
-          return otp;
-        });
+        onChange((prevOtp) => prevOtp.slice(0, currentIndex) + prevOtp.slice(currentIndex + 1));
         break;
-
       default:
         break;
     }
@@ -125,94 +83,28 @@ function OTP({ separator, length, value, onChange }) {
 
   const handleChange = (event, currentIndex) => {
     const currentValue = event.target.value;
-    let indexToEnter = 0;
-
-    while (indexToEnter <= currentIndex) {
-      if (
-        inputRefs.current[indexToEnter].value &&
-        indexToEnter < currentIndex
-      ) {
-        indexToEnter += 1;
-      } else {
-        break;
-      }
-    }
     onChange((prev) => {
       const otpArray = prev.split("");
-      const lastValue = currentValue[currentValue.length - 1];
-      otpArray[indexToEnter] = lastValue;
+      otpArray[currentIndex] = currentValue;
       return otpArray.join("");
     });
-    if (currentValue !== "") {
-      if (currentIndex < length - 1) {
-        focusInput(currentIndex + 1);
-      }
-    }
-  };
-
-  const handleClick = (event, currentIndex) => {
-    selectInput(currentIndex);
-  };
-
-  const handlePaste = (event, currentIndex) => {
-    event.preventDefault();
-    const clipboardData = event.clipboardData;
-
-    if (clipboardData.types.includes("text/plain")) {
-      let pastedText = clipboardData.getData("text/plain");
-      pastedText = pastedText.substring(0, length).trim();
-      let indexToEnter = 0;
-
-      while (indexToEnter <= currentIndex) {
-        if (
-          inputRefs.current[indexToEnter].value &&
-          indexToEnter < currentIndex
-        ) {
-          indexToEnter += 1;
-        } else {
-          break;
-        }
-      }
-
-      const otpArray = value.split("");
-
-      for (let i = indexToEnter; i < length; i += 1) {
-        const lastValue = pastedText[i - indexToEnter] ?? " ";
-        otpArray[i] = lastValue;
-      }
-
-      onChange(otpArray.join(""));
+    if (currentValue !== "" && currentIndex < length - 1) {
+      focusInput(currentIndex + 1);
     }
   };
 
   return (
-    <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+    <Box sx={{ display: "flex", gap: 1, justifyContent: "center", alignItems: "center" }}>
       {new Array(length).fill(null).map((_, index) => (
         <React.Fragment key={index}>
-          <BaseInput
-            slots={{
-              input: InputElement,
-            }}
-            style={{
-              border: "1.213px solid #A8A8A8",
-              background: "#FFFFFF",
-              borderRadius: "8px",
-            }}
+          <InputElement
+            ref={(ele) => (inputRefs.current[index] = ele)}
+            value={value[index] ?? ""}
+            onChange={(event) => handleChange(event, index)}
+            onKeyDown={(event) => handleKeyDown(event, index)}
             aria-label={`Digit ${index + 1} of OTP`}
-            slotProps={{
-              input: {
-                ref: (ele) => {
-                  inputRefs.current[index] = ele;
-                },
-                onKeyDown: (event) => handleKeyDown(event, index),
-                onChange: (event) => handleChange(event, index),
-                onClick: (event) => handleClick(event, index),
-                onPaste: (event) => handlePaste(event, index),
-                value: value[index] ?? "",
-              },
-            }}
           />
-          {index === length - 1 ? null : separator}
+          {index < length - 1 && separator}
         </React.Fragment>
       ))}
     </Box>
@@ -226,21 +118,27 @@ OTP.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
-export default function ForgetPasswordOTPInput() {
-  const [otp, setOtp] = React.useState("");
-  const [timeLeft, setTimeLeft] = useState(600);
+export default function OTPInput() {
+  const [otp, setOtp] = useState("");
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const savedTime = localStorage.getItem("otpTimeLeft");
+    return savedTime ? parseInt(savedTime, 10) : 600;
+  });
   const [error, setError] = useState("");
-  const [, setLoginStep] = useAtom(studentLoginStepAtom);
   const theme = useTheme();
-  const verifyOTP = useForgetPasswordOtpVerify();
+  const verifyOTP = useStudentOtpVerify();
   const navigate = useNavigate();
-  const [otpAtom, setOtpAtom] = useAtom(studentOtpAtom);
+  const otpData = useAtomValue(studentOtpAtom);
 
   useEffect(() => {
     if (timeLeft === 0) return;
 
     const timer = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - 1);
+      setTimeLeft((prevTime) => {
+        const newTime = prevTime - 1;
+        localStorage.setItem("otpTimeLeft", newTime);
+        return newTime;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
@@ -248,6 +146,7 @@ export default function ForgetPasswordOTPInput() {
 
   const handleResend = () => {
     setTimeLeft(60);
+    localStorage.setItem("otpTimeLeft", 60);
   };
 
   const handleVerify = async () => {
@@ -256,20 +155,9 @@ export default function ForgetPasswordOTPInput() {
       return;
     }
     setError("");
-
     try {
-      const response = await verifyOTP(otp);
-
-      const { email, token } = response.data;
-
-      if (response.status === "success") {
-        setOtpAtom({
-          email: otpAtom.email,
-          token: otpAtom.token,
-          otp:otp
-        });
-        setLoginStep(EnterNewPassword_Step);
-      }
+      await verifyOTP(otp);
+      navigate("/student/home");
     } catch (error) {
       setError("Invalid OTP. Please try again.");
     }
@@ -277,51 +165,39 @@ export default function ForgetPasswordOTPInput() {
 
   return (
     <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: 2,
-      }}
-    >
-      <Box>
-        <Typography
-          sx={{
-            color: "#242424",
-            fontSize: "31px",
-            fontWeight: 700,
-            lineHeight: "30px",
-            textAlign: "center",
-          }}
-        >
-          Enter the Code that sent to your entered mail Id
-        </Typography>
-      </Box>
-      <OTP value={otp} onChange={setOtp} length={6} />
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: 2,
+    }}
+  >
+    <Box>
+      <Typography
+        sx={{
+          color: "#242424",
+          fontSize: "31px",
+          fontWeight: 700,
+          lineHeight: "30px",
+          textAlign: "center",
+        }}
+      >
+        Enter the Code that sent to your entered mail Id
+      </Typography>
+    </Box>
+      <Typography variant="h6" sx={{ textAlign: "center", color: theme.palette.text.secondary ,mt:10}}>
+        Your OTP: {otpData?.otp}
+      </Typography>
+      <OTP value={otp} onChange={setOtp} length={6} separator="-" />
       {error && (
         <Typography color="error" variant="body2">
           {error}
         </Typography>
       )}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          width: "100%",
-          px: "40px",
-          pt: "32px",
-        }}
-      >
+      <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", px: 5, pt: 3 }}>
         <Box>
-          <Typography
-            sx={{
-              color: "#000000",
-              fontSize: "16px",
-              fontWeight: 700,
-              lineHeight: "21px",
-            }}
-          >
+          <Typography variant="subtitle2" sx={{ color: theme.palette.text.primary }}>
             {Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? "0" : ""}
             {timeLeft % 60}
           </Typography>
@@ -330,15 +206,14 @@ export default function ForgetPasswordOTPInput() {
               variant="outlined"
               onClick={handleResend}
               sx={{
-                mt: 2,
+                mt: 1,
                 borderRadius: 5,
-                color: "#8D8E90",
+                color: theme.palette.text.primary,
                 fontSize: "14px",
                 textDecoration: "underline",
                 fontWeight: 700,
-                border: "none",
-                ":hover": { border: "none", backgroundColor: "#F8F7FA" },
                 padding: "0px",
+                ":hover": { border: "none", backgroundColor: theme.palette.background.default },
               }}
             >
               Resend
@@ -348,17 +223,21 @@ export default function ForgetPasswordOTPInput() {
         <Box>
           <Button
             sx={{
-              backgroundColor: "#0D6EFD",
+              backgroundColor: theme.palette.primary.main,
               color: "white",
               borderRadius: "36px",
-              boxShadow:
-                "0px 8.582px 26.405px -5.281px rgba(13, 110, 253, 0.23)",
+              boxShadow: "0px 8.582px 26.405px -5.281px rgba(13, 110, 253, 0.23)",
               fontSize: "13px",
               fontWeight: 700,
-              lineHeight: "15px",
               width: "101px",
+              mt:10,
+              mr:40,
               height: "37px",
-              ":hover": { backgroundColor: "#0D6EFD" },
+              "&:hover": {
+                background: "linear-gradient(90deg, #2575FC 0%, #6A11CB 100%)", // Reverse gradient on hover
+                transform: "scale(1.05)", // Slightly enlarges the button
+                boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)", // Enhanced shadow on hover
+              },
             }}
             onClick={handleVerify}
           >
@@ -369,3 +248,4 @@ export default function ForgetPasswordOTPInput() {
     </Box>
   );
 }
+

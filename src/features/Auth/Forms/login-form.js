@@ -55,8 +55,8 @@ const LoginForm = () => {
   // Formik hook for handling form state
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: "student@gmail.com",
+      password: "Wecandoit@2024",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -81,217 +81,183 @@ const LoginForm = () => {
   };
 
   return (
-    <Container maxWidth="xs">
-      <Paper sx={{ padding: 9, borderRadius: 6, boxShadow: 4 }}>
-        <Box mb={4} textAlign="center">
-          <Typography variant="h4" sx={{ fontWeight: "bold", color: theme.palette.primary.main }}>
-            Welcome Back
-          </Typography>
-          <Typography variant="body1" sx={{ color: theme.palette.text.secondary, mt: 1 }}>
-            Join & Connect with the Fastest Growing Online Community
-          </Typography>
-        </Box>
-
-        <form noValidate autoComplete="off" onSubmit={formik.handleSubmit}>
-          {/* Email input */}
-          <Box mb={3}>
-  <FormControl
-    fullWidth
-    error={formik.touched.email && formik.errors.email}
-    sx={{
-      "& .MuiInputBase-root": {
-        backgroundColor: theme.palette.background.default,
-        borderRadius: "12px",
-        border: `2px solid ${formik.touched.email && formik.errors.email ? theme.palette.error.main : theme.palette.divider}`,
-        padding: "12px 16px",
-        transition: "all 0.3s ease-in-out",
-        position: "relative",
-        "&:hover": {
-          borderColor: theme.palette.primary.main,
-          boxShadow: `0 4px 12px rgba(0, 0, 0, 0.1)`,
-        },
-        "&:focus-within": {
-          borderColor: theme.palette.primary.main,
-          boxShadow: `0 4px 12px rgba(0, 0, 0, 0.1)`,
-        },
-        "& .MuiInput-underline": {
-          display: "none", // Remove underline
-        },
-      },
-    }}
-  >
-    <InputLabel htmlFor="email" sx={{ fontSize: "14px", color: theme.palette.text.primary, fontWeight: 600 }}>
-
-    </InputLabel>
-    <Input
-      id="email"
-      name="email"
-      value={formik.values.email}
-      onChange={formik.handleChange}
-      onBlur={formik.handleBlur}
-      required
-      fullWidth
-      startAdornment={
-        <InputAdornment position="start">
-          <IconButton
-            sx={{
-              color: theme.palette.text.secondary,
-              pointerEvents: "none",
-            }}
-          >
-            <EmailIcon />
-          </IconButton>
-        </InputAdornment>
-      }
-    />
-    {formik.touched.email && formik.errors.email && (
-      <FormHelperText
+    <Box>
+      <Box
         sx={{
-          color: theme.palette.error.main,
-          fontSize: "12px",
-          marginTop: "4px",
-          fontWeight: 500,
+          px: { sm: 6, xs: 1 },
+          mt: { sm: "15vh", xs: 5 },
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        {formik.errors.email}
-      </FormHelperText>
-    )}
-  </FormControl>
-</Box>
-
-
-          {/* Password input */}
-          <Box mb={3}>
-  <FormControl
-    fullWidth
-    error={formik.touched.password && formik.errors.password}
-    sx={{
-      "& .MuiInputBase-root": {
-        backgroundColor: theme.palette.background.paper,
-        borderRadius: "10px", // Slightly more rounded corners
-        border: `1px solid ${formik.touched.password && formik.errors.password ? theme.palette.error.main : theme.palette.divider}`,
-        padding: "12px 16px", // Increased padding for a more spacious feel
-        transition: "all 0.3s ease-in-out",
-        position: "relative",
-        boxShadow: formik.touched.password && formik.errors.password ? `0 4px 12px rgba(255, 0, 0, 0.3)` : `0 4px 10px rgba(0, 0, 0, 0.1)`, // Subtle shadow
-        "&:hover": {
-          borderColor: theme.palette.primary.main,
-          boxShadow: `0 4px 12px rgba(0, 0, 0, 0.2)`, // Shadow on hover
-        },
-        "&:focus-within": {
-          borderColor: theme.palette.primary.main,
-          boxShadow: `0 0 8px 2px ${theme.palette.primary.light}`,
-        },
-        "& .MuiInput-underline": {
-          display: "none", // Remove the underline
-        },
-      },
-    }}
-  >
-    <InputLabel htmlFor="password" sx={{ fontSize: "14px", fontWeight: 600, color: theme.palette.text.primary }}>
-      Password
-    </InputLabel>
-    <Input
-      type={showPassword ? "text" : "password"}
-      id="password"
-      name="password"
-      value={formik.values.password}
-      onChange={formik.handleChange}
-      onBlur={formik.handleBlur}
-      required
-      fullWidth
-      endAdornment={
-        <InputAdornment position="end">
-          <IconButton
-            onClick={() => setShowPassword(!showPassword)}
-            edge="end"
-            sx={{
-              color: theme.palette.text.secondary,
-              transition: "color 0.3s ease",
-              "&:hover": {
-                color: theme.palette.primary.main, // Smooth hover effect
-              },
-            }}
-          >
-            {showPassword ? <Visibility /> : <VisibilityOff />}
-          </IconButton>
-        </InputAdornment>
-      }
-    />
-    {formik.touched.password && formik.errors.password && (
-      <FormHelperText
-        sx={{
-          color: theme.palette.error.main,
-          fontSize: "12px",
-          marginTop: "6px",
-          fontWeight: 500, // Make error message text more readable
-        }}
-      >
-        {formik.errors.password}
-      </FormHelperText>
-    )}
-  </FormControl>
-</Box>
-
-
-
-          {/* Submit button */}
-          <Box mb={2}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
+        <Typography
+          variant="h4"
+          sx={{
+            fontFamily: "poppins",
+            textAlign: "justify",
+            fontSize: 22,
+            mb: 5,
+            mr:10,
+            color: theme.palette.dark.main,
+            textAlign : "center",
+          }}
+        >
+          Join & Connect the Fastest Growing Online Community
+        </Typography>
+        <form
+          noValidate
+          autoComplete="off"
+          onSubmit={formik.handleSubmit}
+          style={{ minWidth: "380px", maxWidth: "400px" }}
+          
+        >
+          <Box mb={5} mt={5} mr={10}>
+            <FormControl
               fullWidth
-              size="large"
+              error={formik.touched.email && Boolean(formik.errors.email)}
+            >
+              <InputLabel>Email or Username</InputLabel>
+              <Input
+                id="user-name"
+                name="email"
+                placeholder="Enter your email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                required
+              />
+              {formik.touched.email && formik.errors.email && (
+                <FormHelperText>{formik.errors.email}</FormHelperText>
+              )}
+            </FormControl>
+          </Box>
+          <Box mb={5} mt={10} mr={10}>
+            <FormControl
+              fullWidth
+              error={formik.touched.password && Boolean(formik.errors.password)}
+            >
+              <InputLabel>Password</InputLabel>
+              <Input
+                variant={"filled"}
+                type={ showPassword ?  "text" : "password"}
+                name="password"
+                id="password"
+                placeholder=".........."
+                sx={{ minWidth: "300px"}}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                endAdornment={
+                  <InputAdornment position="end" >
+                    <IconButton onClick={() => setShowPassword(!showPassword)} >
+                       {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                required
+              />
+              {formik.touched.password && formik.errors.password && (
+                <FormHelperText>{formik.errors.password}</FormHelperText>
+              )}
+            </FormControl>
+          </Box>
+          <Box
+            sx={{
+              alignItems: "center",
+              display: "flex",
+              gap: 3,
+              mt: 2,
+              justifyContent: "flex-end",
+            }}
+          >
+            <Box sx={{ alignItems: "center", display: "none" }}>
+              <Checkbox
+                sx={{
+                  color: "#E5D2FF",
+                  "&.Mui-checked": {
+                    color: "#5611B1",
+                  },
+                }}
+              />
+              <Typography sx={{ fontSize: 12, color: "#757575" }}>
+                I accept the terms & conditions
+              </Typography>
+            </Box>
+            <Button
+  variant="contained"
+  size="large"
+  sx={{
+    borderRadius: 28, // Rounded corners
+    background: "linear-gradient(90deg, #6A11CB 0%, #2575FC 100%)", // Gradient background
+    color: "#FFFFFF", // Text color
+    fontWeight: 600, // Bold text
+    fontSize: "16px", // Font size
+    textTransform: "none", // Prevent uppercase text transformation
+    padding: "12px 24px", // Adjusted padding for a better look
+    my: "20px", // Vertical margin
+    mr:"30px",
+    transition: "all 0.3s ease-in-out", // Smooth hover effect
+    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.2)", // Subtle shadow
+    "&:hover": {
+      background: "linear-gradient(90deg, #2575FC 0%, #6A11CB 100%)", // Reverse gradient on hover
+      transform: "scale(1.05)", // Slightly enlarges the button
+      boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)", // Enhanced shadow on hover
+    },
+  }}
+  type="submit"
+>
+  Sign in
+</Button>
+
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 10,mr:10, gap: "5px" }}>
+            <Typography sx={{ fontSize: "0.9375rem",fontWeight: 500,lineHeight: 1.375, color: "#676b7b" }} >
+              Forget Password?
+              </Typography>
+              <Link
+  to="#"
+  style={{
+    fontSize: "0.9375rem", // Adjusted font size for clarity
+    fontWeight: 500, // Semi-bold text
+    lineHeight: 1.375, // Adjusted line height for better spacing
+    color: "#666cff", // Default link color
+    textDecoration: "none", // Removes underline
+    transition: "color 0.3s ease, text-shadow 0.3s ease", // Smooth hover effects
+  }}
+  onClick={handleForgetPassword}
+  onMouseEnter={(e) => {
+    e.target.style.color = "#4c55eb"; // Lighter shade on hover
+    e.target.style.textShadow = "0px 2px 4px rgba(102, 108, 255, 0.5)"; // Subtle shadow effect
+  }}
+  onMouseLeave={(e) => {
+    e.target.style.color = "#666cff"; // Revert to original color
+    e.target.style.textShadow = "none"; // Remove shadow
+  }}
+>
+  Get it
+</Link>
+
+          </Box>
+          <Box sx={{ mt: 12,mr:10, display: "flex", alignItems: "center", gap: 1,ml:15, }}>
+            <span>
+              <InfoIcon />
+            </span>
+            <Typography
               sx={{
-                borderRadius: "25px",
-                padding: "12px",
-                boxShadow: 3,
-                ":hover": {
-                  backgroundColor: "orangered",
-                  transform: "scale(1.05)",
-                  transition: "all 0.3s ease-in-out",
-                },
+                fontSize: 12,
+                color: "#828282",
+                fontWeight: 400,
+                lineHeight: "32px",
+            
               }}
             >
-              Sign in
-            </Button>
-          </Box>
-
-          {/* Forgot password */}
-          <Box sx={{ display: "flex", justifyContent: "center" }}>
-            <Typography sx={{ fontSize: 14, color: "#6c757d" }}>Forgot your password?</Typography>
-            <Link
-              onClick={handleForgetPassword}
-              to="#"
-              sx={{
-                fontSize: 14,
-                color: theme.palette.primary.main,
-                textDecoration: "none",
-                marginLeft: 1,
-                ":hover": {
-                  textDecoration: "underline",
-                  color: theme.palette.primary.dark,
-                  transform: "scale(1.05)",
-                  transition: "all 0.3s ease-in-out",
-                },
-              }}
-            >
-              Get it
-            </Link>
-          </Box>
-
-          {/* Information notice */}
-          <Divider sx={{ my: 3 }} />
-          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12 }}>
-            <InfoIcon sx={{ fontSize: 16, color: "#6c757d", marginRight: 1 }} />
-            <Typography sx={{ color: "#6c757d" }}>
-              Enter the email ID & password provided by LMS.
+              Enter the mail ID & Password that given by LMS
             </Typography>
           </Box>
         </form>
-      </Paper>
-    </Container>
+      </Box>
+    </Box>
   );
 };
 

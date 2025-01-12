@@ -95,7 +95,7 @@ const ChatLog = ({ socket, Messages }) => {
         padding: "16px",
         height: "100%",
         overflowY: "auto",
-        backgroundImage: "url('https://i.pinimg.com/originals/41/76/76/417676f6fd752866c621a585db4f738d.jpg')", // Add wallpaper image path
+        backgroundImage: "url('https://w0.peakpx.com/wallpaper/557/521/HD-wallpaper-whatsapp-v-background-doodle-pattern-patterns-whatsapp-thumbnail.jpg')", // Add wallpaper image path
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
