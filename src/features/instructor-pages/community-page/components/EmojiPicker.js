@@ -10,6 +10,7 @@ const EmojiPicker = ({ onSelect, handleEmojiClick }) => {
         left: "562px",
         zIndex: "1000",
         cursor: "pointer",
+      
       }}
       onClick={handleEmojiClick}
     >

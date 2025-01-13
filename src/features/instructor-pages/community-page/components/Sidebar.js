@@ -5,6 +5,7 @@ import DoneAllOutlinedIcon from "@mui/icons-material/DoneAllOutlined";
 import { useEffect } from "react";
 import { getInstructorDetails } from "store/atoms/authorized-atom";
 import { getInstructorCommunityMessages } from "../services";
+import { color } from "@mui/system";
 
 const SideBar = ({ communities, currentChat, setCurrentChat, socket , Messages, setMessages}) => {
 
@@ -46,6 +47,7 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket , Messages, 
               },
               "&:hover fieldset": {
                 borderColor: "#D1E4E8",
+                boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)",
               },
               "&.Mui-focused fieldset": {
                 borderColor: "#D1E4E8",
@@ -53,6 +55,7 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket , Messages, 
               "& input": {
                 padding: "16px",
               },
+              
               "& input::placeholder": {
                 color: "#9393C1",
                 fontSize: "16px",
@@ -62,15 +65,17 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket , Messages, 
             },
           }}
           placeholder="Search or start a new chat"
+          
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchOutlinedIcon sx={{ color: "#9393C1" }} />
+                <SearchOutlinedIcon sx={{ color: "blue" }} />
               </InputAdornment>
             ),
           }}
         />
       </Box>
+      
       <Box
         sx={{
           padding: "20px",
@@ -87,7 +92,16 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket , Messages, 
               padding: "8px",
               width: "100%",
               justifyContent: "space-between",
+              backgroundColor : group?._id === currentChat?._id && "lightblue",
+              borderRadius: group?._id === currentChat?._id && "6px",
               cursor: "pointer",
+              "&:hover": {
+                backgroundColor: "lightgray", // Hover color changes to light gray
+                transform: "scale(1.05)", // Slightly scales the element when hovered
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Add shadow on hover
+                transition: "transform 0.3s ease, background-color 0.3s ease", // Smooth transition for transform and background color
+              },
+            
             }}
           >
             <Box sx={{ display: "flex", gap: "10px" }}>
@@ -149,8 +163,9 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket , Messages, 
                 </Typography>
               </Box>
               <Box>
-                <DoneAllOutlinedIcon sx={{ color: "#2361FF" }} />
+                <DoneAllOutlinedIcon sx={{ color: "black" }} />
               </Box>
+              
             </Box>
           </Box>
         ))}

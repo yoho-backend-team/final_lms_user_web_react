@@ -279,6 +279,8 @@ export default function OTPInput() {
             fontWeight: 700,
             lineHeight: "30px",
             textAlign: "center",
+            mb:20,
+            
           }}
         >
           Enter the Code that sent to your entered mail iD
@@ -290,7 +292,8 @@ export default function OTPInput() {
             fontWeight: 500,
             lineHeight: "30px",
             textAlign: "center",
-            my: "10px"
+            my: "10px",
+            
           }}
         >
           Your otp is - {otpData?.otp}
@@ -335,8 +338,11 @@ export default function OTPInput() {
                 textDecoration: "underline",
                 fontWeight: 700,
                 border: "none",
-                ":hover": { border: "none", backgroundColor: "#F8F7FA" },
-                padding: "0px",
+                "&:hover": {
+      background: "linear-gradient(90deg, #2575FC 0%, #6A11CB 100%)", // Reverse gradient on hover
+      transform: "scale(1.05)", // Slightly enlarges the button
+      boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)", // Enhanced shadow on hover
+    },
               }}
             >
               Resend
@@ -344,24 +350,40 @@ export default function OTPInput() {
           )}
         </Box>
         <Box>
-          <Button
-            sx={{
-              backgroundColor: "#0D6EFD",
-              color: "white",
-              borderRadius: "36px",
-              boxShadow:
-                "0px 8.582px 26.405px -5.281px rgba(13, 110, 253, 0.23)",
-              fontSize: "13px",
-              fontWeight: 700,
-              lineHeight: "15px",
-              width: "101px",
-              height: "37px",
-              ":hover": { backgroundColor: "#0D6EFD" },
-            }}
-            onClick={handleVerify}
-          >
-            Verify
-          </Button>
+        <Button
+  sx={{
+    backgroundColor: "#0D6EFD", // Initial background color
+    color: "white",
+    borderRadius: "36px",
+    fontSize: "13px",
+    fontWeight: 700,
+    lineHeight: "15px",
+    width: "101px",
+    height: "37px",
+    textTransform: "none", // Ensures text is not capitalized
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    overflow: "hidden",
+    transition: "all 0.3s ease", // Smooth transition for color, shadow, and scaling
+    "&:hover": {
+      background: "linear-gradient(90deg, #2575FC 0%, #6A11CB 100%)", // Reverse gradient on hover
+      transform: "scale(1.05)", // Slightly enlarges the button
+      boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)", // Enhanced shadow on hover
+    },
+    "&:active": {
+      transform: "scale(1)", // Ensures no scale effect on click
+    },
+    "&:focus": {
+      outline: "none", // Removes the default focus outline
+    },
+  }}
+  onClick={handleVerify}
+>
+
+</Button>
+
         </Box>
       </Box>
     </Box>

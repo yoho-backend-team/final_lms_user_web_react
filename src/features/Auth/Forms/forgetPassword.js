@@ -80,88 +80,125 @@ const ForgetPasswordPage = () => {
 
   return (
     <Box
+    sx={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "50px",
+      mr:20,
+    
+      minHeight: "100vh",
+    }}
+  >
+     <Box
+    sx={{
+      width: "360px",
+      height: "auto",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 4,
+      mb:10,
+      borderRadius: 4,
+      background: "#fff", // Card-like container
+      boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.1)", // Subtle shadow for depth
+      fontFamily: '"Zen Kaku Gothic Antique", sans-serif',
+      textAlign: "center",
+    }}
+  >
+        <Typography
+      variant="h4"
+      gutterBottom
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "50px",
+        fontWeight: "bold",
+        color: "#333",
+        fontSize: "1.75rem",
       }}
     >
-      <Box
-        sx={{
-          width: "360.428px",
-          height: "220.021px",
-          flexShrink: 0,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: 3,
-          borderRadius: 2,
-          fontFamily: '"Zen Kaku Gothic Antique"',
-          fontSize: "12.8px",
-          fontStyle: "normal",
-          fontWeight: 700,
-          lineHeight: "14.873px",
-        }}
-      >
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{ fontWeight: "bold", color: "#242424", fontSize: "1.5rem" }}
-        >
-          Forget Password?
-        </Typography>
-        <Typography
-          variant="body1"
-          gutterBottom
-          sx={{
-            textAlign: "left",
-            width: "100%",
-            fontSize: "12.80px",
-            color: "black",
-            fontWeight: 100,
-            paddingTop: 5,
-          }}
-        >
+      Forget Password?
+    </Typography>
+    <Typography
+      variant="body1"
+      gutterBottom
+      sx={{
+        textAlign: "center",
+        width: "100%",
+        fontSize: "1rem",
+        color: "#555",
+        fontWeight: 400,
+        paddingTop: 2,
+      }}
+    >
           Enter Mail ID
         </Typography>
-        <FormControl fullWidth  error={!!emailError}>
-          <Input
-            type="email"
-            value={email}
-            onChange={handleEmailChange}
-            aria-describedby="email-error-text"
-          />
+        <FormControl fullWidth error={!!emailError} sx={{ marginTop: 3 }}>
+      <Input
+        type="email"
+        value={email}
+        onChange={handleEmailChange}
+        aria-describedby="email-error-text"
+        sx={{
+          padding: "10px",
+          border: "1px solid #ccc",
+          borderRadius: "4px",
+          fontSize: "1rem",
+          "&:focus": {
+            borderColor: "#0D6EFD",
+            outline: "none",
+          },
+        }}
+      />
           {emailError && (
-            <FormHelperText id="email-error-text">{emailError}</FormHelperText>
-          )}
-        </FormControl>
-        <Box sx={{ display: 'flex',mt:"40px", width: "100%", justifyContent: "space-between", alignItems: "center"}} >
-          <Typography onClick={handleBack} sx={{ textDecoration: "underline", cursor: "pointer"}} >Back to Login</Typography>
-          <Button
-            variant="contained"
-            onClick={handleSubmit}
-            fullWidth
-            sx={{
-              backgroundColor: "#0D6EFD",
-              maxWidth: 100,
-              marginTop: 5,
-              alignSelf: "flex-end",
-              borderRadius: 20,
-              px: 2,
-              py: 1,
-              "&:hover": {
-                backgroundColor: "#0D6EFD",
-              },
-            }}
-          >
-            VERIFY
-          </Button>
-        </Box>
-      </Box>
-    </Box>
+        <FormHelperText id="email-error-text" sx={{ color: "#d32f2f" }}>
+          {emailError}
+        </FormHelperText>
+      )}
+    </FormControl>
+    <Box
+      sx={{
+        display: "flex",
+        marginTop: 4,
+        width: "100%",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    ><Typography onClick={handleBack} sx={{ textDecoration: "underline", cursor: "pointer"}}
+    onMouseEnter={(e) => {
+      e.target.style.color = "#4c55eb"; // Lighter shade on hover
+      e.target.style.textShadow = "0px 2px 4px rgba(102, 108, 255, 0.5)"; // Subtle shadow effect
+    }}
+    onMouseLeave={(e) => {
+      e.target.style.color = "#666cff"; // Revert to original color
+      e.target.style.textShadow = "none"; // Remove shadow
+    }} >
+    Back to Login
+    </Typography>
+  <Button
+    variant="contained"
+    onClick={handleSubmit}
+    fullWidth
+    sx={{
+      backgroundColor: "#0D6EFD",
+      maxWidth: 100,
+      marginTop: 5,
+      alignSelf: "flex-end",
+      borderRadius: 20,
+      px: 2,
+      py: 1,
+      "&:hover": {
+        background: "linear-gradient(90deg, #2575FC 0%, #6A11CB 100%)", // Reverse gradient on hover
+      transform: "scale(1.05)", // Slightly enlarges the button
+      boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)", // Enhanced shadow on hover
+      },
+    }}
+  >
+    VERIFY
+  </Button>
+</Box>
+</Box>
+</Box>
   );
 };
 
