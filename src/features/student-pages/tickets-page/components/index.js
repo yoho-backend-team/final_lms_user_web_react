@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Tab, Tabs, Button, Grid, styled } from "@mui/material";
+import { Box, Typography, Tab, Tabs, Button, Grid, styled, useMediaQuery } from "@mui/material";
 import CreateTicketForm from "./createTicketForm";
 import { TicketBg, TicketDownbg } from "utils/images";
 import { useTabResponsive } from "utils/tabResponsive";
@@ -7,15 +7,31 @@ import TicketLoader from "components/ui/loaders/ticketLoader";
 import { useSpinner } from "context/SpinnerProvider";
 import TicketView from "./TicketView";
 import TicketCard from "./TicketsCard";
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
 // Styles for the scrollable container
 const ScrollableContainer = styled(Box)({
   overflowY: 'auto',
-  maxHeight: 'calc(100vh - 200px)',
+  maxHeight: 'calc(96vh - 200px)',
+  padding: '10px',
+  marginTop: '55px', // Add margin to prevent overlap
+});
+
+// Styles for the fixed tabs
+const FixedTabsContainer = styled(Box)({
+  position: 'fixed',
+  top: 70,
+  left: 0,
+  right: 0,
+  zIndex: 10,
   padding: '20px',
 });
+
+const tab_list = [
+  { id: "1", title: "All" },
+  { id: "2", title: "Open" },
+  { id: "3", title: "Close" },
+];
 
 const StudentTicketsPage = ({
   data,
@@ -34,11 +50,14 @@ const StudentTicketsPage = ({
   const [selectedTicket, setSelectedTicket] = useState(null);
   const { showSpinner, hideSpinner } = useSpinner();
 
+  // Media query to check screen width
+  const isSmallScreen = useMediaQuery('(max-width:600px)');
+
   const handleOpen = () => {
     setOpen(true);
     navigate(`?create=true`);
   };
-  
+
   const handleClose = () => {
     setOpen(false);
     navigate(`?tab=${value}`);
@@ -56,11 +75,7 @@ const StudentTicketsPage = ({
     setTicketView(false);
   };
 
-  const tab_list = [
-    { id: "1", title: "All" },
-    { id: "2", title: "Open" },
-    { id: "3", title: "Close" },
-  ];
+
 
   const tabStyle = {
     fontSize: "14px",
@@ -93,7 +108,6 @@ const StudentTicketsPage = ({
     handlePageChange(null, prevPage);
     navigate(`?tab=${value}&page=${prevPage}`);
   };
-   console.log(data,"StudentTicketsPage")
   return (
     <Box
       sx={{
@@ -103,21 +117,65 @@ const StudentTicketsPage = ({
         backgroundPosition: 'center center',
         width: '100%',
         position: 'relative',
-        minHeight: '100vh', // Ensure the page takes at least full viewport height
+        minHeight: '100vh',
+        paddingTop: '80px', // Adjust padding to make space for the fixed tabs
       }}
     >
-      <Box
-        sx={{
-          backgroundImage: `url(${TicketDownbg})`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'contain',
-          backgroundPosition: 'bottom center',
-          height: '35vh',
-          width: '100%',
-          position: 'absolute',
-          bottom: 0,
-        }}
-      ></Box>
+      {/* Fixed Tabs */}
+      <FixedTabsContainer>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Box sx={{ display: "flex", gap: "40px" }}>
+            <Typography
+              sx={{
+                color: "#000",
+                fontSize: "24px",
+                fontWeight: "700",
+                lineHeight: "22px",
+                fontFamily: "Nunito Sans",
+              }}
+            >
+              Ticket
+            </Typography>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              sx={{
+                cursor: "pointer",
+                "& .MuiTabs-indicator": { backgroundColor: "#0D6EFD" },
+                color: "#0D6EFD",
+              }}
+              textColor="secondary"
+              indicatorColor="primary"
+              aria-label="secondary tabs example"
+            >
+              {tab_list?.map((i) => (
+                <Tab key={i.id} label={i.title} value={i.id} sx={tabStyle} />
+              ))}
+            </Tabs>
+          </Box>
+          <Box>
+            <Button
+              onClick={handleOpen}
+              variant="contained"
+              sx={{
+                color: "white",
+                borderRadius: "8px",
+                padding: "9px 24px",
+                fontWeight: 500,
+                fontSize: "14px",
+                lineHeight: "22px",
+                border: "1px solid var(--Blue-500, #0D6EFD)",
+                background: "var(--Blue-500, #0D6EFD)",
+                boxShadow: "0px 6px 34px -8px #0D6EFD",
+              }}
+            >
+              Create Ticket
+            </Button>
+          </Box>
+        </Box>
+      </FixedTabsContainer>
+
+      {/* Main Content */}
       <Box
         sx={{
           p: tabView ? "62px 40px 20px 38px" : "62px 40px 20px 80px",
@@ -128,67 +186,14 @@ const StudentTicketsPage = ({
           open ? (
             <CreateTicketForm handleClose={handleClose} />
           ) : (
-            <TicketView selectedTicket={selectedTicket} setSelectedTicket={setSelectedTicket} handleTicketViewClose={handleTicketViewClose} />
+            <TicketView
+              selectedTicket={selectedTicket}
+              setSelectedTicket={setSelectedTicket}
+              handleTicketViewClose={handleTicketViewClose}
+            />
           )
         ) : (
           <ScrollableContainer>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Box sx={{ display: "flex", gap: "40px" }}>
-                <Typography
-                  sx={{
-                    color: "#000",
-                    fontSize: "24px",
-                    fontWeight: "700",
-                    lineHeight: "22px",
-                    fontFamily: "Nunito Sans",
-                  }}
-                >
-                  Ticket
-                </Typography>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  sx={{
-                    cursor: "pointer",
-                    "& .MuiTabs-indicator": { backgroundColor: "#0D6EFD" },
-                    color: "#0D6EFD",
-                  }}
-                  textColor="secondary"
-                  indicatorColor="primary"
-                  aria-label="secondary tabs example"
-                >
-                  {tab_list?.map((i) => (
-                    <Tab key={i.id} label={i.title} value={i.id} style={{}} />
-                  ))}
-                </Tabs>
-              </Box>
-              <Box>
-                <Button
-                  onClick={handleOpen}
-                  variant="contained"
-                  sx={{
-                    color: "white",
-                    borderRadius: "8px",
-                    padding: "9px 24px",
-                    fontWeight: 500,
-                    fontSize: "14px",
-                    lineHeight: "22px",
-                    border: "1px solid var(--Blue-500, #0D6EFD)",
-                    background: "var(--Blue-500, #0D6EFD)",
-                    boxShadow: "0px 6px 34px -8px #0D6EFD",
-                  }}
-                >
-                  Create Ticket
-                </Button>
-              </Box>
-            </Box>
-
             <Grid container spacing={tabView ? 4 : 10} sx={{ pt: "40px" }}>
               {loading ? (
                 <TicketLoader />
@@ -204,52 +209,57 @@ const StudentTicketsPage = ({
                 ))
               )}
             </Grid>
-
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4, gap: "40px" }}>
-              <Typography
-                sx={{
-                  color: currentPage > 1 ? "#A6A6A6" : "#B0B0B0",
-                  fontSize: "15px",
-                  fontWeight: 700,
-                  fontFamily: "Nunito Sans",
-                  lineHeight: "24px",
-                  cursor: currentPage > 1 ? "not-allowed" : "pointer",
-                }}
-                onClick={handlePreviousChange}
-              >
-                Previous
-              </Typography>
-
-              <Typography
-                sx={{
-                  color: currentPage < totalPages ? "#A6A6A6" : "#B0B0B0",
-                  fontSize: "15px",
-                  fontWeight: 700,
-                  fontFamily: "Nunito Sans",
-                  lineHeight: "24px",
-                  cursor: currentPage < totalPages ? "not-allowed" : "pointer",
-                }}
-                onClick={handleNextChange}
-              >
-                Next
-              </Typography>
-
-              <Box sx={{ ml: 2 }}>
+            {value === "1" && (
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4, gap: "40px" }}>
                 <Typography
-                  variant="body2"
-                  color="text.secondary"
                   sx={{
-                    color: "#9F9F9F",
-                    fontSize: "14px",
+                    color: currentPage > 1 ? "#A6A6A6" : "#B0B0B0",
+                    fontSize: "15px",
                     fontWeight: 700,
-                    fontFamily: "Figtree",
+                    fontFamily: "Nunito Sans",
                     lineHeight: "24px",
+                    cursor: currentPage > 1 ? "pointer" : "not-allowed",
+                    "&:hover": {
+                      color: currentPage > 1 ? "#0D6EFD" : "#B0B0B0",
+                    },
                   }}
+                  onClick={handlePreviousChange}
                 >
-                  {data.currentPage} of {data.totalPages}
+                  Previous
                 </Typography>
+                <Typography
+                  sx={{
+                    color: currentPage < totalPages ? "#A6A6A6" : "#B0B0B0",
+                    fontSize: "15px",
+                    fontWeight: 700,
+                    fontFamily: "Nunito Sans",
+                    lineHeight: "24px",
+                    cursor: currentPage < totalPages ? "not-allowed" : "pointer",
+                    "&:hover": {
+                      color: currentPage < totalPages ? "#B0B0B0" : "#0D6EFD",
+                    },
+                  }}
+                  onClick={handleNextChange}
+                >
+                  Next
+                </Typography>
+                <Box sx={{ ml: 2 }}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{
+                      color: "#9F9F9F",
+                      fontSize: "14px",
+                      fontWeight: 700,
+                      fontFamily: "Figtree",
+                      lineHeight: "24px",
+                    }}
+                  >
+                    {data.currentPage} of {data.totalPages}
+                  </Typography>
+                </Box>
               </Box>
-            </Box>
+            )}
           </ScrollableContainer>
         )}
       </Box>
