@@ -56,6 +56,11 @@ export const getStudentInstituteDetails = () => {
   return user.institute_id;
 };
 
+export const getStudentInstituteDetail = () => {
+  const user = getStudentDetails();
+  return user.institute_id;
+};
+
 export const getStudentBranchDetails = () => {
   const user = getStudentDetails();
   return user?.branch_id;

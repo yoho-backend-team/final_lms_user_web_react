@@ -40,7 +40,7 @@ import InstructorNavLinks from "./InstructorNavLinks";
 // import { colorModeContext, tokens } from "../../assets/Styles/theme";
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
-import { checkUser, getStudentDetails } from "store/atoms/authorized-atom";
+import { checkUser, getStudentDetails, getStudentInstituteDetails } from "store/atoms/authorized-atom";
 import { useEffect } from "react";
 import { getImageUrl } from "utils/common/imageUtlils";
 import StudentNotification from "../Components/StudentNotification";
@@ -52,6 +52,7 @@ import { Student_Details } from "lib/constants";
 import { useStudentLogout } from "features/Auth/services";
 import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
+import { imagePlaceholder } from "utils/placeholders";
 
 export default function NavBar() {
   const theme = useTheme();
@@ -73,6 +74,7 @@ export default function NavBar() {
   const notifications = useSelector(selectStudentNotifications)
   const studentLogut = useStudentLogout()
   const { showSpinner, hideSpinner } = useSpinner()
+  const institute_details = getStudentInstituteDetails()
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -143,11 +145,12 @@ setAnchorEl(null);
           boxShadow: "none",
           backgroundColor: "#00215E",
           color: "whitesmoke",
-        },
+          marginTop: 2,
+          },
       }}
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: "top",
+        vertical: "bottom",
         horizontal: "right",
       }}
       id={menuId}
@@ -165,7 +168,7 @@ setAnchorEl(null);
 
     </Menu>
   );
-
+  console.log(student)
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
@@ -240,7 +243,7 @@ setAnchorEl(null);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
-        position="sticky"
+        position="fixed"
         sx={{
           height: 60,
           backgroundColor: theme.palette.common.white,
@@ -273,7 +276,7 @@ setAnchorEl(null);
                 component="div"
                 sx={{ display: { xs: "none", sm: "block" } }}
               >
-                <img src={logo} alt="logo" height={70} />
+                <img src={institute_details ? getImageUrl(institute_details?.image) : imagePlaceholder} alt="logo" height={40} />
               </Box>
             </Grid>
     
@@ -341,7 +344,7 @@ setAnchorEl(null);
                             color : "black"
                           }}
                         >
-                           (you) ID: {student?.id}
+                           ID: {student?.userDetail?.studentId}
                         </Typography>
                       </Box>
                     </Box>
