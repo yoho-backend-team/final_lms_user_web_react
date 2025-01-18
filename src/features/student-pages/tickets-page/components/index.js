@@ -78,7 +78,7 @@ const StudentTicketsPage = ({
 
 
   const tabStyle = {
-    fontSize: "14px",
+    fontSize: isSmallScreen ? "12px" : "14px",
     fontWeight: 600,
     fontFamily: "Poppins",
   };
@@ -88,8 +88,6 @@ const StudentTicketsPage = ({
     2: "opened",
     3: "closed",
   };
-
-  
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
