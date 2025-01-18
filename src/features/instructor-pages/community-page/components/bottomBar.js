@@ -66,10 +66,26 @@ const BottomBar = ({ socket, community}) => {
         />
       )}
 
-      <IconButton onClick={handleEmojiClick}>
-        <EmojiIcon />
-      </IconButton>
-      <IconButton>
+<IconButton
+      onClick={handleEmojiClick}
+      sx={{
+        "&:hover": {
+          boxShadow: "0 4px 8px rgba(231, 40, 136, 0.2)", // Adds shadow on hover
+          transform: "scale(1.1)", // Slight scale effect on hover
+          transition: "0.3s ease", // Smooth transition
+        },
+      }}
+    >
+      <EmojiIcon />
+    </IconButton>
+      <IconButton sx={{
+        "&:hover": {
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+          transform: "scale(1.1)",
+          transition: "0.3s ease",
+        },
+      }}
+    >
         <AddBoxPlusIcon />
       </IconButton>
       <TextField
@@ -97,21 +113,46 @@ const BottomBar = ({ socket, community}) => {
           "& .MuiOutlinedInput-input": {
             padding: "10px 14px",
           },
+          "&:hover": {
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Adds shadow on hover
+          transform: "scale(1.02)", // Slight scale effect on hover
+          transition: "0.3s ease", // Smooth transition
+        },
         }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton>
+              <IconButton 
+               sx={{
+                "&:hover": {
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                  transform: "scale(1.1)",
+                  transition: "0.3s ease",
+                },
+              }}>
                 <AttachFileIcon />
               </IconButton>
             </InputAdornment>
           ),
         }}
       />
-      <IconButton onClick={handleSendClick}>
+      <IconButton onClick={handleSendClick}
+      sx={{
+        "&:hover": {
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+          transform: "scale(1.1)",
+          transition: "0.3s ease",
+        },
+      }}>
         <SendIcon sx={{ color: "#000000" }} />
       </IconButton>
-      <IconButton>
+      <IconButton sx={{
+        "&:hover": {
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+          transform: "scale(1.1)",
+          transition: "0.3s ease",
+        },
+      }}>
         <RecordIcon />
       </IconButton>
     </Box>

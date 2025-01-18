@@ -4,7 +4,7 @@ import SubWayPinIcon from "assets/icons/subWayPinIcon";
 import { formatDate, formatDateandmonth } from "utils/formatDate";
 
 const TicketCard = ({
-  ticket,handleTicketViewOpen,handleTicketViewClose
+  ticket, handleTicketViewOpen, handleTicketViewClose
 }) => {
   const statusColor = {
     opened: "#F6AB3A",
@@ -15,8 +15,6 @@ const TicketCard = ({
     const new_date = new Date(iosString);
     return new_date.toLocaleDateString("en-US");
   };
-
-  
 
   return (
     <Grid
@@ -29,31 +27,37 @@ const TicketCard = ({
         borderRadius: "16px",
         p: "16px",
         boxShadow: "0px 2.4px 25px 0px rgba(160, 170, 255, 0.24)",
-        
+        "&:hover": {
+          transform: "scale(1.05)",
+          "& .hover-target": {
+            color: "#0D6EFD",
+            fontWeight: "bold",
+          },
+        },
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box>
           <Typography
             sx={{
-              color: "#495057",
+              color: "#0D6EFD",
               fontSize: "16px",
               fontWeight: 700,
               lineHeight: "24px",
-              fontfamily: 'Poppins'
+              fontFamily: 'Poppins'
             }}
           >
             Ticket #{ticket?.ticket_id}
           </Typography>
         </Box>
         <Box
-        sx={{
-          color: "#5611B1",
-          borderRadius: "8px",
-          border: "1px solid var(--Blue-500, #0D6EFD)",
-          background: "var(--Blue-100, #CFE2FF)",
-          padding: "9px 24px",
-        }}        
+          sx={{
+            color: "#5611B1",
+            borderRadius: "8px",
+            border: "1px solid var(--Blue-500, #0D6EFD)",
+            background: "var(--Blue-100, #CFE2FF)",
+            padding: "9px 24px",
+          }}
         >
           <Typography sx={{ color: "#5611B1" }}>{formatDateandmonth(ticket?.date)}</Typography>
         </Box>
@@ -66,7 +70,7 @@ const TicketCard = ({
             fontWeight: 700,
             lineHeight: "24px",
             fontSize: "14px",
-            fontfamily: 'Poppins'
+            fontFamily: 'Poppins'
           }}
         >
           {ticket?.query}
@@ -80,6 +84,7 @@ const TicketCard = ({
           justifyContent: "flex-start",
           width: "296px",
           maxHeight: "60px",
+          overflow: "hidden",
         }}
       >
         <Typography
@@ -90,8 +95,7 @@ const TicketCard = ({
             fontWeight: "500",
             height: "66px",
             maxHeight: "60px",
-            fontfamily: 'Poppins',
-            overflow: "auto",
+            fontFamily: 'Poppins',
           }}
         >
           {ticket?.description}
@@ -111,7 +115,7 @@ const TicketCard = ({
               color: "#020202",
             }}
           >
-            {ticket?.id}
+            {ticket?.attachments?.length || 1} 
           </Typography>
         </Box>
         <Box>
@@ -123,7 +127,14 @@ const TicketCard = ({
               borderRadius: "8px",
               backgroundColor: statusColor[ticket?.status],
               padding: "9px 24px",
-              width: '122px'
+              width: '122px',
+              "&:hover": {
+                transform: "scale(1.05)",
+                "& .hover-target": {
+                  color: "#0D6EFD",
+                  fontWeight: "bold",
+                },
+              },
             }}
           >
             {ticket?.status}
