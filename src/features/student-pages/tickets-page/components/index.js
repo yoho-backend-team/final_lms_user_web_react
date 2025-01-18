@@ -75,6 +75,8 @@ const StudentTicketsPage = ({
     setTicketView(false);
   };
 
+
+
   const tabStyle = {
     fontSize: isSmallScreen ? "12px" : "14px",
     fontWeight: 600,
@@ -104,7 +106,6 @@ const StudentTicketsPage = ({
     handlePageChange(null, prevPage);
     navigate(`?tab=${value}&page=${prevPage}`);
   };
-
   return (
     <Box
       sx={{

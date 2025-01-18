@@ -1,6 +1,8 @@
 import React from "react";
 import { Box, Card, Tabs, Tab } from "@mui/material";
 
+
+
 const ClassTabs = ({ tabs, value, handleChange }) => {
   return (
     <Card elevation={3} sx={{ height: "100%", pl: "40px", boxShadow: "none" }}>
@@ -19,8 +21,10 @@ const ClassTabs = ({ tabs, value, handleChange }) => {
         {tabs.map((tab) => (
           <Tab key={tab.id} label={tab.title} value={tab.value} />
         ))}
+        
       </Tabs>
     </Card>
+
   );
 };
 

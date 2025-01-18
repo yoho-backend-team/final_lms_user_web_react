@@ -2,17 +2,13 @@ import React from "react";
 import { Box, Card, Typography, Button, Grid } from "@mui/material";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
-import TimeIcon from "../icons/TimeIcon";
-import DurationIcon from "../icons/DurationIcon";
 import { Link } from "react-router-dom";
 import {
   formatDate,
   formatTime,
-  getIsTimeValid,
   getTimeDifference,
 } from "../../../../../utils/formatDate";
-import { Viewimage, Viewimage1, Viewimage2, viewimage4 } from "utils/images";
-
+import { Viewimage, Viewimage1, Viewimage2 } from "utils/images";
 
 const groupImages = {
   upcoming: Viewimage1,
@@ -21,118 +17,275 @@ const groupImages = {
   live: Viewimage2,
 };
 
-const ClassCard = ({ cls, style, type,group }) => {
 
-  const backgroundImage = groupImages[group] || Viewimage;
+
+  export const ClassCardHeader = () => (
+    <Grid
+      container
+      sx={{
+        mb: 1,
+        mt:8,
+        p: 2,
+        backgroundColor: "lightblue",
+        borderRadius: "22px",
+        position: "sticky", // Keep header visible while scrolling
+        top: 0,
+        zIndex: 1,
+      }}
+    >
+      <Grid item xs={3}>
+        <Typography
+          variant="body1"
+          sx={{
+            fontWeight: 600,
+            fontFamily: "Poppins",
+            fontSize: "14px",
+            color: "#333",
+            ml: 25,
+          }}
+        >
+          Title
+        </Typography>
+      </Grid>
+      <Grid item xs={2}>
+        <Typography
+          variant="body1"
+          sx={{
+            fontWeight: 600,
+            fontFamily: "Poppins",
+            fontSize: "14px",
+            color: "#333",
+            ml: 28,
+          }}
+        >
+          Date
+        </Typography>
+      </Grid>
+      <Grid item xs={2}>
+        <Typography
+          variant="body1"
+          sx={{
+            fontWeight: 600,
+            fontFamily: "Poppins",
+            fontSize: "14px",
+            color: "#333",
+            ml: 6,
+          }}
+        >
+          Time
+        </Typography>
+      </Grid>
+      <Grid item xs={2}>
+        <Typography
+          variant="body1"
+          sx={{
+            fontWeight: 600,
+            fontFamily: "Poppins",
+            fontSize: "14px",
+            color: "#333",
+            ml: 22,
+          }}
+        >
+          Duration
+        </Typography>
+      </Grid>
+      <Grid item xs={3}>
+        <Typography
+          variant="body1"
+          sx={{
+            fontWeight: 600,
+            fontFamily: "Poppins",
+            fontSize: "14px",
+            color: "#333",
+            textAlign: "right",
+            mr: 16,
+          }}
+        >
+          Action
+        </Typography>
+      </Grid>
+    </Grid>
+  );
+  
+  const ClassCard = ({ cls, style, type, group }) => {
+    const backgroundImage = groupImages[group] || Viewimage;
+
 
   return (
-    <Card sx={{ mb: 2}}>
-      <Grid
-        container
+    <>  
+    <Box
+      sx={{
+        overflowY: "auto", // Allow vertical scrolling
+        // maxHeight: "80vh", // Set max height for scrolling
+        scrollBehavior: "smooth", // Smooth scrolling behavior
+        paddingBottom: "30px", // Extra space at the bottom to prevent clipping
+      }}
+    >
+      
+      {/* Individual Card */}
+      <Card
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          
-          backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: 'auto',
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition : "right"
-                  }}
-                  
+          mt:2,
+          mx:4,
+          mb:1, // Reduced margin-bottom to decrease space between cards
+          p: 0.01,
+          transition: "transform 0.3s ease, box-shadow 0.3s ease", // Smooth card hover effect
+          "&:hover": {
+            transform: "scale(1.02)",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+          },
+        }}
       >
-        <Grid item xs={3} sx={{ p: 2 }}>
-          <Box>
-            <Typography variant="h6" sx={{ fontWeight: 600 , color:"#000",fontFamily:"Poppins",fontSize:"14px",lineHeight:"22px"}}>
-              {cls?.class_name}
-            </Typography>
-            <Typography variant="body2" sx={{ fontWeight: 400 , color:"#000",fontFamily:"Poppins",fontSize:"10px",lineHeight:"16px" }}>
-              {cls?.course?.course_name}
-            </Typography>
-          </Box>
-        </Grid>
-
         <Grid
-          item
-          xs={2}
+          container
           sx={{
             display: "flex",
+            justifyContent: "space-between",
             alignItems: "center",
-            justifyContent: "center",
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: "auto",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "right",
+            cursor: "pointer",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <CalendarTodayOutlinedIcon color={style.calendarColor} />
-            <Typography variant="body2" sx={{ color: "#6C757D",fontFamily:"Poppins",fontSize:"12px",lineHeight:"22px",fontWeight:500 }}>
-              {formatDate(cls.start_date)}
-            </Typography>
-          </Box>
-        </Grid>
+          {/* Class Name and Course */}
+          <Grid item xs={3} sx={{ p: 2 }}>
+            <Box>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 600,
+                  color: "#000",
+                  fontFamily: "Poppins",
+                  fontSize: "14px",
+                  lineHeight: "22px",
+                }}
+              >
+                {cls?.class_name}
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontWeight: 400,
+                  color: "#000",
+                  fontFamily: "Poppins",
+                  fontSize: "10px",
+                  lineHeight: "16px",
+                }}
+              >
+                {cls?.course?.course_name}
+              </Typography>
+            </Box>
+          </Grid>
 
-        <Grid item xs={2}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            <AccessTimeOutlinedIcon color={style.timerColor} />
-            <Typography variant="body2" sx={{ color: "#6C757D",fontFamily:"Poppins",fontSize:"12px",lineHeight:"22px",fontWeight:500 }}>
-              {formatTime(cls.start_time)}
-            </Typography>
-          </Box>
-        </Grid>
-
-        <Grid
-          item
-          xs={2}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            color: "gray",
-            justifyContent: "center",
-          }}
-        >
-          <Box
-            sx={{ backgroundColor: style.durationColor, borderRadius: "26px" }}
-          >
-            <Typography
-              variant="body2"
-              sx={{
-                ml: 1,
-                color: style?.durationTextColor,
-                px: "16px",
-                py: "8px",
-                fontWeight: 600,
-                lineHeight: "22px",
-                fontSize: "14px",
-              }}
-            >
-              {getTimeDifference(cls.start_time, cls.end_time)}
-            </Typography>
-          </Box>
-        </Grid>
-        <Grid item xs={3} sx={{ display: "flex", justifyContent: "flex-end" , paddingRight:"30px"}}>
-          
-          <Button
-            component={Link}
-            to={`/student/class/${cls.uuid}?type=${type}&group=${group}`}
-            state={{ id: cls.uuid }}
-            variant="contained"
+          {/* Date */}
+          <Grid
+            item
+            xs={2}
             sx={{
-              backgroundColor: "#FFF",
-              color: "#0D6EFD",
-              padding: '8px 16px',
-              minWidth: '100px',
-              borderRadius: '8px',
-              fontfamily: "Poppins",
-              fontsize: "14px",
-              fontstyle: "normal",
-              fontweight: "500",
-              lineheight: "22px"
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            View Class
-          </Button>
-        
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <CalendarTodayOutlinedIcon color={style.calendarColor} />
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "#6C757D",
+                  fontFamily: "Poppins",
+                  fontSize: "12px",
+                  lineHeight: "22px",
+                  fontWeight: 500,
+                }}
+              >
+                {formatDate(cls.start_date)}
+              </Typography>
+            </Box>
+          </Grid>
+
+          {/* Time */}
+          <Grid item xs={2}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <AccessTimeOutlinedIcon color={style.timerColor} />
+              <Typography
+                variant="body2"
+                sx={{
+                  color: "grey",
+                  fontFamily: "Poppins",
+                  fontSize: "12px",
+                  lineHeight: "22px",
+                  fontWeight: 500,
+                }}
+              >
+                {formatTime(cls.start_time)}
+              </Typography>
+            </Box>
+          </Grid>
+
+          {/* Duration */}
+          <Grid
+            item
+            xs={2}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              color: "gray",
+              justifyContent: "center",
+            }}
+          >
+            <Box
+              sx={{
+                backgroundColor: style.durationColor,
+                borderRadius: "26px",
+              }}
+            >
+              <Typography
+                variant="body2"
+                sx={{
+                  ml: 1,
+                  color: style?.durationTextColor,
+                  px: "16px",
+                  py: "8px",
+                  fontWeight: 600,
+                  lineHeight: "22px",
+                  fontSize: "14px",
+                }}
+              >
+                {getTimeDifference(cls.start_time, cls.end_time)}
+              </Typography>
+            </Box>
+          </Grid>
+
+          {/* View Class Button */}
+          <Grid
+            item
+            xs={3}
+            sx={{ display: "flex", justifyContent: "flex-end", pr: 2 }}
+          >
+            <Button
+              component={Link}
+              to={`/student/class/${cls.uuid}?type=${type}&group=${group}`}
+              state={{ id: cls.uuid }}
+              variant="contained"
+              sx={{
+                backgroundColor: group === "history" ? "white" : "#5611B1",
+                color: group === "history" ? "#5611B1" : "white",
+                "&:hover": {
+                  backgroundColor: group === "history" ? "white" : "#4a0e8d",
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                },
+              }}
+            >
+              View Class
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
-    </Card>
+      </Card>
+    </Box>
+   </> 
   );
 };
 
