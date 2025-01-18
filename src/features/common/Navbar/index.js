@@ -243,7 +243,7 @@ setAnchorEl(null);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
-        position="fixed"
+        position="sticky"
         sx={{
           height: 60,
           backgroundColor: theme.palette.common.white,
