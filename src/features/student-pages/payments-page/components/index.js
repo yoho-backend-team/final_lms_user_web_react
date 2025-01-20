@@ -118,9 +118,9 @@ const Payment = () => {
               borderRadius={2}
               textAlign="center"
               sx={{
-                borderRadius: "10px",
-                border: "1px solid #C3C3C3",
-                background: "#FFF",
+                borderRadius: "15px",
+                border: "2px solid #D3D3D3",
+                background: "#F5F5F5",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",

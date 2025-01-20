@@ -61,10 +61,7 @@ const modules = [
     },
   },
 ];
-
-
-              
-  const CourseAndNotesStudentPage = ({ Course, openCourseView, closeCourseView, selectedClass }) => {
+ const CourseAndNotesStudentPage = ({ Course, openCourseView, closeCourseView, selectedClass }) => {
   const { tabView } = useTabResponsive();
    
     const classes = Course?.batches[0]?.classes || [];
@@ -72,11 +69,7 @@ const modules = [
   const getRandomStyle = (index) => {
     const randomIndex = index % Course?.batches?.[0]?.classes?.length;
     return modules[randomIndex].style;
-  };
-
-          
-              
-                
+  };             
                 return (
                   <Box sx={{ padding: tabView ? "20px" : "60px"}}>
                     <Grid container xs={12} gap={tabView ? "60px" : "20px"}>
@@ -112,8 +105,7 @@ const modules = [
                         justifyContent: "center",
                         height: "100%",
                       }}
-                    >
-                      
+                    >    
                     </Box>
                     <Box
         sx={{
@@ -131,9 +123,8 @@ const modules = [
           Click the Card to view Preview Details
         </Typography>
       </Box>
-                  </Box>
+      </Box>
                 );
-              };
-              
-              export default CourseAndNotesStudentPage;
+                };
+ export default CourseAndNotesStudentPage;
               

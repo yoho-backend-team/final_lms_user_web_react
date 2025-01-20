@@ -261,7 +261,7 @@ const CourseStudentDetails = ({ Course }) => {
               Benefits
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+          <Box sx={{ display: "flex", gap: "20px", flexWrap: "nowrap" }}>
             {Benefits?.map((item) => (
               <Box
                 key={item.id}
