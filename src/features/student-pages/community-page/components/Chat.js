@@ -1,25 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Box, Typography, Card, useMediaQuery } from "@mui/material";
 import ChatHeader from "./ChatHeader";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ChatLog from "./chatLogs";
 import BottomBar from "./bottomBar";
 
 const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) => {
   const isTablet = useMediaQuery("(max-width: 768px)"); // Check for tablet screen size
-  const [showEncryptionInfo, setShowEncryptionInfo] = useState(true);
-
-  useEffect(() => {
-    // Hide the encryption info box after 5 seconds
-    if (currentChat) {
-      setShowEncryptionInfo(true);
-      const timeout = setTimeout(() => {
-        setShowEncryptionInfo(false);
-      }, 5000);
-
-      return () => clearTimeout(timeout); // Cleanup timeout on unmount or chat change
-    }
-  }, [currentChat]);
 
   useEffect(() => {
     const handleMessage = (message) => {
@@ -70,42 +56,6 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
               gap: isTablet ? "12px" : "20px", // Reduce gap for tablets
             }}
           >
-            {/* Info Box for Encryption (Show Only Temporarily) */}
-            {showEncryptionInfo && (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Box
-                  sx={{
-                    backgroundColor: "#FEECDC",
-                    display: { xs: "none", md: "flex" }, // Hide on extra-small screens
-                    width: "100%",
-                    maxWidth: "482px",
-                    padding: isTablet ? "8px 16px" : "12px 24px", // Adjust padding
-                    gap: "10px",
-                    borderRadius: "12px",
-                    alignItems: "center",
-                  }}
-                >
-                  <LockOutlinedIcon sx={{ color: "#312E40" }} />
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      fontWeight: 400,
-                      color: "#312E40",
-                    }}
-                  >
-                    Messages are end-to-end encrypted. No one outside of this chat, not even WhatsApp, can read or listen
-                    to them. Click to learn more.
-                  </Typography>
-                </Box>
-              </Box>
-            )}
-
             {/* Chat Log */}
             <ChatLog socket={socket} Messages={Messages} />
           </Box>
