@@ -76,11 +76,13 @@ const ChatLog = ({ socket, Messages }) => {
   }, [Messages]);
 
   return (
+    
     <Box
       sx={{
         padding: "16px",
         height: "100%",
         overflowY: "auto",
+        backgroundImage: "url('https://e0.pxfuel.com/wallpapers/722/149/desktop-wallpaper-message-background-whatsapp-message-background.jpg')",
         backgroundColor: "#F5F5F5", // Default background color
       }}
     >
