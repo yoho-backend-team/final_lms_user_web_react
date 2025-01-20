@@ -20,6 +20,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
+import SearchIcon from "@mui/icons-material/Search";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
 import CallIcon from "assets/icons/callIcon";
@@ -34,7 +35,7 @@ const ChatHeader = ({ currentChat }) => {
     userDetailsOpen: false,
   });
 
-  const isTablet = useMediaQuery("(max-width: 768px)"); // Check for tablet screen size
+  const isTablet = useMediaQuery("(max-width: 768px)");
   const openMenu = Boolean(anchorEl);
 
   const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
@@ -42,13 +43,14 @@ const ChatHeader = ({ currentChat }) => {
 
   const toggleDialog = (type, state) => {
     setDialogState((prevState) => ({ ...prevState, [type]: state }));
-    if (state === false) handleMenuClose();
+    if (!state) handleMenuClose();
   };
 
   const handleCall = () => console.log("Initiating a call...");
+  const handleSearch = () => console.log("Search action triggered");
 
   const handleAvatarClick = () => {
-    toggleDialog("userDetailsOpen", true); // Open the dialog to show all users
+    toggleDialog("userDetailsOpen", true);
   };
 
   const menuItems = [
@@ -129,11 +131,28 @@ const ChatHeader = ({ currentChat }) => {
               key={user?.id}
               alt={user?.full_name}
               src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
-              onClick={handleAvatarClick} // Show all user details on click
+              onClick={handleAvatarClick}
               sx={{ cursor: "pointer", width: isTablet ? 45 : 40, height: isTablet ? 45 : 40 }}
             />
           ))}
         </AvatarGroup>
+
+        <IconButton
+          onClick={handleSearch}
+          sx={{
+            transition: "all 0.3s ease",
+            "&:hover": {
+              backgroundColor: "#E0E0E0",
+              color: "#0D6EFD",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+            },
+            width: isTablet ? 48 : "auto",
+            height: isTablet ? 48 : "auto",
+          }}
+          aria-label="Search"
+        >
+          <SearchIcon />
+        </IconButton>
 
         <IconButton
           onClick={handleCall}

@@ -14,58 +14,58 @@ const ChatLog = ({ socket, Messages }) => {
 
   const isTablet = useMediaQuery("(max-width: 768px)"); // Detect tablet screen size
 
-  useEffect(() => {
-    const handleFocus = () => setIsWindowFocused(true);
-    const handleBlur = () => setIsWindowFocused(false);
+  // useEffect(() => {
+  //   const handleFocus = () => setIsWindowFocused(true);
+  //   const handleBlur = () => setIsWindowFocused(false);
 
-    window.addEventListener("focus", handleFocus);
-    window.addEventListener("blur", handleBlur);
+  //   window.addEventListener("focus", handleFocus);
+  //   window.addEventListener("blur", handleBlur);
 
-    return () => {
-      window.removeEventListener("focus", handleFocus);
-      window.removeEventListener("blur", handleBlur);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("focus", handleFocus);
+  //     window.removeEventListener("blur", handleBlur);
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && isWindowFocused) {
-            const messageId = entry.target.getAttribute("data-id");
+  // // useEffect(() => {
+  // //   const observer = new IntersectionObserver(
+  // //     (entries) => {
+  // //       entries.forEach((entry) => {
+  // //         if (entry.isIntersecting && isWindowFocused) {
+  // //           const messageId = entry.target.getAttribute("data-id");
 
-            if (!readMessages.has(messageId)) {
-              setTimeout(() => {
-                if (entry.isIntersecting && isWindowFocused) {
-                  triggerMessageRead(messageId);
-                }
-              }, 1500); // Optional delay for confirmation
-            }
-          }
-        });
-      },
-      { threshold: 0.8 } // 80% of message must be visible
-    );
+  // //           if (!readMessages.has(messageId)) {
+  // //             setTimeout(() => {
+  // //               if (entry.isIntersecting && isWindowFocused) {
+  // //                 triggerMessageRead(messageId);
+  // //               }
+  // //             }, 1500); // Optional delay for confirmation
+  // //           }
+  // //         }
+  // //       });
+  // //     },
+  // //     { threshold: 0.8 } // 80% of message must be visible
+  // //   );
 
-    messageRefs.current.forEach((ref) => observer.observe(ref));
+  // //   messageRefs.current.forEach((ref) => observer.observe(ref));
 
-    return () => {
-      observer.disconnect();
-    };
-  }, [Messages, isWindowFocused, readMessages]);
+  //   return () => {
+  //     observer.disconnect();
+  //   };
+  // }, [Messages, isWindowFocused, readMessages]);
 
-  const triggerMessageRead = (messageId) => {
-    const msg = Messages.find((m) => m._id === messageId);
+  // const triggerMessageRead = (messageId) => {
+  //   const msg = Messages.find((m) => m._id === messageId);
 
-    if (msg && !readMessages.has(messageId)) {
-      const now = new Date();
-      const formattedTime = now.toLocaleTimeString("en-US", { hour12: false });
+  //   if (msg && !readMessages.has(messageId)) {
+  //     const now = new Date();
+  //     const formattedTime = now.toLocaleTimeString("en-US", { hour12: false });
 
-      console.log(`Message ${messageId} read at ${formattedTime}`);
-      socket.emit("messageRead", { messageId, userId: student?._id });
-      setReadMessages((prev) => new Set([...prev, messageId]));
-    }
-  };
+  //     console.log(`Message ${messageId} read at ${formattedTime}`);
+  //     socket.emit("messageRead", { messageId, userId: student?._id });
+  //     setReadMessages((prev) => new Set([...prev, messageId]));
+  //   }
+  // };
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
