@@ -33,8 +33,10 @@ const ChatHeader = ({ currentChat }) => {
     wallpaperOpen: false,
     mediaOpen: false,
     searchOpen: false,
+    userDetailsOpen: false,
   });
   const [searchText, setSearchText] = useState("");
+  const [selectedUser, setSelectedUser] = useState(null); // For storing selected user details
 
   const openMenu = Boolean(anchorEl);
 
@@ -49,6 +51,11 @@ const ChatHeader = ({ currentChat }) => {
   const handleCall = () => console.log("Initiating a call...");
 
   const handleSearchChange = (event) => setSearchText(event.target.value);
+
+  const handleAvatarClick = (user) => {
+    setSelectedUser(user);
+    toggleDialog("userDetailsOpen", true);
+  };
 
   const menuItems = [
     { label: "Mute Notification", action: () => toggleDialog("muteOpen", true) },
@@ -100,6 +107,8 @@ const ChatHeader = ({ currentChat }) => {
               key={user?.id}
               alt={user?.full_name}
               src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
+              onClick={() => handleAvatarClick(user)} // On avatar click
+              sx={{ cursor: "pointer" }}
             />
           ))}
           {currentChat?.admin?.map((admin) => (
@@ -107,6 +116,8 @@ const ChatHeader = ({ currentChat }) => {
               key={admin?.id}
               alt={admin?.full_name}
               src={admin?.image ? getImageUrl(admin?.image) : profilePlaceholder}
+              onClick={() => handleAvatarClick(admin)} // On avatar click
+              sx={{ cursor: "pointer" }}
             />
           ))}
         </AvatarGroup>
@@ -191,54 +202,36 @@ const ChatHeader = ({ currentChat }) => {
         </Menu>
       </Box>
 
-      {/* Modals */}
-      <MuteNotificationModel
-        open={dialogState.muteOpen}
-        setMuteOpen={(state) => toggleDialog("muteOpen", state)}
-      />
-      <ReportModel
-        open={dialogState.reportOpen}
-        setReportOpen={(state) => toggleDialog("reportOpen", state)}
-      />
-      <AddWallpaper
-        open={dialogState.wallpaperOpen}
-        setWallpaperOpen={(state) => toggleDialog("wallpaperOpen", state)}
-      />
-      <MediaModel
-        open={dialogState.mediaOpen}
-        setMediaOpen={(state) => toggleDialog("mediaOpen", state)}
-      />
-
-      {/* Search Dialog */}
+      {/* User Details Dialog */}
       <Dialog
-        open={dialogState.searchOpen}
-        onClose={() => toggleDialog("searchOpen", false)}
+        open={dialogState.userDetailsOpen}
+        onClose={() => toggleDialog("userDetailsOpen", false)}
       >
-        <DialogTitle>Search</DialogTitle>
+        <DialogTitle>User Details</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Search..."
-            type="text"
-            fullWidth
-            variant="outlined"
-            value={searchText}
-            onChange={handleSearchChange}
-          />
+          {selectedUser && (
+            <Box>
+              <Avatar
+                sx={{ width: 60, height: 60, marginBottom: 2 }}
+                src={
+                  selectedUser.image
+                    ? getImageUrl(selectedUser.image)
+                    : profilePlaceholder
+                }
+              />
+              <Typography variant="h6">{selectedUser.full_name}</Typography>
+              <Typography variant="body2" color="textSecondary">
+                {selectedUser.email || "No email available"}
+              </Typography>
+            </Box>
+          )}
         </DialogContent>
         <DialogActions>
           <Button
-            onClick={() => toggleDialog("searchOpen", false)}
+            onClick={() => toggleDialog("userDetailsOpen", false)}
             color="primary"
           >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => toggleDialog("searchOpen", false)}
-            color="primary"
-          >
-            Search
+            Close
           </Button>
         </DialogActions>
       </Dialog>
