@@ -87,8 +87,19 @@ const ChatLog = ({ socket, Messages }) => {
     scrollToBottom();
   }, [Messages]);
 
+  
+
   return (
-    <Box sx={{ padding: "16px", height: "100%", overflowY: "auto" }}>
+    <Box
+      sx={{
+        padding: "16px",
+        height: "100%",
+        overflowY: "auto",
+        backgroundImage: "url('https://w0.peakpx.com/wallpaper/557/521/HD-wallpaper-whatsapp-v-background-doodle-pattern-patterns-whatsapp-thumbnail.jpg')", // Add wallpaper image path
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
       {Messages?.map((msg) => (
         <Grid
           container
