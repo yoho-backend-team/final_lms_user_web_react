@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Box, Grid, Typography, Button, Menu, MenuItem } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { getStudentDetails } from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
 import DoneIcon from "@mui/icons-material/Done";
@@ -11,8 +11,6 @@ const ChatLog = ({ socket, Messages }) => {
   const messageRefs = useRef(new Map());
   const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
   const [readMessages, setReadMessages] = useState(new Set());
-  const [wallpaper, setWallpaper] = useState(""); // State to store selected wallpaper
-  const [anchorEl, setAnchorEl] = useState(null); // State for wallpaper menu
 
   useEffect(() => {
     const handleFocus = () => setIsWindowFocused(true);
@@ -77,75 +75,15 @@ const ChatLog = ({ socket, Messages }) => {
     scrollToBottom();
   }, [Messages]);
 
-  const handleWallpaperClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleWallpaperClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleWallpaperChange = (image) => {
-    setWallpaper(image);
-    handleWallpaperClose();
-  };
-
-  console.log(student, "student", Messages);
-
   return (
     <Box
       sx={{
         padding: "16px",
         height: "100%",
         overflowY: "auto",
-        backgroundImage: wallpaper ? `url(${wallpaper})` : "none",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundColor: "#F5F5F5", // Default background color
       }}
     >
-      {/* Wallpaper Button */}
-      <Button
-        variant="contained"
-        onClick={handleWallpaperClick}
-        sx={{ marginBottom: "16px" }}
-      >
-        {/* Change Wallpaper */}
-      </Button>
-      <Menu
-        anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
-        onClose={handleWallpaperClose}
-      >
-        <MenuItem onClick={() => handleWallpaperChange("")}>Default</MenuItem>
-        <MenuItem
-          onClick={() =>
-            handleWallpaperChange(
-              "https://2.bp.blogspot.com/-GLHR429VOio/UNHeUidi0jI/AAAAAAAAdMM/ut9X692432k/s1600/Flowers+wallpapers+red+roses.+(1).jpg"
-            )
-          }
-        >
-         red rose
-        </MenuItem>
-        <MenuItem
-          onClick={() =>
-            handleWallpaperChange(
-              "https://www.w3schools.com/w3images/forest.jpg"
-            )
-          }
-        >
-          Forest
-        </MenuItem>
-        <MenuItem
-          onClick={() =>
-            handleWallpaperChange(
-              "https://www.w3schools.com/w3images/beach.jpg"
-            )
-          }
-        >
-          Beach
-        </MenuItem>
-      </Menu>
-
       {/* Messages */}
       {Messages.map((message) => (
         <Grid
@@ -166,8 +104,7 @@ const ChatLog = ({ socket, Messages }) => {
                 fontWeight: 400,
                 opacity: "0.7",
                 marginBottom: "10px",
-                textAlign:
-                  message.sender === student?._id ? "end" : "start",
+                textAlign: message.sender === student?._id ? "end" : "start",
               }}
             >
               {message.time}
@@ -183,9 +120,7 @@ const ChatLog = ({ socket, Messages }) => {
               <Box
                 sx={{
                   backgroundColor:
-                    message.sender === student?._id
-                      ? "#61C554"
-                      : "#E8ECEF",
+                    message.sender === student?._id ? "#61C554" : "#E8ECEF",
                   padding: "15px 20px 16px 15px",
                   borderRadius: "10px",
                   minWidth: "200px",
@@ -200,10 +135,7 @@ const ChatLog = ({ socket, Messages }) => {
                   variant="body1"
                   sx={{
                     wordBreak: "break-word",
-                    color:
-                      message.sender === student?._id
-                        ? "white"
-                        : "#000000",
+                    color: message.sender === student?._id ? "white" : "#000000",
                     fontSize: "14px",
                     fontWeight: 400,
                   }}
@@ -212,10 +144,7 @@ const ChatLog = ({ socket, Messages }) => {
                 </Typography>
                 <Typography
                   sx={{
-                    textAlign:
-                      message?.sender === student?._id
-                        ? "end"
-                        : "end",
+                    textAlign: "end",
                     display: "flex",
                     justifyContent: "flex-end",
                     marginTop: "-3px",
@@ -263,10 +192,7 @@ const ChatLog = ({ socket, Messages }) => {
                     color: "#727272",
                     fontSize: "11px",
                     fontWeight: 500,
-                    textAlign:
-                      message?.sender === student?._id
-                        ? "end"
-                        : "end",
+                    textAlign: "end",
                   }}
                 >
                   {formatTime(message?.createdAt)}
