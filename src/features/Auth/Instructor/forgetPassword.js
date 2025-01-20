@@ -9,17 +9,16 @@ import {
   Typography,
   FormHelperText,
 } from "@mui/material";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import { useAtom } from "jotai";
+import toast from "react-hot-toast";
 import {
   instructorLoginStepAtom,
   instructorOtpAtom,
 } from "store/atoms/authAtoms";
-import { useAtom } from "jotai";
-import axios from "axios";
 import { useInstructorforgetPassword } from "../services";
-import toast from "react-hot-toast";
 import { ForgetPassword_Otp_Step } from "lib/constants";
 import { useSpinner } from "context/SpinnerProvider";
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 const ForgetPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -28,51 +27,54 @@ const ForgetPasswordPage = () => {
   const navigate = useNavigate();
   const [, setLoginStep] = useAtom(instructorLoginStepAtom);
   const [, setOtpAtom] = useAtom(instructorOtpAtom);
-  const {showSpinner,hideSpinner} = useSpinner()
+  const { showSpinner, hideSpinner } = useSpinner();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    if (e.target.value) {
-      setEmailError("");
-    }
-  };
-
+  // Validate email with a regex
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
 
+  // Handle email input change
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    if (emailError) setEmailError("");
+  };
+
+  // Handle back navigation
+  const handleBackToLogin = () => {
+    showSpinner();
+    setLoginStep(instructorLoginStepAtom);
+    hideSpinner();
+  };
+
+  // Handle form submission
   const handleSubmit = async () => {
     if (!email) {
-      setEmailError("Enter Mail ID");
+      setEmailError("Enter your email address.");
       return;
     }
+
     if (!validateEmail(email)) {
-      setEmailError("Enter a valid email address");
+      setEmailError("Enter a valid email address.");
       return;
     }
-    
+
     try {
       const response = await forgetPassword(email);
-      console.log(response,response?.data)
-      if (response.status === "success") {
+
+      if (response?.status === "success") {
         const { token } = response.data;
         setOtpAtom({ email, token });
         setLoginStep(ForgetPassword_Otp_Step);
       } else {
-        setEmailError("Email not found");
+        setEmailError("Email not found.");
       }
     } catch (error) {
-      console.log(error, "error");
-      toast.error(error || "An error occurred");
+      console.error("Error during email submission:", error);
+      toast.error(error?.message || "An error occurred. Please try again.");
     }
   };
-
-  const handleBackLoginStep = () => {
-     showSpinner()
-     setLoginStep(instructorLoginStepAtom)
-     hideSpinner()
-  }
 
   return (
     <Box
@@ -84,81 +86,126 @@ const ForgetPasswordPage = () => {
         padding: "50px",
       }}
     >
+      {/* Card Container */}
       <Box
         sx={{
-          width: "360.428px",
-          height: "220.021px",
-          flexShrink: 0,
+          width: "360px",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
           padding: 3,
           borderRadius: 2,
           fontFamily: '"Zen Kaku Gothic Antique"',
-          fontSize: "12.8px",
-          fontStyle: "normal",
-          fontWeight: 700,
-          lineHeight: "14.873px",
+          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
         }}
       >
+        {/* Title */}
         <Typography
           variant="h4"
           gutterBottom
-          sx={{ fontWeight: "bold", color: "#242424", fontSize: "1.5rem" }}
-        >
-          Forget Password?
-        </Typography>
-        <Typography
-          variant="body1"
-          gutterBottom
           sx={{
-            textAlign: "left",
-            color : "#757575",
-            width: "100%",
-            fontSize: "12.80px",
-            color: "black",
-            fontWeight: 100,
-            paddingTop: 5,
+            fontWeight: "bold",
+            color: "#242424",
+            fontSize: "1.5rem",
+            textAlign: "center",
           }}
         >
-          Enter Mail ID
+          Forgot Password?
         </Typography>
-        <FormControl fullWidth  error={!!emailError}>
+
+        {/* Subtitle */}
+        <Typography
+          variant="body2"
+          sx={{
+            textAlign: "center",
+            color: "#757575",
+            fontSize: "0.875rem",
+            fontWeight: 400,
+            marginBottom: "20px",
+          }}
+        >
+          Enter your email address below
+        </Typography>
+
+        {/* Email Input */}
+        <FormControl fullWidth error={!!emailError}>
           <Input
             type="email"
             value={email}
             onChange={handleEmailChange}
             aria-describedby="email-error-text"
             placeholder="Enter your email"
-            sx={{ color: "#212121", fontSize: "16px", fontWeight: 400, lineHeight: "22.5px" }}
+            sx={{
+              color: "#212121",
+              fontSize: "1rem",
+              fontWeight: 400,
+              lineHeight: "22.5px",
+              padding: "10px",
+              border: "1px solid #ddd",
+              borderRadius: "8px",
+              marginBottom: "10px",
+            }}
           />
           {emailError && (
             <FormHelperText id="email-error-text">{emailError}</FormHelperText>
           )}
         </FormControl>
-        <Box sx={{ display: 'flex',mt:"40px", width: "100%", justifyContent: "space-between", alignItems: "center"}} >
-          <Typography onClick={handleBackLoginStep} sx={{ textDecoration: "none", cursor: "pointer",display: "flex", alignContent: "center",color: "#5611B1",fontWeight: 400, fontSize: "0.935rem", ":hover": { color: "#22034a" }}} >
-            <span style={{ mr: "0.375rem"}}><ChevronLeftIcon sx={{ width: "20px", height: "20px"}}/></span>Back to Login
-          </Typography>
+
+        {/* Action Buttons */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
+            marginTop: "30px",
+          }}
+        >
+          
+          <Typography
+  onClick={handleBackToLogin}
+  sx={{
+    display: "flex",
+    alignItems: "center",
+    cursor: "pointer",
+    color: "#5611B1",
+    fontSize: "0.9375rem",
+    fontWeight: 500,
+    textDecoration: "none",
+    transition: "all 0.2s ease-in-out",
+    ":hover": {
+      color: "#22034a",
+      transform: "scale(1.05)", // Slight zoom effect
+      textDecoration: "underline", // Add underline on hover
+    },
+  }}
+>
+  <ChevronLeftIcon sx={{ width: "20px", height: "20px", mr: 0.5 }} />
+  Back to Login
+</Typography>
+
+
+          {/* Submit Button */}
           <Button
             variant="contained"
             onClick={handleSubmit}
-            fullWidth
             sx={{
               backgroundColor: "#5611B1",
+              color: "white",
               maxWidth: 100,
-              alignSelf: "flex-end",
               borderRadius: 20,
-              px: 2,
+              px: 3,
               py: 1,
-              "&:hover": {
+              fontSize: "0.9375rem",
+              fontWeight: 600,
+              textTransform: "none",
+              ":hover": {
                 backgroundColor: "#6302e3",
-                transform : "scale(1.05)"
+                transform: "scale(1.05)",
               },
             }}
           >
-            VERIFY
+            Verify
           </Button>
         </Box>
       </Box>

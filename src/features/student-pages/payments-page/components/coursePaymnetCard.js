@@ -7,7 +7,7 @@ const CourseDetailStudentPaymentCard = () => {
       <Grid container xs={12}>
         <Grid item xs={6} sx={{ display: "flex", flexDirection: "column" }}>
           <Box>
-            {/* <CourseStudentDetails /> */}
+            <CourseStudentDetails />
           </Box>
           <Box></Box>
         </Grid>

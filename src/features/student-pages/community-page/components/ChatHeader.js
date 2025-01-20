@@ -129,13 +129,42 @@ const ChatHeader = ({ currentChat }) => {
             />
           ))}
         </AvatarGroup>
-        <IconButton onClick={handleCall}>
+        {/* <IconButton onClick={handleCall}>
           <CallIcon />
         </IconButton>
         <IconButton onClick={handleSearchOpen}>
           <SearchIcon />
-        </IconButton>
+        </IconButton> */}
         <IconButton
+  onClick={handleCall}
+  sx={{
+    transition: "all 0.3s ease",
+    "&:hover": {
+      backgroundColor: "#E0E0E0",
+      color: "#0D6EFD",
+      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+    },
+  }}
+>
+  <CallIcon />
+</IconButton>
+
+<IconButton
+  onClick={handleSearchOpen}
+  sx={{
+    transition: "all 0.3s ease",
+    "&:hover": {
+      backgroundColor: "#E0E0E0",
+      color: "#0D6EFD",
+      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+    },
+  }}
+>
+  <SearchIcon />
+</IconButton>
+
+        <IconButton
+
           onClick={handleMenuOpen}
           sx={{ backgroundColor: open ? "#0D6EFD" : "white" }}
         >
@@ -183,6 +212,14 @@ const ChatHeader = ({ currentChat }) => {
           <MenuItem onClick={handleReportOpen}>Report</MenuItem>
           <MenuItem onClick={handleWallpaperOpen}>Wallpaper</MenuItem>
           <MenuItem onClick={handleMediaOpen}>Group Media</MenuItem>
+          <MenuItem onClick={handleMediaOpen}>Group info</MenuItem>
+          <MenuItem onClick={handleMediaOpen}>Select message</MenuItem>
+          <MenuItem onClick={handleMediaOpen}>Disappearing message</MenuItem>
+          <MenuItem onClick={handleMediaOpen}>Add to favourites</MenuItem>
+          <MenuItem onClick={handleMediaOpen}>Close chat</MenuItem>
+          <MenuItem onClick={handleMediaOpen}>Clear chat</MenuItem>
+          <MenuItem onClick={handleMediaOpen}>Exit group</MenuItem>
+         
         </Menu>
       </Box>
 

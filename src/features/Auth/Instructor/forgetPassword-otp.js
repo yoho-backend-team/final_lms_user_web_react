@@ -6,14 +6,16 @@ import { useTheme } from "@emotion/react";
 import { useState, useEffect } from "react";
 import { Typography, Button } from "@mui/material";
 import { useInstituteForgetPasswordOtpVerify } from "../services/index";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";  // Import Link
 import { useAtom } from "jotai";
+
+
 import {
   instructorLoginStepAtom,
   instructorOtpAtom,
+  
 } from "store/atoms/authAtoms";
 import { EnterNewPassword_Step } from "lib/constants";
-//import { studentOtpAtom } from "store/atoms/authAtoms";
 
 const InputElement = styled("input")(
   ({ theme }) => `
@@ -57,7 +59,6 @@ const InputElement = styled("input")(
     };
   }
 
-  // firefox
   &:focus-visible {
     outline: 0;
   }
@@ -105,7 +106,6 @@ function OTP({ separator, length, value, onChange }) {
             prevOtp.slice(0, currentIndex) + prevOtp.slice(currentIndex + 1);
           return otp;
         });
-
         break;
       case "Backspace":
         event.preventDefault();
@@ -231,7 +231,11 @@ OTP.propTypes = {
 
 export default function ForgetPasswordOTPInput() {
   const [otp, setOtp] = React.useState("");
-  const [timeLeft, setTimeLeft] = useState(600);
+  const [timeLeft, setTimeLeft] = useState(() => {
+    // Get the remaining time from localStorage if available, otherwise default to 600 seconds (10 minutes)
+    const savedTime = localStorage.getItem("otpTimeLeft");
+    return savedTime ? parseInt(savedTime, 10) : 600; // 10 minutes (600 seconds)
+  });
   const [error, setError] = useState("");
   const [, setLoginStep] = useAtom(instructorLoginStepAtom);
   const theme = useTheme();
@@ -243,14 +247,19 @@ export default function ForgetPasswordOTPInput() {
     if (timeLeft === 0) return;
 
     const timer = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - 1);
+      setTimeLeft((prevTime) => {
+        const newTime = prevTime - 1;
+        localStorage.setItem("otpTimeLeft", newTime);  // Save time to localStorage
+        return newTime;
+      });
     }, 1000);
 
     return () => clearInterval(timer);
   }, [timeLeft]);
 
   const handleResend = () => {
-    setTimeLeft(60);
+    setTimeLeft(600); // Reset time to 600 seconds (10 minutes)
+    localStorage.setItem("otpTimeLeft", 600);  // Reset time in localStorage
   };
 
   const handleVerify = async () => {
@@ -295,6 +304,7 @@ export default function ForgetPasswordOTPInput() {
             fontWeight: 700,
             lineHeight: "30px",
             textAlign: "center",
+            mb:10,
           }}
         >
           Enter the Code that sent to your entered mail Id
@@ -332,7 +342,7 @@ export default function ForgetPasswordOTPInput() {
               variant="outlined"
               onClick={handleResend}
               sx={{
-                mt: 2,
+                mt: 1,
                 borderRadius: 5,
                 color: "#8D8E90",
                 fontSize: "14px",
@@ -360,7 +370,14 @@ export default function ForgetPasswordOTPInput() {
               lineHeight: "15px",
               width: "101px",
               height: "37px",
-              ":hover": { backgroundColor: "#5611B1" },
+              ":hover": {
+                backgroundColor: "#5611B1", // Keep the same background color
+                transform: "scale(1.1)", // Boom animation: scale up
+                transition: "transform 0.3s ease-in-out", // Smooth transition for the scaling effect
+              },
+              ":active": {
+                transform: "scale(1)", // Ensure it shrinks back after the click (for a "boom" effect)
+              },
             }}
             onClick={handleVerify}
           >
@@ -368,6 +385,35 @@ export default function ForgetPasswordOTPInput() {
           </Button>
         </Box>
       </Box>
+
+      
+      <Link
+  to="/"  // Update this with the desired path
+  style={{
+    textDecoration: "none",
+    marginTop: "20px",
+  }}
+>
+  <Button
+    variant="text"
+    sx={{
+      color: "#5611B1",
+      fontWeight: 700,
+      transition: "all 0.2s ease-in-out", // Smooth transition for hover effects
+      ":hover": {
+        color: "#22034a", // Hover color change
+        transform: "scale(1.05)", // Slight zoom effect
+        textDecoration: "underline", // Underline on hover
+      },
+    }}
+  >
+    Go to Main Page
+  </Button>
+</Link> 
+
+      
+       
+
     </Box>
   );
 }

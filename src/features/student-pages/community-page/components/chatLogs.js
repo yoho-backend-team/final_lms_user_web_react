@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Button, Menu, MenuItem } from "@mui/material";
 import { getStudentDetails } from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
-import DoneIcon from '@mui/icons-material/Done';
-import DoneAllIcon from '@mui/icons-material/DoneAll';
+import DoneIcon from "@mui/icons-material/Done";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 
 const ChatLog = ({ socket, Messages }) => {
   const student = getStudentDetails();
@@ -11,6 +11,8 @@ const ChatLog = ({ socket, Messages }) => {
   const messageRefs = useRef(new Map());
   const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
   const [readMessages, setReadMessages] = useState(new Set());
+  const [wallpaper, setWallpaper] = useState(""); // State to store selected wallpaper
+  const [anchorEl, setAnchorEl] = useState(null); // State for wallpaper menu
 
   useEffect(() => {
     const handleFocus = () => setIsWindowFocused(true);
@@ -26,21 +28,24 @@ const ChatLog = ({ socket, Messages }) => {
   }, []);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && isWindowFocused) {
-          const messageId = entry.target.getAttribute("data-id");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && isWindowFocused) {
+            const messageId = entry.target.getAttribute("data-id");
 
-          if (!readMessages.has(messageId)) {
-            setTimeout(() => {
-              if (entry.isIntersecting && isWindowFocused) {
-                triggerMessageRead(messageId);
-              }
-            }, 1500); // Optional delay for confirmation
+            if (!readMessages.has(messageId)) {
+              setTimeout(() => {
+                if (entry.isIntersecting && isWindowFocused) {
+                  triggerMessageRead(messageId);
+                }
+              }, 1500); // Optional delay for confirmation
+            }
           }
-        }
-      });
-    }, { threshold: 0.8 }); // 80% of message must be visible
+        });
+      },
+      { threshold: 0.8 } // 80% of message must be visible
+    );
 
     messageRefs.current.forEach((ref) => observer.observe(ref));
 
@@ -54,8 +59,8 @@ const ChatLog = ({ socket, Messages }) => {
 
     if (msg && !readMessages.has(messageId)) {
       const now = new Date();
-      const formattedTime = now.toLocaleTimeString('en-US', { hour12: false });
-      
+      const formattedTime = now.toLocaleTimeString("en-US", { hour12: false });
+
       console.log(`Message ${messageId} read at ${formattedTime}`);
       socket.emit("messageRead", { messageId, userId: student?._id });
       setReadMessages((prev) => new Set([...prev, messageId]));
@@ -71,9 +76,77 @@ const ChatLog = ({ socket, Messages }) => {
   useEffect(() => {
     scrollToBottom();
   }, [Messages]);
-  console.log(student,"student",Messages)
+
+  const handleWallpaperClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleWallpaperClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleWallpaperChange = (image) => {
+    setWallpaper(image);
+    handleWallpaperClose();
+  };
+
+  console.log(student, "student", Messages);
+
   return (
-    <Box sx={{ padding: "16px", height: "100%", overflowY: "auto" }}>
+    <Box
+      sx={{
+        padding: "16px",
+        height: "100%",
+        overflowY: "auto",
+        backgroundImage: wallpaper ? `url(${wallpaper})` : "none",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Wallpaper Button */}
+      <Button
+        variant="contained"
+        onClick={handleWallpaperClick}
+        sx={{ marginBottom: "16px" }}
+      >
+        {/* Change Wallpaper */}
+      </Button>
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleWallpaperClose}
+      >
+        <MenuItem onClick={() => handleWallpaperChange("")}>Default</MenuItem>
+        <MenuItem
+          onClick={() =>
+            handleWallpaperChange(
+              "https://2.bp.blogspot.com/-GLHR429VOio/UNHeUidi0jI/AAAAAAAAdMM/ut9X692432k/s1600/Flowers+wallpapers+red+roses.+(1).jpg"
+            )
+          }
+        >
+         red rose
+        </MenuItem>
+        <MenuItem
+          onClick={() =>
+            handleWallpaperChange(
+              "https://www.w3schools.com/w3images/forest.jpg"
+            )
+          }
+        >
+          Forest
+        </MenuItem>
+        <MenuItem
+          onClick={() =>
+            handleWallpaperChange(
+              "https://www.w3schools.com/w3images/beach.jpg"
+            )
+          }
+        >
+          Beach
+        </MenuItem>
+      </Menu>
+
+      {/* Messages */}
       {Messages.map((message) => (
         <Grid
           container
@@ -93,7 +166,8 @@ const ChatLog = ({ socket, Messages }) => {
                 fontWeight: 400,
                 opacity: "0.7",
                 marginBottom: "10px",
-                textAlign: message.sender === student?._id ? "end" : "start",
+                textAlign:
+                  message.sender === student?._id ? "end" : "start",
               }}
             >
               {message.time}
@@ -102,12 +176,16 @@ const ChatLog = ({ socket, Messages }) => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: message.sender === student?._id ? "flex-end" : "flex-start",
+                alignItems:
+                  message.sender === student?._id ? "flex-end" : "flex-start",
               }}
             >
               <Box
                 sx={{
-                  backgroundColor: message.sender === student?._id ? "#61C554" : "#E8ECEF",
+                  backgroundColor:
+                    message.sender === student?._id
+                      ? "#61C554"
+                      : "#E8ECEF",
                   padding: "15px 20px 16px 15px",
                   borderRadius: "10px",
                   minWidth: "200px",
@@ -122,7 +200,10 @@ const ChatLog = ({ socket, Messages }) => {
                   variant="body1"
                   sx={{
                     wordBreak: "break-word",
-                    color: message.sender === student?._id ? "white" : "#000000",
+                    color:
+                      message.sender === student?._id
+                        ? "white"
+                        : "#000000",
                     fontSize: "14px",
                     fontWeight: 400,
                   }}
@@ -130,33 +211,62 @@ const ChatLog = ({ socket, Messages }) => {
                   {message.message}
                 </Typography>
                 <Typography
-                   sx={{
-                    textAlign: message?.sender === student?._id ? "end" : "end",
+                  sx={{
+                    textAlign:
+                      message?.sender === student?._id
+                        ? "end"
+                        : "end",
                     display: "flex",
                     justifyContent: "flex-end",
-                    marginTop: "-3px"
+                    marginTop: "-3px",
                   }}
                 >
-                   {message?.sender === student?._id && message?.status?.some(s => s.delivered) && !message?.status?.every(s => s.delivered) && (
-                     <DoneIcon sx={{ color: "white", width: "17px", height: "17px" }} />
-                   )}
-                 
-                   {message?.sender === student?._id && message?.status?.every(s => s.delivered) && !message?.status?.every(s => s.read) && (
-                     <DoneAllIcon sx={{  color: "white", width: "17px", height: "17px" }} />
-                   )}
-                 
-                   { message?.sender === student?._id && message?.status?.every(s => s.read) && (
-                     <DoneAllIcon sx={{ color: "#0D6EFD", width: "17px", height: "17px" }} />
-                   )}
+                  {message?.sender === student?._id &&
+                    message?.status?.some((s) => s.delivered) &&
+                    !message?.status?.every((s) => s.delivered) && (
+                      <DoneIcon
+                        sx={{
+                          color: "white",
+                          width: "17px",
+                          height: "17px",
+                        }}
+                      />
+                    )}
+
+                  {message?.sender === student?._id &&
+                    message?.status?.every((s) => s.delivered) &&
+                    !message?.status?.every((s) => s.read) && (
+                      <DoneAllIcon
+                        sx={{
+                          color: "white",
+                          width: "17px",
+                          height: "17px",
+                        }}
+                      />
+                    )}
+
+                  {message?.sender === student?._id &&
+                    message?.status?.every((s) => s.read) && (
+                      <DoneAllIcon
+                        sx={{
+                          color: "#0D6EFD",
+                          width: "17px",
+                          height: "17px",
+                        }}
+                      />
+                    )}
                 </Typography>
               </Box>
-              <Box sx={{ marginTop: "5px"}} >
+              <Box sx={{ marginTop: "5px" }}>
                 <Typography
                   sx={{
                     color: "#727272",
                     fontSize: "11px",
                     fontWeight: 500,
-                    textAlign: message?.sender === student?._id ? "end" : "end",
+                    textAlign:
+                      message?.sender === student?._id
+                        ? "end"
+                        : "end",
                   }}
                 >
                   {formatTime(message?.createdAt)}
