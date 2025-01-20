@@ -212,14 +212,7 @@ const ChatHeader = ({ currentChat }) => {
           <MenuItem onClick={handleReportOpen}>Report</MenuItem>
           <MenuItem onClick={handleWallpaperOpen}>Wallpaper</MenuItem>
           <MenuItem onClick={handleMediaOpen}>Group Media</MenuItem>
-          <MenuItem onClick={handleMediaOpen}>Group info</MenuItem>
-          <MenuItem onClick={handleMediaOpen}>Select message</MenuItem>
-          <MenuItem onClick={handleMediaOpen}>Disappearing message</MenuItem>
-          <MenuItem onClick={handleMediaOpen}>Add to favourites</MenuItem>
-          <MenuItem onClick={handleMediaOpen}>Close chat</MenuItem>
-          <MenuItem onClick={handleMediaOpen}>Clear chat</MenuItem>
-          <MenuItem onClick={handleMediaOpen}>Exit group</MenuItem>
-         
+          
         </Menu>
       </Box>
 
