@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 import { getStudentDetails } from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
 import DoneIcon from "@mui/icons-material/Done";
@@ -11,6 +11,8 @@ const ChatLog = ({ socket, Messages }) => {
   const messageRefs = useRef(new Map());
   const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
   const [readMessages, setReadMessages] = useState(new Set());
+
+  const isTablet = useMediaQuery("(max-width: 768px)"); // Detect tablet screen size
 
   useEffect(() => {
     const handleFocus = () => setIsWindowFocused(true);
@@ -76,14 +78,13 @@ const ChatLog = ({ socket, Messages }) => {
   }, [Messages]);
 
   return (
-    
     <Box
       sx={{
-        padding: "16px",
+        padding: isTablet ? "12px" : "16px", // Adjust padding for tablets
         height: "100%",
         overflowY: "auto",
         backgroundImage: "url('https://e0.pxfuel.com/wallpapers/722/149/desktop-wallpaper-message-background-whatsapp-message-background.jpg')",
-        backgroundColor: "#F5F5F5", // Default background color
+        backgroundColor: "#F5F5F5",
       }}
     >
       {/* Messages */}
@@ -95,17 +96,17 @@ const ChatLog = ({ socket, Messages }) => {
           justifyContent={
             message.sender === student?._id ? "flex-end" : "flex-start"
           }
-          sx={{ marginBottom: "8px" }}
+          sx={{ marginBottom: isTablet ? "6px" : "8px" }} // Adjust margin for tablets
           ref={(el) => messageRefs.current.set(message._id, el)}
         >
-          <Grid item xs={8} sm={7} md={6}>
+          <Grid item xs={10} sm={8} md={6}>
             <Typography
               sx={{
                 color: "#0B3048",
-                fontSize: "12px",
+                fontSize: isTablet ? "11px" : "12px", // Adjust font size for tablets
                 fontWeight: 400,
                 opacity: "0.7",
-                marginBottom: "10px",
+                marginBottom: isTablet ? "8px" : "10px", // Adjust margin for tablets
                 textAlign: message.sender === student?._id ? "end" : "start",
               }}
             >
@@ -123,13 +124,18 @@ const ChatLog = ({ socket, Messages }) => {
                 sx={{
                   backgroundColor:
                     message.sender === student?._id ? "#61C554" : "#E8ECEF",
-                  padding: "15px 20px 16px 15px",
+                  padding: isTablet ? "12px 16px" : "15px 20px 16px 15px", // Adjust padding for tablets
                   borderRadius: "10px",
-                  minWidth: "200px",
+                  minWidth: "180px", // Reduced for smaller screens
                 }}
               >
                 {message.sender !== student?._id && (
-                  <Typography sx={{ fontSize: "10px", alignSelf: "start" }}>
+                  <Typography
+                    sx={{
+                      fontSize: isTablet ? "9px" : "10px", // Adjust font size for tablets
+                      alignSelf: "start",
+                    }}
+                  >
                     {message.sender_name}
                   </Typography>
                 )}
@@ -138,7 +144,7 @@ const ChatLog = ({ socket, Messages }) => {
                   sx={{
                     wordBreak: "break-word",
                     color: message.sender === student?._id ? "white" : "#000000",
-                    fontSize: "14px",
+                    fontSize: isTablet ? "13px" : "14px", // Adjust font size for tablets
                     fontWeight: 400,
                   }}
                 >
@@ -149,7 +155,7 @@ const ChatLog = ({ socket, Messages }) => {
                     textAlign: "end",
                     display: "flex",
                     justifyContent: "flex-end",
-                    marginTop: "-3px",
+                    marginTop: isTablet ? "-2px" : "-3px", // Adjust spacing for tablets
                   }}
                 >
                   {message?.sender === student?._id &&
@@ -158,8 +164,8 @@ const ChatLog = ({ socket, Messages }) => {
                       <DoneIcon
                         sx={{
                           color: "white",
-                          width: "17px",
-                          height: "17px",
+                          width: "16px",
+                          height: "16px",
                         }}
                       />
                     )}
@@ -170,8 +176,8 @@ const ChatLog = ({ socket, Messages }) => {
                       <DoneAllIcon
                         sx={{
                           color: "white",
-                          width: "17px",
-                          height: "17px",
+                          width: "16px",
+                          height: "16px",
                         }}
                       />
                     )}
@@ -181,18 +187,18 @@ const ChatLog = ({ socket, Messages }) => {
                       <DoneAllIcon
                         sx={{
                           color: "#0D6EFD",
-                          width: "17px",
-                          height: "17px",
+                          width: "16px",
+                          height: "16px",
                         }}
                       />
                     )}
                 </Typography>
               </Box>
-              <Box sx={{ marginTop: "5px" }}>
+              <Box sx={{ marginTop: isTablet ? "3px" : "5px" }}>
                 <Typography
                   sx={{
                     color: "#727272",
-                    fontSize: "11px",
+                    fontSize: isTablet ? "10px" : "11px", // Adjust font size for tablets
                     fontWeight: 500,
                     textAlign: "end",
                   }}

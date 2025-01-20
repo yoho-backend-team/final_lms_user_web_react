@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Card } from "@mui/material";
+import { Box, Typography, Card, useMediaQuery } from "@mui/material";
 import ChatHeader from "./ChatHeader";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ChatLog from "./chatLogs";
 import BottomBar from "./bottomBar";
 
 const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) => {
+  const isTablet = useMediaQuery("(max-width: 768px)"); // Check for tablet screen size
+
   useEffect(() => {
     const handleMessage = (message) => {
       setMessages((prev) => [...prev, message]);
@@ -26,6 +28,7 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#F6F6F6",
+        padding: isTablet ? "10px" : "20px", // Adjust padding for tablets
       }}
     >
       {currentChat ? (
@@ -47,11 +50,11 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
           <Box
             sx={{
               flex: 1,
-              padding: "20px",
+              padding: isTablet ? "10px" : "20px", // Adjust padding for tablets
               overflowY: "auto",
               display: "flex",
               flexDirection: "column",
-              gap: "20px",
+              gap: isTablet ? "12px" : "20px", // Reduce gap for tablets
             }}
           >
             {/* Info Box for Encryption */}
@@ -65,17 +68,23 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
               <Box
                 sx={{
                   backgroundColor: "#FEECDC",
-                  display: { xs: "none", md: "flex" }, // Responsive visibility
+                  display: { xs: "none", md: "flex" }, // Hide on extra-small screens
                   width: "100%",
                   maxWidth: "482px",
-                  padding: "12px 24px",
+                  padding: isTablet ? "8px 16px" : "12px 24px", // Adjust padding
                   gap: "10px",
                   borderRadius: "12px",
                   alignItems: "center",
                 }}
               >
                 <LockOutlinedIcon sx={{ color: "#312E40" }} />
-                <Typography sx={{ fontSize: "12px", fontWeight: 400, color: "#312E40" }}>
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                    fontWeight: 400,
+                    color: "#312E40",
+                  }}
+                >
                   Messages are end-to-end encrypted. No one outside of this chat, not even WhatsApp, can read or listen
                   to them. Click to learn more.
                 </Typography>
@@ -87,7 +96,12 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
           </Box>
 
           {/* Bottom Bar for Sending Messages */}
-          <Box sx={{ padding: "10px", borderTop: "1px solid #E0E0E0" }}>
+          <Box
+            sx={{
+              padding: isTablet ? "8px" : "10px", // Adjust padding for tablets
+              borderTop: "1px solid #E0E0E0",
+            }}
+          >
             <BottomBar socket={socket} community={currentChat} />
           </Box>
         </Card>
@@ -109,15 +123,15 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
             src="https://cdn-icons-png.flaticon.com/512/9388/9388030.png"
             alt="Group Chat Logo"
             sx={{
-              width: "120px",
-              height: "120px",
+              width: isTablet ? "100px" : "120px", // Adjust size for tablets
+              height: isTablet ? "100px" : "120px", // Adjust size for tablets
               borderRadius: "50%",
             }}
           />
           <Typography
             sx={{
               color: "#747474",
-              fontSize: "16px",
+              fontSize: isTablet ? "14px" : "16px", // Adjust font size for tablets
               fontWeight: 500,
               lineHeight: "24px",
             }}

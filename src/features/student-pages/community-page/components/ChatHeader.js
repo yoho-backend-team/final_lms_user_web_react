@@ -8,22 +8,21 @@ import {
   AvatarGroup,
   Menu,
   MenuItem,
-  TextField,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   Button,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  useMediaQuery,
 } from "@mui/material";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
 import CallIcon from "assets/icons/callIcon";
-import SearchIcon from "assets/icons/searchIcon";
-import MuteNotificationModel from "./Models/MuteNotification";
-import ReportModel from "./Models/ReportDialog";
-import AddWallpaper from "./Models/WallPaperModel";
-import MediaModel from "./Models/Media";
 
 const ChatHeader = ({ currentChat }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -32,12 +31,10 @@ const ChatHeader = ({ currentChat }) => {
     reportOpen: false,
     wallpaperOpen: false,
     mediaOpen: false,
-    searchOpen: false,
     userDetailsOpen: false,
   });
-  const [searchText, setSearchText] = useState("");
-  const [selectedUser, setSelectedUser] = useState(null); // For storing selected user details
 
+  const isTablet = useMediaQuery("(max-width: 768px)"); // Check for tablet screen size
   const openMenu = Boolean(anchorEl);
 
   const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
@@ -50,11 +47,8 @@ const ChatHeader = ({ currentChat }) => {
 
   const handleCall = () => console.log("Initiating a call...");
 
-  const handleSearchChange = (event) => setSearchText(event.target.value);
-
-  const handleAvatarClick = (user) => {
-    setSelectedUser(user);
-    toggleDialog("userDetailsOpen", true);
+  const handleAvatarClick = () => {
+    toggleDialog("userDetailsOpen", true); // Open the dialog to show all users
   };
 
   const menuItems = [
@@ -67,20 +61,29 @@ const ChatHeader = ({ currentChat }) => {
   const totalMembers =
     (currentChat?.users?.length || 0) + (currentChat?.admin?.length || 0);
 
+  const allUsers = [...(currentChat?.users || []), ...(currentChat?.admin || [])];
+
   return (
     <Box
       sx={{
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: isTablet ? "center" : "space-between",
         alignItems: "center",
-        padding: "16px",
+        flexDirection: isTablet ? "column" : "row",
+        padding: isTablet ? "12px" : "16px",
+        gap: isTablet ? 2 : 0,
       }}
     >
       {/* Left Section */}
-      <Grid container alignItems="center" spacing={2}>
+      <Grid
+        container
+        alignItems="center"
+        spacing={2}
+        justifyContent={isTablet ? "center" : "flex-start"}
+      >
         <Grid item>
           <Avatar
-            sx={{ width: 40, height: 40 }}
+            sx={{ width: isTablet ? 50 : 40, height: isTablet ? 50 : 40 }}
             src={
               currentChat?.batch?.course?.image
                 ? getImageUrl(currentChat?.batch?.course?.image)
@@ -90,34 +93,44 @@ const ChatHeader = ({ currentChat }) => {
           />
         </Grid>
         <Grid item>
-          <Typography variant="h6" sx={{ fontWeight: 700 }}>
+          <Typography
+            variant={isTablet ? "h5" : "h6"}
+            sx={{ fontWeight: 700, textAlign: isTablet ? "center" : "left" }}
+          >
             {currentChat?.batch?.batch_name || "Chat Name"}
           </Typography>
-          <Typography variant="body2" color="textSecondary">
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={{ textAlign: isTablet ? "center" : "left" }}
+          >
             {`Group Members: ${totalMembers}`}
           </Typography>
         </Grid>
       </Grid>
 
       {/* Right Section */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <AvatarGroup max={3} total={totalMembers}>
-          {currentChat?.users?.map((user) => (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: isTablet ? 1 : 2,
+          justifyContent: isTablet ? "center" : "flex-end",
+          flexWrap: isTablet ? "wrap" : "nowrap",
+        }}
+      >
+        <AvatarGroup
+          max={isTablet ? 4 : 3}
+          total={totalMembers}
+          sx={{ justifyContent: "center" }}
+        >
+          {allUsers.map((user) => (
             <Avatar
               key={user?.id}
               alt={user?.full_name}
               src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
-              onClick={() => handleAvatarClick(user)} // On avatar click
-              sx={{ cursor: "pointer" }}
-            />
-          ))}
-          {currentChat?.admin?.map((admin) => (
-            <Avatar
-              key={admin?.id}
-              alt={admin?.full_name}
-              src={admin?.image ? getImageUrl(admin?.image) : profilePlaceholder}
-              onClick={() => handleAvatarClick(admin)} // On avatar click
-              sx={{ cursor: "pointer" }}
+              onClick={handleAvatarClick} // Show all user details on click
+              sx={{ cursor: "pointer", width: isTablet ? 45 : 40, height: isTablet ? 45 : 40 }}
             />
           ))}
         </AvatarGroup>
@@ -131,6 +144,8 @@ const ChatHeader = ({ currentChat }) => {
               color: "#0D6EFD",
               boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
             },
+            width: isTablet ? 48 : "auto",
+            height: isTablet ? 48 : "auto",
           }}
           aria-label="Initiate call"
         >
@@ -138,29 +153,18 @@ const ChatHeader = ({ currentChat }) => {
         </IconButton>
 
         <IconButton
-          onClick={() => toggleDialog("searchOpen", true)}
-          sx={{
-            transition: "all 0.3s ease",
-            "&:hover": {
-              backgroundColor: "#E0E0E0",
-              color: "#0D6EFD",
-              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-            },
-          }}
-          aria-label="Search"
-        >
-          <SearchIcon />
-        </IconButton>
-
-        <IconButton
           onClick={handleMenuOpen}
-          sx={{ backgroundColor: openMenu ? "#0D6EFD" : "white" }}
+          sx={{
+            backgroundColor: openMenu ? "#0D6EFD" : "white",
+            width: isTablet ? 48 : "auto",
+            height: isTablet ? 48 : "auto",
+          }}
           aria-controls={openMenu ? "menu" : undefined}
           aria-haspopup="true"
           aria-expanded={openMenu ? "true" : undefined}
         >
           <ExpandMoreRoundedIcon
-            sx={{ color: openMenu ? "white" : "#130F26" }}
+            sx={{ color: openMenu ? "white" : "#130F26", fontSize: isTablet ? 30 : "default" }}
           />
         </IconButton>
 
@@ -174,7 +178,7 @@ const ChatHeader = ({ currentChat }) => {
           PaperProps={{
             elevation: 0,
             sx: {
-              padding: "24px 21px 44px 21px",
+              padding: isTablet ? "16px" : "24px 21px 44px 21px",
               borderRadius: "28px",
               border: "1px solid #DCDCDC",
               boxShadow: "0px 4px 54px 0px rgba(0, 0, 0, 0.25)",
@@ -202,29 +206,45 @@ const ChatHeader = ({ currentChat }) => {
         </Menu>
       </Box>
 
-      {/* User Details Dialog */}
+      {/* All Users Dialog */}
       <Dialog
         open={dialogState.userDetailsOpen}
         onClose={() => toggleDialog("userDetailsOpen", false)}
       >
-        <DialogTitle>User Details</DialogTitle>
+        <DialogTitle>All Users</DialogTitle>
         <DialogContent>
-          {selectedUser && (
-            <Box>
-              <Avatar
-                sx={{ width: 60, height: 60, marginBottom: 2 }}
-                src={
-                  selectedUser.image
-                    ? getImageUrl(selectedUser.image)
-                    : profilePlaceholder
-                }
-              />
-              <Typography variant="h6">{selectedUser.full_name}</Typography>
-              <Typography variant="body2" color="textSecondary">
-                {selectedUser.email || "No email available"}
-              </Typography>
-            </Box>
-          )}
+          <List>
+            {allUsers.map((user) => (
+              <ListItem key={user?.id} sx={{ marginBottom: 2 }}>
+                <ListItemAvatar>
+                  <Avatar
+                    src={
+                      user?.image
+                        ? getImageUrl(user?.image)
+                        : profilePlaceholder
+                    }
+                    alt={user?.full_name}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={user?.full_name || "Name not available"}
+                  secondary={
+                    <>
+                      <Typography variant="body2" color="textSecondary">
+                        {user?.email || "Email not available"}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {user?.phone || "Phone number not available"}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {user?.role || "Role not available"}
+                      </Typography>
+                    </>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
         </DialogContent>
         <DialogActions>
           <Button

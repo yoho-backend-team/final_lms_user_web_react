@@ -1,5 +1,11 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Box, IconButton, TextField, InputAdornment } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  TextField,
+  InputAdornment,
+  useMediaQuery,
+} from "@mui/material";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import SendIcon from "@mui/icons-material/Send";
 import AddBoxPlusIcon from "assets/icons/AddBoxPlusIcon"; // Your custom plus icon
@@ -12,6 +18,7 @@ const BottomBar = ({ socket, community }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [message, setMessage] = useState("");
   const [isRecording, setIsRecording] = useState(false); // New state for voice recording
+  const isTablet = useMediaQuery("(max-width: 768px)"); // Check for tablet devices
   const student = getStudentDetails();
 
   const toggleEmojiPicker = () => setShowEmojiPicker((prev) => !prev);
@@ -74,10 +81,10 @@ const BottomBar = ({ socket, community }) => {
       sx={{
         display: "flex",
         alignItems: "center",
-        padding: "8px 16px",
-        justifyContent: "flex-end",
-        position: "static",
-        bottom: 0,
+        padding: isTablet ? "8px" : "8px 16px",
+        justifyContent: isTablet ? "space-between" : "flex-end",
+        flexDirection: isTablet ? "column" : "row",
+        gap: isTablet ? 1 : 0,
         backgroundColor: "#F6F6F6",
         borderTop: "1px solid #E0E0E0",
       }}
@@ -85,35 +92,31 @@ const BottomBar = ({ socket, community }) => {
       {showEmojiPicker && <EmojiPicker onSelect={handleEmojiSelect} />}
 
       {/* Emoji Picker Toggle */}
-      
       <IconButton
-  onClick={toggleEmojiPicker}
-  aria-label="Toggle emoji picker"
-  sx={{
-    '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.1)', // Change background color on hover
-      color: 'blue', // Optional: Change icon color on hover
-    },
-  }}
->
-  <EmojiIcon />
-</IconButton>
+        onClick={toggleEmojiPicker}
+        aria-label="Toggle emoji picker"
+        sx={{
+          "&:hover": {
+            backgroundColor: "rgba(0, 0, 0, 0.1)", // Change background color on hover
+            color: "blue",
+          },
+        }}
+      >
+        <EmojiIcon />
+      </IconButton>
 
-
-     {/* // Plus Button */}
-      
+      {/* Plus Button */}
       <IconButton
-  aria-label="Add more options"
-  sx={{
-    '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.1)', // Change the background color on hover
-      color: 'green', // Optional: Change icon color on hover
-    },
-  }}
->
-  <AddBoxPlusIcon />
-</IconButton>
-
+        aria-label="Add more options"
+        sx={{
+          "&:hover": {
+            backgroundColor: "rgba(0, 0, 0, 0.1)",
+            color: "green",
+          },
+        }}
+      >
+        <AddBoxPlusIcon />
+      </IconButton>
 
       {/* Text Input for Messages */}
       <TextField
@@ -123,7 +126,7 @@ const BottomBar = ({ socket, community }) => {
         placeholder="Type a message..."
         fullWidth
         sx={{
-          margin: "0 8px",
+          margin: isTablet ? "8px 0" : "0 8px",
           backgroundColor: "#FFFFFF",
           borderRadius: "20px",
           "& .MuiOutlinedInput-root": {
@@ -145,63 +148,51 @@ const BottomBar = ({ socket, community }) => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              
               <IconButton
-  aria-label="Attach a file"
-  sx={{
-    '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.1)', // Background color on hover
-      color: 'purple', // Optional: Change icon color on hover
-    },
-  }}
->
-  <AttachFileIcon />
-</IconButton>
-
+                aria-label="Attach a file"
+                sx={{
+                  "&:hover": {
+                    backgroundColor: "rgba(0, 0, 0, 0.1)",
+                    color: "purple",
+                  },
+                }}
+              >
+                <AttachFileIcon />
+              </IconButton>
             </InputAdornment>
           ),
         }}
       />
 
       {/* Voice Note Button */}
-      
       <IconButton
-  onClick={toggleRecording}
-  aria-label={isRecording ? "Stop recording voice note" : "Start recording voice note"}
-  sx={{
-    '&:hover': {
-      backgroundColor: 'rgba(255, 0, 0, 0.1)', // Light red background on hover
-    },
-  }}
->
-  <RecordIcon 
-    sx={{ 
-      color: isRecording ? "red" : "black",
-      '&:hover': {
-        color: isRecording ? "darkred" : "gray", // Change icon color on hover
-      },
-    }} 
-  />
-</IconButton>
-
+        onClick={toggleRecording}
+        aria-label={isRecording ? "Stop recording voice note" : "Start recording voice note"}
+        sx={{
+          "&:hover": {
+            backgroundColor: "rgba(255, 0, 0, 0.1)", // Light red background on hover
+          },
+        }}
+      >
+        <RecordIcon
+          sx={{
+            color: isRecording ? "red" : "black",
+            "&:hover": {
+              color: isRecording ? "darkred" : "gray",
+            },
+          }}
+        />
+      </IconButton>
 
       {/* Send Button */}
-      {/* <IconButton
+      <IconButton
         onClick={handleSendMessage}
         aria-label="Send message"
         disabled={!message.trim()}
+        className={`send-button ${message.trim() ? "enabled" : "disabled"}`}
       >
-        <SendIcon sx={{ color: message.trim() ? "#000" : "#B0B0B0" }} />
-      </IconButton> */}
-      <IconButton
-  onClick={handleSendMessage}
-  aria-label="Send message"
-  disabled={!message.trim()}
-  className={`send-button ${message.trim() ? 'enabled' : 'disabled'}`}
->
-  <SendIcon className="send-icon" />
-</IconButton>
-
+        <SendIcon />
+      </IconButton>
     </Box>
   );
 };

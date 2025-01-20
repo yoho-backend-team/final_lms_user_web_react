@@ -40,11 +40,14 @@ const CommunityPage = () => {
   return (
     <Box
       sx={{
-        height: "85vh",
+        // height: "85vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        padding: "40px",
+        padding:"10px",
+        paddingTop:"30px",
+       
+        height:"50%"
       }}
     >
       <Box
@@ -53,9 +56,10 @@ const CommunityPage = () => {
           borderRadius: "18px",
           border: "1px solid #C3C3C3",
           boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
-          height: "100%",
+          height: "50%",
           width: "100%",
           display: "flex",
+         
           flexDirection: "column",
         }}
       >
