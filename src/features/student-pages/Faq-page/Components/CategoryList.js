@@ -108,117 +108,150 @@
 
 
 import React, { useState } from 'react';
-import {Box, Button, Card, CardContent, Typography, Grid, Chip } from '@mui/material';
-
+import { Box, Typography, Grid, Collapse, Chip, Card, CardContent } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { styled } from '@mui/material/styles';
 
 const faqData = [
   {
     title: 'Introduction',
     description: 'Thanks for your interest in teaching your courses through Payil.',
-    roles: ['Owner'],
+    relatedAnswers: [
+      'Payil is designed to help you manage your courses effectively.',
+      'You can track student progress and manage assignments easily.',
+    ],
   },
   {
     title: 'How to access Payil?',
     description: 'Way To Access Sign Up\nWay To Access Login In',
-    roles: ['Owner', 'Student'],
+    relatedAnswers: [
+      'Visit the Payil website and click on Sign Up.',
+      'If you already have an account, click on Login.',
+    ],
   },
   {
     title: 'About Payil Dashboard',
     description: 'Dashboard feature allows the admin/owner to view the registration, ...',
-    roles: ['Owner', 'Admin', 'Staff', 'Student'],
+    relatedAnswers: [
+      'The dashboard provides an overview of all registered users.',
+      'You can manage courses and view analytics from the dashboard.',
+    ],
   },
   {
     title: 'About Payil Courses',
     description: 'Each course comprises subjects with their learning materials and assignments.',
-    roles: ['Owner', 'Admin'],
+    relatedAnswers: [
+      'Courses can be customized with various subjects.',
+      'You can add assignments and track student submissions.',
+    ],
   },
   {
     title: 'How to access Payil Subject',
     description: 'In the subject listing page you View / create the subjects for the respective...',
-    roles: ['Owner', 'Admin'],
+    relatedAnswers: [
+      'Navigate to the Subjects section in the dashboard.',
+      'You can create new subjects or edit existing ones.',
+    ],
   },
   {
     title: 'How to add a new course to the dashboard?',
     description: 'In the add course page, Add a thumbnail image for your course...',
-    roles: ['Owner', 'Admin'],
+    relatedAnswers: [
+      'Fill in the course details and upload a thumbnail image.',
+      'Once added, the course will be visible on the dashboard.',
+    ],
   },
 ];
 
+const ExpandableCard = styled(Card)(({ theme }) => ({
+  marginBottom: '10px',
+  transition: '0.3s',
+  '&:hover': {
+    boxShadow: theme.shadows[5],
+  },
+}));
 
-const CategoryList = ({ categories, onCategorySelect }) => {
-  const [selectedRole, setSelectedRole] = useState('All');
+const CategoryList = () => {
+  const [expanded, setExpanded] = useState(null);
 
-  const categoryNames = categories?.map(category => category.category_id.category_name) || [];
- const uniqueFilters = Array.from(new Set(['All', ...categoryNames]));
+  const handleToggle = (index) => {
+    setExpanded(expanded === index ? null : index);
+  };
 
-  const filteredFAQs = selectedRole === 'All' 
-    ? faqData 
-    : faqData.filter(faq => faq.roles.includes(selectedRole));
-
-   console.log(categories,"categories")
   return (
-    <div style={{ padding: '20px' }}>
-      {/* Role Filter Buttons */}
-      <div style={{ marginBottom: '20px', display: 'flex', gap: '10px',justifyContent:"center" ,paddingLeft:1000}}>
-        {uniqueFilters.map((role) => (
-          <Button 
-            key={role}
-            variant={selectedRole === role ? 'contained' : 'outlined'}
-            onClick={() => setSelectedRole(role)}
-            sx={{ 
-              borderRadius: '1px', 
-              padding: '10px 40px', 
-              fontSize: '16px', 
-              fontWeight: 'bold',
-              transition: 'background-color 0.3s, color 0.3s',
-              '&:hover': {
-                backgroundColor: selectedRole === role ? '#0056b3' : '#f0f0f0',
-                color: selectedRole === role ? '#0056b3' : '#0056b3',
-              },
-            }}
-          >
-            {role}
-          </Button>
-        ))}
-      </div>
-
-      
-      <Grid container spacing={2} justifyContent="space-between">
-  {categories.map((faq, index) => (
-    <Grid item xs={12} sm={6} md={3} key={index}>
-        <Card
-          elevation={3}
-          sx={{
-            width:'200%',
-            height:"200px",
-            display:"flex",
-            padding: 2,
-            margin: '16px',
-            transition: 'transform 0.3s',
-            '&:hover': {
-              transform: 'scale(1.05)',
-            },
-          }}
-        >
-          <CardContent>
-            <Typography variant="h6" gutterBottom align="center" color={'#8f00c8'} fontFamily={'poppins'} fontSize={'22px'} fontWeight={600}>
-              {faq.title}
-            </Typography>
-            <Typography variant="body2" align="center" color={'#00000'} fontFamily={'poppins'} fontSize={'16px'} fontWeight={600}>
-              {faq.description}
-            </Typography>
-          </CardContent>
-        </Card>
-    </Grid>
-  ))}
-</Grid>
-    </div>
+    <Box sx={{ 
+      padding: '20px', 
+      backgroundColor: '#f9f9f9', 
+      borderRadius: '8px', 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      minHeight: '100vh', // Ensures the box takes full height of the viewport
+    }}>
+      <Box sx={{ maxWidth: '800px', width: '100%' }}>
+        <Typography variant="h4" gutterBottom align="center" color="#3f51b5">
+          Frequently Asked Questions
+        </Typography>
+        <Grid container spacing={2}>
+          {faqData.map((faq, index) => (
+            <Grid item xs={12} key={index}>
+              <ExpandableCard>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: 2,
+                    cursor: 'pointer',
+                    backgroundColor: expanded === index ? '#e0e7ff' : 'white',
+                    borderRadius: '8px',
+                  }}
+                  onClick={() => handleToggle(index)}
+                >
+                  <Typography variant="h6" color="#3f51b5">
+                    {faq.title}
+                  </Typography>
+                  <ExpandMoreIcon color="action" />
+                </Box>
+                <Collapse in={expanded === index}>
+                  <CardContent>
+                    <Typography variant="body1" sx={{ marginTop: 1 }}>
+                      {faq.description}
+                    </Typography>
+                    <Box sx={{ marginTop: 1 }}>
+                      {faq.relatedAnswers.map((answer, answerIndex) => (
+                        <Chip
+                          key={answerIndex}
+                          label={answer}
+                          variant="outlined"
+                          sx={{ marginTop: 1, marginRight: 1, backgroundColor: '#e0f7fa' }}
+                        />
+                      ))}
+                    </Box>
+                  </CardContent>
+                </Collapse>
+              </ExpandableCard>
+            </Grid>
+          ))}
+        </Grid>
+        {/* Centered Box Below FAQ */}
+        <Box sx={{ marginTop: 4, textAlign: 'center' }}>
+          <Typography variant="h6" color="#3f51b5">
+            Need more help?
+          </Typography>
+          <Typography variant="body2" sx={{ marginTop: 1 }}>
+            If you have any further questions, feel free to reach out to our support team.
+          </Typography>
+          <Box sx={{ marginTop: 2 }}>
+            <Chip  label="Contact Support" variant="outlined" sx={{ backgroundColor: '#e0f7fa' }} />
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
-export default CategoryList ;
-
-
+export default CategoryList;
 
 
 
