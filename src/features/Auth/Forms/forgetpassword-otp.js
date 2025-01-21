@@ -203,7 +203,7 @@ export default function OTPInput() {
           </Typography>
           {timeLeft === 0 && (
             <Button
-              variant="outlined"
+            
               onClick={handleResend}
               sx={{
                 mt: 1,

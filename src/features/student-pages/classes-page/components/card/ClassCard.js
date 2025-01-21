@@ -125,9 +125,10 @@ const groupImages = {
       {/* Individual Card */}
       <Card
         sx={{
-          mt:2,
+          mt:1,
           mx:4,
-          mb:1, // Reduced margin-bottom to decrease space between cards
+          my:1,
+          mb:0.5, // Reduced margin-bottom to decrease space between cards
           p: 0.01,
           transition: "transform 0.3s ease, box-shadow 0.3s ease", // Smooth card hover effect
           "&:hover": {

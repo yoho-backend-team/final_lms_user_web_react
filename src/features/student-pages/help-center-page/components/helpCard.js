@@ -1,75 +1,86 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 
-const StudentHelpCard = ({ section, title, setView ,category}) => {
-  
-  
+const StudentHelpCard = ({ section, title, setView, category }) => {
   return (
-    <Box sx={{ borderRadius: "24px", marginBottom: 2, width: "100%" }}>
+    <Box
+      sx={{
+        borderRadius: "16px",
+        marginBottom: 3,
+        width: "100%",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+        overflow: "hidden",
+        backgroundColor: "white",
+      }}
+    >
+      {/* Header Section */}
       <Box
         sx={{
-          padding: "19.285px",
-          pb: "15px",
+          padding: "20px",
           backgroundColor: "#EDE0FF",
-          borderTopLeftRadius: "24px",
-          borderTopRightRadius: "24px",
+          borderBottom: "1px solid #DADADA",
         }}
       >
+        {/* Category Tag */}
         <Typography
           sx={{
-            padding: "5px",
-            backgroundColor: "#F0F0F0",
+            padding: "4px 10px",
+            backgroundColor: "#F5F5F5",
             color: "#646464",
-            fontSize: "7px",
+            fontSize: "12px",
             fontWeight: 400,
-            lineHeight: "19px",
-            maxWidth: "25px",
+            borderRadius: "8px",
             display: "inline-block",
+            textTransform: "uppercase",
           }}
         >
           {category}
         </Typography>
+
+        {/* Section Title */}
         <Typography
           sx={{
             color: "#000000",
-            fontSize: "16px",
-            fontWeight: 500,
-            maxHeight: "55px",
-            minHeight: "55px",
-            overflowX: "hidden",
-            pt: "15px",
+            fontSize: "18px",
+            fontWeight: 600,
+            marginTop: "12px",
+            lineHeight: "1.4",
           }}
         >
           {section}
         </Typography>
-        
       </Box>
-      
+
+      {/* Content Section */}
       <Box
         sx={{
+          padding: "20px",
           backgroundColor: "white",
-          borderBottomLeftRadius: "24px",
-          borderBottomRightRadius: "24px",
-          padding: "9.642px 19.285px 19.285px 19.285px",
-          textAlign: "start",
         }}
       >
         <Typography
-          onClick={() => {setView(category)}}
+          onClick={() => {
+            setView(category);
+          }}
           sx={{
             fontSize: "14px",
             fontWeight: 500,
-            color: "#646464",
-            padding: "5px",
-            backgroundColor: "#F0F0F0",
-            borderRadius: "24px",
+            color: "#5611B1",
+            padding: "10px 20px",
+            borderRadius: "16px",
             cursor: "pointer",
+            backgroundColor: "#F3EDFF",
+            textAlign: "center",
             display: "inline-block",
+            transition: "all 0.3s",
+            "&:hover": {
+              backgroundColor: "#5611B1",
+              color: "white",
+            },
           }}
         >
-          Click to view
+          Click to View
         </Typography>
-        
       </Box>
     </Box>
   );
