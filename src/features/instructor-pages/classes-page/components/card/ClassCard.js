@@ -5,6 +5,97 @@ import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import { Link } from "react-router-dom";
 import { formatDate, formatTime, getTimeDifference } from "../../../../../utils/formatDate";
 
+
+export const ClassCardHeader = () => (
+  <Grid
+    container
+    sx={{
+      mb: 2,
+      mt: 3,
+      p: 2,
+      backgroundColor: "#0D6EFD", // Added background color for better visibility
+      borderRadius: "22px",
+      // Remove position sticky to test without it
+      position: "sticky",
+      top: 0,
+      zIndex: 1,
+    }}
+  >
+    <Grid item xs={3}>
+      <Typography
+        variant="body1"
+        sx={{
+          fontWeight: 600,
+          fontFamily: "Poppins",
+          fontSize: "14px",
+          color: "#333",
+          ml: 25,
+        }}
+      >
+        Title
+      </Typography>
+    </Grid>
+    <Grid item xs={2}>
+      <Typography
+        variant="body1"
+        sx={{
+          fontWeight: 600,
+          fontFamily: "Poppins",
+          fontSize: "14px",
+          color: "#333",
+          ml: 16,
+        }}
+      >
+        Date
+      </Typography>
+    </Grid>
+    <Grid item xs={2}>
+      <Typography
+        variant="body1"
+        sx={{
+          fontWeight: 600,
+          fontFamily: "Poppins",
+          fontSize: "14px",
+          color: "#333",
+          ml: 6,
+        }}
+      >
+        Time
+      </Typography>
+    </Grid>
+    <Grid item xs={2}>
+      <Typography
+        variant="body1"
+        sx={{
+          fontWeight: 600,
+          fontFamily: "Poppins",
+          fontSize: "14px",
+          color: "#333",
+          ml: 10,
+        }}
+      >
+        Duration
+      </Typography>
+    </Grid>
+    <Grid item xs={3}>
+      <Typography
+        variant="body1"
+        sx={{
+          fontWeight: 600,
+          fontFamily: "Poppins",
+          fontSize: "14px",
+          color: "#333",
+          textAlign: "right",
+          mr: 16,
+        }}
+      >
+        Action
+      </Typography>
+    </Grid>
+  </Grid>
+);
+
+
 const ClassCard = ({ cls, style, type, group, img }) => {
   
   return (
