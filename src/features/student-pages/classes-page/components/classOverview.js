@@ -203,11 +203,12 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   >
                     <Box
                       sx={{
-                        gap: "40px",
+                        gap: "30px",
                         display: "flex",
                         backgroundColor: "#BCE1F1",
-                        borderRadius: "16px",
-                        padding: "26px 38px",
+                        borderRadius: "18px",
+                        padding: "28px 20px",
+                        
                       }}
                     >
                       <Box>
@@ -364,6 +365,13 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                 width: "220px", 
                 height: "46px",       
                 boxShadow: "0px 6px 34px -8px #A4A4A4", 
+                cursor : "pointer",
+        "&:hover": {
+          background: "linear-gradient(45deg, #FF5733, #EA0234)", // Reverse gradient on hover
+      transform: "scale(1.05)", // Slight enlargement on hover
+      boxShadow: "0px 6px 8px rgba(0, 0, 0, 0.2)", // Stronger shadow on hover
+        },
+            
               }}
               tabIndex={2}
             >
@@ -384,6 +392,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                 border: "2px solid #5611B1",
                 fontFamily:"Nunito Sans",
                 borderRadius: "24px",
+                
               }}
               tabIndex={3}
             >
@@ -401,6 +410,8 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   fontWeight: 400,
                   lineHeight: "20px",
                   fontFamily:"Nunito Sans",
+                
+                
                 }}
               >
                 Make sure your presence in the class & If you are unable to attend, please inform the coordinator.
@@ -415,6 +426,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   fontWeight: 400,
                   lineHeight: "20px",
                   fontFamily:"Nunito Sans",
+                  
                 }}
               >
                 If any Issue in attendance please raise a Ticket
