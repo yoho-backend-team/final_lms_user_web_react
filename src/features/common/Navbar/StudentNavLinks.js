@@ -21,9 +21,8 @@ const StudentNavLinks = ({ student }) => {
 
   const isSmallScreen = useMediaQuery('(max-width: 900px)');
 
-
   // Initialize selected state with a default value
-  const [selected, setSelected] = useState(1);
+  const [selected, setSelected] = useState(null);
 
   const nav_items = [
     {
@@ -69,6 +68,9 @@ const StudentNavLinks = ({ student }) => {
     if (current) {
       setSelected(current?.id); // Update selected state with current id
     }
+    return () => {
+      setSelected(null); // Reset selected state when component unmounts
+    };
   }, [currentPath, nav_items]);
 
   return (
@@ -99,12 +101,12 @@ const StudentNavLinks = ({ student }) => {
       <Box
         sx={{
           display: "flex",
-          gap: tabView ? 2 : 5,
+          gap: tabView ? 2 : 10,
           position: "relative",
           padding: tabView ? "25px 45px 45px 45px" : 7,
           borderBottomLeftRadius: 80,
           borderBottomRightRadius: 80,  
-          marginTop: isSmallScreen ? "-64px" : "80px"       
+          marginTop:  "55px",       
           
         }}
       >
@@ -116,22 +118,42 @@ const StudentNavLinks = ({ student }) => {
               justifyContent: "center",
               textDecoration: "none",
               marginTop: -13.3,
-              pt: 5,
+              pt: 8,
+              transition: "transform 0.3s ease, color 0.3s ease",
+              "&:hover": {
+                transform: "scale(1.05)",
+                "& .hover-target": {
+                  color: "#0D6EFD",
+                  fontWeight: "bold",
+                },
+              },
             }}
             component={Link}
             to={item.to}
             onClick={() => {
-              setSelected(item?.student?.id); // Update selected state on click
+              setSelected(item?.id); // Update selected state on click
             }}
           >
-            <Box sx={{ textAlign: "center", pt: 5 }}>
+            <Box sx={{ textAlign: "center", 
+            pt: 5, 
+            transition: "color 0.3s ease",
+            color: selected === item.id ? "#0D6EFD" : "#6C757D", 
+            }}
+            className="hover-target">
               <Icon
                 icon={item.icon}
-                color={selected === item?.id ? "#0D6EFD" : "#6C757D"}
+                className="hover-target"
+                sx={{
+                  transition: "color 0.3s ease",
+                  ":hover" : {
+                    color: "#0D6EFD",
+                  }
+                }}
               />
             </Box>
             <Typography
               variant="h5"
+              className="hover-target"
               sx={{
                 textDecoration: "none",
                 textAlign: "center",
@@ -140,6 +162,7 @@ const StudentNavLinks = ({ student }) => {
                 fontSize: tabView ? "12px" : "14px",
                 fontFamily: "poppins",
                 lineHeight: "22px",
+                transition: "color 0.3s ease",
               }}
             >
               {item.name}
@@ -147,7 +170,7 @@ const StudentNavLinks = ({ student }) => {
             {item?.id === selected && (
               <img
                 src={nav_selected_image}
-                style={{ marginTop: -34, height: 50 }}
+                style={{ marginTop: -44,height: 50,}}
                 alt="nav selected"
               />
             )}
