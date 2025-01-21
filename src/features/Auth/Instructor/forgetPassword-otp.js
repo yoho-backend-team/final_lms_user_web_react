@@ -407,7 +407,7 @@ export default function ForgetPasswordOTPInput() {
       },
     }}
   >
-    Go to Main Page
+    Back to Login
   </Button>
 </Link> 
 

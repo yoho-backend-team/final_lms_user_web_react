@@ -38,18 +38,28 @@ const CommunityPage = () => {
   
 
   return (
-    <Box
-      sx={{
-        // height: "85vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        padding:"10px",
-        paddingTop:"30px",
+    // <Box
+    //   sx={{
+    //     // height: "85vh",
+    //     display: "flex",
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    //     padding:"10px",
+    //     paddingTop:"50px",
        
-        height:"50%"
-      }}
-    >
+    //     height:"50%"
+    //   }}
+    // >
+    <Box
+  sx={{
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "10px",
+    height: "50%",
+   padding:"40px"
+  }}
+>
       <Box
         sx={{
           backgroundColor: "#FFFFFF",
@@ -61,8 +71,14 @@ const CommunityPage = () => {
           display: "flex",
          
           flexDirection: "column",
+          // paddingTop: {
+          //   xs: "50px", // For small screens (mobile)
+          //   sm: "50px", // For small laptops
+          //   md: "100px", // For tablets
+          // },
         }}
-      >
+      > 
+      
         <Grid container sx={{ flex: 1 }}>
           <Grid item xs={4}>
             <SideBar
