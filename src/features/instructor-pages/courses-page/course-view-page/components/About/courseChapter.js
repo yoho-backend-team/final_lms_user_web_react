@@ -37,7 +37,7 @@ const chapters = [
 
 const CourseChapters = ({ Chapters }) => {
   return (
-    <Box sx={{ pl: "91px", pr: "50px", height: "80vh", overflowY: "auto" }}>
+    <Box sx={{ pl: "91px", pr: "50px", height: "80vh", overflowY: "none" ,scrollBehavior: "smooth"}}>
       <Box
         sx={{ display: "flex", justifyContent: "space-between", pb: "20px" }}
       >
@@ -82,6 +82,11 @@ const CourseChapters = ({ Chapters }) => {
             p: 2,
             background: chapters[index].background,
             padding: "30px",
+            transition: "transform 0.3s, box-shadow 0.3s",
+            '&:hover': {
+              transform: "scale(1.02)",
+              boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+            },
           }}
         >
           <Box>

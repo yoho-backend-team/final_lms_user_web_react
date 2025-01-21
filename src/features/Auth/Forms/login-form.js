@@ -93,7 +93,6 @@ const LoginForm = () => {
       >
         <Typography
           variant="h4"
-          onClick={() => setLoginStep(Otp_Step)}
           sx={{
             fontFamily: "poppins",
             textAlign: "justify",
