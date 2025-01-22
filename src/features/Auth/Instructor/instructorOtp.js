@@ -1,10 +1,8 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { Input as BaseInput } from "@mui/base/Input";
-import { Box, styled } from "@mui/system";
+import { Box, Typography, Button } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { useState, useEffect } from "react";
-import { Typography, Button } from "@mui/material";
 import { useVerifyOTP } from "../services/index";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -12,55 +10,7 @@ import { useSpinner } from "context/SpinnerProvider";
 import { useAtomValue } from "jotai";
 import { instructorOtpAtom } from "store/atoms/authAtoms";
 
-const InputElement = styled("input")(
-  ({ theme }) => `
-  width: 40px;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.5;
-  padding: 8px 0px;
-  border-radius: 8px;
-  text-align: center;
-  color: ${
-    theme.palette.mode === "dark"
-      ? theme.palette.primary.main
-      : theme.palette.primary.main
-  };
-  background: ${
-    theme.palette.mode === "dark" ? theme.palette.primary.main : "#fff"
-  };
-  border: 1px solid ${
-    theme.palette.mode === "dark"
-      ? theme.palette.primary.main
-      : theme.palette.primary.main
-  };
-  box-shadow: 0px 2px 4px ${
-    theme.palette.mode === "dark"
-      ? theme.palette.secondary
-      : theme.palette.secondary
-  };
-
-  &:hover {
-    border-color: ${theme.palette.primary.main};
-  }
-
-  &:focus {
-    border-color: ${theme.palette.primary.main};
-    box-shadow: 0 0 0 3px ${
-      theme.palette.mode === "dark"
-        ? theme.palette.primary.main
-        : theme.palette.primary.main
-    };
-  }
-
-  // firefox
-  &:focus-visible {
-    outline: 0;
-  }
-`
-);
-
+// OTP component for input field handling
 function OTP({ separator, length, value, onChange }) {
   const inputRefs = React.useRef(new Array(length).fill(null));
 
@@ -102,7 +52,6 @@ function OTP({ separator, length, value, onChange }) {
             prevOtp.slice(0, currentIndex) + prevOtp.slice(currentIndex + 1);
           return otp;
         });
-
         break;
       case "Backspace":
         event.preventDefault();
@@ -110,14 +59,12 @@ function OTP({ separator, length, value, onChange }) {
           focusInput(currentIndex - 1);
           selectInput(currentIndex - 1);
         }
-
         onChange((prevOtp) => {
           const otp =
             prevOtp.slice(0, currentIndex) + prevOtp.slice(currentIndex + 1);
           return otp;
         });
         break;
-
       default:
         break;
     }
@@ -189,28 +136,27 @@ function OTP({ separator, length, value, onChange }) {
     <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
       {new Array(length).fill(null).map((_, index) => (
         <React.Fragment key={index}>
-          <BaseInput
-            slots={{
-              input: InputElement,
+          <input
+            type="text"
+            ref={(ele) => {
+              inputRefs.current[index] = ele;
             }}
+            onKeyDown={(event) => handleKeyDown(event, index)}
+            onChange={(event) => handleChange(event, index)}
+            onClick={(event) => handleClick(event, index)}
+            onPaste={(event) => handlePaste(event, index)}
+            value={value[index] ?? ""}
             style={{
-              border: "1.213px solid #A8A8A8",
-              background: "#FFFFFF",
+              width: "40px",
+              fontFamily: "'IBM Plex Sans', sans-serif",
+              fontSize: "0.875rem",
+              padding: "8px 0px",
               borderRadius: "8px",
+              textAlign: "center",
+              border: "1px solid #A8A8A8",
+              background: "#fff",
             }}
             aria-label={`Digit ${index + 1} of OTP`}
-            slotProps={{
-              input: {
-                ref: (ele) => {
-                  inputRefs.current[index] = ele;
-                },
-                onKeyDown: (event) => handleKeyDown(event, index),
-                onChange: (event) => handleChange(event, index),
-                onClick: (event) => handleClick(event, index),
-                onPaste: (event) => handlePaste(event, index),
-                value: value[index] ?? "",
-              },
-            }}
           />
           {index === length - 1 ? null : separator}
         </React.Fragment>
@@ -234,7 +180,7 @@ export default function InstructorOTPInput() {
   const verifyOTP = useVerifyOTP();
   const navigate = useNavigate();
   const { showSpinner, hideSpinner } = useSpinner();
-  const otpData = useAtomValue(instructorOtpAtom)
+  const otpData = useAtomValue(instructorOtpAtom);
 
   useEffect(() => {
     if (timeLeft === 0) return;
@@ -261,7 +207,7 @@ export default function InstructorOTPInput() {
       showSpinner();
       const response = await verifyOTP(otp);
       toast.success(response?.message);
-      navigate("/instructor/home");
+      navigate("/"); // Navigate to home page after OTP is verified
     } catch (error) {
       setError("Invalid OTP. Please try again.");
       toast.error(error?.message);
@@ -299,10 +245,10 @@ export default function InstructorOTPInput() {
             fontWeight: 500,
             lineHeight: "30px",
             textAlign: "center",
-            my: "10px"
+            my: "10px",
           }}
         >
-        Your Otp is - {otpData?.otp}
+          Your OTP is - {otpData?.otp}
         </Typography>
       </Box>
       <OTP value={otp} onChange={setOtp} length={6} />

@@ -7,7 +7,7 @@ import {
   studentUserAtom,
   studentOtpAtom,
 } from "store/atoms/authAtoms";
-import { useAtom, useSetAtom, useAtomValue } from "jotai";
+import { useAtom, useSetAtom, useAtomValue } from "jotai";      
 import { useCallback } from "react";
 import { compressAndStore } from "utils/auth_helpers";
 import { Instructor_Details, Instructor_Role, Instructor_Token, isAuthenticatedInstructor, isAuthenticatedStudent, Login_Step, Otp_Step, Student_Details, Student_Role, Student_Token } from "lib/constants";
@@ -34,12 +34,12 @@ export const useInstructorLogin = () => {
           return { message: response?.message };
         } else {
           setOtpAtom({ email: null, token: null, otp: "" });
-          // setInstructorAtom({
-          //   isLoggedIn: true,
-          //   userDetails: user,
-          //   token: token,
-          //   role: "instructor",
-          // });
+          setInstructorAtom({
+            isLoggedIn: true,
+            userDetails: user,
+            token: token,
+            role: "instructor",
+          });
           setLoginStep(Login_Step);
           dispatch(loginSuccess({ userDetails:user,token,role:"instructor" }))
           const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
@@ -73,12 +73,12 @@ export const useVerifyOTP = () => {
       const response = await Client.Instructor.verifyOtp({ ...otpData, otp });
       const { token, user } = response?.data;
       setOtpAtom({ email: null, token: null, otp: "" });
-      // setInstructorAtom({
-      //   isLoggedIn: true,
-      //   userDetails: user,
-      //   token: token,
-      //   role: "instructor",
-      // });
+      setInstructorAtom({
+        isLoggedIn: true,
+        userDetails: user,
+        token: token,
+        role: "instructor",
+      });
       dispatch(loginSuccess({ userDetails:user,token,role:"instructor" }))
       const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
       compressAndStore(isAuthenticatedInstructor,true,expiryDate)
@@ -130,7 +130,7 @@ export const useStudentLogin = () => {
           setLoginStep(Login_Step);
           return { success: true };
         }
-      } catch (error) {
+      } catch (error) {  
         throw error;
       }
     },
@@ -196,7 +196,7 @@ export const useForgetPasswordOtpVerify = () => {
         userDetails: user,
         token: token,
         role: "student",
-      });
+      });                                                                  
       return response;
     } catch (error) {
       throw error;
@@ -237,17 +237,13 @@ export const useChangePassword = () => {
       setOtpAtom({ email: null, token: null, otp: "" });
       setLoginStep(Login_Step);
       return { success: true, message: response?.message };
-    } catch (error) {
+      } catch (error) {
       console.error("Error setting new password:", error);
       throw error;
     }
   };
-
-  return changePassword;
+  return changePassword;       
 };
-
-
-
 export const useInstructorforgetPassword = () => {
   const [, setOtpAtom] = useAtom(studentOtpAtom);
 

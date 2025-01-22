@@ -98,7 +98,7 @@ const PaymentInterface = () => {
               <Typography
                 sx={{
                   color: "#151010",
-                  fontSize: "24px",
+                  fontSize: "28px",
                   fontWeight: "700",
                   lineHeight: "32px",
                 }}
@@ -114,15 +114,23 @@ const PaymentInterface = () => {
                   fontWeight: "700",
                   lineHeight: "22px",
                   textDecoration: "underline",
+                  transition: "background-color 0.3s, color 0.3s", // Smooth transitions
+                  "&:hover": {
+                    backgroundColor: "rgba(13, 110, 253, 0.1)", // Add a light highlight background on hover
+                    color: "#084298", // Slightly darken the text color
+                    textDecoration: "none", // Optionally remove underline on hover
+                  },
+                 
                 }}
                 component={Link}
                 to={"/instructor/tickets?create=true"}
               >
                 Raise A Ticket?
               </Typography>
+              
               <Typography
                 sx={{
-                  fontSize: "12px",
+                  fontSize: "13px",
                   fontWeight: "400",
                   color: "#495057",
                   lineHeight: "24px",

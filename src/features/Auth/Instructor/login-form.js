@@ -25,6 +25,7 @@ import { useAtom } from "jotai";
 import {instructorLoginStepAtom} from "store/atoms/authAtoms";
 import { ForgetPassword_Step } from "lib/constants";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { InstructorOtp } from "lib/constants";
 
 
 
@@ -97,7 +98,7 @@ const InstructorLoginForm = () => {
             fontFamily: "poppins",
             textAlign: "justify",
             fontSize: 22,
-            mb: 5,
+            mb: 15,
             color: theme.palette.dark.main,
             textAlign : "center",
           }}
@@ -130,6 +131,8 @@ const InstructorLoginForm = () => {
               )}
             </FormControl>
           </Box>
+          
+
           <Box mb={5}>
             <FormControl
               fullWidth
@@ -183,17 +186,53 @@ const InstructorLoginForm = () => {
               </Typography>
             </Box>
             <Button
-              variant="contained"
-              size="large"
-              sx={{ borderRadius: 56, backgroundColor: "#5611B1", my: "20px" }}
-              type="submit"
-            >
-              Sign in
-            </Button>
+  variant="contained"
+  size="large"
+  sx={{
+    borderRadius: 56,
+    backgroundColor: "#5611B1",
+    my: "20px",
+    ":hover": {
+      backgroundColor: "#5611B1", // Keep the background color same
+      transform: "scale(1.1)", // Boom effect: make the button grow
+      transition: "transform 0.3s ease-in-out", // Smooth transition for the scaling effect
+    },
+    ":active": {
+      transform: "scale(1)", // Shrinks back after click (boom effect)
+    },
+  }}
+  type="submit"
+>
+  Sign in
+</Button>
+
           </Box>
           <Box sx={{ display: "flex", justifyContent: "center", mt: 2, gap: "5px" }}>
             <Typography sx={{ fontSize: "0.9375rem",fontWeight: 500,lineHeight: 1.375, color: "#676b7b" }} >Forget Password?</Typography>
-            <Link  to="#" style={{ fontSize: "0.9375", fontWeight: 500, lineHeight: 1.375, color: "#666cff",textDecoration: "none"}} onClick={handleForgetPassword}>Get it</Link>
+            {/* <Link  to="#" style={{ fontSize: "0.9375", fontWeight: 500, lineHeight: 1.375, color: "#666cff",textDecoration: "none"}} onClick={handleForgetPassword}>Get it</Link> */}
+            <Link
+  to="#"
+  style={{
+    fontSize: "0.9375rem",
+    fontWeight: 500,
+    lineHeight: 1.375,
+    color: "#666cff",
+    textDecoration: "none",
+    transition: "color 0.3s ease, text-decoration 0.3s ease",
+  }}
+  onClick={handleForgetPassword}
+  onMouseEnter={(e) => {
+    e.target.style.color = "#3f51b5"; // Change color on hover
+    e.target.style.textDecoration = "underline"; // Underline on hover
+  }}
+  onMouseLeave={(e) => {
+    e.target.style.color = "#666cff"; // Revert to original color
+    e.target.style.textDecoration = "none"; // Remove underline
+  }}
+>
+  Get it
+</Link>
+
           </Box>
           <Box sx={{ mt: 8, display: "flex", alignItems: "center", gap: 1 }}>
             <span>

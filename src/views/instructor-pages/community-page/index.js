@@ -47,6 +47,7 @@ const Community = () => {
         justifyContent: "center",
         alignItems: "center",
         padding: "40px",
+        
       }}
     >
       <Box
@@ -59,6 +60,7 @@ const Community = () => {
           width: "100%",
           display: "flex",
           flexDirection: "column",
+         
         }}
       >
         <Grid container sx={{ flex: 1 }}>

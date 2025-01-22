@@ -8,93 +8,84 @@ import {
   AvatarGroup,
   Menu,
   MenuItem,
-  TextField,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   Button,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  useMediaQuery,
 } from "@mui/material";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
+import SearchIcon from "@mui/icons-material/Search";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
 import CallIcon from "assets/icons/callIcon";
-import SearchIcon from "assets/icons/searchIcon";
-import MuteNotificationModel from "./Models/MuteNotification";
-import ReportModel from "./Models/ReportDialog";
-import AddWallpaper from "./Models/WallPaperModel";
-import MediaModel from "./Models/Media";
 
 const ChatHeader = ({ currentChat }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const [dialogState, setDialogState] = useState({
+    muteOpen: false,
+    reportOpen: false,
+    wallpaperOpen: false,
+    mediaOpen: false,
+    userDetailsOpen: false,
+  });
 
-  const [muteOpen, setMuteOpen] = useState(false);
-  const [reportOpen, setReportOpen] = useState(false);
-  const [wallpaperOpen, setWallpaperOpen] = useState(false);
-  const [mediaOpen, setMediaOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchText, setSearchText] = useState("");
+  const isTablet = useMediaQuery("(max-width: 768px)");
+  const openMenu = Boolean(anchorEl);
 
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
+  const handleMenuClose = () => setAnchorEl(null);
+
+  const toggleDialog = (type, state) => {
+    setDialogState((prevState) => ({ ...prevState, [type]: state }));
+    if (!state) handleMenuClose();
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
+  const handleCall = () => console.log("Initiating a call...");
+  const handleSearch = () => console.log("Search action triggered");
+
+  const handleAvatarClick = () => {
+    toggleDialog("userDetailsOpen", true);
   };
 
-  const handleMuteOpen = () => {
-    setMuteOpen(true);
-    handleMenuClose();
-  };
+  const menuItems = [
+    { label: "Mute Notification", action: () => toggleDialog("muteOpen", true) },
+    { label: "Report", action: () => toggleDialog("reportOpen", true) },
+    { label: "Wallpaper", action: () => toggleDialog("wallpaperOpen", true) },
+    { label: "Group Media", action: () => toggleDialog("mediaOpen", true) },
+  ];
 
-  const handleReportOpen = () => {
-    setReportOpen(true);
-    handleMenuClose();
-  };
+  const totalMembers =
+    (currentChat?.users?.length || 0) + (currentChat?.admin?.length || 0);
 
-  const handleWallpaperOpen = () => {
-    setWallpaperOpen(true);
-    handleMenuClose();
-  };
-
-  const handleMediaOpen = () => {
-    setMediaOpen(true);
-    handleMenuClose();
-  };
-
-  const handleSearchOpen = () => {
-    setSearchOpen(true);
-  };
-
-  const handleSearchClose = () => {
-    setSearchOpen(false);
-    setSearchText("");
-  };
-
-  const handleCall = () => {
-    
-    console.log("Initiating a call...");
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchText(event.target.value);
-  };
+  const allUsers = [...(currentChat?.users || []), ...(currentChat?.admin || [])];
 
   return (
     <Box
       sx={{
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: isTablet ? "center" : "space-between",
         alignItems: "center",
-        padding: "16px",
+        flexDirection: isTablet ? "column" : "row",
+        padding: isTablet ? "12px" : "16px",
+        gap: isTablet ? 2 : 0,
       }}
     >
-      <Grid container alignItems="center" spacing={2}>
+      {/* Left Section */}
+      <Grid
+        container
+        alignItems="center"
+        spacing={2}
+        justifyContent={isTablet ? "center" : "flex-start"}
+      >
         <Grid item>
           <Avatar
-            sx={{ width: 40, height: 40 }}
+            sx={{ width: isTablet ? 50 : 40, height: isTablet ? 50 : 40 }}
             src={
               currentChat?.batch?.course?.image
                 ? getImageUrl(currentChat?.batch?.course?.image)
@@ -104,61 +95,109 @@ const ChatHeader = ({ currentChat }) => {
           />
         </Grid>
         <Grid item>
-          <Typography variant="h6" sx={{ fontWeight: 700 }}>
-            {currentChat?.batch?.batch_name}
+          <Typography
+            variant={isTablet ? "h5" : "h6"}
+            sx={{ fontWeight: 700, textAlign: isTablet ? "center" : "left" }}
+          >
+            {currentChat?.batch?.batch_name || "Chat Name"}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={{ textAlign: isTablet ? "center" : "left" }}
+          >
+            {`Group Members: ${totalMembers}`}
           </Typography>
         </Grid>
       </Grid>
-      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+
+      {/* Right Section */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: isTablet ? 1 : 2,
+          justifyContent: isTablet ? "center" : "flex-end",
+          flexWrap: isTablet ? "wrap" : "nowrap",
+        }}
+      >
         <AvatarGroup
-          max={3}
-          total={currentChat?.users?.length + currentChat?.admin?.length}
+          max={isTablet ? 4 : 3}
+          total={totalMembers}
+          sx={{ justifyContent: "center" }}
         >
-          {currentChat?.users?.map((user) => (
+          {allUsers.map((user) => (
             <Avatar
               key={user?.id}
               alt={user?.full_name}
               src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
-            />
-          ))}
-          {currentChat?.admin?.map((user) => (
-            <Avatar
-              key={user?.id}
-              alt={user?.full_name}
-              src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
+              onClick={handleAvatarClick}
+              sx={{ cursor: "pointer", width: isTablet ? 45 : 40, height: isTablet ? 45 : 40 }}
             />
           ))}
         </AvatarGroup>
-        <IconButton onClick={handleCall}>
-          <CallIcon />
-        </IconButton>
-        <IconButton onClick={handleSearchOpen}>
+
+        <IconButton
+          onClick={handleSearch}
+          sx={{
+            transition: "all 0.3s ease",
+            "&:hover": {
+              backgroundColor: "#E0E0E0",
+              color: "#0D6EFD",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+            },
+            width: isTablet ? 48 : "auto",
+            height: isTablet ? 48 : "auto",
+          }}
+          aria-label="Search"
+        >
           <SearchIcon />
         </IconButton>
+
+        <IconButton
+          onClick={handleCall}
+          sx={{
+            transition: "all 0.3s ease",
+            "&:hover": {
+              backgroundColor: "#E0E0E0",
+              color: "#0D6EFD",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+            },
+            width: isTablet ? 48 : "auto",
+            height: isTablet ? 48 : "auto",
+          }}
+          aria-label="Initiate call"
+        >
+          <CallIcon />
+        </IconButton>
+
         <IconButton
           onClick={handleMenuOpen}
-          sx={{ backgroundColor: open ? "#0D6EFD" : "white" }}
+          sx={{
+            backgroundColor: openMenu ? "#0D6EFD" : "white",
+            width: isTablet ? 48 : "auto",
+            height: isTablet ? 48 : "auto",
+          }}
+          aria-controls={openMenu ? "menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={openMenu ? "true" : undefined}
         >
           <ExpandMoreRoundedIcon
-            sx={{ color: open ? "white" : "#130F26", cursor: "pointer" }}
+            sx={{ color: openMenu ? "white" : "#130F26", fontSize: isTablet ? 30 : "default" }}
           />
         </IconButton>
+
         <Menu
+          id="menu"
           anchorEl={anchorEl}
-          open={open}
+          open={openMenu}
           onClose={handleMenuClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
           PaperProps={{
             elevation: 0,
             sx: {
-              padding: "24px 21px 44px 21px",
+              padding: isTablet ? "16px" : "24px 21px 44px 21px",
               borderRadius: "28px",
               border: "1px solid #DCDCDC",
               boxShadow: "0px 4px 54px 0px rgba(0, 0, 0, 0.25)",
@@ -169,7 +208,6 @@ const ChatHeader = ({ currentChat }) => {
                 lineHeight: "28px",
                 color: "black",
                 display: "flex",
-                justifyItems: "center",
                 alignItems: "center",
                 "&:hover": {
                   backgroundColor: "#0D6EFD",
@@ -179,39 +217,60 @@ const ChatHeader = ({ currentChat }) => {
             },
           }}
         >
-          <MenuItem onClick={handleMuteOpen}>Mute Notification</MenuItem>
-          <MenuItem onClick={handleReportOpen}>Report</MenuItem>
-          <MenuItem onClick={handleWallpaperOpen}>Wallpaper</MenuItem>
-          <MenuItem onClick={handleMediaOpen}>Group Media</MenuItem>
+          {menuItems.map((item, index) => (
+            <MenuItem key={index} onClick={item.action}>
+              {item.label}
+            </MenuItem>
+          ))}
         </Menu>
       </Box>
 
-      <MuteNotificationModel open={muteOpen} setMuteOpen={setMuteOpen} />
-      <ReportModel open={reportOpen} setReportOpen={setReportOpen} />
-      <AddWallpaper open={wallpaperOpen} setWallpaperOpen={setWallpaperOpen} />
-      <MediaModel open={mediaOpen} setMediaOpen={setMediaOpen} />
-
-      {/* Search Dialog */}
-      <Dialog open={searchOpen} onClose={handleSearchClose}>
-        <DialogTitle>Search</DialogTitle>
+      {/* All Users Dialog */}
+      <Dialog
+        open={dialogState.userDetailsOpen}
+        onClose={() => toggleDialog("userDetailsOpen", false)}
+      >
+        <DialogTitle>All Users</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Search..."
-            type="text"
-            fullWidth
-            variant="outlined"
-            value={searchText}
-            onChange={handleSearchChange}
-          />
+          <List>
+            {allUsers.map((user) => (
+              <ListItem key={user?.id} sx={{ marginBottom: 2 }}>
+                <ListItemAvatar>
+                  <Avatar
+                    src={
+                      user?.image
+                        ? getImageUrl(user?.image)
+                        : profilePlaceholder
+                    }
+                    alt={user?.full_name}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={user?.full_name || "Name not available"}
+                  secondary={
+                    <>
+                      <Typography variant="body2" color="textSecondary">
+                        {user?.email || "Email not available"}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {user?.phone || "Phone number not available"}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {user?.role || "Role not available"}
+                      </Typography>
+                    </>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSearchClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleSearchClose} color="primary">
-            Search
+          <Button
+            onClick={() => toggleDialog("userDetailsOpen", false)}
+            color="primary"
+          >
+            Close
           </Button>
         </DialogActions>
       </Dialog>

@@ -6,8 +6,8 @@ import InvoiceReceipt from './InvoiceReceipt'; // Update the import path as nece
 const InvoiceModal = ({ open, onClose, feesdata }) => {
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
-      <DialogTitle>Invoice Receipt</DialogTitle>
-      <p>Paid Amount: ₹{feesdata?.paid_amount}</p>
+      <DialogTitle></DialogTitle>
+      <p>{feesdata?.paid_amount}</p>
       <DialogContent>
         <InvoiceReceipt feesdata={feesdata} />
       </DialogContent>
