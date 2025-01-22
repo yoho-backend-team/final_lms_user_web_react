@@ -34,7 +34,7 @@ const CourseStudentViewPage = ({ Course }) => {
   console.log(selectedClassId,"selectedClassId")
 
   return (
-    <Box sx={{ height: "100vh", overflowY: "auto" }}>
+    <Box sx={{ height: "100vh", overflowY: "auto",backgroundColor: "#f4f5f7"}}>
       <Box sx={{ pl: "40px", pt: "40px" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box
@@ -43,17 +43,18 @@ const CourseStudentViewPage = ({ Course }) => {
             {!courseView ? (
               <Typography
                 sx={{
-                  color: "#000000",
-                  fontSize: "20px",
-                  fontWeight: 800,
-                  lineHeight: "24px",
+                  color: "#1A237E",  
+                  fontSize: "24px",
+                  fontWeight: 900,   
+                  lineHeight: "32px", 
+                  fontFamily: "Arial,sans-serif",
                 }}
               >
                 Course
               </Typography>
             ) : (
               <ArrowBack
-                sx={{ color: "black", cursor: "pointer" }}
+                sx={{ color: "#1A237E", cursor: "pointer",fontSize: "28px"  }}
                 onClick={closeCourseView}
               />
             )}
@@ -78,10 +79,13 @@ const CourseStudentViewPage = ({ Course }) => {
                     backgroundColor: "#5611B1",
                   },
                   "& .MuiTab-root": {
-                    color: "#000000",
+                    color: "#6A1B9A", 
+                    fontSize: "18px",  
+                    fontWeight: 700,  
+                    fontFamily: "Roboto, sans-serif",
                   },
                   "& .Mui-selected": {
-                    color: "#5611B1",
+                    color: "#1A237E",
                   },
                 }}
               >
