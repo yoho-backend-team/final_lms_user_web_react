@@ -80,10 +80,11 @@ const ChatLog = ({ socket, Messages }) => {
   return (
     <Box
       sx={{
+        
         padding: isTablet ? "12px" : "16px", // Adjust padding for tablets
         height: "100%",
         overflowY: "auto",
-        backgroundImage: "url('https://e0.pxfuel.com/wallpapers/722/149/desktop-wallpaper-message-background-whatsapp-message-background.jpg')",
+        backgroundImage: "url('https://i.pinimg.com/originals/62/8a/06/628a064e53d4d2afa7ef36075e98f1b1.jpg')",
         backgroundColor: "#F5F5F5",
          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)"
       }}
@@ -117,6 +118,7 @@ const ChatLog = ({ socket, Messages }) => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
+                
                 alignItems:
                   message.sender === student?._id ? "flex-end" : "flex-start",
               }}

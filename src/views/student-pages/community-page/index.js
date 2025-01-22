@@ -40,36 +40,41 @@ const CommunityPage = () => {
   return (
     // <Box
     //   sx={{
-    //     // height: "85vh",
+    //     height: "85vh",
     //     display: "flex",
     //     justifyContent: "center",
     //     alignItems: "center",
     //     padding:"10px",
     //     paddingTop:"50px",
-       
+    //    mt:"70px",
     //     height:"50%"
     //   }}
     // >
-    <Box
-  sx={{
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "10px",
-    height: "50%",
-   padding:"30px",
-   boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)"
-  }}
->
+     <Box
+   sx={{
+     height: "85vh",
+     display: "flex",
+     justifyContent: "center",
+     alignItems: "center",
+     padding: "30px",
+     height: "20%",
+     mt:"60px",
+    
+ 
+   
+  
+   }}
+ >
       <Box
         sx={{
           backgroundColor: "#FFFFFF",
-          borderRadius: "50px",
+          borderRadius: "3px",
           border: "1px solid #C3C3C3",
           boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
           height: "50%",
           width: "100%",
           display: "flex",
+         
          
           flexDirection: "column",
           
@@ -103,7 +108,6 @@ const CommunityPage = () => {
 };
 
 export default CommunityPage;
-
 
 
 
