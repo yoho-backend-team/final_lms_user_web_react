@@ -117,7 +117,7 @@ export default function CustomizedSteppers() {
                  backgroundColor: '#ffffff',
                  borderRadius: '16px',
                  boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
-                 maxWidth: '800px',
+                 maxWidth: '900px',
                  }} spacing={4}>
         <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
           {steps.map((label, index) => (

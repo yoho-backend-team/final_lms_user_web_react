@@ -236,7 +236,7 @@ const Payment = ({activeStep}) => {
                 <Typography
                     variant='body1'
                     style={{
-                    color: 'var(--Colour-Neutral-1, #878787)',
+                    color: 'var(--Colour-Neutral-1,rgb(135, 135, 135))',
                     fontFamily: 'Nunito Sans',
                     fontSize: '20px',
                     fontStyle: 'normal',
@@ -281,7 +281,7 @@ const Payment = ({activeStep}) => {
                     fontFamily: "Nunito Sans",
                     fontSize: "20px",
                     fontStyle: "normal",
-                    fontWeight: 600,
+                    fontWeight: "bold",
                     lineHeight: "25px",
                     paddingTop:'26px',
                     marginBottom:'20px'
@@ -298,7 +298,17 @@ const Payment = ({activeStep}) => {
                 border: '2px solid #A7D7B4',
                 background: '#E4F4E3',
                 }}>
-                <Typography variant="body1" style={{ color: '#038D00', fontFamily: 'Nunito Sans', fontSize: '20px', fontWeight: 700 }}>
+                <Typography variant="body1" 
+                style={{ 
+                  color: '#038D00',
+                   fontFamily: 'Nunito Sans',
+                    fontSize: '20px', 
+                    fontWeight: 700 ,
+                    "&:hover": {
+                      color: "#005500", 
+                      cursor: "pointer", 
+                    },
+                    }}>
                 {feesData?.pending_payment} INR
                 </Typography>
                 </div>
