@@ -322,11 +322,7 @@ const Payment = ({activeStep}) => {
             </>
         )}     
          </Grid>
-
-
-
-
-      </Grid>
+        </Grid>
 
   );
 };

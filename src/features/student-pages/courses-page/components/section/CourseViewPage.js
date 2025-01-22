@@ -60,7 +60,7 @@ const SingleCourseStudentView = ({ Course,selectedClassId }) => {
 
   
   return (
-    <Box sx={{ padding: "16px" }}>
+    <Box sx={{ padding: "16px" ,backgroundColor: "#E0E0E0",}}>
         <Box>
           <Box
             sx={{
@@ -95,11 +95,11 @@ const SingleCourseStudentView = ({ Course,selectedClassId }) => {
         <Typography
           sx={{
             fontfamily: "Poppins",
-            fontSize: "14px",
-            fontWeight: 600,
-            lineHeight: "11.317px",
-            color: "#000",
-           
+            fontSize: "16px",
+            fontWeight: 900,
+            lineHeight: "1.5",
+            color: "#333",
+            letterSpacing: "1px",
           }}
         >
           Chapter
@@ -119,11 +119,23 @@ const SingleCourseStudentView = ({ Course,selectedClassId }) => {
         <Typography
           sx={{
             fontfamily: "Poppins",
-            fontSize: "28px",
-            fontWeight: 900,
-            lineHeight: "14.761px",
-            color: "#000",
-            marginLeft: '-34px',
+            fontSize: "36px",
+            fontWeight: 800,
+            lineHeight: "1.2",
+            color: "#333",
+            marginLeft: '0',
+            textAlign:"center",
+            letterSpacing: "1px", 
+            background: "linear-gradient(90deg, #5F1AA4, #00A9FF)", 
+            borderRadius: "5px", 
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+            transition: "all 0.3s ease", 
+            "&:hover": {
+              color: "#fff",
+              background: "linear-gradient(90deg, #00A9FF, #5F1AA4)", 
+              boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+              transform: "scale(1.05)", 
+            },
           }}
         >
           97%
@@ -136,7 +148,22 @@ const SingleCourseStudentView = ({ Course,selectedClassId }) => {
                 <Box sx={{ display: "inline-flex", gap: "8px" }}>
                   <NoteIcon width="22px" height="22px" fill="black" />
                   <Typography
-                    sx={{ fontSize: "13px", fontWeight: 700, lineHeight: "22px",fontFamily:"Nunito Sans",lineHeight:"21.825px" }}
+                    sx={{ 
+                      fontfamily: "Poppins",
+                      fontSize: "16px",
+                      fontWeight: 900,
+                      lineHeight: "1.5",
+                      color: "#333",
+                      letterSpacing: "1px",
+                      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                      transition: "all 0.3s ease", 
+                      "&:hover": {
+                        color: "#fff",
+                        background: "linear-gradient(90deg, #00A9FF, #5F1AA4)", 
+                        boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+                        transform: "scale(1.05)", 
+                      },
+                       }}
                   >
                     {Course?.notes?.length} Notes
                   </Typography>
@@ -144,7 +171,22 @@ const SingleCourseStudentView = ({ Course,selectedClassId }) => {
                 <Box sx={{ display: "inline-flex", gap: "8px" }}>
                   <SmartDisplayOutlined sx={{ color: "black" }} />
                   <Typography
-                sx={{ fontSize: "13px", fontWeight: 700, lineHeight: "22px" ,fontFamily:"Nunito Sans",lineHeight:"21.825px"}}
+                sx={{ 
+                  fontfamily: "Poppins",
+                      fontSize: "16px",
+                      fontWeight: 900,
+                      lineHeight: "1.5",
+                      color: "#333",
+                      letterSpacing: "1px",
+                      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                      transition: "all 0.3s ease", 
+                      "&:hover": {
+                        color: "#fff",
+                        background: "linear-gradient(90deg, #00A9FF, #5F1AA4)", 
+                        boxShadow: "0 6px 15px rgba(0, 0, 0, 0.2)",
+                        transform: "scale(1.05)", 
+                      },
+                 }}
               >
                 {" "}
                 {Course?.study_materials?.length} Videos{" "}
@@ -162,10 +204,17 @@ const SingleCourseStudentView = ({ Course,selectedClassId }) => {
                 <Card
                   key={Course}
                   sx={{
-                    minWidth: "200px",
+                    minWidth: "310px",
                     padding: "15px",
                     borderRadius: "16px",
                     boxShadow: "0px 5.044px 38.968px 0px rgba(0, 0, 0, 0.19)",
+                    backgroundColor: "#f5f5f5", 
+                    transition: "all 0.3s ease", 
+                    "&:hover": {
+                    backgroundColor: "#e0e0e0", 
+                    transform: "scale(1.05)", 
+                    boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.2)", 
+                   },
                   }}
                   tabIndex={1}
                 >
@@ -267,7 +316,9 @@ const SingleCourseStudentView = ({ Course,selectedClassId }) => {
             
             </Box>
           </Box>
-          <Box sx={{ paddingTop: "16px", pb: "25px" , p:4, m:2,marginTop: "-26px"}}>
+          <Box sx={{
+             paddingTop: "16px", 
+             pb: "25px" , p:4, m:2,marginTop: "-26px"}}>
             <Typography
               variant="h6"
               sx={{
@@ -276,6 +327,12 @@ const SingleCourseStudentView = ({ Course,selectedClassId }) => {
                 fontWeight: 600,
                 lineHeight: "14px",
                 pb: "25px",
+                "&:hover": {
+                color: "#5611B1",  
+                cursor: "pointer", 
+                transform: "scale(1.05)", 
+                transition: "all 0.3s ease", 
+      },
               }}
             >
               Study Materials
@@ -311,6 +368,12 @@ const SingleCourseStudentView = ({ Course,selectedClassId }) => {
                               fontSize: "16px",
                               fontWeight: 700,
                               lineHeight: "14px",
+                              "&:hover": {
+                              color: "#5611B1",  
+                              cursor: "pointer", 
+                              transform: "scale(1.05)", 
+                              transition: "all 0.3s ease", 
+                             },
                             }}
                           >
                             Chapter-1
@@ -351,6 +414,12 @@ const SingleCourseStudentView = ({ Course,selectedClassId }) => {
                 fontWeight: 600,
                 lineHeight: "14px",
                 pb: "25px",
+                "&:hover": {
+                color: "#5611B1",  
+                cursor: "pointer", 
+                transform: "scale(1.05)", 
+                transition: "all 0.3s ease", 
+      },
               }}
             >
               Notes
