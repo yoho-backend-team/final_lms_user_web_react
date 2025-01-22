@@ -57,13 +57,14 @@ const CommunityPage = () => {
     alignItems: "center",
     padding: "10px",
     height: "50%",
-   padding:"40px"
+   padding:"30px",
+   boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)"
   }}
 >
       <Box
         sx={{
           backgroundColor: "#FFFFFF",
-          borderRadius: "18px",
+          borderRadius: "50px",
           border: "1px solid #C3C3C3",
           boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
           height: "50%",
@@ -71,11 +72,7 @@ const CommunityPage = () => {
           display: "flex",
          
           flexDirection: "column",
-          // paddingTop: {
-          //   xs: "50px", // For small screens (mobile)
-          //   sm: "50px", // For small laptops
-          //   md: "100px", // For tablets
-          // },
+          
         }}
       > 
       

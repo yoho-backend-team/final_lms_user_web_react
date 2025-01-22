@@ -20,10 +20,8 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
-import SearchIcon from "@mui/icons-material/Search";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
-import CallIcon from "assets/icons/callIcon";
 
 const ChatHeader = ({ currentChat }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -45,9 +43,6 @@ const ChatHeader = ({ currentChat }) => {
     setDialogState((prevState) => ({ ...prevState, [type]: state }));
     if (!state) handleMenuClose();
   };
-
-  const handleCall = () => console.log("Initiating a call...");
-  const handleSearch = () => console.log("Search action triggered");
 
   const handleAvatarClick = () => {
     toggleDialog("userDetailsOpen", true);
@@ -136,40 +131,6 @@ const ChatHeader = ({ currentChat }) => {
             />
           ))}
         </AvatarGroup>
-
-        <IconButton
-          onClick={handleSearch}
-          sx={{
-            transition: "all 0.3s ease",
-            "&:hover": {
-              backgroundColor: "#E0E0E0",
-              color: "#0D6EFD",
-              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-            },
-            width: isTablet ? 48 : "auto",
-            height: isTablet ? 48 : "auto",
-          }}
-          aria-label="Search"
-        >
-          <SearchIcon />
-        </IconButton>
-
-        <IconButton
-          onClick={handleCall}
-          sx={{
-            transition: "all 0.3s ease",
-            "&:hover": {
-              backgroundColor: "#E0E0E0",
-              color: "#0D6EFD",
-              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-            },
-            width: isTablet ? 48 : "auto",
-            height: isTablet ? 48 : "auto",
-          }}
-          aria-label="Initiate call"
-        >
-          <CallIcon />
-        </IconButton>
 
         <IconButton
           onClick={handleMenuOpen}

@@ -85,6 +85,7 @@ const ChatLog = ({ socket, Messages }) => {
         overflowY: "auto",
         backgroundImage: "url('https://e0.pxfuel.com/wallpapers/722/149/desktop-wallpaper-message-background-whatsapp-message-background.jpg')",
         backgroundColor: "#F5F5F5",
+         boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)"
       }}
     >
       {/* Messages */}
@@ -96,7 +97,7 @@ const ChatLog = ({ socket, Messages }) => {
           justifyContent={
             message.sender === student?._id ? "flex-end" : "flex-start"
           }
-          sx={{ marginBottom: isTablet ? "6px" : "8px" }} // Adjust margin for tablets
+          sx={{ marginBottom: isTablet ? "6px" : "8px" }} 
           ref={(el) => messageRefs.current.set(message._id, el)}
         >
           <Grid item xs={10} sm={8} md={6}>
