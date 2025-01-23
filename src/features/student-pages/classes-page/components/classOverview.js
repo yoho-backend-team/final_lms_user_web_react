@@ -366,11 +366,11 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                 height: "46px",       
                 boxShadow: "0px 6px 34px -8px #A4A4A4", 
                 cursor : "pointer",
-        "&:hover": {
-          background: "linear-gradient(45deg, #FF5733, #EA0234)", // Reverse gradient on hover
-      transform: "scale(1.05)", // Slight enlargement on hover
-      boxShadow: "0px 6px 8px rgba(0, 0, 0, 0.2)", // Stronger shadow on hover
-        },
+               "&:hover": {
+                background: "linear-gradient(45deg, #FF5733, #EA0234)", 
+               transform: "scale(1.05)", 
+                boxShadow: "0px 6px 8px rgba(0, 0, 0, 0.2)",
+                },
             
               }}
               tabIndex={2}
@@ -438,7 +438,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
         <>
         <Typography
               sx={{
-                color: "#495057",
+                color: "black",
                 fontSize: "20px",
                 fontWeight: 800,
                 lineHeight: "32px",
@@ -475,6 +475,12 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   lineHeight: "24px",
                   border: "2px solid #5611B1",
                   borderRadius: "24px",
+                  transition: "all 0.3s ease", 
+                 "&:hover": {
+                  backgroundColor: "#0D6EFD", 
+                  color: "#fff", 
+                 border: "2px solid #0D6EFD", 
+                },
                 }}
                 tabIndex={4}
               >
@@ -495,13 +501,11 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
               >
                 If any Issue in attendance please raise a Ticket
               </Typography>
-            </Box>
-          </Box>
-        </>
-      )}
-    </>
-
-                 
+              </Box>
+                </Box>
+             </>
+            )}
+            </>  
                   <Typography
                     sx={{
                       color: "black",
@@ -515,14 +519,14 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                     Session Notes
                   </Typography>
                   <Box
-  sx={{
-    display: "flex",
-    gap: "40px",
-    flexDirection: "column",
-  }}
->
-  <Box>
-    <Box
+                  sx={{
+                 display: "flex",
+                 gap: "40px",
+                 flexDirection: "column",
+                 }}
+                  >
+              <Box>
+                <Box
       sx={{
         display: "flex",
         pl: "30px",
@@ -602,17 +606,31 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
               </Grid>
               <Grid item xs={8} md={6}>
                 <Box>
-                  <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2,fontFamily:"Nunito Sans", }}>
+                  <Typography variant="h5" 
+                  sx={{ 
+                    fontWeight: "800",
+                      mb: 2,
+                      color: "#000",
+                      fontSize: "20px",
+                      lineHeight: "16px",
+                      fontFamily:"Nunito Sans",
+                       }}>
                     Other Details
                   </Typography>
-                  <Box sx={{ display: "flex", gap: "40px", mb: 2 }}>
+                  <Box sx={{ display: "flex", gap: "40px", mb: 2 ,}}>
                     <Box
                       sx={{
                         backgroundImage: `url(${ClassStudentViewCard})`,
                         width: "240px",
                         height: "150px",
-                      }}
-                    >
+                        transition: "all 0.3s ease", 
+                       "&:hover": {
+                        transform: "scale(1.05)", 
+                        boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+                         background: "linear-gradient(120deg, rgb(158, 255, 234) 2.28%, #FF7F50 100%)", 
+                         },
+                        }}
+   >
                       <Typography
                         variant="body2"
                         sx={{
@@ -622,6 +640,10 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                           lineHeight: "16px",
                           fontFamily:"Poppins",
                           p: "20px",
+                          transition: "color 0.3s ease", 
+                          "&:hover": {
+                            color: "#1976d2", 
+                          },
                         }}
                       >
                         Students
@@ -666,6 +688,12 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                         backgroundImage: `url(${ClassInstructorViewCard})`,
                         width: "240px",
                         height: "150px",
+                        transition: "all 0.3s ease", 
+                       "&:hover": {
+                        transform: "scale(1.05)", 
+                        boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+                         background: "linear-gradient(120deg,rgb(158, 255, 234) 2.28%, #FF7F50 100%)", 
+                         },
                       }}
                     >
                       <Typography
@@ -677,6 +705,10 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                           lineHeight: "16px",
                           fontFamily:"Poppins",
                           p: "20px",
+                          transition: "color 0.3s ease", 
+                          "&:hover": {
+                            color: "#1976d2", 
+                          },
                         }}
                       >
                         Instructors
@@ -722,6 +754,12 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                       width: "240px",
                       height: "150px",
                       pt: "5px",
+                      transition: "all 0.3s ease", 
+                       "&:hover": {
+                        transform: "scale(1.05)", 
+                        boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+                         background: "linear-gradient(120deg,rgb(158, 255, 234) 2.28%, #FF7F50 100%)", 
+                         },
                     }}
                   >
                     {/* <Typography variant="body1" sx={{ fontWeight: '500',fontSize:"12px",lineHeight:"16px",color:"#435D85",p:"20px" }} >Jerome Bell</Typography> */}
@@ -735,6 +773,10 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                           lineHeight: "16px",
                           fontFamily:"Poppins",
                           pb: "10px",
+                          transition: "color 0.3s ease", 
+                          "&:hover": {
+                            color: "#1976d2", 
+                          },
                         }}
                       >
                         Student Details

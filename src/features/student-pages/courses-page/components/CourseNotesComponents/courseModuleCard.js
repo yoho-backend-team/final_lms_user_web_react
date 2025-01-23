@@ -28,6 +28,11 @@ const CourseStudentModuleCard = ({
         padding: "25.867px 23.1px 30.367px 23px",
         background: `linear-gradient(${style.card})`,
         cursor: "pointer",
+        boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)", 
+        "&:hover": {
+          transform: "scale(1.05)",
+          transition: "transform 0.3s ease",
+        },
       }}
     >
       <Box

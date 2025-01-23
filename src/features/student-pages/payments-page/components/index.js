@@ -56,7 +56,7 @@ const Payment = () => {
 
   return (
     <div className="main-container" style={{display:"none"}}>
-      <Grid container spacing={2} sx={{ p: 4 }}>
+      <Grid container spacing={2} sx={{ p: 4}}>
         <Grid container>
           <Grid item xs={12} sm={6}>
             <Typography
@@ -110,7 +110,7 @@ const Payment = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid container spacing={2} sx={{ p: 3 }}>
+        <Grid container spacing={2} sx={{ p: 4 }}>
           <Grid item xs={12} sm={6} md={4} lg={2.4}>
             <Box
               p={2}
@@ -118,9 +118,9 @@ const Payment = () => {
               borderRadius={2}
               textAlign="center"
               sx={{
-                borderRadius: "10px",
-                border: "1px solid #C3C3C3",
-                background: "#FFF",
+                borderRadius: "15px",
+                border: "2px solid #D3D3D3",
+                background: "#F5F5F5",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -157,7 +157,7 @@ const Payment = () => {
                     fontFamily: "Nunito Sans",
                     fontSize: "16px",
                     fontStyle: "normal",
-                    fontWeight: 700,
+                    fontWeight: 600,
                     lineHeight: "24px",
                   }}
                 >
