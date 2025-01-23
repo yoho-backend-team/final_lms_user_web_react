@@ -36,8 +36,12 @@ const Payment = () => {
 
     fetchStudentFees();
   }, []);
-
-
+  const handleView = (id) => {
+    console.log("View clicked for item:", id);
+  };
+  const handlePayDue = (id) => {
+    console.log("Pay Due clicked for item:", id);
+  };
   const data = [
     { id: 1, text: "Apr 23", type: "pending" },
     { id: 2, text: "Mar 23", type: "bill receipt" },
