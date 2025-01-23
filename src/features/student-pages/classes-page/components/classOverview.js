@@ -888,7 +888,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                             lineHeight: "16px",
                           }}
                         >
-                       Once Class Finished Study Materials will be upoaded
+                       Once Class Finished Study Materials will be uploaded
                         </Typography>
                       )}      
                         {classDetails?.study_materials?.map((item) => (

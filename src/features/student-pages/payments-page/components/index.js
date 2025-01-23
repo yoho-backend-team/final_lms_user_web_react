@@ -112,9 +112,8 @@ const Payment = () => {
         </Grid>
         <Grid container spacing={2}
           sx={{ p: 4,
-          flexWrap: "nowrap", 
-          overflowX: "auto",  }}>
-          <Grid item xs={{ flex: "0 0 auto" }}>
+          overflowX: "auto", gap:"2" }}>
+          <Grid item >
             <Box
               p={2}
               border={1}
@@ -123,26 +122,23 @@ const Payment = () => {
               sx={{
                 borderRadius: "15px",
                 border: "2px solid #D3D3D3",
-                background: "#F5F5F5",
-                display: "flex",
+                 background: "#F5F5F5",
+                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 width: "207px",
                 height: "80px",
-                padding: "12px 20px",
-                justifyContent: "center",
-                transition: "box-shadow 0.3s ease, transform 0.3s ease", 
-              ":hover": {
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
+               justifyContent: "center",
+               transition: "box-shadow 0.3s ease, transform 0.3s ease",
+                ":hover": {
+               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
                transform: "scale(1.05)", 
-              },
-              }}
+        },
+                 }}
             >
               <Box
                 sx={{
                   display: "flex",
-                  alignItems: "center",
-                  width: "100%",
                   justifyContent: "center",
                   paddingBottom: "10px",
                 }}
@@ -186,7 +182,7 @@ const Payment = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={{ flex: "0 0 auto" }}>
+          <Grid item >
             <Box
               p={2}
               border={1}
@@ -258,7 +254,7 @@ const Payment = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={{ flex: "0 0 auto" }}>
+          <Grid item >
             <Box
               p={2}
               border={1}
@@ -330,7 +326,7 @@ const Payment = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={{ flex: "0 0 auto" }}>
+          <Grid item >
             <Box
               p={2}
               border={1}
@@ -402,7 +398,7 @@ const Payment = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={{ flex: "0 0 auto" }}>
+          <Grid item >
             <Box
               p={2}
               border={1}
@@ -1108,30 +1104,43 @@ const Payment = () => {
                         {item.type}
                       </Typography>
 
-                      <Typography
-                        variant="body1"
-                        component={Link}
-                        to="/student/create-ticket"
-                        sx={{
-                          display: "inline-flex",
-                          padding: "9px 24px",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          gap: "8px",
-                          borderRadius: "54px",
-                          border: "1px solid var(--Gray-300, #DEE2E6)",
-                          background: "#CFE3FF",
-                          color: "#0D6EFD",
-                          fontFamily: "Poppins",
-                          fontSize: "14px",
-                          fontStyle: "normal",
-                          fontWeight: 500,
-                          lineHeight: "22px",
-                          textDecoration: "none",
-                        }}
-                      >
-                        View
-                      </Typography>
+                      {item.hasDue && (
+            <button
+              onClick={() => handlePayDue(item.id)}
+              style={{
+                padding: "9px 24px",
+                borderRadius: "54px",
+                border: "1px solid #DEE2E6",
+                background: "#FFF5F5",
+                color: "#DC3545",
+                fontFamily: "Poppins",
+                fontSize: "14px",
+                fontWeight: 500,
+                lineHeight: "22px",
+                cursor: "pointer",
+              }}
+            >
+              PayDue
+            </button>
+          )}
+                   <button
+            onClick={() => handleView(item.id)}
+            style={{
+              padding: "9px 24px",
+              borderRadius: "54px",
+              border: "1px solid #DEE2E6",
+              background: "#CFE3FF",
+              color: "#0D6EFD",
+              fontFamily: "Poppins",
+              fontSize: "14px",
+              fontWeight: 500,
+              lineHeight: "22px",
+              cursor: "pointer",
+              marginLeft: "10px",
+            }}
+          >
+            View
+          </button>
                     </div>
                   </Grid>
                 ))}
