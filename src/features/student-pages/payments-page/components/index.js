@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Grid,Table, TableBody, TableCell, TableContainer, TableHead, TableRow,Paper, Typography, useMediaQuery } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import wallet from "../.../../../../../assets/images/icons/wallet.svg";
@@ -110,8 +110,11 @@ const Payment = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid container spacing={2} sx={{ p: 4 }}>
-          <Grid item xs={12} sm={6} md={4} lg={2.4}>
+        <Grid container spacing={2}
+          sx={{ p: 4,
+          flexWrap: "nowrap", 
+          overflowX: "auto",  }}>
+          <Grid item xs={{ flex: "0 0 auto" }}>
             <Box
               p={2}
               border={1}
@@ -128,7 +131,11 @@ const Payment = () => {
                 height: "80px",
                 padding: "12px 20px",
                 justifyContent: "center",
-                flexShrink: 0,
+                transition: "box-shadow 0.3s ease, transform 0.3s ease", 
+              ":hover": {
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
+               transform: "scale(1.05)", 
+              },
               }}
             >
               <Box
@@ -179,7 +186,7 @@ const Payment = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={2.4}>
+          <Grid item xs={{ flex: "0 0 auto" }}>
             <Box
               p={2}
               border={1}
@@ -196,7 +203,11 @@ const Payment = () => {
                 height: "80px",
                 padding: "12px 20px",
                 justifyContent: "center",
-                flexShrink: 0,
+                transition: "box-shadow 0.3s ease, transform 0.3s ease", 
+               ":hover": {
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
+                 transform: "scale(1.05)", 
+                 },
               }}
             >
               <Box
@@ -247,7 +258,7 @@ const Payment = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={2.4}>
+          <Grid item xs={{ flex: "0 0 auto" }}>
             <Box
               p={2}
               border={1}
@@ -264,7 +275,11 @@ const Payment = () => {
                 height: "80px",
                 padding: "12px 20px",
                 justifyContent: "center",
-                flexShrink: 0,
+                transition: "box-shadow 0.3s ease, transform 0.3s ease",
+                ":hover": {
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                  transform: "scale(1.05)", 
+                },
               }}
             >
               <Box
@@ -315,7 +330,7 @@ const Payment = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={2.4}>
+          <Grid item xs={12} sm={{ flex: "0 0 auto" }}>
             <Box
               p={2}
               border={1}
@@ -332,7 +347,11 @@ const Payment = () => {
                 height: "80px",
                 padding: "12px 20px",
                 justifyContent: "center",
-                flexShrink: 0,
+                transition: "box-shadow 0.3s ease, transform 0.3s ease", 
+                ":hover": {
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
+                  transform: "scale(1.05)", 
+                },
               }}
             >
               <Box
@@ -383,7 +402,7 @@ const Payment = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={2.4}>
+          <Grid item xs={{ flex: "0 0 auto" }}>
             <Box
               p={2}
               border={1}
@@ -400,7 +419,11 @@ const Payment = () => {
                 height: "80px",
                 padding: "12px 20px",
                 justifyContent: "center",
-                flexShrink: 0,
+                transition: "box-shadow 0.3s ease, transform 0.3s ease", 
+                ":hover": {
+                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
+                  transform: "scale(1.05)", 
+                },
               }}
             >
               <Box
@@ -727,9 +750,9 @@ const Payment = () => {
               <Grid item xs={12}>
                 <Box
                   sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    justifyContent: "space-between",
+                    // display: "flex",
+                    // flexWrap: "wrap",
+                    // justifyContent: "space-between",
                     padding: "0 30px",
                   }}
                 >
@@ -843,183 +866,56 @@ const Payment = () => {
               </Grid>
 
               <Grid item xs={12}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    padding: "0 30px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      Tuition Amount
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      {feesData?.course_fees} INR
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      Software Cost
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      13,000.00 INR
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      GST Tax
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      1800.00 INR
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      Paid Amount
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      {feesData?.totalAmount} INR
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      Pending
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#F00",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      ₹{feesData?.pending_payment} INR
-                    </Typography>
-                  </Box>
+            <TableContainer component={Paper} sx={{ margin: "0 30px" }}>
+           <Table>
+           <TableHead>
+            <TableRow>
+            <TableCell 
+            sx={{ 
+              fontWeight: "bold",
+               color: "#495057", fontFamily: "Nunito Sans"
+                }}>Description</TableCell>
+            <TableCell 
+            sx={{ fontWeight: "bold", 
+            color: "#495057", 
+            fontFamily: "Nunito Sans" 
+            }} align="right">Amount (INR)</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>Tuition Amount</TableCell>
+            <TableCell align="right">{feesData?.course_fees}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Software Cost</TableCell>
+            <TableCell align="right">13,000.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>GST Tax</TableCell>
+            <TableCell align="right">1,800.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Paid Amount</TableCell>
+            <TableCell align="right">{feesData?.totalAmount}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Pending</TableCell>
+            <TableCell align="right" sx={{ color: "#F00" }}>
+              ₹{feesData?.pending_payment}
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </Grid>
 
                   <Box
                     sx={{
                       display: "flex",
                       justifyContent: "flex-end",
+                      marginTop: "10px", 
+                      padding: "0 30px"
                     }}
                   >
                     <Typography
@@ -1039,7 +935,7 @@ const Payment = () => {
                       Download receipt
                     </Typography>
                   </Box>
-                </Box>
+                {/* </Box> */}
               </Grid>
             </Grid>
           </Grid>
@@ -1244,7 +1140,7 @@ const Payment = () => {
             </div>
           </Grid>
         </Grid>
-      </Grid>
+      {/* </Grid> */}
     </div>
   );
 };
