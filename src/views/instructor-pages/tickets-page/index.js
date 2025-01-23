@@ -132,9 +132,10 @@ const TicketsPage = () => {
                 <Typography
                   sx={{
                     color: "#000",
-                    fontSize: "24px",
-                    fontWeight: "700",
-                    lineHeight: "22px",
+                    fontSize: "34px",
+                    fontWeight: "800",
+                    lineHeight: "28px",
+                    mb:"10px",
                   }}
                 >
                   Ticket
@@ -162,7 +163,7 @@ const TicketsPage = () => {
                   ))}
                 </Tabs>
               </Box>
-              <Button
+              {/* <Button
                 onClick={handleOpen}
                 variant="contained"
                 sx={{
@@ -177,7 +178,36 @@ const TicketsPage = () => {
                 }}
               >
                 Create Ticket
-              </Button>
+              </Button> */}
+             <Button
+  onClick={handleOpen}
+  variant="contained"
+  sx={{
+    color: "white",
+    backgroundColor: "#5611B1",
+    borderRadius: "8px",
+    boxShadow: "0px 6px 34px -8px #0D6EFD",
+    padding: "9px 24px",
+    fontWeight: 500,
+    fontSize: "18px",
+    lineHeight: "22px",
+    transition: "all 0.3s ease", // Smooth transition for hover and active effects
+    mr: "10px",
+    
+    "&:hover": {
+      backgroundColor: "#450E99", // Slightly darker shade on hover
+      transform: "scale(1.1)", // Adds a more prominent zoom effect on hover (Boom effect)
+      boxShadow: "0px 8px 40px -6px rgba(13, 110, 253, 0.6)", // Elevated shadow on hover
+    },
+    "&:active": {
+      transform: "scale(0.98)", // Slightly shrink when clicked for a "press" effect
+    },
+  }}
+>
+  Create Ticket
+</Button>
+
+
             </Box>
 
             <Grid container spacing={5} sx={{ mt: "40px", height: "calc(100vh - 250px)", overflowY: "auto" }}>

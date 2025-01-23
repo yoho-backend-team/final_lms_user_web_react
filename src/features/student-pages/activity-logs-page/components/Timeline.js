@@ -9,23 +9,23 @@ import { getAllStudentActivity } from '../services';
 
 const TimelineComponent = ({filterData}) => {
   
-  // const [activityLogs, setActivityLogs] = useState([]);
+  const [activityLogs, setActivityLogs] = useState([]);
   
   
 
-  // useEffect(() => {
-  //   const fetchActivityLogs = async () => {
-  //     try {
-  //       const logs = await getAllStudentActivity();
-  //       setActivityLogs(logs);
-  //     } catch (error) {
-  //       console.error("Error fetching activity logs:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchActivityLogs = async () => {
+      try {
+        const logs = await getAllStudentActivity();
+        setActivityLogs(logs);
+      } catch (error) {
+        console.error("Error fetching activity logs:", error);
+      }
+    };
     
 
-  //   fetchActivityLogs();
-  // }, []);
+    fetchActivityLogs();
+  }, []);
   const getIcon = (type) => {
     switch (type) {
       case 'login':
@@ -41,30 +41,30 @@ const TimelineComponent = ({filterData}) => {
     }
   };
   
-  // const getLogs = (type, username) => {
-  //   switch (type) {
-  //     case 'login':
-  //       return [
-  //         `The User ${activityLogs[0]?.user?.username} Successfully Login`,
-  //         `The User ${activityLogs[0]?.user?.username} Failed Login Process`,
-  //       ];
-  //     case 'delete':
-  //       return [
-  //         `The User ${activityLogs[0]?.user?.username} Successful event after correct password confirmation`,
-  //         `The User ${activityLogs[0]?.user?.username} Failed event after wrong password confirmation`,
-  //       ];
-  //     case 'passwordChange':
-  //       return [
-  //         `The User ${activityLogs[0]?.user?.username} Successful event after correct password confirmation`,
-  //       ];
-  //     case 'Ticket Create':
-  //       return [
-  //         `The User  ${activityLogs[0]?.user?.username} ticket Created Sucessfully,`,
-  //       ];
-  //     default:
-  //       return [];
-  //   }
-  // };
+  const getLogs = (type, username) => {
+    switch (type) {
+      case 'login':
+        return [
+          `The User ${activityLogs[0]?.user?.username} Successfully Login`,
+          `The User ${activityLogs[0]?.user?.username} Failed Login Process`,
+        ];
+      case 'delete':
+        return [
+          `The User ${activityLogs[0]?.user?.username} Successful event after correct password confirmation`,
+          `The User ${activityLogs[0]?.user?.username} Failed event after wrong password confirmation`,
+        ];
+      case 'passwordChange':
+        return [
+          `The User ${activityLogs[0]?.user?.username} Successful event after correct password confirmation`,
+        ];
+      case 'Ticket Create':
+        return [
+          `The User  ${activityLogs[0]?.user?.username} ticket Created Sucessfully,`,
+        ];
+      default:
+        return [];
+    }
+  };
 
 
   

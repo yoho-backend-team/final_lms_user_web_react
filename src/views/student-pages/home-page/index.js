@@ -24,6 +24,7 @@ import offlineclass from ".././../../assets/images/icons/offlineclass.svg"
 import { selectLoading, selectStudentDashboard } from "features/student-pages/home-page/redux/selectors.js";
 import getAllReports from "features/student-pages/home-page/redux/thunks.js";
 import { selectStudentNotifications } from "features/common/redux/studentSelector.js";
+import { getInstituteDetails, getStudentDetails, getStudentInstituteDetails } from "store/atoms/authorized-atom.js";
 
 
 
@@ -33,7 +34,9 @@ const StudentDashboard = () => {
   const [editProfileClicked, setEditProfileClicked] = useState(false);
   const [personalInfo, setPersonalInfo] = useState("");
   const Notification = useSelector(selectStudentNotifications)
+  const studentDetails = getStudentInstituteDetails()
 
+  console.log(studentDetails,"student")
     const dispatch = useDispatch()
     const reports = useSelector(selectStudentDashboard); 
     const loading = useSelector(selectLoading);

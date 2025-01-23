@@ -63,7 +63,7 @@ console.log(feesData,"feesData")
   
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
-
+   
     doc.text("Course Details", 20, 10);
     doc.text(`Course Name: ${feesData?.course?.course_name}`, 20, 20);
     doc.text(`Institute: Rajalakshmi Institute`, 20, 30);

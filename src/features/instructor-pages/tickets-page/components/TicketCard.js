@@ -3,7 +3,7 @@ import { Box, Typography, Grid, Button } from "@mui/material";
 import SubWayPinIcon from "assets/icons/subWayPinIcon";
 
 const TicketCard = ({
-  ticket,handleTicketViewOpen,handleTicketViewClose
+  ticket, handleTicketViewOpen, handleTicketViewClose
 }) => {
   const statusColor = {
     opened: "#008375",
@@ -19,14 +19,27 @@ const TicketCard = ({
     <Grid
       item
       xs={12}
-      sx={{ 
+      sx={{
         display: "flex",
         flexDirection: "column",
         background: "#FFF",
         borderRadius: "16px",
-        p: "16px",
+        p: "4px",
+        pl:"10px",
+        pr:"10px",
+        pt:"10px",
+        pb:"5px",
+        height:"200px",
+        
         boxShadow: "0px 2.4px 25px 0px rgba(160, 170, 255, 0.24)",
-        transition : "transform 0.3s ease"
+        transition: "transform 0.3s ease, box-shadow 0.3s ease", // Smooth transition
+        mt: "0px",
+        mb: "0px",
+        mr:"20px",
+        "&:hover": {
+          transform: "scale(1.05)", // Slightly increase size on hover
+          boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)", // Add a shadow on hover
+        },
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -108,7 +121,7 @@ const TicketCard = ({
           </Typography>
         </Box>
         <Box>
-          <Button
+          {/* <Button
             onClick={() => handleTicketViewOpen(ticket)}
             variant="contained"
             sx={{
@@ -116,10 +129,34 @@ const TicketCard = ({
               borderRadius: "8px",
               backgroundColor: statusColor[ticket?.status],
               padding: "9px 24px",
+              "&:hover": {
+                backgroundColor: ticket?.status === "opened" ? "#005f50" : "#d0842e", // Darken the color on hover
+                transform: "scale(1.05)", // Slightly increase the size
+                boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)", // Add a shadow
+              },
             }}
           >
             {ticket?.status}
-          </Button>
+          </Button> */}
+          <Button
+  onClick={() => handleTicketViewOpen(ticket)}
+  variant="contained"
+  sx={{
+    color: "white",
+    borderRadius: "8px",
+    backgroundColor: statusColor[ticket?.status],
+    padding: "9px 24px",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease", // Smooth transition for transform and box-shadow
+    "&:hover": {
+      backgroundColor: ticket?.status === "opened" ? "#005f50" : "#d0842e", // Darken the color on hover
+      transform: "scale(1.1)", // Increase the size on hover
+      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)", // Add a shadow on hover
+    },
+  }}
+>
+  {ticket?.status}
+</Button>
+
         </Box>
       </Box>
     </Grid>
