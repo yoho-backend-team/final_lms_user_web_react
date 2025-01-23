@@ -129,7 +129,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
               <Box sx={{ display: "inline-flex", alignItems: "center" }}>
                 <Typography
                   sx={{
-                    color: "#ADB5BD",
+                    color: "#6A0DAD",
                     fontSize: "16px",
                     fontFamily:"Poppins",
                     fontWeight: 600,
@@ -199,6 +199,9 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                       display: "flex",
                       justifyContent: "flex-start",
                       mb: 2,
+                      borderRadius: "18px",
+                      padding: "20px 20px",
+                      
                     }}
                   >
                     <Box
@@ -208,7 +211,8 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                         backgroundColor: "#BCE1F1",
                         borderRadius: "18px",
                         padding: "28px 20px",
-                        
+                        borderTop: "1px solid #427A92", 
+                        borderBottom: "2px solid #427A92", 
                       }}
                     >
                       <Box>
@@ -327,7 +331,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
         <>
            <Typography
         sx={{
-          color: "#495057",
+          color: "blue",
           fontSize: "20px",
           fontWeight: 800,
           lineHeight: "32px",
@@ -341,7 +345,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
 
           <Typography
             sx={{
-              color: "#828282",
+              color: "black",
               fontSize: "14px",
               fontWeight: 600,
               fontFamily:"Nunito Sans",
@@ -392,7 +396,11 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                 border: "2px solid #5611B1",
                 fontFamily:"Nunito Sans",
                 borderRadius: "24px",
-                
+                "&:hover": {
+                  background: "linear-gradient(45deg,rgb(51, 173, 255),rgb(2, 56, 234))", 
+                 transform: "scale(1.05)", 
+                  boxShadow: "0px 6px 8px rgba(0, 0, 0, 0.2)",
+                  },
               }}
               tabIndex={3}
             >
@@ -405,7 +413,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
               <InfoOutlinedIcon sx={{ color: "#828282", height: '18px', width: '18px' }} />
               <Typography
                 sx={{
-                  color: "#828282",
+                  color: "gray",
                   fontSize: "11px",
                   fontWeight: 400,
                   lineHeight: "20px",
@@ -418,10 +426,10 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
               </Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <InfoOutlinedIcon sx={{ color: "#828282", height: '18px', width: '18px' }} />
+              <InfoOutlinedIcon sx={{ color: "#4CAF50", height: '18px', width: '18px' }} />
               <Typography
                 sx={{
-                  color: "#828282",
+                  color: "gray",
                   fontSize: "11px",
                   fontWeight: 400,
                   lineHeight: "20px",
@@ -452,7 +460,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
             <Box sx={{ display: "flex", justifyContent: "space-between",marginRight:'50px', marginBottom: "10px" }}>
               <Typography
                 sx={{
-                  color: "#828282",
+                  color: "red",
                   fontSize: "14px",
                   fontWeight: 600,
                   lineHeight: "32px",
@@ -483,6 +491,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                 },
                 }}
                 tabIndex={4}
+                onClick={() => handleDownload()}
               >
                 Check Attendance
               </Button>
@@ -513,6 +522,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                       fontWeight: 800,
                       lineHeight: "32px",
                       fontFamily:"Nunito Sans",
+                      marginBottom:"10px"
                     }}
                     
                   >
@@ -539,17 +549,31 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
       }}
     >
       {classDetails?.notes?.length === 0 && ( 
+        <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row", 
+          justifyContent: "center", 
+          alignItems: "center", 
+          padding: "10px", 
+          backgroundColor: "#F5F5F5", 
+          borderRadius: "8px", 
+          border: "1px solid #ddd", 
+        }}
+      >
         <Typography
           sx={{
             color: "black",
             fontSize: "14px",
             fontWeight: 400,
             lineHeight: "16px",
-            fontFamily:"Nunito Sans",
+            fontFamily: "Nunito Sans",
           }}
         >
           Once Class Finished Videos will be uploaded
         </Typography>
+      </Box>
+      
       )}
       {classDetails?.notes?.map((item) => (
         <Box
@@ -560,7 +584,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
             backgroundColor: "#FFFFFF",
             border: "1px solid #CCCCCC",
             borderRadius: "8px",
-            gap: "23px",
+            gap: "18px",
           }}
         >
           <Box>
@@ -821,6 +845,10 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                       color: "#000",
                       fontSize: "20px",
                       fontFamily:"Nunito Sans",
+                      transition: "color 0.3s ease", 
+                          "&:hover": {
+                            color: "#1976d2", 
+                          },
                     }}
                   >
                     Study Materials
