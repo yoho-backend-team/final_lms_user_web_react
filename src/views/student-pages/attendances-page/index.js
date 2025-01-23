@@ -27,11 +27,17 @@ import CustomCalendar from "features/student-pages/attendances-page/components/C
 import { getStudentDetails } from "store/atoms/authorized-atom";
 import { useNavigate } from "react-router-dom";
 
+const months = [
+  "January", "February", "March", "April", "May", "June", 
+  "July", "August", "September", "October", "November", "December"
+];
+
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    height: "100vh",
+    height: "100vh", 
     width: "100vw",
+    overflow: "hidden",
   },
   card: {
     backgroundImage: `url(${AttedenceMainBg})`,
@@ -43,92 +49,70 @@ const useStyles = makeStyles({
     position: "relative",
     overflow: "hidden",
   },
-  headerImg: {
-    position: "absolute",
-  },
-  header2Img: {
-    opacity: 0.5,
-  },
-  monthText: {
-    position: "absolute",
-    color: "white",
-    top: "7px",
-    right: 0,
-    padding: "5px 10px",
-    borderRadius: "5px",
-    fontSize: "20px",
-    fontWeight: 700,
-  },
-  formControl: {
-    minWidth: 120,
+  scrollContainer: {
+    height: "calc(100vh - 120px)", 
+    overflowY: "auto", 
+    paddingRight: "10px", 
+    "@media (max-width: 600px)": {
+      height: "calc(100vh - 80px)", 
+    },
   },
   sidebar: {
     paddingTop: "40px",
     paddingLeft: "31px",
     overflowY: "auto",
-    maxHeight: "calc(100vh - 150px)",
+    maxHeight: "100%",
   },
   content: {
     padding: "20px 20px 20px 0",
-    overflowY: "auto",
-    maxHeight: "calc(100vh - 150px)",
+    height: "100%",
+  },
+  statsContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "20px",
+    "@media (max-width: 600px)": {
+      flexDirection: "column",
+      gap: "15px",
+    },
   },
 });
 
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const getCurrentMonth = () => {
-  const date = new Date();
-  return months[date.getMonth()];
-};
-
 const Attendance = () => {
   const classes = useStyles();
-  const [selectedMonth, setSelectedMonth] = React.useState(new Date().getMonth());
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [attendance, setAttendance] = useState([]);
-  const [ attendance_data,setAttendanceData] = useState([])
+  const [attendance_data, setAttendanceData] = useState([]);
   const [loading, setLoading] = useState(false);
   const { tabView } = useTabResponsive();
   const { showSpinner, hideSpinner } = useSpinner();
-  const navigate = useNavigate()
-  const date = new Date()
+  const navigate = useNavigate();
+  const date = new Date();
 
   const getAttedenceDetails = async (month) => {
     try {
       showSpinner();
       const user = getStudentDetails();
       const response = await Client.Student.attendance.get({
-        userId: user.uuid, month: month  , instituteId: user.institute_id?.uuid
+        userId: user.uuid, 
+        month: month, 
+        instituteId: user.institute_id?.uuid
       });
-      setAttendanceData(response?.data)
+      setAttendanceData(response?.data);
+      setAttendance(response?.data?.attendanceDetails || []);
     } catch (error) {
-      toast.error(error?.message)
+      toast.error(error?.message);
     } finally {
       hideSpinner();
     }
   };
   
   const handleChange = (event) => {
-    setSelectedMonth(event.target.value);
-    getAttedenceDetails(event.target.value)
+    const newMonth = event.target.value;
+    setSelectedMonth(newMonth);
+    getAttedenceDetails(newMonth);
   };
 
-  const handleview = () =>{
-    navigate(`student/tickets?create=true`)
-  }
   useEffect(() => {
     getAttedenceDetails(selectedMonth);
   }, []);
@@ -138,297 +122,158 @@ const Attendance = () => {
   }
 
   const totalClasses = (attendance_data?.onlineClassCount ?? 0) + (attendance_data?.offlineClassCount ?? 0);
-  console.log(attendance_data,"attendance_data")
-  console.log(totalClasses,"totalClasses")
+
   return (
     <Box
       className={classes.root}
-      sx={{ padding: tabView ? "36px 20px 20px 20px" : "56px 40px 17px 40px" }}
+      sx={{ 
+        padding: tabView ? "20px" : "56px 40px 17px 40px",
+      }}
     >
       <Box className={classes.card}>
+        {/* Header Section */}
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            flexDirection: "row",
-            height: "58px",
-            width: "100%",
+            alignItems: "center",
+            padding: "20px 31px",
           }}
         >
-          <Box>
-            <Typography
-              sx={{
-                color: "#282828",
-                fontSize: "24px",
-                fontWeight: 800,
-                lineHeight: "24px",
-                pt: "34px",
-                pl: "31px",
-              }}
-            >
-              Attendance
-            </Typography>
-          </Box>
-          <Box className={classes.headerImgContainer}>
-            <img
-              src={StudentAttendanceHeader}
-              className={classes.headerImg}
-              alt="Header 1"
-            />
-            <img
-              src={StudentAttendanceHeader2}
-              className={classes.header2Img}
-              alt="Header 2"
-            />
-            <Typography className={classes.monthText}>{months[selectedMonth]}{"  "} {date.getFullYear()}</Typography>
-          </Box>
+          <Typography
+            sx={{
+              color: "#282828",
+              fontSize: "24px",
+              fontWeight: 800,
+            }}
+          >
+            Attendance
+          </Typography>
+          {!tabView && (
+            <Box>
+              <img
+                src={StudentAttendanceHeader}
+                alt="Header 1"
+                style={{ position: "absolute", top: 0, right: 0 }}
+              />
+              <Typography 
+                sx={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "20px",
+                  color: "white",
+                  fontSize: "20px",
+                }}
+              >
+                {months[selectedMonth]} {date.getFullYear()}
+              </Typography>
+            </Box>
+          )}
         </Box>
-        <Grid container>
-          <Grid item xs={tabView ? 12 : 4} className={classes.sidebar}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                pr: "40px",
-              }}
-            >
-              <FormControl className={classes.formControl}>
-                <Select
-                  id="month-select"
-                  size="small"
-                  value={selectedMonth}
-                  onChange={handleChange}
-                  IconComponent={() => (
-                    <ExpandMoreIcon sx={{ color: "black" }} />
-                  )}
-                  sx={{
-                    border: "1px solid #0D6EFD",
-                    backgroundColor: "white",
-                    borderRadius: "8px",
-                    display: "flex",
-                    padding: "8px 14px",
-                    gap: "8px",
-                  }}
-                >
-                  {months.map((month, index) => (
-                    <MenuItem key={index} value={index}>
-                      {month}
-                    </MenuItem>
+
+        {/* Scrollable Content Container */}
+        <Box className={classes.scrollContainer}>
+          <Grid container spacing={2}>
+            {/* Sidebar Section */}
+            <Grid item xs={12} md={4}>
+              <Box sx={{ padding: "0 20px" }}>
+                {/* Month Selector */}
+                <FormControl fullWidth sx={{ mb: 2 }}>
+                  <Select
+                    value={selectedMonth}
+                    onChange={handleChange}
+                    IconComponent={ExpandMoreIcon}
+                  >
+                    {months.map((month, index) => (
+                      <MenuItem key={index} value={index}>
+                        {month}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+
+                {/* Stats Boxes */}
+                <Box className={classes.statsContainer}>
+                  {[
+                    {
+                      title: "Present days",
+                      color: "#D5FFDA",
+                      value: `${attendance_data?.totalPresentDays ?? 0}/${attendance_data?.totalWorkingDays ?? 0}`,
+                      textColor: "#2C9939"
+                    },
+                    {
+                      title: "Absent days",
+                      color: "#FFD5D5",
+                      value: attendance_data?.totalAbsentDays ?? 0,
+                      textColor: "#A04A4A"
+                    },
+                    {
+                      title: "Classes Atten",
+                      color: "#FFF5D1",
+                      value: `${attendance_data?.attendedClassCount ?? 0}/${totalClasses}`,
+                      textColor: "#9F8015"
+                    }
+                  ].map((stat, index) => (
+                    <Box
+                      key={index}
+                      sx={{
+                        backgroundColor: stat.color,
+                        borderRadius: "10px",
+                        padding: "20px",
+                        width: tabView ? "100%" : "calc(50% - 10px)",
+                        boxSizing: "border-box"
+                      }}
+                    >
+                      <Typography 
+                        sx={{ 
+                          color: stat.textColor, 
+                          fontSize: "18px", 
+                          mb: 2 
+                        }}
+                      >
+                        {stat.title}
+                      </Typography>
+                      <Typography 
+                        sx={{ 
+                          fontSize: "32px", 
+                          fontWeight: "bold" 
+                        }}
+                      >
+                        {stat.value}
+                      </Typography>
+                    </Box>
                   ))}
-                </Select>
-              </FormControl>
-              <Box sx={{ display: tabView ? "flex" : "none" }}>
+                </Box>
+
+                {/* Create Ticket Button */}
                 <Button
-                 component={Link}
-                 onClick={handleview}
-                 to={"/student/tickets?create=true"}
-                  sx={{
-                    backgroundColor: "##0D6EFD",
-                    boxShadow: "0px 6px 34px -8px #0D6EFD",
-                    borderRadius: "8px",
-                    padding: tabView ? "9px 24px" : "9px 82px",
-                    fontSize: "14px",
-                    fontWeight: 500,
-                    color: "#0D6EFD",
-                  }}
-                  tabIndex={1}
-                >
-                  Create Ticket
-                </Button>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                pt: "20px",
-                display: tabView ? "inline-flex" : "flex",
-                gap: "20px",
-                flexWrap: "wrap",
-              }}
-            >
-              <Box
-                sx={{
-                  padding: tabView
-                    ? "36px 20px 20px 20px"
-                    : "36px 35px 36px 27px",
-                  backgroundColor: "#D5FFDA",
-                  borderRadius: "10px",
-                }}
-              >
-                <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
-                >
-                  <Box>
-                    <Typography
-                      sx={{
-                        color: "#2C9939",
-                        fontSize: "20px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                        fontFamily:"Nunito Sans"
-                      }}
-                      tabIndex={1}
-                    >
-                      Present days
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: "inline-flex" }}>
-                    <Typography
-                      sx={{
-                        fontSize: "40px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                        letterSpacing: "0.8px",
-                        color: "#000",
-                        fontFamily:"Barlow Condensed"
-                      }}
-                    >
-                      {attendance_data?.totalPresentDays}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: "40px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                        letterSpacing: "0.8px",
-                        color: "#2C9939",
-                        fontFamily:"Barlow Condensed"
-                      }}
-                      
-                    >
-                      /{attendance_data?.totalWorkingDays}
-                    </Typography>
-                  </Box>
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  padding: "36px 35px 36px 27px",
-                  backgroundColor: "#FFD5D5",
-                  borderRadius: "10px",
-                }}
-              >
-                <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
-                >
-                  <Box>
-                    <Typography
-                      sx={{
-                        color: "#A04A4A",
-                        fontSize: "20px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                        fontFamily:"Nunito Sans"
-                      }}
-                      
-                    >
-                      Absent days
-                    </Typography>
-                  </Box>
-                  <Box>
-                    <Typography
-                      sx={{
-                        fontSize: "40px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                        letterSpacing: "0.8px",
-                       color: "#000",
-                        fontFamily:"Barlow Condensed"
-                      }}
-                    >
-                      {attendance_data?.totalAbsentDays}
-                    </Typography>
-                  </Box>
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  padding: "36px 35px 36px 27px",
-                  backgroundColor: "#FFF5D1",
-                  borderRadius: "10px",
-                }}
-              >
-                <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
-                >
-                  <Box>
-                    <Typography
-                      sx={{
-                        color: "#9F8015",
-                        fontSize: "20px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                       fontFamily:"Nunito Sans"
-                      }}
-                     
-                    >
-                      Classes Atten
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: "inline-flex" }}>
-                    <Typography
-                      sx={{
-                        fontSize: "40px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                        letterSpacing: "0.8px",
-                       color: "#000",
-                        fontFamily:"Barlow Condensed"
-                      }}
-                    >
-                      {attendance_data?.attendedClassCount}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: "40px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                        letterSpacing: "0.8px",
-                         color: "#9F8015",
-                        fontFamily:"Barlow Condensed"
-                      }}
-                    >
-                      /{totalClasses}
-                    </Typography>
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: tabView ? "none" : "flex",
-                flexDirection: "column-reverse",
-                pt: "72px",
-              }}
-            >
-              <Box>
-                <Button
-                  component={Link}
-                  to={"/student/tickets?create=true"}
-                  sx={{
+                  fullWidth
+                  variant="contained"
+                  sx={{ 
+                    mt: 2,
                     backgroundColor: "#0D6EFD",
-                    boxShadow: "0px 6px 34px -8px #0D6EFD",
-                    borderRadius: "8px",
-                    padding: "9px 82px",
-                    fontSize: "14px",
-                    fontWeight: 500,
-                    fontFamily:"Poppins",
-                    color: "#FBFBFB",
-                    ":hover":{
+                    color: "white",
+                    '&:hover': {
                       backgroundColor: "#0D6EFD",
                     }
                   }}
-                  tabIndex={2}
+                  onClick={() => navigate("/student/tickets?create=true")}
                 >
                   Create Ticket
                 </Button>
               </Box>
-            </Box>
+            </Grid>
+
+            {/* Calendar Section */}
+            <Grid item xs={12} md={8}>
+              <CustomCalendar 
+                attendanceData={attendance} 
+                getAttedenceDetails={getAttedenceDetails} 
+                attendance_data={attendance_data}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={tabView ? 12 : 8} className={classes.content}>
-            <CustomCalendar attendanceData={attendance} getAttedenceDetails={getAttedenceDetails} attendance_data={attendance_data}   />
-          </Grid>
-        </Grid>
+        </Box>
       </Box>
     </Box>
   );
