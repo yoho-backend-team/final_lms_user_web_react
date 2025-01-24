@@ -1,7 +1,7 @@
 import { instructorDetails, isAuthenticatedInstructor } from "lib/constants";
 import { useState, useEffect, createContext, useContext } from "react";
 import { io } from "socket.io-client";
-import { checkUserLoggedIn } from "store/atoms/authorized-atom";
+import { checkUserLoggedIn, getInstructorDetails } from "store/atoms/authorized-atom";
 
 const SocketContext = createContext()
 
@@ -18,8 +18,11 @@ export const InstructorSocketProvider = ({children}) => {
      if(isLoggedIn){
 
        const socketIO = io(url)
+
+        const user = getInstructorDetails()
+        socketIO.emit("registeronline",{userId:user?._id})
+
        setSocket(socketIO)
-   
        return () => {
            socketIO.disconnect()
        }
