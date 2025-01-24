@@ -8,79 +8,51 @@ import {
   AvatarGroup,
   Menu,
   MenuItem,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  useMediaQuery,
+  Tooltip,
 } from "@mui/material";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
+import GroupDetails from "./Models/GroupDetails"; // Import the GroupDetails component
 
 const ChatHeader = ({ currentChat }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [dialogState, setDialogState] = useState({
-    muteOpen: false,
-    reportOpen: false,
-    wallpaperOpen: false,
-    mediaOpen: false,
-    userDetailsOpen: false,
-  });
+  const open = Boolean(anchorEl);
 
-  const isTablet = useMediaQuery("(max-width: 768px)");
-  const openMenu = Boolean(anchorEl);
+  const [viewGroup, setViewGroup] = useState(false); // State to toggle group details view
 
-  const handleMenuOpen = (event) => setAnchorEl(event.currentTarget);
-  const handleMenuClose = () => setAnchorEl(null);
-
-  const toggleDialog = (type, state) => {
-    setDialogState((prevState) => ({ ...prevState, [type]: state }));
-    if (!state) handleMenuClose();
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const handleAvatarClick = () => {
-    toggleDialog("userDetailsOpen", true);
+  const handleMenuClose = () => {
+    setAnchorEl(null);
   };
 
-  const menuItems = [
-    { label: "Mute Notification", action: () => toggleDialog("muteOpen", true) },
-    { label: "Report", action: () => toggleDialog("reportOpen", true) },
-    { label: "Wallpaper", action: () => toggleDialog("wallpaperOpen", true) },
-    { label: "Group Media", action: () => toggleDialog("mediaOpen", true) },
-  ];
+  const handleViewGroup = () => {
+    setViewGroup(true);
+    handleMenuClose();
+  };
 
-  const totalMembers =
-    (currentChat?.users?.length || 0) + (currentChat?.admin?.length || 0);
-
-  const allUsers = [...(currentChat?.users || []), ...(currentChat?.admin || [])];
+  // Render the group details page if `viewGroup` is true
+  if (viewGroup) {
+    return <GroupDetails currentChat={currentChat} setViewGroup={setViewGroup} />;
+  }
 
   return (
     <Box
       sx={{
         display: "flex",
-        justifyContent: isTablet ? "center" : "space-between",
+        justifyContent: "space-between",
         alignItems: "center",
-        flexDirection: isTablet ? "column" : "row",
-        padding: isTablet ? "12px" : "16px",
-        gap: isTablet ? 2 : 0,
+        padding: "16px",
+        
       }}
     >
-      {/* Left Section */}
-      <Grid
-        container
-        alignItems="center"
-        spacing={2}
-        justifyContent={isTablet ? "center" : "flex-start"}
-      >
+      <Grid container alignItems="center" spacing={2}>
         <Grid item>
           <Avatar
-            sx={{ width: isTablet ? 50 : 40, height: isTablet ? 50 : 40 }}
+            sx={{ width: 65, height: 40 }}
             src={
               currentChat?.batch?.course?.image
                 ? getImageUrl(currentChat?.batch?.course?.image)
@@ -90,75 +62,60 @@ const ChatHeader = ({ currentChat }) => {
           />
         </Grid>
         <Grid item>
-          <Typography
-            variant={isTablet ? "h5" : "h6"}
-            sx={{ fontWeight: 700, textAlign: isTablet ? "center" : "left" }}
-          >
-            {currentChat?.batch?.batch_name || "Chat Name"}
-          </Typography>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            sx={{ textAlign: isTablet ? "center" : "left" }}
-          >
-            {`Group Members: ${totalMembers}`}
+          <Typography variant="h6" sx={{ fontWeight: 700 }}>
+            {currentChat?.batch?.batch_name}
           </Typography>
         </Grid>
       </Grid>
-
-      {/* Right Section */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          gap: isTablet ? 1 : 2,
-          justifyContent: isTablet ? "center" : "flex-end",
-          flexWrap: isTablet ? "wrap" : "nowrap",
-        }}
-      >
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
         <AvatarGroup
-          max={isTablet ? 4 : 3}
-          total={totalMembers}
-          sx={{ justifyContent: "center" }}
+          max={3}
+          total={currentChat?.users?.length + currentChat?.admin?.length}
         >
-          {allUsers.map((user) => (
-            <Avatar
-              key={user?.id}
-              alt={user?.full_name}
-              src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
-              onClick={handleAvatarClick}
-              sx={{ cursor: "pointer", width: isTablet ? 45 : 40, height: isTablet ? 45 : 40 }}
-            />
+          {currentChat?.users?.map((user) => (
+            <Tooltip title={user?.full_name} key={user?.id}>
+              <Avatar
+                alt={user?.full_name}
+                src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
+                sx={{ cursor: "pointer" }}
+              />
+            </Tooltip>
+          ))}
+          {currentChat?.admin?.map((user) => (
+            <Tooltip title={user?.full_name} key={user?.id}>
+              <Avatar
+                alt={user?.full_name}
+                src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
+                sx={{ cursor: "pointer" }}
+              />
+            </Tooltip>
           ))}
         </AvatarGroup>
 
         <IconButton
           onClick={handleMenuOpen}
-          sx={{
-            backgroundColor: openMenu ? "#0D6EFD" : "white",
-            width: isTablet ? 48 : "auto",
-            height: isTablet ? 48 : "auto",
-          }}
-          aria-controls={openMenu ? "menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={openMenu ? "true" : undefined}
+          sx={{ backgroundColor: open ? "#0D6EFD" : "white" }}
         >
           <ExpandMoreRoundedIcon
-            sx={{ color: openMenu ? "white" : "#130F26", fontSize: isTablet ? 30 : "default" }}
+            sx={{ color: open ? "white" : "#130F26", cursor: "pointer" }}
           />
         </IconButton>
-
         <Menu
-          id="menu"
           anchorEl={anchorEl}
-          open={openMenu}
+          open={open}
           onClose={handleMenuClose}
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          transformOrigin={{ vertical: "top", horizontal: "right" }}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
           PaperProps={{
             elevation: 0,
             sx: {
-              padding: isTablet ? "16px" : "24px 21px 44px 21px",
+              padding: "14px ",
               borderRadius: "28px",
               border: "1px solid #DCDCDC",
               boxShadow: "0px 4px 54px 0px rgba(0, 0, 0, 0.25)",
@@ -168,8 +125,6 @@ const ChatHeader = ({ currentChat }) => {
                 fontWeight: 500,
                 lineHeight: "28px",
                 color: "black",
-                display: "flex",
-                alignItems: "center",
                 "&:hover": {
                   backgroundColor: "#0D6EFD",
                   color: "#FFFFFF",
@@ -178,63 +133,9 @@ const ChatHeader = ({ currentChat }) => {
             },
           }}
         >
-          {menuItems.map((item, index) => (
-            <MenuItem key={index} onClick={item.action}>
-              {item.label}
-            </MenuItem>
-          ))}
+          <MenuItem onClick={handleViewGroup}>View Group</MenuItem>
         </Menu>
       </Box>
-
-      {/* All Users Dialog */}
-      <Dialog
-        open={dialogState.userDetailsOpen}
-        onClose={() => toggleDialog("userDetailsOpen", false)}
-      >
-        <DialogTitle>All Users</DialogTitle>
-        <DialogContent>
-          <List>
-            {allUsers.map((user) => (
-              <ListItem key={user?.id} sx={{ marginBottom: 2 }}>
-                <ListItemAvatar>
-                  <Avatar
-                    src={
-                      user?.image
-                        ? getImageUrl(user?.image)
-                        : profilePlaceholder
-                    }
-                    alt={user?.full_name}
-                  />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={user?.full_name || "Name not available"}
-                  secondary={
-                    <>
-                      <Typography variant="body2" color="textSecondary">
-                        {user?.email || "Email not available"}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {user?.phone || "Phone number not available"}
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {user?.role || "Role not available"}
-                      </Typography>
-                    </>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            onClick={() => toggleDialog("userDetailsOpen", false)}
-            color="primary"
-          >
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Box>
   );
 };
