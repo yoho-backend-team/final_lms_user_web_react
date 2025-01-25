@@ -67,6 +67,8 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
             paddingBottom:"1px", 
               borderTop: "1px solid #E0E0E0",
             }}
+
+            
           >
             <BottomBar socket={socket} community={currentChat} />
           </Box>
