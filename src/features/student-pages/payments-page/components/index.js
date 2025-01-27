@@ -116,7 +116,7 @@ const Payment = () => {
         </Grid>
         <Grid container spacing={2}
           sx={{ p: 4,
-          overflowX: "auto", gap:"2" }}>
+          overflowX: "auto", gap:"1" }}>
           <Grid item >
             <Box
               p={2}
@@ -349,7 +349,7 @@ const Payment = () => {
                 justifyContent: "center",
                 transition: "box-shadow 0.3s ease, transform 0.3s ease", 
                 ":hover": {
-                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
+                  boxShadow: "0 4px 8px hsla(0, 0.00%, 0.00%, 0.48)", 
                   transform: "scale(1.05)", 
                 },
               }}
@@ -421,7 +421,7 @@ const Payment = () => {
                 justifyContent: "center",
                 transition: "box-shadow 0.3s ease, transform 0.3s ease", 
                 ":hover": {
-                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
+                  boxShadow: "0 4px 8px rgba(255, 0, 0, 0.2)", 
                   transform: "scale(1.05)", 
                 },
               }}

@@ -451,7 +451,7 @@ console.log(feesData,"feesData")
         <TableBody>
           <TableRow>
             <TableCell>Tuition Amount</TableCell>
-            <TableCell align="right">{feesData?.course_fees}81200 INR</TableCell>
+            <TableCell align="right">{feesData?.course_fees}81,200 INR</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Software Cost</TableCell>
@@ -468,7 +468,7 @@ console.log(feesData,"feesData")
           <TableRow>
             <TableCell>Pending</TableCell>
             <TableCell align="right" sx={{ color: "#F00" }}>
-              ₹{feesData?.pending_payment}16000INR
+              ₹{feesData?.pending_payment}16,000INR
             </TableCell>
           </TableRow>
         </TableBody>
