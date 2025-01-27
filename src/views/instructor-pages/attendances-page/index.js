@@ -9,6 +9,7 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import {
   AttedenceMainBg,
@@ -24,11 +25,16 @@ import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
-const useStyles = makeStyles({
+const theme = createTheme();
+
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
-    height: "100vh",
+    minHeight: "100vh",
     width: "100vw",
+    [theme.breakpoints.down('md')]: {
+      padding: "20px 10px !important",
+    },
   },
   card: {
     backgroundImage: `url(${AttedenceMainBg})`,
@@ -40,11 +46,20 @@ const useStyles = makeStyles({
     position: "relative",
     overflow: "hidden",
   },
+  headerImgContainer: {
+    position: "relative",
+  },
   headerImg: {
     position: "absolute",
+    [theme.breakpoints.down('md')]: {
+      display: "none",
+    },
   },
   header2Img: {
     opacity: 0.5,
+    [theme.breakpoints.down('md')]: {
+      display: "none",
+    },
   },
   monthText: {
     position: "absolute",
@@ -58,33 +73,64 @@ const useStyles = makeStyles({
   },
   formControl: {
     minWidth: 120,
+    width: "100%",
   },
   sidebar: {
-    paddingTop: "40px",
-    paddingLeft: "31px",
-    overflowY: "auto",
-    maxHeight: "calc(100vh - 150px)",
+    padding: "20px",
+    [theme.breakpoints.up('md')]: {
+      paddingTop: "40px",
+      paddingLeft: "31px",
+      overflowY: "auto",
+      maxHeight: "calc(100vh - 150px)",
+    },
   },
   content: {
-    padding: "20px 20px 20px 0",
-    overflowY: "auto",
-    maxHeight: "calc(100vh - 150px)",
+    padding: "20px",
+    [theme.breakpoints.up('md')]: {
+      padding: "20px 20px 20px 0",
+      overflowY: "auto",
+      maxHeight: "calc(100vh - 150px)",
+    },
   },
-});
+  statsContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "20px",
+    [theme.breakpoints.down('md')]: {
+      flexDirection: "column",
+      width: "100%",
+    },
+  },
+  statsBox: {
+    flex: 1,
+    padding: "20px",
+    borderRadius: "10px",
+    minWidth: "200px",
+    [theme.breakpoints.down('md')]: {
+      minWidth: "100%",
+    },
+  },
+  createTicketContainer: {
+    display: "flex",
+    flexDirection: "column-reverse",
+    paddingTop: "72px",
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
+  },
+  mobileCreateTicketContainer: {
+    display: 'none',
+    [theme.breakpoints.down('md')]: {
+      display: 'block',
+      marginTop: '20px',
+      width: '100%',
+    },
+  },
+}));
 
 const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  "January", "February", "March", "April", "May", "June", 
+  "July", "August", "September", "October", "November", "December"
 ];
 
 const getCurrentMonth = () => {
@@ -94,15 +140,15 @@ const getCurrentMonth = () => {
 
 const Attendance = () => {
   const classes = useStyles();
-  const [selectedMonth, setSelectedMonth] = React.useState(getCurrentMonth());
+  const [selectedMonth, setSelectedMonth] = useState(getCurrentMonth());
   const [attendance, setAttendance] = useState([]);
-  const [ attendance_data,setAttendanceData] = useState([])
-  const [attendance_report,setAttendance_report] = useState(null)
+  const [attendance_data, setAttendanceData] = useState([]);
+  const [attendance_report, setAttendance_report] = useState(null);
   const [loading, setLoading] = useState(false);
   const { tabView } = useTabResponsive();
   const { showSpinner, hideSpinner } = useSpinner();
-  const navigate = useNavigate()
-  const date = new Date()
+  const navigate = useNavigate();
+  const date = new Date();
 
   const getAttedenceDetails = async (month) => {
     try {
@@ -111,10 +157,10 @@ const Attendance = () => {
       const response = await Client.Instructor.attendance.get({
         userId: user.uuid, month: month
       });
-      setAttendance_report(response?.data)
-      setAttendanceData(response?.data)
+      setAttendance_report(response?.data);
+      setAttendanceData(response?.data);
     } catch (error) {
-      toast.error(error?.message)
+      toast.error(error?.message);
     } finally {
       hideSpinner();
     }
@@ -127,10 +173,10 @@ const Attendance = () => {
       const response = await Client.Instructor.attendance.get({
         userId: user.uuid, month: month
       });
-      setAttendance_report(response?.data)
-      setAttendanceData(response?.data)
+      setAttendance_report(response?.data);
+      setAttendanceData(response?.data);
     } catch (error) {
-      toast.error(error?.message)
+      toast.error(error?.message);
     } finally {
       hideSpinner();
     }
@@ -143,23 +189,24 @@ const Attendance = () => {
       const response = await Client.Instructor.attendance.get({
         userId: user.uuid, month: month
       });
-      setAttendanceData(response?.data)
+      setAttendanceData(response?.data);
     } catch (error) {
-      toast.error(error?.message)
+      toast.error(error?.message);
     } finally {
       hideSpinner();
     }
   };
   
   const handleChange = (event) => {
-    setSelectedMonth(event.target.value);
-    getAttedenceDetails(event.target.value)
-    handleUpdateReports(event.target.value)
+    const newMonth = event.target.value;
+    setSelectedMonth(newMonth);
+    getAttedenceDetails(newMonth);
+    handleUpdateReports(newMonth);
   };
 
   const handleTicketView = () => {
-    navigate(`/instructor/ticket?create=true`)
-  }
+    navigate(`/instructor/ticket?create=true`);
+  };
 
   useEffect(() => {
     getAttedenceDetails(selectedMonth);
@@ -170,254 +217,151 @@ const Attendance = () => {
   }
 
   return (
-    <Box
-      className={classes.root}
-      sx={{ padding: tabView ? "36px 20px 20px 20px" : "56px 40px 17px 40px" }}
-    >
-      <Box className={classes.card}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            flexDirection: "row",
-            height: "58px",
-            width: "100%",
-          }}
-        >
-          <Box>
+    <ThemeProvider theme={theme}>
+      <Box
+        className={classes.root}
+        sx={{ padding: tabView ? "20px" : "56px 40px 17px 40px" }}
+      >
+        <Box className={classes.card}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              flexDirection: "row",
+              height: tabView ? "auto" : "58px",
+              width: "100%",
+              padding: tabView ? "20px" : "0",
+            }}
+          >
             <Typography
               sx={{
                 color: "#282828",
-                fontSize: "24px",
+                fontSize: tabView ? "20px" : "24px",
                 fontWeight: 800,
                 lineHeight: "24px",
-                pt: "34px",
-                pl: "31px",
+                paddingBottom: tabView ? "10px" : "0",
               }}
             >
               Attendance
             </Typography>
-          </Box>
-          <Box className={classes.headerImgContainer}>
-            <img
-              src={AttedenceHeaderImg}
-              className={classes.headerImg}
-              alt="Header 1"
-            />
-            <img
-              src={AttedenceHeader2Img}
-              className={classes.header2Img}
-              alt="Header 2"
-            />
-            <Typography className={classes.monthText}>{selectedMonth}{"  "}{date.getFullYear()}</Typography>
-          </Box>
-        </Box>
-        <Grid container>
-          <Grid item xs={tabView ? 12 : 4} className={classes.sidebar}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                pr: "40px",
-              }}
-            >
-              <FormControl className={classes.formControl}>
-                <Select
-                  id="month-select"
-                  size="small"
-                  value={selectedMonth}
-                  onChange={handleChange}
-                  IconComponent={() => (
-                    <ExpandMoreIcon sx={{ color: "black" }} />
-                  )}
-                  sx={{
-                    border: "1px solid #5611B1",
-                    backgroundColor: "white",
-                    borderRadius: "8px",
-                    display: "flex",
-                    padding: "8px 14px",
-                    gap: "8px",
-                  }}
-                >
-                  {months.map((month, index) => (
-                    <MenuItem key={index} value={month}>
-                      {month}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <Box sx={{ display: tabView ? "flex" : "none" }}>
-                <Button
-                  sx={{
-                    backgroundColor: "#5611B1",
-                    boxShadow: "0px 6px 34px -8px #5611B1",
-                    borderRadius: "8px",
-                    padding: tabView ? "9px 24px" : "9px 82px",
-                    fontSize: "14px",
-                    fontWeight: 500,
-                    color: "#FBFBFB",
-                  }}
-                  component = {Link}
-                  onClick={handleTicketView}
-                  to={"/instructor/ticket?create=true"}
-                >
-                  Create Ticket
-                </Button>
-              </Box>
+            
+            <Box className={classes.headerImgContainer}>
+              <img
+                src={AttedenceHeaderImg}
+                className={classes.headerImg}
+                alt="Header 1"
+              />
+              <img
+                src={AttedenceHeader2Img}
+                className={classes.header2Img}
+                alt="Header 2"
+              />
+              <Typography className={classes.monthText}>
+                {selectedMonth} {date.getFullYear()}
+              </Typography>
             </Box>
-            <Box
-              sx={{
-                pt: "20px",
-                display: tabView ? "inline-flex" : "flex",
-                gap: "20px",
-                flexWrap: "wrap",
-              }}
-            >
+          </Box>
+
+          <Grid container>
+            <Grid item xs={12} md={4} className={classes.sidebar}>
               <Box
                 sx={{
-                  padding: tabView
-                    ? "36px 20px 20px 20px"
-                    : "36px 35px 36px 27px",
-                  backgroundColor: "#B8FEBF",
-                  borderRadius: "10px",
+                  display: "flex",
+                  flexDirection: tabView ? "column" : "row",
+                  justifyContent: "space-between",
+                  gap: "10px",
+                  marginBottom: "20px",
                 }}
               >
-                <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
-                >
-                  <Box>
-                    <Typography
-                      sx={{
-                        color: "#2C9939",
-                        fontSize: "20px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                      }}
-                    >
-                      Present days
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: "inline-flex" }}>
-                    <Typography
-                      sx={{
-                        fontSize: "40px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                        letterSpacing: "0.8px",
-                        color: "blacks",
-                      }}
-                    >
-                      {attendance_report?.presentDays}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: "40px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                        letterSpacing: "0.8px",
-                        color: "#2C9939",
-                      }}
-                    >
-                      /{attendance_report?.totalWorkingDays}
-                    </Typography>
-                  </Box>
+                <FormControl className={classes.formControl}>
+                  <Select
+                    fullWidth
+                    id="month-select"
+                    size="small"
+                    value={selectedMonth}
+                    onChange={handleChange}
+                    IconComponent={ExpandMoreIcon}
+                    sx={{
+                      border: "1px solid #5611B1",
+                      backgroundColor: "white",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    {months.map((month, index) => (
+                      <MenuItem key={index} value={month}>
+                        {month}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                
+                <Box className={classes.mobileCreateTicketContainer}>
+                  <Button
+                    fullWidth
+                    sx={{
+                      backgroundColor: "#5611B1",
+                      boxShadow: "0px 6px 34px -8px #5611B1",
+                      borderRadius: "8px",
+                      padding: "9px 24px",
+                      fontSize: "14px",
+                      fontWeight: 500,
+                      color: "#FBFBFB",
+                      ":hover": { backgroundColor: "#5611B1" },
+                    }}
+                    component={Link}
+                    to="/instructor/ticket?create=true"
+                    onClick={handleTicketView}
+                  >
+                    Create Ticket
+                  </Button>
                 </Box>
               </Box>
-              <Box
-                sx={{
-                  padding: "36px 35px 36px 27px",
-                  backgroundColor: "#EBACAC",
-                  borderRadius: "10px",
-                }}
-              >
-                <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
+
+              <Box className={classes.statsContainer}>
+                <Box 
+                  className={classes.statsBox}
+                  sx={{ backgroundColor: "#B8FEBF" }}
                 >
-                  <Box>
-                    <Typography
-                      sx={{
-                        color: "#A04A4A",
-                        fontSize: "20px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                      }}
-                    >
-                      Absent days
+                  <Typography sx={{ color: "#2C9939", fontSize: "20px", fontWeight: 600 }}>
+                    Present Days
+                  </Typography>
+                  <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
+                    {attendance_report?.presentDays || 0}
+                    <Typography component="span" sx={{ color: "#2C9939" }}>
+                      /{attendance_report?.totalWorkingDays || 0}
                     </Typography>
-                  </Box>
-                  <Box>
-                    <Typography
-                      sx={{
-                        fontSize: "40px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                        letterSpacing: "0.8px",
-                        color: "blacks",
-                      }}
-                    >
-                      {attendance_report?.absentDays}
+                  </Typography>
+                </Box>
+
+                <Box 
+                  className={classes.statsBox}
+                  sx={{ backgroundColor: "#EBACAC" }}
+                >
+                  <Typography sx={{ color: "#A04A4A", fontSize: "20px", fontWeight: 600 }}>
+                    Absent Days
+                  </Typography>
+                  <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
+                    {attendance_report?.absentDays || 0}
+                  </Typography>
+                </Box>
+
+                <Box 
+                  className={classes.statsBox}
+                  sx={{ backgroundColor: "#FFE896" }}
+                >
+                  <Typography sx={{ color: "#9F8015", fontSize: "20px", fontWeight: 600 }}>
+                    Classes Atten
+                  </Typography>
+                  <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
+                    {attendance_report?.total_class || 0}
+                    <Typography component="span" sx={{ color: "#9F8015" }}>
+                      /{attendance_report?.total_class || 0}
                     </Typography>
-                  </Box>
+                  </Typography>
                 </Box>
               </Box>
-              <Box
-                sx={{
-                  padding: "36px 35px 36px 27px",
-                  backgroundColor: "#FFE896",
-                  borderRadius: "10px",
-                }}
-              >
-                <Box
-                  sx={{ display: "flex", flexDirection: "column", gap: "30px" }}
-                >
-                  <Box>
-                    <Typography
-                      sx={{
-                        color: "#9F8015",
-                        fontSize: "20px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                      }}
-                    >
-                      Classes Atten
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: "inline-flex" }}>
-                    <Typography
-                      sx={{
-                        fontSize: "40px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                        letterSpacing: "0.8px",
-                        color: "blacks",
-                      }}
-                    >
-                      {attendance_report?.total_class}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: "40px",
-                        fontWeight: 600,
-                        lineHeight: "24px",
-                        letterSpacing: "0.8px",
-                        color: "#9F8015",
-                      }}
-                    >
-                      /{attendance_report?.total_class}
-                    </Typography>
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: tabView ? "none" : "flex",
-                flexDirection: "column-reverse",
-                pt: "72px",
-              }}
-            >
-              <Box>
+
+              <Box className={classes.createTicketContainer}>
                 <Button
                   sx={{
                     backgroundColor: "#5611B1",
@@ -431,20 +375,27 @@ const Attendance = () => {
                       backgroundColor: "#5611B1",
                     }
                   }}
-                  component = {Link}
-                  to={"/instructor/tickets?create=true"}
+                  component={Link}
+                  to="/instructor/ticket?create=true"
+                  onClick={handleTicketView}
                 >
                   Create Ticket
                 </Button>
               </Box>
-            </Box>
+            </Grid>
+
+            <Grid item xs={12} md={8} className={classes.content}>
+              <InstructorAttendance 
+                attendanceData={attendance} 
+                getAttedenceDetails={getAttedenceDetails} 
+                attendance_data={attendance_data}
+                handleUpdateDetails={handleUpdateDetails}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={tabView ? 12 : 8} className={classes.content}>
-            <InstructorAttendance attendanceData={attendance} getAttedenceDetails={getAttedenceDetails} attendance_data={attendance_data} handleUpdateDetails={handleUpdateDetails}  />
-          </Grid>
-        </Grid>
+        </Box>
       </Box>
-    </Box>
+    </ThemeProvider>
   );
 };
 
