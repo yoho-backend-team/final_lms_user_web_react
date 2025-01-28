@@ -20,7 +20,16 @@ const Verify = ({paymentMethod}) => {
     
  
     return (
-    <Box>
+    <Box
+    sx={{
+      backgroundColor: "#ffe0e0", 
+      padding: "16px",           
+      borderRadius: "8px", 
+      "&:hover": {
+        color: "#005cf2",
+        cursor: "pointer", 
+      },      
+    }}>
     <Typography
       variant="body1"
       style={{
@@ -45,15 +54,17 @@ const Verify = ({paymentMethod}) => {
             InputLabelProps={{
                 shrink: true, 
             }}
-            InputProps={{
+            onChange={(e) => console.log(e.target.value)}
+          /*  InputProps={{
                 readOnly: true, 
-            }}
+            }}*/
             />
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                 <TextField
                     fullWidth
                     label="Code"
+                    placeholder="1234"
                     variant="outlined"
                     margin="normal"
                     />
@@ -64,10 +75,10 @@ const Verify = ({paymentMethod}) => {
          </Grid>
         
         <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'right', gap: '16px', marginTop: '16px' }}>
-        <Button variant="outlined" style={{ width: '100px' }}  onClick={handleCancel}>
+        <Button variant="contained" color="primary" style={{ width: '100px' }}  onClick={handleCancel}>
         Cancel
       </Button>
-          <Button variant="contained" color="primary" style={{ width: '100px' }}>
+          <Button variant="contained" color="primary" style={{ width: '100px' }}  onClick={handleCancel}>
             Pay
           </Button>
         </div>

@@ -37,7 +37,11 @@ const PaymentMethod = () => {
       
   
     return (   
-        <Box>
+        <Box  sx={{
+          backgroundColor: "lightgray", 
+          padding: "18px", 
+          borderRadius: "8px", 
+        }}>
         <Typography
           variant="body1"
           style={{
@@ -66,7 +70,7 @@ const PaymentMethod = () => {
                 gap="30px"
                 marginRight="10px"
                 display="flex"
-                width="150px"
+                width="100px"
                 height="49px"
                 paddingLeft="10px"
                 alignItems="center"
@@ -84,7 +88,7 @@ const PaymentMethod = () => {
                 gap="30px"
                 marginRight="10px"
                 display="flex"
-                width="150px"
+                width="120px"
                 height="49px"
                 paddingLeft="10px"
                 alignItems="center"
@@ -102,7 +106,7 @@ const PaymentMethod = () => {
                 gap="30px"
                 marginRight="10px"
                 display="flex"
-                width="150px"
+                width="100px"
                 height="49px"
                 paddingLeft="10px"
                 alignItems="center"
@@ -202,7 +206,7 @@ const PaymentMethod = () => {
         <Button variant="outlined" style={{ width: '100px' }}  onClick={handleCancel}>
         Cancel
       </Button>
-          <Button variant="contained" color="primary" style={{ width: '100px' }}>
+          <Button variant="contained" color="primary" style={{ width: '100px' }} onClick={handleCancel}>
             Pay
           </Button>
         </div>

@@ -49,6 +49,10 @@ const NotesUpload = ({ handleFileChange, updateClass }) => {
           fontSize: "18px",
           fontWeight: 600,
           lineHeight: "24px",
+          backgroundColor: "#5611B1",
+          "&:hover": {
+            backgroundColor: "#421096",  
+          },
         }}
       >
         Notes
@@ -95,12 +99,18 @@ const NotesUpload = ({ handleFileChange, updateClass }) => {
                 </Box>
                 <Box sx={{ mb: 2 }}>
                   <Field
-                    name="description"
+                    name="title"
                     as={TextField}
-                    label="Description"
+                    label="title"
                     fullWidth
                     multiline
                     rows={4}
+                    sx={{
+                      backgroundColor: "#fff",  
+                      borderRadius: "8px", 
+                      padding: "10px", 
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", 
+                    }}
                   />
                   <ErrorMessage
                     name="description"
@@ -129,13 +139,22 @@ const NotesUpload = ({ handleFileChange, updateClass }) => {
                   style={{ color: "red" }}
                 />
                 <DialogActions>
-                  <Button onClick={handleClose} sx={{ fontSize: "12px" }}>
+                  <Button onClick={handleClose} sx={{ fontSize: "12px",textTransform: "capitalize",
+                  transition: "background-color 0.3s ease", 
+                 "&:hover": {
+                  backgroundColor: "#e0e0e0",  
+                  }, }}>
                     Cancel
                   </Button>
                   <Button
                     type="submit"
                     color="primary"
-                    sx={{ fontSize: "12px" }}
+                    sx={{ fontSize: "12px" ,textTransform: "capitalize",
+                      transition: "background-color 0.3s ease", 
+                      "&:hover": {
+                        backgroundColor: "#5611B1", 
+                        color: "#fff", 
+                      },}}
                   >
                     Upload
                   </Button>

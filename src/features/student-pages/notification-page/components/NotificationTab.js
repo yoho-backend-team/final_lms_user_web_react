@@ -56,6 +56,9 @@ const NotificationTab = ({
         backgroundColor: "#FFF",
         color: "#333",
         borderLeft: "1px solid #E0E0E0",
+        boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+        ml:"15px",
+        mr:"10px"
       }}
     >
       <Box
@@ -63,6 +66,7 @@ const NotificationTab = ({
           padding: "24px 16px",
           display: "flex",
           flexDirection: "column",
+          height: "95vh",
           gap: "16px",
         }}
       >

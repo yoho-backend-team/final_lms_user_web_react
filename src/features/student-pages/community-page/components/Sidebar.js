@@ -39,6 +39,7 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages,se
           paddingLeft: "32px",
           paddingTop: "20px",
           paddingRight: "12px",
+          
         }}
       >
         <TextField
@@ -80,7 +81,7 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages,se
       </Box>
       <Box
         sx={{
-          padding: "30px",
+          padding: "18px",
           height : "60vh",
           overflow : "auto",
          

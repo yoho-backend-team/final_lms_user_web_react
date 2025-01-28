@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@mui/material";
-import ClassCard from "../card/ClassCard";
+import ClassCard, { ClassCardHeader } from "../card/ClassCard";
 
 const classes = [
   {
@@ -39,6 +39,7 @@ const defaultStyles = {
 const CompletedClassList = ({ data, classType,group, image}) => {
   return (
     <Box sx={{ mt: 3, px: "40px" }}>
+      <ClassCardHeader />
       {data?.map((cls) => (
         <ClassCard
           key={cls.id}

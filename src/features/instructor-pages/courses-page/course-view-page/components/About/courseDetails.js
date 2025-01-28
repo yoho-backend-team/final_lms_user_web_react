@@ -128,6 +128,7 @@ const CourseDetails = ({ Course }) => {
               fontSize: "14px",
               fontWeight: 700,
               lineHeight: "10px",
+              textTransform: "uppercase",
             }}
           >
             By Rajalakshmi Institute
