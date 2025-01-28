@@ -38,15 +38,15 @@ const AttendanceCard = ({ Attendance }) => {
 
   const options = {
     chart: {
-      height: 300,
+      height: 800,
       type: "radialBar",
     },
-    series: reports?.attendance?.[0]?.total?.percentage ? [reports.attendance?.[0]?.total?.percentage] : [0],
+    series: reports?.attendance?.[0]?.total?.percentage ? [reports.attendance?.[0]?.total?.percentage] : [75],
     plotOptions: {
       radialBar: {
         hollow: {
-          margin: 15,
-          size: "50%",
+          margin: 1,
+          size: "30%",
         },
         dataLabels: {
           showOn: "always",
@@ -79,17 +79,20 @@ const AttendanceCard = ({ Attendance }) => {
     <Card
     sx={{
       p: 3,
-      boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
-      background: "#EFEFFF",
-      borderRadius: "8px",
+      boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.2)",
+      background: "#EFFFFF",
+      width: "369px",
+      height: "202px",
+      borderRadius: "16px",
       border: "1px solid #BAA3E8",
       backgroundImage: `url(${AttedenceBg})`,
-      backgroundSize: "138% 190%",
+      backgroundSize: "auto",
       backgroundPosition: "center",
       height: 'auto',
       '@media screen and (max-width: 600px)': {
         backgroundSize: "cover",
         backgroundPosition: "center",
+        
       },
     }}
   >  
