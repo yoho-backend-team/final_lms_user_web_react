@@ -37,7 +37,8 @@ const PaymentsCard = () => {
               display: "flex",
               backgroundColor: "#97D79D",
               borderRadius: "0px 0px 0px 0px",
-              padding: 2.3,
+              padding:{ xs: 1.5, sm: 2.3 }, 
+              fontweight:"900",
             }}
           >
             <Grid xs={6} sx={{ display: "flex", justifyContent: "start" }}>
@@ -63,7 +64,7 @@ const PaymentsCard = () => {
                   color: '#2C6831',         
                   textAlign: 'right',      
                   fontFamily: 'Work Sans', 
-                  fontSize: 14,            
+                  fontSize: { xs: 12, sm: 14 },            
                   fontStyle: 'normal',
                   fontWeight: 400,
                   lineHeight: 'normal',   
@@ -75,11 +76,12 @@ const PaymentsCard = () => {
             </Grid>
           </Grid>
           <Grid xs={12}>
-            <Box sx={{ p: 3 }}>
-              <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+            <Box sx={{ p: { xs: 2, sm: 3 } }}> 
+              <Box sx={{ display: "flex",flexDirection: { xs: "column", sm: "row" },  gap: 2, mb: 2 }}>
                 <Box>
                   <Avatar
-                    sx={{ backgroundColor: "#038400", width: 20, height: 20 }} >
+                    sx={{ backgroundColor: "#038400",width: { xs: 16, sm: 20 },
+                    height: { xs: 16, sm: 20 },  }} >
                     <CurrencyRupeeRoundedIcon fontSize="small" />
                   </Avatar>
                 </Box>
@@ -89,7 +91,7 @@ const PaymentsCard = () => {
                     sx={{
                       color: 'var(--Colour-Neutral-1, #000)',  
                       fontFamily: 'Poppins',  
-                      fontSize: '16px',  
+                       fontSize: { xs: 14, sm: 16 }, 
                       fontStyle: 'normal',
                       fontWeight: 500,
                       lineHeight: 'normal',
@@ -97,12 +99,12 @@ const PaymentsCard = () => {
                   >
                     Payment Pending for April
                   </Typography>
-                  <Box sx={{ display: "flex", gap: 1, mt: 0.5 }}>
+                  <Box sx={{ display: "flex",flexDirection: { xs: "column", sm: "row" }, gap: 1, mt: 0.5 }}>
                   <Typography
                       sx={{
                         color: 'var(--Colour-Neutral-1, #696969)', 
                         fontFamily: 'Poppins', 
-                        fontSize: '14px', 
+                         fontSize: { xs: 12, sm: 14 }, 
                         fontStyle: 'normal',
                         fontWeight: 300,
                         lineHeight: 'normal', 
