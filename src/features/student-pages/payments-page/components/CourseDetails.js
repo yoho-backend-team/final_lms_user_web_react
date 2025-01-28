@@ -451,11 +451,11 @@ console.log(feesData,"feesData")
         <TableBody>
           <TableRow>
             <TableCell>Tuition Amount</TableCell>
-            <TableCell align="right">{feesData?.course_fees}81,200 INR</TableCell>
+            <TableCell align="right">{feesData?.course_fees} INR</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Software Cost</TableCell>
-            <TableCell align="right">13,000.00INR</TableCell>
+            <TableCell align="right">13,000INR</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>GST Tax</TableCell>
@@ -463,12 +463,12 @@ console.log(feesData,"feesData")
           </TableRow>
           <TableRow>
             <TableCell>Paid Amount</TableCell>
-            <TableCell align="right">{feesData?.totalAmount}86,000INR</TableCell>
+            <TableCell align="right">{feesData?.totalAmount}INR</TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Pending</TableCell>
             <TableCell align="right" sx={{ color: "#F00" }}>
-              ₹{feesData?.pending_payment}16,000INR
+              {feesData?.pending_payment}INR
             </TableCell>
           </TableRow>
         </TableBody>
@@ -614,25 +614,27 @@ console.log(feesData,"feesData")
             </Typography>
             <Box
               sx={{
-                maxHeight: "300px",
+                maxHeight: "600px",
                 overflowY: "auto",
                 paddingRight: "15px",
               }}
             >
-              <Grid container Spacing={1}>
+              <Grid container Spacing={2}>
                  {feesData?.payment_history?.map((item) =>(
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={6} md={4} key={item.id}>
                      <Box
             sx={{
               display: 'flex',
-              flexDirection: 'row',
-              padding: '10px',
-              borderBottom: '1px solid #ccc',
-              borderRadius: '9px',
+              alignItems: 'center',
+              flexDirection: 'column',
+              padding: '20px 25px 15px 10px',
+            
+              borderBottom: '2px solid #ccc',
+              borderRadius: '18px',
               background: 'linear-gradient(90deg, #6380E6 0%, #00C9C0 100%)',
             }}
           >
-           <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
+           <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px', }}>
             <img
               src={pdfgroup}
               alt="Logo"

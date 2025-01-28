@@ -22,7 +22,12 @@ const PaymentsCard = () => {
  
   return (
     <>
-      <Card sx={{ boxShadow: "none" }}>
+      <Card sx={{ boxShadow: "none" ,
+         width: "369px",
+         height: "202px",
+         display: "flex",
+         justifyContent: "space-between",
+      }}>
         <Grid
           container
           sx={{
