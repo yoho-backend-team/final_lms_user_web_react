@@ -29,6 +29,7 @@ const UpdatesCard = (props,notification) => {
             justifyContent: "space-between",
             display: "flex",
             alignItems: "center",
+            height: "auto",
           }}
         >
           <Typography

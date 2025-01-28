@@ -31,7 +31,7 @@ const useStyles = makeStyles(() => ({
     height: "40px",
     borderRadius: "47px",
     textTransform: "none",
-    fontSize: "14px",
+    fontSize: "18px",
     fontWeight: 400,
     minWidth: "auto",
     margin: "0 5px",
@@ -123,32 +123,30 @@ const StudentHelpCenter = () => {
 
   return (
     <Box>
-      {/* Conditionally Render Header Section */}
-      {!isTabClicked && !isView && (
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          {/*<IconButton
-            onClick={handleBackClick}
-            sx={{
-              color: "#321658",
-              borderRadius: "50%",
-              backgroundColor: "#fff",
-              "&:hover": { backgroundColor: "#F0F0F0" },
-              marginRight: "8px",
-            }}
-          >
-            <ArrowBackIcon />
-          </IconButton>*/}
-          <Box display="flex" alignItems="center" gap="10px">
-            <Typography fontSize="14px" fontWeight={500}>
-              Help Centre
-            </Typography>
-          </Box>
-        </Box>
-      )}
+      {/* Fixed Header Section */}
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{
+          position: "fixed", // Keeps the header fixed at the top
+          top: 90,
+          left: 70,
+          width: "100%", // Full width
+          //backgroundColor: "#fff", // Background color to distinguish the header
+          zIndex: 10, // Ensure it's above other content
+          padding: "10px 16px", // Add spacing
+          //boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)", // Optional: Add a shadow for emphasis
+        }}
+      >
+        <Typography fontSize="16px" fontWeight={500}>
+          Help Centre
+        </Typography>
+      </Box>
 
       {/* Tabs Section */}
-      { !isView && (
-        <Box mt={3}>
+      {!isView && (
+        <Box mt={8}> {/* Adjust margin-top to account for the fixed header */}
           <Tabs
             value={selectedTab}
             onChange={handleTabChange}
@@ -174,8 +172,8 @@ const StudentHelpCenter = () => {
       )}
 
       {/* Conditionally Render Search Section */}
-      { !isView && (
-        <Box display="flex" justifyContent="center" mt={10} gap="10px">
+      {!isView && (
+        <Box display="flex" justifyContent="center" mt={12} gap="10px">
           <TextField
             placeholder="Search"
             value={searchQuery}
@@ -228,5 +226,3 @@ const StudentHelpCenter = () => {
 };
 
 export default StudentHelpCenter;
-
-

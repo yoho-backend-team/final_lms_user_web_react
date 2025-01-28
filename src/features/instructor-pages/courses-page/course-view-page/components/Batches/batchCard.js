@@ -7,10 +7,10 @@ import { formatDate } from "utils/formatDate";
 // Styled components
 const CardContainer = styled(Grid)(({ theme }) => ({
   width: '300px',
-  height: '250px',
+  height: '200px',
   borderRadius: '16px',
   padding: '25px',
-  background: theme.palette.background.paper,
+  background: "lightblue",
   boxShadow: theme.shadows[3],
   cursor: 'pointer',
   transition: 'transform 0.3s, box-shadow 0.3s',

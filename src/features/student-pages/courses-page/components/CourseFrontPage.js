@@ -36,13 +36,12 @@ const CourseFrontPage = ({ Course }) => {
           </IconButton>
           <Typography
             sx={{
-              color: "#000000",
-              fontFamily: "Nunito Sans",
-              fontSize: "20px",
-              fontWeight: 800,
-              lineHeight: "24px",
-              fontStyle: "normal",
-              flexGrow: 1
+              color: "#333333", 
+              fontFamily: "Roboto", 
+              fontSize: "18px", 
+              fontWeight: 700,
+              lineHeight: "28px", 
+              textAlign: "center", 
             }}
           >
             Course List & Details

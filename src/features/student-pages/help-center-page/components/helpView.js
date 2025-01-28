@@ -44,22 +44,24 @@ const StudentHelpView = ({ category, setIsView, isView }) => {
     >
       {/* Navigation Button */}
       <IconButton
-        onClick={handleNavigateBack}
-        sx={{
-          position: "absolute",
-          top: "6px",
-          left: "16px",
-          zIndex: 10, // Ensure the button is above the card
-          color: "#321658",
-          backgroundColor: "#fff",
-          borderRadius: "50%",
-          "&:hover": {
-            backgroundColor: "#F0F0F0",
-          },
-        }}
-      >
-        <ArrowBackIcon />
-      </IconButton>
+  onClick={handleNavigateBack}
+  sx={{
+    position: "fixed", // Use "fixed" to keep it outside of the card and in a fixed position relative to the viewport
+    top: "90px", // Adjust the distance from the top of the viewport
+    left: "26px", // Adjust the distance from the left of the viewport
+    zIndex: 10, // Ensure it appears above other components
+    color: "#321658",
+    backgroundColor: "#fff",
+    borderRadius: "50%",
+    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Optional: Add a subtle shadow for emphasis
+    "&:hover": {
+      backgroundColor: "#F0F0F0",
+    },
+  }}
+>
+  <ArrowBackIcon />
+</IconButton>
+
 
       {/* Dummy Content Section */}
       <Box mb={4} mt={8}>
