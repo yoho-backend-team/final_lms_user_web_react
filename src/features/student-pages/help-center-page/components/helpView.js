@@ -1,121 +1,148 @@
-import React, { useState } from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Box, Grid, Typography, IconButton } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const StudentHelpView = ({ category }) => {
-  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(1);
+const StudentHelpView = ({ category, setIsView, isView }) => {
+  const navigate = useNavigate();
+  const [isVideoOpen, setIsVideoOpen] = useState(false); // Tracks if the video is open
+
+  const handleNavigateBack = () => {
+    setIsView(!isView);
+  };
+
+  const handleVideoClick = () => {
+    setIsVideoOpen(true); // Mark video as open
+    window.open(category.videolink, "_blank"); // Open video in a new tab
+  };
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setIsVideoOpen(false); // Reset video state when tab is hidden
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   return (
     <Box
       sx={{
-        backgroundColor: "#EDE0FF",
-        border: "1px solid #C3C3C3",
-        borderRadius: "18px",
-        boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
-        padding: "20px",
+        position: "relative",
+        backgroundColor: "#F9F6FF",
+        border: "1px solid #D6D6D6",
+        borderRadius: "16px",
+        boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+        padding: "24px",
+        width: "100%",
       }}
     >
-      <Grid container spacing={5}>
-        <Grid item xs={12} md={6}>
+      {/* Navigation Button */}
+      <IconButton
+  onClick={handleNavigateBack}
+  sx={{
+    position: "fixed", // Use "fixed" to keep it outside of the card and in a fixed position relative to the viewport
+    top: "90px", // Adjust the distance from the top of the viewport
+    left: "26px", // Adjust the distance from the left of the viewport
+    zIndex: 10, // Ensure it appears above other components
+    color: "#321658",
+    backgroundColor: "#fff",
+    borderRadius: "50%",
+    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Optional: Add a subtle shadow for emphasis
+    "&:hover": {
+      backgroundColor: "#F0F0F0",
+    },
+  }}
+>
+  <ArrowBackIcon />
+</IconButton>
+
+
+      {/* Dummy Content Section */}
+      <Box mb={4} mt={8}>
+        <Typography
+          variant="h6"
+          sx={{
+            fontSize: "20px",
+            fontWeight: 600,
+            color: "#4A148C",
+            fontFamily: "Poppins, sans-serif",
+          }}
+        >
+          Additional Information
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: "16px",
+            color: "#333333",
+            fontFamily: "Poppins, sans-serif",
+            lineHeight: "1.8",
+          }}
+        >
+          This section contains some dummy content. You can replace this with any relevant information you want to display above the video link.You can replace this with any relevant information you want to display above the video link.
+        </Typography>
+      </Box>
+
+      <Grid container>
+        <Grid item xs={12}>
+          {/* Full-Page Watch Video Card */}
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "30px",
-              alignItems: "start",
-              pb: "40px",
+              position: "relative",
+              width: "100%",
+              height: "400px",
+              backgroundColor: "#f9f9f9",
+              borderRadius: "12px",
+              overflow: "hidden",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+              cursor: "pointer",
+              "&:hover img": {
+                transform: "scale(1.05)",
+                transition: "transform 0.3s ease-in-out",
+              },
             }}
+            onClick={handleVideoClick}
           >
-            <Typography
-              variant="h3"
+            <img
+              src={category?.videoThumbnail || "https://via.placeholder.com/1920x1080"}
+              alt="Video thumbnail"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+            <Box
               sx={{
-                fontSize: "16px",
-                fontWeight: 700,
-                lineHeight: "19px",
-                color: "#000000",
-                padding: "2px",
-                 fontFamily:"poppins"
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                backgroundColor: "rgba(0, 0, 0, 0.6)",
+                borderRadius: "50%",
+                padding: "16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              {category?.question || "No question available"}
-            </Typography>
-            <Typography
-              sx={{
-                color: "#321658",
-                fontSize: "16px",
-                fontWeight: 400,
-                lineHeight: "25px",
-                 fontFamily:"poppins"
-              }}
-            >
-              {category?.answer || "No answer available"}
-            </Typography>
-            <Box>
-            <Typography
-                    sx={{
-                      color: "#000",
-                      fontSize: "24px",
-                      fontWeight: 700,
-                      textAlign: "center",
-                      fontFamily:"poppins"
-                    }}
-                  >
-                    Video Link
-                    
-                  </Typography>
-            </Box>
-
-            {category?.videolink && (
-              
-              <Box
+              <Typography
                 sx={{
-                  position: "relative",
-                  width: "100%",
-                  aspectRatio: "16/9",
-                  backgroundColor: "#f5f5f5",
-                  borderRadius: "8px",
-                  overflow: "hidden",
+                  color: "#FFFFFF",
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  textAlign: "center",
+                  fontFamily: "Poppins, sans-serif",
                 }}
               >
-                <img
-                  src={category?.videoThumbnail || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIQTqg9NctHPWirUzxWYQHlGusYzURbCLFog&s.jpg"}
-                  alt="Video thumbnail"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => window.open(category.videolink, "_blank")}
-                />
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
-                    borderRadius: "50%",
-                    p: "10px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => window.open(category.videolink, "_blank")}
-                  
-                  
-                >
-                 
-                  <Typography
-                    sx={{
-                      color: "#FFFFFF",
-                      fontSize: "24px",
-                      fontWeight: 700,
-                      textAlign: "center",
-                    }}
-                  >
-                    ▶ React Class 1
-                  </Typography>
-                </Box>
-              </Box>
-            )}
+                ▶ Watch Video
+              </Typography>
+            </Box>
           </Box>
         </Grid>
       </Grid>
@@ -124,3 +151,4 @@ const StudentHelpView = ({ category }) => {
 };
 
 export default StudentHelpView;
+

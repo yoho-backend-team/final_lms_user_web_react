@@ -8,33 +8,18 @@ import {
   AvatarGroup,
   Menu,
   MenuItem,
-  TextField,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
+  Tooltip,
 } from "@mui/material";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
-import CallIcon from "assets/icons/callIcon";
-import SearchIcon from "assets/icons/searchIcon";
-import MuteNotificationModel from "./Models/MuteNotification";
-import ReportModel from "./Models/ReportDialog";
-import AddWallpaper from "./Models/WallPaperModel";
-import MediaModel from "./Models/Media";
+import GroupDetails from "./Models/GroupDetails"; // Import the GroupDetails component
 
 const ChatHeader = ({ currentChat }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const [muteOpen, setMuteOpen] = useState(false);
-  const [reportOpen, setReportOpen] = useState(false);
-  const [wallpaperOpen, setWallpaperOpen] = useState(false);
-  const [mediaOpen, setMediaOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [searchText, setSearchText] = useState("");
+  const [viewGroup, setViewGroup] = useState(false); // State to toggle group details view
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -44,43 +29,15 @@ const ChatHeader = ({ currentChat }) => {
     setAnchorEl(null);
   };
 
-  const handleMuteOpen = () => {
-    setMuteOpen(true);
+  const handleViewGroup = () => {
+    setViewGroup(true);
     handleMenuClose();
   };
 
-  const handleReportOpen = () => {
-    setReportOpen(true);
-    handleMenuClose();
-  };
-
-  const handleWallpaperOpen = () => {
-    setWallpaperOpen(true);
-    handleMenuClose();
-  };
-
-  const handleMediaOpen = () => {
-    setMediaOpen(true);
-    handleMenuClose();
-  };
-
-  const handleSearchOpen = () => {
-    setSearchOpen(true);
-  };
-
-  const handleSearchClose = () => {
-    setSearchOpen(false);
-    setSearchText("");
-  };
-
-  const handleCall = () => {
-    
-    console.log("Initiating a call...");
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchText(event.target.value);
-  };
+  // Render the group details page if `viewGroup` is true
+  if (viewGroup) {
+    return <GroupDetails currentChat={currentChat} setViewGroup={setViewGroup} />;
+  }
 
   return (
     <Box
@@ -89,12 +46,13 @@ const ChatHeader = ({ currentChat }) => {
         justifyContent: "space-between",
         alignItems: "center",
         padding: "16px",
+        
       }}
     >
       <Grid container alignItems="center" spacing={2}>
         <Grid item>
           <Avatar
-            sx={{ width: 40, height: 40 }}
+            sx={{ width: 65, height: 40 }}
             src={
               currentChat?.batch?.course?.image
                 ? getImageUrl(currentChat?.batch?.course?.image)
@@ -115,26 +73,25 @@ const ChatHeader = ({ currentChat }) => {
           total={currentChat?.users?.length + currentChat?.admin?.length}
         >
           {currentChat?.users?.map((user) => (
-            <Avatar
-              key={user?.id}
-              alt={user?.full_name}
-              src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
-            />
+            <Tooltip title={user?.full_name} key={user?.id}>
+              <Avatar
+                alt={user?.full_name}
+                src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
+                sx={{ cursor: "pointer" }}
+              />
+            </Tooltip>
           ))}
           {currentChat?.admin?.map((user) => (
-            <Avatar
-              key={user?.id}
-              alt={user?.full_name}
-              src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
-            />
+            <Tooltip title={user?.full_name} key={user?.id}>
+              <Avatar
+                alt={user?.full_name}
+                src={user?.image ? getImageUrl(user?.image) : profilePlaceholder}
+                sx={{ cursor: "pointer" }}
+              />
+            </Tooltip>
           ))}
         </AvatarGroup>
-        <IconButton onClick={handleCall}>
-          <CallIcon />
-        </IconButton>
-        <IconButton onClick={handleSearchOpen}>
-          <SearchIcon />
-        </IconButton>
+
         <IconButton
           onClick={handleMenuOpen}
           sx={{ backgroundColor: open ? "#0D6EFD" : "white" }}
@@ -158,7 +115,7 @@ const ChatHeader = ({ currentChat }) => {
           PaperProps={{
             elevation: 0,
             sx: {
-              padding: "24px 21px 44px 21px",
+              padding: "14px ",
               borderRadius: "28px",
               border: "1px solid #DCDCDC",
               boxShadow: "0px 4px 54px 0px rgba(0, 0, 0, 0.25)",
@@ -168,9 +125,6 @@ const ChatHeader = ({ currentChat }) => {
                 fontWeight: 500,
                 lineHeight: "28px",
                 color: "black",
-                display: "flex",
-                justifyItems: "center",
-                alignItems: "center",
                 "&:hover": {
                   backgroundColor: "#0D6EFD",
                   color: "#FFFFFF",
@@ -179,42 +133,9 @@ const ChatHeader = ({ currentChat }) => {
             },
           }}
         >
-          <MenuItem onClick={handleMuteOpen}>Mute Notification</MenuItem>
-          <MenuItem onClick={handleReportOpen}>Report</MenuItem>
-          <MenuItem onClick={handleWallpaperOpen}>Wallpaper</MenuItem>
-          <MenuItem onClick={handleMediaOpen}>Group Media</MenuItem>
+          <MenuItem onClick={handleViewGroup}>View Group</MenuItem>
         </Menu>
       </Box>
-
-      <MuteNotificationModel open={muteOpen} setMuteOpen={setMuteOpen} />
-      <ReportModel open={reportOpen} setReportOpen={setReportOpen} />
-      <AddWallpaper open={wallpaperOpen} setWallpaperOpen={setWallpaperOpen} />
-      <MediaModel open={mediaOpen} setMediaOpen={setMediaOpen} />
-
-      {/* Search Dialog */}
-      <Dialog open={searchOpen} onClose={handleSearchClose}>
-        <DialogTitle>Search</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Search..."
-            type="text"
-            fullWidth
-            variant="outlined"
-            value={searchText}
-            onChange={handleSearchChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleSearchClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleSearchClose} color="primary">
-            Search
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Box>
   );
 };

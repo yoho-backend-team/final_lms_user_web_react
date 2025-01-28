@@ -77,7 +77,13 @@ const CourseDetails = ({ Course }) => {
         <Box sx={{ pb: "27px" }}>
           <img
             src={getImageUrl(Course?.image)}
-            style={{ width: "363px", height: "160px", borderRadius: "25px" }}
+            style={{
+              width: "100%",
+              maxWidth: "400px",
+              height: "auto",
+              borderRadius: "16px",
+              boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+            }}
             alt="course"
           />
         </Box>
@@ -122,6 +128,7 @@ const CourseDetails = ({ Course }) => {
               fontSize: "14px",
               fontWeight: 700,
               lineHeight: "10px",
+              textTransform: "uppercase",
             }}
           >
             By Rajalakshmi Institute
@@ -247,6 +254,10 @@ const CourseDetails = ({ Course }) => {
                   justifyContent: "center",
                   alignItems: "center",
                   borderRadius: "11px",
+                  transition: "transform 0.3s",
+                  '&:hover': {
+                    transform: "scale(1.05)",
+                  },
                 }}
               >
                 <Typography sx={{ padding: "17px 41px 10px 40px" }}>

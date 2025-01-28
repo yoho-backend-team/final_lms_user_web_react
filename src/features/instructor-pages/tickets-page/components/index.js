@@ -112,7 +112,7 @@ const InstructorTicketsPage = ({
                   </Tabs>
                 </Box>
                 <Box>
-                  <Button
+                   <Button
                     onClick={handleOpen}
                     variant="contained"
                     sx={{
@@ -124,10 +124,13 @@ const InstructorTicketsPage = ({
                       fontWeight: 500,
                       fontSize: "14px",
                       lineHeight: "22px",
+                      
                     }}
                   >
                     Create Ticket
-                  </Button>
+                  </Button> 
+         
+
                 </Box>
               </Box>
 

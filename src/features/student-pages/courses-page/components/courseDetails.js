@@ -14,14 +14,14 @@ const CourseStudentDetails = ({ Course }) => {
   const Benefits = [
     {
       icon: <LanguageIcon color="white" />,
-      id: "benifit1",
+      id: "benefit1",
       title: "English & Tamil",
       background: "#5F1AA4",
       shadow: "0px 0px 50px 0px rgba(95, 26, 164, 0.63)",
     },
     {
       icon: <CertificateIcon color="white" padding="17px 41px 10px 40px" />,
-      id: "benifit2",
+      id: "benefit2",
       title: "3 Certificates",
       background: "#0051C8",
       shadow: "0px 0px 50px 0px rgba(0, 81, 200, 0.63)",
@@ -30,7 +30,7 @@ const CourseStudentDetails = ({ Course }) => {
       icon: (
         <NoteIcon color="white" fill={"white"} padding="17px 41px 10px 40px" />
       ),
-      id: "benifit3",
+      id: "benefit3",
       title: "Notes",
       background: "#0F8D0D",
       shadow: "0px 0px 50px 0px rgba(15, 141, 13, 0.63)",
@@ -40,15 +40,15 @@ const CourseStudentDetails = ({ Course }) => {
     <Box sx={{ pr: "60px", maxHeight: "100vh" }}>
       <Box sx={{ display: "flex", flexDirection: "column", pr: "90px" }}>
         <Box
-          sx={{ display: "flex", justifyContent: "space-between", pb: "20px" }}
+          sx={{ display: "flex", justifyContent: "space-between", pb: "20px" ,}}
         >
           <Typography
             sx={{
-              color: "#4B4B4B",
+              color: "#000000",
               fontSize: "16px",
               fontWeight: 800,
               lineHeight: "24px",
-              fontFamily:"Nunito Sans"
+              fontFamily:"Nunito Sans",
             }}
           >
             Course Details
@@ -56,7 +56,7 @@ const CourseStudentDetails = ({ Course }) => {
           <Typography>
             <span
               style={{
-                color: "#4B4B4B",
+                color: "#000000",
                 fontSize: "12px",
                 lineHeight: "14px",
                 fontWeight: 600,
@@ -136,12 +136,12 @@ const CourseStudentDetails = ({ Course }) => {
           </Typography>
           <Typography
             sx={{
-              color: "#000000",
+              color: "#000080",
               fontSize: "14px",
               fontWeight: 700,
               lineHeight: "10px",
               fontFamily:"Nunito Sans",
-             
+              textTransform: "uppercase",
             }}
           >
             Rajalakshmi Institute
@@ -261,7 +261,7 @@ const CourseStudentDetails = ({ Course }) => {
               Benefits
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", gap: "40px", flexWrap: "wrap" }}>
+          <Box sx={{ display: "flex", gap: "20px", flexWrap: "nowrap" }}>
             {Benefits?.map((item) => (
               <Box
                 key={item.id}
@@ -272,8 +272,10 @@ const CourseStudentDetails = ({ Course }) => {
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
-                  borderRadius: "11px",
-                  
+                  borderRadius: "10px",
+                  padding: '20px',
+                  flex: '1 1 30%',
+                  minWidth: '200px',
                 }}
               >
                 <Typography sx={{ padding: "17px 41px 10px 40px" }}>

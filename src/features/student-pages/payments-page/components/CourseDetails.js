@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState  } from "react";
-import { Box, Button, Grid, Typography, useMediaQuery } from "@mui/material";
+import { Box, Button, Grid, Typography, useMediaQuery,Table,Paper, TableBody, TableCell, TableContainer, TableHead, TableRow, } from "@mui/material";
 import { getStudentFees } from "../services";
 import { Link } from "react-router-dom";
 import { useTheme } from "@emotion/react";
@@ -63,7 +63,7 @@ console.log(feesData,"feesData")
   
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
-
+   
     doc.text("Course Details", 20, 10);
     doc.text(`Course Name: ${feesData?.course?.course_name}`, 20, 20);
     doc.text(`Institute: Rajalakshmi Institute`, 20, 30);
@@ -435,144 +435,70 @@ console.log(feesData,"feesData")
               </Grid>
 
               <Grid item xs={12}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    padding: "0 30px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      Tuition Amount
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      {feesData?.course_fees} INR
-                    </Typography>
-                  </Box>
-                  
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      Paid Amount
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      {feesData?.totalAmount} INR
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginBottom: "8px",
-                    }}
-                  >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#495057",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      Pending
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#F00",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                      }}
-                    >
-                      {feesData?.pending_payment} INR
-                    </Typography>
-                  </Box>
+  <Box
+    sx={{
+      padding: "0 30px",
+    }}
+  >
+    <TableContainer component={Paper} sx={{ margin: "0 30px" }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ fontWeight: "bold", color: "blue", fontFamily: "Nunito Sans" }}>Description</TableCell>
+            <TableCell sx={{ fontWeight: "bold", color: "blue", fontFamily: "Nunito Sans" }} align="right">Amount (INR)</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>Tuition Amount</TableCell>
+            <TableCell align="right">{feesData?.course_fees}81,200 INR</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Software Cost</TableCell>
+            <TableCell align="right">13,000.00INR</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>GST Tax</TableCell>
+            <TableCell align="right">1,800.00INR</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Paid Amount</TableCell>
+            <TableCell align="right">{feesData?.totalAmount}86,000INR</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Pending</TableCell>
+            <TableCell align="right" sx={{ color: "#F00" }}>
+              ₹{feesData?.pending_payment}16,000INR
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
 
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-end",
-                      marginTop: 2
-                    }}
-                  >
-                  
-                    <Button
-                      variant="body1"
-                    //   component={Link}
-                    //   to="#"
-                      
-                      sx={{
-                        color: "#0051C8",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 600,
-                        lineHeight: "22px",
-                        textDecorationLine: "underline",
-                      }}
-                      onClick={handleDownloadPDF1}
-                    >
-                      Download receipt
-                    </Button>
-                    
-                  </Box>
-                </Box>
-              </Grid>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "flex-end",
+        marginTop: 2,
+      }}
+    >
+      <Button
+        variant="body1"
+        sx={{
+          color: "#0051C8",
+          fontFamily: "Nunito Sans",
+          fontSize: "14px",
+          fontWeight: 600,
+          textDecorationLine: "underline",
+        }}
+        onClick={handleDownloadPDF1}
+      >
+        Download Receipt
+      </Button>
+    </Box>
+  </Box>
+</Grid>
+
             </Grid>
           </Grid>
 
