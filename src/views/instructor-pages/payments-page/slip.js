@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import logo from "assets/images/logo.png"
 
+
 const SalarySlip = () => {
     return (
         <Box sx={{ maxWidth: 800, margin: '0 auto', padding: 3, border: '1px solid black', mt: "40px" }}>

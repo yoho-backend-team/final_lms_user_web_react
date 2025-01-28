@@ -1234,7 +1234,7 @@ const Payment = () => {
                           textDecoration: "none",
                         }}
                       >
-                        View
+                     view
                       </Typography>
                     </div>
                   </Grid>
