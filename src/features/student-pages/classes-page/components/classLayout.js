@@ -15,6 +15,7 @@ const ClassLayout = ({ children }) => {
         padding: 4,
         overflow: "hidden", 
         position: "relative", 
+        backgroundPosition: "center",
       }}
     >
       <Grid

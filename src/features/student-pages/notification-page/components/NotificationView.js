@@ -59,23 +59,49 @@ const NotificationView = ({ handleBack, selectedNotification }) => {
     <Box
       sx={{
         height: "90vh",
+      
         backgroundColor: "#FFF",
         padding: "24px",
-        ml:"40px",
-        mb:"60px",
+        ml: "10px",
+        mr:"10px",
+        mb: "60px",
         display: "flex",
         flexDirection: "column",
         gap: "16px",
         boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
         borderRadius: "8px",
+        '@media (max-width: 960px)': {
+          padding: "16px",
+          ml: "16px",
+          mb: "32px",
+        },
       }}
     >
       {/* Header Section */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <IconButton onClick={handleBack} aria-label="Go back" sx={{ color: "#4A4A4A" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <IconButton
+          onClick={handleBack}
+          aria-label="Go back"
+          sx={{ color: "#4A4A4A" }}
+        >
           <KeyboardBackspaceSharpIcon fontSize="medium" />
         </IconButton>
-        <Box sx={{ display: "flex", alignItems: "center", gap: "16px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: "16px",
+            '@media (max-width: 960px)': {
+              gap: "8px",
+            },
+          }}
+        >
           <IconButton
             onClick={handleConfirmDelete}
             aria-label="Delete notification"
@@ -86,7 +112,16 @@ const NotificationView = ({ handleBack, selectedNotification }) => {
           >
             <DeleteOutlineOutlinedIcon fontSize="medium" />
           </IconButton>
-          <Typography sx={{ color: "#7F7F7F", fontSize: "16px", fontWeight: 400 }}>
+          <Typography
+            sx={{
+              color: "#7F7F7F",
+              fontSize: "16px",
+              fontWeight: 400,
+              '@media (max-width: 960px)': {
+                fontSize: "14px",
+              },
+            }}
+          >
             {selectedNotification?.createdAt
               ? `${formatDate(selectedNotification.createdAt)} - ${formatTime(
                   selectedNotification.createdAt
@@ -97,7 +132,17 @@ const NotificationView = ({ handleBack, selectedNotification }) => {
       </Box>
 
       {/* Notification Details */}
-      <Box sx={{ display: "flex", gap: "30px", mt: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: "30px",
+          mt: 2,
+          '@media (max-width: 960px)': {
+            flexDirection: "column",
+            gap: "16px",
+          },
+        }}
+      >
         <Avatar
           src={
             selectedNotification?.student?.image
@@ -105,24 +150,82 @@ const NotificationView = ({ handleBack, selectedNotification }) => {
               : profilePlaceholder
           }
           alt="Profile"
-          sx={{ width: "60px", height: "60px", border: "2px solid #F0F0F0" }}
+          sx={{
+            width: "60px",
+            height: "60px",
+            border: "2px solid #F0F0F0",
+            '@media (max-width: 960px)': {
+              width: "48px",
+              height: "48px",
+            },
+          }}
         />
-        <Box sx={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-          <Typography sx={{ fontSize: "18px", fontWeight: 700, color: "#000" }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: "18px",
+              fontWeight: 700,
+              color: "#000",
+              '@media (max-width: 960px)': {
+                fontSize: "16px",
+              },
+            }}
+          >
             {selectedNotification?.title || "No Title"}
           </Typography>
-          <Typography sx={{ fontSize: "14px", color: "#555" }}>
+          <Typography
+            sx={{
+              fontSize: "14px",
+              color: "#555",
+              '@media (max-width: 960px)': {
+                fontSize: "12px",
+              },
+            }}
+          >
             {selectedNotification?.body || "No additional details available."}
           </Typography>
         </Box>
       </Box>
 
       {/* Body Section */}
-      <Box sx={{ flex: 1, mt: 8 }}>
-        <Typography sx={{ fontSize: "20px", fontWeight: 400, color: "#000", lineHeight: 1.5 }}>
+      <Box
+        sx={{
+          flex: 1,
+          mt: 8,
+          '@media (max-width: 960px)': {
+            mt: 4,
+          },
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: "20px",
+            fontWeight: 400,
+            color: "#000",
+            lineHeight: 1.5,
+            '@media (max-width: 960px)': {
+              fontSize: "18px",
+            },
+          }}
+        >
           {selectedNotification?.body || "No details provided."}
         </Typography>
-        <Typography sx={{ fontSize: "16px", color: "#7F7F7F", mt: 2 }}>
+        <Typography
+          sx={{
+            fontSize: "16px",
+            color: "#7F7F7F",
+            mt: 2,
+            '@media (max-width: 960px)': {
+              fontSize: "14px",
+            },
+          }}
+        >
           {selectedNotification?.title || ""}
         </Typography>
       </Box>

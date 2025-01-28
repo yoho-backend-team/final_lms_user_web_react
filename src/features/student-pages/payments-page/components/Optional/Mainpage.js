@@ -104,8 +104,21 @@ export default function CustomizedSteppers() {
   };
 
   return (
-    <div className="main-container">
-      <Stack sx={{ width: '100%', padding: 4 }} spacing={4}>
+    <div className="main-container" sx={{width: '100%',
+      minHeight: '100vh', 
+      backgroundColor: '#f5f5f5', 
+      padding: 4,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}>
+      <Stack sx={{ width: '100%',
+                 padding: 4 ,
+                 backgroundColor: '#ffffff',
+                 borderRadius: '16px',
+                 boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+                 maxWidth: '900px',
+                 }} spacing={4}>
         <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
           {steps.map((label, index) => (
             <Step key={label}>
@@ -124,6 +137,7 @@ export default function CustomizedSteppers() {
                   fontFamily: 'Nunito Sans',
                   fontSize: 14,
                   fontStyle: 'normal',
+                  backgroundColor: '#f5f5f5', 
                   fontWeight: 600,
                   lineHeight: '22px',
                   "&.MuiStepLabel-label":{

@@ -40,7 +40,7 @@ const CourseStudentDetails = ({ Course }) => {
     <Box sx={{ pr: "60px", maxHeight: "100vh" }}>
       <Box sx={{ display: "flex", flexDirection: "column", pr: "90px" }}>
         <Box
-          sx={{ display: "flex", justifyContent: "space-between", pb: "20px" }}
+          sx={{ display: "flex", justifyContent: "space-between", pb: "20px" ,}}
         >
           <Typography
             sx={{
@@ -261,7 +261,7 @@ const CourseStudentDetails = ({ Course }) => {
               Benefits
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+          <Box sx={{ display: "flex", gap: "20px", flexWrap: "nowrap" }}>
             {Benefits?.map((item) => (
               <Box
                 key={item.id}

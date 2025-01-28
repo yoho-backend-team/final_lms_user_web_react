@@ -13,12 +13,14 @@ const BottomBar = ({ socket, community}) => {
   const [message, setMessage] = useState("");
   const instructor = getInstructorDetails();
 
+  
+
   const handleEmojiClick = () => {
     setShowEmojiPicker(!showEmojiPicker);
   };
 
-  const handleEmojiSelect = (emoji) => {
-    setMessage(message + emoji.native);
+   const handleEmojiSelect = (emoji) => {
+    setMessage((prevMessage) => prevMessage + emoji.native);
   };
 
   const handleSendClick = () => {
@@ -52,17 +54,16 @@ const BottomBar = ({ socket, community}) => {
       sx={{
         display: "flex",
         alignItems: "center",
-        padding: "8px",
+        padding: "1px",
+        mb:"1px",
         justifyContent: "flex-end",
         position: "static",
-        bottom: "0",
         backgroundColor: "#F6F6F6",
       }}
     >
       {showEmojiPicker && (
         <EmojiPicker
           onSelect={handleEmojiSelect}
-          handleEmojiClick={handleEmojiClick}
         />
       )}
 

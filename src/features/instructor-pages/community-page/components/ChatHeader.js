@@ -122,7 +122,7 @@ const ChatHeader = ({ currentChat }) => {
           ))}
         </AvatarGroup>
 
-        <IconButton
+       {/* <IconButton
           onClick={handleCall}
           sx={{
             transition: "all 0.3s ease",
@@ -199,7 +199,7 @@ const ChatHeader = ({ currentChat }) => {
               {item.label}
             </MenuItem>
           ))}
-        </Menu>
+        </Menu>*/}
       </Box>
 
       {/* User Details Dialog */}
