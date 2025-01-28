@@ -17,19 +17,18 @@ const groupImages = {
   live: Viewimage2,
 };
 
-
-
-  export const ClassCardHeader = () => (
+export const ClassCardHeader = () => (
     <Grid
       container
       sx={{
         mb: 1,
-        mt:8,
+        mt:2,
+       
         p: 2,
         backgroundColor: "lightblue",
         borderRadius: "22px",
         position: "sticky", // Keep header visible while scrolling
-        top: 0,
+        top: 10, // Add gap between the top of the viewport and the header
         zIndex: 1,
       }}
     >
@@ -55,10 +54,10 @@ const groupImages = {
             fontFamily: "Poppins",
             fontSize: "14px",
             color: "#333",
-            ml: 28,
+            ml: 15,
           }}
         >
-          Date
+          Classes Starting Date
         </Typography>
       </Grid>
       <Grid item xs={2}>
@@ -69,10 +68,10 @@ const groupImages = {
             fontFamily: "Poppins",
             fontSize: "14px",
             color: "#333",
-            ml: 6,
+            ml: 1,
           }}
         >
-          Time
+          Classes Starting Time
         </Typography>
       </Grid>
       <Grid item xs={2}>
@@ -107,30 +106,25 @@ const groupImages = {
     </Grid>
   );
   
-  const ClassCard = ({ cls, style, type, group }) => {
-    const backgroundImage = groupImages[group] || Viewimage;
-
+const ClassCard = ({ cls, style, type, group }) => {
+  const backgroundImage = groupImages[group] || Viewimage;
 
   return (
     <>  
     <Box
       sx={{
-        overflowY: "auto", // Allow vertical scrolling
-        // maxHeight: "80vh", // Set max height for scrolling
-        scrollBehavior: "smooth", // Smooth scrolling behavior
-        paddingBottom: "30px", // Extra space at the bottom to prevent clipping
+        overflowY: "auto",
+        scrollBehavior: "smooth",
+        paddingBottom: "16px",
       }}
     >
-      
-      {/* Individual Card */}
       <Card
         sx={{
-          mt:1,
-          mx:4,
-          my:1,
-          mb:0.5, // Reduced margin-bottom to decrease space between cards
+          mt: 0.5,  // Reduced from 1
+          mx: 4,
+          mb: 0.2,  // Keeping consistent spacing
           p: 0.01,
-          transition: "transform 0.3s ease, box-shadow 0.3s ease", // Smooth card hover effect
+          transition: "transform 0.3s ease, box-shadow 0.3s ease",
           "&:hover": {
             transform: "scale(1.02)",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
@@ -267,21 +261,22 @@ const groupImages = {
             sx={{ display: "flex", justifyContent: "flex-end", pr: 2 }}
           >
             <Button
-              component={Link}
-              to={`/student/class/${cls.uuid}?type=${type}&group=${group}`}
-              state={{ id: cls.uuid }}
-              variant="contained"
-              sx={{
-                backgroundColor: group === "history" ? "white" : "#5611B1",
-                color: group === "history" ? "#5611B1" : "white",
-                "&:hover": {
-                  backgroundColor: group === "history" ? "white" : "#4a0e8d",
-                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-                },
-              }}
-            >
-              View Class
-            </Button>
+  component={Link}
+  to={`/student/class/${cls.uuid}?type=${type}&group=${group}`}
+  state={{ id: cls.uuid }}
+  variant="contained"
+  sx={{
+    backgroundColor: group === "history" ? "white" : "lightblue",
+    color: group === "history" ? "#5611B1" : "white",
+    "&:hover": {
+      backgroundColor: group === "history" ? "white" : "#add8e6", // lighter shade for hover
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    },
+  }}
+>
+  View Class
+</Button>
+
           </Grid>
         </Grid>
       </Card>
