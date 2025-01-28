@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Grid, Typography, Collapse, Card, CardContent, Chip } from '@mui/material';
+import { Box, Grid, Typography, Collapse, Card, CardContent, Chip, TextField } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled } from '@mui/system';
 
@@ -55,9 +55,17 @@ const ExpandableCard = styled(Card)(({ theme }) => ({
   },
 }));
 
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  marginBottom: '16px',
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '8px',
+  },
+}));
+
 const InstructorCategoryList = () => {
   const [expanded, setExpanded] = useState(null);
   const [showRelatedAnswers, setShowRelatedAnswers] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const handleToggle = (index) => {
     setExpanded(expanded === index ? null : index);
@@ -68,22 +76,36 @@ const InstructorCategoryList = () => {
     setShowRelatedAnswers(showRelatedAnswers === index ? null : index);
   };
 
+  const filteredCategories = categoryData.filter(category =>
+    category.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <Box sx={{ 
       padding: '20px', 
-      backgroundColor: '#E0E4F4', 
+      backgroundColor: '#FFFFF7', 
       borderRadius: '8px', 
       display: 'flex', 
       justifyContent: 'center', 
       alignItems: 'center', 
-      minHeight: '100vh', // Ensures the box takes full height of the viewport
+      minHeight: '100vh',
     }}>
-      <Box sx={{ maxWidth: '800px', width: '100%', }}>
-        <Typography variant="h4" gutterBottom align="center" color="#3f51b5">
+      <Box sx={{ maxWidth: '800px', width: '100%' }}>
+        <Typography variant="h3" gutterBottom align="center" color="#3f51b5" sx={{ marginBottom: '10px', fontWeight: 'bold' }}>
           Frequently Asked Questions
         </Typography>
+        
+        {/* Search Bar */}
+        <StyledTextField
+          variant="outlined"
+          placeholder="Search categories..."
+          fullWidth
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
         <Grid container spacing={2}>
-          {categoryData.map((category, index) => (
+          {filteredCategories.map((category, index) => (
             <Grid item xs={12} key={index}>
               <ExpandableCard>
                 <Box
@@ -95,10 +117,11 @@ const InstructorCategoryList = () => {
                     cursor: 'pointer',
                     backgroundColor: expanded === index ? '#e0e7ff' : 'white',
                     borderRadius: '8px',
+                    transition: 'background-color 0.3s',
                   }}
                   onClick={() => handleToggle(index)}
                 >
-                  <Typography variant="h6" color="#3f51b5">
+                  <Typography variant="h5" color="#3f51b5" sx={{ fontWeight: 'bold' }}>
                     {category.title}
                   </Typography>
                   <ExpandMoreIcon color="action" />
@@ -109,7 +132,7 @@ const InstructorCategoryList = () => {
                       {category.description}
                     </Typography>
                     <Box sx={{ marginTop: 1 }}>
-                      <Typography variant="body2" onClick={() => handleRelatedToggle(index)} sx={{ cursor: 'pointer', color: '#3f51b5' }}>
+                      <Typography variant="body2" onClick={() => handleRelatedToggle(index)} sx={{ cursor: 'pointer', color: '#3f51b5', fontWeight: 'bold' }}>
                         {showRelatedAnswers === index ? 'Hide Related Answers' : 'Show Related Answers'}
                       </Typography>
                       <Collapse in={showRelatedAnswers === index}>
@@ -118,7 +141,7 @@ const InstructorCategoryList = () => {
                             key={answerIndex}
                             label={answer}
                             variant="outlined"
-                            sx={{ marginTop: 1, marginRight: 1, backgroundColor: '#e0f7fa' }}
+                            sx={{ marginTop: 1, marginRight: 1, backgroundColor: '#e0f7fa', borderColor: '#3f51b5' }}
                           />
                         ))}
                       </Collapse>
@@ -131,14 +154,14 @@ const InstructorCategoryList = () => {
         </Grid>
         {/* Centered Box Below FAQ */}
         <Box sx={{ marginTop: 4, textAlign: 'center' }}>
-          <Typography variant="h6" color="#3f51b5">
+          <Typography variant="h6" color="#3f51b5" sx={{ fontWeight: 'bold' }}>
             Need more help?
           </Typography>
           <Typography variant="body2" sx={{ marginTop: 1 }}>
             If you have any further questions, feel free to reach out to our support team.
           </Typography>
           <Box sx={{ marginTop: 2 }}>
-            <Chip label="Contact Support" variant="outlined" sx={{ backgroundColor: '#e0f7fa' }} />
+            <Chip label="Contact Support" variant="outlined" sx={{ backgroundColor: '#e0f7fa', borderColor: '#3f51b5' }} />
           </Box>
         </Box>
       </Box>
