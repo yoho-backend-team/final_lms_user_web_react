@@ -4,17 +4,23 @@ const PaymentCardStudent = ({ icon, title, amount, style, border }) => {
   return (
     <Box
       sx={{
-        display: "flex",
+        display: "grid",
         flexDirection: "row",
-        p: "12px 65px 13px 20px",
+        p: "10px 65px 13px 20px",
+        justifyContent: "space-between",
+        flexWrap: "wrap",
         border: border && "1px solid #C3C3C3",
         backgroundColor: style?.bg,
         borderRadius: "10px",
         gap: "8px",
+        "&:hover": {
+          backgroundColor: style?.hoverBg || "#ADD8E6", 
+          transform: "scale(1.02)", 
+        },
       }}
     >
-      <Box>{icon}</Box>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      <Box >{icon}</Box>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: "2px" }}>
         <Box>
           <Typography
             sx={{
