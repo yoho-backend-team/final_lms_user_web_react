@@ -16,12 +16,12 @@ async function subscribe(serviceWorker,role,userId,user) {
   // if (subscription === null) {
      subscription = await serviceWorker.pushManager.subscribe({
        userVisibleOnly: true,
-       applicationServerKey: urlBase64ToUint8Array('BOBc9xb8qvLCEgI6xf7OoY7_q6CvrAVvhl1_nrG9WFMkV28Oyiwj_OrjMWYsM85b9oGs5QjI2WuHuST0caFgsTU')
+       applicationServerKey: urlBase64ToUint8Array('BJFWPqfGs7DoTQTkLe7MdCdCv6N0wGofV9WSd4HKQVHn8nR2X-pOg2cT1VIWG9QN-jyELRZDYWLuo6cRwPJixMg')
      });
 
-     const endPoint = `${process.env.REACT_APP_BACK_END_URL}notification/subscribe`
+    //  const endPoint = `${process.env.REACT_APP_BACK_END_URL}notification/subscribe`
      
-     await axios.post(endPoint, {subscription,user:userId,role:role});
+    //  await axios.post(endPoint, {subscription,user:userId,role:role});
      const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
      Cookies.set(user+"subscription",true,{expires:expiryDate})
   // }
