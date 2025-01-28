@@ -108,7 +108,7 @@
 
 
 import React, { useState } from 'react';
-import { Box, Typography, Grid, Collapse, Chip, Card, CardContent } from '@mui/material';
+import { Box, Typography, Grid, Collapse, Chip, Card, CardContent, TextField } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled } from '@mui/material/styles';
 
@@ -171,17 +171,43 @@ const ExpandableCard = styled(Card)(({ theme }) => ({
   },
 }));
 
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '8px',
+    '& fieldset': {
+      borderColor: theme.palette.grey[400],
+    },
+    '&:hover fieldset': {
+      borderColor: theme.palette.primary.main,
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: theme.palette.primary.main,
+    },
+  },
+  '& .MuiInputBase-input': {
+    padding: '10px', // Reduced padding for a lower height
+    fontSize: '1rem',
+  },
+}));
+
 const CategoryList = () => {
   const [expanded, setExpanded] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleToggle = (index) => {
     setExpanded(expanded === index ? null : index);
   };
 
+  const filteredFaqs = faqData.filter(faq =>
+    faq.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    faq.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    faq.relatedAnswers.some(answer => answer.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
+
   return (
     <Box sx={{ 
       padding: '20px', 
-      backgroundColor: '#f9f9f9', 
+      backgroundColor: '#FFFFF7', 
       borderRadius: '8px', 
       display: 'flex', 
       justifyContent: 'center', 
@@ -189,11 +215,22 @@ const CategoryList = () => {
       minHeight: '100vh', // Ensures the box takes full height of the viewport
     }}>
       <Box sx={{ maxWidth: '800px', width: '100%' }}>
-        <Typography variant="h4" gutterBottom align="center" color="#3f51b5">
+        <Typography variant="h3" gutterBottom align="center" color="#3f51b5">
           Frequently Asked Questions
         </Typography>
+        
+        {/* Search Bar */}
+        <StyledTextField
+          variant="outlined"
+          placeholder="Search FAQs..."
+          fullWidth
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          sx={{ marginBottom: 2 }}
+        />
+
         <Grid container spacing={2}>
-          {faqData.map((faq, index) => (
+          {filteredFaqs.map((faq, index) => (
             <Grid item xs={12} key={index}>
               <ExpandableCard>
                 <Box
@@ -208,14 +245,14 @@ const CategoryList = () => {
                   }}
                   onClick={() => handleToggle(index)}
                 >
-                  <Typography variant="h6" color="#3f51b5">
+                  <Typography variant="h5" color="#3f51b5">
                     {faq.title}
                   </Typography>
                   <ExpandMoreIcon color="action" />
                 </Box>
                 <Collapse in={expanded === index}>
                   <CardContent>
-                    <Typography variant="body1" sx={{ marginTop: 1 }}>
+                    <Typography variant="body1" sx={{ marginTop: 1, fontSize: '1.1rem' }}>
                       {faq.description}
                     </Typography>
                     <Box sx={{ marginTop: 1 }}>
@@ -224,7 +261,7 @@ const CategoryList = () => {
                           key={answerIndex}
                           label={answer}
                           variant="outlined"
-                          sx={{ marginTop: 1, marginRight: 1, backgroundColor: '#e0f7fa' }}
+                          sx={{ marginTop: 1, marginRight: 1, backgroundColor: '#e0f7fa', fontSize: '0.9rem' }}
                         />
                       ))}
                     </Box>
@@ -236,14 +273,14 @@ const CategoryList = () => {
         </Grid>
         {/* Centered Box Below FAQ */}
         <Box sx={{ marginTop: 4, textAlign: 'center' }}>
-          <Typography variant="h6" color="#3f51b5">
+          <Typography variant="h5" color="#3f51b5">
             Need more help?
           </Typography>
-          <Typography variant="body2" sx={{ marginTop: 1 }}>
+          <Typography variant="body2" sx={{ marginTop: 1, fontSize: '1rem' }}>
             If you have any further questions, feel free to reach out to our support team.
           </Typography>
           <Box sx={{ marginTop: 2 }}>
-            <Chip  label="Contact Support" variant="outlined" sx={{ backgroundColor: '#e0f7fa' }} />
+            <Chip label="Contact Support" variant="outlined" sx={{ backgroundColor: '#e0f7fa', fontSize: '0.9rem' }} />
           </Box>
         </Box>
       </Box>
@@ -252,7 +289,6 @@ const CategoryList = () => {
 };
 
 export default CategoryList;
-
 
 
 //https://payil.app/FAQ/
