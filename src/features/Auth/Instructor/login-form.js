@@ -109,7 +109,7 @@ const InstructorLoginForm = () => {
           noValidate
           autoComplete="off"
           onSubmit={formik.handleSubmit}
-          style={{ minWidth: "380px", maxWidth: "400px" }}
+          style={{ minWidth: "380px", maxWidth: "400px", }}
         >
           <Box mb={5}>
             <FormControl
@@ -219,6 +219,7 @@ const InstructorLoginForm = () => {
     color: "#666cff",
     textDecoration: "none",
     transition: "color 0.3s ease, text-decoration 0.3s ease",
+    
   }}
   onClick={handleForgetPassword}
   onMouseEnter={(e) => {
@@ -234,16 +235,17 @@ const InstructorLoginForm = () => {
 </Link>
 
           </Box>
-          <Box sx={{ mt: 8, display: "flex", alignItems: "center", gap: 1 }}>
+          <Box sx={{ mt: 2, display: "flex", alignItems: "center", gap: 2,  }}>
             <span>
               <InfoIcon />
             </span>
             <Typography
               sx={{
-                fontSize: 12,
+                fontSize: 14,
                 color: "#828282",
                 fontWeight: 400,
                 lineHeight: "32px",
+               
               }}
             >
               Enter the mail ID & Password that given by LMS

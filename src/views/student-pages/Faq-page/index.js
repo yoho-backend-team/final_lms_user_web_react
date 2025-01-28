@@ -75,19 +75,21 @@ const FAQPage = () => {
 
   return (
     <Layout>
-       <Grid item xs={12}>
-          <Typography variant="h2" gutterBottom align="center" sx={{fontSize:"32px",fontFamily:"poppins",color:"black"}}>
-          <QuestionAnswerIcon sx={{gap:"10px", width:"100px",}} />
-            Frequently Asked Questions   
+       <Grid container xs={12} justifyContent="center"> {/* Centering the Grid item */}
+        <Grid item xs={12}>
+          <Typography variant="h2" gutterBottom align="center" sx={{ fontSize: "32px", fontFamily: "poppins", color: "black" }}>
+            <QuestionAnswerIcon sx={{ gap: "10px", width: "100px" }} />
+            FAQ
           </Typography>
         </Grid>
-      <Grid container xs={12} spacing={3}>
-        <Grid item xs={4}  sx={{gap:"10px"}}>
-          <CategoryList categories={faqCategories}  onCategorySelect={handleCategorySelect} />
+        <Grid container xs={12} spacing={3} justifyContent="center" alignItems="center"> {/* Centering the Grid items */}
+        <Grid item xs={4} sx={{ display: 'flex', justifyContent: 'center' }}> {/* Centering the CategoryList */}
+          <CategoryList categories={faqCategories} onCategorySelect={handleCategorySelect} />
         </Grid>
-        <Grid item xs={7} >
+        {/* <Grid item xs={7} >
           <FAQList  selectedCategory={selectedCategory} faqs={faqCategories} />
-        </Grid>
+        </Grid> */}
+      </Grid>
       </Grid>
     </Layout>
   );

@@ -13,20 +13,27 @@ const CourseModuleCard = ({
   videos,
   closeCourseView,
   openCourseView,
-  class_details
+  class_details,
 }) => {
   const { tabView } = useTabResponsive();
+
   return (
     <Grid
-      onClick={()=>openCourseView(class_details,id)}
+      onClick={() => openCourseView(class_details, id)}
       item
       sx={{
         width: "291px",
-        height: "247px",
-        borderRadius: "12px",
-        padding: "25.867px 23.1px 30.367px 23px",
+        height: "200px",
+        borderRadius: "16px",
+        padding: "25px",
         background: `linear-gradient(${style.card})`,
         cursor: "pointer",
+        transition: "transform 0.4s, box-shadow 0.4s",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+        "&:hover": {
+          transform: "translateY(-8px)",
+          boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.4)",
+        },
       }}
     >
       <Box
@@ -38,7 +45,6 @@ const CourseModuleCard = ({
           alignItems: "center",
           fontSize: "21px",
           fontWeight: 600,
-          lineHeight: "14px",
         }}
       >
         <Typography
@@ -47,6 +53,8 @@ const CourseModuleCard = ({
             backgroundColor: style.background,
             color: style.color,
             borderRadius: "12px",
+            fontSize: "18px",
+            fontWeight: "bold",
           }}
         >
           {oridinalSuffix(id)}
@@ -56,7 +64,6 @@ const CourseModuleCard = ({
             color: "white",
             fontSize: "16px",
             fontWeight: 600,
-            lineHeight: "11px",
           }}
         >
           Chapter
@@ -66,9 +73,9 @@ const CourseModuleCard = ({
         <Typography
           sx={{
             color: "white",
-            fontSize: "13px",
+            fontSize: "14px",
             fontWeight: 800,
-            lineHeight: "22px",
+            flex: 1,
           }}
         >
           {title}
@@ -78,7 +85,6 @@ const CourseModuleCard = ({
             color: "white",
             fontSize: "38px",
             fontWeight: 900,
-            lineHeight: "40px",
           }}
         >
           {progress}
@@ -91,29 +97,27 @@ const CourseModuleCard = ({
           alignItems: "center",
         }}
       >
-        <Box sx={{ display: "inline-flex", gap: "5px", alignItems: "center" }}>
-          <NoteIcon color="white" width="22px" heiht="22px" fill="white" />
+        <Box sx={{ display: "inline-flex", gap: "8px", alignItems: "center" }}>
+          <NoteIcon color="white" width="22px" height="22px" fill="white" />
           <Typography
             sx={{
               color: "white",
-              fontSize: "13px",
+              fontSize: "14px",
               fontWeight: 700,
-              lineHeight: "22px",
             }}
           >
             {notes} Notes
           </Typography>
         </Box>
-        <Box sx={{ display: "inline-flex", gap: "5px" }}>
+        <Box sx={{ display: "inline-flex", gap: "8px", alignItems: "center" }}>
           <SmartDisplayOutlinedIcon
             sx={{ color: "white", height: "22px", width: "22px" }}
           />
           <Typography
             sx={{
               color: "white",
-              fontSize: "13px",
+              fontSize: "14px",
               fontWeight: 700,
-              lineHeight: "22px",
             }}
           >
             {videos} Videos
@@ -125,3 +129,4 @@ const CourseModuleCard = ({
 };
 
 export default CourseModuleCard;
+

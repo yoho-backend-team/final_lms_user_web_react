@@ -27,13 +27,14 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#F6F6F6",
-        padding: isTablet ? "10px" : "20px", // Adjust padding for tablets
+        
+        
       }}
     >
       {currentChat ? (
         <Card
           sx={{
-            height: { xs: "85vh", md: "73vh" }, // Responsive height
+            height: "78vh",
             width: "100%",
             display: "flex",
             flexDirection: "column",
@@ -49,11 +50,11 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
           <Box
             sx={{
               flex: 1,
-              padding: isTablet ? "10px" : "20px", // Adjust padding for tablets
+             
               overflowY: "auto",
               display: "flex",
               flexDirection: "column",
-              gap: isTablet ? "12px" : "20px", // Reduce gap for tablets
+              gap: 10
             }}
           >
             {/* Chat Log */}
@@ -63,9 +64,11 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
           {/* Bottom Bar for Sending Messages */}
           <Box
             sx={{
-              padding: isTablet ? "8px" : "10px", // Adjust padding for tablets
+            paddingBottom:"1px", 
               borderTop: "1px solid #E0E0E0",
             }}
+
+            
           >
             <BottomBar socket={socket} community={currentChat} />
           </Box>
@@ -79,7 +82,7 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
             alignItems: "center",
             textAlign: "center",
             gap: "16px",
-            padding: "20px",
+            padding: "1px",
           }}
         >
           {/* Placeholder when no chat is selected */}
