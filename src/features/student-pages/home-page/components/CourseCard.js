@@ -36,7 +36,7 @@ const CourseCard = () => {
       type: "radialBar",
       position: 'absolute',
     },
-    series: reports?.classes?.[0]?.total ? [reports.classes[0].total] : [75],
+    series: reports?.classes?.[0]?.total ? [reports.classes[0].total] : [0],
     plotOptions: {
       radialBar: {
         hollow: {
@@ -78,6 +78,8 @@ const CourseCard = () => {
         boxShadow:"0px 8px 32px rgba(0, 0, 0, 0.15)",
         borderRadius: "16px",
         border: "1px solid #E6AC96",
+         width: "369px",
+        height: "202px",
         position: "relative",
       }}
     >
@@ -85,6 +87,7 @@ const CourseCard = () => {
         container
         justifyContent="center"
         alignItems="center"
+        display="flex"
         spacing={2}
       >
         <Grid item xs={12}>
