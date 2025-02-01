@@ -13,6 +13,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
 
+
+
 const CustomAvatar = ({ src, alt, size = 60 }) => (
   <Avatar
     src={src ? getImageUrl(src) : profilePlaceholder}
@@ -69,7 +71,7 @@ const GroupDetails = ({ currentChat, setViewGroup }) => {
             backgroundSize: "cover",
             backgroundPosition: "center",
             borderRadius: 2,
-            boxShadow: 3,
+            // boxShadow: 3,
             marginBottom: "16px",
           }}
         />
@@ -154,6 +156,7 @@ const GroupDetails = ({ currentChat, setViewGroup }) => {
           <ListItem
             key={user.id}
             sx={{
+              
               display: "flex",
               alignItems: "center",
               padding: "8px 16px",

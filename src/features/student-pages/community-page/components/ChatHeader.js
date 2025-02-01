@@ -18,7 +18,6 @@ import GroupDetails from "./Models/GroupDetails"; // Import the GroupDetails com
 const ChatHeader = ({ currentChat }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
   const [viewGroup, setViewGroup] = useState(false); // State to toggle group details view
 
   const handleMenuOpen = (event) => {
@@ -34,6 +33,9 @@ const ChatHeader = ({ currentChat }) => {
     handleMenuClose();
   };
 
+  const totalMembers =
+    (currentChat?.users?.length || 0) + (currentChat?.admin?.length || 0);
+
   // Render the group details page if `viewGroup` is true
   if (viewGroup) {
     return <GroupDetails currentChat={currentChat} setViewGroup={setViewGroup} />;
@@ -46,7 +48,6 @@ const ChatHeader = ({ currentChat }) => {
         justifyContent: "space-between",
         alignItems: "center",
         padding: "16px",
-        
       }}
     >
       <Grid container alignItems="center" spacing={2}>
@@ -65,13 +66,13 @@ const ChatHeader = ({ currentChat }) => {
           <Typography variant="h6" sx={{ fontWeight: 700 }}>
             {currentChat?.batch?.batch_name}
           </Typography>
+          <Typography variant="body2" sx={{ color: "#666" }}>
+            {totalMembers} {totalMembers === 1 ? "member" : "members"}
+          </Typography>
         </Grid>
       </Grid>
       <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-        <AvatarGroup
-          max={3}
-          total={currentChat?.users?.length + currentChat?.admin?.length}
-        >
+        <AvatarGroup max={3}>
           {currentChat?.users?.map((user) => (
             <Tooltip title={user?.full_name} key={user?.id}>
               <Avatar
@@ -94,10 +95,21 @@ const ChatHeader = ({ currentChat }) => {
 
         <IconButton
           onClick={handleMenuOpen}
-          sx={{ backgroundColor: open ? "#0D6EFD" : "white" }}
+          sx={{
+            backgroundColor: open ? "#0D6EFD" : "transparent",
+            borderRadius: "50%",
+            padding: "8px",
+            transition: "background-color 0.3s ease",
+            "&:hover": {
+              backgroundColor: "#0D6EFD",
+            },
+          }}
         >
           <ExpandMoreRoundedIcon
-            sx={{ color: open ? "white" : "#130F26", cursor: "pointer" }}
+            sx={{
+              color: open ? "white" : "#130F26",
+              transition: "color 0.3s ease",
+            }}
           />
         </IconButton>
         <Menu
@@ -113,18 +125,19 @@ const ChatHeader = ({ currentChat }) => {
             horizontal: "right",
           }}
           PaperProps={{
-            elevation: 0,
+            elevation: 3,
             sx: {
-              padding: "14px ",
-              borderRadius: "28px",
+              padding: "14px 8px",
+              borderRadius: "12px",
               border: "1px solid #DCDCDC",
-              boxShadow: "0px 4px 54px 0px rgba(0, 0, 0, 0.25)",
+              // boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.15)",
               "& .MuiMenuItem-root": {
-                padding: "10px",
+                padding: "10px 20px",
                 fontSize: "14px",
                 fontWeight: 500,
                 lineHeight: "28px",
-                color: "black",
+                color: "#333",
+                borderRadius: "8px",
                 "&:hover": {
                   backgroundColor: "#0D6EFD",
                   color: "#FFFFFF",
