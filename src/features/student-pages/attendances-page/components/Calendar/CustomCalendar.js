@@ -78,6 +78,7 @@ function CustomCalendar({ attendanceData, getAttedenceDetails, attendance_data }
               <Card 
                 sx={{ 
                   height: '100%',
+                  borderRadius: 0, // Ensures square edges
                   backgroundColor: dayData.status === 'present' 
                     ? 'rgba(46, 204, 113, 0.1)' 
                     : 'rgba(231, 76, 60, 0.1)',
@@ -144,7 +145,7 @@ function CustomCalendar({ attendanceData, getAttedenceDetails, attendance_data }
   return (
     <Box sx={{ height: '67vh', display: 'flex', flexDirection: 'column', p: 2 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h4">Attendance Calendar</Typography>
+        
         <FormControl sx={{ minWidth: 120 }}>
           <Select
             value={selectedMonth}
