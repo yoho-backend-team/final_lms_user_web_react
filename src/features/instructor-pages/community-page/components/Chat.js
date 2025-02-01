@@ -36,6 +36,7 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
         height: "76vh",
         display: "flex",
         flexDirection: "column",
+       
         
       }}
     >
@@ -57,20 +58,22 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
           {/* Message Log */}
           <Box
             sx={{
+              
+              
               flex: 1,
+             
               overflowY: "auto",
               display: "flex",
               flexDirection: "column",
-              padding: isSmallScreen ? "10px" : "20px",
-              gap: "10px",
-              backgroundColor: "#E5DDD5", // Background for the chat log
+              gap: 10
+            
             }}
           >
-            <Box
+           {/* <Box
               sx={{
                 display: "flex",
                 justifyContent: "center",
-                marginBottom: "16px",
+                marginBottom: "0px",
               }}
             >
               <Box
@@ -97,7 +100,7 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
                   chat, not even WhatsApp, can read or listen to them.
                 </Typography>
               </Box>
-            </Box>
+            </Box>*/}
             <ChatLog socket={socket} Messages={Messages} />
           </Box>
 

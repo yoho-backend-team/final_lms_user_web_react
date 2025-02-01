@@ -34,10 +34,9 @@ const ClassesPage = () => {
   const [classType, setClassType] = useState(queryParams.get("classType") || "online");
   const [page, setPage] = useState(Number(queryParams.get("page")) || 1);
   const dispatch = useDispatch();
-  const { showSpinner, hideSpinner } = useSpinner()
+  const { showSpinner, hideSpinner } = useSpinner();
   const classes = useSelector(selectClasses);
   const loading = useSelector(selectLoading);
-  
 
   const tabs = [
     { id: "1", title: "Upcoming Classes", value: "upcoming" },
@@ -54,15 +53,20 @@ const ClassesPage = () => {
   };
 
   const classTypes = [
-    { id: "1", title: "online class", value: "online" },
-    { id: "2", title: "offline class", value: "offline" },
+    { id: "1", title: "Online Class", value: "online" },
+    { id: "2", title: "Offline Class", value: "offline" },
   ];
 
   const fetchData = async () => {
-    showSpinner()
-    const data = { userType: classType, classType: value, page: page };
-    await dispatch(getAllClasses(data));
-    hideSpinner()
+    showSpinner();
+    try {
+      const data = { userType: classType, classType: value, page: page };
+      await dispatch(getAllClasses(data));
+    } catch (error) {
+      console.error("Error fetching classes:", error);
+    } finally {
+      hideSpinner();
+    }
   };
 
   useEffect(() => {
@@ -81,36 +85,23 @@ const ClassesPage = () => {
   };
 
   const handleNextChange = () => {
-    setPage(page + 1);
+    setPage((prevPage) => prevPage + 1);
     navigate(`?tab=${value}&classType=${classType}&page=${page + 1}`);
   };
 
   const handlePrevious = () => {
-    setPage(page - 1);
+    setPage((prevPage) => prevPage - 1);
     navigate(`?tab=${value}&classType=${classType}&page=${page - 1}`);
   };
 
-  // navigator.geolocation.getCurrentPosition(
-  //   async (position) => {
-  //     const { latitude, longitude } = position.coords;
-
-      
-  //     const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
-  //     const data = await response.json();
-  //   },
-  //   (error) => {
-  //     console.error('Error getting location:', error.message);
-  //   }
-  // );
-  
   return (
     <ClassLayout>
       <Box sx={{ display: "flex", flexDirection: "column", width: "100vw" }}>
-        <Box sx={{ overflow: "hidden"}} >
+        <Box sx={{ overflow: "hidden" }}>
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: 28,
+              fontSize: 30,
               color: "#484848",
               mb: "4px",
               pl: "40px",
@@ -119,7 +110,7 @@ const ClassesPage = () => {
             Classes
           </Typography>
         </Box>
-        <Card sx={{ overflow: "hidden"}} >
+        <Card sx={{ overflow: "hidden" }}>
           <Grid container sx={{ height: "auto", width: "100%" }}>
             <Grid
               item
@@ -142,15 +133,13 @@ const ClassesPage = () => {
                 <Typography
                   variant="h6"
                   sx={{
-                    fontSize: "20px",
-                    fontWeight: 500,
+                    fontSize: "25px",
+                    fontWeight: 700,
                     lineHeight: "32px",
                     color: "#495057",
                   }}
                 >
-                  {classType === "online"
-                    ? "Online Classes"
-                    : "Offline Classes"}
+                  {classType === "online" ? "Online Classes" : "Offline Classes"}
                 </Typography>
                 <img src={OfflineClassIcon} alt="online class" />
               </Box>
@@ -188,9 +177,9 @@ const ClassesPage = () => {
             </Grid>
           </Grid>
         </Card>
-        
+
         {loading ? <ClassLoader /> : renderComponents[value]}
-        {classes?.last_page !== 1 && classes.last_page !== 0 && (
+        {classes?.last_page > 1 && (
           <Box
             sx={{
               display: "flex",
@@ -198,7 +187,7 @@ const ClassesPage = () => {
               py: "40px",
             }}
           >
-            <Box sx={{ display: "flex", gap: "40px", alignItems: "center" }}>
+          {/*  <Box sx={{ display: "flex", gap: "40px", alignItems: "center" }}>
               <Typography
                 onClick={page === 1 ? null : handlePrevious}
                 sx={{
@@ -255,7 +244,7 @@ const ClassesPage = () => {
                   {classes?.last_page}
                 </Typography>
               </Box>
-            </Box>
+            </Box>*/}
           </Box>
         )}
       </Box>

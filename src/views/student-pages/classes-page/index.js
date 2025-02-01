@@ -96,8 +96,20 @@ const ClassesPage = () => {
   ];
 
   const fetchData = async () => {
-    const data = { userType: classType, classType: value, page: page, month: filters.month, year: filters.year, course: filters.course };
-    await dispatch(getAllClasses(data));
+    const data = {
+      userType: classType,
+      classType: value,
+      page: page,
+      month: filters.month,
+      year: filters.year,
+      course: filters.course,
+    };
+    try {
+      await dispatch(getAllClasses(data));
+    } catch (error) {
+      console.error("Failed to fetch classes:", error);
+      // Optionally, you can set an error state here to display an error message to the user
+    }
   };
 
   useEffect(() => {
@@ -213,7 +225,7 @@ const ClassesPage = () => {
 
         {loading ? <ClassLoader /> : renderComponents[value]}
 
-        {classes?.last_page >1 && (
+        {classes?.last_page > 1 && (
           <Box
             sx={{
               display: "flex",

@@ -15,8 +15,8 @@ const ClassTabs = ({ tabs, value, handleChange }) => {
               color : "#5611B1",
           }
         }}
-        textColor="secondary"
-        indicatorColor="primary"
+        textColor="#5611B1"
+        indicatorColor="#5611B1"
         aria-label="secondary tabs example"
       >
         {tabs.map((tab) => (

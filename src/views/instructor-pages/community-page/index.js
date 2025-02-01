@@ -1,23 +1,31 @@
-import { Box, Grid, Skeleton, Card } from "@mui/material";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import { Box, Grid, Card } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { selectInstructorCommunities } from "features/instructor-pages/community-page/redux/selectors";
 import getandAddCommunity from "features/instructor-pages/community-page/redux/thunks";
 import toast from "react-hot-toast";
 import { useSocket } from "context/instructorSocket";
-import Chat from "features/instructor-pages/community-page/components/Chat.js";
-import SideBar from "features/instructor-pages/community-page/components//Sidebar.js";
+import SideBar from "features/instructor-pages/community-page/components/Sidebar";
+import Chat from "features/instructor-pages/community-page/components/Chat";
 
 const SidebarSkeleton = () => (
   <Box>
-    {/* Search bar container with exact padding */}
+    {/* Search bar container */}
     <Box sx={{ paddingLeft: "32px", paddingTop: "20px", paddingRight: "12px" }}>
-      <Skeleton 
-        variant="rectangular" 
-        height={56} // Height of TextField with padding
+      <Box 
         sx={{ 
+          height: "56px",
+          backgroundColor: "#F6F6F6",
           borderRadius: "24px",
-          bgcolor: "#F6F6F6"
+          animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+          "@keyframes pulse": {
+            "0%, 100%": {
+              opacity: 1
+            },
+            "50%": {
+              opacity: .5
+            }
+          }
         }} 
       />
     </Box>
@@ -42,10 +50,14 @@ const SidebarSkeleton = () => (
         >
           {/* Left side with image and text */}
           <Box sx={{ display: "flex", gap: "10px" }}>
-            <Skeleton 
-              variant="circular" 
-              width={60} 
-              height={60} 
+            <Box 
+              sx={{ 
+                width: 60, 
+                height: 60, 
+                borderRadius: "50%",
+                backgroundColor: "#F6F6F6",
+                animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
+              }} 
             />
             <Box sx={{
               display: "flex",
@@ -54,8 +66,20 @@ const SidebarSkeleton = () => (
               py: "10px",
               width: "150px"
             }}>
-              <Skeleton variant="text" width="80%" height={24} />
-              <Skeleton variant="text" width="60%" height={16} />
+              <Box sx={{ 
+                height: "24px", 
+                width: "80%", 
+                backgroundColor: "#F6F6F6",
+                borderRadius: 1,
+                animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
+              }} />
+              <Box sx={{ 
+                height: "16px", 
+                width: "60%", 
+                backgroundColor: "#F6F6F6",
+                borderRadius: 1,
+                animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
+              }} />
             </Box>
           </Box>
 
@@ -66,9 +90,21 @@ const SidebarSkeleton = () => (
             justifyContent: "space-between",
             gap: "10px"
           }}>
-            <Skeleton variant="text" width={40} height={16} />
+            <Box sx={{ 
+              height: "16px", 
+              width: "40px", 
+              backgroundColor: "#F6F6F6",
+              borderRadius: 1,
+              animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
+            }} />
             <Box sx={{ textAlign: "end" }}>
-              <Skeleton variant="circular" width={17} height={17} />
+              <Box sx={{ 
+                width: 17, 
+                height: 17, 
+                borderRadius: "50%",
+                backgroundColor: "#F6F6F6",
+                animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
+              }} />
             </Box>
           </Box>
         </Box>
@@ -103,8 +139,20 @@ const ChatSkeleton = () => (
         alignItems: "center",
         gap: 2
       }}>
-        <Skeleton variant="circular" width={40} height={40} />
-        <Skeleton variant="text" width={200} height={24} />
+        <Box sx={{ 
+          width: 40, 
+          height: 40, 
+          borderRadius: "50%",
+          backgroundColor: "#F6F6F6",
+          animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
+        }} />
+        <Box sx={{ 
+          height: "24px", 
+          width: "200px", 
+          backgroundColor: "#F6F6F6",
+          borderRadius: 1,
+          animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
+        }} />
       </Box>
 
       {/* Chat Messages */}
@@ -126,12 +174,13 @@ const ChatSkeleton = () => (
               alignSelf: index % 2 === 0 ? "flex-start" : "flex-end"
             }}
           >
-            <Skeleton 
-              variant="rectangular"
-              width="100%"
-              height={60}
-              sx={{ borderRadius: "8px" }}
-            />
+            <Box sx={{ 
+              width: "100%",
+              height: "60px",
+             
+              borderRadius: "8px",
+              animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
+            }} />
           </Box>
         ))}
       </Box>
@@ -141,11 +190,12 @@ const ChatSkeleton = () => (
         padding: "10px",
         borderTop: "1px solid #E0E0E0"
       }}>
-        <Skeleton 
-          variant="rectangular" 
-          height={56}
-          sx={{ borderRadius: "8px" }}
-        />
+        <Box sx={{ 
+          height: "56px",
+          backgroundColor: "#F6F6F6",
+          borderRadius: "8px",
+          animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
+        }} />
       </Box>
     </Card>
   </Box>

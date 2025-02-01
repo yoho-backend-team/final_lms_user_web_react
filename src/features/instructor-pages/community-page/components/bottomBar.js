@@ -79,7 +79,7 @@ const BottomBar = ({ socket, community}) => {
     >
       <EmojiIcon />
     </IconButton>
-      <IconButton sx={{
+    {/*}  <IconButton sx={{
         "&:hover": {
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
           transform: "scale(1.1)",
@@ -88,7 +88,7 @@ const BottomBar = ({ socket, community}) => {
       }}
     >
         <AddBoxPlusIcon />
-      </IconButton>
+      </IconButton>*/}
       <TextField
         value={message}
         onChange={(e) => setMessage(e.target.value)}
@@ -123,7 +123,7 @@ const BottomBar = ({ socket, community}) => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton 
+              {/*<IconButton 
                sx={{
                 "&:hover": {
                   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
@@ -132,7 +132,7 @@ const BottomBar = ({ socket, community}) => {
                 },
               }}>
                 <AttachFileIcon />
-              </IconButton>
+              </IconButton>*/}
             </InputAdornment>
           ),
         }}
@@ -147,7 +147,7 @@ const BottomBar = ({ socket, community}) => {
       }}>
         <SendIcon sx={{ color: "#000000" }} />
       </IconButton>
-      <IconButton sx={{
+     {/*} <IconButton sx={{
         "&:hover": {
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
           transform: "scale(1.1)",
@@ -155,7 +155,7 @@ const BottomBar = ({ socket, community}) => {
         },
       }}>
         <RecordIcon />
-      </IconButton>
+      </IconButton>*/}
     </Box>
   );
 };

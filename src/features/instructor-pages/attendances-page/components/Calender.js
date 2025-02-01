@@ -145,7 +145,7 @@ function InstructorAttendance({ attendanceData, getAttedenceDetails, attendance_
   return (
     <Box sx={{ height: '67vh', display: 'flex', flexDirection: 'column', p: 2 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h4">Attendance Calendar</Typography>
+        <Typography variant="h4"></Typography>
         <FormControl sx={{ minWidth: 120 }}>
           <Select
             value={selectedMonth}

@@ -120,33 +120,81 @@ OTP.propTypes = {
 
 export default function OTPInput() {
   const [otp, setOtp] = useState("");
-  const [timeLeft, setTimeLeft] = useState(() => {
-    const savedTime = localStorage.getItem("otpTimeLeft");
-    return savedTime ? parseInt(savedTime, 10) : 600;
-  });
   const [error, setError] = useState("");
+  const [isResendDisabled, setIsResendDisabled] = useState(false);
   const theme = useTheme();
   const verifyOTP = useStudentOtpVerify();
   const navigate = useNavigate();
   const otpData = useAtomValue(studentOtpAtom);
 
+  // Timer state for OTP expiry
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const startTime = localStorage.getItem("otpStartTime");
+    const duration = 600; // 10 minutes in seconds
+    
+    if (!startTime) {
+      const now = Date.now();
+      localStorage.setItem("otpStartTime", now.toString());
+      return duration;
+    }
+    
+    const elapsed = Math.floor((Date.now() - parseInt(startTime)) / 1000);
+    return Math.max(0, duration - elapsed);
+  });
+
+  // Timer state for resend button
+  const [resendTimeLeft, setResendTimeLeft] = useState(() => {
+    const resendStartTime = localStorage.getItem("resendStartTime");
+    const duration = 600; // 10 minutes in seconds
+    
+    if (!resendStartTime) {
+      return 0; // Allow immediate first resend
+    }
+    
+    const elapsed = Math.floor((Date.now() - parseInt(resendStartTime)) / 1000);
+    return Math.max(0, duration - elapsed);
+  });
+
+  // Effect for OTP expiry timer
   useEffect(() => {
     if (timeLeft === 0) return;
 
     const timer = setInterval(() => {
-      setTimeLeft((prevTime) => {
-        const newTime = prevTime - 1;
-        localStorage.setItem("otpTimeLeft", newTime);
-        return newTime;
-      });
+      setTimeLeft((prevTime) => Math.max(0, prevTime - 1));
     }, 1000);
 
     return () => clearInterval(timer);
   }, [timeLeft]);
 
+  // Effect for resend button timer
+  useEffect(() => {
+    if (resendTimeLeft === 0) {
+      setIsResendDisabled(false);
+      return;
+    }
+
+    setIsResendDisabled(true);
+    const timer = setInterval(() => {
+      setResendTimeLeft((prevTime) => Math.max(0, prevTime - 1));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [resendTimeLeft]);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
+
   const handleResend = () => {
-    setTimeLeft(60);
-    localStorage.setItem("otpTimeLeft", 60);
+    const now = Date.now();
+    localStorage.setItem("otpStartTime", now.toString());
+    localStorage.setItem("resendStartTime", now.toString());
+    setTimeLeft(600); // Reset OTP timer to 10 minutes
+    setResendTimeLeft(600); // Reset resend timer to 10 minutes
+    setIsResendDisabled(true);
+    // Add your resend OTP API call here
   };
 
   const handleVerify = async () => {
@@ -162,6 +210,7 @@ export default function OTPInput() {
       setError("Invalid OTP. Please try again.");
     }
   };
+
 
   return (
     <Box
@@ -183,7 +232,7 @@ export default function OTPInput() {
           textAlign: "center",
         }}
       >
-        Enter the Code that sent to your entered mail Id
+        Enter the Code that sent to your entered mail id
       </Typography>
     </Box>
       <Typography variant="h6" sx={{ textAlign: "center", color: theme.palette.text.secondary ,mt:10}}>
@@ -195,30 +244,30 @@ export default function OTPInput() {
           {error}
         </Typography>
       )}
-      <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", px: 5, pt: 3 }}>
-        <Box>
+      <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", px: 5, pt: 5,mt:5 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <Typography variant="subtitle2" sx={{ color: theme.palette.text.primary }}>
-            {Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? "0" : ""}
-            {timeLeft % 60}
+            OTP expires in: {formatTime(timeLeft)}
           </Typography>
-          {timeLeft === 0 && (
-            <Button
-            
-              onClick={handleResend}
-              sx={{
-                mt: 1,
-                borderRadius: 5,
-                color: theme.palette.text.primary,
-                fontSize: "14px",
-                textDecoration: "underline",
-                fontWeight: 700,
-                padding: "0px",
-                ":hover": { border: "none", backgroundColor: theme.palette.background.default },
-              }}
-            >
+          <Button
+            disabled={isResendDisabled}
+            onClick={handleResend}
+            sx={{
+              mt: 7,
+              borderRadius: 5,
+              color: isResendDisabled ? theme.palette.text.disabled : theme.palette.primary.main,
+              fontSize: "14px",
+              textDecoration: "underline",
+              fontWeight: 700,
+              padding: "0px",
+              ":hover": { 
+                border: "none", 
+                backgroundColor: isResendDisabled ? "transparent" : theme.palette.background.default 
+              },
+            }}
+          >
               Resend
-            </Button>
-          )}
+          </Button>
         </Box>
         <Box>
           <Button
@@ -230,13 +279,13 @@ export default function OTPInput() {
               fontSize: "13px",
               fontWeight: 700,
               width: "101px",
-              mt:10,
-              mr:40,
+              mt: 10,
+              mr: 5,
               height: "37px",
               "&:hover": {
-                background: "linear-gradient(90deg, #2575FC 0%, #6A11CB 100%)", // Reverse gradient on hover
-                transform: "scale(1.05)", // Slightly enlarges the button
-                boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)", // Enhanced shadow on hover
+                background: "linear-gradient(90deg, #2575FC 0%, #6A11CB 100%)",
+                transform: "scale(1.05)",
+                boxShadow: "0 6px 15px rgba(0, 0, 0, 0.3)",
               },
             }}
             onClick={handleVerify}

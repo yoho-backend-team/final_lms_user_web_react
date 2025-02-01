@@ -40,7 +40,7 @@ const ClassHistory = ({ data, classType, group, image }) => {
         onFilterChange={handleFilterChange}
         onResetFilters={handleResetFilters}
       />
-      <Box sx={{ mt: 3, px: "40px" }}>
+      <Box sx={{ mt: "1px", px: "40px" }}>
         {data?.map((cls) => (
           <ClassCard
             key={cls.id}

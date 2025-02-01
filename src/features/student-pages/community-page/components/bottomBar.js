@@ -62,6 +62,7 @@ const BottomBar = ({ socket, community }) => {
   return (
     <Box
       sx={{
+        
         display: "flex",
         alignItems: "center",
         padding: isTablet ? "8px" : "8px 16px",

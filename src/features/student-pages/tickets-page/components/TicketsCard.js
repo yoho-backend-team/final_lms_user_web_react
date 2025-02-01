@@ -25,6 +25,7 @@ const TicketCard = ({
         flexDirection: "column",
         background: "#FFF",
         borderRadius: "16px",
+        mt: "26px",
         p: "16px",
         boxShadow: "0px 2.4px 25px 0px rgba(160, 170, 255, 0.24)",
         "&:hover": {

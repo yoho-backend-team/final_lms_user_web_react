@@ -122,41 +122,41 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
 
   console.log(classDetails,"classDetails")
   return (
-    <Box sx={{ paddingTop: "40px", width: "100%", overflow: "auto" }}>
+    <Box sx={{ paddingTop: "20px", width: "100%", overflow: "auto" }}>
       <Breadcrumbs
         aria-label="breadcrumb"
         separator={<NavigateNext sx={{ color: "blue" }} />}
         sx={{ mb: 2 }}
       >
-        <Link
+        <p
           underline="hover"
-          sx={{
+          style={{
             color: "#484848",
             fontSize: "28px",
             fontWeight: "700",
             lineHeight: "22px",
           }}
-          color="inherit"
-          href="#"
+          
+          onClick={() => handleBack()}
         >
           Classes
-        </Link>
-        <Link
+        </p>
+        <p
           underline="hover"
           sx={{
             color: "#495057",
-            fontSize: "20px",
-            fontWeight: 500,
+            fontSize: "25px",
+            fontWeight:"500",
             lineHeight: "32px",
           }}
-          color="inherit"
-          href="#"
+          
+          onClick={() => handleBack()}
         >
           {String(type)?.charAt(0).toUpperCase()+type.slice(1)} Class
-        </Link>
+        </p>
         <Typography
           color="text.primary"
-          sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "22px" }}
+          sx={{ fontSize: "13px", fontWeight: 500, lineHeight: "22px" }}
         >
           {group?.charAt(0).toUpperCase()+group.slice(1)} Class
         </Typography>
@@ -200,28 +200,31 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                 >
                   #{classDetails?.batch?.id}
                 </Typography>
-              </Box>
-            </Box>
-            <Grid container spacing={4}>
-              <Grid item xs={8} md={6}>
-                <Box sx={{ paddingLeft: "40px" }}>
-                  <Typography
+                <Typography
                     variant="h5"
                     sx={{
                       fontWeight: "800",
-                      mb: 2,
+                      mb: 1,
+                      ml:"25px",
                       color: "#000",
-                      fontSize: "20px",
+                      fontSize: "25px",
                       lineHeight: "16px",
                     }}
                   >
                     Class Details
                   </Typography>
+              </Box>
+            </Box>
+            <Grid container spacing={4}>
+              <Grid item xs={8} md={6}>
+                <Box sx={{ paddingLeft: "40px" }}>
+                 
                   <Typography
                     variant="h6"
                     sx={{
                       fontWeight: 700,
                       mb: 1,
+                      ml:4,
                       color: "#495057",
                       fontSize: "20px",
                       lineHeight: "32px",
@@ -232,6 +235,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                   <Typography
                     sx={{
                       mb: 2,
+                      ml:4,
                       fontSize: "14px",
                       fontWeight: 400,
                       lineHeight: "16px",
@@ -341,6 +345,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                       fontWeight: 800,
                       lineHeight: "32px",
                       pb: "10px",
+                      ml:4,
                     }}
                   >
                     Class Meeting Link
@@ -351,6 +356,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                       fontSize: "14px",
                       fontWeight: 600,
                       lineHeight: "32px",
+                      ml:4,
                     }}
                   >
                     Join the class @{formatTime(classDetails?.start_time)}
@@ -373,7 +379,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                         Host Now
                       </Button>
                       :
-                      <Typography sx={{ color:"#828282", fontSize:"14px",fontWeight:400,lineHeight:"32px"}} >Class Finished {formatDate(classDetails?.start_date)} - {formatTime(classDetails?.end_time)}</Typography>
+                      <Typography sx={{ color:"#828282",ml:"14px", fontSize:"14px",fontWeight:400,lineHeight:"32px"}} >Class Finished {formatDate(classDetails?.start_date)} - {formatTime(classDetails?.end_time)}</Typography>
                     }
                     <Button
                       variant={ isUpCommingClass ? "outlined" : "contained" }
@@ -384,6 +390,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                         backgroundColor : isUpCommingClass ? "transparent" : "#0D6EFD",
                         fontSize: "14px",
                         fontWeight: 600,
+                        ml:18,
                         lineHeight: "24px",
                         border: `2px solid ${isUpCommingClass ? "#5611B1" : "#0D6EFD" }`,
                         borderRadius: "24px",
@@ -420,13 +427,14 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                         
                       </Typography>
                     </Box>
-                    <Box sx={{ display: "inline-flex", gap: "10px" }}>
+                    <Box sx={{ display: "inline-flex",ml:14, gap: "10px" }}>
                       <InfoOutlinedIcon sx={{ color: "#828282" }} />
                       <Typography
                         sx={{
                           color: "#828282",
                           fontSize: "11px",
                           fontWeight: 400,
+                          
                           lineHeight: "20px",
                         }}
                       >
@@ -439,30 +447,32 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                       </Typography>
                     </Box>
                   </Box>
-                  <Typography
+                  {/*<Typography
                     sx={{
                       color: "black",
                       fontSize: "20px",
+                      mt:"15px",
                       fontWeight: 800,
                       lineHeight: "32px",
                     }}
                   >
                     Session Videos
-                  </Typography>
+                  </Typography>*/}
                   {
                     classDetails?.videos?.length !== 0 && 
                     (
                       classDetails?.videos?.map((video)=>
-                       <Box sx={{ height: "120px", width: "241px"}} >
+                      {/* <Box sx={{ height: "120px", width: "241px"}} >
                          <VideoCard url={video?.url} />
-                      </Box>
+                      </Box>*/}
                       )
                     )
                   }
-                  <Box
+                 {/* <Box
                       sx={{
                         display: "flex",
-                        flexDirection: "row",
+                        flexDirection: "column",
+                        mr:"500px",
                         alignItems: "center",
                         gap: "33px",
                       }}
@@ -480,12 +490,13 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                      <VideoUpload 
                      updateClass={updateClass}
                      />
-                    </Box>
+                    </Box>*/}
                   <Typography
                     sx={{
                       color: "black",
                       fontSize: "20px",
                       fontWeight: 800,
+                      ml:4,
                       lineHeight: "32px",
                     }}
                   >
@@ -509,6 +520,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                           width: "max-content",
                           pb: "20px",
                           justifyContent: "flex-start",
+                          
                         }}
                       >
                         {classDetails?.notes?.map((item) => (
@@ -520,6 +532,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                               border: "1px solid #CCCCCC",
                               borderRadius: "8px",
                               gap: "23px",
+                              
                             }}
                           >
                             <Box>
@@ -561,17 +574,20 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                     <Box
                       sx={{
                         display: "flex",
-                        flexDirection: "row",
+                        flexDirection: "column",
                         alignItems: "center",
                         gap: "33px",
+                        mr:"500px",
+                        
                       }}
                     >
                       <Typography
                         sx={{
                           color: "black",
-                          fontSize: "14px",
-                          fontWeight: 400,
+                          fontSize: "20px",
+                          fontWeight: 600,
                           lineHeight: "16px",
+                          mr:"13px",
                         }}
                       >
                         Upload Notes
@@ -696,7 +712,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                       </Typography>
                     </Box>
                   </Box>
-                  <Box
+                 {/* <Box
                     sx={{
                       mt: 2,
                       backgroundImage: `url(${ClassCoordinatorViewCard})`,
@@ -705,7 +721,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                       pt: "5px",
                     }}
                   >
-                    {/* <Typography variant="body1" sx={{ fontWeight: '500',fontSize:"12px",lineHeight:"16px",color:"#435D85",p:"20px" }} >Jerome Bell</Typography> */}
+                     <Typography variant="body1" sx={{ fontWeight: '500',fontSize:"12px",lineHeight:"16px",color:"#435D85",p:"20px" }} >Jerome Bell</Typography> 
                     <Box sx={{ padding: "20px" }}>
                       <Typography
                         variant="body2"
@@ -747,7 +763,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                         Total {classDetails?.batch?.student?.length}
                       </Typography>
                     </Box>
-                  </Box>
+                  </Box>*/}
                 </Box>
                 <Box sx={{ mt: 4 }}>
                   <Typography
@@ -770,7 +786,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                       border: "1px solid #C3C3C3",
                       borderRadius: "10px",
                       boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.14)",
-                      minHeight: "200px",
+                      minHeight: "450px",
                       maxHeight: "200px",
                       overflow: "auto",
                     }}
@@ -796,6 +812,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                               border: "1px solid #CCCCCC",
                               borderRadius: "8px",
                               gap: "23px",
+                              ml:"220px"
                             }}
                           >
                             <Box>
@@ -841,7 +858,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                       <Typography
                         variant="body2"
                         color="text.secondary"
-                        sx={{ mt: 1 }}
+                        sx={{ mt: 3 }}
                       >
                         Once the class is finished, please upload the Study
                         Materials.

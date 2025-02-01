@@ -5,9 +5,9 @@ import {
   Button,
   FormControl,
   Input,
-  InputLabel,
   Typography,
   FormHelperText,
+  Card,
 } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { useAtom } from "jotai";
@@ -29,32 +29,27 @@ const ForgetPasswordPage = () => {
   const [, setOtpAtom] = useAtom(instructorOtpAtom);
   const { showSpinner, hideSpinner } = useSpinner();
 
-  // Validate email with a regex
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
 
-  // Handle email input change
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     if (emailError) setEmailError("");
   };
 
-  // Handle back navigation
   const handleBackToLogin = () => {
     showSpinner();
     setLoginStep(instructorLoginStepAtom);
     hideSpinner();
   };
 
-  // Handle form submission
   const handleSubmit = async () => {
     if (!email) {
       setEmailError("Enter your email address.");
       return;
     }
-
     if (!validateEmail(email)) {
       setEmailError("Enter a valid email address.");
       return;
@@ -62,7 +57,6 @@ const ForgetPasswordPage = () => {
 
     try {
       const response = await forgetPassword(email);
-
       if (response?.status === "success") {
         const { token } = response.data;
         setOtpAtom({ email, token });
@@ -71,7 +65,6 @@ const ForgetPasswordPage = () => {
         setEmailError("Email not found.");
       }
     } catch (error) {
-      console.error("Error during email submission:", error);
       toast.error(error?.message || "An error occurred. Please try again.");
     }
   };
@@ -80,135 +73,82 @@ const ForgetPasswordPage = () => {
     <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
         justifyContent: "center",
-        padding: "50px",
+        alignItems: "center",
+        minHeight: "100vh",
+        backgroundColor: "#f4f6f8",
       }}
     >
-      {/* Card Container */}
-      <Box
+      <Card
         sx={{
-          width: "360px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          padding: 3,
+          width: 450,
+          padding: 4,
+          boxShadow: 3,
           borderRadius: 2,
-          fontFamily: '"Zen Kaku Gothic Antique"',
-          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+          backgroundColor: "white",
+          textAlign: "center",
         }}
       >
-        {/* Title */}
-        <Typography
-          variant="h4"
-          gutterBottom
-          sx={{
-            fontWeight: "bold",
-            color: "#242424",
-            fontSize: "1.5rem",
-            textAlign: "center",
-          }}
-        >
+        <Typography variant="h2" fontWeight="bold" mb={2}>
           Forgot Password?
         </Typography>
-
-        {/* Subtitle */}
-        <Typography
-          variant="body2"
-          sx={{
-            textAlign: "center",
-            color: "#757575",
-            fontSize: "0.875rem",
-            fontWeight: 400,
-            marginBottom: "20px",
-          }}
-        >
-          Enter your email address below
+        <Typography variant="h4" color="textSecondary" mb={3}>
+        Enter your email address below
         </Typography>
 
-        {/* Email Input */}
         <FormControl fullWidth error={!!emailError}>
           <Input
             type="email"
             value={email}
             onChange={handleEmailChange}
-            aria-describedby="email-error-text"
             placeholder="Enter your email"
             sx={{
-              color: "#212121",
               fontSize: "1rem",
-              fontWeight: 400,
-              lineHeight: "22.5px",
               padding: "10px",
               border: "1px solid #ddd",
               borderRadius: "8px",
-              marginBottom: "10px",
+              mb: 2,
             }}
           />
-          {emailError && (
-            <FormHelperText id="email-error-text">{emailError}</FormHelperText>
-          )}
+          {emailError && <FormHelperText>{emailError}</FormHelperText>}
         </FormControl>
 
-        {/* Action Buttons */}
-        <Box
+        <Button
+          fullWidth
+          variant="contained"
+          onClick={handleSubmit}
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            width: "100%",
-            marginTop: "30px",
+            backgroundColor: "#5611B1",
+            color: "white",
+            py: 1.5,
+            mt: 2,
+            borderRadius: 2,
+            fontSize: "1rem",
+            ":hover": { backgroundColor: "#6302e3" },
           }}
         >
-          
-          <Typography
-  onClick={handleBackToLogin}
-  sx={{
-    display: "flex",
-    alignItems: "center",
-    cursor: "pointer",
-    color: "#5611B1",
-    fontSize: "0.9375rem",
-    fontWeight: 500,
-    textDecoration: "none",
-    transition: "all 0.2s ease-in-out",
-    ":hover": {
-      color: "#22034a",
-      transform: "scale(1.05)", // Slight zoom effect
-      textDecoration: "underline", // Add underline on hover
-    },
-  }}
->
-  <ChevronLeftIcon sx={{ width: "20px", height: "20px", mr: 0.5 }} />
-  Back to Login
-</Typography>
+         Verify
+        </Button>
 
-
-          {/* Submit Button */}
-          <Button
-            variant="contained"
-            onClick={handleSubmit}
-            sx={{
-              backgroundColor: "#5611B1",
-              color: "white",
-              maxWidth: 100,
-              borderRadius: 20,
-              px: 3,
-              py: 1,
-              fontSize: "0.9375rem",
-              fontWeight: 600,
-              textTransform: "none",
-              ":hover": {
-                backgroundColor: "#6302e3",
-                transform: "scale(1.05)",
-              },
-            }}
-          >
-            Verify
-          </Button>
-        </Box>
-      </Box>
+        <Typography
+          onClick={handleBackToLogin}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            color: "#5611B1",
+            fontSize: "0.9375rem",
+            fontWeight: 500,
+            mt: 6,
+            textDecoration: "none",
+            ":hover": { textDecoration: "underline" },
+          }}
+        >
+          <ChevronLeftIcon sx={{ width: 20, height: 20, mr: 0.5 }} />
+          Back to Login
+        </Typography>
+      </Card>
     </Box>
   );
 };

@@ -283,7 +283,7 @@ export default function OTPInput() {
             
           }}
         >
-          Enter the Code that sent to your entered mail iD
+          Enter the Code that sent to your entered mail i
         </Typography>
         <Typography
           sx={{
