@@ -61,6 +61,8 @@ const ActivityLogsPage = () => {
       sx={{
         display: "flex",
         padding: "60px 40px 20px 40px",
+        backgroundColor: '#CCFFCC',
+        
       }}
     >
       <Box
@@ -70,6 +72,7 @@ const ActivityLogsPage = () => {
           boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
           width: "100vw",
           height: "100vh",
+          overflow: "hidden",
         }}
       >
         <Box
@@ -77,21 +80,24 @@ const ActivityLogsPage = () => {
             display: "flex",
             justifyContent: "space-between",
             padding: "30px 45px 28px 30px",
+            borderBottom: "1px solid #E0E0E0",
+            backgroundColor: "#FFB6C1", 
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Typography
               sx={{
                 color: "#495057",
-                fontSize: "24px",
+                fontSize: "28px",
                 fontWeight: 700,
-                lineHeight: "24px",
+                lineHeight: '32px',
+                letterSpacing: '0.5px',
               }}
             >
               Activity Log
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", gap: "20px" }}>
+          <Box sx={{ display: "flex", gap: "20px" ,}}>
           <FormControl
         sx={{
           display: "inline-flex",

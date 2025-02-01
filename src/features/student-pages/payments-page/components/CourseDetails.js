@@ -600,9 +600,9 @@ console.log(feesData,"feesData")
             <Typography
               variant="body1"
               style={{
-                color: "#495057",
+                color: "#151010",
                 fontFamily: "Nunito Sans",
-                fontSize: "16px",
+                fontSize: isXs ? "18px" : "24px",
                 fontStyle: "normal",
                 fontWeight: 700,
                 lineHeight: "24px",
@@ -626,12 +626,12 @@ console.log(feesData,"feesData")
             sx={{
               display: 'flex',
               alignItems: 'center',
-              flexDirection: 'column',
+              flexDirection: 'row',
               padding: '20px 25px 15px 10px',
             
-              borderBottom: '2px solid #ccc',
+              borderBottom: '1px solid #ccc',
               borderRadius: '18px',
-              background: 'linear-gradient(90deg, #6380E6 0%, #00C9C0 100%)',
+              background: 'linear-gradient(90deg, #6380E6 100%, #00C9C0 100%)',
             }}
           >
            <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px', }}>

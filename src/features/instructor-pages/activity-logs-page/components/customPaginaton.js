@@ -4,15 +4,18 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const CustomPagination = ({ totalPages,currentPage,setCurrentPage,updateActivitys }) => {
-  
+  const [loading, setLoading] = useState(false);
 
   const handlePrevious = async () => {
     if (currentPage > 1) {
       const newPage = currentPage - 1;
       setCurrentPage(newPage);
+      setLoading(true);
       await updateActivitys({ page: newPage });
+      setLoading(true);
     }
   };
 
@@ -20,7 +23,9 @@ const CustomPagination = ({ totalPages,currentPage,setCurrentPage,updateActivity
     if (currentPage < totalPages) {
       const newPage = currentPage + 1;
       setCurrentPage(newPage);
+      setLoading(true);
       await updateActivitys({ page: newPage });
+      setLoading(true);
     }
   };
 
@@ -30,27 +35,38 @@ const CustomPagination = ({ totalPages,currentPage,setCurrentPage,updateActivity
 
   return (
     <Box sx={{ 
-         display: "flex", justifyContent: "flex-end", pr: "35px", alignItems : "center"
+         
+         display: "flex", 
+         justifyContent: "flex-end",
+         pr: "35px", 
+         alignItems : "center",
+         borderTop: '2px solid #ddd',
+         backgroundColor: "#FFB6C1",  
     }}>
       <Button
         variant="text"
         color="primary"
         onClick={handlePrevious}
         sx={{ color: currentPage === 1 ? "#9F9F9F" : "#5611B1",fontSize:"15px",fontWeight:700,lineHeight:"24px",":hover":{background:"none"}}}
-        disabled={currentPage === 1}
+        disabled={currentPage === 1 || loading}
         startIcon={<ArrowBackIosIcon sx={{ height: "24px", width: "24px"}} />}
+        aria-label="Previous Page"
       >
-         Previous
+        {loading ? <CircularProgress size={24} color="inherit" /> : "Previous"}
+        
       </Button>
       <Button
         variant="text"
         color="primary"
         sx={{ color: currentPage === totalPages ? "#9F9F9F" : "#5611B1",fontSize:"15px",fontWeight:700,lineHeight:"24px",":hover":{background:"none"},":focus":{ background: "none"}}}
         onClick={handleNext}
-        disabled={currentPage === totalPages}
+        disabled={currentPage === totalPages || loading}
         endIcon={<ArrowForwardIosIcon sx={{ height: "24px", width: "24px"}} />}
+        aria-label="Next Page"
       >
-        Next 
+        {loading ? <CircularProgress size={24} color="inherit" /> : "Next"}
+      
+        
       </Button>
       <Box sx={{ textAlign: "center" }} >
       <Typography variant="body1" sx={{ margin: '0 16px', color : "#9F9F9F", fontSize: "14px", fontWeight: 700 }}>

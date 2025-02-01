@@ -31,8 +31,11 @@ const CustomPagination = ({ totalPages, currentPage, setCurrentPage,updateActivi
       sx={{
         display: 'flex',
         justifyContent: 'flex-end',
+        borderTop: '2px solid #ddd',
+        paddingTop: '10px',
         pr: '35px',
         alignItems: 'center',
+        backgroundColor: '#CCFFCC',
       }}
     >
       <Button

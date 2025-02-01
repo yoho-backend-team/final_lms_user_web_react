@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Card, Typography, Button, Grid } from "@mui/material";
+import { Box, Card, Typography, Button, Grid ,useTheme, useMediaQuery} from "@mui/material";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import { Link } from "react-router-dom";
@@ -21,7 +21,7 @@ export const ClassCardHeader = () => (
       zIndex: 1,
     }}
   >
-    <Grid item xs={3}>
+    <Grid item   xs={12} md={3}>
       <Typography
         variant="body1"
         sx={{
@@ -35,7 +35,7 @@ export const ClassCardHeader = () => (
         Title
       </Typography>
     </Grid>
-    <Grid item xs={2}>
+    <Grid item xs={12} md={2} >
       <Typography
         variant="body1"
         sx={{
@@ -49,7 +49,7 @@ export const ClassCardHeader = () => (
         Date
       </Typography>
     </Grid>
-    <Grid item xs={2}>
+    <Grid item xs={12} md={2} >
       <Typography
         variant="body1"
         sx={{
@@ -63,7 +63,7 @@ export const ClassCardHeader = () => (
         Time
       </Typography>
     </Grid>
-    <Grid item xs={2}>
+    <Grid item xs={12} md={2} >
       <Typography
         variant="body1"
         sx={{
@@ -77,7 +77,7 @@ export const ClassCardHeader = () => (
         Duration
       </Typography>
     </Grid>
-    <Grid item xs={3}>
+    <Grid item xs={12} md={3}>
       <Typography
         variant="body1"
         sx={{
@@ -97,7 +97,9 @@ export const ClassCardHeader = () => (
 
 
 const ClassCard = ({ cls, style, type, group, img }) => {
-  
+  const theme = useTheme();
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
+
   return (
     <Card
       sx={{
@@ -115,14 +117,14 @@ const ClassCard = ({ cls, style, type, group, img }) => {
       }}
     >
       <Grid
-        container
+        container spacing={2}
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
         }}
       >
-        <Grid item xs={3}>
+        <Grid item  xs={12} md={3} >
           <Box>
             <Typography variant="h6" sx={{ fontWeight: "bold" }}>
               {cls?.class_name}
@@ -134,13 +136,13 @@ const ClassCard = ({ cls, style, type, group, img }) => {
         </Grid>
 
         <Grid
-          item
-          xs={2}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          item xs={6} md={2}
+         
+          // sx={{
+          //   display: "flex",
+          //   alignItems: "center",
+          //   justifyContent: "center",
+          // }}
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <CalendarTodayOutlinedIcon color={style.calendarColor} />
@@ -150,7 +152,7 @@ const ClassCard = ({ cls, style, type, group, img }) => {
           </Box>
         </Grid>
 
-        <Grid item xs={2}>
+        <Grid item xs={6} md={2} >
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <AccessTimeOutlinedIcon color={style.timerColor} />
             <Typography variant="body2" sx={{ color: "gray" }}>
@@ -160,14 +162,14 @@ const ClassCard = ({ cls, style, type, group, img }) => {
         </Grid>
 
         <Grid
-          item
-          xs={2}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            color: "gray",
-            justifyContent: "center",
-          }}
+          item xs={12} md={2}
+          
+          // sx={{
+          //   display: "flex",
+          //   alignItems: "center",
+          //   color: "gray",
+          //   justifyContent: "center",
+          // }}
         >
           <Box
             sx={{ backgroundColor: style.durationColor, borderRadius: "26px" }}
@@ -182,6 +184,7 @@ const ClassCard = ({ cls, style, type, group, img }) => {
                 fontWeight: 600,
                 lineHeight: "22px",
                 fontSize: "14px",
+                textAlign: isTablet ? "center" : "left",
               }}
             >
               {getTimeDifference(cls.start_time, cls.end_time)}
@@ -189,7 +192,7 @@ const ClassCard = ({ cls, style, type, group, img }) => {
           </Box>
         </Grid>
 
-        <Grid item xs={3} sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Grid item xs={12} md={3}  sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             component={Link}
             to={`/instructor/classes/${cls.uuid}?type=${type}&group=${group}`}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import {
@@ -34,59 +34,41 @@ function ActivityLog() {
     backgroundPosition: "center",
     backgroundSize: "cover",
   }));
+  
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
-  const [fromDate, setFromDate] = React.useState(null);
-  const [toDate, setToDate] = React.useState(null);
-  const [dateRange, setDateRange] = React.useState("pastWeek");
+  
+  const [fromDate, setFromDate] = useState(null);
+  const [toDate, setToDate] = useState(null);
+  const [dateRange, setDateRange] = useState("pastWeek");
 
   const handleDateRangeChange = (event) => {
     setDateRange(event.target.value);
   };
 
   const activities = [
-    {
-      time: "2024-05-18 09:30",
-      icon: <PersonIcon />,
-      title: "Account Details",
-      description: "Event after correct password confirmation",
-    },
-    {
-      time: "2024-05-18 10:00",
-      icon: <DeleteIcon />,
-      title: "Delete Process",
-      description: "Because it's awesome!",
-    },
-    {
-      time: "2024-05-18 22:00",
-      icon: <KeyIcon />,
-      title: "Password Change",
-      description: "Because you need rest",
-    },
+    { time: "2024-05-18 09:30", icon: <PersonIcon />, title: "Account Details", description: "Event after correct password confirmation" },
+    { time: "2024-05-18 10:00", icon: <DeleteIcon />, title: "Delete Process", description: "Because it's awesome!" },
+    { time: "2024-05-18 22:00", icon: <KeyIcon />, title: "Password Change", description: "Because you need rest" },
   ];
+
+  // Filter activities by date range
+  const filteredActivities = activities.filter(activity => {
+    const activityDate = new Date(activity.time);
+    const isAfterFromDate = fromDate ? activityDate >= fromDate : true;
+    const isBeforeToDate = toDate ? activityDate <= toDate : true;
+    return isAfterFromDate && isBeforeToDate;
+  });
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <StyledPaper elevation={3}>
         <Card>
           <Grid container spacing={2} sx={{ padding: "20px" }}>
-            <Grid
-              item
-              xs={isSmallScreen ? 12 : 6}
-              style={{ display: "flex", alignItems: "center" }}
-            >
+            <Grid item xs={isSmallScreen ? 12 : 6} style={{ display: "flex", alignItems: "center" }}>
               <Typography variant="h3">Activity Log</Typography>
             </Grid>
-            <Grid
-              item
-              xs={isSmallScreen ? 12 : 6}
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center",
-              }}
-            >
+            <Grid item xs={isSmallScreen ? 12 : 6} style={{ display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
               <DatePicker
                 label="From"
                 value={fromDate}
@@ -120,13 +102,9 @@ function ActivityLog() {
           <Grid container>
             <Grid item xs={6}>
               <Timeline position="right">
-                {activities.map((activity, index) => (
+                {filteredActivities.map((activity, index) => (
                   <TimelineItem key={index}>
-                    <TimelineOppositeContent
-                      sx={{ textAlign: "right", m: "auto 0" }}
-                      variant="body2"
-                      color="text.secondary"
-                    >
+                    <TimelineOppositeContent sx={{ textAlign: "right", m: "auto 0" }} variant="body2" color="text.secondary">
                       {activity.time}
                     </TimelineOppositeContent>
                     <TimelineSeparator>
@@ -143,21 +121,15 @@ function ActivityLog() {
                       <Box
                         sx={{
                           borderRadius: 2,
-                          bgcolor:
-                            theme.palette.mode === "dark"
-                              ? "grey.800"
-                              : "primary.light",
-                          color:
-                            theme.palette.mode === "dark" ? "white" : "black",
+                          bgcolor: theme.palette.mode === "dark" ? "grey.800" : "primary.light",
+                          color: theme.palette.mode === "dark" ? "white" : "black",
                           p: 2,
                           maxWidth: "300px",
                           ml: "auto",
                           mb: 2,
                         }}
                       >
-                        <Typography variant="body1">
-                          {activity.description}
-                        </Typography>
+                        <Typography variant="body1">{activity.description}</Typography>
                         <Typography variant="body2" color="text.secondary">
                           {activity.time}
                         </Typography>
