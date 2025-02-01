@@ -36,9 +36,18 @@ const defaultStyles = {
   durationColor: "rgba(253, 176, 61, 0.22)",
 };
 
-const CompletedClassList = ({ data, classType,group, image}) => {
+const CompletedClassList = ({ data, classType, group, image }) => {
   return (
-    <Box sx={{ mt: 3, px: "40px" }}>
+    <Box
+      sx={{
+        mt: 3,
+        px: "40px",
+        height: "calc(100vh - 100px)", // Dynamic height to fit the viewport
+        overflowY: "auto", // Enable vertical scrolling
+        pb: 2, // Reduce bottom padding for less space
+        scrollBehavior: "smooth", // Add smooth scrolling behavior
+      }}
+    >
       <ClassCardHeader />
       {data?.map((cls) => (
         <ClassCard

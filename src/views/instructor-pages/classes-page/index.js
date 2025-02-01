@@ -101,7 +101,7 @@ const ClassesPage = () => {
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: 28,
+              fontSize: 30,
               color: "#484848",
               mb: "4px",
               pl: "40px",
@@ -133,8 +133,8 @@ const ClassesPage = () => {
                 <Typography
                   variant="h6"
                   sx={{
-                    fontSize: "20px",
-                    fontWeight: 500,
+                    fontSize: "25px",
+                    fontWeight: 700,
                     lineHeight: "32px",
                     color: "#495057",
                   }}
@@ -187,7 +187,7 @@ const ClassesPage = () => {
               py: "40px",
             }}
           >
-            <Box sx={{ display: "flex", gap: "40px", alignItems: "center" }}>
+          {/*  <Box sx={{ display: "flex", gap: "40px", alignItems: "center" }}>
               <Typography
                 onClick={page === 1 ? null : handlePrevious}
                 sx={{
@@ -244,7 +244,7 @@ const ClassesPage = () => {
                   {classes?.last_page}
                 </Typography>
               </Box>
-            </Box>
+            </Box>*/}
           </Box>
         )}
       </Box>

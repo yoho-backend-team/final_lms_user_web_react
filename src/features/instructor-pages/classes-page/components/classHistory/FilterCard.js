@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, FormControl, InputLabel, Select, MenuItem, Button } from "@mui/material";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { getMonthList, getYearList } from "utils/formatDate";
-import ClassCard, { ClassCardHeader } from "../card/ClassCard";
+import  { ClassCardHeader } from "../card/ClassCard";
 
 const FilterHeader = ({ filters, onFilterChange, onResetFilters }) => {
   const [yearList, setYearList] = useState([]);
@@ -108,7 +108,7 @@ const FilterHeader = ({ filters, onFilterChange, onResetFilters }) => {
       </Box>
 
       {/* Content Below Sticky Header */}
-      <Box sx={{ mt: 4 }}>
+      <Box sx={{ mt: "0.1px" }}>
         {/* Add your content here */}
         {/* This could be a list of class cards */}
       </Box>
