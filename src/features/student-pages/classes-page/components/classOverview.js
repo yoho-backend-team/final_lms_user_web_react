@@ -901,13 +901,6 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                       border: "1px solid #C3C3C3",
                       borderRadius: "10px",
                       boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.14)",
-<<<<<<< HEAD
-                      minHeight: "140px",
-                      maxHeight: "200px",
-                      overflow: "auto",
-                      mb:"140px",
-                      
-=======
                       height: "200px", 
                       overflowY: "auto",
                      "&::-webkit-scrollbar": {
@@ -921,7 +914,6 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
         backgroundColor: "#9e9e9e",
       },
                      
->>>>>>> 6d12b43ea262313843f01cba93807233a34336fb
                     }}
                   >
                     <Box sx={{ overflow: "auto" }}>
