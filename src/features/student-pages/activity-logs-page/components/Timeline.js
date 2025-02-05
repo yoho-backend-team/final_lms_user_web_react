@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent } from '@mui/lab';
-import { Typography, Box, Paper } from '@mui/material';
-import ConfirmationNumberOutlinedIcon from '@mui/icons-material/ConfirmationNumberOutlined';
-import { Person, Delete, Lock } from '@mui/icons-material';
+import { 
+  Timeline, 
+  TimelineItem, 
+  TimelineSeparator, 
+  TimelineConnector, 
+  TimelineContent, 
+  TimelineDot, 
+  TimelineOppositeContent 
+} from '@mui/lab';
+import { Typography, Box, Paper, useTheme } from '@mui/material';
+import { 
+  ConfirmationNumberOutlined,
+  PersonOutline,
+  DeleteOutline,
+  LockReset
+} from '@mui/icons-material';
 import { formatDate, formatTime } from 'utils/formatDate';
 import { getAllStudentActivity } from '../services';
 
-
-const TimelineComponent = ({filterData}) => {
-  
+const TimelineComponent = ({ filterData }) => {
   const [activityLogs, setActivityLogs] = useState([]);
-  
-  
+  const theme = useTheme();
 
   useEffect(() => {
     const fetchActivityLogs = async () => {
@@ -22,94 +31,176 @@ const TimelineComponent = ({filterData}) => {
         console.error("Error fetching activity logs:", error);
       }
     };
-    
-
     fetchActivityLogs();
   }, []);
+
   const getIcon = (type) => {
+    const iconStyle = { fontSize: 16 };
+    const dotStyle = {
+      width: 24,
+      height: 24,
+      boxShadow: theme.shadows[1],
+      alignItems: 'center',
+      justifyContent: 'center'
+    };
+
     switch (type) {
       case 'login':
-        return <TimelineDot color="primary" sx={{ backgroundColor: "#0D6EFD" }}><Person sx={{ color: "#FFFFFF" }} /></TimelineDot>;
-      case 'delete':
-        return <TimelineDot sx={{ color: "#FFFFFF", backgroundColor: "#F76761" }}><Delete /></TimelineDot>;
-      case 'passwordChange':
-        return <TimelineDot sx={{ color: "#0E820B", backgroundColor: "#6AF467" }}><Lock /></TimelineDot>;
-      case 'Ticket Create':
-        return <TimelineDot sx={{ color: "#0E820B", backgroundColor: "#6AF467" }}><ConfirmationNumberOutlinedIcon /></TimelineDot>;
-      default:
-        return null;
-    }
-  };
-  
-  const getLogs = (type, username) => {
-    switch (type) {
-      case 'login':
-        return [
-          `The User ${activityLogs[0]?.user?.username} Successfully Login`,
-          `The User ${activityLogs[0]?.user?.username} Failed Login Process`,
-        ];
-      case 'delete':
-        return [
-          `The User ${activityLogs[0]?.user?.username} Successful event after correct password confirmation`,
-          `The User ${activityLogs[0]?.user?.username} Failed event after wrong password confirmation`,
-        ];
-      case 'passwordChange':
-        return [
-          `The User ${activityLogs[0]?.user?.username} Successful event after correct password confirmation`,
-        ];
-      case 'Ticket Create':
-        return [
-          `The User  ${activityLogs[0]?.user?.username} ticket Created Sucessfully,`,
-        ];
-      default:
-        return [];
-    }
-  };
-
-
-  
-console.log(filterData,"filterDatafilterData")
-  return (
-    <Timeline sx={{ width: "80vw" }}>
-      {filterData.map((log, index) => {
-        const icon = getIcon(log.action);
-        // const logs = getLogs(log.action, log.user.username);
         return (
-          <TimelineItem key={index}>
-            <TimelineOppositeContent sx={{ width: "250px", flex: "none"}}>
-              <Typography variant="body2" sx={{ color: "#495057", fontSize: "12px", fontWeight: 500, lineHeight: "24px" ,marginRight: "28px",}} color="textSecondary">
-                {formatDate(log?.updatedAt)} {formatTime(log?.updatedAt)}
+          <TimelineDot color="primary" sx={{ ...dotStyle, backgroundColor: '#e3f2fd' }}>
+            <PersonOutline sx={{ ...iconStyle, color: theme.palette.primary.main }} />
+          </TimelineDot>
+        );
+      case 'delete':
+        return (
+          <TimelineDot sx={{ ...dotStyle, backgroundColor: '#ffebee' }}>
+            <DeleteOutline sx={{ ...iconStyle, color: theme.palette.error.main }} />
+          </TimelineDot>
+        );
+      case 'passwordChange':
+        return (
+          <TimelineDot sx={{ ...dotStyle, backgroundColor: '#e8f5e9' }}>
+            <LockReset sx={{ ...iconStyle, color: theme.palette.success.main }} />
+          </TimelineDot>
+        );
+      case 'Ticket Create':
+        return (
+          <TimelineDot sx={{ ...dotStyle, backgroundColor: '#fff3e0' }}>
+            <ConfirmationNumberOutlined sx={{ ...iconStyle, color: theme.palette.warning.main }} />
+          </TimelineDot>
+        );
+      default:
+        return <TimelineDot sx={dotStyle} />;
+    }
+  };
+
+  const getBorderColor = (type) => {
+    switch (type) {
+      case 'login': return theme.palette.primary.main;
+      case 'delete': return theme.palette.error.main;
+      case 'passwordChange': return theme.palette.success.main;
+      case 'Ticket Create': return theme.palette.warning.main;
+      default: return theme.palette.divider;
+    }
+  };
+
+  return (
+    <Box sx={{ 
+      maxWidth: 800,
+      margin: '0 auto',
+      p: 3,
+      [theme.breakpoints.down('sm')]: {
+        p: 1,
+        maxWidth: '100%'
+      }
+    }}>
+      <Timeline position="alternate" sx={{ p: 0 }}>
+        {filterData.map((log, index) => (
+          <TimelineItem key={log.id}>
+            <TimelineOppositeContent
+              sx={{
+                flex: 0.2,
+                minWidth: 120,
+                pt: 1.5,
+                [theme.breakpoints.down('sm')]: { display: 'none' }
+              }}
+            >
+              <Typography
+                variant="caption"
+                sx={{
+                  color: 'text.secondary',
+                  fontWeight: 500,
+                  display: 'block'
+                }}
+              >
+                {formatDate(log.updatedAt)}
+              </Typography>
+              <Typography
+                variant="caption"
+                sx={{
+                  color: 'text.secondary',
+                  fontWeight: 400
+                }}
+              >
+                {formatTime(log.updatedAt)}
               </Typography>
             </TimelineOppositeContent>
+
             <TimelineSeparator>
-              {icon}
-              {index < filterData.length - 1 && <TimelineConnector />}
+              {getIcon(log.action)}
+              {index < filterData.length - 1 && (
+                <TimelineConnector sx={{ backgroundColor: 'divider' }} />
+              )}
             </TimelineSeparator>
-            <TimelineContent>
-              <Typography variant="h6" component="h1" sx={{ color: "#495057", fontSize: "14px", fontWeight: 700, lineHeight: "24px",mb: "40px"}}>
-                {log.title}
-              </Typography>
-              
-              <Box sx={{ display: 'flex',gap:"24px"}} >
-            <Box sx={{ display: "flex",ml:"-33px",justifyContent:"center",alignItems:"center"}} >
-            <TimelineSeparator sx={{ backgroundColor: "#D9D9D9", height: "1px", width: "91px",flex:"none"}} />
-            <Typography sx={{ border : `4px solid #6AF467`, height: "20px",width:"20px", borderRadius: "20px"}} ></Typography>
-            </Box>
-              <Paper elevation={3} style={{ padding: '10px 24px' , margin: '10px 0', backgroundColor: "#E7E7E7", borderRadius: "8px", boxShadow: "none",  }} >
-                <Typography variant="body2">
-                {log.title} {log.user.email}
+
+            <TimelineContent sx={{ py: 2, px: 3 }}>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 2,
+                  borderRadius: 2,
+                  borderLeft: `4px solid ${getBorderColor(log.action)}`,
+                  backgroundColor: 'background.paper',
+                  transition: 'box-shadow 0.2s',
+                  '&:hover': {
+                    boxShadow: theme.shadows[2]
+                  }
+                }}
+              >
+                <Typography
+                  variant="subtitle2"
+                  component="div"
+                  sx={{ 
+                    fontWeight: 600,
+                    mb: 0.5,
+                    color: 'text.primary'
+                  }}
+                >
+                  {log.title}
                 </Typography>
-                    <Typography variant="caption" display="block" color="textSecondary" sx={{ textAlign: "end",mb: "10px" }}>
-                      {formatDate(log.createdAt)} {formatTime(log.createdAt)}
-                    </Typography>
-                  </Paper>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: 'text.secondary',
+                    fontSize: '0.875rem',
+                    lineHeight: 1.4,
+                    mb: 1
+                  }}
+                >
+                  {log.description || `User ${log.user?.username} performed ${log.action}`}
+                </Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color: 'text.disabled',
+                      fontSize: '0.75rem'
+                    }}
+                  >
+                    {log.user?.email}
+                  </Typography>
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color: 'text.disabled',
+                      fontSize: '0.75rem'
+                    }}
+                  >
+                    {formatTime(log.createdAt)}
+                  </Typography>
                 </Box>
-              
+              </Paper>
             </TimelineContent>
           </TimelineItem>
-        );
-      })}
-    </Timeline>
+        ))}
+      </Timeline>
+    </Box>
   );
 };
 

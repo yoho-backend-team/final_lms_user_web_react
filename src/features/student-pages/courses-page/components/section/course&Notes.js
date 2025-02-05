@@ -118,9 +118,7 @@ const modules = [
           sx={{ fontSize: "16px", 
             fontWeight: 600,
             lineHeight: "24px",
-            backgroundColor: "#f0f0f0",
             color: "blue",
-            boxShadow: "0 2px 6px rgba(0, 0, 0, 0.2)", 
           }}
         >
           Click the Card to view Preview Details
