@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import NavigateNext from "@mui/icons-material/NavigateNext";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+//import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useNavigate, Link } from "react-router-dom";
 import {
@@ -58,56 +58,54 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
       hideSpinner();
     }
   };
-
+  const scrollContainer = (direction) => {
+    const scrollableBox = document.getElementById("scrollable-box");
+    const scrollAmount = 100; 
+    if (direction === "up") {
+      scrollableBox.scrollBy({ top: -scrollAmount, behavior: "smooth" });
+    } else {
+      scrollableBox.scrollBy({ top: scrollAmount, behavior: "smooth" });
+    }
+  };
+  
   return (
-    <Box sx={{ paddingTop: "40px", width: "100%", overflow: "auto" }}>
+    <Box sx={{ paddingTop: "65px", width: "100%", overflow: "none" }}>
       <Breadcrumbs
         aria-label="breadcrumb"
         separator={<NavigateNext sx={{ color: "blue" }} />}
         sx={{ mb: 2 }}
       >
-        <Link
-          underline="hover"
-          sx={{
-            color: "#484848",
-            fontSize: "28px",
-            fontWeight: "700",
-            lineHeight: "22px",
-          }}
-          color="inherit"
-          href="#"
-        >
-          Classes
-        </Link>
-        <Link
-          underline="hover"
-          sx={{
-            color: "#495057",
-            fontSize: "20px",
-            fontWeight: 500,
+       <p
+          // underline="hover"
+          style={{
+            color: "blue",
+            fontSize: "15px",
+            fontWeight: 300,
             lineHeight: "32px",
           }}
-          color="inherit"
-          href="#"
+          // color="inherit"
+          onClick={() => handleBack()}
         >
-          {type} Class
-        </Link>
+          Classes
+        </p>
+        <p
+          // underline="hover"
+          style={{
+            color: "blue",
+            fontSize: "15px",
+            fontWeight: 300,
+            lineHeight: "32px",
+          }}
+          // color="inherit"
+          onClick={() => handleBack()}
+        >
+          {String(type)?.charAt(0).toUpperCase()+type.slice(1)} Class
+        </p>
         <Typography
           color="text.primary"
           sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "22px" }}
         >
           {group?.charAt(0).toUpperCase()+group.slice(1)} Class
-        </Typography>
-        <Typography
-          color="text.primary"
-          sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "22px",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            maxWidth: "200px"
-          }}
-        >
-          {classDetails?.class_name}
         </Typography>
       </Breadcrumbs>
         <Box
@@ -122,19 +120,20 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
         >
           <Box sx={{ padding: "20px" }}>
             <Box sx={{ display: "flex", gap: "24px", mb: 3 }}>
-              <ArrowBackIcon
+              {/* <ArrowBackIcon
                 onClick={() => handleBack()}
                 sx={{ cursor: "pointer" }}
-              />
+              /> */}
               <Box sx={{ display: "inline-flex", alignItems: "center" }}>
                 <Typography
                   sx={{
                     color: "#6A0DAD",
-                    fontSize: "16px",
+                    fontSize: "22px",
                     fontFamily:"Poppins",
                     fontWeight: 600,
                     lineHeight: "16px",
                     pr: 1,
+                    mt:3,
                   }}
                 >
                   Batch No:
@@ -142,24 +141,21 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                 <Typography
                   sx={{
                     color: "#495057",
-                    fontSize: "16px",
+                    fontSize: "20px",
                     fontWeight: 600,
                     lineHeight: "24px",
                     fontFamily:"Poppins",
+                    mt:3,
                   }}
                 >
                   #{classDetails?.batch?.id}
                 </Typography>
-              </Box>
-            </Box>
-            <Grid container spacing={4}>
-              <Grid item xs={8} md={6}>
-                <Box sx={{ paddingLeft: "40px" }}>
-                  <Typography
+                <Typography
                     variant="h5"
                     sx={{
                       fontWeight: "800",
-                      mb: 2,
+                      mt: 2,
+                      ml:15,
                       color: "#000",
                       fontSize: "20px",
                       lineHeight: "16px",
@@ -168,15 +164,36 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   >
                     Class Details
                   </Typography>
+              </Box>
+            </Box>
+            <Grid container spacing={4}>
+              <Grid item xs={8} md={6}>
+                <Box sx={{ paddingLeft: "40px" }}>
+                 {/* <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: "800",
+                      mb: 2,
+                      color: "#000",
+                      fontSize: "21px",
+                      lineHeight: "16px",
+                      fontFamily:"Nunito Sans",
+                    }}
+                  >
+                    Class Details
+                  </Typography>*/}
                   <Typography
                     variant="h6"
                     sx={{
                       fontWeight: 700,
                       mb: 1,
+                      ml:8,
                       color: "#495057",
+                      pl: "50px",
                       fontSize: "20px",
                       lineHeight: "32px",
                       fontFamily:"Nunito Sans",
+                      textAlign: "justify", 
                     }}
                   >
                     {classDetails?.class_name}
@@ -184,8 +201,10 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   <Typography
                     sx={{
                       mb: 2,
+                      ml:8,
                       fontSize: "14px",
                       fontWeight: 400,
+                      pl: "50px",
                       lineHeight: "16px",
                       color: "#6C757D",
                       pr: "171px",
@@ -334,6 +353,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
           color: "blue",
           fontSize: "20px",
           fontWeight: 800,
+          ml:8,
           lineHeight: "32px",
           fontFamily:"Nunito Sans",
           pb: "10px",
@@ -350,6 +370,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
               fontWeight: 600,
               fontFamily:"Nunito Sans",
               lineHeight: "32px",
+              ml:8,
             }}
           >
             Join the class @{formatTime(classDetails?.start_time)}
@@ -367,13 +388,15 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                 fontWeight: 600,
                 lineHeight: "24px",
                 width: "220px", 
-                height: "46px",       
+                height: "46px", 
+                ml:6,      
                 boxShadow: "0px 6px 34px -8px #A4A4A4", 
                 cursor : "pointer",
                "&:hover": {
                 background: "linear-gradient(45deg, #FF5733, #EA0234)", 
                transform: "scale(1.05)", 
                 boxShadow: "0px 6px 8px rgba(0, 0, 0, 0.2)",
+                
                 },
             
               }}
@@ -388,7 +411,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
               to="/student/attendances"
               disabled
               sx={{
-                padding: "8px 18px",
+                
                 color: "#0D6EFD",
                 fontSize: "14px",
                 fontWeight: 600,
@@ -396,11 +419,6 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                 border: "2px solid #5611B1",
                 fontFamily:"Nunito Sans",
                 borderRadius: "24px",
-                "&:hover": {
-                  background: "linear-gradient(45deg,rgb(51, 173, 255),rgb(2, 56, 234))", 
-                 transform: "scale(1.05)", 
-                  boxShadow: "0px 6px 8px rgba(0, 0, 0, 0.2)",
-                  },
               }}
               tabIndex={3}
             >
@@ -410,7 +428,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
 
           <Box sx={{ display: "flex", justifyContent: "flex-start", gap: "40px", pt: "5px" }}>
             <Box sx={{ display: "flex", gap: "10px", width: "300px" }}>
-              <InfoOutlinedIcon sx={{ color: "#828282", height: '18px', width: '18px' }} />
+              <InfoOutlinedIcon sx={{ color: "#828282", height: '18px', width: '18px',ml:5 }} />
               <Typography
                 sx={{
                   color: "gray",
@@ -426,7 +444,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
               </Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <InfoOutlinedIcon sx={{ color: "#4CAF50", height: '18px', width: '18px' }} />
+              <InfoOutlinedIcon sx={{ color: "#828282", height: '18px', width: '18px',ml:14,mb:22 }} />
               <Typography
                 sx={{
                   color: "gray",
@@ -434,6 +452,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   fontWeight: 400,
                   lineHeight: "20px",
                   fontFamily:"Nunito Sans",
+                  mb:21,
                   
                 }}
               >
@@ -447,11 +466,12 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
         <Typography
               sx={{
                 color: "black",
-                fontSize: "20px",
+                fontSize: "21px",
                 fontWeight: 800,
                 lineHeight: "32px",
                 fontFamily:"Nunito Sans",
                 pb: "10px",
+                ml:8,
               }}
             >
               Class Status
@@ -463,39 +483,37 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   color: "red",
                   fontSize: "14px",
                   fontWeight: 600,
+                  pl:"40",
                   lineHeight: "32px",
                   marginRight: "10px",
                   fontFamily:"Poppins",
+                  ml:8,
                 }}
               >
                 Class Finished @{formatTime(classDetails?.end_time)}
               </Typography>
-
+              </Box>
               <Button
                 variant="outlined"
                 component={Link}
                 to="/student/attendances"
                 sx={{
-                  padding: "8px 18px",
+                 paddingright:"100px",
                   color: "#0D6EFD",
                   fontSize: "14px",
                   fontWeight: 600,
                   lineHeight: "24px",
+                  width:"190px",
                   border: "2px solid #5611B1",
                   borderRadius: "24px",
-                  transition: "all 0.3s ease", 
-                 "&:hover": {
-                  backgroundColor: "#0D6EFD", 
-                  color: "#fff", 
-                 border: "2px solid #0D6EFD", 
-                },
+                  ml:"25px",
                 }}
                 tabIndex={4}
                 onClick={() => handleDownload()}
               >
                 Check Attendance
               </Button>
-            </Box>
+            
 
             <Box sx={{ display: "flex", justifyContent:'flex-end' ,marginTop: "5px" }}>
               <InfoOutlinedIcon sx={{ color: "#828282", height: '18px', width: '18px', marginRight: '5px' }} />
@@ -506,6 +524,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   fontWeight: 400,
                   lineHeight: "20px",
                   fontFamily:"Poppins",
+                  mr:95,
                 }}
               >
                 If any Issue in attendance please raise a Ticket
@@ -518,11 +537,12 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   <Typography
                     sx={{
                       color: "black",
-                      fontSize: "20px",
+                      fontSize: "21px",
                       fontWeight: 800,
                       lineHeight: "32px",
                       fontFamily:"Nunito Sans",
-                      marginBottom:"10px"
+                      ml:9,
+                      mb:1,
                     }}
                     
                   >
@@ -567,7 +587,8 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
             fontSize: "14px",
             fontWeight: 400,
             lineHeight: "16px",
-            fontFamily: "Nunito Sans",
+            fontFamily:"Nunito Sans",
+            mb:1,
           }}
         >
           Once Class Finished Videos will be uploaded
@@ -635,7 +656,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                     fontWeight: "800",
                       mb: 2,
                       color: "#000",
-                      fontSize: "20px",
+                      fontSize: "21px",
                       lineHeight: "16px",
                       fontFamily:"Nunito Sans",
                        }}>
@@ -651,7 +672,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                        "&:hover": {
                         transform: "scale(1.05)", 
                         boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
-                         background: "linear-gradient(120deg, rgb(158, 255, 234) 2.28%, #FF7F50 100%)", 
+                     
                          },
                         }}
    >
@@ -716,7 +737,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                        "&:hover": {
                         transform: "scale(1.05)", 
                         boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
-                         background: "linear-gradient(120deg,rgb(158, 255, 234) 2.28%, #FF7F50 100%)", 
+                         
                          },
                       }}
                     >
@@ -782,7 +803,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                        "&:hover": {
                         transform: "scale(1.05)", 
                         boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
-                         background: "linear-gradient(120deg,rgb(158, 255, 234) 2.28%, #FF7F50 100%)", 
+                         
                          },
                     }}
                   >
@@ -843,7 +864,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                       fontWeight: 800,
                       mb: 2,
                       color: "#000",
-                      fontSize: "20px",
+                      fontSize: "21px",
                       fontFamily:"Nunito Sans",
                       transition: "color 0.3s ease", 
                           "&:hover": {
@@ -853,7 +874,25 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   >
                     Study Materials
                   </Typography>
+                  <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
+    <Button
+      size="small"
+      variant="outlined"
+      onClick={() => scrollContainer("up")}
+      sx={{ mr: 1 }}
+    >
+      Scroll Up
+    </Button>
+    <Button
+      size="small"
+      variant="outlined"
+      onClick={() => scrollContainer("down")}
+    >
+      Scroll Down
+    </Button>
+  </Box>
                   <Box
+                  id="scrollable-box"
                     sx={{
                       display: "flex",
                       justifyContent: "center",
@@ -862,9 +901,27 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                       border: "1px solid #C3C3C3",
                       borderRadius: "10px",
                       boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.14)",
-                      minHeight: "200px",
+<<<<<<< HEAD
+                      minHeight: "140px",
                       maxHeight: "200px",
                       overflow: "auto",
+                      mb:"140px",
+                      
+=======
+                      height: "200px", 
+                      overflowY: "auto",
+                     "&::-webkit-scrollbar": {
+                      width: "8px",
+                      },
+      "&::-webkit-scrollbar-thumb": {
+        backgroundColor: "#c0c0c0",
+        borderRadius: "4px",
+      },
+      "&::-webkit-scrollbar-thumb:hover": {
+        backgroundColor: "#9e9e9e",
+      },
+                     
+>>>>>>> 6d12b43ea262313843f01cba93807233a34336fb
                     }}
                   >
                     <Box sx={{ overflow: "auto" }}>
@@ -900,6 +957,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                               border: "1px solid #CCCCCC",
                               borderRadius: "8px",
                               gap: "23px",
+                              height:"70px",
                             }}
                           >
                             <Box>

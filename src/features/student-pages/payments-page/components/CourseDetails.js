@@ -207,7 +207,217 @@ const CourseStudentDetails = ({ feesdata, isPaymentPending }) => {
 
                 <Grid item xs={12} sm={5}>
 
+<<<<<<< HEAD
                    {/* <div
+=======
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography
+                  variant="body1"
+                  style={{
+                    color: "#151010",
+                    fontFamily: "Nunito Sans",
+                    fontSize: isXs ? "18px" : "24px",
+                    fontStyle: "normal",
+                    fontWeight: 700,
+                    lineHeight: isXs ? "26px" : "32px",
+                  }}
+                >
+                  Fees Details
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <hr style={{ borderTop: "1px solid #ccc", width: "auto" }} />
+              </Grid>
+              <Grid item xs={12}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: "space-between",
+                    padding: "0 30px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: "#495057",
+                        fontFamily: "Nunito Sans",
+                        fontSize: "14px",
+                        fontStyle: "normal",
+                        fontWeight: 700,
+                      }}
+                    >
+                      Student:
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: "#495057",
+                        fontFamily: "Nunito Sans",
+                        fontSize: "14px",
+                        fontStyle: "normal",
+                        fontWeight: 400,
+                        marginLeft: "-2px",
+                      }}
+                    >
+                      {getStudentDetails()?.full_name}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: "#495057",
+                        fontFamily: "Nunito Sans",
+                        fontSize: "14px",
+                        fontStyle: "normal",
+                        fontWeight: 700,
+                      }}
+                    >
+                      Category:
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: "#495057",
+                        fontFamily: "Nunito Sans",
+                        fontSize: "14px",
+                        fontStyle: "normal",
+                        fontWeight: 400,
+                        marginLeft: "-2px",
+                      }}
+                    >
+                      {feesData?.course?.course_name}
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: "#495057",
+                        fontFamily: "Nunito Sans",
+                        fontSize: "14px",
+                        fontStyle: "normal",
+                        fontWeight: 700,
+                      }}
+                    >
+                      Enrolled date:
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: "#495057",
+                        fontFamily: "Nunito Sans",
+                        fontSize: "14px",
+                        fontStyle: "normal",
+                        fontWeight: 400,
+                        marginLeft: "-2px",
+                      }}
+                    >
+                      {formatDate(feesData?.fees?.[0]?.createdAt)}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Grid>
+
+              <Grid item xs={12}>
+                <hr style={{ borderTop: "1px solid #ccc", width: "auto" }} />
+              </Grid>
+
+              <Grid item xs={12}>
+  <Box
+    sx={{
+      padding: "0 30px",
+    }}
+  >
+    <TableContainer component={Paper} sx={{ margin: "0 30px" }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ fontWeight: "bold", color: "blue", fontFamily: "Nunito Sans" }}>Description</TableCell>
+            <TableCell sx={{ fontWeight: "bold", color: "blue", fontFamily: "Nunito Sans" }} align="right">Amount (INR)</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>Tuition Amount</TableCell>
+            <TableCell align="right">{feesData?.course_fees} INR</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Software Cost</TableCell>
+            <TableCell align="right">13,000INR</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>GST Tax</TableCell>
+            <TableCell align="right">1,800.00INR</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Paid Amount</TableCell>
+            <TableCell align="right">{feesData?.totalAmount}INR</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Pending</TableCell>
+            <TableCell align="right" sx={{ color: "#F00" }}>
+              {feesData?.pending_payment}INR
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
+
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "flex-end",
+        marginTop: 2,
+      }}
+    >
+      <Button
+        variant="body1"
+        sx={{
+          color: "#0051C8",
+          fontFamily: "Nunito Sans",
+          fontSize: "14px",
+          fontWeight: 600,
+          textDecorationLine: "underline",
+        }}
+        onClick={handleDownloadPDF1}
+      >
+        Download Receipt
+      </Button>
+    </Box>
+  </Box>
+</Grid>
+
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={6} lg={5}>
+            <div
+>>>>>>> f1fdffa403f4d683a368d37c0ebba640023d203b
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -300,6 +510,7 @@ const CourseStudentDetails = ({ feesdata, isPaymentPending }) => {
                   </Typography>
                 </div>
               </div>
+<<<<<<< HEAD
             </div> */}
                     <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
                         Payment History
@@ -388,6 +599,99 @@ const CourseStudentDetails = ({ feesdata, isPaymentPending }) => {
                 <div ref={invoiceRef}>
                     <InvoiceReceipt feesdata={feesData} />
                 </div>
+=======
+            </div>
+            <Typography
+              variant="body1"
+              style={{
+                color: "#495057",
+                fontFamily: "Nunito Sans",
+                fontSize: "16px",
+                fontStyle: "normal",
+                fontWeight: 700,
+                lineHeight: "24px",
+                paddingTop: "10px",
+                marginBottom:'5px'
+              }}
+            >
+              Payment History
+            </Typography>
+            <Box
+              sx={{
+                maxHeight: "600px",
+                overflowY: "auto",
+                paddingRight: "15px",
+              }}
+            >
+              <Grid container Spacing={2}>
+                 {feesData?.payment_history?.map((item) =>(
+                  <Grid item xs={12} sm={6} md={4} key={item.id}>
+                     <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column',
+              padding: '20px 25px 15px 10px',
+            
+              borderBottom: '2px solid #ccc',
+              borderRadius: '18px',
+              background: 'linear-gradient(90deg, #6380E6 0%, #00C9C0 100%)',
+            }}
+          >
+           <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '10px', }}>
+            <img
+              src={pdfgroup}
+              alt="Logo"
+              style={{
+                width: '15px',
+                height: '19px',
+                marginRight: '10px',
+              }}
+            />
+            <Typography
+              variant="body1"
+              style={{
+                flex: 1,
+                color: '#495057',
+                fontFamily: 'Poppins',
+                fontSize: '16px',
+                fontStyle: 'normal',
+                fontWeight: 400,
+                lineHeight: '40px',
+              }}
+            >
+              {formatDate(item.payment_date)}
+            </Typography>
+            
+            <Typography
+              variant="body1"
+              style={{
+                flex: 1,
+                color: '#495057',
+                fontFamily: 'Poppins',
+                fontSize: '16px',
+                fontStyle: 'normal',
+                fontWeight: 400,
+                lineHeight: '40px',
+              }}
+            >
+              {formatDate(item.duepaymentdate)}
+            </Typography>
+            <Typography
+              variant="body1"
+              style={{
+                flex: 1,
+                color: item.type === 'pending' ? '#AAA' : '#495057',
+                fontFamily: 'Poppins',
+                fontSize: '16px',
+                fontStyle: item.type === 'pending' ? 'italic' : 'normal',
+                fontWeight: item.type === 'pending' ? 400 : 500,
+                lineHeight: '40px',
+              }}
+            >
+               Bill Receipt
+            </Typography>
+>>>>>>> f1fdffa403f4d683a368d37c0ebba640023d203b
             </Box>
 
             <InvoiceModal open={open} onClose={handleClose} feeData={selectedFee} />
