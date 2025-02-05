@@ -37,8 +37,8 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
     closed: "#008375",
   };
 
-  const handleFileOpen = (file) => {
-    setFile(file)
+  const handleFileOpen = (ticket) => {
+    setFile(ticket)
     setFileView(true)
   }
 
@@ -176,7 +176,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                  gap: "20px",
                }}
               >
-               <Button
+              {/* <Button
                  variant="outlined"
                  
                  sx={{
@@ -185,7 +185,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                    padding: "10px",
                    color: "red",
                    background: "white",
-                 }}
+                 }} 
                >
                  Solved
                </Button>
@@ -199,7 +199,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                  }}
                >
                  No Related
-               </Button>
+               </Button>*/}
               </Box>
               }
             </Box>
@@ -231,15 +231,16 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
             sx={{ display: "inline-flex", alignItems: "center", gap: "37px" }}
           >
             <Typography
-              sx={{ fontSize: "24px", lineHeight: "22px", fontWeight: 700,fontFamily:"Nunito Sans" }}
+              sx={{ fontSize: "28px", lineHeight: "22px", fontWeight: 700,fontFamily:"Nunito Sans" }}
             >
               Ticket
             </Typography>
             <Typography
               variant="h6"
               sx={{
+                mt:"6px",
                 color: "#595959",
-                fontSize: "16px",
+                fontSize: "18px",
                 fontWeight: 700,
                 lineHeight: "24px",
                 fontFamily:"Nunito Sans"
@@ -249,7 +250,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
             </Typography>
           </Box>
 
-          <Box
+        {/*  <Box
             sx={{
               display: "flex",
               justifyContent: "space-between",
@@ -276,7 +277,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
               Request For Close
             </Button>
             )}
-          </Box>
+          </Box>*/}
         </Box>
       </Box>
 
@@ -302,7 +303,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
             >
               #{selectedTicket?.ticket_id} {selectedTicket?.query}
             </Typography>
-            <Typography
+          {/*  <Typography
               sx={{
                 color: "black",
                 fontSize: "12px",
@@ -326,10 +327,10 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
               }}
             >
               Close ticket
-            </Button>
-            <Typography>
+            </Button>*/}
+           {/* <Typography>
               <MenuKebab/>
-            </Typography>
+            </Typography>*/}
             <Box sx={{ display: 'flex', gap: "21px"}} >
               <Typography
                 sx={{ fontSize: "14px", color: "#495057", fontWeight: 700,fontFamily:"Nunito Sans" }}
@@ -350,19 +351,20 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
             </Box>
           </Box>
 
-          <CardContent>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={8}>
-                <Paper sx={{ p: 2, mb: 2 }}>
-                <Box sx={{ height: "300px", overflowY: "scroll"}}>
-                      {MessageBox()}
-                    </Box>
+          <CardContent sx={{ height: "calc(90vh - 100px)", overflow: "auto" }}>
+  <Grid container spacing={2} sx={{ height: "100%" }}>
+    <Grid item xs={12} md={8}>
+      <Paper sx={{ p: 2, mb: 2, height: "400x" }}> {/* Increased height */}
+        <Box sx={{ height: "328px", overflowY: "scroll" }}> {/* Increased height */}
+          {MessageBox()}
+        </Box>
                   {
                   selectedTicket?.status === "opened" &&<Box
                     sx={{
                       display: "flex",
                       alignItems: "end",
                       paddingTop: "80px",
+                      gap: "12px",
                     }}
                   >
                     <Box
@@ -416,6 +418,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                           },
                           "&.Mui-focused fieldset": {
                             borderColor: "transparent",
+                            boxShadow: "none", // Prevent any shadow/bloom effect
                           },
                         },
                       }}
@@ -453,6 +456,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                     display: "flex",
                     flexDirection: "column",
                     gap: "40px",
+                    height:"478px",
                   }}
                 >
                   <Box

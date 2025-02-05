@@ -106,6 +106,7 @@ const Attendance = () => {
       hideSpinner();
     }
   };
+ 
   
   const handleChange = (event) => {
     const newMonth = event.target.value;
@@ -193,7 +194,13 @@ const Attendance = () => {
                 </FormControl>
 
                 {/* Stats Boxes */}
-                <Box className={classes.statsContainer}>
+                <Box
+                 sx={{
+                
+                  mt: "20px",
+    
+                }}
+                 className={classes.statsContainer}>
                   {[
                     {
                       title: "Present days",
@@ -250,7 +257,7 @@ const Attendance = () => {
                   fullWidth
                   variant="contained"
                   sx={{ 
-                    mt: 2,
+                    mt: 10,
                     backgroundColor: "#0D6EFD",
                     color: "white",
                     '&:hover': {

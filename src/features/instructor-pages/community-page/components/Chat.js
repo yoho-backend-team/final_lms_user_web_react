@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import {
   Box,
   Typography,
@@ -10,9 +10,11 @@ import ChatHeader from "./ChatHeader";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ChatLog from "./chatLogs";
 import BottomBar from "./bottomBar";
+import ChatGroupDetails from "./Models/Chatgroupdetails";
 
 const Chat = ({ currentChat, socket, Messages, setMessages }) => {
   const theme = useTheme();
+  const [viewGroup, setViewGroup] = useState(false);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
@@ -40,20 +42,31 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
         
       }}
     >
-      {currentChat ? (
+          {viewGroup ? (
+        <ChatGroupDetails 
+          currentChat={currentChat} 
+          setViewGroup={setViewGroup} 
+        />
+      ) : (
+      
+        currentChat ? (
         <Card
           sx={{
-            height: "100%",
+            height: "99%",
             width: "100%",
             display: "flex",
             flexDirection: "column",
             boxShadow: "none",
-            borderRadius: 0,
+            
+            borderRadius: "20px",  // Curved edges for the main card
             overflow: "hidden",
           }}
         >
           {/* Chat Header */}
-          <ChatHeader currentChat={currentChat} />
+          <ChatHeader 
+              currentChat={currentChat} 
+              onViewGroup={setViewGroup} 
+            />
 
           {/* Message Log */}
           <Box
@@ -152,7 +165,7 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
     </Typography>
   </Box>
   </Box>
-
+      )
 )}
   </Box>
 

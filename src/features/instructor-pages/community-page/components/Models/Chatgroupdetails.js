@@ -1,202 +1,152 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
+import { 
+  Box, 
+  Typography, 
+  Avatar, 
+  List, 
+  ListItem, 
+  ListItemAvatar, 
   ListItemText,
-  IconButton,
+  IconButton
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
-import { calcLength } from "framer-motion";
-
-const CustomAvatar = ({ src, alt, size = 60 }) => (
-  <Avatar
-    src={src ? getImageUrl(src) : profilePlaceholder}
-    alt={alt}
-    sx={{
-      width: size,
-      height: size,
-      border: "2px solid #ddd",
-      boxShadow: 2,
-    }}
-  />
-);
 
 const ChatGroupDetails = ({ currentChat, setViewGroup }) => {
+  const allMembers = [
+    ...(currentChat?.admin?.map(a => ({...a, role: 'Admin'})) || []),
+    ...(currentChat?.users?.map(u => ({...u, role: 'Member'})) || [])
+  ];
+
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        
-        overflowY:"hidden",
-        padding: 2,
-        backgroundColor: "background.default",
-        color: "text.primary",
-        display: "flex",
-        flexDirection: "column",
-      
-      }}
-    >
+    <Box sx={{ 
+      height: '100vh', 
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      {/* Fullscreen Background */}
+      <Box sx={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundImage: `url(${
+          currentChat?.batch?.course?.image 
+            ? getImageUrl(currentChat?.batch?.course?.image) 
+            : imagePlaceholder
+        })`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        filter: 'brightness(50%)',
+        zIndex: 1
+      }} />
+
       {/* Back Button */}
-      <IconButton
-        onClick={() => setViewGroup(false)}
-        sx={{
-          alignSelf: "flex-start",
-          marginBottom: 2,
-          color: "primary.main",
-          "&:hover": {
-            backgroundColor: "primary.light",
-          },
+      <IconButton 
+        onClick={() => {
+          
+          setViewGroup(false);
+        }}
+        sx={{ 
+          position: 'absolute', 
+          top: 10, 
+          left: 10, 
+          zIndex: 3,
+          color: 'white' 
         }}
       >
         <ArrowBackIcon />
       </IconButton>
 
-      {/* Group Image and Details */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          marginBottom: 3,
-        }}
-      >
-        <Box
-          sx={{
-            width: { xs: "80%", sm: "50%", md: "30%" },
-            height: 130,
-            backgroundImage: `url(${
-              currentChat?.batch?.course?.image
-                ? getImageUrl(currentChat?.batch?.course?.image)
-                : imagePlaceholder
-            })`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            borderRadius: 2,
-            boxShadow: 3,
-            marginBottom: 1,
-          }}
-        />
-        <Typography
-          variant="h5"
-          sx={{
-            fontWeight: "bold",
-            textAlign: "center",
-            wordWrap: "break-word",
-            marginBottom: 1,
-          }}
-        >
-          {currentChat?.batch?.batch_name || "Group Name"}
-        </Typography>
-        <Typography
-          variant="body2"
-          sx={{
-            textAlign: "center",
-            fontStyle: "italic",
-            color: "text.secondary",
-          }}
-        >
-          {currentChat?.batch?.description || "No description available."}
-        </Typography>
-      </Box>
+      {/* Group Details Overlay */}
+      <Box sx={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: 2,
+        display: 'flex',
+        flexDirection: 'column',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: 'white',
+        textAlign: 'center',
+        p: 3
+      }}>
+        {/* Group Name and Description */}
+        <Box sx={{
+          textAlign: 'center',
+          pt: 10,
+          px: 3,
+          
+        }}>
+          <Typography variant="h4" sx={{ 
+            fontWeight: 'bold', 
+            mb: 1,
+            color:"white",
+            textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+          }}>
+            {currentChat?.batch?.batch_name || 'Group Name'}
+          </Typography>
+          <Typography variant="h6" sx={{ 
+            mb: 3,
+            opacity: 0.8,
+            color:"white",
+            textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
+          }}>
+            {currentChat?.batch?.description || 'No description available'}
+          </Typography>
+        </Box>
 
-      {/* Scrollable Section */}
-      <Box
-        sx={{
-          flex: 1,
-          overflowY: "auto",
-        }}
-      >
-        {/* Admins Section */}
-        <Typography
-          variant="h6"
-          sx={{
-            fontWeight: "bold",
-            marginBottom: 1,
-          }}
-        >
-          Admins
-        </Typography>
-        <List sx={{ padding: 0, marginBottom: 2 }}>
-          {currentChat?.admin?.map((admin) => (
-            <ListItem
-              key={admin.id}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                padding: 1,
-              }}
-            >
-              <ListItemAvatar>
-                <CustomAvatar
-                  src={admin.image}
-                  alt={admin.full_name}
-                  size={50}
+        {/* Members List */}
+        <Box sx={{ 
+          maxWidth: '500px', 
+          width: '100%', 
+          maxHeight: '300px', 
+          overflowY: 'auto',
+          backgroundColor: 'rgba(255,255,255,0.2)',
+          borderRadius: 2,
+          p: 2
+        }}>
+          <Typography variant="h6" sx={{color: 'white', mb: 2 }}>
+            {`Members (${allMembers.length})`}
+          </Typography>
+          <List>
+            {allMembers.map((member) => (
+              <ListItem 
+                key={member.id} 
+                sx={{ 
+                  backgroundColor: 'rgba(255,255,255,0.1)',
+                  borderRadius: 1,
+                  mb: 1
+                }}
+              >
+                <ListItemAvatar>
+                  <Avatar 
+                    src={member.image ? getImageUrl(member.image) : profilePlaceholder}
+                    sx={{ width: 40, height: 40 }}
+                  />
+                </ListItemAvatar>
+                <ListItemText 
+                  primary={
+                    <Typography variant="body1" sx={{ color: 'white' }}>
+                      {member.full_name}
+                    </Typography>
+                  }
+                  secondary={
+                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
+                      {member.role}
+                    </Typography>
+                  }
                 />
-              </ListItemAvatar>
-              <ListItemText
-                primary={
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      fontWeight: 500,
-                    }}
-                  >
-                    {admin.full_name}
-                  </Typography>
-                }
-              />
-            </ListItem>
-          ))}
-        </List>
-
-        {/* Users Section */}
-        <Typography
-          variant="h6"
-          sx={{
-            fontWeight: "bold",
-            marginBottom: 1,
-          }}
-        >
-          Users
-        </Typography>
-        <List sx={{ padding: 0 }}>
-          {currentChat?.users?.map((user) => (
-            <ListItem
-              key={user.id}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                padding: 1,
-              }}
-            >
-              <ListItemAvatar>
-                <CustomAvatar
-                  src={user.image}
-                  alt={user.full_name}
-                  size={50}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                primary={
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      fontWeight: 400,
-                    }}
-                  >
-                    {user.full_name}
-                  </Typography>
-                }
-              />
-            </ListItem>
-          ))}
-        </List>
+              </ListItem>
+            ))}
+          </List>
+        </Box>
       </Box>
     </Box>
   );

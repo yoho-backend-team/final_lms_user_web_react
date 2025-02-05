@@ -26,10 +26,12 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, s
   return (
     <Box
       sx={{
-        height: "76vh", // Increased height to fill the full viewport
+        height: "75.8vh",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#f8f6ff", // Light purple background
+        borderRadius: "24px",
+        overflow: "hidden"
       }}
     >
       {/* Search Bar */}
@@ -38,6 +40,7 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, s
           paddingLeft: "32px",
           paddingTop: "20px",
           paddingRight: "12px",
+          
         }}
       >
         <TextField
@@ -97,11 +100,11 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, s
                 padding: "8px",
                 width: "100%",
                 justifyContent: "space-between",
-                backgroundColor: group?._id === currentChat?._id && "lightblue",
+                backgroundColor: group?._id === currentChat?._id && "white",
                 borderRadius: group?._id === currentChat?._id && "6px",
                 cursor: "pointer",
                 "&:hover": {
-                  backgroundColor: "lightgray",
+                  backgroundColor: "white",
                   transform: "scale(1.05)",
                   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
                   transition: "transform 0.3s ease, background-color 0.3s ease",

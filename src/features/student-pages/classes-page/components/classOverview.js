@@ -154,10 +154,10 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                     variant="h5"
                     sx={{
                       fontWeight: "800",
-                      mt: 2,
+                      mt: 3,
                       ml:15,
                       color: "#000",
-                      fontSize: "20px",
+                      fontSize: "24px",
                       lineHeight: "16px",
                       fontFamily:"Nunito Sans",
                     }}
@@ -187,7 +187,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                     sx={{
                       fontWeight: 700,
                       mb: 1,
-                      ml:8,
+                      mr:118,
                       color: "#495057",
                       pl: "50px",
                       fontSize: "20px",
@@ -201,7 +201,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   <Typography
                     sx={{
                       mb: 2,
-                      ml:8,
+                      mr:50,
                       fontSize: "14px",
                       fontWeight: 400,
                       pl: "50px",
@@ -901,27 +901,11 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                       border: "1px solid #C3C3C3",
                       borderRadius: "10px",
                       boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.14)",
-<<<<<<< HEAD
                       minHeight: "140px",
                       maxHeight: "200px",
                       overflow: "auto",
                       mb:"140px",
                       
-=======
-                      height: "200px", 
-                      overflowY: "auto",
-                     "&::-webkit-scrollbar": {
-                      width: "8px",
-                      },
-      "&::-webkit-scrollbar-thumb": {
-        backgroundColor: "#c0c0c0",
-        borderRadius: "4px",
-      },
-      "&::-webkit-scrollbar-thumb:hover": {
-        backgroundColor: "#9e9e9e",
-      },
-                     
->>>>>>> 6d12b43ea262313843f01cba93807233a34336fb
                     }}
                   >
                     <Box sx={{ overflow: "auto" }}>
