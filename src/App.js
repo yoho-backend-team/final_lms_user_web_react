@@ -104,19 +104,18 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
     .then(async () => {
       // Backend API endpoint
       const endPoint = `${process.env.REACT_APP_BACK_END_URL}notification/subscribe`;
-      const user2 = getStudentDetails(); // Get student details
-      const user = getInstructorDetails(); // Get instructor details
+      const user2 = getStudentDetails(); 
+      const user = getInstructorDetails(); 
 
       if (user2) {
-        await axios.post(endPoint, { subscription, user: user2._id }); // Send subscription to backend
+        await axios.post(endPoint, { subscription, user: user2._id }); 
       }
       if (user) {
-        await axios.post(endPoint, { subscription, user: user._id }); // Send subscription to backend
+        await axios.post(endPoint, { subscription, user: user._id }); 
       }
     })
     .catch((error) => console.error('Error subscribing to push notifications', error));
 }
-
 
   // onMessageListener()
   //   .then((payload) => {
