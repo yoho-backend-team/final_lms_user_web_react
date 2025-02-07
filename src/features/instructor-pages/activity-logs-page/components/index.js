@@ -69,7 +69,7 @@ const ActivityLog = ({data}) => {
               <Typography
                 sx={{
                   color: "#495057",
-                  fontSize: "24px",
+                  fontSize: "30px",
                   fontWeight: 700,
                   lineHeight: "24px",
                 }}

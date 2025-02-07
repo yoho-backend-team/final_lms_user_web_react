@@ -14,7 +14,7 @@ const CourseDetails = () => {
           pb: "20px",
         }}
       >
-        Course Details
+     course details
       </Typography>
       <Box sx={{ pt: "20px" }}>
         <Box

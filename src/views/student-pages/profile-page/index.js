@@ -262,7 +262,7 @@ const ProfilePage = () => {
           boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
+          justifyContent: 'space-between', // Changed to space-between
           alignItems: 'center',
           padding: 2,
           margin: 2,
@@ -279,53 +279,82 @@ const ProfilePage = () => {
           marginRight: '20px',
         }}
       >
-        <Typography variant="h6" sx={{ mb: 2, color: 'black' }}>Profile Sections</Typography>
-        <Button
-          variant={activeSection === "personalInfo" ? "contained" : "outlined"}
-          onClick={() => setActiveSection("personalInfo")}
-          fullWidth
-          sx={{
-            mb: 2,
-            padding: '8px', // Reduced padding for a more compact button
-            fontSize: '14px', // Reduced font size for a more compact look
-            color: activeSection === "personalInfo" ? 'white' : 'black',
-            background: activeSection === "personalInfo" ? 'linear-gradient(45deg, #0D6EFD 30%, #0A58CA 90%)' : 'transparent',
-            borderColor: 'black',
-          }}
-        >
-          Profile Info
-        </Button>
-        <Button
-          variant={activeSection === "security" ? "contained" : "outlined"}
-          onClick={() => setActiveSection("security")}
-          fullWidth
-          sx={{
-            mb: 2,
-            padding: '8px', // Reduced padding for a more compact button
-            fontSize: '14px', // Reduced font size for a more compact look
-            color: activeSection === "security" ? 'white' : 'black',
-            background: activeSection === "security" ? 'linear-gradient(45deg, #0D6EFD 30%, #0A58CA 90%)' : 'transparent',
-            borderColor: 'black',
-          }}
-        >
-          Security
-        </Button>
+        <Box sx={{ width: '107%' }}>
+        <Box
+            onClick={() => setActiveSection("personalInfo")}
+            sx={{
+              position: 'relative',
+              padding: '12px 20px',
+              marginBottom: '8px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              background: activeSection === "personalInfo" 
+                ? 'linear-gradient(90deg, rgba(13, 110, 253, 0.1) 0%, rgba(13, 110, 253, 0.05) 100%)' 
+                : 'transparent',
+              '&:hover': {
+                background: 'rgba(13, 110, 253, 0.05)'
+              },
+              borderLeft: activeSection === "personalInfo" 
+                ? '4px solid #0D6EFD' 
+                : 'none'
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 600,
+                color: activeSection === "personalInfo" ? '#0D6EFD' : '#666',
+                fontSize: '16px'
+              }}
+            >
+              Profile Info
+            </Typography>
+          </Box>
+          <Box
+            onClick={() => setActiveSection("security")}
+            sx={{
+              position: 'relative',
+              padding: '12px 20px',
+              marginBottom: '8px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              background: activeSection === "security" 
+                ? 'linear-gradient(90deg, rgba(13, 110, 253, 0.1) 0%, rgba(13, 110, 253, 0.05) 100%)' 
+                : 'transparent',
+              '&:hover': {
+                background: 'rgba(13, 110, 253, 0.05)'
+              },
+              borderLeft: activeSection === "security" 
+                ? '4px solid #0D6EFD' 
+                : 'none'
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 600,
+                color: activeSection === "security" ? '#0D6EFD' : '#666',
+                fontSize: '16px'
+              }}
+            >
+              Security
+            </Typography>
+          </Box>
+        </Box>
         <Button
           variant="contained"
           onClick={handleNavigateBack}
           fullWidth
           sx={{
-            mt: 2,
-            backgroundColor: '#0D6EFD',
+            mt: 1,
+            background: 'linear-gradient(45deg, #FF5722 30%, #D84315 90%)',
             color: 'white',
-            borderRadius: '20px',
             padding: '10px 20px',
+            boxShadow: '0 3px 5px 2px rgba(255, 87, 34, .3)',
             '&:hover': {
-              backgroundColor: '#0A58CA',
+              background: 'linear-gradient(45deg, #D84315 30%, #FF5722 90%)',
             },
           }}
         >
-          Go to Dashboard
+          Go Back
         </Button>
       </Box>
       <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', padding: 2, marginLeft: '250px', mt: 2, mb: 2 }}>
@@ -338,9 +367,9 @@ const ProfilePage = () => {
                 padding: "20px",
                 height: '90%',
                 boxShadow: 3,
-                width: 'calc(100% - 80px)', // Adjusted width to match sidebar
-                marginLeft: '80px', // Align with sidebar
-                borderRadius: '10px', // Added border radius for better aesthetics
+                width: 'calc(100% - 80px)',
+                marginLeft: '80px',
+                borderRadius: '10px',
               }}
             >
               <Card sx={{ mb: 4, position: "relative", boxShadow: "none" }}>
