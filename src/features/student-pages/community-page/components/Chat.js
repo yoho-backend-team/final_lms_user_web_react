@@ -4,6 +4,7 @@ import ChatHeader from "./ChatHeader";
 import ChatLog from "./chatLogs";
 import BottomBar from "./bottomBar";
 
+
 const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) => {
   const isTablet = useMediaQuery("(max-width: 768px)"); // Check for tablet screen size
 
@@ -27,6 +28,7 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#F6F6F6",
+        
         
         
       }}
@@ -64,6 +66,10 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
           {/* Bottom Bar for Sending Messages */}
           <Box
             sx={{
+              
+            
+             
+              
             paddingBottom:"1px", 
               borderTop: "1px solid #E0E0E0",
             }}

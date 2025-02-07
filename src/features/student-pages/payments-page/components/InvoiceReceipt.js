@@ -37,9 +37,11 @@ const InvoiceReceipt = forwardRef(({ feesdata = {} }, ref) => {
   const paidAmount = courseFees - pendingPayment;
 
   return (
-    <Box ref={ref} id="invoiceReceipt" sx={{ width: '595px', margin: '0 auto', border: '1px solid #ccc', fontFamily: 'Poppins', height: "842px", background: "#FFF" }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #ccc', paddingBottom: 2 }}>
-         <img src={logo} alt="Logo" style={{ height: '60px' }} />
+     <Box ref={ref} id="invoiceReceipt" sx={{ width: '595px', margin: '0 auto',  fontFamily: 'Poppins', height: "842px", background: "#FFF" }}>
+    
+
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',  paddingBottom: 2 }}>
+         <img src={logo} alt="Logo" style={{ height: '80px' }} />
         
         <Box display="flex" flexDirection="column" alignItems="center" padding={3} width="100%">
           <Typography variant="h6" color="black" align="center" gutterBottom fontSize={"20px"} fontWeight={700} fontFamily={"Inter"} sx={{ marginLeft: '-120px' }}>
@@ -162,9 +164,7 @@ const InvoiceReceipt = forwardRef(({ feesdata = {} }, ref) => {
             <Typography sx={{ color: "#000", fontFamily: "Nunito Sans", fontSize: "13px", fontWeight: 800, lineHeight: "14px", mr: 0.5 }}>
               Pending:
             </Typography>
-            {/* <Typography sx={{ color: "red", fontFamily: "Nunito Sans", fontSize: "13px", fontWeight: 800, lineHeight: "14px" }}>
-              {5000}
-            </Typography> */}
+           
             <Typography sx={{ color: "#F00", fontFamily: "Nunito Sans", fontSize: "13px", fontWeight: 800, lineHeight: "14px" }}>
               {feesdata?.pending_payment}
             </Typography>
@@ -188,255 +188,279 @@ const InvoiceReceipt = forwardRef(({ feesdata = {} }, ref) => {
           <Typography sx={{ color: "#2AAD37", fontFamily: "Inter", fontSize: "13px", fontWeight: 800, lineHeight: "14px", mb: 6 }}>{40000}</Typography>
         </div>
       </Box>
+{/* Transaction Table */}
+    <Box sx={{ marginTop: -4, padding: 2 }}>
+  
+  <Box 
+  sx={{ 
+    padding: '16px', 
+    borderRadius: '8px', 
+    backgroundColor: '#f4f4f4', 
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)', 
+    border: '2px solid skyblue' // Adding the border color as sky blue
+  }}
+>
+  
 
-      <Box sx={{ marginTop: -4, padding: 2 }}>
-        <Typography sx={{ color: "#06496E", fontFamily: "Inter", fontSize: "20px", fontWeight: 700, lineHeight: "normal", width: '146.736p', mb: 3, paddingBottom: "5px", borderBottom: '2px solid #06496E' }}>
-          Transaction
-        </Typography>
-        <TableContainer
-          component={Paper}
-          sx={{
-            width: '540px',
-            flexShrink: 0,
-            backgroundColor: '#FFF9F9',
-            marginTop: 6,
-            marginLeft: 4
+    <Typography
+      sx={{
+        color: "#06496E",
+        fontFamily: "Inter",
+        fontSize: "20px",
+        fontWeight: 700,
+        lineHeight: "normal",
+        width: '550px',
+        paddingBottom: '5px',
+        borderBottom: '2px solid #06496E',
+        marginBottom: 3
+      }}
+    >
+      Transaction
+    </Typography>
 
-          }}
-        >
-          <Table
-            sx={{
-              '& thead': {
-                backgroundColor: '#0051C8',
-              },
-              '& tbody': {
-                backgroundColor: '#ACCDFF',
-              },
+    {/* Transaction Table */}
+    <TableContainer
+      component={Paper}
+      sx={{
+        width: '540px',
+        flexShrink: 0,
+        backgroundColor: '#FFF9F9',
+        marginTop: 6,
+        marginLeft: 1
+      }}
+    >
+      <Table
+        sx={{
+          '& thead': {
+            backgroundColor: '#0051C8',
+          },
+          '& tbody': {
+            backgroundColor: '#ACCDFF',
+          },
+        }}
+      >
+        <TableHead sx={{ width: "40.423px", height: "60px", flexShrink: 0, border: '0.477px #FFF9F9' }}>
+          <TableRow>
+            <TableCell align="center" style={{
+              width: '80.423px',
+              height: '32.421px',
+              color: '#FFF',
+              fontFamily: 'Inter',
+              fontSize: '15px',
+              padding: '8px',
+              border: '1px solid #CCC'
+            }}>Payment Type</TableCell>
+            <TableCell align="center" style={{
+              width: '80.423px',
+              height: '32.421px',
+              color: '#FFF',
+              fontFamily: 'Inter',
+              fontSize: '15px',
+              padding: '8px',
+              border: '1px solid #CCC'
+            }}>GST</TableCell>
+            <TableCell align="center" style={{
+              width: '80.423px',
+              height: '32.421px',
+              color: '#FFF',
+              fontFamily: 'Inter',
+              fontSize: '15px',
+              padding: '8px',
+              border: '1px solid #CCC'
+            }}>Other Tax</TableCell>
+            <TableCell align="center" style={{
+              width: '80.423px',
+              height: '32.421px',
+              color: '#FFF',
+              fontFamily: 'Inter',
+              fontSize: '15px',
+              padding: '8px',
+              border: '1px solid #CCC'
+            }}>Total Amount</TableCell>
+            <TableCell align="center" style={{
+              width: '80.423px',
+              height: '32.421px',
+              color: '#FFF',
+              fontFamily: 'Inter',
+              fontSize: '15px',
+              padding: '8px',
+              border: '1px solid #CCC'
+            }}>Cash / Online</TableCell>
+            <TableCell align="center" style={{
+              width: '80.423px',
+              height: '32.421px',
+              color: '#FFF',
+              fontFamily: 'Inter',
+              fontSize: '15px',
+              padding: '8px',
+              border: '1px solid #CCC'
+            }}>Payment Method</TableCell>
+          </TableRow>
+        </TableHead>
 
-            }}
+        <TableBody sx={{ width: "40.423px", height: "50px", flexShrink: 0, border: '0.477px #FFF9F9' }}>
+          <TableRow>
+            <TableCell align="center" style={{
+              width: '80.423px',
+              height: '32.421px',
+              color: '#000',
+              fontFamily: 'Inter',
+              fontSize: '15px',
+              padding: '8px',
+              border: '1px solid #FFF9F9'
+            }}>Monthly</TableCell>
+            <TableCell align="center" style={{
+              width: '80.423px',
+              height: '32.421px',
+              color: '#000',
+              fontFamily: 'Inter',
+              fontSize: '15px',
+              padding: '8px',
+              border: '1px solid #FFF9F9'
+            }}>1800</TableCell>
+            <TableCell align="center" style={{
+              width: '80.423px',
+              height: '32.421px',
+              color: '#000',
+              fontFamily: 'Inter',
+              fontSize: '15px',
+              padding: '8px',
+              border: '1px solid #FFF9F9'
+            }}>200</TableCell>
+            <TableCell align="center" style={{
+              width: '80.423px',
+              height: '32.421px',
+              color: '#000',
+              fontFamily: 'Inter',
+              fontSize: '15px',
+              padding: '8px',
+              border: '1px solid #FFF9F9'
+            }}>{feesdata?.course_fees}</TableCell>
+            <TableCell align="center" style={{
+              width: '80.423px',
+              height: '32.421px',
+              color: '#000',
+              fontFamily: 'Inter',
+              fontSize: '15px',
+              padding: '8px',
+              border: '1px solid #FFF9F9'
+            }}>Online</TableCell>
+            <TableCell align="center" style={{
+              width: '80.423px',
+              height: '32.421px',
+              color: '#000',
+              fontFamily: 'Inter',
+              fontSize: '15px',
+              padding: '8px',
+              border: '1px solid #FFF9F9'
+            }}>Gpay</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
+  </Box>
+</Box>
 
-          >
-            <TableHead sx={{ width: "40.423px", height: " 60px", flexshrink: 0, border: '0.477px #FFF9F9' }}>
-              <TableRow>
-                <TableCell align="center" style={{
-                  width: '80.423px',
-                  height: '32.421px',
-                  flexShrink: 0,
-                  color: '#FFF',
-                  fontFamily: 'Inter',
-                  fontSize: '15px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  padding: '8px',
-                  border: '1px solid #CCC'
-                }}>Payment Type</TableCell>
-                <TableCell align="center" style={{
-                  width: '80.423px',
-                  height: '32.421px',
-                  flexShrink: 0,
-                  color: '#FFF',
-                  fontFamily: 'Inter',
-                  fontSize: '15px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  padding: '8px',
-                  border: '1px solid #CCC'
-                }}>GST</TableCell>
-                <TableCell align="center" style={{
-                  width: '80.423px',
-                  height: '32.421px',
-                  flexShrink: 0,
-                  color: '#FFF',
-                  fontFamily: 'Inter',
-                  fontSize: '15px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  padding: '8px',
-                  border: '1px solid #CCC'
-                }}>Other Tax</TableCell>
-                <TableCell align="center" style={{
-                  width: '80.423px',
-                  height: '32.421px',
-                  flexShrink: 0,
-                  color: '#FFF',
-                  fontFamily: 'Inter',
-                  fontSize: '15px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  padding: '8px',
-                  border: '1px solid #CCC'
-                }}>Total Amount</TableCell>
-                <TableCell align="center" style={{
-                  width: '80.423px',
-                  height: '32.421px',
-                  flexShrink: 0,
-                  color: '#FFF',
-                  fontFamily: 'Inter',
-                  fontSize: '15px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  padding: '8px',
-                  border: '1px solid #CCC'
-                }}>Cash / Online</TableCell>
-                <TableCell align="center" style={{
-                  width: '80.423px',
-                  height: '32.421px',
-                  flexShrink: 0,
-                  color: '#FFF',
-                  fontFamily: 'Inter',
-                  fontSize: '15px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  padding: '8px',
-                  border: '1px solid #CCC'
-                }}>Payment Method</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody sx={{ width: "40.423px", height: " 50px", flexshrink: 0, border: '0.477px #FFF9F9' }}>
-              <TableRow >
-                <TableCell align="center" style={{
-                  width: '80.423px',
-                  height: '32.421px',
-                  flexShrink: 0,
-                  color: '#000',
-                  fontFamily: 'Inter',
-                  fontSize: '15px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  border: ' 0.477px',
-                  padding: '8px',
-                  border: '1px solid #FFF9F9'
-                }}>Monthly</TableCell>
-                <TableCell align="center" style={{
-                  width: '80.423px',
-                  height: '32.421px',
-                  flexShrink: 0,
-                  color: '#000',
-                  fontFamily: 'Inter',
-                  fontSize: '15px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  border: ' 0.477px',
-                  padding: '8px',
-                  border: '1px solid #FFF9F9'
-                }}>1800</TableCell>
-                <TableCell align="center" style={{
-                  width: '80.423px',
-                  height: '32.421px',
-                  flexShrink: 0,
-                  color: '#000',
-                  fontFamily: 'Inter',
-                  fontSize: '15px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  border: ' 0.477px',
-                  padding: '8px',
-                  border: '1px solid #FFF9F9'
-                }}>200</TableCell>
-                <TableCell align="center" style={{
-                  width: '80.423px',
-                  height: '32.421px',
-                  flexShrink: 0,
-                  color: '#000',
-                  fontFamily: 'Inter',
-                  fontSize: '15px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  border: ' 0.477px',
-                  padding: '8px',
-                  border: '1px solid #FFF9F9'
-                }}>{feesdata?.course_fees}</TableCell>
-                <TableCell align="center" style={{
-                  width: '80.423px',
-                  height: '32.421px',
-                  flexShrink: 0,
-                  color: '#000',
-                  fontFamily: 'Inter',
-                  fontSize: '15px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  border: ' 0.477px',
-                  padding: '8px',
-                  border: '1px solid #FFF9F9'
-                }}>Online</TableCell>
-                <TableCell align="center" style={{
-                  width: '80.423px',
-                  height: '32.421px',
-                  flexShrink: 0,
-                  color: '#000',
-                  fontFamily: 'Inter',
-                  fontSize: '15px',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  lineHeight: 'normal',
-                  border: ' 0.477px',
-                  padding: '8px',
-                  border: '1px solid #FFF9F9'
-                }}>Gpay</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: 5, paddingRight: 2 }}>
-        <Typography sx={{
-          marginRight: 1, color: "#000", fontFamily: "Nunito Sans",
-          fontsize: '20px',
-          fontstyle: 'normal',
-          fontweight: 800,
-          lineheight: '24px'
-        }}>Status:</Typography>
-        <Box sx={{ padding: '10px 20px', backgroundColor: '#D2FDD6', fontFamily: "Nunito Sans", color: '#2AAD37', border: '1px #2AAD37', borderRadius: 5, fontWeight: 800, lineHeight: "24px", }}>
-          Payment Success
-        </Box>
-      </Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: 4, paddingRight: 2 }}>
-        <Typography sx={{
-          marginRight: -2, color: "#000", fontFamily: "Nunito Sans",
-          fontsize: '20px',
-          fontstyle: 'normal',
-          fontweight: 800,
-          lineheight: '24px',
-          mb: 8
-        }}>Signature:</Typography>
-        <img
-          src={sign}
-          alt="Signature"
-          style={{ height: '50px', marginBottom: -35 }}
-        />
-        <img
-          src={paid}
-          alt="Paid"
-          style={{ height: '50px', marginBottom: -35 }}
-        />
-      </Box>
+      
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginTop: 5, paddingRight: 2 }}>
+  <Typography sx={{
+    marginRight: 6, color: "#000", fontFamily: "Nunito Sans",
+    fontSize: '14px',
+    fontStyle: 'normal',
+    fontWeight: 800,  // This ensures the text is bold
+    lineHeight: '24px'
+  }}>
+    Status:
+  </Typography>
+       
+      <Box
+  sx={{
+    padding: '10px 20px',
+    backgroundColor: '#D2FDD6',
+    fontFamily: 'Nunito Sans',
+    color: '#2AAD37',
+    border: '2px solid #2AAD37',
+    borderRadius: 2, // Slightly rounded corners
+    fontWeight: 800,
+    lineHeight: '24px',
+    width: '150px', // Set a fixed width
+    height: '40px', // Set a fixed height
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    
+  }}
+>
+  Payment Success
+</Box>
+</Box>
 
-      <Box sx={{ display: 'flex', justifyContent: "center", alignItems: 'center', marginTop: 10 }}>
-        <Typography sx={{
-          marginRight: 6, color: "#000", fontFamily: "Nunito Sans",
-          fontsize: '20px',
-          fontstyle: 'normal',
-          fontweight: 800,
-          lineheight: '24px',
-          mb: 14
-        }}>Thank You</Typography>
-      </Box>
+      
+<Box
+  sx={{
+    display: 'flex',
+    justifyContent: 'flex-end', 
+    alignItems: 'center',
+    marginTop: 4,
+    paddingRight: 19
+  }}
+>
+  {/* "Signature" Label */}
+  <Typography
+    sx={{
+      marginRight: 1,  // Adjusted spacing
+      color: "#000",
+      fontFamily: "Nunito Sans",
+      fontSize: '14px',
+      fontStyle: 'normal',
+      fontWeight: 800,  // Ensuring bold text
+      lineHeight: '24px',
+      ml: 30, // Removed unnecessary margin
+      mb:15
+    }}
+  >
+    Signature:
+  </Typography>
+
+ 
+  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 7 }}>
+  <img
+    src={sign}
+    alt="Signature"
+    style={{ height: '50px', marginBottom: '5px' }} // Kept slight bottom margin for spacing
+  />
+  <img
+    src={paid}
+    alt="Paid"
+    style={{ height: '60px', marginTop: '-35px', marginRight: '-30px' }} // Adjusted left margin
+  />
+</Box>
+
+</Box>
+
+
+      
+      <Box sx={{ display: 'flex', justifyContent: "center", alignItems: 'center', marginBottom: 20 }}>
+  <Typography
+    sx={{
+      marginRight: 6,
+      color: "#000",
+      fontFamily: "Nunito Sans",
+      fontSize: '14px',  // Corrected capitalization
+      fontStyle: 'normal',  
+      fontWeight: 800,  // Corrected capitalization
+      lineHeight: '24px',  
+       mb: 10
+    }}
+  >
+    Thank You
+  </Typography>
+</Box>
 
       <Box sx={{
-        textAlign: 'center', marginTop: -4, fontSize: 12, fontFamily: "Nunito Sans", color: '#000', fontWeight: 300, width: '595px', height: '30px', flexshrink: 0, background: "#ACC1E1", display: 'flex',
+        textAlign: 'center', marginTop: 4, fontSize: 12, fontFamily: "Nunito Sans", color: '#000', fontWeight: 300, width: '595px', height: '30px', flexshrink: 0, background: "#ACC1E1", display: 'flex',
         alignItems: 'center', justifyContent: 'center'
       }}>
         <Typography>All Rights Reserved @2024 Regulations</Typography>
