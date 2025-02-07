@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef,useState } from "react";
 import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
 import { getStudentDetails } from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
@@ -8,9 +8,11 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 const ChatLog = ({ socket, Messages }) => {
   const student = getStudentDetails();
   const messagesEndRef = useRef(null);
+  const messageRefs = useRef(new Map());
   const isTablet = useMediaQuery("(max-width: 768px)"); // Detect tablet screen size
+  const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
+  const [readMessages, setReadMessages] = useState(new Set());
 
-<<<<<<< HEAD
   useEffect(() => {
     const handleFocus = () => setIsWindowFocused(true);
     const handleBlur = () => setIsWindowFocused(false);
@@ -68,8 +70,6 @@ const ChatLog = ({ socket, Messages }) => {
     }
   };
 
-=======
->>>>>>> ea334de7afd0fc3de3fa589b98a831f578af889e
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
