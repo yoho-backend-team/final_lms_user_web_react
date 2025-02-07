@@ -39,7 +39,10 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
 // const classes = Course?.batches[0]?.classes|| [];
 
   return (
-    <Box sx={{ pl: "91px", pr: "50px", height: "80vh",}}>
+    <Box sx={{ pl: { xs: "20px", sm: "50px", md: "91px" },
+    pr: { xs: "20px", sm: "30px", md: "50px" },
+    height: "80vh",
+    overflowY: "auto",}}>
       <Box
         sx={{ display: "flex", justifyContent: "space-between", pb: "20px" }}
       >
@@ -92,13 +95,21 @@ const CourseStudentChapters = ({ Chapters , Course}) => {
             mb: 2,
             p: 2,
             background: chapters[index].background,
+            boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
             padding: "30px",
-            width: '460px',
-            height: '180px'
+            width: "100%",
+            height: "180px",
+            borderRadius: "16px",
+            transition: "all 0.3s ease", 
+            "&:hover": {
+              transform: "scale(1.05)", 
+              boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+              
+            },
           }}
         >
           <Box>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between",alignItems: "center", }}>
               <Typography
                 sx={{
                   color: "white",

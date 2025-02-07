@@ -61,10 +61,7 @@ const modules = [
     },
   },
 ];
-
-
-              
-  const CourseAndNotesStudentPage = ({ Course, openCourseView, closeCourseView, selectedClass }) => {
+ const CourseAndNotesStudentPage = ({ Course, openCourseView, closeCourseView, selectedClass }) => {
   const { tabView } = useTabResponsive();
    
     const classes = Course?.batches[0]?.classes || [];
@@ -72,21 +69,16 @@ const modules = [
   const getRandomStyle = (index) => {
     const randomIndex = index % Course?.batches?.[0]?.classes?.length;
     return modules[randomIndex].style;
-  };
-
-          
-              
-                
+  };             
                 return (
-                  <Box sx={{ padding: tabView ? "20px" : "60px"}}>
+                  <Box sx={{ padding: tabView ? "20px" : "60px", backgroundColor: "#e0f7fa", }}>
                     <Grid container xs={12} gap={tabView ? "60px" : "20px"}>
                     {classes?.map((module,index) => (
                         <Grid item key={module.id} xs={2.5}  sx={{display:"flex",flexDirection:"row",justifyContent: "center", alignItems: "center",cursor: "pointer"}} tabIndex={1}>
                           <CourseStudentModuleCard
                             id={index+1}
                             style={getRandomStyle(index)}
-                      
-                            title={module.class_name}
+                           title={module.class_name}
                             notes={module.notes}
                             videos={module.videos}
                             progress={module.progress}
@@ -94,16 +86,14 @@ const modules = [
                             openCourseView={openCourseView}
                             module={module}
                             class_details ={module}
-                            
-                          />
+                        />
                         </Grid>
                       ))}
                       <Grid
-                        
-                      >
+                     >
                       </Grid>
                     </Grid>
-                    <Box
+                    {/* <Box
                       sx={{
                         display: "flex",
                         justifyItems: "center",
@@ -112,9 +102,8 @@ const modules = [
                         justifyContent: "center",
                         height: "100%",
                       }}
-                    >
-                      
-                    </Box>
+                    >    
+                    </Box> */}
                     <Box
         sx={{
           display: "flex",
@@ -126,14 +115,17 @@ const modules = [
         }}
       >
         <Typography
-          sx={{ fontSize: "14px", fontWeight: 600, lineHeight: "24px" }}
+          sx={{ fontSize: "16px", 
+            fontWeight: 600,
+            lineHeight: "24px",
+            color: "blue",
+          }}
         >
           Click the Card to view Preview Details
         </Typography>
       </Box>
-                  </Box>
+      </Box>
                 );
-              };
-              
-              export default CourseAndNotesStudentPage;
+                };
+ export default CourseAndNotesStudentPage;
               

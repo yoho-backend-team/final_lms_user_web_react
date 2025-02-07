@@ -15,10 +15,9 @@ export const ClassCardHeader = () => (
       p: 2,
       backgroundColor: "#0D6EFD", // Added background color for better visibility
       borderRadius: "22px",
-      // Remove position sticky to test without it
-      position: "sticky",
-      top: 0,
-      zIndex: 1,
+      // position: "fixed",  // Keep header visible while scrolling
+        // top: 230, // Add gap between the top of the viewport and the header
+        zIndex: 1,
     }}
   >
     <Grid item xs={3}>
@@ -28,8 +27,8 @@ export const ClassCardHeader = () => (
           fontWeight: 600,
           fontFamily: "Poppins",
           fontSize: "14px",
-          color: "#333",
-          ml: 25,
+          color: "white",
+          ml: 10,
         }}
       >
         Title
@@ -42,11 +41,11 @@ export const ClassCardHeader = () => (
           fontWeight: 600,
           fontFamily: "Poppins",
           fontSize: "14px",
-          color: "#333",
-          ml: 16,
+          color: "white",
+          ml: 14,
         }}
       >
-        Date
+       Classes Starting Date
       </Typography>
     </Grid>
     <Grid item xs={2}>
@@ -56,11 +55,11 @@ export const ClassCardHeader = () => (
           fontWeight: 600,
           fontFamily: "Poppins",
           fontSize: "14px",
-          color: "#333",
-          ml: 6,
+          color: "white",
+          ml: 1,
         }}
       >
-        Time
+        Classes Starting Time
       </Typography>
     </Grid>
     <Grid item xs={2}>
@@ -70,8 +69,8 @@ export const ClassCardHeader = () => (
           fontWeight: 600,
           fontFamily: "Poppins",
           fontSize: "14px",
-          color: "#333",
-          ml: 10,
+          color: "white",
+          ml: 22,
         }}
       >
         Duration
@@ -84,9 +83,9 @@ export const ClassCardHeader = () => (
           fontWeight: 600,
           fontFamily: "Poppins",
           fontSize: "14px",
-          color: "#333",
+          color: "white",
           textAlign: "right",
-          mr: 16,
+          mr: 7,
         }}
       >
         Action
@@ -101,7 +100,7 @@ const ClassCard = ({ cls, style, type, group, img }) => {
   return (
     <Card
       sx={{
-        mb: 2,
+        mb: 1.5,
         p: 2,
         backgroundImage : `url(${img})`,
         backgroundPosition : "right",
@@ -111,6 +110,8 @@ const ClassCard = ({ cls, style, type, group, img }) => {
         "&:hover": {
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", 
           transform: "scale(1.02)", 
+          overflow: "auto", /* Or scroll */
+          position: "relative", /* If necessary */
         },
       }}
     >
@@ -124,7 +125,13 @@ const ClassCard = ({ cls, style, type, group, img }) => {
       >
         <Grid item xs={3}>
           <Box>
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+            <Typography variant="h6" sx={{
+                  fontWeight: 600,
+                  color: "#000",
+                  fontFamily: "Poppins",
+                  fontSize: "14px",
+                  lineHeight: "22px",
+                }}>
               {cls?.class_name}
             </Typography>
             <Typography variant="body2" sx={{ color: "gray" }}>

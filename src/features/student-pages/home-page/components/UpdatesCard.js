@@ -17,7 +17,7 @@ const UpdatesCard = (props,notification) => {
 
   
   return (
-    <Card sx={{ boxShadow: "none" }}>
+    <Card sx={{ boxShadow: "none", }}>
       <Grid>
         <Box sx={{ height: 105, overflow: "hidden" }}>
           <img src={image} alt="banner" style={{ width: "100%" }} />
@@ -29,6 +29,7 @@ const UpdatesCard = (props,notification) => {
             justifyContent: "space-between",
             display: "flex",
             alignItems: "center",
+            height: "auto",
           }}
         >
           <Typography

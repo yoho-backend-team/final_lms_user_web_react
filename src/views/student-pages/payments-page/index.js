@@ -1,64 +1,31 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Paper,
   Box,
-  Grid,
-  Button,
-  Divider,
-  Card,
+  Typography,
+  Link,
 } from "@mui/material";
-import { PaymentBg } from "utils/images";
 import { useTabResponsive } from "utils/tabResponsive";
 import { useDispatch, useSelector } from "react-redux";
-
 import { useSpinner } from "context/SpinnerProvider";
-import toast from "react-hot-toast";
-import updateStudentFees from "features/student-pages/payments-page/redux/thunks";
-import PaymentCardStudent from "features/student-pages/payments-page/components/PaymentCard";
-import { selectStudentPayments ,selectLoading} from "features/student-pages/payments-page/redux/selectors";
 import { getStudentFees } from "features/student-pages/payments-page/services";
+import PaymentCardStudent from "features/student-pages/payments-page/components/PaymentCard";
 import CourseStudentDetails from "features/student-pages/payments-page/components/CourseDetails";
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
-import EPFIcon from "assets/icons/EPFIcon";
-import TaxIcon from "assets/icons/TaxIcon";
-import SalaryInHandIcon from "assets/icons/salaryHandIcon";
-import PaymentMethodIcon from "assets/icons/paymentMethodIcon";
 import PendingActionsOutlinedIcon from '@mui/icons-material/PendingActionsOutlined';
-import { Link } from "react-router-dom";
 import PaymentIcon from "assets/icons/datetimepayIcon";
 import StatusIcon from "assets/icons/StatusIcon";
 import ParkPayment from "assets/icons/ParkPaymentIcon";
-
-
-
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+import { selectStudentPayments, selectLoading } from "features/student-pages/payments-page/redux/selectors";
 
 const PaymentStudentInterface = () => {
   const dispatch = useDispatch();
   const Studentfess = useSelector(selectStudentPayments);
   const loading = useSelector(selectLoading);
   const { tabView } = useTabResponsive();
-  const { showSpinner,hideSpinner } = useSpinner()
+  const { showSpinner, hideSpinner } = useSpinner();
   const [feesDataStudent, setFeesDataStudent] = useState([{ fees: [], totalAmount: 0 }]);
 
-   const instructorPaymentCardData = [
+  const instructorPaymentCardData = [
     {
       id: 1,
       title: "Course Fees",
@@ -69,7 +36,7 @@ const PaymentStudentInterface = () => {
     {
       id: 2,
       title: "Amount Paid",
-      amount: feesDataStudent?.totalAmount      ,
+      amount: feesDataStudent?.totalAmount,
       icon: <PaymentIcon color="primary" />,
       style: { color: "#009028", bg: "#D2FDD6" },
     },
@@ -77,8 +44,8 @@ const PaymentStudentInterface = () => {
       id: 3,
       title: "Pending Payment",
       amount: feesDataStudent?.pending_payment,
-      icon: <PendingActionsOutlinedIcon sx={{color:"#F00" }}/>,
-      style: {  bg: "#FFDAD8" },
+      icon: <PendingActionsOutlinedIcon sx={{ color: "#F00" }} />,
+      style: { bg: "#FFDAD8" },
     },
     {
       id: 4,
@@ -106,23 +73,6 @@ const PaymentStudentInterface = () => {
     fetchStudentFee();
   }, []);
 
-  // const getStudentfeesDetails = async () => {
-  //   try {
-  //     showSpinner()
-  //     dispatch(getStudentFees()); 
-  //   } catch (error) {
-  //     toast.error(error?.response?.data?.message)
-  //   }finally{
-  //     hideSpinner()
-  //   }
-  
-  // };
-
-  // useEffect(() => {
-  //   getStudentfeesDetails();
-  // }, [dispatch]);
-
-console.log(feesDataStudent,"feesDataStudent")
   return (
     <>
       <Box
@@ -131,38 +81,35 @@ console.log(feesDataStudent,"feesDataStudent")
           mt: tabView ? "80px" : "40px",
           mb: "20px",
           borderRadius: "25px",
-          boxShadow: tabView ? "none" : "0px 0px 64px 0px rgba(0, 0, 0, 0.10);",
-          
+          boxShadow: tabView ? "none" : "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
         }}
       >
         <Box
           sx={{
-            backgroundColor:'white',
+            backgroundColor: 'white',
             width: "100%",
-            borderRadius:'24px'
+            borderRadius: '24px',
+            padding: tabView ? "20px" : "40px",
           }}
         >
           <Box
             sx={{
               display: "flex",
               flexDirection: "row",
-              p: "40px",
-              marginBottom: '-40px',
               justifyContent: "space-between",
+              mb: 2,
             }}
           >
-            <Box>
-              <Typography
-                sx={{
-                  color: "#151010",
-                  fontSize: "24px",
-                  fontWeight: "700",
-                  lineHeight: "32px",
-                }}
-              >
-                Payment
-              </Typography>
-            </Box>
+            <Typography
+              sx={{
+                color: "#151010",
+                fontSize: "24px",
+                fontWeight: "700",
+                lineHeight: "32px",
+              }}
+            >
+              Payment
+            </Typography>
             <Box sx={{ textAlign: "end" }}>
               <Typography
                 variant="body1"
@@ -194,9 +141,9 @@ console.log(feesDataStudent,"feesDataStudent")
           <Box
             sx={{
               display: "flex",
-              p: tabView ? "20px" : "40px",
-              gap: "46px",
+              gap: "20px",
               flexWrap: "wrap",
+              justifyContent: "space-between",
             }}
           >
             {instructorPaymentCardData.map((i) => (
@@ -209,7 +156,9 @@ console.log(feesDataStudent,"feesDataStudent")
               />
             ))}
           </Box>
-          <CourseStudentDetails />
+          <Box sx={{ mt: 4 }}>
+            <CourseStudentDetails />
+          </Box>
         </Box>
       </Box>
     </>

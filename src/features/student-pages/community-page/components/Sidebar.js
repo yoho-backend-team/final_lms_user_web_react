@@ -1,73 +1,53 @@
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { Box, TextField, InputAdornment, Typography } from "@mui/material";
-import { getStudentDetails } from "store/atoms/authorized-atom";
-import { getImageUrl } from "utils/common/imageUtlils";
-import { imagePlaceholder } from "utils/placeholders";
+import { Box, TextField, InputAdornment, Typography, Avatar } from "@mui/material";
+import { useState, useEffect } from "react";
 import { getCommunityMessages } from "../services";
 import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
 import { formatTime } from "utils/formatDate";
-import DoneIcon from '@mui/icons-material/Done';
-import DoneAllIcon from '@mui/icons-material/DoneAll';
+import DoneIcon from "@mui/icons-material/Done";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
+import { getImageUrl } from "utils/common/imageUtlils";
+import { imagePlaceholder } from "utils/placeholders";
 
-const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages,setMessages }) => {
-  const { showSpinner , hideSpinner } = useSpinner()
-  const student = getStudentDetails()
+const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, setMessages }) => {
+  const { showSpinner, hideSpinner } = useSpinner();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredCommunities, setFilteredCommunities] = useState(communities);
+
+  useEffect(() => {
+    setFilteredCommunities(
+      communities.filter((group) =>
+        group?.batch?.batch_name?.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  }, [searchTerm, communities]);
 
   const handleChat = async (group) => {
     try {
-      showSpinner()
+      showSpinner();
       setCurrentChat(group);
-      const communituy_id = group?._id;
-      const student = getStudentDetails()
-      const data = await getCommunityMessages({ community: communituy_id})
-      setMessages(data)
-      socket.emit("joinGroup", { groupId: communituy_id, userId: student?._id }, (error) => {
-        console.log(error, "error");
+      const data = await getCommunityMessages({ community: group?._id });
+      setMessages(data);
+      socket.emit("joinGroup", { groupId: group?._id }, (error) => {
+        if (error) console.log(error, "error");
       });
     } catch (error) {
-       toast.error(error?.message)
-    }finally{
-     hideSpinner()
+      toast.error(error?.message);
+    } finally {
+      hideSpinner();
     }
   };
 
   return (
     <Box>
-      <Box
-        sx={{
-          paddingLeft: "32px",
-          paddingTop: "20px",
-          paddingRight: "12px",
-        }}
-      >
+      {/* Search Bar */}
+      <Box sx={{ padding: "20px 12px 0 32px" }}>
         <TextField
           variant="outlined"
-          sx={{
-            width: "100%",
-            "& .MuiOutlinedInput-root": {
-              borderRadius: "24px",
-              "& fieldset": {
-                borderColor: "#D1E4E8",
-                borderRadius: "24px",
-              },
-              "&:hover fieldset": {
-                borderColor: "#D1E4E8",
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "#D1E4E8",
-              },
-              "& input": {
-                padding: "16px",
-              },
-              "& input::placeholder": {
-                color: "#9393C1",
-                fontSize: "16px",
-                fontWeight: 400,
-                lineHeight: "24px",
-              },
-            },
-          }}
+          fullWidth
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search or start a new chat"
           InputProps={{
             startAdornment: (
@@ -76,119 +56,67 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages,se
               </InputAdornment>
             ),
           }}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "24px",
+              "& fieldset": { borderColor: "#D1E4E8" },
+              "&:hover fieldset": { borderColor: "#D1E4E8" },
+              "&.Mui-focused fieldset": { borderColor: "#D1E4E8" },
+              "& input": { padding: "16px" },
+            },
+          }}
         />
       </Box>
-      <Box
-        sx={{
-          padding: "30px",
-          height : "60vh",
-          overflow : "auto",
-         
-        }}
-      >
-        {communities?.map((group) => (
-          <Box
-            key={group._id}
-            onClick={() => handleChat(group)}
-            sx={{
-              display: "flex",
-              padding: "8px",
-              width: "100%",
-              justifyContent: "space-between",
-              backgroundColor : group?._id === currentChat?._id && "#D1E4E8",
-              borderRadius: group?._id === currentChat?._id && "8px",
-              cursor: "pointer",
-              ":hover" : {
-                  backgroundColor : "#D1E4E8",
-                  borderRadius: "8px"
-              }
-            }}
-          >
-            <Box sx={{ display: "flex", gap: "10px" }}>
-              <Box>
-                <img
-                  style={{ width: "60px", height: "60px", borderRadius: "50%" }}
-                  src={
-                    group?.batch?.course?.image
-                      ? getImageUrl(group?.batch?.course?.image)
-                      : imagePlaceholder
-                  }
-                  alt={group?.batch?.batch_name}
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  py: "10px",
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: "#09132C",
-                    fontSize: "16px",
-                    fontWeight: 500,
-                    lineHeight: "24px",
-                  }}
-                >
-                  {group?.batch?.batch_name}
-                </Typography>
-                <Typography
-                  sx={{
-                    color: "#09132C",
-                    fontSize: "12px",
-                    fontWeight: "400",
-                    lineHeight: "16px",
-                  }}
-                >
-                  {group.last_message
-                    ? group?.last_message?.message
-                    : "Haha that's terrifying 😂"}
-                </Typography>
-              </Box>
-            </Box>
+      {/* Community List */}
+      <Box sx={{ padding: "18px", height: "60vh", overflowY: "auto" }}>
+        {filteredCommunities.length > 0 ? (
+          filteredCommunities.map((group) => (
             <Box
+              key={group._id}
+              onClick={() => handleChat(group)}
               sx={{
                 display: "flex",
-                flexDirection: "column",
+                padding: "10px",
                 justifyContent: "space-between",
-                gap: "10px",
+                alignItems: "center",
+                backgroundColor: group?._id === currentChat?._id ? "#D1E4E8" : "transparent",
+                borderRadius: "8px",
+                cursor: "pointer",
+                ":hover": { backgroundColor: "#D1E4E8" },
               }}
             >
-              <Box>
-                <Typography
-                  sx={{
-                    color: "#829C99",
-                    fontSize: "10px",
-                    fontWeight: 400,
-                    lineHeight: "16px",
-                  }}
-                >
-                  { group?.last_message ? formatTime(group?.last_message?.createdAt) : formatTime(new Date())  }
-                </Typography>
+              <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                <Avatar
+                  src={group?.batch?.course?.image ? getImageUrl(group?.batch?.course?.image) : imagePlaceholder}
+                  alt={group?.batch?.batch_name}
+                  sx={{ width: 85, height: 47 }}
+                />
+                <Box>
+                  <Typography sx={{ fontWeight: 500 }}>{group?.batch?.batch_name}</Typography>
+                  <Typography sx={{ fontSize: "12px", color: "#09132C" }}>
+                    {group?.last_message?.message || "No messages yet"}
+                  </Typography>
+                </Box>
               </Box>
-              <Box sx={{ textAlign: "end"}} > 
-              <Typography>
-                   { group?.last_message && group?.last_message?.status?.some(s => s.delivered) && !group?.last_message?.status?.every(s => s.delivered) && (
-                     <DoneIcon sx={{ color: "black", width: "17px", height: "17px" }} />
-                   )}
-                 
-                   {group?.last_message && group?.last_message?.status?.every(s => s.delivered) && !group?.last_message?.status?.every(s => s.read) && (
-                     <DoneAllIcon sx={{  color: "black", width: "17px", height: "17px" }} />
-                   )}
-                 
-                   { group?.last_message && group?.last_message && group?.last_message?.status?.every(s => s.read) && (
-                     <DoneAllIcon sx={{ color: "#0D6EFD", width: "17px", height: "17px" }} />
-                   )}
-                   { !group?.last_message && (
-                     <DoneAllIcon sx={{ color: "#0D6EFD", width: "17px", height: "17px" }} />
-                   )}
+              <Box>
+                <Typography sx={{ fontSize: "10px", color: "#829C99" }}>
+                  {group?.last_message?.createdAt ? formatTime(group?.last_message?.createdAt) : "Now"}
                 </Typography>
+                {group?.last_message?.status?.some((s) => s.delivered) && !group?.last_message?.status?.every((s) => s.read) ? (
+                  <DoneAllIcon sx={{ color: "black" }} />
+                ) : group?.last_message?.status?.every((s) => s.read) ? (
+                  <DoneAllIcon sx={{ color: "#0D6EFD" }} />
+                ) : (
+                  <DoneIcon sx={{ color: "black" }} />
+                )}
               </Box>
             </Box>
-          </Box>
-        ))}
+          ))
+        ) : (
+          <Typography sx={{ textAlign: "center", color: "#9393C1", marginTop: "20px" }}>
+            No results found
+          </Typography>
+        )}
       </Box>
     </Box>
   );

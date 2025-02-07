@@ -32,12 +32,11 @@ import { getImageUrl } from "utils/common/imageUtlils";
 import studentheaderpic from "../../../assets/images/background/studentprofile.svg";
 import { fileUpload } from "features/common/upload";
 import toast from "react-hot-toast";
-import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import { useNavigate } from "react-router-dom";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { FaIdCard } from "react-icons/fa";
 import { useSpinner } from "context/SpinnerProvider";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePage = () => {
   const theme = useTheme();
@@ -231,7 +230,7 @@ const ProfilePage = () => {
     },
   ];
 
-  const Instituteinfo = [
+  const instituteInfoItems = [
     {
       icon: <AutoStoriesIcon />,
       label: "Course",
@@ -255,147 +254,228 @@ const ProfilePage = () => {
   ];
 
   return (
-    <Box sx={{ p: 5, display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 5 }}>
-      <Box sx={{ width: isTabletScreen ? '300px' : '250px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Typography variant="h6" sx={{ mb: 2 }}>Profile Sections</Typography>
-        <Button
-          variant={activeSection === "personalInfo" ? "contained" : "outlined"}
-          onClick={() => setActiveSection("personalInfo")}
-          fullWidth
-          sx={{ mb: 1 }}
-        >
-          Personal Info
-        </Button>
-        <Button
-          variant={activeSection === "instituteInfo" ? "contained" : "outlined"}
-          onClick={() => setActiveSection("instituteInfo")}
-          fullWidth
-          sx={{ mb: 1 }}
-        >
-          Institute Info
-        </Button>
-        <Button
-          variant={activeSection === "security" ? "contained" : "outlined"}
-          onClick={() => setActiveSection("security")}
-          fullWidth
-        >
-          Security
-        </Button>
+    <Box sx={{ display: 'flex', height: '100vh', padding: '70px' }}>
+      <Box
+        sx={{
+          width: '300px',
+          background: 'white',
+          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between', // Changed to space-between
+          alignItems: 'center',
+          padding: 2,
+          margin: 2,
+          height: 'auto',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          paddingTop: 4,
+          paddingBottom: 4,
+          marginTop: '140px',
+          marginBottom: '70px',
+          marginLeft: '60px',
+          marginRight: '20px',
+        }}
+      >
+        <Box sx={{ width: '107%' }}>
+        <Box
+            onClick={() => setActiveSection("personalInfo")}
+            sx={{
+              position: 'relative',
+              padding: '12px 20px',
+              marginBottom: '8px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              background: activeSection === "personalInfo" 
+                ? 'linear-gradient(90deg, rgba(13, 110, 253, 0.1) 0%, rgba(13, 110, 253, 0.05) 100%)' 
+                : 'transparent',
+              '&:hover': {
+                background: 'rgba(13, 110, 253, 0.05)'
+              },
+              borderLeft: activeSection === "personalInfo" 
+                ? '4px solid #0D6EFD' 
+                : 'none'
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 600,
+                color: activeSection === "personalInfo" ? '#0D6EFD' : '#666',
+                fontSize: '16px'
+              }}
+            >
+              Profile Info
+            </Typography>
+          </Box>
+          <Box
+            onClick={() => setActiveSection("security")}
+            sx={{
+              position: 'relative',
+              padding: '12px 20px',
+              marginBottom: '8px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              background: activeSection === "security" 
+                ? 'linear-gradient(90deg, rgba(13, 110, 253, 0.1) 0%, rgba(13, 110, 253, 0.05) 100%)' 
+                : 'transparent',
+              '&:hover': {
+                background: 'rgba(13, 110, 253, 0.05)'
+              },
+              borderLeft: activeSection === "security" 
+                ? '4px solid #0D6EFD' 
+                : 'none'
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 600,
+                color: activeSection === "security" ? '#0D6EFD' : '#666',
+                fontSize: '16px'
+              }}
+            >
+              Security
+            </Typography>
+          </Box>
+        </Box>
         <Button
           variant="contained"
           onClick={handleNavigateBack}
           fullWidth
           sx={{
-            mt: 2,
-            backgroundColor: '#0D6EFD',
-            color: 'white ',
-            borderRadius: '20px',
+            mt: 1,
+            background: 'linear-gradient(45deg, #FF5722 30%, #D84315 90%)',
+            color: 'white',
             padding: '10px 20px',
+            boxShadow: '0 3px 5px 2px rgba(255, 87, 34, .3)',
             '&:hover': {
-              backgroundColor: '#0A58CA',
+              background: 'linear-gradient(45deg, #D84315 30%, #FF5722 90%)',
             },
           }}
         >
-          Go to Dashboard
+          Go Back
         </Button>
       </Box>
-      <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-        <Grid container xs={12} spacing={2} sx={{ p: 3, gap: { md: "20px", xl: "72px" } }}>
+      <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', padding: 2, marginLeft: '250px', mt: 2, mb: 2 }}>
+        <Grid container xs={12} spacing={2} sx={{ gap: { md: "20px", xl: "72px" } }}>
           <Grid item xs={12}>
             <Card
               sx={{
                 backgroundColor: "white",
                 overflow: "auto",
                 padding: "20px",
-                maxHeight: "100%",
-                maxWidth: "100%",
-                marginTop: 20,
+                height: '90%',
                 boxShadow: 3,
+                width: 'calc(100% - 80px)',
+                marginLeft: '80px',
+                borderRadius: '10px',
               }}
             >
               <Card sx={{ mb: 4, position: "relative", boxShadow: "none" }}>
-                <Box sx={{ position: "relative" }}>
-                  <img
-                    src={studentheaderpic}
-                    alt="Background"
-                    style={{
-                      width: "100%",
-                      height: "120px",
-                      objectFit: "cover",
-                      borderRadius: "10px",
-                    }}
-                  />
-                  <Avatar
-                    alt="userimage"
-                    src={getImageUrl(personalInfo.image)}
-                    variant="rounded"
-                    sx={{ width: 120, height: 120, position: "absolute", top: 70, left: 30 }}
-                  />
-                  {editing && (
-                    <>
-                      <input
-                        accept="image/*"
-                        style={{ display: "none" }}
-                        id="avatar-upload"
-                        type="file"
-                        onChange={fileEditHandler}
-                      />
-                      <label htmlFor="avatar-upload">
-                        <Button
-                          variant="contained"
-                          component="span"
-                          sx={{
-                            position: "absolute",
-                            top: 170,
-                            left: 30,
-                            backgroundColor: "#0D6EFD",
-                            color: "white",
-                            width: 120,
-                            height: 20,
-                            fontSize: "12px",
-                            fontWeight: 400,
-                            fontFamily: "Nunito Sans",
-                          }}
-                        >
-                          <FileUploadOutlinedIcon style={{ color: "white", fontSize: "16px" }} />{" "}
-                          Upload
-                        </Button>
-                      </label>
-                    </>
-                  )}
-                  <div
-                    style={{
-                      display: "flex",
-                      position: "absolute",
-                      top: 140,
-                      right: 30,
-                    }}
-                  >
-                    {editing ? (
+                {activeSection === "personalInfo" && (
+                  <Box sx={{ position: "relative" }}>
+                    <img
+                      src={studentheaderpic}
+                      alt="Background"
+                      style={{
+                        width: "100%",
+                        height: "120px",
+                        objectFit: "cover",
+                        borderRadius: "10px",
+                      }}
+                    />
+                    <Avatar
+                      alt="userimage"
+                      src={getImageUrl(personalInfo.image)}
+                      variant="rounded"
+                      sx={{ width: 120, height: 120, position: "absolute", top: 70, left: 30 }}
+                    />
+                    {editing && (
                       <>
-                        <IconButton
-                          aria-label="cancel"
-                          onClick={handleCancelEdit}
-                          style={{
-                            color: "black",
-                            fontFamily: "Nunito Sans",
-                            fontSize: "14px",
-                            fontStyle: "normal",
-                            fontWeight: 400,
-                            lineHeight: "22px",
-                            display: "flex",
-                            alignItems: "center",
-                            cursor: "pointer",
-                            marginRight: "10px",
-                            borderRadius: "10px",
-                          }}
-                        >
-                          <CancelIcon style={{ color: "red", marginRight: "5px" }} />{" "}
-                          Cancel
-                        </IconButton>
+                        <input
+                          accept="image/*"
+                          style={{ display: "none" }}
+                          id="avatar-upload"
+                          type="file"
+                          onChange={fileEditHandler}
+                        />
+                        <label htmlFor="avatar-upload">
+                          <Button
+                            variant="contained"
+                            component="span"
+                            sx={{
+                              position: "absolute",
+                              top: 170,
+                              left: 30,
+                              backgroundColor: "#0D6EFD",
+                              color: "white",
+                              width: 120,
+                              height: 20,
+                              fontSize: "12px",
+                              fontWeight: 400,
+                              fontFamily: "Nunito Sans",
+                            }}
+                          >
+                            <FileUploadOutlinedIcon style={{ color: "white", fontSize: "16px" }} />{" "}
+                            Upload
+                          </Button>
+                        </label>
+                      </>
+                    )}
+                    <div
+                      style={{
+                        display: "flex",
+                        position: "absolute",
+                        top: 140,
+                        right: 30,
+                      }}
+                    >
+                      {editing ? (
+                        <>
+                          <IconButton
+                            aria-label="cancel"
+                            onClick={handleCancelEdit}
+                            style={{
+                              color: "black",
+                              fontFamily: "Nunito Sans",
+                              fontSize: "14px",
+                              fontStyle: "normal",
+                              fontWeight: 400,
+                              lineHeight: "22px",
+                              display: "flex",
+                              alignItems: "center",
+                              cursor: "pointer",
+                              marginRight: "10px",
+                              borderRadius: "10px",
+                            }}
+                          >
+                            <CancelIcon style={{ color: "red", marginRight: "5px" }} />{" "}
+                            Cancel
+                          </IconButton>
+                          <Button
+                            variant="contained"
+                            onClick={editing ? editProfile : () => setEditing(true)}
+                            sx={{
+                              borderRadius: "24px",
+                              backgroundColor: "#0D6EFD",
+                              padding: "8px 18px",
+                              color: "white",
+                              fontSize: "13px",
+                              fontWeight: 600,
+                              lineHeight: "16px",
+                              width: "130px",
+                              height: "auto",
+                              boxShadow: "0px 6px 34px -8px #A4A4A4",
+                            }}
+                          >
+                            Save Profile
+                          </Button>
+                        </>
+                      ) : (
                         <Button
                           variant="contained"
-                          onClick={editing ? editProfile : () => setEditing(true)}
+                          onClick={() => setEditing(true)}
                           sx={{
                             borderRadius: "24px",
                             backgroundColor: "#0D6EFD",
@@ -409,31 +489,12 @@ const ProfilePage = () => {
                             boxShadow: "0px 6px 34px -8px #A4A4A4",
                           }}
                         >
-                          Save Profile
+                          Edit Profile
                         </Button>
-                      </>
-                    ) : (
-                      <Button
-                        variant="contained"
-                        onClick={() => setEditing(true)}
-                        sx={{
-                          borderRadius: "24px",
-                          backgroundColor: "#0D6EFD",
-                          padding: "8px 18px",
-                          color: "white",
-                          fontSize: "13px",
-                          fontWeight: 600,
-                          lineHeight: "16px",
-                          width: "130px",
-                          height: "auto",
-                          boxShadow: "0px 6px 34px -8px #A4A4A4",
-                        }}
-                      >
-                        Edit Profile
-                      </Button>
-                    )}
-                  </div>
-                </Box>
+                      )}
+                    </div>
+                  </Box>
+                )}
                 <CardContent sx={{ mt: 10 }}>
                   {activeSection === "personalInfo" && (
                     <>
@@ -449,85 +510,101 @@ const ProfilePage = () => {
                           textAlign: "left",
                         }}
                       >
-                        Personal info
+                        Profile Info
                       </Typography>
                       <Grid container spacing={2} justifyContent="space-between">
                         {editing ? (
                           <>
-                            <TextField
-                              label="Email"
-                              margin="normal"
-                              value={editedPersonalInfo.email}
-                              disabled
-                              onChange={(e) =>
-                                handleInputChange("email", e.target.value)
-                              }
-                              fullWidth
-                            />
-                            <TextField
-                              label="First Name"
-                              margin="normal"
-                              value={editedPersonalInfo.first_name}
-                              onChange={(e) =>
-                                handleInputChange("first_name", e.target.value)
-                              }
-                              fullWidth
-                            />
-                            <TextField
-                              label="Last Name"
-                              margin="normal"
-                              value={editedPersonalInfo.last_name}
-                              onChange={(e) =>
-                                handleInputChange("last_name", e.target.value)
-                              }
-                              fullWidth
-                            />
-                            <TextField
-                              label="Gender"
-                              margin="normal"
-                              value={editedPersonalInfo.gender}
-                              disabled
-                              onChange={(e) =>
-                                handleInputChange("gender", e.target.value)
-                              }
-                              fullWidth
-                            />
-                            <TextField
-                              label="Contact Number"
-                              margin="normal"
-                              value={editedPersonalInfo.contact}
-                              onChange={(e) =>
-                                handleInputChange("contact", e.target.value)
-                              }
-                              fullWidth
-                            />
-                            <TextField
-                              label="Address Line 1"
-                              margin="normal"
-                              value={editedPersonalInfo.address1}
-                              onChange={(e) =>
-                                handleInputChange("address1", e.target.value)
-                              }
-                              fullWidth
-                            />
-                            <TextField
-                              label="Address Line 2"
-                              margin="normal"
-                              value={editedPersonalInfo.address2}
-                              onChange={(e) =>
-                                handleInputChange("address2", e.target.value)
-                              }
-                              fullWidth
-                            />
-                            <TextField
-                              label="Pincode"
-                              margin="normal"
-                              value={editedPersonalInfo.pincode}
-                              onChange={(e) =>
-                                handleInputChange("pincode", e.target.value)
-                              }
-                              fullWidth
-                            />
+                            <Grid item xs={12}>
+                              <TextField
+                                label="Email"
+                                margin="normal"
+                                value={editedPersonalInfo.email}
+                                disabled
+                                onChange={(e) =>
+                                  handleInputChange("email", e.target.value)
+                                }
+                                fullWidth
+                              />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                              <TextField
+                                label="First Name"
+                                margin="normal"
+                                value={editedPersonalInfo.first_name}
+                                onChange={(e) =>
+                                  handleInputChange("first_name", e.target.value)
+                                }
+                                fullWidth
+                              />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                              <TextField
+                                label="Last Name"
+                                margin="normal"
+                                value={editedPersonalInfo.last_name}
+                                onChange={(e) =>
+                                  handleInputChange("last_name", e.target.value)
+                                }
+                                fullWidth
+                              />
+                            </Grid>
+                            <Grid item xs={12}>
+                              <TextField
+                                label="Gender"
+                                margin="normal"
+                                value={editedPersonalInfo.gender}
+                                disabled
+                                onChange={(e) =>
+                                  handleInputChange("gender", e.target.value)
+                                }
+                                fullWidth
+                              />
+                            </Grid>
+                            <Grid item xs={12}>
+                              <TextField
+                                label="Contact Number"
+                                margin="normal"
+                                value={editedPersonalInfo.contact}
+                                onChange={(e) =>
+                                  handleInputChange("contact", e.target.value)
+                                }
+                                fullWidth
+                              />
+                            </Grid>
+                            <Grid item xs={12}>
+                              <TextField
+                                label="Address Line 1"
+                                margin="normal"
+                                value={editedPersonalInfo.address1}
+                                onChange={(e) =>
+                                  handleInputChange("address1", e.target.value)
+                                }
+                                fullWidth
+                              />
+                            </Grid>
+                            <Grid item xs={12}>
+                              <TextField
+                                label="Address Line 2"
+                                margin="normal"
+                                value={editedPersonalInfo.address2}
+                                onChange={(e) =>
+                                  handleInputChange("address2", e.target.value)
+                                }
+                                fullWidth
+                              />
+                            </Grid>
+                            <Grid item xs={12}>
+                              <TextField
+                                label="Pincode"
+                                margin="normal"
+                                value={editedPersonalInfo.pincode}
+                                onChange={(e) =>
+                                  handleInputChange("pincode", e.target.value)
+                                }
+                                fullWidth
+                              />
+                            </Grid>
                           </>
                         ) : (
                           <>
@@ -567,10 +644,8 @@ const ProfilePage = () => {
                           </>
                         )}
                       </Grid>
-                    </>
-                  )}
-                  {activeSection === "instituteInfo" && (
-                    <>
+
+                      {/* Institute Info Section */}
                       <Typography
                         variant="body1"
                         sx={{
@@ -584,10 +659,10 @@ const ProfilePage = () => {
                           textAlign: "left",
                         }}
                       >
-                        Institute info
+                        Institute Info
                       </Typography>
                       <Grid container spacing={2} justifyContent="space-between">
-                        {Instituteinfo.map((item, index) => (
+                        {instituteInfoItems.map((item, index) => (
                           <Grid item xs={12} sm={6} md={3} key={index}>
                             <Box display="flex" alignItems="center">
                               <div style={{ color: "black" }}>{item.icon}</div>

@@ -43,23 +43,37 @@ const StudyMaterialUpload = ({
           border: "2px solid #5611B1",
           borderRadius: "24px",
           color: "#5611B1",
-          fontSize: "18px",
+          fontSize: "16px",
           fontWeight: 600,
           lineHeight: "24px",
           mt: 1,
+          padding: "8px 16px",
+          "&:hover": {
+            backgroundColor: "#3e088e",
+          },
         }}
       >
         Upload
       </Button>
-      <Dialog open={open} onClose={handleClose} fullWidth>
+      <Dialog open={open} onClose={handleClose} fullWidth 
+       PaperProps={{
+        sx: {
+          padding: "20px",
+          borderRadius: "16px",
+          backgroundColor: "#F5F5F5", 
+        },
+      }}
+      >
         <DialogTitle
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            paddingBottom: "8px",
+            borderBottom: "1px solid #E0E0E0",
           }}
         >
-          <Typography>Upload Study Material</Typography>
+          <Typography variant="h6" sx={{ fontWeight: 700, color: "#5611B1" }}>Upload Study Material</Typography>
           <IconButton onClick={handleClose}>
             <CloseIcon />
           </IconButton>
@@ -93,9 +107,9 @@ const StudyMaterialUpload = ({
                 </Box>
                 <Box sx={{ mb: 2 }}>
                   <Field
-                    name="description"
+                    name="Title"
                     as={TextField}
-                    label="Description"
+                    label="Title"
                     fullWidth
                     multiline
                     rows={4}
@@ -117,7 +131,15 @@ const StudyMaterialUpload = ({
                   variant="outlined"
                   color="primary"
                   onClick={() => fileInputRef.current.click()}
-                  sx={{ mb: 2 }}
+                  sx={{ mb: 2 , border: "2px dashed #5611B1", 
+                    borderRadius: "8px",
+                    padding: "12px",
+                    color: "#5611B1",
+                    fontWeight: 500,
+                    "&:hover": {
+                      backgroundColor: "#F0E6FF", 
+                    },
+                    marginBottom: "16px",}}
                 >
                   Select File
                 </Button>

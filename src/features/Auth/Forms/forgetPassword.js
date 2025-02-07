@@ -86,7 +86,7 @@ const ForgetPasswordPage = () => {
       alignItems: "center",
       justifyContent: "center",
       padding: "50px",
-      mr:20,
+      mr:15,
     
       minHeight: "100vh",
     }}

@@ -36,19 +36,42 @@ const CourseStudentDetails = ({ Course }) => {
       shadow: "0px 0px 50px 0px rgba(15, 141, 13, 0.63)",
     },
   ];
+
   return (
-    <Box sx={{ pr: "60px", maxHeight: "100vh" }}>
-      <Box sx={{ display: "flex", flexDirection: "column", pr: "90px" }}>
-        <Box
-          sx={{ display: "flex", justifyContent: "space-between", pb: "20px" }}
-        >
+    <Box sx={{ 
+      pr: "60px", 
+      height: "100vh", 
+      overflow: "hidden",
+      display: "flex",
+      flexDirection: "column"
+    }}>
+      <Box sx={{ 
+        pr: "90px",
+        overflowY: "auto",
+        scrollBehavior: "smooth",
+        WebkitOverflowScrolling: "touch",
+        '&::-webkit-scrollbar': {
+          width: '6px',
+        },
+        '&::-webkit-scrollbar-track': {
+          background: '#f1f1f1',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          background: '#888',
+          borderRadius: '4px',
+        },
+        '&::-webkit-scrollbar-thumb:hover': {
+          background: '#555',
+        }
+      }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", pb: "20px" }}>
           <Typography
             sx={{
               color: "#000000",
               fontSize: "16px",
               fontWeight: 800,
               lineHeight: "24px",
-              fontFamily:"Nunito Sans",
+              fontFamily: "Nunito Sans",
             }}
           >
             Course Details
@@ -60,7 +83,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "12px",
                 lineHeight: "14px",
                 fontWeight: 600,
-                fontFamily:"Poppins"
+                fontFamily: "Poppins"
               }}
             >
               Purchased on: 
@@ -71,7 +94,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "12px",
                 lineHeight: "14px",
                 fontWeight: 600,
-                fontFamily:"Poppins"
+                fontFamily: "Poppins"
               }}
             >
               {formatDate(Course.createdAt)}
@@ -92,7 +115,7 @@ const CourseStudentDetails = ({ Course }) => {
               fontSize: "16px",
               fontWeight: 700,
               lineHeight: "32px",
-              fontFamily:"Nunito Sans"
+              fontFamily: "Nunito Sans"
             }}
           >
             {Course?.course_name}
@@ -106,7 +129,7 @@ const CourseStudentDetails = ({ Course }) => {
                 color: "#000000",
                 fontSize: "12px",
                 fontWeight: 700,
-                fontFamily:"Nunito Sans",
+                fontFamily: "Nunito Sans",
                 lineHeight: "13px",
               }}
             >
@@ -128,8 +151,8 @@ const CourseStudentDetails = ({ Course }) => {
               fontSize: "14px",
               fontWeight: 400,
               lineHeight: "10px",
-              fontFamily:"Nunito Sans",
-              mr:-1
+              fontFamily: "Nunito Sans",
+              mr: -1
             }}
           >
             By
@@ -140,7 +163,7 @@ const CourseStudentDetails = ({ Course }) => {
               fontSize: "14px",
               fontWeight: 700,
               lineHeight: "10px",
-              fontFamily:"Nunito Sans",
+              fontFamily: "Nunito Sans",
               textTransform: "uppercase",
             }}
           >
@@ -156,7 +179,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "14px",
                 fontWeight: 600,
                 lineHeight: "10px",
-                fontFamily:"Nunito Sans"
+                fontFamily: "Nunito Sans"
               }}
             >
               {Course.duration}hrs
@@ -170,7 +193,7 @@ const CourseStudentDetails = ({ Course }) => {
               fontSize: "12px",
               fontWeight: 400,
               lineHeight: "16px",
-              fontFamily:"Nunito Sans"
+              fontFamily: "Nunito Sans"
             }}
           >
             {Course?.description}
@@ -191,7 +214,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "16px",
                 fontWeight: 700,
                 lineHeight: "20px",
-                fontFamily:"Nunito Sans"
+                fontFamily: "Nunito Sans"
               }}
             >
               Durations:
@@ -202,7 +225,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "16px",
                 fontWeight: 600,
                 lineHeight: "20px",
-                fontFamily:"Nunito Sans"
+                fontFamily: "Nunito Sans"
               }}
             >
               {" "}
@@ -223,7 +246,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "16px",
                 fontWeight: 700,
                 lineHeight: "24px",
-                fontFamily:"Nunito Sans"
+                fontFamily: "Nunito Sans"
               }}
             >
               Type:
@@ -234,7 +257,7 @@ const CourseStudentDetails = ({ Course }) => {
                 fontSize: "16px",
                 fontWeight: 600,
                 lineHeight: "24px",
-                fontFamily:"Nunito Sans"
+                fontFamily: "Nunito Sans"
               }}
             >
               {" "}
@@ -244,11 +267,12 @@ const CourseStudentDetails = ({ Course }) => {
           <Box
             sx={{ display: "inline-flex", gap: "15px", alignItems: "center", }}
           >
-            <Typography sx={{fontFamily:"Nunito Sans",fontWeight:700,fontSize:"16px",color:"#000",lineHeight:"normal"}}>Status:</Typography>
+            <Typography sx={{ fontFamily: "Nunito Sans", fontWeight: 700, fontSize: "16px", color: "#000", lineHeight: "normal" }}>Status:</Typography>
             <CircularProgressWithStudentLabel />
           </Box>
         </Box>
-        <Box>
+        {/* Uncomment this section if you want to display benefits */}
+        {/* <Box>
           <Box sx={{ pt: "40px", pb: "20px" }}>
             <Typography
               sx={{
@@ -261,7 +285,7 @@ const CourseStudentDetails = ({ Course }) => {
               Benefits
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+          <Box sx={{ display: "flex", gap: "20px", flexWrap: "nowrap" }}>
             {Benefits?.map((item) => (
               <Box
                 key={item.id}
@@ -289,7 +313,7 @@ const CourseStudentDetails = ({ Course }) => {
                     lineHeight: "23px",
                     px: "10px",
                     pb: "11px",
-                    fontFamily:"Nunito Sans"
+                    fontFamily: "Nunito Sans"
                   }}
                 >
                   {item.title}
@@ -297,7 +321,7 @@ const CourseStudentDetails = ({ Course }) => {
               </Box>
             ))}
           </Box>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );

@@ -4,6 +4,7 @@ import { getInstructorDetails } from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
 import DoneIcon from '@mui/icons-material/Done';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 const ChatLog = ({ socket, Messages }) => {
   const instructor = getInstructorDetails();
@@ -91,15 +92,48 @@ const ChatLog = ({ socket, Messages }) => {
 
   return (
     <Box
-      sx={{
-        padding: "16px",
-        height: "100%",
-        overflowY: "auto",
-        backgroundImage: "url('https://w0.peakpx.com/wallpaper/557/521/HD-wallpaper-whatsapp-v-background-doodle-pattern-patterns-whatsapp-thumbnail.jpg')", // Add wallpaper image path
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
+  sx={{
+    height: "200vh", // Full viewport height
+    overflowY: "auto", // Scrollable content
+    backgroundImage:
+      "url('https://i.pinimg.com/originals/62/8a/06/628a064e53d4d2afa7ef36075e98f1b1.jpg')",
+    backgroundSize: "cover", // Image covers the full background
+    backgroundPosition: "center", // Centers the image
+    backgroundRepeat: "no-repeat", // Prevents tiling
+    backgroundColor: "transparent", // Fallback if image fails to load
+    padding: "20px", // Adds space around messages
+    display: "flex", // Allows messages to be centered
+    flexDirection: "column", // Stacks messages vertically
+    gap: "15px", // Adds space between messages
+  }}
+>
+
+ {/* Sticky Header */}
+ <Box
+  sx={{
+    position: "sticky",
+    top: 0,
+    zIndex: 10, // Keeps it above messages
+    backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent background
+    padding: "5px 10px", // Compact padding
+    borderRadius: "6px", // Slightly rounded corners
+    color: "white",
+    textAlign: "center",
+    marginBottom: "10px",
+    fontSize: "12px", // Smaller font for reduced size
+    display: "flex", // Align icon and text
+    alignItems: "center",
+    justifyContent: "center", // Center-align the content
+    maxWidth: "90%", // Restrict width for smaller devices
+    margin: "10px auto", // Center horizontally
+    boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)", // Slight shadow for visibility
+  }}
+>
+  <LockOutlinedIcon sx={{ fontSize: "16px", marginRight: "6px" }} />
+  Messages are end-to-end encrypted. No one outside of this chat, not even WhatsApp, can read or listen to them.
+</Box>
+
+  
       {Messages?.map((msg) => (
         <Grid
           container

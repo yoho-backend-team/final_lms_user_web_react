@@ -3,12 +3,12 @@ import {
   Avatar,
   Box,
   IconButton,
-  Input,
+  InputBase,
   Tab,
   Tabs,
   Typography,
-  InputAdornment,
   Grid,
+  Paper
 } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { profilePlaceholder } from "utils/placeholders";
@@ -52,10 +52,12 @@ const NotificationTab = ({
     <Box
       sx={{
         height: "90vh",
-        paddindLeft:"100px",
         backgroundColor: "#FFF",
         color: "#333",
         borderLeft: "1px solid #E0E0E0",
+        // boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+        ml: "15px",
+        mr: "10px"
       }}
     >
       <Box
@@ -63,6 +65,7 @@ const NotificationTab = ({
           padding: "24px 16px",
           display: "flex",
           flexDirection: "column",
+          height: "95vh",
           gap: "16px",
         }}
       >
@@ -74,34 +77,23 @@ const NotificationTab = ({
           </Typography>
         </Box>
 
-        {/* Search Section */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: "12px" }}>
-          <Input
+        <Paper
+          component="form"
+          sx={{ display: 'flex', alignItems: 'center', padding: '6px 12px', borderRadius: '20px', backgroundColor: "#F5F5F5" }}
+        >
+          <IconButton sx={{ p: '10px' }}>
+            <SearchIcon sx={{ color: "#757575" }} />
+          </IconButton>
+          <InputBase
+            sx={{ ml: 1, flex: 1, fontSize: "14px" }}
             placeholder="Search notifications"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            sx={{
-              backgroundColor: "#F5F5F5",
-              border: "1px solid #E0E0E0",
-              padding: "8px 12px",
-              borderRadius: "6px",
-              width: "100%",
-              maxWidth: "300px",
-              fontSize: "14px",
-              "&::placeholder": {
-                color: "#9E9E9E",
-              },
-            }}
-            startAdornment={
-              <InputAdornment position="start">
-                <SearchIcon sx={{ color: "#757575" }} />
-              </InputAdornment>
-            }
           />
-        </Box>
+        </Paper>
 
         {/* Tabs Section */}
-        <Tabs value={tabValue} onChange={handleTabChange}>
+        <Tabs value={tabValue} onChange={handleTabChange} variant="fullWidth">
           <Tab label="All" sx={{ fontSize: "14px" }} />
           <Tab label="Read" sx={{ fontSize: "14px" }} />
           <Tab label="Unread" sx={{ fontSize: "14px" }} />

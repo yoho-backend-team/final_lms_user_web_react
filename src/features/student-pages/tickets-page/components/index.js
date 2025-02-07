@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Typography, Tab, Tabs, Button, Grid, styled, useMediaQuery } from "@mui/material";
 import CreateTicketForm from "./createTicketForm";
-import { TicketBg, TicketDownbg } from "utils/images";
+import { TicketBg } from "utils/images";
 import { useTabResponsive } from "utils/tabResponsive";
 import TicketLoader from "components/ui/loaders/ticketLoader";
 import { useSpinner } from "context/SpinnerProvider";
@@ -15,16 +15,6 @@ const ScrollableContainer = styled(Box)({
   maxHeight: 'calc(96vh - 200px)',
   padding: '10px',
   marginTop: '55px', // Add margin to prevent overlap
-});
-
-// Styles for the fixed tabs
-const FixedTabsContainer = styled(Box)({
-  position: 'fixed',
-  top: 70,
-  left: 0,
-  right: 0,
-  zIndex: 10,
-  padding: '20px',
 });
 
 const tab_list = [
@@ -75,14 +65,6 @@ const StudentTicketsPage = ({
     setTicketView(false);
   };
 
-
-
-  const tabStyle = {
-    fontSize: isSmallScreen ? "12px" : "14px",
-    fontWeight: 600,
-    fontFamily: "Poppins",
-  };
-
   const status = {
     1: null,
     2: "opened",
@@ -106,79 +88,19 @@ const StudentTicketsPage = ({
     handlePageChange(null, prevPage);
     navigate(`?tab=${value}&page=${prevPage}`);
   };
+
   return (
     <Box
       sx={{
         backgroundImage: `url(${TicketBg})`,
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-        backgroundPosition: 'center center',
-        width: '100%',
-        position: 'relative',
-        minHeight: '100vh',
-        paddingTop: '80px', // Adjust padding to make space for the fixed tabs
+        height: "100vh",
+        overflow: "auto",
       }}
     >
-      {/* Fixed Tabs */}
-      <FixedTabsContainer>
-        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Box sx={{ display: "flex", gap: "40px" }}>
-            <Typography
-              sx={{
-                color: "#000",
-                fontSize: "24px",
-                fontWeight: "700",
-                lineHeight: "22px",
-                fontFamily: "Nunito Sans",
-              }}
-            >
-              Ticket
-            </Typography>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              sx={{
-                cursor: "pointer",
-                "& .MuiTabs-indicator": { backgroundColor: "#0D6EFD" },
-                color: "#0D6EFD",
-              }}
-              textColor="secondary"
-              indicatorColor="primary"
-              aria-label="secondary tabs example"
-            >
-              {tab_list?.map((i) => (
-                <Tab key={i.id} label={i.title} value={i.id} sx={tabStyle} />
-              ))}
-            </Tabs>
-          </Box>
-          <Box>
-            <Button
-              onClick={handleOpen}
-              variant="contained"
-              sx={{
-                color: "white",
-                borderRadius: "8px",
-                padding: "9px 24px",
-                fontWeight: 500,
-                fontSize: "14px",
-                lineHeight: "22px",
-                border: "1px solid var(--Blue-500, #0D6EFD)",
-                background: "var(--Blue-500, #0D6EFD)",
-                boxShadow: "0px 6px 34px -8px #0D6EFD",
-              }}
-            >
-              Create Ticket
-            </Button>
-          </Box>
-        </Box>
-      </FixedTabsContainer>
-
-      {/* Main Content */}
       <Box
-        sx={{
-          p: tabView ? "62px 40px 20px 38px" : "62px 40px 20px 80px",
-          position: 'relative',
-        }}
+        sx={{ p: tabView ? "62px 40px 20px 38px" : "62px 40px 20px 80px" }}
       >
         {open || ticketView ? (
           open ? (
@@ -186,27 +108,85 @@ const StudentTicketsPage = ({
           ) : (
             <TicketView
               selectedTicket={selectedTicket}
-              setSelectedTicket={setSelectedTicket}
               handleTicketViewClose={handleTicketViewClose}
             />
           )
         ) : (
-          <ScrollableContainer>
-            <Grid container spacing={tabView ? 4 : 10} sx={{ pt: "40px" }}>
-              {loading ? (
-                <TicketLoader />
-              ) : (
-                data?.tickets?.map((ticket, index) => (
-                  <Grid item xs={tabView ? 6 : 4} key={index}>
-                    <TicketCard
-                      ticket={ticket}
-                      handleTicketViewOpen={handleTicketViewOpen}
-                      handleTicketViewClose={handleTicketViewClose}
-                    />
-                  </Grid>
-                ))
-              )}
-            </Grid>
+          <>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Box sx={{ display: "flex", gap: "40px" }}>
+                <Typography
+                  sx={{
+                    color: "#000",
+                    fontSize: "24px",
+                    fontWeight: "700",
+                    lineHeight: "22px",
+                  }}
+                >
+                  Ticket
+                </Typography>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  sx={{
+                    cursor: "pointer",
+                    "& .MuiTabs-indicator": { backgroundColor: "#0D6EFD" },
+                    color: "#0D6EFD",
+                  }}
+                  textColor="secondary"
+                  indicatorColor="primary"
+                  aria-label="secondary tabs example"
+                >
+                  {tab_list.map((i) => (
+                    <Tab key={i.id} label={i.title} value={i.id} />
+                  ))}
+                </Tabs>
+              </Box>
+              <Box>
+                <Button
+                  onClick={handleOpen}
+                  variant="contained"
+                  sx={{
+                    color: "white",
+                    backgroundColor: "#0D6EFD",
+                    borderRadius: "8px",
+                    boxShadow: "0px 6px 34px -8px #5611B1",
+                    padding: "9px 24px",
+                    fontWeight: 500,
+                    fontSize: "14px",
+                    lineHeight: "22px",
+                  }}
+                >
+                  Create Ticket
+                </Button>
+              </Box>
+            </Box>
+
+            <ScrollableContainer>
+              <Grid container spacing={tabView ? 4 : 10} sx={{ pt: "40px" }}>
+                {loading ? (
+                  <TicketLoader />
+                ) : (
+                  data?.tickets?.map((ticket, index) => (
+                    <Grid item xs={tabView ? 6 : 4} key={index}>
+                      <TicketCard
+                        ticket={ticket}
+                        handleTicketViewOpen={handleTicketViewOpen}
+                        handleTicketViewClose={handleTicketViewClose}
+                      />
+                    </Grid>
+                  ))
+                )}
+              </Grid>
+            </ScrollableContainer>
+
+            {/* Pagination Controls - Only show for "All" tab */}
             {value === "1" && (
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4, gap: "40px" }}>
                 <Typography
@@ -258,7 +238,7 @@ const StudentTicketsPage = ({
                 </Box>
               </Box>
             )}
-          </ScrollableContainer>
+          </>
         )}
       </Box>
     </Box>

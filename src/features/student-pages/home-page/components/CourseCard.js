@@ -32,7 +32,7 @@ const CourseCard = () => {
  
   const options = {
     chart: {
-      height: 300,
+      height: 400,
       type: "radialBar",
       position: 'absolute',
     },
@@ -40,22 +40,22 @@ const CourseCard = () => {
     plotOptions: {
       radialBar: {
         hollow: {
-          margin: 15,
-          size: "50%",
+          margin: 20,
+          size: "60%",
         },
         dataLabels: {
           showOn: "always",
           name: {
-            offsetY: -10,
-            show: false,
-            color: "#888",
-            fontSize: "10px",
+            offsetY: 0,
+            show: true,
+            color: "#555",
+            fontSize: "14px",
             fontWeight: "bold",
           },
           value: {
-            color: "#111",
-            fontSize: "20px",
-            fontWeight: "bold",
+            color: "#ff5722",
+            fontSize: "24px",
+            fontWeight: "900",
             show: true,
           },
         },
@@ -64,19 +64,22 @@ const CourseCard = () => {
     stroke: {
       lineCap: "round",
     },
-    labels: [""],
+    labels: ["progress"],
   };
 
   return (
     <Card
       sx={{
         backgroundImage: `url(${coursecardimage})`,
-        backgroundSize: "auto 130%",
+        backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        p: 3,
-        boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
+        backgroundPosition: "top-center",
+        p: 4,
+        boxShadow:"0px 8px 32px rgba(0, 0, 0, 0.15)",
+        borderRadius: "16px",
         border: "1px solid #E6AC96",
+         width: "369px",
+        height: "202px",
         position: "relative",
       }}
     >
@@ -84,6 +87,7 @@ const CourseCard = () => {
         container
         justifyContent="center"
         alignItems="center"
+        display="flex"
         spacing={2}
       >
         <Grid item xs={12}>
