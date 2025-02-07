@@ -32,12 +32,14 @@ const UpdatesCard = (props,notification) => {
             height: "auto",
           }}
         >
+         
           <Typography
-            variant="h4"
-            sx={{ fontWeight: 600, color: "black", fontFamily: "poppins" }}
-          >
-            Updates{" "}
-          </Typography>
+  variant="h3"
+  sx={{ fontWeight: 'bold', color: 'black', fontFamily: 'poppins' }}
+>
+  Updates
+</Typography>
+
           <Typography
             color="secondary"
             sx={{ fontWeight: 400, fontFamily: "poppins", fontSize: 12 }}
@@ -58,9 +60,9 @@ const UpdatesCard = (props,notification) => {
             </Box>
             <TabPanel value="today">
               {/* message */}
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5}}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -71,7 +73,9 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
+                          
                         }}
                       >
                         Community
@@ -114,9 +118,9 @@ const UpdatesCard = (props,notification) => {
                 </Box>
               </Box>
               {/* message */}
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -127,6 +131,7 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
                         }}
                       >
@@ -145,7 +150,7 @@ const UpdatesCard = (props,notification) => {
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
                       mt: -1,
@@ -170,11 +175,11 @@ const UpdatesCard = (props,notification) => {
                   </Typography>
                 </Box>
               </Box>
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
-                      sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
+                      sx={{ backgroundColor: "#6fa8dc", borderRadius: 2,mt:"10" }}
                     >
                       <CalendarToday sx={{ color: "black" }} />
                     </Avatar>
@@ -183,6 +188,7 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                         
                           fontFamily: "poppins",
                         }}
                       >
@@ -201,7 +207,10 @@ const UpdatesCard = (props,notification) => {
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+               
+                <Box sx={{ display: "flex" }}>
+                      
+                <Box sx={{ ml: 15,mb:"10px" }}>
                   <Typography
                     sx={{
                       mt: -1,
@@ -226,9 +235,9 @@ const UpdatesCard = (props,notification) => {
                   </Typography>
                 </Box>
               </Box>
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5}}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -239,6 +248,7 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
                         }}
                       >
@@ -257,13 +267,14 @@ const UpdatesCard = (props,notification) => {
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
-                      mt: -1,
+                      mt: -4,
                       fontWeight: 400,
                       fontSize: 13,
                       color: "black",
+                      mt:"1px",
                       fontFamily: "poppins",
                     }}
                   >
@@ -284,9 +295,9 @@ const UpdatesCard = (props,notification) => {
                   </Typography>
                 </Box>
               </Box>
-              <Box mb={2}>
+              <Box mb={23}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -297,6 +308,7 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
                         }}
                       >
@@ -315,7 +327,7 @@ const UpdatesCard = (props,notification) => {
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
                       mt: -1,
@@ -339,12 +351,13 @@ const UpdatesCard = (props,notification) => {
                   </Typography>
                 </Box>
               </Box>
+              </Box>
             </TabPanel>
             <TabPanel value="previous">
               {/* message */}
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -355,6 +368,7 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
                         }}
                       >
@@ -373,7 +387,7 @@ const UpdatesCard = (props,notification) => {
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
                       mt: -1,
@@ -400,9 +414,9 @@ const UpdatesCard = (props,notification) => {
               </Box>
               {/* message */}
 
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -413,6 +427,7 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mb:"15px",
                           fontFamily: "poppins",
                         }}
                       >
@@ -431,7 +446,7 @@ const UpdatesCard = (props,notification) => {
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
                       mt: -1,
@@ -456,9 +471,9 @@ const UpdatesCard = (props,notification) => {
                   </Typography>
                 </Box>
               </Box>
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -469,6 +484,7 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
                         }}
                       >
@@ -487,7 +503,7 @@ const UpdatesCard = (props,notification) => {
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
                       mt: -1,
@@ -512,9 +528,9 @@ const UpdatesCard = (props,notification) => {
                   </Typography>
                 </Box>
               </Box>
-              <Box mb={2}>
+              <Box mb={30}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -525,6 +541,7 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
                         }}
                       >
@@ -543,7 +560,7 @@ const UpdatesCard = (props,notification) => {
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
                       mt: -1,

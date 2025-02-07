@@ -239,7 +239,7 @@ const Community = () => {
           backgroundColor: "#FFFFFF",
           borderRadius: "18px",
           border: "1px solid #C3C3C3",
-          boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
+          // boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.10)",
           height: "100%",
           width: "100%",
           display: "flex",

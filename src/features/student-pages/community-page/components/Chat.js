@@ -1,22 +1,36 @@
-import React, { useEffect } from "react";
-import { Box, Typography, Card, useMediaQuery } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Typography,
+  Card,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import ChatHeader from "./ChatHeader";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ChatLog from "./chatLogs";
 import BottomBar from "./bottomBar";
+import GroupDetails from "./Models/GroupDetails";
+
+const Chat = ({ currentChat, socket, Messages, setMessages }) => {
+  const theme = useTheme();
+  const [viewGroup, setViewGroup] = useState(false);
 
 
-const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) => {
-  const isTablet = useMediaQuery("(max-width: 768px)"); // Check for tablet screen size
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "md"));
 
   useEffect(() => {
+    if (!socket) return;
+
     const handleMessage = (message) => {
       setMessages((prev) => [...prev, message]);
     };
 
-    socket?.on("newMessage", handleMessage);
+    socket.on("newMessage", handleMessage);
 
     return () => {
-      socket?.off("newMessage", handleMessage);
+      socket.off("newMessage", handleMessage);
     };
   }, [socket, setMessages]);
 
@@ -24,57 +38,48 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
     <Box
       sx={{
         width: "100%",
+        height: "80vh",
+        
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#F6F6F6",
-        
-        
-        
+       
+        flexDirection: "column",
       }}
     >
-      {currentChat ? (
+      {viewGroup ? (
+        <GroupDetails currentChat={currentChat} setViewGroup={setViewGroup} />
+      ) : currentChat ? (
         <Card
           sx={{
-            height: "78vh",
+            height: "99%",
             width: "100%",
             display: "flex",
             flexDirection: "column",
             boxShadow: "none",
-            borderRadius: "8px", // Modern rounded design
-            backgroundColor: "#FFFFFF",
+            borderRadius: "20px", 
+            overflow: "hidden",
           }}
         >
-          {/* Chat Header */}
-          <ChatHeader currentChat={currentChat} />
+         
+          <ChatHeader currentChat={currentChat} onViewGroup={setViewGroup} />
 
-          {/* Chat Log Section */}
           <Box
             sx={{
               flex: 1,
-             
               overflowY: "auto",
               display: "flex",
               flexDirection: "column",
-              gap: 10
+              gap: 10,
             }}
           >
-            {/* Chat Log */}
             <ChatLog socket={socket} Messages={Messages} />
           </Box>
 
-          {/* Bottom Bar for Sending Messages */}
           <Box
             sx={{
-              
-            
-             
-              
-            paddingBottom:"1px", 
-              borderTop: "1px solid #E0E0E0",
+              padding: "8px",
+              borderTop: "1px solid #ddd",
+              backgroundColor: "#FFFFFF", 
             }}
-
-            
           >
             <BottomBar socket={socket} community={currentChat} />
           </Box>
@@ -82,16 +87,16 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
       ) : (
         <Box
           sx={{
+            flex: 1,
             display: "flex",
-            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             textAlign: "center",
-            gap: "16px",
-            padding: "1px",
+            
+            ml: "10px",
           }}
         >
-          {/* Placeholder when no chat is selected */}
+         
           <Box
             component="img"
             src="https://cdn-icons-png.flaticon.com/512/9388/9388030.png"
@@ -102,6 +107,8 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
               borderRadius: "50%",
             }}
           />
+         
+          
           <Typography
             sx={{
               color: "#747474",
