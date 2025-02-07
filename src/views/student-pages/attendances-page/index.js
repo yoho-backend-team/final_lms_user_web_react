@@ -121,7 +121,7 @@ const Attendance = () => {
   if (loading) {
     return <CircularProgress />;
   }
-
+console.log(attendance_data,'attendance')
   const totalClasses = (attendance_data?.onlineClassCount ?? 0) + (attendance_data?.offlineClassCount ?? 0);
 
   return (

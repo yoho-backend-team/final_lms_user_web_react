@@ -114,7 +114,12 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
                 </Typography>
               </Box>
             </Box>*/}
-            <ChatLog socket={socket} Messages={Messages} />
+            <ChatLog
+  socket={socket}
+  Messages={Messages}
+  currentUserId={currentChat.currentUserId} // Replace with the actual user ID
+  setMessages={setMessages}
+/>
           </Box>
 
           {/* Bottom Bar */}
