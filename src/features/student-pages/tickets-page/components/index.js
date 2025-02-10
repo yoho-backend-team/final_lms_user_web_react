@@ -14,7 +14,7 @@ const ScrollableContainer = styled(Box)({
   overflowY: 'auto',
   maxHeight: 'calc(96vh - 200px)',
   padding: '10px',
-  marginTop: '55px', // Add margin to prevent overlap
+  marginTop: '5px', // Add margin to prevent overlap
 });
 
 const tab_list = [

@@ -164,7 +164,7 @@ const ForgetPasswordPage = () => {
         justifyContent: "space-between",
         alignItems: "center",
       }}
-    ><Typography onClick={handleBack} sx={{ textDecoration: "underline", cursor: "pointer"}}
+    ><Typography onClick={handleBack} sx={{ textDecoration: "underline", cursor: "pointer",mt:"25px"}}
     onMouseEnter={(e) => {
       e.target.style.color = "#4c55eb"; // Lighter shade on hover
       e.target.style.textShadow = "0px 2px 4px rgba(102, 108, 255, 0.5)"; // Subtle shadow effect

@@ -1,35 +1,51 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, IconButton, TextField, InputAdornment } from "@mui/material";
-import AttachFileIcon from "@mui/icons-material/AttachFile";
 import SendIcon from "@mui/icons-material/Send";
-import AddBoxPlusIcon from "assets/icons/AddBoxPlusIcon";
-import RecordIcon from "assets/icons/RecordIcon";
 import EmojiIcon from "assets/icons/EmojiIcon";
 import EmojiPicker from "./EmojiPicker";
 import { getInstructorDetails } from "store/atoms/authorized-atom";
 
-const BottomBar = ({ socket, community}) => {
+const BottomBar = ({ socket, community }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [message, setMessage] = useState("");
   const instructor = getInstructorDetails();
+  const emojiPickerRef = useRef(null);
 
-  
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (emojiPickerRef.current && !emojiPickerRef.current.contains(event.target)) {
+        setShowEmojiPicker(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleEmojiClick = () => {
     setShowEmojiPicker(!showEmojiPicker);
   };
 
-   const handleEmojiSelect = (emoji) => {
+  const handleEmojiSelect = (emoji) => {
     setMessage((prevMessage) => prevMessage + emoji.native);
+    setShowEmojiPicker(false);
   };
 
   const handleSendClick = () => {
+    if (!message.trim()) return;
     setMessage("");
+    setShowEmojiPicker(false);
     socket.emit(
       "sendMessage",
-      { content: message, senderId: instructor?._id, groupId : community?._id , name : instructor?.full_name || instructor?.first_name },
-      (response) => {
+      {
+        content: message,
+        senderId: instructor?._id,
+        groupId: community?._id,
+        name: instructor?.full_name || instructor?.first_name
       },
+      (response) => {}
     );
   };
 
@@ -43,11 +59,10 @@ const BottomBar = ({ socket, community}) => {
     };
 
     window.addEventListener("keydown", handleKeyDown);
-
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [handleSendClick]);
+  }, [message]);
 
   return (
     <Box
@@ -55,40 +70,24 @@ const BottomBar = ({ socket, community}) => {
         display: "flex",
         alignItems: "center",
         padding: "1px",
-        mb:"1px",
+        mb: "1px",
         justifyContent: "flex-end",
         position: "static",
         backgroundColor: "#F6F6F6",
       }}
     >
-      {showEmojiPicker && (
-        <EmojiPicker
-          onSelect={handleEmojiSelect}
-        />
-      )}
+      <div ref={emojiPickerRef} style={{ }}>
+        <IconButton onClick={handleEmojiClick}>
+          <EmojiIcon />
+        </IconButton>
+        
+        {showEmojiPicker && (
+          <div style={{}}>
+            <EmojiPicker onSelect={handleEmojiSelect} />
+          </div>
+        )}
+      </div>
 
-<IconButton
-      onClick={handleEmojiClick}
-      sx={{
-        "&:hover": {
-          boxShadow: "0 4px 8px rgba(231, 40, 136, 0.2)", // Adds shadow on hover
-          transform: "scale(1.1)", // Slight scale effect on hover
-          transition: "0.3s ease", // Smooth transition
-        },
-      }}
-    >
-      <EmojiIcon />
-    </IconButton>
-    {/*}  <IconButton sx={{
-        "&:hover": {
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-          transform: "scale(1.1)",
-          transition: "0.3s ease",
-        },
-      }}
-    >
-        <AddBoxPlusIcon />
-      </IconButton>*/}
       <TextField
         value={message}
         onChange={(e) => setMessage(e.target.value)}
@@ -113,49 +112,16 @@ const BottomBar = ({ socket, community}) => {
           },
           "& .MuiOutlinedInput-input": {
             padding: "10px 14px",
-          },
-          "&:hover": {
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", // Adds shadow on hover
-          transform: "scale(1.02)", // Slight scale effect on hover
-          transition: "0.3s ease", // Smooth transition
-        },
+          }
         }}
         InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              {/*<IconButton 
-               sx={{
-                "&:hover": {
-                  boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-                  transform: "scale(1.1)",
-                  transition: "0.3s ease",
-                },
-              }}>
-                <AttachFileIcon />
-              </IconButton>*/}
-            </InputAdornment>
-          ),
+          endAdornment: <InputAdornment position="end" />
         }}
       />
-      <IconButton onClick={handleSendClick}
-      sx={{
-        "&:hover": {
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-          transform: "scale(1.1)",
-          transition: "0.3s ease",
-        },
-      }}>
+
+      <IconButton onClick={handleSendClick}>
         <SendIcon sx={{ color: "#000000" }} />
       </IconButton>
-     {/*} <IconButton sx={{
-        "&:hover": {
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-          transform: "scale(1.1)",
-          transition: "0.3s ease",
-        },
-      }}>
-        <RecordIcon />
-      </IconButton>*/}
     </Box>
   );
 };

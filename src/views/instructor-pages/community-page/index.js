@@ -15,7 +15,7 @@ const SidebarSkeleton = () => (
       <Box 
         sx={{ 
           height: "56px",
-          backgroundColor: "#F6F6F6",
+          backgroundColor: "#E0E0E0",
           borderRadius: "24px",
           animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
           "@keyframes pulse": {
@@ -23,7 +23,7 @@ const SidebarSkeleton = () => (
               opacity: 1
             },
             "50%": {
-              opacity: .5
+              opacity: .7
             }
           }
         }} 
@@ -37,12 +37,12 @@ const SidebarSkeleton = () => (
           key={index}
           sx={{
             display: "flex",
-            padding: "8px",
+            padding: "12px",
             width: "100%",
             justifyContent: "space-between",
             borderRadius: "8px",
             cursor: "pointer",
-            mb: 1,
+            mb: 2,
             "&:hover": {
               backgroundColor: "#D1E4E8",
             }
@@ -55,7 +55,7 @@ const SidebarSkeleton = () => (
                 width: 60, 
                 height: 60, 
                 borderRadius: "50%",
-                backgroundColor: "#F6F6F6",
+                backgroundColor:"#E0E0E0",
                 animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
               }} 
             />
@@ -64,19 +64,20 @@ const SidebarSkeleton = () => (
               flexDirection: "column",
               justifyContent: "space-between",
               py: "10px",
-              width: "150px"
+              width: "150px",
+              gap: "12px"
             }}>
               <Box sx={{ 
                 height: "24px", 
                 width: "80%", 
-                backgroundColor: "#F6F6F6",
+                backgroundColor:  "#E0E0E0",
                 borderRadius: 1,
                 animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
               }} />
               <Box sx={{ 
                 height: "16px", 
                 width: "60%", 
-                backgroundColor: "#F6F6F6",
+                backgroundColor:  "#E0E0E0",
                 borderRadius: 1,
                 animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
               }} />
@@ -88,21 +89,22 @@ const SidebarSkeleton = () => (
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
-            gap: "10px"
+            gap: "12px",
+            py: 1
           }}>
             <Box sx={{ 
               height: "16px", 
               width: "40px", 
-              backgroundColor: "#F6F6F6",
+              backgroundColor:"#E0E0E0",
               borderRadius: 1,
               animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
             }} />
             <Box sx={{ textAlign: "end" }}>
               <Box sx={{ 
-                width: 17, 
-                height: 17, 
+                width: 20, 
+                height: 20, 
                 borderRadius: "50%",
-                backgroundColor: "#F6F6F6",
+                backgroundColor: "#E0E0E0",
                 animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
               }} />
             </Box>
@@ -133,23 +135,23 @@ const ChatSkeleton = () => (
     }}>
       {/* Chat Header */}
       <Box sx={{ 
-        p: 2, 
+        p: 3, 
         borderBottom: "1px solid #E0E0E0",
         display: "flex",
         alignItems: "center",
-        gap: 2
+        gap: 3
       }}>
         <Box sx={{ 
-          width: 40, 
-          height: 40, 
+          width: 48, 
+          height: 48, 
           borderRadius: "50%",
-          backgroundColor: "#F6F6F6",
+          backgroundColor:  "#E0E0E0",
           animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
         }} />
         <Box sx={{ 
-          height: "24px", 
+          height: "28px", 
           width: "200px", 
-          backgroundColor: "#F6F6F6",
+          backgroundColor:  "#E0E0E0",
           borderRadius: 1,
           animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
         }} />
@@ -158,11 +160,11 @@ const ChatSkeleton = () => (
       {/* Chat Messages */}
       <Box sx={{
         flex: 1,
-        padding: "20px",
+        padding: "24px",
         overflowY: "auto",
         display: "flex",
         flexDirection: "column",
-        gap: "20px"
+        gap: "28px"
       }}>
         {[...Array(4)].map((_, index) => (
           <Box
@@ -176,9 +178,9 @@ const ChatSkeleton = () => (
           >
             <Box sx={{ 
               width: "100%",
-              height: "60px",
-             
-              borderRadius: "8px",
+              height: "70px",
+              backgroundColor: "#E0E0E0",
+              borderRadius: "12px",
               animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
             }} />
           </Box>
@@ -187,13 +189,13 @@ const ChatSkeleton = () => (
 
       {/* Bottom Bar */}
       <Box sx={{
-        padding: "10px",
+        padding: "16px",
         borderTop: "1px solid #E0E0E0"
       }}>
         <Box sx={{ 
-          height: "56px",
-          backgroundColor: "#F6F6F6",
-          borderRadius: "8px",
+          height: "60px",
+          backgroundColor: "#E0E0E0",
+          borderRadius: "12px",
           animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite"
         }} />
       </Box>
@@ -262,7 +264,7 @@ const Community = () => {
             )}
           </Grid>
           <Grid item xs={8}>
-            {isLoading ? (
+            {isLoading  ? (
               <ChatSkeleton />
             ) : (
               <Chat

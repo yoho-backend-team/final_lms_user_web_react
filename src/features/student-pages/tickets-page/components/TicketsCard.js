@@ -25,7 +25,7 @@ const TicketCard = ({
         flexDirection: "column",
         background: "#FFF",
         borderRadius: "16px",
-        mt: "26px",
+        mt: "1.5px",
         p: "16px",
         boxShadow: "0px 2.4px 25px 0px rgba(160, 170, 255, 0.24)",
         "&:hover": {
@@ -83,9 +83,10 @@ const TicketCard = ({
           pt: "13px",
           display: "flex",
           justifyContent: "flex-start",
-          width: "296px",
-          maxHeight: "60px",
+          width: "286px",
+          maxHeight: "50px",
           overflow: "hidden",
+          
         }}
       >
         <Typography

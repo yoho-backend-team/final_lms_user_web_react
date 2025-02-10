@@ -6,8 +6,12 @@ import { useTheme } from "@emotion/react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStudentOtpVerify } from "../services/index";
-import { useAtomValue } from "jotai";
+import { useAtomValue,useAtom } from "jotai";
 import { studentOtpAtom } from "store/atoms/authAtoms";
+import { studentLoginStepAtom } from "store/atoms/authAtoms";
+import { Student_Login_Step } from "lib/constants";
+import toast from "react-hot-toast";
+import { useSpinner } from "context/SpinnerProvider";
 
 const InputElement = styled("input")(
   ({ theme }) => `
@@ -122,9 +126,12 @@ export default function OTPInput() {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [isResendDisabled, setIsResendDisabled] = useState(false);
+  const [isLoginPage, setIsLoginPage] = useState(true); // Manage current step
   const theme = useTheme();
   const verifyOTP = useStudentOtpVerify();
   const navigate = useNavigate();
+  const [, setLoginStep] = useAtom(studentLoginStepAtom);
+  const { showSpinner,hideSpinner } = useSpinner()
   const otpData = useAtomValue(studentOtpAtom);
 
   // Timer state for OTP expiry
@@ -212,6 +219,18 @@ export default function OTPInput() {
   };
 
 
+  const handleBack = () => {
+    try {
+      showSpinner()
+      setLoginStep(Student_Login_Step)     
+    } catch (error) {
+      toast.error("Try again")
+    }finally{
+      hideSpinner()
+    }
+  }
+
+
   return (
     <Box
     sx={{
@@ -270,6 +289,19 @@ export default function OTPInput() {
           </Button>
         </Box>
         <Box>
+
+          <Typography onClick={handleBack} sx={{ textDecoration: "underline", cursor: "pointer",ml:2}}
+              onMouseEnter={(e) => {
+                e.target.style.color = "#4c55eb"; // Lighter shade on hover
+                e.target.style.textShadow = "0px 2px 4px rgba(102, 108, 255, 0.5)"; // Subtle shadow effect
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.color = "#666cff"; // Revert to original color
+                e.target.style.textShadow = "none"; // Remove shadow
+              }} >
+              Back to Login
+              </Typography>
+
           <Button
             sx={{
               backgroundColor: theme.palette.primary.main,
@@ -279,7 +311,7 @@ export default function OTPInput() {
               fontSize: "13px",
               fontWeight: 700,
               width: "101px",
-              mt: 10,
+              mt: 5,
               mr: 5,
               height: "37px",
               "&:hover": {
@@ -291,10 +323,10 @@ export default function OTPInput() {
             onClick={handleVerify}
           >
             Verify
-          </Button>
+        
+        </Button>
         </Box>
       </Box>
     </Box>
   );
 }
-
