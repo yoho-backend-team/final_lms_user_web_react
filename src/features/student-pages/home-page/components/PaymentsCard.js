@@ -27,6 +27,7 @@ const PaymentsCard = () => {
          height: "202px",
          display: "flex",
          justifyContent: "space-between",
+         mt:"10px",
       }}>
         <Grid
           container
