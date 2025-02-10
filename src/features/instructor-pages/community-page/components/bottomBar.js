@@ -100,19 +100,24 @@ const BottomBar = ({ socket, community }) => {
           borderRadius: "20px",
           "& .MuiOutlinedInput-root": {
             paddingRight: 0,
+            boxShadow: "none !important", // Ensures no shadow
             "& fieldset": {
               borderColor: "transparent",
             },
             "&:hover fieldset": {
               borderColor: "transparent",
             },
+            "&.Mui-focused": {
+              boxShadow: "none !important", // Removes focus shadow
+            },
             "&.Mui-focused fieldset": {
-              borderColor: "transparent",
+              borderColor: "transparent !important",
+              boxShadow: "none !important", // Extra safeguard to remove any lingering shadow
             },
           },
           "& .MuiOutlinedInput-input": {
             padding: "10px 14px",
-          }
+          },
         }}
         InputProps={{
           endAdornment: <InputAdornment position="end" />

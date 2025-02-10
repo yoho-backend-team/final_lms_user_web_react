@@ -148,7 +148,7 @@ function CustomCalendar({
     <Box sx={{ height: '67vh', display: 'flex', flexDirection: 'column', p: 2 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <FormControl sx={{ minWidth: 120 }}>
-          <Select
+          {/*<Select
             value={selectedMonth}
             onChange={handleMonthChange}
             IconComponent={ExpandMoreIcon}
@@ -158,7 +158,7 @@ function CustomCalendar({
                 {month}
               </MenuItem>
             ))}
-          </Select>
+          </Select>*/}
         </FormControl>
       </Box>
 

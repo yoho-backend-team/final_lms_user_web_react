@@ -106,7 +106,7 @@ const Attendance = () => {
       hideSpinner();
     }
   };
- 
+ console.log(attendance,"att")
   
   const handleChange = (event) => {
     const newMonth = event.target.value;
