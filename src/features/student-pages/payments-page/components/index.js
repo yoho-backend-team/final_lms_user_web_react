@@ -1108,32 +1108,6 @@ const Payment = () => {
                         {item.type}
                       </Typography>
 
-<<<<<<< HEAD
-                      <Typography
-                        variant="body1"
-                        component={Link}
-                        to="/student/create-ticket"
-                        sx={{
-                          display: "inline-flex",
-                          padding: "9px 24px",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          gap: "8px",
-                          borderRadius: "54px",
-                          border: "1px solid var(--Gray-300, #DEE2E6)",
-                          background: "#CFE3FF",
-                          color: "#0D6EFD",
-                          fontFamily: "Poppins",
-                          fontSize: "14px",
-                          fontStyle: "normal",
-                          fontWeight: 500,
-                          lineHeight: "22px",
-                          textDecoration: "none",
-                        }}
-                      >
-                     view
-                      </Typography>
-=======
                       {item.hasDue && (
             <button
               onClick={() => handlePayDue(item.id)}
@@ -1171,7 +1145,6 @@ const Payment = () => {
           >
             View
           </button>
->>>>>>> 8af8f866a944d6af625d1e9e5bdbfecbc62ffc03
                     </div>
                   </Grid>
                 ))}

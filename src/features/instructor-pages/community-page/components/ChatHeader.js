@@ -15,11 +15,11 @@ import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
 import ChatGroupDetails from "./Models/Chatgroupdetails"; // Import the GroupDetails component
 
-const ChatHeader = ({ currentChat }) => {
+const ChatHeader = ({ currentChat,onViewGroup }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const [viewGroup, setViewGroup] = useState(false); // State to toggle group details view
+  
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,14 +30,10 @@ const ChatHeader = ({ currentChat }) => {
   };
 
   const handleViewGroup = () => {
-    setViewGroup(true);
+    onViewGroup(true);
     handleMenuClose();
   };
 
-  // Render the group details page if `viewGroup` is true
-  if (viewGroup) {
-    return <ChatGroupDetails currentChat={currentChat} setViewGroup={setViewGroup} />;
-  }
 
   return (
     <Box

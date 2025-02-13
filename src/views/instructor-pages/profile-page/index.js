@@ -61,7 +61,7 @@ const ProfilePage = () => {
       const file = e.target.files[0];
       const form_data = new FormData();
       form_data.append("file", file);
-      const response = await fileUpload(form_data);
+      const response = await fileUpload(form_data); // Ensure this function is defined
       setInstructor((prev) => ({ ...prev, image: response?.file }));
       toast.success("Profile image updated successfully");
     } catch (error) {
@@ -98,70 +98,94 @@ const ProfilePage = () => {
           boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
+          justifyContent: 'space-between', // Space between items
           alignItems: 'center',
-          padding: 2,
+          padding: 3, // Increased padding for better spacing
           margin: 2,
           height: 'auto',
           position: 'fixed',
           top: 0,
           left: 0,
           bottom: 0,
-          paddingTop: 4,
-          paddingBottom: 4,
           marginTop: '140px',
           marginBottom: '70px',
           marginLeft: '60px',
           marginRight: '20px',
+          borderRadius: '9px',
         }}
       >
-        <Typography variant="h6" sx={{ mb: 2, color: 'black' }}>Profile Sections</Typography>
-        <Button
-          variant="contained"
-          onClick={() => setView("personalInfo")}
-          fullWidth
-          sx={{
-            mt: 2,
-            backgroundColor: view === "personalInfo" ? '#0D6EFD' : 'white',
-            color: view === "personalInfo" ? 'white' : 'black',
-            borderRadius: '0px', // No curve for sidebar button
-            padding: '10px 20px',
-            '&:hover': {
-              backgroundColor: view === "personalInfo" ? '#0A58CA' : '#f0f0f0',
-            },
-          }}
-        >
-          Personal Info
-        </Button>
-        <Button
-          variant="contained"
-          onClick={() => setView("changePassword")}
-          fullWidth
-          sx={{
-            mt: 2,
-            backgroundColor: view === "changePassword" ? '#0D6EFD' : 'white',
-            color: view === "changePassword" ? 'white' : 'black',
-            borderRadius: '0px', // No curve for sidebar button
-            padding: '10px 20px',
-            '&:hover': {
-              backgroundColor: view === "changePassword" ? '#0A58CA' : '#f0f0f0',
-            },
-          }}
-        >
-          Change Password
-        </Button>
+        <Box sx={{ width: '110%' }}>
+        <Box
+            onClick={() => setView("personalInfo")}
+            sx={{
+              position: 'relative',
+              padding: '12px 20px',
+              marginBottom: '8px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              background: view === "personalInfo" 
+                ? 'linear-gradient(90deg, rgba(13, 110, 253, 0.1) 0%, rgba(13, 110, 253, 0.05) 100%)' 
+                : 'transparent',
+              '&:hover': {
+                background: 'rgba(13, 110, 253, 0.05)'
+              },
+              borderLeft: view === "personalInfo" 
+                ? '4px solid #0D6EFD' 
+                : 'none'
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 600,
+                color: view === "personalInfo" ? '#0D6EFD' : '#666',
+                fontSize: '16px'
+              }}
+            >
+              Personal Info
+            </Typography>
+          </Box>
+          <Box
+            onClick={() => setView("changePassword")}
+            sx={{
+              position: 'relative',
+              padding: '12px 20px',
+              marginBottom: '8px',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              background: view === "changePassword" 
+                ? 'linear-gradient(90deg, rgba(13, 110, 253, 0.1) 0%, rgba(13, 110, 253, 0.05) 100%)' 
+                : 'transparent',
+              '&:hover': {
+                background: 'rgba(13, 110, 253, 0.05)'
+              },
+              borderLeft: view === "changePassword" 
+                ? '4px solid #0D6EFD' 
+                : 'none'
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 600,
+                color: view === "changePassword" ? '#0D6EFD' : '#666',
+                fontSize: '16px'
+              }}
+            >
+              Change Password
+            </Typography>
+          </Box>
+        </Box>
         <Button
           variant="contained"
           onClick={handleBack}
           fullWidth
           sx={{
-            mt: 2,
-            backgroundColor: '#0D6EFD',
+            mt: 1,
+            background: 'linear-gradient(45deg, #FF5722 30%, #D84315 90%)', // Different color for Go Back button
             color: 'white',
-            borderRadius: '0px', // No curve for sidebar button
             padding: '10px 20px',
+            boxShadow: '0 3px 5px 2px rgba(255, 87, 34, .3)',
             '&:hover': {
-              backgroundColor: '#0A58CA',
+              background: 'linear-gradient(45deg, #D84315 30%, #FF5722 90%)',
             },
           }}
         >
@@ -174,14 +198,14 @@ const ProfilePage = () => {
             <Card
               sx={{
                 backgroundColor: "white",
-                overflow: "auto",
-                padding: "20px",
-                height: '90%',
-                boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', // Enhanced shadow
-                width: 'calc(100% - 80px)', // Adjusted width to match sidebar
-                marginLeft: '80px', // Align with sidebar
-                borderRadius: '15px', // Increased border radius for better aesthetics
-                position: 'relative', // Added for positioning the edit button
+                overflow: isEditMode ? "auto" : "hidden", // Enable scrolling only in edit mode
+                padding: "10px",
+                height: '70vh', // Set a fixed height
+                width: '70%', // Set a fixed width
+                boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
+                marginLeft: '80px',
+                borderRadius: '15px',
+                position: 'fixed', // Changed to relative to allow scrolling
               }}
             >
               {view === "personalInfo" && (
@@ -195,10 +219,10 @@ const ProfilePage = () => {
                       right: 16,
                       borderColor: isEditMode ? '#0D6EFD' : '#ccc',
                       color: isEditMode ? '#0D6EFD' : '#000',
-                      backgroundColor: isEditMode ? '#E0E0E0' : 'transparent', // Dark color for edit button
+                      background: isEditMode ? 'linear-gradient(45deg, #0D6EFD 30%, #0A58CA 90%)' : 'transparent',
                       '&:hover': {
                         borderColor: '#0A58CA',
-                        backgroundColor: '#D0D0D0',
+                        background: 'linear-gradient(45deg, #0A58CA 30%, #0D6EFD 90%)',
                       },
                     }}
                   >
@@ -211,11 +235,11 @@ const ProfilePage = () => {
                   )}
                   <CardContent>
                     <Grid container spacing={2}>
-                      <Grid item xs={4}>
+                      <Grid item xs={12} md={4}>
                         <Avatar
                           alt="user"
                           src={instructor?.image ? getImageUrl(instructor?.image) : imagePlaceholder}
-                          sx={{ width: 175, height: 175, ml: 15, mb: 2, border: '2px solid #0D6EFD' }}
+                          sx={{ width: 175, height: 175, mb: 2, ml: 10, border: '2px solid #0D6EFD' }}
                         />
                         {isEditMode && (
                           <Button onClick={handleButtonClick} startIcon={<FileUploadOutlinedIcon />} sx={{ mt: 2 }}>
@@ -229,7 +253,7 @@ const ProfilePage = () => {
                           onChange={handleFileChange}
                         />
                       </Grid>
-                      <Grid item xs={8}>
+                      <Grid item xs={12} md={8}>
                         <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Personal Information</Typography>
                         <Grid container spacing={2}>
                           {[
@@ -245,7 +269,7 @@ const ProfilePage = () => {
                                     value={instructor?.[key] || ''}
                                     onChange={(e) => setInstructor((prev) => ({ ...prev, [key]: e.target.value }))}
                                     disabled={!isEditMode}
-                                    sx={{ borderRadius: '10px' }} // Rounded corners for select
+                                    sx={{ borderRadius: '10px' }}
                                   >
                                     <MenuItem value={"Male"}>Male</MenuItem>
                                     <MenuItem value={"Female"}>Female</MenuItem>
@@ -256,7 +280,7 @@ const ProfilePage = () => {
                                     readOnly={!isEditMode}
                                     value={instructor?.[key] || ''}
                                     onChange={(e) => setInstructor((prev) => ({ ...prev, [key]: e.target.value }))}
-                                    sx={{ borderRadius: '10px' }} // Rounded corners for input
+                                    sx={{ borderRadius: '10px' }}
                                   />
                                 )}
                               </FormControl>
@@ -286,7 +310,7 @@ const ProfilePage = () => {
                                 value={instructor?.contact_info?.[key] || instructor?.[key] || ''}
                                 disabled={key === "email" && isEditMode}
                                 onChange={(e) => setInstructor((prev) => ({ ...prev, contact_info: { ...prev.contact_info, [key]: e.target.value } }))}
-                                sx={{ borderRadius: '10px' }} // Rounded corners for input
+                                sx={{ borderRadius: '10px' }}
                               />
                             </FormControl>
                           </Grid>

@@ -2,9 +2,10 @@ import React, { useRef, useEffect, useState } from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import { getInstructorDetails } from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
-import DoneIcon from '@mui/icons-material/Done';
-import DoneAllIcon from '@mui/icons-material/DoneAll';
+import DoneIcon from "@mui/icons-material/Done";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ChatLog = ({ socket, Messages }) => {
   const instructor = getInstructorDetails();
@@ -12,8 +13,11 @@ const ChatLog = ({ socket, Messages }) => {
   const messageRefs = useRef(new Map());
   const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
   const [readMessages, setReadMessages] = useState(new Set());
+  const [messages, setMessages] = useState(Messages);
 
-  console.log(instructor,Messages)
+  useEffect(() => {
+    setMessages(Messages);
+  }, [Messages]);
 
   useEffect(() => {
     const handleFocus = () => setIsWindowFocused(true);
@@ -29,52 +33,25 @@ const ChatLog = ({ socket, Messages }) => {
   }, []);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && isWindowFocused) {
-            const messageId = entry.target.getAttribute("data-id");
-  
-            if (!readMessages.has(messageId)) {
-              setTimeout(() => {
-                if (entry.isIntersecting && isWindowFocused) {
-                  triggerMessageRead(messageId);
-                }
-              }, 1500);
-            }
-          }
-        });
-      },
-      { threshold: 0.8 }
-    );
-  
-    
-    messageRefs.current.forEach((ref) => {
-      if (ref instanceof Element) {
-        observer.observe(ref);
-      }
+    socket.on("messageDeleted", (updatedMessages) => {
+      setMessages(updatedMessages); 
     });
-  
     return () => {
-      observer.disconnect();
+      socket.off("messageDeleted");
     };
-  }, [Messages, isWindowFocused, readMessages]);
-  
+  }, [socket]);
 
-  const triggerMessageRead = (messageId) => {
-    const msg = Messages.find((m) => m._id === messageId);
+  const handleDeleteMessage = (messageId) => {
+    console.log("Delete clicked for message:", messageId); 
+    socket.emit("deleteMessage", { messageId, userId: instructor?._id });
 
-    if (msg && !readMessages.has(messageId)) {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      const formattedTime = `${hours}:${minutes}:${seconds}`;
-
-      console.log(formattedTime, messageId, msg);
-      socket.emit("messageRead",{ messageId: messageId, userId: instructor?._id})
-      setReadMessages((prevReadMessages) => new Set([...prevReadMessages, messageId]));
-    }
+    setMessages((prevMessages) => {
+      const updatedMessages = prevMessages.filter(
+        (message) => message._id !== messageId
+      );
+      console.log("Updated messages after delete:", updatedMessages); 
+      return updatedMessages;
+    });
   };
 
   const scrollToBottom = () => {
@@ -83,58 +60,53 @@ const ChatLog = ({ socket, Messages }) => {
     }
   };
 
-
   useEffect(() => {
     scrollToBottom();
-  }, [Messages]);
-
-  
+  }, [messages]);
 
   return (
     <Box
-  sx={{
-    height: "200vh", // Full viewport height
-    overflowY: "auto", // Scrollable content
-    backgroundImage:
-      "url('https://i.pinimg.com/originals/62/8a/06/628a064e53d4d2afa7ef36075e98f1b1.jpg')",
-    backgroundSize: "cover", // Image covers the full background
-    backgroundPosition: "center", // Centers the image
-    backgroundRepeat: "no-repeat", // Prevents tiling
-    backgroundColor: "transparent", // Fallback if image fails to load
-    padding: "20px", // Adds space around messages
-    display: "flex", // Allows messages to be centered
-    flexDirection: "column", // Stacks messages vertically
-    gap: "15px", // Adds space between messages
-  }}
->
+      sx={{
+        height: "200vh",
+        overflowY: "auto",
+        backgroundImage:
+          "url('https://i.pinimg.com/originals/62/8a/06/628a064e53d4d2afa7ef36075e98f1b1.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundColor: "transparent",
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "15px",
+      }}
+    >
+      <Box
+        sx={{
+          position: "sticky",
+          top: 0,
+          zIndex: 10,
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
+          padding: "5px 10px",
+          borderRadius: "6px",
+          color: "white",
+          textAlign: "center",
+          marginBottom: "10px",
+          fontSize: "12px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          maxWidth: "90%",
+          margin: "10px auto",
+          boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
+        }}
+      >
+        <LockOutlinedIcon sx={{ fontSize: "16px", marginRight: "6px" }} />
+        Messages are end-to-end encrypted. No one outside of this chat, not even
+        WhatsApp, can read or listen to them.
+      </Box>
 
- {/* Sticky Header */}
- <Box
-  sx={{
-    position: "sticky",
-    top: 0,
-    zIndex: 10, // Keeps it above messages
-    backgroundColor: "rgba(0, 0, 0, 0.6)", // Semi-transparent background
-    padding: "5px 10px", // Compact padding
-    borderRadius: "6px", // Slightly rounded corners
-    color: "white",
-    textAlign: "center",
-    marginBottom: "10px",
-    fontSize: "12px", // Smaller font for reduced size
-    display: "flex", // Align icon and text
-    alignItems: "center",
-    justifyContent: "center", // Center-align the content
-    maxWidth: "90%", // Restrict width for smaller devices
-    margin: "10px auto", // Center horizontally
-    boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)", // Slight shadow for visibility
-  }}
->
-  <LockOutlinedIcon sx={{ fontSize: "16px", marginRight: "6px" }} />
-  Messages are end-to-end encrypted. No one outside of this chat, not even WhatsApp, can read or listen to them.
-</Box>
-
-  
-      {Messages?.map((msg) => (
+      {messages?.map((msg) => (
         <Grid
           container
           key={msg._id}
@@ -181,27 +153,45 @@ const ChatLog = ({ socket, Messages }) => {
                   {msg.message}
                 </Typography>
                 <Typography
-                   sx={{
+                  sx={{
                     textAlign: msg?.sender === instructor?._id ? "end" : "end",
                     display: "flex",
-                    justifyContent: "flex-end",
-                    marginTop: "-3px"
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginTop: "-3px",
                   }}
                 >
-                   {msg?.sender === instructor?._id && msg?.status?.some(s => s.delivered) && !msg?.status?.every(s => s.delivered) && (
-                     <DoneIcon sx={{ color: "white", width: "17px", height: "17px" }} />
-                   )}
-                 
-                   {msg?.sender === instructor?._id && msg?.status?.every(s => s.delivered) && !msg?.status?.every(s => s.read) && (
-                     <DoneAllIcon sx={{  color: "white", width: "17px", height: "17px" }} />
-                   )}
-                 
-                   { msg?.sender === instructor?._id && msg?.status?.every(s => s.read) && (
-                     <DoneAllIcon sx={{ color: "#0D6EFD", width: "17px", height: "17px" }} />
-                   )}
+                  {msg?.sender === instructor?._id && msg?.status?.some((s) => s.delivered) &&
+                    !msg?.status?.every((s) => s.delivered) && (
+                      <DoneIcon
+                        sx={{ color: "white", width: "17px", height: "17px" }}
+                      />
+                    )}
+
+                  {msg?.sender === instructor?._id &&
+                    msg?.status?.every((s) => s.delivered) &&
+                    !msg?.status?.every((s) => s.read) && (
+                      <DoneAllIcon
+                        sx={{ color: "white", width: "17px", height: "17px" }}
+                      />
+                    )}
+
+                  {msg?.sender === instructor?._id &&
+                    msg?.status?.every((s) => s.read) && (
+                      <DoneAllIcon
+                        sx={{ color: "#0D6EFD", width: "17px", height: "17px" }}
+                      />
+                    )}
+
+                  {msg.sender === instructor?._id && (
+                    <DeleteIcon
+                      onClick={() => handleDeleteMessage(msg._id)}
+                      sx={{ color: "white", cursor: "pointer", marginLeft: "10px" }}
+                    />
+                  )}
                 </Typography>
               </Box>
-              <Box sx={{ marginTop: "5px"}} >
+              <Box sx={{ marginTop: "5px" }}>
                 <Typography
                   sx={{
                     color: msg.sender === instructor?._id ? "white" : "#727272",
