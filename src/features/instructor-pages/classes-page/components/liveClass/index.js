@@ -45,20 +45,14 @@ const LiveClassList = ({ data, classType, group, image }) => {
 
   const tourSteps = [
     {
-      target: "body",
-      content: "Welcome! Let's take a quick tour of the Live Classes section.",
-      placement: "center",
-      disableBeacon: true,
-    },
-    {
       target: "#live-class-list",
-      content: "This section displays all your live classes.",
+      content: "This section displays your live classes.",
       placement: "top",
       disableBeacon: true,
     },
     {
       target: "#live-class-card",
-      content: "Each card provides details about a live class, including time and subject.",
+      content: "Each card represents a live class with relevant details.",
       placement: "top",
       disableBeacon: true,
     },
