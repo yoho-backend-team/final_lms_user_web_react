@@ -1,8 +1,7 @@
-import { Grid, Typography } from "@mui/material";
 import React, { useEffect } from "react";
+import { Card, Grid, Typography } from "@mui/material";
 import Chart from "react-apexcharts";
-import { Card } from "@mui/material";
-import coursecardimage from "../../../../assets/images/background/coursecard.svg";
+import coursecardimage from "../../../../assets/images/background/home pic.png";
 import { useSpinner } from 'context/SpinnerProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
@@ -10,11 +9,11 @@ import getAllReports from '../redux/thunks';
 import { selectStudentDashboard } from '../redux/selectors';
 
 const CourseCard = () => {
-    
   const dispatch = useDispatch();
   const reports = useSelector(selectStudentDashboard); 
   const { showSpinner, hideSpinner } = useSpinner();
-
+  
+ console.log(coursecardimage)
   const fetchReports = async () => {
     try {
       showSpinner();
@@ -32,116 +31,135 @@ const CourseCard = () => {
  
   const options = {
     chart: {
-      height: 400,
+      height: 250,
       type: "radialBar",
-      position: 'absolute',
     },
     series: reports?.classes?.[0]?.total ? [reports.classes[0].total] : [0],
     plotOptions: {
       radialBar: {
         hollow: {
-          margin: 20,
-          size: "60%",
+          margin: 15,
+          size: "55%",
         },
         dataLabels: {
           showOn: "always",
           name: {
-            offsetY: 0,
+            offsetY: -10,
             show: true,
-            color: "#555",
+            color: "#555", 
             fontSize: "14px",
-            fontWeight: "bold",
+            fontWeight: 600,
           },
           value: {
-            color: "#ff5722",
-            fontSize: "24px",
-            fontWeight: "900",
+            color: "#ff5722", 
+            fontSize: "22px",
+            fontWeight: 800,
             show: true,
           },
         },
+        track: {
+          background: 'rgba(219, 23, 23, 0.3)', // Soft white background
+        }
       },
     },
     stroke: {
       lineCap: "round",
     },
-    labels: ["progress"],
+    labels: ["Progress"],
+    colors: ['black'], // White color for better contrast
   };
 
   return (
     <Card
-      sx={{
-        backgroundImage: `url(${coursecardimage})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "top-center",
-        p: 4,
-        boxShadow:"0px 8px 32px rgba(0, 0, 0, 0.15)",
-        borderRadius: "16px",
-        border: "1px solid #E6AC96",
-         width: "369px",
-        height: "202px",
-        position: "relative",
-      }}
+    sx={{
+      backgroundImage: `url('${coursecardimage}')`,
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
+      p: 2,
+      boxShadow: "0px 0px 30px rgba(53, 177, 48, 0.1)",
+      border: "1px",
+      borderRadius: "2px",
+      maxWidth: "450px",
+      height: "200px",
+    }}
+    
     >
-      <Grid
-        container
-        justifyContent="center"
-        alignItems="center"
-        display="flex"
-        spacing={2}
+      <Grid 
+        container 
+        spacing={2} 
+        alignItems="center" 
+        justifyContent="center" 
+        sx={{
+          position: 'relative',
+          zIndex: 1, // Ensure content is above background
+        }}
       >
-        <Grid item xs={12}>
+        <Grid item xs={12} textAlign="center">
           <Typography
             variant="h5"
             sx={{
-              color: "#481D0C",
+              color: "#481D0C", 
               fontFamily: "Nunito Sans",
-              fontSize: "1.25rem",
+              fontSize: "1.5rem",
               fontWeight: 900,
-              textAlign: "left",
+              mt: 0.1,
+              mr:"251px",
+              textAlign: "center",
+              textShadow: "1px 1px 2px rgba(0,0,0,0.5)", // Added text shadow for readability
             }}
           >
             Course Progress
           </Typography>
         </Grid>
 
-        <Grid item xs={12} sm={6} md={6} lg={12}>
-          <Grid container justifyContent="center" alignItems="center" spacing={2}>
-            <Grid item xs={12} sm={6} md={6} lg={6}>
+        <Grid item xs={12}>
+          <Grid 
+            container 
+            justifyContent="center" 
+            alignItems="center" 
+            spacing={2}
+            textAlign="center"
+          >
+            <Grid item xs={12}>
               <Typography
                 sx={{
-                  color: "#272835",
+                  color: "#272835", 
                   fontFamily: "Nunito Sans",
-                  fontSize: "1rem",
+                  fontSize: "1.25rem",
                   fontWeight: 700,
                   textAlign: "center",
-                  minWidth: '65px',
-                  marginLeft: '100px',
-                  lineHeight: 'normal'
+                  mt:"20px",
+                  mr:"30px",
+                  textShadow: "1px 1px 2px rgba(189, 34, 34, 0.5)", // Added text shadow
                 }}
               >
-                Course
+                Total Classes
               </Typography>
               <Typography
                 sx={{
-                  color: "#403B3B",
+                  color: "#403B3B", // Changed to white
                   fontFamily: "Poppins",
-                  fontSize: "0.875rem",
-                  fontWeight: 400,
+                  fontSize: "1rem",
+                  fontWeight: 600,
                   textAlign: "center",
-                  minWidth: '65px',
-                  marginLeft: '100px',
+                  mr:"30px",
+                  mt: 1,
+                  textShadow: "1px 1px 2px rgba(0,0,0,0.5)", // Added text shadow
                 }}
               >
-                {reports?.classes?.[0]?.total} Class
+                {reports?.classes?.[0]?.total || 0} Classes
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} md={6} lg={6} sx={{ textAlign: 'center' }}>
+            
+            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center',ml:"270px", position: 'relative', top: -105 }}>
               <Chart
                 options={options}
                 series={options.series}
                 type="radialBar"
-                height={[150, 200, 300]} 
+                height={200}
+                width={200
+                }
               />
             </Grid>
           </Grid>

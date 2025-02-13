@@ -11,7 +11,7 @@ export function useStudentSocket(){
 
 export const StudentSocketProvider = ({children}) => {
     const [socket,setSocket] = useState(null)
-
+    const user = getStudentDetails()
     useEffect(() => {
       const isLoggedIn = checkUserLoggedIn(isAuthenticatedStudent)
       const url = process.env.REACT_APP_URL
@@ -19,7 +19,7 @@ export const StudentSocketProvider = ({children}) => {
          const socketIO = io(url)
          setSocket(socketIO)
 
-         const user = getStudentDetails()
+         
          socketIO.emit("registeronline",{userId:user?._id})
 
          return(
