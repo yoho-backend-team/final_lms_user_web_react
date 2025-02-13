@@ -292,9 +292,8 @@ import { useSocket } from "context/instructorSocket";
 import SideBar from "features/instructor-pages/community-page/components/Sidebar";
 import Chat from "features/instructor-pages/community-page/components/Chat";
 
-<<<<<<< HEAD
-=======
 const SidebarSkeleton = () => (
+  
   <Box>
     {/* Search bar container */}
     <Box sx={{ paddingLeft: "32px", paddingTop: "20px", paddingRight: "12px" }}>
@@ -489,7 +488,6 @@ const ChatSkeleton = () => (
   </Box>
 );
 
->>>>>>> 6ec0e710ddbee0fd899715094d9073594ec807eb
 const Community = () => {
   const dispatch = useDispatch();
   const communities = useSelector(selectInstructorCommunities);
@@ -574,16 +572,6 @@ const Community = () => {
               setMessages={setMessages}
             />
           </Grid>
-<<<<<<< HEAD
-          <Grid item xs={8} id="chat-section">
-            <Chat
-              currentChat={currentChat}
-              socket={socket}
-              setCurrentChat={setCurrentChat}
-              setMessages={setMessages}
-              Messages={Messages}
-            />
-=======
           <Grid item xs={8}>
             {isLoading  ? (
               <ChatSkeleton />
@@ -596,7 +584,6 @@ const Community = () => {
                 Messages={Messages}
               />
             )}
->>>>>>> 6ec0e710ddbee0fd899715094d9073594ec807eb
           </Grid>
         </Grid>
       </Box>

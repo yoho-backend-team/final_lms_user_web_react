@@ -34,20 +34,11 @@ const UpdatesCard = (props,notification) => {
         >
          
           <Typography
-<<<<<<< HEAD
-  variant="h3"
-  sx={{ fontWeight: 'bold', color: 'black', fontFamily: 'poppins' }}
->
-  Updates
-</Typography>
-
-=======
             variant="h4"
             sx={{ fontWeight: 600, color: "black", fontFamily: "poppins" ,fontSize: 18 }}
           >
             Updates{" "}
           </Typography>
->>>>>>> 6ec0e710ddbee0fd899715094d9073594ec807eb
           <Typography
             color="secondary"
             sx={{ fontWeight: 400, fontFamily: "poppins", fontSize: 14 }}
@@ -83,12 +74,8 @@ const UpdatesCard = (props,notification) => {
                           color: "black",
                           mt:"10px",
                           fontFamily: "poppins",
-<<<<<<< HEAD
-                          
-=======
                           mt:1,
                           ml:2,
->>>>>>> 6ec0e710ddbee0fd899715094d9073594ec807eb
                         }}
                       >
                         Community
