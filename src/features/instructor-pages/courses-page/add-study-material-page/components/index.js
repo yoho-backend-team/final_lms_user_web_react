@@ -31,7 +31,7 @@ const AddStudyMaterialsPage = ({ Course, getCourseDetails }) => {
     <Box sx={{ overflow: "auto", padding: "20px" }}>
       <Box sx={{ padding: "20px", borderRadius: "8px"}}>
         <Box sx={{ display: "flex", alignItems: "center", mb: "5px" }}>
-          <Typography variant="h6" sx={{ flex: 1 }}>Add Notes & Materials</Typography>
+          <Typography variant="h3" sx={{ flex: 1 }}>Add Notes & Materials</Typography>
           <Box sx={{ display: "flex", gap: "20px" }}>
             <IconButton
               onClick={() => handleSectionChange("videos")}

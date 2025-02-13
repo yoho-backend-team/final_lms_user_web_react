@@ -66,7 +66,7 @@ const InstructorLoginForm = () => {
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh" px={3}>
-      <Typography variant="h2" textAlign="center" mb={4} fontWeight={600} color={theme.palette.primary.main}>
+      <Typography variant="h1" textAlign="center" mb={10} fontWeight={600} color={theme.palette.primary.main}>
         Join & Connect the Fastest Growing Online Community
       </Typography>
       <Box component="form" noValidate autoComplete="off" onSubmit={formik.handleSubmit} width={{ xs: "100%", sm: "400px" }}>

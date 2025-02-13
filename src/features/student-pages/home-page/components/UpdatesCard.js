@@ -32,15 +32,25 @@ const UpdatesCard = (props,notification) => {
             height: "auto",
           }}
         >
+         
           <Typography
+<<<<<<< HEAD
+  variant="h3"
+  sx={{ fontWeight: 'bold', color: 'black', fontFamily: 'poppins' }}
+>
+  Updates
+</Typography>
+
+=======
             variant="h4"
-            sx={{ fontWeight: 600, color: "black", fontFamily: "poppins" }}
+            sx={{ fontWeight: 600, color: "black", fontFamily: "poppins" ,fontSize: 18 }}
           >
             Updates{" "}
           </Typography>
+>>>>>>> 6ec0e710ddbee0fd899715094d9073594ec807eb
           <Typography
             color="secondary"
-            sx={{ fontWeight: 400, fontFamily: "poppins", fontSize: 12 }}
+            sx={{ fontWeight: 400, fontFamily: "poppins", fontSize: 14 }}
           >
            {Notification.length} new messages
           </Typography>
@@ -58,9 +68,9 @@ const UpdatesCard = (props,notification) => {
             </Box>
             <TabPanel value="today">
               {/* message */}
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5}}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -71,7 +81,14 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
+<<<<<<< HEAD
+                          
+=======
+                          mt:1,
+                          ml:2,
+>>>>>>> 6ec0e710ddbee0fd899715094d9073594ec807eb
                         }}
                       >
                         Community
@@ -82,19 +99,21 @@ const UpdatesCard = (props,notification) => {
                     variant="subtitle2"
                     sx={{
                       fontWeight: 400,
-                      fontSize: 11,
+                      fontSize: 13,
                       fontFamily: "poppins",
                     }}
                   >
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 6}}>
                   <Typography
                     sx={{
                       mt: -1,
                       fontWeight: 400,
-                      fontSize: 13,
+                      fontSize: 16,
+                      ml:8,
+                      
                       color: "black",
                       fontFamily: "poppins",
                     }}
@@ -106,7 +125,9 @@ const UpdatesCard = (props,notification) => {
                     sx={{
                       fontWeight: 400,
                       fontSize: 12,
+                      ml:8,
                       fontFamily: "poppins",
+                      mb:"10px",
                     }}
                   >
                     {Notification?.[0]?.title}
@@ -114,9 +135,9 @@ const UpdatesCard = (props,notification) => {
                 </Box>
               </Box>
               {/* message */}
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -127,7 +148,10 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
+                          mt:1,
+                          ml:1.5,
                         }}
                       >
                         Attendance
@@ -138,21 +162,22 @@ const UpdatesCard = (props,notification) => {
                     variant="subtitle2"
                     sx={{
                       fontWeight: 400,
-                      fontSize: 11,
+                      fontSize: 13,
                       fontFamily: "poppins",
                     }}
                   >
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
                       mt: -1,
                       fontWeight: 400,
-                      fontSize: 13,
+                      fontSize: 16,
                       color: "black",
                       fontFamily: "poppins",
+                      ml:8,
                     }}
                   >
                     Today 02/04/2024{" "}
@@ -164,17 +189,18 @@ const UpdatesCard = (props,notification) => {
                       fontWeight: 400,
                       fontSize: 12,
                       fontFamily: "poppins",
+                      ml:8,
                     }}
                   >
                     {Notification?.[1]?.body}
                   </Typography>
                 </Box>
               </Box>
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
-                      sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
+                      sx={{ backgroundColor: "#6fa8dc", borderRadius: 2,mt:"10" }}
                     >
                       <CalendarToday sx={{ color: "black" }} />
                     </Avatar>
@@ -183,7 +209,10 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                         
                           fontFamily: "poppins",
+                          ml:1.5,
+                          mt:1,
                         }}
                       >
                        {Notification?.[1]?.title}
@@ -194,21 +223,25 @@ const UpdatesCard = (props,notification) => {
                     variant="subtitle2"
                     sx={{
                       fontWeight: 400,
-                      fontSize: 11,
+                      fontSize: 13,
                       fontFamily: "poppins",
                     }}
                   >
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+               
+                <Box sx={{ display: "flex" }}>
+                      
+                <Box sx={{ ml: 15,mb:"10px" }}>
                   <Typography
                     sx={{
                       mt: -1,
                       fontWeight: 400,
-                      fontSize: 13,
+                      fontSize: 16,
                       color: "black",
                       fontFamily: "poppins",
+                      ml:8,
                     }}
                   >
                     Today 02/04/2024{" "}
@@ -220,15 +253,16 @@ const UpdatesCard = (props,notification) => {
                       fontWeight: 400,
                       fontSize: 12,
                       fontFamily: "poppins",
+                      ml:8,
                     }}
                   >
                     {Notification?.[1]?.body}
                   </Typography>
                 </Box>
               </Box>
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5}}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -239,7 +273,10 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
+                          mt:1,
+                          ml:1.5,
                         }}
                       >
                         Class
@@ -250,21 +287,23 @@ const UpdatesCard = (props,notification) => {
                     variant="subtitle2"
                     sx={{
                       fontWeight: 400,
-                      fontSize: 11,
+                      fontSize: 13,
                       fontFamily: "poppins",
                     }}
                   >
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
-                      mt: -1,
+                      mt: -4,
                       fontWeight: 400,
-                      fontSize: 13,
+                      fontSize: 16,
                       color: "black",
+                      mt:"1px",
                       fontFamily: "poppins",
+                      ml:8,
                     }}
                   >
                     <span style={{ color: "green" }}>
@@ -277,6 +316,7 @@ const UpdatesCard = (props,notification) => {
                       fontWeight: 400,
                       fontSize: 12,
                       fontFamily: "poppins",
+                      ml:8,
                     }}
                   >
                     "SQL" group chat 22 others messaged and 2 instructors and
@@ -284,9 +324,9 @@ const UpdatesCard = (props,notification) => {
                   </Typography>
                 </Box>
               </Box>
-              <Box mb={2}>
+              <Box mb={23}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -297,7 +337,10 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
+                          mt:1,
+                          ml:1.5,
                         }}
                       >
                         Payment
@@ -308,14 +351,14 @@ const UpdatesCard = (props,notification) => {
                     variant="subtitle2"
                     sx={{
                       fontWeight: 400,
-                      fontSize: 11,
+                      fontSize: 13,
                       fontFamily: "poppins",
                     }}
                   >
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
                       mt: -1,
@@ -323,6 +366,7 @@ const UpdatesCard = (props,notification) => {
                       fontSize: 13,
                       color: "red",
                       fontFamily: "poppins",
+                      ml:8,
                     }}
                   >
                     Due for Apr
@@ -333,18 +377,20 @@ const UpdatesCard = (props,notification) => {
                       fontWeight: 400,
                       fontSize: 12,
                       fontFamily: "poppins",
+                      ml:8,
                     }}
                   >
                     "SQL" group chat 22 others messaged
                   </Typography>
                 </Box>
               </Box>
+              </Box>
             </TabPanel>
             <TabPanel value="previous">
               {/* message */}
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -355,6 +401,7 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
                         }}
                       >
@@ -366,14 +413,14 @@ const UpdatesCard = (props,notification) => {
                     variant="subtitle2"
                     sx={{
                       fontWeight: 400,
-                      fontSize: 11,
+                      fontSize: 13,
                       fontFamily: "poppins",
                     }}
                   >
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
                       mt: -1,
@@ -400,9 +447,9 @@ const UpdatesCard = (props,notification) => {
               </Box>
               {/* message */}
 
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -413,6 +460,7 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mb:"15px",
                           fontFamily: "poppins",
                         }}
                       >
@@ -424,14 +472,14 @@ const UpdatesCard = (props,notification) => {
                     variant="subtitle2"
                     sx={{
                       fontWeight: 400,
-                      fontSize: 11,
+                      fontSize: 13,
                       fontFamily: "poppins",
                     }}
                   >
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
                       mt: -1,
@@ -456,9 +504,9 @@ const UpdatesCard = (props,notification) => {
                   </Typography>
                 </Box>
               </Box>
-              <Box mb={2}>
+              <Box mb={5}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -469,6 +517,7 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
                         }}
                       >
@@ -480,14 +529,14 @@ const UpdatesCard = (props,notification) => {
                     variant="subtitle2"
                     sx={{
                       fontWeight: 400,
-                      fontSize: 11,
+                      fontSize: 13,
                       fontFamily: "poppins",
                     }}
                   >
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
                       mt: -1,
@@ -512,9 +561,9 @@ const UpdatesCard = (props,notification) => {
                   </Typography>
                 </Box>
               </Box>
-              <Box mb={2}>
+              <Box mb={30}>
                 <Box sx={{ justifyContent: "space-between", display: "flex" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 5 }}>
                     <Avatar
                       sx={{ backgroundColor: "#6fa8dc", borderRadius: 2 }}
                     >
@@ -525,7 +574,10 @@ const UpdatesCard = (props,notification) => {
                         sx={{
                           fontWeight: 600,
                           color: "black",
+                          mt:"10px",
                           fontFamily: "poppins",
+                          mt:1,
+                          ml:1.5
                         }}
                       >
                         Payment
@@ -536,21 +588,22 @@ const UpdatesCard = (props,notification) => {
                     variant="subtitle2"
                     sx={{
                       fontWeight: 400,
-                      fontSize: 11,
+                      fontSize: 13,
                       fontFamily: "poppins",
                     }}
                   >
                     11 mins ago
                   </Typography>
                 </Box>
-                <Box sx={{ ml: 6 }}>
+                <Box sx={{ ml: 15 }}>
                   <Typography
                     sx={{
                       mt: -1,
                       fontWeight: 400,
-                      fontSize: 13,
+                      fontSize: 16,
                       color: "red",
                       fontFamily: "poppins",
+                      ml:8,
                     }}
                   >
                     Due for Apr
@@ -561,6 +614,7 @@ const UpdatesCard = (props,notification) => {
                       fontWeight: 400,
                       fontSize: 12,
                       fontFamily: "poppins",
+                      ml:8,
                     }}
                   >
                     "SQL" group chat 22 others messaged

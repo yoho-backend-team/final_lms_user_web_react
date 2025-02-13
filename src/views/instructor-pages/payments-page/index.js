@@ -23,7 +23,7 @@ const PaymentInterface = () => {
   const { tabView } = useTabResponsive();
   const { showSpinner, hideSpinner } = useSpinner();
 
-  // Detect tablet screen size (600px - 1024px)
+ 
   const isTablet = useMediaQuery("(min-width: 600px) and (max-width: 1024px)");
 
   const getSalaryDetails = async () => {

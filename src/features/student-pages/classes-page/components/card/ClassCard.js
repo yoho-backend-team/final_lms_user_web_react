@@ -25,7 +25,7 @@ export const ClassCardHeader = () => (
         mt:2,
        
         p: 2,
-        backgroundColor: "lightblue",
+        backgroundColor: "blue",
         borderRadius: "22px",
         position: "sticky", // Keep header visible while scrolling
         top: 10, // Add gap between the top of the viewport and the header
@@ -39,7 +39,7 @@ export const ClassCardHeader = () => (
             fontWeight: 600,
             fontFamily: "Poppins",
             fontSize: "14px",
-            color: "#333",
+            color: "white",
             ml: 25,
           }}
         >
@@ -53,7 +53,7 @@ export const ClassCardHeader = () => (
             fontWeight: 600,
             fontFamily: "Poppins",
             fontSize: "14px",
-            color: "#333",
+            color: "white",
             ml: 15,
           }}
         >
@@ -67,7 +67,7 @@ export const ClassCardHeader = () => (
             fontWeight: 600,
             fontFamily: "Poppins",
             fontSize: "14px",
-            color: "#333",
+            color: "white",
             ml: 1,
           }}
         >
@@ -81,7 +81,7 @@ export const ClassCardHeader = () => (
             fontWeight: 600,
             fontFamily: "Poppins",
             fontSize: "14px",
-            color: "#333",
+            color: "white",
             ml: 22,
           }}
         >
@@ -95,7 +95,7 @@ export const ClassCardHeader = () => (
             fontWeight: 600,
             fontFamily: "Poppins",
             fontSize: "14px",
-            color: "#333",
+            color: "white",
             textAlign: "right",
             mr: 16,
           }}
@@ -266,7 +266,7 @@ const ClassCard = ({ cls, style, type, group }) => {
   state={{ id: cls.uuid }}
   variant="contained"
   sx={{
-    backgroundColor: group === "history" ? "white" : "lightblue",
+    backgroundColor: group === "history" ? "white" : "blue",
     color: group === "history" ? "#5611B1" : "white",
     "&:hover": {
       backgroundColor: group === "history" ? "white" : "#add8e6", // lighter shade for hover

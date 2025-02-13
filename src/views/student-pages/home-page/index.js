@@ -361,25 +361,33 @@ const StudentDashboard = () => {
             <TicketStatusCard />
           </Grid>
         </Grid>
-        <Grid item xs={12} sm={6} md={5.5} lg={2} xl={4} className="MainGrid-2">
-          <Grid item xs={12} px={3} mb={2}>
-            <CourseCard />
-          </Grid>
-          <Grid item xs={12} px={3} mb={2}>
-            <AttendanceCard />
-          </Grid>
-          <Grid item xs={12} px={3}>
-            <PaymentsCard />
-          </Grid>
+        <Grid item xs={12} sm={6} md={5.5} lg={2} xl={4}>
+        <Grid item xs={12} px={3} mb={2}>
+        <CourseCard />        
         </Grid>
-        <Grid item xs={12} sm={4} md={8} lg={2} xl={4} className="MainGrid-3">
-          <UpdatesCard image={studentdashboardimage} notification={Notification} />
+        {/* <Grid item xs={12} sm={4} md={8} lg={2} xl={4} className="MainGrid-3">
+        <UpdatesCard image={studentdashboardimage}  notification={Notification}/>
+      </Grid> */}
+        
+        <Grid item xs={12} px={3}>
+           <AttendanceCard />
         </Grid>
 
-        <Box sx={{ display: 'flex', backdropFilter: "blur(4px)", padding: "25px 60px 26px 58px", background: "#CCCCCC29", borderRadius: "8px", justifyContent: "space-between", width: "inherit", marginTop: '20px' }} >
-          <Box sx={{ padding: "10px 19px", backgroundColor: "#FFFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px", display: "flex", gap: "10px", alignItems: "center" }} >
-            <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 900 }} >Course name: </Typography>
-            <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 600 }} >{reports?.courses?.[0]?.course?.course_name}</Typography>
+        <Grid item xs={12} px={3}>
+           <PaymentsCard />
+        </Grid>
+
+      </Grid>
+      <Grid item xs={12} sm={4} md={8} lg={2} xl={4} className="MainGrid-3">
+          <UpdatesCard image={studentdashboardimage} notification={Notification} />
+        </Grid>
+      </Grid>
+      
+      
+      <Box sx={{ display: 'flex', backdropFilter:"blur(4px)",padding : "25px 60px 26px 58px",background:"#CCCCCC29",borderRadius:"8px", justifyContent: "space-between", width : "inherit",marginTop:'20px' }} >
+          <Box sx={{ padding : "10px 19px", backgroundColor: "#FFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px",display:"flex", gap: "10px",alignItems: "center"}} >
+              <Typography sx={{ color : "#000000", fontSize:"16px",fontWeight:900}} >Course name: </Typography>
+              <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight:600}} >{reports?.courses?.[0]?.course?.course_name}</Typography>
           </Box>
           <Box sx={{ padding: "10px 19px", backgroundColor: "#FFFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px", display: "flex", gap: "10px", alignItems: "center" }} >
             <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 900 }} >Total Instructors: {reports?.batches?.[0]?.batch?.classes?.[0]?.instructors?.length}</Typography>
@@ -399,7 +407,7 @@ const StudentDashboard = () => {
             <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 600 }} >{reports?.courses?.[0]?.course?.category?.category_name}</Typography>
           </Box>
         </Box>
-      </Grid>
+  
     </>
   );
 };

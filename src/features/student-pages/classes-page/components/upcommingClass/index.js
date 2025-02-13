@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { Box,Typography } from "@mui/material";
 import ClassCard from "../card/ClassCard";
 
 const classes = [
@@ -39,8 +39,9 @@ const defaultStyles = {
 const UpcomingClassList = ({ data, classType ,group}) => {
   
   return (
-    <Box sx={{ mt: 3, px: "40px" }}>
-      {data.map((cls) => (
+    <Box sx={{ mt: 3, px: "40px" ,textAlign: "center"}}>
+      {data.length > 0 ? (
+      data.map((cls) => (
         <ClassCard
           key={cls.id}
           cls={cls}
@@ -48,7 +49,18 @@ const UpcomingClassList = ({ data, classType ,group}) => {
           type={classType}
           group={group}
         />
-      ))}
+      ))
+    ) : (
+      <Box sx={{ py: 5 }}>
+         <img src="https://cdni.iconscout.com/illustration/premium/thumb/employee-is-unable-to-find-sensitive-data-illustration-download-in-svg-png-gif-file-formats--no-found-misplaced-files-business-pack-illustrations-8062128.png" alt="No data available" style={{ maxWidth: '100%', height: '270px' }} />
+        <Typography variant="h6" color="textSecondary" fontSize={'32px'} >
+          No Upcoming Classes
+        </Typography>
+        <Typography variant="body2" color="textSecondary" fontSize={'25px'}>
+          Check back later for updates.
+        </Typography>
+      </Box>
+    )}
       
     </Box>
   );
