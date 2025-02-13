@@ -17,11 +17,6 @@ self.addEventListener('push', (event) => {
 
 self.addEventListener('notificationclick', event => {
   event.notification.close();
-
-  // const url = event.notification.data?.url || '/';
-  // event.waitUntil(
-  //   clients.openWindow(url)
-  // );
    event.waitUntil(
     clients.matchAll({ type: 'window' }).then(function(clientList) {
       for (const client of clientList) {
