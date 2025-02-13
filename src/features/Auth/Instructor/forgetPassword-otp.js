@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useState, useEffect, useRef } from "react";
-import { Box, Typography, Button, Card } from "@mui/material";
+import { Box, Typography, Button, Card, useTheme } from "@mui/material";
 import { styled } from "@mui/system";
 import { useInstituteForgetPasswordOtpVerify } from "../services/index";
 import { useAtom } from "jotai";
 import { instructorLoginStepAtom, instructorOtpAtom } from "store/atoms/authAtoms";
-import { EnterNewPassword_Step, Login_Step } from "lib/constants"; 
+import { EnterNewPassword_Step, Login_Step } from "lib/constants";
 
-const InputElement = styled("input")(({ theme }) => ({
+const InputElement = styled("input")(() => ({
   width: "57px",
   height: "50px",
   fontSize: "20px",
@@ -34,13 +34,7 @@ const OTPInput = ({ length, value, onChange }) => {
     onChange(newOtp.join(""));
 
     if (newValue && index < length - 1) {
-      inputRefs.current[index + 1].focus(); 
-    }
-  };
-
-  const handleKeyDown = (event, index) => {
-    if (event.key === "Backspace" && !value[index] && index > 0) {
-      inputRefs.current[index - 1].focus(); 
+      inputRefs.current[index + 1].focus();
     }
   };
 
@@ -52,7 +46,6 @@ const OTPInput = ({ length, value, onChange }) => {
           ref={(el) => (inputRefs.current[index] = el)}
           value={value[index] || ""}
           onChange={(e) => handleChange(e, index)}
-          onKeyDown={(e) => handleKeyDown(e, index)} 
           maxLength={1}
         />
       ))}
@@ -67,23 +60,26 @@ export default function ForgetPasswordOTPInput() {
   const [, setLoginStep] = useAtom(instructorLoginStepAtom);
   const [otpAtom, setOtpAtom] = useAtom(instructorOtpAtom);
   const verifyOTP = useInstituteForgetPasswordOtpVerify();
-  const timerRef = useRef(null); 
+  const timerRef = useRef(null);
+  const theme = useTheme();
 
   useEffect(() => {
-    const savedTime = localStorage.getItem("otpTimerStart");
+    const savedExpiration = localStorage.getItem("otpExpirationTime");
     const currentTime = Math.floor(Date.now() / 1000);
 
-    if (savedTime) {
-      const elapsedTime = currentTime - parseInt(savedTime, 10);
-      const newTimeLeft = Math.max(600 - elapsedTime, 0);
-      setTimeLeft(newTimeLeft);
+    if (savedExpiration) {
+      const remainingTime = parseInt(savedExpiration, 10) - currentTime;
+      if (remainingTime > 0) {
+        setTimeLeft(remainingTime);
+      } else {
+        resetTimer();
+      }
     } else {
-      localStorage.setItem("otpTimerStart", currentTime);
+      resetTimer();
     }
 
-    startTimer(); 
-
-    return () => clearInterval(timerRef.current); 
+    startTimer();
+    return () => clearInterval(timerRef.current);
   }, []);
 
   const startTimer = () => {
@@ -99,11 +95,15 @@ export default function ForgetPasswordOTPInput() {
     }, 1000);
   };
 
-  const handleResend = () => {
-    const currentTime = Math.floor(Date.now() / 1000);
-    localStorage.setItem("otpTimerStart", currentTime);
+  const resetTimer = () => {
+    const expirationTime = Math.floor(Date.now() / 1000) + 600;
+    localStorage.setItem("otpExpirationTime", expirationTime.toString());
     setTimeLeft(600);
-    startTimer(); 
+    startTimer();
+  };
+
+  const handleResend = () => {
+    resetTimer();
   };
 
   const handleVerify = async () => {
@@ -123,6 +123,11 @@ export default function ForgetPasswordOTPInput() {
     }
   };
 
+  const handleBackToLogin = () => {
+    localStorage.removeItem("otpExpirationTime"); // Remove stored timer so new OTP starts fresh
+    setLoginStep(Login_Step);
+  };
+
   return (
     <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
       <Card sx={{ padding: 5, boxShadow: 3, textAlign: "center", borderRadius: "16px", maxWidth: "400px" }}>
@@ -137,11 +142,27 @@ export default function ForgetPasswordOTPInput() {
         <Typography mt={5}>
           {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, "0")}
         </Typography>
-        {timeLeft === 0 && (
-          <Button variant="text" onClick={handleResend} sx={{ textTransform: "none", color: "#5611B1" }}>
-            Resend OTP
-          </Button>
-        )}
+
+        <Button
+          disabled={timeLeft > 0}
+          onClick={handleResend}
+          sx={{
+            mt: 2,
+            borderRadius: 5,
+            color: timeLeft > 0 ? theme.palette.text.disabled : theme.palette.primary.main,
+            fontSize: "14px",
+            textDecoration: "underline",
+            fontWeight: 700,
+            padding: "0px",
+            ":hover": {
+              border: "none",
+              backgroundColor: timeLeft > 0 ? "transparent" : theme.palette.background.default,
+            },
+          }}
+        >
+          Resend OTP
+        </Button>
+
         <Button
           fullWidth
           variant="contained"
@@ -150,12 +171,12 @@ export default function ForgetPasswordOTPInput() {
         >
           Verify OTP
         </Button>
-       
+
         <Button
           fullWidth
           variant="text"
           sx={{ mt: 2, color: "#5611B1" }}
-          onClick={() => setLoginStep(Login_Step)} 
+          onClick={handleBackToLogin}
         >
           Back to Login
         </Button>
