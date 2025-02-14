@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { Instructor_Details, instructorDetails, Student, Student_Details } from "lib/constants";
 import LZString from "lz-string"
-import { getAndDecompress } from "utils/auth_helpers";
+import { getAndDecompress,getAndDecompressForSub } from "utils/auth_helpers";
 
 export const checkUser = (role) => {
   const user = Cookies.get(role);
@@ -15,6 +15,12 @@ export const checkUserLoggedIn = (role) => {
   const auth_state = getAndDecompress(role)
   return auth_state
 };
+
+export const checkUserLoggedInForSub = (role) => {
+  const auth_state = getAndDecompressForSub(role)
+  return auth_state
+};
+
 
 export const getInstructorDetails = () => {
   const user = checkUser(Instructor_Details);
