@@ -32,6 +32,10 @@ const months = [
   "July", "August", "September", "October", "November", "December"
 ];
 
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 5 }, (_, i) => currentYear - i);
+
+
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -81,6 +85,7 @@ const useStyles = makeStyles({
 const Attendance = () => {
   const classes = useStyles();
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+  const [selectedYear, setSelectedYear] = useState(currentYear);
   const [attendance, setAttendance] = useState([]);
   const [attendance_data, setAttendanceData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -89,13 +94,14 @@ const Attendance = () => {
   const navigate = useNavigate();
   const date = new Date();
 
-  const getAttedenceDetails = async (month) => {
+  const getAttedenceDetails = async (month, year) => {
     try {
       showSpinner();
       const user = getStudentDetails();
       const response = await Client.Student.attendance.get({
         userId: user.uuid, 
         month: month, 
+        year: year,
         instituteId: user.institute_id?.uuid
       });
       setAttendanceData(response?.data);
@@ -115,8 +121,8 @@ const Attendance = () => {
   };
 
   useEffect(() => {
-    getAttedenceDetails(selectedMonth);
-  }, []);
+    getAttedenceDetails(selectedMonth, selectedYear);
+  }, [selectedMonth, selectedYear]);
 
   if (loading) {
     return <CircularProgress />;
@@ -179,7 +185,7 @@ console.log(attendance_data,'attendance')
             <Grid item xs={12} md={4}>
               <Box sx={{ padding: "0 20px" }}>
                 {/* Month Selector */}
-                <FormControl fullWidth sx={{ mb: 2 }}>
+                <FormControl fullWidth sx={{ mt: 3 }}>
                   <Select
                     value={selectedMonth}
                     onChange={handleChange}
@@ -193,6 +199,14 @@ console.log(attendance_data,'attendance')
                   </Select>
                 </FormControl>
 
+                <FormControl fullWidth sx={{ mt: 2 }}>
+          <Select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+            {years.map((year, index) => (
+              <MenuItem key={index} value={year}>{year}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
                 {/* Stats Boxes */}
                 <Box
                  sx={{
@@ -202,6 +216,12 @@ console.log(attendance_data,'attendance')
                 }}
                  className={classes.statsContainer}>
                   {[
+                    {
+                      title: "Classes Atten",
+                      color: "#FFF5D1",
+                      value: `${attendance_data?.attendedClassCount ?? 0}/${totalClasses}`,
+                      textColor: "#9F8015"
+                    },
                     {
                       title: "Present days",
                       color: "#D5FFDA",
@@ -214,21 +234,20 @@ console.log(attendance_data,'attendance')
                       value: attendance_data?.totalAbsentDays ?? 0,
                       textColor: "#A04A4A"
                     },
-                    {
-                      title: "Classes Atten",
-                      color: "#FFF5D1",
-                      value: `${attendance_data?.attendedClassCount ?? 0}/${totalClasses}`,
-                      textColor: "#9F8015"
-                    }
+                    
                   ].map((stat, index) => (
                     <Box
                       key={index}
                       sx={{
                         backgroundColor: stat.color,
-                        borderRadius: "10px",
+                        borderRadius: "0px",
                         padding: "20px",
                         width: tabView ? "100%" : "calc(50% - 10px)",
-                        boxSizing: "border-box"
+                        boxSizing: "border-box",
+                        transition: "background-color 0.3s ease",
+            '&:hover': {
+              backgroundColor: "#dcdcdc"
+            }
                       }}
                     >
                       <Typography 
@@ -277,6 +296,9 @@ console.log(attendance_data,'attendance')
                 attendanceData={attendance} 
                 getAttedenceDetails={getAttedenceDetails} 
                 attendance_data={attendance_data}
+                setSelectedMonth={setSelectedMonth}
+                selectedMonth={selectedMonth}
+                selectedYear={selectedYear}
               />
             </Grid>
           </Grid>
