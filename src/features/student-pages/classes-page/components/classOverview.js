@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import NavigateNext from "@mui/icons-material/NavigateNext";
-//import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useNavigate, Link } from "react-router-dom";
 import {
@@ -69,7 +69,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
   };
   
   return (
-    <Box sx={{ paddingTop: "65px", width: "100%", overflow: "none" }}>
+    <Box sx={{ paddingTop: "5px", width: "100%", overflow: "none" }}>
       <Breadcrumbs
         aria-label="breadcrumb"
         separator={<NavigateNext sx={{ color: "blue" }} />}
@@ -79,7 +79,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
           // underline="hover"
           style={{
             color: "blue",
-            fontSize: "15px",
+            fontSize: "20px",
             fontWeight: 300,
             lineHeight: "32px",
           }}
@@ -120,10 +120,10 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
         >
           <Box sx={{ padding: "20px" }}>
             <Box sx={{ display: "flex", gap: "24px", mb: 3 }}>
-              {/* <ArrowBackIcon
+              <ArrowBackIcon
                 onClick={() => handleBack()}
                 sx={{ cursor: "pointer" }}
-              /> */}
+              /> 
               <Box sx={{ display: "inline-flex", alignItems: "center" }}>
                 <Typography
                   sx={{
@@ -187,9 +187,9 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                     sx={{
                       fontWeight: 700,
                       mb: 1,
-                      mr:118,
-                      color: "#495057",
-                      pl: "50px",
+            ml:"28px",
+                                  color: "#495057",
+        
                       fontSize: "20px",
                       lineHeight: "32px",
                       fontFamily:"Nunito Sans",
@@ -201,13 +201,13 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                   <Typography
                     sx={{
                       mb: 2,
-                      mr:50,
+                
                       fontSize: "14px",
                       fontWeight: 400,
-                      pl: "50px",
+            ml:"28px",
                       lineHeight: "16px",
                       color: "#6C757D",
-                      pr: "171px",
+                  
                       fontFamily:"Nunito Sans",
                     }}
                   >
@@ -875,21 +875,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                     Study Materials
                   </Typography>
                   <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
-    <Button
-      size="small"
-      variant="outlined"
-      onClick={() => scrollContainer("up")}
-      sx={{ mr: 1 }}
-    >
-      Scroll Up
-    </Button>
-    <Button
-      size="small"
-      variant="outlined"
-      onClick={() => scrollContainer("down")}
-    >
-      Scroll Down
-    </Button>
+    
   </Box>
                   <Box
                   id="scrollable-box"

@@ -283,7 +283,7 @@ export default function OTPInput() {
             
           }}
         >
-          Enter the Code that sent to your entered mail i
+          Enter the Code that sent to your entered mail id
         </Typography>
         <Typography
           sx={{
@@ -381,6 +381,7 @@ export default function OTPInput() {
   }}
   onClick={handleVerify}
 >
+Verify
 
 </Button>
 

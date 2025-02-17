@@ -269,23 +269,7 @@ const CreateTicketForm = ({ handleClose }) => {
               />
             </Grid>
 
-            {/* <Grid item xs={12}>
-              <InputLabel className={classes.label}>Attachment</InputLabel>
-              <Button
-                component="label"
-                variant="contained"
-                disabled={formik.values.file ? true : false}
-                startIcon={<CloudUploadIcon sx={{ color: "#5611B1" }} />}
-                sx={{ backgroundColor: formik.values.file ? "#E0EBFA" : "#DFC7FF", color: "#5611B1", }}
-              >
-                {formik.values.file ? formik.values.file?.name : "Choose file"}
-                <VisuallyHiddenInput
-                  type="file"
-                  accept="image/*,.pdf"
-                  onChange={handleAttachmentChange}
-                />
-              </Button>
-            </Grid> */}
+            
             <Grid item xs={12}>
   <InputLabel className={classes.label}>Attachment</InputLabel>
   <Button
@@ -314,19 +298,7 @@ const CreateTicketForm = ({ handleClose }) => {
 
 
             <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 5 }}>
-              {/* <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                sx={{
-                  borderRadius: "8px",
-                  backgroundColor: "#5611B1",
-                  padding: "12px 24px",
-                  fontSize: "16px",
-                }}
-              >
-                Submit
-              </Button> */}
+              
               <Button
   variant="contained"
   color="primary"

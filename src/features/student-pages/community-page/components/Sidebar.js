@@ -42,7 +42,7 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, s
   return (
     <Box>
       {/* Search Bar */}
-      <Box sx={{ padding: "20px 12px 0 32px" }}>
+      <Box sx={{ padding:"24px" }}>
         <TextField
           variant="outlined"
           fullWidth
@@ -89,7 +89,7 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, s
                 <Avatar
                   src={group?.batch?.course?.image ? getImageUrl(group?.batch?.course?.image) : imagePlaceholder}
                   alt={group?.batch?.batch_name}
-                  sx={{ width: 85, height: 47 }}
+                  sx={{ width: 85, height: 50 }}
                 />
                 <Box>
                   <Typography sx={{ fontWeight: 500 }}>{group?.batch?.batch_name}</Typography>
