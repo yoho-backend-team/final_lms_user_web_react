@@ -43,31 +43,33 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, setMessages
     >
       {/* Search Bar */}
       <Box sx={{ paddingLeft: "32px", paddingTop: "20px", paddingRight: "12px" }}>
-        <TextField
-          variant="outlined"
-          sx={{
-            width: "100%",
-            "& .MuiOutlinedInput-root": {
-              borderRadius: "24px",
-              "& fieldset": { borderColor: "#D1E4E8", borderRadius: "24px" },
-              "&:hover fieldset": { borderColor: "#D1E4E8" },
-              "&.Mui-focused fieldset": { borderColor: "#D1E4E8", boxShadow: "none" },
-              "& input": { padding: "16px" },
-              "& input::placeholder": { color: "#9393C1", fontSize: "16px", fontWeight: 400, lineHeight: "24px" },
-            },
-          }}
-          placeholder="Search or start a new chat"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchOutlinedIcon sx={{ color: "blue" }} />
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Box>
+  <TextField
+    variant="outlined"
+    sx={{
+      width: "100%",
+      "& .MuiOutlinedInput-root": {
+        borderRadius: "24px",
+        boxShadow: "none", // Remove shadow
+        "& fieldset": { borderColor: "#D1E4E8", borderRadius: "24px" },
+        "&:hover fieldset": { borderColor: "#D1E4E8" },
+        "&.Mui-focused fieldset": { borderColor: "#D1E4E8" },
+        "& input": { padding: "16px" },
+        "& input::placeholder": { color: "#9393C1", fontSize: "16px", fontWeight: 400, lineHeight: "24px" },
+      },
+    }}
+    placeholder="Search or start a new chat"
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <SearchOutlinedIcon sx={{ color: "blue" }} />
+        </InputAdornment>
+      ),
+    }}
+  />
+</Box>
+
 
       {/* Communities List (Filtered) */}
       <Box sx={{ flex: 1, padding: "20px", overflowY: "auto" }}>

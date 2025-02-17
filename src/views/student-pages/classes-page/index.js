@@ -24,6 +24,8 @@ import {
   selectStudentClasses,
 } from "features/student-pages/classes-page/redux/selectors";
 import ClassLoader from "components/ui/loaders/classLoading";
+import Joyride from "react-joyride";
+
 
 const ClassesPage = () => {
   const location = useLocation();
@@ -40,6 +42,31 @@ const ClassesPage = () => {
   const dispatch = useDispatch();
   const classes = useSelector(selectStudentClasses);
   const loading = useSelector(selectLoading);
+
+
+  const steps = [
+    {
+      target: "body",
+      content: "Welcome to your Classes Page! Let's take a quick tour.",
+      placement: "center",
+    },
+    {
+      target: "#class-title",
+      content: "Here you can see all your available classes.",
+    },
+    {
+      target: "#class-tabs",
+      content: "Use these tabs to switch between different class types.",
+    },
+    {
+      target: "#class-type-selector",
+      content: "You can filter classes based on type here.",
+    },
+    {
+      target: "#pagination-controls",
+      content: "Navigate between pages using these controls.",
+    },
+  ];
 
   const tabs = [
     { id: "1", title: "Upcoming Classes", value: "upcoming" },
@@ -139,15 +166,22 @@ const ClassesPage = () => {
 
   return (
     <ClassLayout>
+       <Joyride steps={steps} 
+       continuous 
+       showProgress 
+       showSkipButton
+       disableScrolling
+        styles={{ options: { zIndex: 10000 } }} />
       <Box sx={{ display: "flex", flexDirection: "column", width: "100vw" }}>
         <Box>
-          <Typography
+          <Typography id="class-title"
             sx={{
               fontWeight: 700,
               fontSize: 28,
               color: "#484848",
-              mb: "4px",
+              mb: "1px",
               pl: "40px",
+              mt:-20,
             }}
           >
             Classes
@@ -164,7 +198,7 @@ const ClassesPage = () => {
                 justifyContent: "center",
               }}
             >
-              <Box
+              <Box 
                 sx={{
                   px: "40px",
                   py: "20px",
@@ -186,7 +220,7 @@ const ClassesPage = () => {
                 </Typography>
                 <img src={OfflineClassIcon} alt="Live Class" />
               </Box>
-              <Box>
+              <Box id="class-tabs">
                 <ClassTabs
                   tabs={tabs}
                   value={value}
@@ -208,8 +242,8 @@ const ClassesPage = () => {
               }}
               tabIndex={2}
             >
-              <Box>
-                <FormControl>
+              <Box id="class-type-selector">
+                <FormControl >
                   <Select value={classType} onChange={handleClassTypeChange}>
                     {classTypes.map((list) => (
                       <MenuItem key={list.id} value={list.value}>
