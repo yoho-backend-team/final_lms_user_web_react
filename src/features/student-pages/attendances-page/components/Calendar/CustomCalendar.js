@@ -19,10 +19,12 @@ function CustomCalendar({
   attendanceData, 
   getAttendanceDetails = () => {
     console.warn('getAttendanceDetails not provided');
-  } 
+  },
+  selectedMonth,
+  setSelectedMonth 
 }) {
   const theme = useTheme();
-  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+  // const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
 
   const months = [
     "January", "February", "March", "April", "May", "June", 

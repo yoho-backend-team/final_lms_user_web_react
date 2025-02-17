@@ -16,6 +16,7 @@ import PaymentIcon from "assets/icons/datetimepayIcon";
 import StatusIcon from "assets/icons/StatusIcon";
 import ParkPayment from "assets/icons/ParkPaymentIcon";
 import { selectStudentPayments, selectLoading } from "features/student-pages/payments-page/redux/selectors";
+import Joyride from 'react-joyride';
 
 const PaymentStudentInterface = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const PaymentStudentInterface = () => {
   const { tabView } = useTabResponsive();
   const { showSpinner, hideSpinner } = useSpinner();
   const [feesDataStudent, setFeesDataStudent] = useState([{ fees: [], totalAmount: 0 }]);
+  const [runTour, setRunTour] = useState(true); // State to control the tour
 
   const instructorPaymentCardData = [
     {
@@ -63,6 +65,24 @@ const PaymentStudentInterface = () => {
     },
   ];
 
+  const steps = [
+    {
+      target: '.payment-title',
+      content: 'This is where you can see your payment details.',
+      disableBeacon:true
+    },
+    {
+      target: '.payment-card',
+      content: 'Here are your payment cards with detailed information.',
+      disableBeacon:true,
+    },
+    {
+      target: '.raise-ticket',
+      content: 'If you have any queries, you can raise a ticket here.',
+      disableBeacon:true
+    },
+  ];
+
   useEffect(() => {
     const fetchStudentFee = async () => {
       const data = {};
@@ -75,6 +95,22 @@ const PaymentStudentInterface = () => {
 
   return (
     <>
+      <Joyride
+        steps={steps}
+        run={runTour} // Automatically start the tour
+        continuous
+        showSkipButton
+        disableBeacon
+        disableScrolling
+        styles={{ options: { zIndex: 10000 } }}
+        
+        callback={(data) => {
+          const { status } = data;
+          if (status === 'finished' || status === 'skipped') {
+            setRunTour(false);
+          }
+        }}
+      />
       <Box
         sx={{
           mx: tabView ? "0px" : "40px",
@@ -101,6 +137,7 @@ const PaymentStudentInterface = () => {
             }}
           >
             <Typography
+              className="payment-title"
               sx={{
                 color: "#151010",
                 fontSize: "24px",
@@ -115,6 +152,7 @@ const PaymentStudentInterface = () => {
                 variant="body1"
                 component={Link}
                 to="/student/tickets"
+                className="raise-ticket"
                 sx={{
                   color: "#0D6EFD",
                   fontSize: "16px",
@@ -153,6 +191,7 @@ const PaymentStudentInterface = () => {
                 icon={i.icon}
                 key={i.title}
                 style={i.style}
+                className="payment-card"
               />
             ))}
           </Box>
