@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Joyride from "react-joyride";
 import {
   Button,
   MenuItem,
@@ -11,18 +12,26 @@ import {
   Box,
   useTheme
 } from "@mui/material";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-function InstructorAttendance({ attendanceData, getAttedenceDetails, attendance_data, handleUpdateDetails }) {
+function InstructorAttendance({ attendance_data, getAttedenceDetails, handleUpdateDetails }) {
   const theme = useTheme();
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
-  const [selectedYear] = useState(new Date().getFullYear());
+  const [runTour, setRunTour] = useState(true);
 
   const months = [
     "January", "February", "March", "April", "May", "June", 
     "July", "August", "September", "October", "November", "December"
+  ];
+
+  const tourSteps = [
+    { target: "body", content: "Welcome to the Attendance Calendar!", placement: "center" },
+    { target: "#month-selector", content: "Select a month to view attendance records." },
+    { target: "#calendar-view", content: "View attendance status for each day." },
+    { target: "#prev-month", content: "Go to the previous month." },
+    { target: "#next-month", content: "Go to the next month." }
   ];
 
   const handleMonthChange = (event) => {
@@ -33,10 +42,8 @@ function InstructorAttendance({ attendanceData, getAttedenceDetails, attendance_
   };
 
   const generateCalendar = () => {
-    const year = selectedYear;
-    const month = selectedMonth;
-    const firstDay = new Date(year, month, 1).getDay();
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const firstDay = new Date(new Date().getFullYear(), selectedMonth, 1).getDay();
+    const daysInMonth = new Date(new Date().getFullYear(), selectedMonth + 1, 0).getDate();
     
     const weeks = [];
     let currentWeek = Array(7).fill(null);
@@ -47,21 +54,13 @@ function InstructorAttendance({ attendanceData, getAttedenceDetails, attendance_
 
     for (let day = 1; day <= daysInMonth; day++) {
       const weekday = (firstDay + day - 1) % 7;
-      
-      const attendanceForDate = attendance_data?.workingDays?.find(
-        (item) => {
-          const itemDate = new Date(item?.date);
-          return itemDate.getMonth() === month && 
-                 itemDate.getDate() === day
-        }
-      );
+      const attendanceForDate = attendance_data?.workingDays?.find((item) => {
+        const itemDate = new Date(item?.date);
+        return itemDate.getMonth() === selectedMonth && itemDate.getDate() === day;
+      });
 
       const attendanceStatus = attendanceForDate?.status || "Absent";
-
-      currentWeek[weekday] = {
-        day,
-        status: attendanceStatus.toLowerCase()
-      };
+      currentWeek[weekday] = { day, status: attendanceStatus.toLowerCase() };
 
       if (weekday === 6 || day === daysInMonth) {
         weeks.push(currentWeek);
@@ -76,42 +75,28 @@ function InstructorAttendance({ attendanceData, getAttedenceDetails, attendance_
             {dayData ? (
               <Card 
                 sx={{ 
-                  height: '100%',
-                  backgroundColor: dayData.status === 'present' 
-                    ? 'rgba(46, 204, 113, 0.1)' 
-                    : 'rgba(231, 76, 60, 0.1)',
-                  border: dayData.status === 'present' 
-                    ? '1px solid rgba(46, 204, 113, 0.5)' 
-                    : '1px solid rgba(231, 76, 60, 0.5)'
+                  height: "100%",
+                  backgroundColor: dayData.status === "present" ? "rgba(46, 204, 113, 0.1)" : "rgba(231, 76, 60, 0.1)",
+                  border: dayData.status === "present" ? "1px solid rgba(46, 204, 113, 0.5)" : "1px solid rgba(231, 76, 60, 0.5)"
                 }}
               >
-                <CardContent 
-                  sx={{ 
-                    textAlign: 'center', 
-                    p: 1,
-                    '&:last-child': { pb: 1 } 
-                  }}
-                >
-                  <Typography sx={{ fontSize: '0.8rem', color: 'text.secondary' }}>
-                    {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][dayIndex]}
+                <CardContent sx={{ textAlign: "center", p: 1 }}>
+                  <Typography sx={{ fontSize: "0.8rem", color: "text.secondary" }}>
+                    {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"][dayIndex]}
                   </Typography>
-                  <Typography sx={{ fontWeight: 'bold', my: 0.5 }}>
+                  <Typography sx={{ fontWeight: "bold", my: 0.5 }}>
                     {dayData.day}
                   </Typography>
                   <Button 
                     size="small"
                     sx={{
-                      width: '100%',
-                      backgroundColor: dayData.status === 'present' 
-                        ? '#2ecc71' 
-                        : '#e74c3c',
-                      color: 'white',
+                      width: "100%",
+                      backgroundColor: dayData.status === "present" ? "#2ecc71" : "#e74c3c",
+                      color: "white",
                       '&:hover': {
-                        backgroundColor: dayData.status === 'present' 
-                          ? '#27ae60' 
-                          : '#c0392b'
+                        backgroundColor: dayData.status === "present" ? "#27ae60" : "#c0392b"
                       },
-                      fontSize: '0.7rem',
+                      fontSize: "0.7rem",
                       py: 0.5
                     }}
                   >
@@ -120,7 +105,7 @@ function InstructorAttendance({ attendanceData, getAttedenceDetails, attendance_
                 </CardContent>
               </Card>
             ) : (
-              <Box sx={{ height: '100%' }} />
+              <Box sx={{ height: "100%" }} />
             )}
           </Grid>
         ))}
@@ -128,56 +113,27 @@ function InstructorAttendance({ attendanceData, getAttedenceDetails, attendance_
     ));
   };
 
-  const handleNextMonth = () => {
-    const nextMonth = selectedMonth === 11 ? 0 : selectedMonth + 1;
-    setSelectedMonth(nextMonth);
-    getAttedenceDetails(months[nextMonth]);
-    handleUpdateDetails(months[nextMonth]);
-  };
-
-  const handlePreviousMonth = () => {
-    const prevMonth = selectedMonth === 0 ? 11 : selectedMonth - 1;
-    setSelectedMonth(prevMonth);
-    getAttedenceDetails(months[prevMonth]);
-    handleUpdateDetails(months[prevMonth]);
-  };
-
   return (
-    <Box sx={{ height: '67vh', display: 'flex', flexDirection: 'column', p: 2 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h4"></Typography>
-        <FormControl sx={{ minWidth: 120 }}>
-          <Select
-            value={selectedMonth}
-            onChange={handleMonthChange}
-            IconComponent={ExpandMoreIcon}
-          >
+    <Box sx={{ height: "67vh", display: "flex", flexDirection: "column", p: 2 }}>
+      <Joyride steps={tourSteps} run={runTour} continuous showSkipButton showProgress disableOverlayClose spotlightClicks styles={{ options: { zIndex: 10000 } }} />
+      
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 2 }}>
+        <FormControl sx={{ minWidth: 120 }} id="month-selector">
+          <Select value={selectedMonth} onChange={handleMonthChange} IconComponent={ExpandMoreIcon}>
             {months.map((month, index) => (
-              <MenuItem key={index} value={index}>
-                {month}
-              </MenuItem>
+              <MenuItem key={index} value={index}>{month}</MenuItem>
             ))}
           </Select>
         </FormControl>
       </Box>
-
-      <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
+      
+      <Box sx={{ flexGrow: 1, overflowY: "auto" }} id="calendar-view">
         {generateCalendar()}
       </Box>
-
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
-        <Button 
-          startIcon={<KeyboardArrowLeftIcon />}
-          onClick={handlePreviousMonth}
-        >
-          {months[selectedMonth === 0 ? 11 : selectedMonth - 1]}
-        </Button>
-        <Button 
-          endIcon={<ChevronRightIcon />}
-          onClick={handleNextMonth}
-        >
-          {months[selectedMonth === 11 ? 0 : selectedMonth + 1]}
-        </Button>
+      
+      <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+        <Button id="prev-month" startIcon={<KeyboardArrowLeftIcon />}>Previous</Button>
+        <Button id="next-month" endIcon={<ChevronRightIcon />}>Next</Button>
       </Box>
     </Box>
   );

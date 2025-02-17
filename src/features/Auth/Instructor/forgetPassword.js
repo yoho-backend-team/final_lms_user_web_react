@@ -29,10 +29,7 @@ const ForgetPasswordPage = () => {
   const [, setOtpAtom] = useAtom(instructorOtpAtom);
   const { showSpinner, hideSpinner } = useSpinner();
 
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -81,7 +78,8 @@ const ForgetPasswordPage = () => {
     >
       <Card
         sx={{
-          width: 450,
+          width: 500,
+        
           padding: 4,
           boxShadow: 3,
           borderRadius: 2,
@@ -93,10 +91,10 @@ const ForgetPasswordPage = () => {
           Forgot Password?
         </Typography>
         <Typography variant="h4" color="textSecondary" mb={3}>
-        Enter your email address below
+          Enter your email address below
         </Typography>
 
-        <FormControl fullWidth error={!!emailError}>
+        <FormControl fullWidth error={!!emailError} sx={{ mt: 5 }}>
           <Input
             type="email"
             value={email}
@@ -104,50 +102,51 @@ const ForgetPasswordPage = () => {
             placeholder="Enter your email"
             sx={{
               fontSize: "1rem",
-              padding: "10px",
+              padding: "12px",
               border: "1px solid #ddd",
               borderRadius: "8px",
-              mb: 2,
             }}
           />
           {emailError && <FormHelperText>{emailError}</FormHelperText>}
         </FormControl>
 
-        <Button
-          fullWidth
-          variant="contained"
-          onClick={handleSubmit}
-          sx={{
-            backgroundColor: "#5611B1",
-            color: "white",
-            py: 1.5,
-            mt: 2,
-            borderRadius: 2,
-            fontSize: "1rem",
-            ":hover": { backgroundColor: "#6302e3" },
-          }}
-        >
-         Verify
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 10 }}>
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            sx={{
+              backgroundColor: "#5611B1",
+              color: "white",
+              py: 1,
+              px: 4,
+              borderRadius: 2,
+              fontSize: "1rem",
+              textTransform: "none",
+              boxShadow: "none",
+              ":hover": { backgroundColor: "#6302e3" },
+            }}
+          >
+            Verify
+          </Button>
 
-        <Typography
-          onClick={handleBackToLogin}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            color: "#5611B1",
-            fontSize: "0.9375rem",
-            fontWeight: 500,
-            mt: 6,
-            textDecoration: "none",
-            ":hover": { textDecoration: "underline" },
-          }}
-        >
-          <ChevronLeftIcon sx={{ width: 20, height: 20, mr: 0.5 }} />
-          Back to Login
-        </Typography>
+          <Button
+            variant="outlined"
+            onClick={handleBackToLogin}
+            sx={{
+              color: "#5611B1",
+              borderColor: "#5611B1",
+              py: 1,
+              px: 4,
+              borderRadius: 2,
+              fontSize: "1rem",
+              textTransform: "none",
+              ":hover": { borderColor: "#6302e3", color: "#6302e3" },
+            }}
+          >
+            <ChevronLeftIcon sx={{ width: 20, height: 20, mr: 1 }} />
+            Back to Login
+          </Button>
+        </Box>
       </Card>
     </Box>
   );
