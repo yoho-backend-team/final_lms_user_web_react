@@ -79,8 +79,8 @@ const CourseCard = () => {
       p: 2,
       boxShadow: "0px 0px 30px rgba(53, 177, 48, 0.1)",
       border: "1px",
-      borderRadius: "2px",
-      maxWidth: "450px",
+      borderRadius: "20px",
+      maxWidth: "460px",
       height: "200px",
     }}
     

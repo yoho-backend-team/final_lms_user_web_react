@@ -120,7 +120,7 @@ const ClassCard = ({ cls, style, type, group }) => {
     >
       <Card
         sx={{
-          mt: 0.5,  // Reduced from 1
+          mt: 1,  // Reduced from 1
           mx: 4,
           mb: 0.2,  // Keeping consistent spacing
           p: 0.01,

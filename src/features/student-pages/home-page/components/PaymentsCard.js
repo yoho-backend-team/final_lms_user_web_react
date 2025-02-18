@@ -24,7 +24,7 @@ const PaymentsCard = () => {
     <>
       <Card sx={{ boxShadow: "none" ,
          width: "453px",
-         height: "202px",
+         height: "195px",
          display: "flex",
          justifyContent: "space-between",
          mt:"10px",

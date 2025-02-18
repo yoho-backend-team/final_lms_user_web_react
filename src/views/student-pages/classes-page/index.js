@@ -24,8 +24,7 @@ import {
   selectStudentClasses,
 } from "features/student-pages/classes-page/redux/selectors";
 import ClassLoader from "components/ui/loaders/classLoading";
-import Joyride from "react-joyride";
-
+import Joyride from "react-joyride"; // Import Joyride
 
 const ClassesPage = () => {
   const location = useLocation();
@@ -39,34 +38,10 @@ const ClassesPage = () => {
     month: "",
     year: "",
   });
+  const [runTour, setRunTour] = useState(true); // Start the tour automatically
   const dispatch = useDispatch();
   const classes = useSelector(selectStudentClasses);
   const loading = useSelector(selectLoading);
-
-
-  const steps = [
-    {
-      target: "body",
-      content: "Welcome to your Classes Page! Let's take a quick tour.",
-      placement: "center",
-    },
-    {
-      target: "#class-title",
-      content: "Here you can see all your available classes.",
-    },
-    {
-      target: "#class-tabs",
-      content: "Use these tabs to switch between different class types.",
-    },
-    {
-      target: "#class-type-selector",
-      content: "You can filter classes based on type here.",
-    },
-    {
-      target: "#pagination-controls",
-      content: "Navigate between pages using these controls.",
-    },
-  ];
 
   const tabs = [
     { id: "1", title: "Upcoming Classes", value: "upcoming" },
@@ -135,7 +110,6 @@ const ClassesPage = () => {
       await dispatch(getAllClasses(data));
     } catch (error) {
       console.error("Failed to fetch classes:", error);
-      // Optionally, you can set an error state here to display an error message to the user
     }
   };
 
@@ -164,24 +138,51 @@ const ClassesPage = () => {
     navigate(`?tab=${value}&classType=${classType}&page=${page - 1}`);
   };
 
+  // Define the Joyride steps
+  const steps = [
+    {
+      target: "body",
+      content: "Welcome to the Classes Page! Let's start with the tabs.",
+      placement: "center",
+      disableBeacon: true,
+    },
+    {
+      target: ".class-tabs",
+      content: "Here are the tabs where you can navigate between different class categories.",
+      placement: "bottom",
+      disableBeacon: true,
+    },
+    {
+      target: ".class-filter",
+      content: "You can filter classes by course, month, and year.",
+      placement: "bottom",
+      disableBeacon: true,
+    },
+    {
+      target: ".class-type-selector",
+      content: "You can change between live and offline classes here.",
+      placement: "bottom",
+      disableBeacon: true,
+    },
+    {
+      target: ".pagination",
+      content: "You can navigate between pages using these buttons.",
+      placement: "top",
+      disableBeacon: true,
+    },
+  ];
+
   return (
     <ClassLayout>
-       <Joyride steps={steps} 
-       continuous 
-       showProgress 
-       showSkipButton
-       disableScrolling
-        styles={{ options: { zIndex: 10000 } }} />
       <Box sx={{ display: "flex", flexDirection: "column", width: "100vw" }}>
         <Box>
-          <Typography id="class-title"
+          <Typography
             sx={{
               fontWeight: 700,
               fontSize: 28,
               color: "#484848",
-              mb: "1px",
+              mb: "4px",
               pl: "40px",
-              mt:-20,
             }}
           >
             Classes
@@ -198,7 +199,7 @@ const ClassesPage = () => {
                 justifyContent: "center",
               }}
             >
-              <Box 
+              <Box
                 sx={{
                   px: "40px",
                   py: "20px",
@@ -220,7 +221,7 @@ const ClassesPage = () => {
                 </Typography>
                 <img src={OfflineClassIcon} alt="Live Class" />
               </Box>
-              <Box id="class-tabs">
+              <Box className="class-tabs">
                 <ClassTabs
                   tabs={tabs}
                   value={value}
@@ -242,8 +243,8 @@ const ClassesPage = () => {
               }}
               tabIndex={2}
             >
-              <Box id="class-type-selector">
-                <FormControl >
+              <Box>
+                <FormControl className="class-type-selector">
                   <Select value={classType} onChange={handleClassTypeChange}>
                     {classTypes.map((list) => (
                       <MenuItem key={list.id} value={list.value}>
@@ -260,13 +261,7 @@ const ClassesPage = () => {
         {loading ? <ClassLoader /> : renderComponents[value]}
 
         {classes?.last_page > 1 && (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "end",
-              py: "40px",
-            }}
-          >
+          <Box sx={{ display: "flex", justifyContent: "end", py: "40px" }}>
             <Box sx={{ display: "flex", gap: "40px", alignItems: "center" }}>
               <Typography
                 onClick={page === 1 ? null : handlePrevious}
@@ -330,6 +325,20 @@ const ClassesPage = () => {
           </Box>
         )}
       </Box>
+
+      <Joyride
+        steps={steps}
+        run={runTour}
+        continuous
+        showSkipButton
+        scrollToFirstStep
+        disableScrolling
+        callback={({ status }) => {
+          if (status === "finished" || status === "skipped") {
+            setRunTour(false); // Stop the tour when it is finished or skipped
+          }
+        }}
+      />
     </ClassLayout>
   );
 };

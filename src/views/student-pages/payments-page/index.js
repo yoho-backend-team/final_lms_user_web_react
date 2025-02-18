@@ -67,13 +67,19 @@ const PaymentStudentInterface = () => {
 
   const steps = [
     {
-      target: '.payment-title',
+      target: 'body',
       content: 'This is where you can see your payment details.',
+      placement: "center",
       disableBeacon:true
     },
     {
       target: '.payment-card',
-      content: 'Here are your payment cards with detailed information.',
+      content: 'Here are your payment-card  with detailed information',
+      disableBeacon:true,
+    },
+    {
+      target: '.payment-details',
+      content: 'Here are your course and fees  with detailed information and download the receipt here',
       disableBeacon:true,
     },
     {
@@ -137,7 +143,7 @@ const PaymentStudentInterface = () => {
             }}
           >
             <Typography
-              className="payment-title"
+             
               sx={{
                 color: "#151010",
                 fontSize: "24px",
@@ -176,7 +182,7 @@ const PaymentStudentInterface = () => {
             </Box>
           </Box>
 
-          <Box
+          <Box className="payment-card"
             sx={{
               display: "flex",
               gap: "20px",
@@ -185,17 +191,17 @@ const PaymentStudentInterface = () => {
             }}
           >
             {instructorPaymentCardData.map((i) => (
-              <PaymentCardStudent
+              <PaymentCardStudent  
                 title={i.title}
                 amount={i.amount}
                 icon={i.icon}
                 key={i.title}
                 style={i.style}
-                className="payment-card"
+               
               />
             ))}
           </Box>
-          <Box sx={{ mt: 4 }}>
+          <Box sx={{ mt: 4 }}  className="payment-details">
             <CourseStudentDetails />
           </Box>
         </Box>

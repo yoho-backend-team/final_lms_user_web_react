@@ -145,8 +145,9 @@ const Attendance = () => {
 
   const steps = [
     {
-      target: ".attendance-title",
+      target: "body",
       content: "Welcome to the Attendance page! Here, you can track your attendance records.",
+      placement: "center",
       disableBeacon: true,
     },
     {
