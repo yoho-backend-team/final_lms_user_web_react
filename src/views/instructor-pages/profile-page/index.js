@@ -26,6 +26,7 @@ import { imagePlaceholder } from "utils/placeholders";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import PasswordReset from "features/instructor-pages/profile-page/components/ResetPassword";
 import { fileUpload } from "features/common/upload"; // Ensure this path is correct
+import BackgroundImage from 'assets/images/background/instructor.png';
 
 const ProfilePage = () => {
   const fileInputRef = useRef(null);
@@ -90,6 +91,15 @@ const ProfilePage = () => {
   };
 
   return (
+    <Box
+      sx={{
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        p: 3,
+      }}
+    >
     <Box sx={{ display: 'flex', height: '100vh', padding: '70px' }}>
       <Box
         sx={{
@@ -329,6 +339,7 @@ const ProfilePage = () => {
           </Grid>
         </Grid>
       </Box>
+    </Box>
     </Box>
   );
 };
