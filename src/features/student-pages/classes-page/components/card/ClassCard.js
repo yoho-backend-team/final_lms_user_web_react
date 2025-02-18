@@ -123,7 +123,7 @@ const ClassCard = ({ cls, style, type, group }) => {
           mt: 1,  // Reduced from 1
           mx: 4,
           mb: 0.2,  // Keeping consistent spacing
-          p: 0.01,
+          p: 0.1,
           transition: "transform 0.3s ease, box-shadow 0.3s ease",
           "&:hover": {
             transform: "scale(1.02)",
@@ -258,9 +258,9 @@ const ClassCard = ({ cls, style, type, group }) => {
           <Grid
             item
             xs={3}
-            sx={{ display: "flex", justifyContent: "flex-end", pr: 2 }}
+            sx={{ display: "flex", justifyContent: "flex-end", pr: 5 }}
           >
-            <Button
+           <Button
   component={Link}
   to={`/student/class/${cls.uuid}?type=${type}&group=${group}`}
   state={{ id: cls.uuid }}
@@ -268,6 +268,9 @@ const ClassCard = ({ cls, style, type, group }) => {
   sx={{
     backgroundColor: group === "history" ? "white" : "blue",
     color: group === "history" ? "#5611B1" : "white",
+    padding: "4px 12px", // Reduced padding
+    fontSize: "0.90rem", // Smaller font size
+    minWidth: "auto", // Removes unnecessary width
     "&:hover": {
       backgroundColor: group === "history" ? "white" : "#add8e6", // lighter shade for hover
       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
@@ -276,6 +279,7 @@ const ClassCard = ({ cls, style, type, group }) => {
 >
   View Class
 </Button>
+
 
           </Grid>
         </Grid>

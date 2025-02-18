@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import UpdateIcon from "@mui/icons-material/Update";
 import StarIcon from "@mui/icons-material/Star"; // Added StarIcon import
 import { getImageUrl } from "utils/common/imageUtlils";
+import Joyride from "react-joyride";
 
 const isCompleted = (endDate) => {
   const currentDate = new Date();
@@ -12,6 +13,7 @@ const isCompleted = (endDate) => {
 
 const CourseFrontPage = ({ Course }) => {
   const [currentTabs, setCurrentTabs] = useState("1");
+  const [tourActive, setTourActive] = useState(true);
 
   const courses = Array.isArray(Course?.batches) ? Course.batches : [];
   const currentCourses = courses.filter((course) => !isCompleted(course?.end_date));
@@ -24,8 +26,35 @@ const CourseFrontPage = ({ Course }) => {
 
   const imageUrl = getImageUrl(Course?.image);
 
+  const steps = [
+    {
+      target: "body",
+      content: "This is the course  section where you can find the course name.",
+      disableBeacon:true,
+      placement: "center",
+    },
+    {
+      target: "#tabs-section",
+      content: "Use these tabs to switch between current and completed courses.",
+      disableBeacon:true,
+    },
+    {
+      target: "#course-list",
+      content: "Here are your available courses. Click on one to view details.",
+      disableBeacon:true,
+    },
+  ];
+
   return (
     <Box sx={{ p: "41px 41px 41px 71px", overflowY: "auto", maxHeight: "100vh" }}>
+      <Joyride steps={steps} 
+      continuous={true} 
+      showProgress={true} 
+      showSkipButton={true}
+      disableBeacon
+      disableScrolling
+       run={tourActive} 
+       styles={{ options: { zIndex: 10000 } }}/>
       <Box sx={{ display: "flex", flexDirection: "column", pr: "90px" }}>
         <Typography
           sx={{
@@ -39,7 +68,7 @@ const CourseFrontPage = ({ Course }) => {
           Course
         </Typography>
         
-        <Tabs
+        <Tabs id="tabs-section"
           value={currentTabs}
           onChange={(e, value) => setCurrentTabs(value)}
           indicatorColor="primary"
@@ -64,7 +93,7 @@ const CourseFrontPage = ({ Course }) => {
           ))}
         </Tabs>
 
-        <Box sx={{ pt: "30px" }}>
+        <Box  id="course-list" sx={{ pt: "30px" }}>
           {currentTabs === "1" ? (
             currentCourses.length > 0 ? (
               currentCourses.map((course) => (
