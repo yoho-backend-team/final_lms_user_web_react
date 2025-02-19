@@ -189,6 +189,7 @@ import PaymentIcon from "assets/icons/datetimepayIcon";
 import StatusIcon from "assets/icons/StatusIcon";
 import ParkPayment from "assets/icons/ParkPaymentIcon";
 import { selectStudentPayments, selectLoading } from "features/student-pages/payments-page/redux/selectors";
+import Joyride from 'react-joyride';
 
 const PaymentStudentInterface = () => {
   const dispatch = useDispatch();
@@ -196,6 +197,7 @@ const PaymentStudentInterface = () => {
   const loading = useSelector(selectLoading);
   const { tabView } = useTabResponsive();
   const { showSpinner, hideSpinner } = useSpinner();
+<<<<<<< HEAD
   const [feesDataStudent, setFeesDataStudent] = useState({ fees: [], totalAmount: 0 });
 
   useEffect(() => {
@@ -214,6 +216,10 @@ const PaymentStudentInterface = () => {
 
     fetchStudentFee();
   }, []);
+=======
+  const [feesDataStudent, setFeesDataStudent] = useState([{ fees: [], totalAmount: 0 }]);
+  const [runTour, setRunTour] = useState(true); // State to control the tour
+>>>>>>> 16310f8027e446670453f5d26da554ab0fa912db
 
   const instructorPaymentCardData = [
     {
@@ -253,6 +259,7 @@ const PaymentStudentInterface = () => {
     },
   ];
 
+<<<<<<< HEAD
   return (
     <Box
       sx={{
@@ -264,6 +271,54 @@ const PaymentStudentInterface = () => {
         
       }}
     >
+=======
+  const steps = [
+    {
+      target: '.payment-title',
+      content: 'This is where you can see your payment details.',
+      disableBeacon:true
+    },
+    {
+      target: '.payment-card',
+      content: 'Here are your payment cards with detailed information.',
+      disableBeacon:true,
+    },
+    {
+      target: '.raise-ticket',
+      content: 'If you have any queries, you can raise a ticket here.',
+      disableBeacon:true
+    },
+  ];
+
+  useEffect(() => {
+    const fetchStudentFee = async () => {
+      const data = {};
+      const details = await getStudentFees(data);
+      setFeesDataStudent(details);
+    };
+
+    fetchStudentFee();
+  }, []);
+
+  return (
+    <>
+      <Joyride
+        steps={steps}
+        run={runTour} // Automatically start the tour
+        continuous
+        showSkipButton
+        disableBeacon
+        disableScrolling
+        styles={{ options: { zIndex: 10000 } }}
+        
+        callback={(data) => {
+          const { status } = data;
+          if (status === 'finished' || status === 'skipped') {
+            setRunTour(false);
+          }
+        }}
+      />
+>>>>>>> 16310f8027e446670453f5d26da554ab0fa912db
       <Box
         sx={{
           backgroundColor: "white",
@@ -295,9 +350,13 @@ const PaymentStudentInterface = () => {
           </Typography>
           <Box sx={{ textAlign: "end" }}>
             <Typography
+<<<<<<< HEAD
               variant="body1"
               component={RouterLink}
               to="/student/tickets"
+=======
+              className="payment-title"
+>>>>>>> 16310f8027e446670453f5d26da554ab0fa912db
               sx={{
                 color: "#0D6EFD",
                 fontSize: "16px",
@@ -318,6 +377,59 @@ const PaymentStudentInterface = () => {
             >
               For any Queries, Please Raise your Ticket
             </Typography>
+<<<<<<< HEAD
+=======
+            <Box sx={{ textAlign: "end" }}>
+              <Typography
+                variant="body1"
+                component={Link}
+                to="/student/tickets"
+                className="raise-ticket"
+                sx={{
+                  color: "#0D6EFD",
+                  fontSize: "16px",
+                  fontWeight: "700",
+                  lineHeight: "22px",
+                  textDecoration: "underline",
+                }}
+              >
+                Raise A Ticket?
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: "12px",
+                  fontWeight: "400",
+                  color: "#495057",
+                  lineHeight: "24px",
+                }}
+              >
+                For any Queries, Please Raise your Ticket
+              </Typography>
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              gap: "20px",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+            }}
+          >
+            {instructorPaymentCardData.map((i) => (
+              <PaymentCardStudent
+                title={i.title}
+                amount={i.amount}
+                icon={i.icon}
+                key={i.title}
+                style={i.style}
+                className="payment-card"
+              />
+            ))}
+          </Box>
+          <Box sx={{ mt: 4 }}>
+            <CourseStudentDetails />
+>>>>>>> 16310f8027e446670453f5d26da554ab0fa912db
           </Box>
         </Box>
 

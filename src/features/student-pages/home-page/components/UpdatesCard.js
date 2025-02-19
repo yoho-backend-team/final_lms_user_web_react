@@ -79,12 +79,8 @@ const UpdatesCard = (props,notification) => {
                           color: "black",
                           mt:"10px",
                           fontFamily: "poppins",
-
-                          
-
                           mt:1,
                           ml:2,
-
                         }}
                       >
                         Community
