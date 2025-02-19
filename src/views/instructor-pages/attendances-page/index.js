@@ -240,6 +240,8 @@ const Attendance = () => {
                 fontWeight: 800,
                 lineHeight: "24px",
                 paddingBottom: tabView ? "10px" : "0",
+                ml:"35px",
+                mt:"20px"
               }}
             >
               Attendance
@@ -318,48 +320,64 @@ const Attendance = () => {
               </Box>
 
               <Box className={classes.statsContainer}>
-                <Box 
-                  className={classes.statsBox}
-                  sx={{ backgroundColor: "#B8FEBF" }}
-                >
-                  <Typography sx={{ color: "#2C9939", fontSize: "20px", fontWeight: 600 }}>
-                    Present Days
-                  </Typography>
-                  <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
-                    {attendance_report?.presentDays || 0}
-                    <Typography component="span" sx={{ color: "#2C9939" }}>
-                      /{attendance_report?.totalWorkingDays || 0}
-                    </Typography>
-                  </Typography>
-                </Box>
+  <Box 
+    className={classes.statsBox}
+    sx={{ backgroundColor: "#FFE896", minWidth: "180px", minHeight: "120px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", 
+      transition: "background-color 0.3s ease",
+'&:hover': {
+backgroundColor: "#dcdcdc"
+} }}
+  >
+    <Typography sx={{ color: "#9F8015", fontSize: "20px", fontWeight: 600 }}>
+      Classes Atten
+    </Typography>
+    <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
+      {attendance_report?.total_class || 0}
+      <Typography component="span" sx={{ color: "#9F8015",fontSize: "40px", fontWeight: 600 }}>
+        /{attendance_report?.total_class || 0}
+      </Typography>
+    </Typography>
+  </Box>
 
-                <Box 
-                  className={classes.statsBox}
-                  sx={{ backgroundColor: "#EBACAC" }}
-                >
-                  <Typography sx={{ color: "#A04A4A", fontSize: "20px", fontWeight: 600 }}>
-                    Absent Days
-                  </Typography>
-                  <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
-                    {attendance_report?.absentDays || 0}
-                  </Typography>
-                </Box>
+  <Box 
+    className={classes.statsBox}
+    sx={{ backgroundColor: "#B8FEBF", minWidth: "180px", minHeight: "120px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
+      transition: "background-color 0.3s ease",
+'&:hover': {
+backgroundColor: "#dcdcdc"
+} }}
+  >
+    <Typography sx={{ color: "#2C9939", fontSize: "20px", fontWeight: 600 }}>
+      Present Days
+    </Typography>
+    <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
+      {attendance_report?.presentDays || 0}
+      <Typography component="span" sx={{ color: "#2C9939",fontSize: "40px", fontWeight: 600 }}>
+        /{attendance_report?.totalWorkingDays || 0}
+      </Typography>
+    </Typography>
+  </Box>
 
-                <Box 
-                  className={classes.statsBox}
-                  sx={{ backgroundColor: "#FFE896" }}
-                >
-                  <Typography sx={{ color: "#9F8015", fontSize: "20px", fontWeight: 600 }}>
-                    Classes Atten
-                  </Typography>
-                  <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
-                    {attendance_report?.total_class || 0}
-                    <Typography component="span" sx={{ color: "#9F8015" }}>
-                      /{attendance_report?.total_class || 0}
-                    </Typography>
-                  </Typography>
-                </Box>
-              </Box>
+  <Box 
+    className={classes.statsBox}
+    sx={{ backgroundColor: "#EBACAC", maxWidth: "40px", minHeight: "120px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" , 
+      transition: "background-color 0.3s ease",
+'&:hover': {
+backgroundColor: "#dcdcdc"
+}}}
+  >
+    <Typography sx={{ color: "#A04A4A", fontSize: "20px", fontWeight: 600 }}>
+      Absent Days
+    </Typography>
+    <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
+      {attendance_report?.absentDays || 0}
+      <Typography component="span" sx={{ color: "#A04A4A",fontSize: "40px", fontWeight: 600 }}>
+        /{attendance_report?.totalWorkingDays || 0}
+      </Typography>
+    </Typography>
+  </Box>
+</Box>
+
 
               <Box className={classes.createTicketContainer}>
                 <Button
@@ -370,9 +388,11 @@ const Attendance = () => {
                     padding: "9px 82px",
                     fontSize: "14px",
                     fontWeight: 500,
+                    mt:"-50px",
                     color: "#FBFBFB",
                     ":hover":{
                       backgroundColor: "#5611B1",
+                      
                     }
                   }}
                   component={Link}
@@ -390,6 +410,9 @@ const Attendance = () => {
                 getAttedenceDetails={getAttedenceDetails} 
                 attendance_data={attendance_data}
                 handleUpdateDetails={handleUpdateDetails}
+                handleMonthChange={handleChange}
+                setSelectedMonth={setSelectedMonth}
+                selectedMonth={selectedMonth}
               />
             </Grid>
           </Grid>
