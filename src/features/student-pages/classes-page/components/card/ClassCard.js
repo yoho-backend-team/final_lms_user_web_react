@@ -36,9 +36,9 @@ export const ClassCardHeader = () => (
         <Typography
           variant="body1"
           sx={{
-            fontWeight: 600,
+            fontWeight: 800,
             fontFamily: "Poppins",
-            fontSize: "14px",
+            fontSize: "16px",
             color: "white",
             ml: 25,
           }}
@@ -50,37 +50,37 @@ export const ClassCardHeader = () => (
         <Typography
           variant="body1"
           sx={{
-            fontWeight: 600,
+            fontWeight: 800,
             fontFamily: "Poppins",
-            fontSize: "14px",
+            fontSize: "16px",
             color: "white",
-            ml: 15,
+            ml: 19,
           }}
         >
-          Classes Starting Date
+           Start Date
         </Typography>
       </Grid>
       <Grid item xs={2}>
         <Typography
           variant="body1"
           sx={{
-            fontWeight: 600,
+            fontWeight: 800,
             fontFamily: "Poppins",
-            fontSize: "14px",
+            fontSize: "16px",
             color: "white",
             ml: 1,
           }}
         >
-          Classes Starting Time
+          Start Time
         </Typography>
       </Grid>
       <Grid item xs={2}>
         <Typography
           variant="body1"
           sx={{
-            fontWeight: 600,
+            fontWeight: 800,
             fontFamily: "Poppins",
-            fontSize: "14px",
+            fontSize: "16px",
             color: "white",
             ml: 22,
           }}
@@ -92,9 +92,9 @@ export const ClassCardHeader = () => (
         <Typography
           variant="body1"
           sx={{
-            fontWeight: 600,
+            fontWeight: 800,
             fontFamily: "Poppins",
-            fontSize: "14px",
+            fontSize: "16px",
             color: "white",
             textAlign: "right",
             mr: 16,

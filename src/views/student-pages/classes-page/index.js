@@ -326,7 +326,7 @@ const ClassesPage = () => {
         )}
       </Box>
 
-      <Joyride
+      {/* <Joyride
         steps={steps}
         run={runTour}
         continuous
@@ -338,7 +338,7 @@ const ClassesPage = () => {
             setRunTour(false); // Stop the tour when it is finished or skipped
           }
         }}
-      />
+      /> */}
     </ClassLayout>
   );
 };

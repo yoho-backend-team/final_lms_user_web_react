@@ -190,7 +190,7 @@ console.log(attendance_data,'attendance')
       }}
     >
 
-<Joyride
+{/*<Joyride
         steps={steps}
         run={runTour}
         continuous
@@ -199,7 +199,7 @@ console.log(attendance_data,'attendance')
         spotlightClicks
         disableScrolling
         styles={{ options: { zIndex: 10000 } }}
-      />
+      />*/}
 
       <Box className={classes.card}>
         {/* Header Section */}
