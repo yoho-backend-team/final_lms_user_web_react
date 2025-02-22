@@ -115,7 +115,7 @@ const ClassCard = ({ cls, style, type, group }) => {
       sx={{
         overflowY: "auto",
         scrollBehavior: "smooth",
-        paddingBottom: "16px",
+        paddingBottom: "3px",
       }}
     >
       <Card
@@ -123,7 +123,8 @@ const ClassCard = ({ cls, style, type, group }) => {
           mt: 1,  // Reduced from 1
           mx: 4,
           mb: 0.2,  // Keeping consistent spacing
-          p: 0.1,
+          // py: 0.1,
+          ps: 0.5,
           transition: "transform 0.3s ease, box-shadow 0.3s ease",
           "&:hover": {
             transform: "scale(1.02)",
@@ -142,10 +143,11 @@ const ClassCard = ({ cls, style, type, group }) => {
             backgroundRepeat: "no-repeat",
             backgroundPosition: "right",
             cursor: "pointer",
+            height: "55px"
           }}
         >
           {/* Class Name and Course */}
-          <Grid item xs={3} sx={{ p: 2 }}>
+          <Grid item xs={3} sx={{ p: 1 }}>
             <Box>
               <Typography
                 variant="h6"

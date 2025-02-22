@@ -174,12 +174,13 @@ const ClassesPage = () => {
 
   return (
     <ClassLayout>
-      <Box sx={{ display: "flex", flexDirection: "column", width: "100vw" }}>
+     <Box sx={{ display: "flex", flexDirection: "column", width: "100%", height: "100vh", }}>
+
         <Box>
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: 28,
+              fontSize: 29,
               color: "#484848",
               mb: "4px",
               pl: "40px",
@@ -189,7 +190,7 @@ const ClassesPage = () => {
           </Typography>
         </Box>
         <Card>
-          <Grid container sx={{ height: "auto", width: "100%" }}>
+          <Grid container sx={{ height: "auto", width: "100%",overflow:"auto" }}>
             <Grid
               item
               xs={8}
