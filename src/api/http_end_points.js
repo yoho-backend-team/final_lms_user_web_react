@@ -42,6 +42,7 @@ const courseId = () => {
 
 const getStudentDetails = () => {
   const user = getAndDecompress(Student_Details)
+  console.log(user,'user')
   const userDetail = user
   return userDetail;
 };
