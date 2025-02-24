@@ -6,51 +6,37 @@ import {
   Input,
   Typography,
   FormHelperText,
+  InputAdornment,
+  IconButton,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import toast from "react-hot-toast";
 import { useChangePassword } from "../services";
 import { studentOtpAtom } from "store/atoms/authAtoms";
 import { useAtom } from "jotai";
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     display: "flex",
-//     flexDirection: "column",
-//     alignItems: "center",
-//     justifyContent: "center",
-//     height: "100vh",
-//     backgroundColor: "#f0f0f0",
-//   },
-//   container: {
-//     padding: theme.spacing(4),
-//     backgroundColor: "#fff",
-//     borderRadius: theme.spacing(1),
-//     boxShadow: theme.shadows[3],
-//   },
-//   button: {
-//     marginTop: theme.spacing(2),
-//   },
-// }));
-
 const EnterNewPassword = () => {
-   //const classes = useStyles();
   const changePassword = useChangePassword();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
-  const [otpAtom, setOtpAtom] = useAtom(studentOtpAtom);
+  const [otpAtom] = useAtom(studentOtpAtom);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
-    setPasswordError(""); 
+    setPasswordError("");
   };
 
   const handleConfirmPasswordChange = (event) => {
     setConfirmPassword(event.target.value);
     setConfirmPasswordError("");
   };
+
+  const toggleShowPassword = () => setShowPassword((prev) => !prev);
+  const toggleShowConfirmPassword = () => setShowConfirmPassword((prev) => !prev);
 
   const handleSubmit = async () => {
     if (!password) {
@@ -65,8 +51,9 @@ const EnterNewPassword = () => {
       setConfirmPasswordError("Passwords do not match");
       return;
     }
+
     try {
-      const response = await changePassword(confirmPassword);
+      const response = await changePassword({ otp: otpAtom, password });
       toast.success(response.message);
     } catch (error) {
       console.error("Error resetting password", error);
@@ -81,98 +68,84 @@ const EnterNewPassword = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "50px",
+        height: "100vh",
+        backgroundColor: "#f9f9f9",
       }}
     >
       <Box
         sx={{
-          width: "360.428px",
-          height: "220.021px",
+          width: 400,
+          padding: 4,
+          backgroundColor: "#fff",
+          borderRadius: 2,
+          boxShadow: 3,
         }}
       >
         <Typography
-          variant="h5"
-          component="h1"
-          sx={{ fontWeight: "bold", color: "#242424", fontSize: "1.5rem" }}
+          variant="h2"
+          sx={{ fontWeight: "bold", color: "#242424", textAlign: "center" }}
         >
           Enter New Password
         </Typography>
-        <Typography
-          variant="body1"
-          gutterBottom
-          sx={{
-            textAlign: "left",
-            width: "100%",
-            fontSize: "12.80px",
-            color: "black",
-            fontWeight: 100,
-            paddingTop: 5,
-          }}
-        >
-          Password
-        </Typography>
-        <FormControl fullWidth sx={{ maxWidth: 250 }} error={!!passwordError}>
+
+        <FormControl fullWidth sx={{ mt: 3 }} error={!!passwordError}>
+          <Typography variant="body2" sx={{ color: "#333", mb: 1 }}>
+            Password
+          </Typography>
           <Input
-            type="password"
+            type={showPassword ? "text" : "password"}
             value={password}
             onChange={handlePasswordChange}
             aria-describedby="password-error-text"
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton onClick={toggleShowPassword}>
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
           />
-          {passwordError && (
-            <FormHelperText id="password-error-text">
-              {passwordError}
-            </FormHelperText>
-          )}
+          {passwordError && <FormHelperText>{passwordError}</FormHelperText>}
         </FormControl>
-        <Typography
-          variant="body1"
-          gutterBottom
-          sx={{
-            textAlign: "left",
-            width: "100%",
-            fontSize: "12.80px",
-            color: "black",
-            fontWeight: 100,
-            paddingTop: 5,
-          }}
-        >
-          Confirm Password
-        </Typography>
-        <FormControl
-          fullWidth
-          sx={{ maxWidth: 250 }}
-          error={!!confirmPasswordError}
-        >
+
+        <FormControl fullWidth sx={{ mt: 2 }} error={!!confirmPasswordError}>
+          <Typography variant="body2" sx={{ color: "#333", mb: 1 }}>
+            Confirm Password
+          </Typography>
           <Input
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
             aria-describedby="confirm-password-error-text"
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton onClick={toggleShowConfirmPassword}>
+                  {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
           />
           {confirmPasswordError && (
-            <FormHelperText id="confirm-password-error-text">
-              {confirmPasswordError}
-            </FormHelperText>
+            <FormHelperText>{confirmPasswordError}</FormHelperText>
           )}
         </FormControl>
+
         <Button
           variant="contained"
           onClick={handleSubmit}
           fullWidth
           sx={{
             backgroundColor: "#0D6EFD",
-            maxWidth: 100,
-            marginTop: 5,
-            alignSelf: "flex-end",
-            borderRadius: 20,
+            mt: 3,
+            borderRadius: 2,
             px: 2,
             py: 1,
             "&:hover": {
-              backgroundColor: "#0D6EFD",
+              backgroundColor: "#0B5ED7",
             },
           }}
         >
-          VERIFY
+          CONFRIM
         </Button>
       </Box>
     </Box>

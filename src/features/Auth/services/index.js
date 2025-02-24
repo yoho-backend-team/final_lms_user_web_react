@@ -16,6 +16,7 @@ import { loginSuccess } from "../reducers/actionsCreators";
 import { getErrorMessage } from "utils/common/error";
 import Cookies from "js-cookie";
 
+
 export const useInstructorLogin = () => {
   const [, setLoginStep] = useAtom(instructorLoginStepAtom);
   const [, setOtpAtom] = useAtom(instructorOtpAtom);
@@ -338,7 +339,7 @@ export const useInstructorLogout = () => {
    return instructorLogout
 }
 
-export const useStudentLogout = () => {
+export const useStudentLogout = () => { 
     const [,setLoginStep] = useAtom(studentLoginStepAtom)
    
   const studentLogout = useCallback(
@@ -358,3 +359,4 @@ export const useStudentLogout = () => {
   )
   return studentLogout
 }
+

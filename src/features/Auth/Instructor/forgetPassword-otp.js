@@ -6,6 +6,7 @@ import { useInstituteForgetPasswordOtpVerify } from "../services/index";
 import { useAtom } from "jotai";
 import { instructorLoginStepAtom, instructorOtpAtom } from "store/atoms/authAtoms";
 import { EnterNewPassword_Step, Login_Step } from "lib/constants";
+import { useSpinner } from "context/SpinnerProvider"; // Spinner Context
 
 const InputElement = styled("input")(() => ({
   width: "57px",
@@ -18,7 +19,7 @@ const InputElement = styled("input")(() => ({
   background: "#FFFFFF",
   transition: "0.3s",
   outline: "none",
-  '&:focus': {
+  "&:focus": {
     borderColor: "#5611B1",
     boxShadow: "0px 0px 8px rgba(86, 17, 177, 0.5)",
   },
@@ -55,13 +56,15 @@ const OTPInput = ({ length, value, onChange }) => {
 
 export default function ForgetPasswordOTPInput() {
   const [otp, setOtp] = useState("");
-  const [timeLeft, setTimeLeft] = useState(600);
+  const [timeLeft, setTimeLeft] = useState(300);
   const [error, setError] = useState("");
   const [, setLoginStep] = useAtom(instructorLoginStepAtom);
   const [otpAtom, setOtpAtom] = useAtom(instructorOtpAtom);
   const verifyOTP = useInstituteForgetPasswordOtpVerify();
   const timerRef = useRef(null);
   const theme = useTheme();
+  const [showResend, setShowResend] = useState(false);
+  const { showSpinner, hideSpinner } = useSpinner(); // Spinner Context
 
   useEffect(() => {
     const savedExpiration = localStorage.getItem("otpExpirationTime");
@@ -88,6 +91,7 @@ export default function ForgetPasswordOTPInput() {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timerRef.current);
+          setShowResend(true);
           return 0;
         }
         return prev - 1;
@@ -96,9 +100,10 @@ export default function ForgetPasswordOTPInput() {
   };
 
   const resetTimer = () => {
-    const expirationTime = Math.floor(Date.now() / 1000) + 600;
+    const expirationTime = Math.floor(Date.now() / 1000) + 300;
     localStorage.setItem("otpExpirationTime", expirationTime.toString());
-    setTimeLeft(600);
+    setTimeLeft(300);
+    setShowResend(false);
     startTimer();
   };
 
@@ -112,20 +117,31 @@ export default function ForgetPasswordOTPInput() {
       return;
     }
     setError("");
+    showSpinner(); // Show spinner while verifying OTP
+
     try {
       const response = await verifyOTP(otp);
       if (response.status === "success") {
         setOtpAtom({ ...otpAtom, otp });
         setLoginStep(EnterNewPassword_Step);
+      } else {
+        setError("Invalid OTP. Please try again.");
       }
     } catch {
       setError("Invalid OTP. Please try again.");
+    } finally {
+      hideSpinner(); // Hide spinner after process
     }
   };
 
   const handleBackToLogin = () => {
-    localStorage.removeItem("otpExpirationTime"); // Remove stored timer so new OTP starts fresh
-    setLoginStep(Login_Step);
+    const confirmBack = window.confirm(
+      "Are you sure you want to go back to the login page? You will need to request a new OTP if you return."
+    );
+    if (confirmBack) {
+      localStorage.removeItem("otpExpirationTime");
+      setLoginStep(Login_Step);
+    }
   };
 
   return (
@@ -143,43 +159,59 @@ export default function ForgetPasswordOTPInput() {
           {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, "0")}
         </Typography>
 
-        <Button
-          disabled={timeLeft > 0}
-          onClick={handleResend}
-          sx={{
-            mt: 2,
-            borderRadius: 5,
-            color: timeLeft > 0 ? theme.palette.text.disabled : theme.palette.primary.main,
-            fontSize: "14px",
-            textDecoration: "underline",
-            fontWeight: 700,
-            padding: "0px",
-            ":hover": {
-              border: "none",
-              backgroundColor: timeLeft > 0 ? "transparent" : theme.palette.background.default,
-            },
-          }}
-        >
-          Resend OTP
-        </Button>
+        {showResend && (
+          <Button
+            onClick={handleResend}
+            sx={{
+              mt: 2,
+              borderRadius: 5,
+              color: theme.palette.primary.main,
+              fontSize: "14px",
+              textDecoration: "underline",
+              fontWeight: 700,
+              padding: "0px",
+              ":hover": {
+                backgroundColor: theme.palette.background.default,
+              },
+            }}
+          >
+            Resend OTP
+          </Button>
+        )}
 
-        <Button
-          fullWidth
-          variant="contained"
-          sx={{ mt: 5, backgroundColor: "#5611B1", borderRadius: "8px" }}
-          onClick={handleVerify}
-        >
-          Verify OTP
-        </Button>
+        {/* Buttons in a single row */}
+        
+          <Box sx={{ display: "flex", justifyContent: "space-between", mt: 5 }}>
+  <Button
+    variant="outlined" // Change to "outlined" for the border
+    sx={{
+      color: "#5611B1",
+      borderColor: "#5611B1", // Outline color
+      borderRadius: "8px",
+      textAlign: "center",
+      px: 3, // Padding for better spacing
+      "&:hover": {
+        backgroundColor: "rgba(86, 17, 177, 0.1)", // Light purple background on hover
+      },
+    }}
+    onClick={handleBackToLogin}
+  >
+    Back to Login
+  </Button>
 
-        <Button
-          fullWidth
-          variant="text"
-          sx={{ mt: 2, color: "#5611B1" }}
-          onClick={handleBackToLogin}
-        >
-          Back to Login
-        </Button>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#5611B1",
+              borderRadius: "8px",
+              textAlign: "center",
+              px: 4, // Padding for better button size
+            }}
+            onClick={handleVerify}
+          >
+            Verify OTP
+          </Button>
+        </Box>
       </Card>
     </Box>
   );
