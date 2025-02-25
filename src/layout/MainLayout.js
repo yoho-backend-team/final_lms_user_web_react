@@ -6,10 +6,9 @@ import { getInstructorDetails, getStudentDetails } from "store/atoms/authorized-
 import axios from "axios";
 
 const MainLayout = () => {
-
-  function liveupdated(){
-     const user2 = getStudentDetails();
+    const user2 = getStudentDetails();
      const user = getInstructorDetails();
+  function liveupdated(){
     if(user){
        axios.post(`${process.env.REACT_APP_URL}/online`,{user})
     }else{
