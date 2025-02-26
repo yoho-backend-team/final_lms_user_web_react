@@ -133,6 +133,10 @@ const months = [
   "July", "August", "September", "October", "November", "December"
 ];
 
+
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 5 }, (_, i) => currentYear - i);
+
 const getCurrentMonth = () => {
   const date = new Date();
   return months[date.getMonth()];
@@ -141,6 +145,7 @@ const getCurrentMonth = () => {
 const Attendance = () => {
   const classes = useStyles();
   const [selectedMonth, setSelectedMonth] = useState(getCurrentMonth());
+  const [selectedYear, setSelectedYear] = useState(currentYear);
   const [attendance, setAttendance] = useState([]);
   const [attendance_data, setAttendanceData] = useState([]);
   const [attendance_report, setAttendance_report] = useState(null);
@@ -275,27 +280,62 @@ const Attendance = () => {
                   marginBottom: "20px",
                 }}
               >
-                <FormControl className={classes.formControl}>
-                  <Select
-                    fullWidth
-                    id="month-select"
-                    size="small"
-                    value={selectedMonth}
-                    onChange={handleChange}
-                    IconComponent={ExpandMoreIcon}
-                    sx={{
-                      border: "1px solid #5611B1",
-                      backgroundColor: "white",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    {months.map((month, index) => (
-                      <MenuItem key={index} value={month}>
-                        {month}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <Box
+  sx={{
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    marginBottom: "20px",
+    width:"100%",
+  }}
+>
+  {/* Month Selector */}
+  <FormControl className={classes.formControl}>
+    <Select
+      fullWidth
+      id="month-select"
+      size="small"
+      value={selectedMonth}
+      onChange={handleChange}
+      IconComponent={ExpandMoreIcon}
+      sx={{
+        border: "1px solid #5611B1",
+        backgroundColor: "white",
+        borderRadius: "8px",
+      }}
+    >
+      {months.map((month, index) => (
+        <MenuItem key={index} value={month}>
+          {month}
+        </MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+
+  {/* Year Selector */}
+  <FormControl className={classes.formControl}>
+    <Select
+      fullWidth
+      id="year-select"
+      size="small"
+      value={selectedYear}
+      onChange={(e) => setSelectedYear(e.target.value)}
+      IconComponent={ExpandMoreIcon}
+      sx={{
+        border: "1px solid #5611B1",
+        backgroundColor: "white",
+        borderRadius: "8px",
+      }}
+    >
+      {years.map((year, index) => (
+        <MenuItem key={index} value={year}>
+          {year}
+        </MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+</Box>
+
                 
                 <Box className={classes.mobileCreateTicketContainer}>
                   <Button
@@ -413,6 +453,7 @@ backgroundColor: "#dcdcdc"
                 handleMonthChange={handleChange}
                 setSelectedMonth={setSelectedMonth}
                 selectedMonth={selectedMonth}
+                selectedYear={selectedYear}
               />
             </Grid>
           </Grid>
