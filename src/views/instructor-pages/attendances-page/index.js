@@ -215,7 +215,7 @@ const Attendance = () => {
 
   useEffect(() => {
     getAttedenceDetails(selectedMonth);
-  }, []);
+  }, [selectedMonth]);
 
   if (loading) {
     return <CircularProgress />;
@@ -362,7 +362,14 @@ const Attendance = () => {
               <Box className={classes.statsContainer}>
   <Box 
     className={classes.statsBox}
-    sx={{ backgroundColor: "#FFE896", minWidth: "180px", minHeight: "120px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", 
+    sx={{ backgroundColor: "#FFE896",
+       minWidth: "180px",
+        minHeight: "120px",
+         display: "flex", 
+        
+         flexDirection: "column", 
+         justifyContent: "center",
+          alignItems: "center", 
       transition: "background-color 0.3s ease",
 '&:hover': {
 backgroundColor: "#dcdcdc"
