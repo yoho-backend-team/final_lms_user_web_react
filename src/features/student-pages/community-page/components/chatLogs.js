@@ -10,7 +10,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const ChatLog = ({ socket, Messages }) => {
   const instructor = getInstructorDetails();
   const chatEndRef = useRef(null);
-  const [messages, setMessages] = useState(Message);
+  const [messages, setMessages] = useState(Messages);
 
   useEffect(() => {
     setMessages(Messages);
