@@ -34,16 +34,11 @@ const UpdatesCard = (props,notification) => {
         >
          
           <Typography
-
-  variant="h3"
-  sx={{ fontWeight: 'bold', color: 'black', fontFamily: 'poppins' }}
->
-  Updates
-</Typography>
-
-
-          
-
+            variant="h4"
+            sx={{ fontWeight: 600, color: "black", fontFamily: "poppins" ,fontSize: 18 }}
+          >
+            Updates{" "}
+          </Typography>
           <Typography
             color="secondary"
             sx={{ fontWeight: 400, fontFamily: "poppins", fontSize: 14 }}
