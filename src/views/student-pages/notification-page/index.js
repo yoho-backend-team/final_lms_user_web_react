@@ -11,6 +11,7 @@ import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
 import { deleteNotification, updateNotificationStatus } from "features/student-pages/notification-page/services";
 import getAllStudentNotifications from "features/common/redux/studentThunks";
+import BackgroundImage from 'assets/images/background/student.png';
 
 const StudentNotificationList = () => {
     const navigate = useNavigate();
@@ -71,6 +72,15 @@ const StudentNotificationList = () => {
     };
 
     return (
+        <Box
+      sx={{
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "50vh",
+        p: 3,
+      }}
+    >
         <Box sx={{ padding: "70px 39px 20px 40px", zIndex: 1000 }}>
             <Box sx={{ display: 'flex', justifyContent: "space-between" }}>
                 <IconButton onClick={handleBack} sx={{ display: 'flex', gap: "20px", ":hover": { background: "skyblue" } }}>
@@ -111,6 +121,7 @@ const StudentNotificationList = () => {
                     handleDelete={handleDelete}
                 />
             </Modal>
+        </Box>
         </Box>
     );
 };

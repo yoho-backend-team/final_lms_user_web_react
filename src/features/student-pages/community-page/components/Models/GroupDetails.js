@@ -13,174 +13,121 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
 
-
-
-const CustomAvatar = ({ src, alt, size = 60 }) => (
+const CustomAvatar = ({ src, alt, size = 48 }) => (
   <Avatar
     src={src ? getImageUrl(src) : profilePlaceholder}
     alt={alt}
     sx={{
       width: size,
       height: size,
-      border: "2px solid #ddd",
-      boxShadow: 2,
+      border: "1px solid #ddd",
+      boxShadow: 1,
     }}
   />
 );
 
 const GroupDetails = ({ currentChat, setViewGroup }) => {
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        overflowY: "auto",
-        padding: "16px",
-        backgroundColor: "#fff",
-      }}
-    >
-      {/* Back Button */}
-      <IconButton
-        onClick={() => setViewGroup(false)}
+    <Box sx={{ height: "100vh", overflowY: "auto", backgroundColor: "#fff" }}>
+      {/* Top Section with Background Image */}
+      <Box
         sx={{
-          marginBottom: "16px",
-          color: "#4caf50",
-          "&:hover": {
-            backgroundColor: "#4caf50",
-            color: "#fff",
+          position: "relative",
+          width: "100%",
+          height: "220px",
+          backgroundImage: `url(${
+            currentChat?.batch?.course?.image ? getImageUrl(currentChat?.batch?.course?.image) : imagePlaceholder
+          })`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          display: "flex",
+          alignItems: "flex-end",
+          padding: "16px",
+          color: "white",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            top: 0,
+            left: 0,
+            background: "linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0))",
           },
         }}
       >
-        <ArrowBackIcon />
-      </IconButton>
-
-      {/* Group Image and Details */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          marginBottom: "24px",
-        }}
-      >
-        <Box
+        <IconButton
+          onClick={() => setViewGroup(false)}
           sx={{
-            width: "30%",
-            maxWidth: "300px",
-            height: "130px",
-            backgroundImage: `url(${currentChat?.batch?.course?.image ? getImageUrl(currentChat?.batch?.course?.image) : imagePlaceholder})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            borderRadius: 2,
-            // boxShadow: 3,
-            marginBottom: "16px",
-          }}
-        />
-        <Typography
-          variant="h5"
-          sx={{
-            fontWeight: "bold",
-            textAlign: "center",
-            color: "#333",
-            wordWrap: "break-word",
-            marginBottom: "8px",
+            position: "absolute",
+            top: "12px",
+            left: "12px",
+            color: "white",
+            backgroundColor: "rgba(255,255,255,0.2)",
+            "&:hover": { backgroundColor: "rgba(255,255,255,0.3)" },
           }}
         >
-          {currentChat?.batch?.batch_name || "Group Name"}
-        </Typography>
-        <Typography
-          variant="body2"
-          sx={{
-            textAlign: "center",
-            fontStyle: "italic",
-            color: "#555",
-          }}
-        >
-          {currentChat?.batch?.description || "No description available."}
-        </Typography>
+          <ArrowBackIcon />
+        </IconButton>
+        <Box sx={{ position: "relative", zIndex: 2 }}>
+          <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+            {currentChat?.batch?.batch_name || "Group Name"}
+          </Typography>
+          <Typography variant="body2" sx={{ opacity: 0.9 }}>
+            {currentChat?.batch?.description || "No description available."}
+          </Typography>
+        </Box>
       </Box>
 
-      {/* Admins Section */}
-      <Typography
-        variant="h6"
-        sx={{
-          fontWeight: "bold",
-          marginBottom: "8px",
-          color: "#333",
-        }}
-      >
-        Admins
-      </Typography>
-      <List sx={{ marginBottom: "16px" }}>
-        {currentChat?.admin?.map((admin) => (
-          <ListItem
-            key={admin.id}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              padding: "8px 16px",
-            }}
-          >
-            <ListItemAvatar>
-              <CustomAvatar src={admin.image} alt={admin.full_name} size={50} />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "#333",
-                    fontWeight: "500",
-                  }}
-                >
-                  {admin.full_name}
-                </Typography>
-              }
-            />
-          </ListItem>
-        ))}
-      </List>
+      {/* Group Members Section */}
+      <Box sx={{ padding: "16px" }}>
+        {/* Admins Section */}
+        <Typography variant="body2" sx={{ fontWeight: "bold", color: "#666", mb: 1 }}>
+          Admins
+        </Typography>
+        <List sx={{ padding: 0 }}>
+          {currentChat?.admin?.map((admin) => (
+            <ListItem
+              key={admin.id}
+              sx={{
+                padding: "10px 16px",
+                "&:hover": { backgroundColor: "#f5f5f5" },
+              }}
+            >
+              <ListItemAvatar>
+                <CustomAvatar src={admin.image} alt={admin.full_name} size={40} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={<Typography sx={{ fontWeight: "500", color: "#333" }}>{admin.full_name}</Typography>}
+                secondary="Admin"
+                secondaryTypographyProps={{ sx: { color: "#888", fontSize: "12px" } }}
+              />
+            </ListItem>
+          ))}
+        </List>
 
-      {/* Users Section */}
-      <Typography
-        variant="h6"
-        sx={{
-          fontWeight: "bold",
-          marginBottom: "8px",
-          color: "#333",
-        }}
-      >
-        Users
-      </Typography>
-      <List>
-        {currentChat?.users?.map((user) => (
-          <ListItem
-            key={user.id}
-            sx={{
-              
-              display: "flex",
-              alignItems: "center",
-              padding: "8px 16px",
-            }}
-          >
-            <ListItemAvatar>
-              <CustomAvatar src={user.image} alt={user.full_name} size={50} />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: "#333",
-                    fontWeight: "400",
-                  }}
-                >
-                  {user.full_name}
-                </Typography>
-              }
-            />
-          </ListItem>
-        ))}
-      </List>
+        {/* Users Section */}
+        <Typography variant="body2" sx={{ fontWeight: "bold", color: "#666", mt: 3, mb: 1 }}>
+          Participants
+        </Typography>
+        <List sx={{ padding: 0 }}>
+          {currentChat?.users?.map((user) => (
+            <ListItem
+              key={user.id}
+              sx={{
+                padding: "10px 16px",
+                "&:hover": { backgroundColor: "#f5f5f5" },
+              }}
+            >
+              <ListItemAvatar>
+                <CustomAvatar src={user.image} alt={user.full_name} size={40} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={<Typography sx={{ fontWeight: "500", color: "#333" }}>{user.full_name}</Typography>}
+              />
+            </ListItem>
+          ))}
+        </List>
+      </Box>
     </Box>
   );
 };

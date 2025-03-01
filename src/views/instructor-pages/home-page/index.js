@@ -33,7 +33,7 @@ import { Link } from "react-router-dom";
 import { useSocket } from "context/instructorSocket";
 import { setNotifications, addNotification } from "features/common/redux/slices";
 import { selectNotificationList } from "features/common/redux/selector";
-
+import BackgroundImage from 'assets/images/background/instructor.png'; 
 const InstructorDashBoard = () => {
   const dispatch = useDispatch()
   const reports = useSelector(selectInstructorDashboard)
@@ -75,6 +75,15 @@ const InstructorDashBoard = () => {
  console.log(NotificationList,"NotificationList")
 
   return (
+    <Box
+      sx={{
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        p: 3,
+      }}
+    >
     <Grid
       container
       p={tabView ? 4 : 8}
@@ -381,6 +390,7 @@ const InstructorDashBoard = () => {
           </Box>
       </Box>
     </Grid>
+        </Box>
   );
 };
 

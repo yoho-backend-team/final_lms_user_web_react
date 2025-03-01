@@ -26,6 +26,8 @@ import getAllReports from "features/student-pages/home-page/redux/thunks.js";
 import { selectStudentNotifications } from "features/common/redux/studentSelector.js";
 import { getInstituteDetails, getStudentDetails, getStudentInstituteDetails } from "store/atoms/authorized-atom.js";
 import ReactTour from 'reactour';
+import BackgroundImage from 'assets/images/background/student.png'; 
+
 
 const StudentDashboard = () => {
   const theme = useTheme();
@@ -141,95 +143,105 @@ const StudentDashboard = () => {
     },
     // Add more steps as needed
   ];
-
-  return (
-    <>
-      <ReactTour
-        steps={steps}
-        isOpen={isTourOpen}
-        onRequestClose={() => setIsTourOpen(false)}
-        rounded={5}
-        accentColor="#5cbfba"
-        className="tour" // Add a class for custom styling
-      />
-      <Grid container p={12}>
-        <Grid item xs={12} sm={4} className="MainGrid-1">
-          <Card sx={{ boxShadow: "none" }}>
-            <Box>
-              <img
-                src={studentheaderpic}
-                alt="account-banner"
-                style={{ height: 80, width: "100%" }}
-              />
-            </Box>
-            <Grid
-              container
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Grid xs={8}>
-                <Box p={2} sx={{ mt: -8 }}>
-                  <Avatar
-                    alt="user-name"
-                    src={student.profileImage}
-                    sx={{ height: 60, width: 60, borderRadius: 2, mb: 1 }}
-                  />
-
-                  <Box>
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        fontWeight: 600,
-                        color: "black",
-                        fontFamily: "poppins",
-                      }}
-                    >
-                      {reports?.user ? `${reports.user.first_name} ${reports.user.last_name}` : 'Unknown User'}
-                    </Typography>
-                    <Box sx={{ display: "flex ", mt: 1 }}>
+return (
+    <Box
+      sx={{
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        p: 3,
+      }}
+    >
+      <>
+        <ReactTour
+          steps={steps}
+          isOpen={isTourOpen}
+          onRequestClose={() => setIsTourOpen(false)}
+          rounded={5}
+          accentColor="#5cbfba"
+          className="tour"
+        />
+  
+        <Grid container p={12}>
+          <Grid item xs={12} sm={4} className="MainGrid-1">
+            <Card sx={{ boxShadow: "none" }}>
+              <Box>
+                <img
+                  src={studentheaderpic}
+                  alt="account-banner"
+                  style={{ height: 80, width: "100%" }}
+                />
+              </Box>
+  
+              <Grid
+                container
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Grid item xs={8}>
+                  <Box p={2} sx={{ mt: -8 }}>
+                    <Avatar
+                      alt="user-name"
+                      src={student.profileImage}
+                      sx={{ height: 60, width: 60, borderRadius: 2, mb: 1 }}
+                    />
+                    <Box>
                       <Typography
-                        color="black"
+                        variant="h5"
                         sx={{
-                          mr: 1,
                           fontWeight: 600,
-                          fontSize: 12,
+                          color: "black",
                           fontFamily: "poppins",
                         }}
                       >
-                        Student ID :
+                        {reports?.user
+                          ? `${reports.user.first_name} ${reports.user.last_name}`
+                          : "Unknown User"}
                       </Typography>
-                      <Typography
-                        sx={{
-                          fontWeight: 500,
-                          fontSize: 12,
-                          fontFamily: "poppins",
-                        }}
-                      >
-                        {reports?.user?.id}
-                      </Typography>
+                      <Box sx={{ display: "flex ", mt: 1 }}>
+                        <Typography
+                          color="black"
+                          sx={{
+                            mr: 1,
+                            fontWeight: 600,
+                            fontSize: 12,
+                            fontFamily: "poppins",
+                          }}
+                        >
+                          Student ID :
+                        </Typography>
+                        <Typography
+                          sx={{
+                            fontWeight: 500,
+                            fontSize: 12,
+                            fontFamily: "poppins",
+                          }}
+                        >
+                          {reports?.user?.id}
+                        </Typography>
+                      </Box>
                     </Box>
                   </Box>
-                </Box>
+                </Grid>
+                <Grid item xs={4}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    size="medium"
+                    sx={{ p: 1, px: 2, borderRadius: 5 }}
+                    onClick={handleEditProfileClick}
+                  >
+                    View Profile
+                  </Button>
+                </Grid>
               </Grid>
-              <Grid xs={4}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  size="medium"
-                  sx={{ p: 1, px: 2, borderRadius: 5 }}
-                  onClick={handleEditProfileClick}
-                >
-                  View Profile
-                </Button>
-              </Grid>
-            </Grid>
-
-            <Grid container>
+              <Grid container>
               <Grid item xs={12} alignItems="center">
-                <Typography
+               <Typography
                   variant="h4"
                   sx={{
                     color: 'black',
@@ -302,114 +314,143 @@ const StudentDashboard = () => {
                 ))}
               </Grid>
             </Grid>
-            <Box sx={{ px: 2 }}>
-              <Card
-                sx={{
-                  borderRadius: "10px 10px 0px 0px",
-                  border: "1px solid ",
-                  borderColor: theme.palette.secondary.main,
-                  backgroundColor: theme.palette.secondary.light,
-                }}
-              >
-                <Grid
-                  container
+
+  
+              <Box sx={{ px: 2 }}>
+                <Card
                   sx={{
-                    justifyContent: "center",
-                    display: "flex",
-                    alignItems: "center",
-                    p: 2,
+                    borderRadius: "10px 10px 0px 0px",
+                    border: "1px solid ",
+                    borderColor: theme.palette.secondary.main,
+                    backgroundColor: theme.palette.secondary.light,
                   }}
                 >
-                  <Grid item xs={6}>
-                    <Typography
-                      sx={{
-                        fontFamily: "poppins",
-                        fontWeight: 700,
-                        fontSize: 15,
-                        color: "black",
-                      }}
-                    >
-                      Institute Name :
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontFamily: "poppins",
-                        fontWeight: 500,
-                        fontSize: 12,
-                        color: "black",
-                        mt: 2,
-                      }}
-                    >
-                      {reports?.institute?.institute_name}, Vellore
-                    </Typography>
-                  </Grid>
                   <Grid
-                    item
-                    xs={6}
-                    sx={{ justifyContent: "center", display: "flex" }}
+                    container
+                    sx={{
+                      justifyContent: "center",
+                      display: "flex",
+                      alignItems: "center",
+                      p: 2,
+                    }}
                   >
-                    <Avatar
-                      src={instituteimage}
-                      sx={{ height: 100, width: 100, backgroundColor: "white" }}
-                    ></Avatar>
+                    <Grid item xs={6}>
+                      <Typography
+                        sx={{
+                          fontFamily: "poppins",
+                          fontWeight: 700,
+                          fontSize: 15,
+                          color: "black",
+                        }}
+                      >
+                        Institute Name :
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: "poppins",
+                          fontWeight: 500,
+                          fontSize: 12,
+                          color: "black",
+                          mt: 2,
+                        }}
+                      >
+                        {reports?.institute?.institute_name}, Vellore
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={6}
+                      sx={{ justifyContent: "center", display: "flex" }}
+                    >
+                      <Avatar
+                        src={instituteimage}
+                        sx={{ height: 100, width: 100, backgroundColor: "white" }}
+                      />
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Card>
-            </Box>
-          </Card>
-          <Grid item xs={12}>
+                </Card>
+              </Box>
+            </Card>
             <TicketStatusCard />
           </Grid>
+  
+          {/* Middle Section */}
+          <Grid item xs={12} sm={6} md={5.5} lg={2} xl={4}>
+            <Grid item xs={12} px={3} mb={2}>
+              <CourseCard />
+            </Grid>
+            <Grid item xs={12} px={3}>
+              <AttendanceCard />
+            </Grid>
+            <Grid item xs={12} px={3}>
+              <PaymentsCard />
+            </Grid>
+          </Grid>
+  
+          {/* Updates Section */}
+          <Grid item xs={12} sm={4} md={8} lg={2} xl={4} className="MainGrid-3">
+            <UpdatesCard
+              image={studentdashboardimage}
+              notification={Notification}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={6} md={5.5} lg={2} xl={4}>
-        <Grid item xs={12} px={3} mb={2}>
-        <CourseCard />        
-        </Grid>
-        {/* <Grid item xs={12} sm={4} md={8} lg={2} xl={4} className="MainGrid-3">
-        <UpdatesCard image={studentdashboardimage}  notification={Notification}/>
-      </Grid> */}
-        
-        <Grid item xs={12} px={3}>
-           <AttendanceCard />
-        </Grid>
-
-        <Grid item xs={12} px={3}>
-           <PaymentsCard />
-        </Grid>
-
-      </Grid>
-      <Grid item xs={12} sm={4} md={8} lg={2} xl={4} className="MainGrid-3">
-          <UpdatesCard image={studentdashboardimage} notification={Notification} />
-        </Grid>
-      </Grid>
-      
-      
-      <Box sx={{ display: 'flex', backdropFilter:"blur(4px)",padding : "25px 60px 26px 58px",background:"#CCCCCC29",borderRadius:"8px", justifyContent: "space-between", width : "inherit",marginTop:'20px' }} >
-          <Box sx={{ padding : "10px 19px", backgroundColor: "#FFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px",display:"flex", gap: "10px",alignItems: "center"}} >
-              <Typography sx={{ color : "#000000", fontSize:"16px",fontWeight:900}} >Course name: </Typography>
-              <Typography sx={{ color : "#000000", fontSize: "16px", fontWeight:600}} >{reports?.courses?.[0]?.course?.course_name}</Typography>
+  
+        {/* Bottom Section */}
+        <Box
+          sx={{
+            display: "flex",
+            backdropFilter: "blur(4px)",
+            padding: "25px 60px 26px 58px",
+            background: "#CCCCCC29",
+            borderRadius: "8px",
+            justifyContent: "space-between",
+            width: "inherit",
+            marginTop: "20px",
+          }}
+        >
+          <Box
+            sx={{
+              padding: "10px 19px",
+              backgroundColor: "#FFFFFF",
+              boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)",
+              borderRadius: "27px",
+              display: "flex",
+              gap: "10px",
+              alignItems: "center",
+            }}
+          >
+            <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 900 }}>
+              Course name:
+            </Typography>
+            <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 600 }}>
+              {reports?.courses?.[0]?.course?.course_name}
+            </Typography>
           </Box>
-          <Box sx={{ padding: "10px 19px", backgroundColor: "#FFFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px", display: "flex", gap: "10px", alignItems: "center" }} >
-            <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 900 }} >Total Instructors: {reports?.batches?.[0]?.batch?.classes?.[0]?.instructors?.length}</Typography>
-            <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 600 }} >{personalInfo?.courses?.length}</Typography>
-          </Box>
-          <Box sx={{ padding: "10px 19px", backgroundColor: "#FFFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px", display: "flex", gap: "10px", alignItems: "center" }} >
-            <Box sx={{ display: "inline-flex", gap: "10px" }} >
-              <Typography sx={{ color: "#000000", fontWeight: 900, fontSize: "16px" }} >Branch: </Typography>
-              <Typography sx={{ color: "#000000", fontWeight: 600, fontSize: "16px" }} >{reports?.branch?.branch_identity}</Typography>
-            </Box>
-            <Box>
-              <img src={BranchIcon} alt="branchicon" />
-            </Box>
-          </Box>
-          <Box sx={{ padding: "10px 19px", backgroundColor: "#FFFFFF", boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)", borderRadius: "27px", display: "flex", gap: "10px", alignItems: "center" }} >
-            <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 900 }} >Projects: </Typography>
-            <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 600 }} >{reports?.courses?.[0]?.course?.category?.category_name}</Typography>
+  
+          <Box
+            sx={{
+              padding: "10px 19px",
+              backgroundColor: "#FFFFFF",
+              boxShadow: "0px 0px 25px 0px rgba(0, 0, 0, 0.08)",
+              borderRadius: "27px",
+              display: "flex",
+              gap: "10px",
+              alignItems: "center",
+            }}
+          >
+            <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 900 }}>
+              Projects:
+            </Typography>
+            <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 600 }}>
+              {reports?.courses?.[0]?.course?.category?.category_name}
+            </Typography>
           </Box>
         </Box>
-  
-    </>
+      </>
+    </Box>
   );
+  
 };
 
 export default StudentDashboard;
