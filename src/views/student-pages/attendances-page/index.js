@@ -145,8 +145,9 @@ const Attendance = () => {
 
   const steps = [
     {
-      target: ".attendance-title",
+      target: "body",
       content: "Welcome to the Attendance page! Here, you can track your attendance records.",
+      placement: "center",
       disableBeacon: true,
     },
     {
@@ -189,7 +190,7 @@ console.log(attendance_data,'attendance')
       }}
     >
 
-<Joyride
+{/*<Joyride
         steps={steps}
         run={runTour}
         continuous
@@ -198,7 +199,7 @@ console.log(attendance_data,'attendance')
         spotlightClicks
         disableScrolling
         styles={{ options: { zIndex: 10000 } }}
-      />
+      />*/}
 
       <Box className={classes.card}>
         {/* Header Section */}
