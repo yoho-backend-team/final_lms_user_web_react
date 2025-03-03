@@ -122,7 +122,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
 
   console.log(classDetails,"classDetails")
   return (
-    <Box sx={{ paddingTop: "20px", width: "100%", overflow: "auto" }}>
+    <Box sx={{ paddingTop: "20px", width: "100%", overflow: "auto",scrollBehavior: "smooth" }}>
       <Breadcrumbs
         aria-label="breadcrumb"
         separator={<NavigateNext sx={{ color: "blue" }} />}
@@ -132,9 +132,10 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
           underline="hover"
           style={{
             color: "#484848",
-            fontSize: "28px",
+            fontSize: "20px",
             fontWeight: "700",
-            lineHeight: "22px",
+            lineHeight: "12px",
+            
           }}
           
           onClick={() => handleBack()}
@@ -145,7 +146,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
           underline="hover"
           sx={{
             color: "#495057",
-            fontSize: "25px",
+            fontSize: "18px",
             fontWeight:"500",
             lineHeight: "32px",
           }}
@@ -156,7 +157,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
         </p>
         <Typography
           color="text.primary"
-          sx={{ fontSize: "13px", fontWeight: 500, lineHeight: "22px" }}
+          sx={{ fontSize: "14px", fontWeight: 500, lineHeight: "22px" }}
         >
           {group?.charAt(0).toUpperCase()+group.slice(1)} Class
         </Typography>
@@ -170,6 +171,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
             backgroundColor: "white",
             height: "100vh",
             overflow: "auto",
+            scrollBehavior: "smooth"
           }}
         >
           <Box sx={{ padding: "20px" }}>
@@ -787,11 +789,12 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                       borderRadius: "10px",
                       boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.14)",
                       minHeight: "450px",
-                      maxHeight: "200px",
+                      Height: "450px",
                       overflow: "auto",
+                      scrollBehavior: "smooth"
                     }}
                   >
-                    <Box sx={{ overflow: "auto" }}>
+                    <Box sx={{ overflow: "auto" ,scrollBehavior: "smooth"}}>
                       <Box
                         sx={{
                           display: "flex",

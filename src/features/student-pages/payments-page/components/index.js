@@ -1108,6 +1108,7 @@ const Payment = () => {
                         {item.type}
                       </Typography>
 
+
                       <Typography
                         variant="body1"
                         component={Link}
@@ -1132,6 +1133,7 @@ const Payment = () => {
                       >
                      view
                       </Typography>
+=======
                       {item.hasDue && (
             <button
               onClick={() => handlePayDue(item.id)}

@@ -14,6 +14,19 @@ export const getAndDecompress = (key, default_value) => {
     }
     return default_value;
   };
+
+  export const getAndDecompressForSub = async(key, default_value) => {
+    const details = Cookies.get(key);
+    if (details) {
+      try {
+        const decompressed = LZString.decompressFromBase64(details);
+        console.log("studnt,",decompressed)
+        return decompressed ? JSON.parse(decompressed) : default_value;
+      } catch (error) {
+        console.error('Error decompressing or parsing data:', error);
+      }
+    }
+  };
   
   export const compressAndStore = (key, value, expires) => {
     try {

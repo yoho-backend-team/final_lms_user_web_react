@@ -26,11 +26,16 @@ import toast from "react-hot-toast";
 import CustomCalendar from "features/student-pages/attendances-page/components/Calendar/CustomCalendar";
 import { getStudentDetails } from "store/atoms/authorized-atom";
 import { useNavigate } from "react-router-dom";
+import Joyride from "react-joyride";
 
 const months = [
   "January", "February", "March", "April", "May", "June", 
   "July", "August", "September", "October", "November", "December"
 ];
+
+const currentYear = new Date().getFullYear();
+const years = Array.from({ length: 5 }, (_, i) => currentYear - i);
+
 
 const useStyles = makeStyles({
   root: {
@@ -81,6 +86,7 @@ const useStyles = makeStyles({
 const Attendance = () => {
   const classes = useStyles();
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+  const [selectedYear, setSelectedYear] = useState(currentYear);
   const [attendance, setAttendance] = useState([]);
   const [attendance_data, setAttendanceData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -88,14 +94,16 @@ const Attendance = () => {
   const { showSpinner, hideSpinner } = useSpinner();
   const navigate = useNavigate();
   const date = new Date();
+  const [runTour, setRunTour] = useState(true);
 
-  const getAttedenceDetails = async (month) => {
+  const getAttedenceDetails = async (month, year) => {
     try {
       showSpinner();
       const user = getStudentDetails();
       const response = await Client.Student.attendance.get({
         userId: user.uuid, 
         month: month, 
+        year: year,
         instituteId: user.institute_id?.uuid
       });
       setAttendanceData(response?.data);
@@ -106,6 +114,7 @@ const Attendance = () => {
       hideSpinner();
     }
   };
+ console.log(attendance,"att")
   
   const handleChange = (event) => {
     const newMonth = event.target.value;
@@ -114,25 +123,86 @@ const Attendance = () => {
   };
 
   useEffect(() => {
-    getAttedenceDetails(selectedMonth);
+    getAttedenceDetails(selectedMonth, selectedYear);
+  }, [selectedMonth, selectedYear]);
+
+  useEffect(() => {
+    const checkElements = setInterval(() => {
+      const elementsExist =
+        document.querySelector(".attendance-title") &&
+        document.querySelector(".stats-container") &&
+        document.querySelector(".calendar-section") &&
+        document.querySelector(".ticket-button");
+
+      if (elementsExist) {
+        clearInterval(checkElements);
+        setRunTour(true);
+      }
+    }, 500);
+
+    return () => clearInterval(checkElements);
   }, []);
+
+  const steps = [
+    {
+      target: ".attendance-title",
+      content: "Welcome to the Attendance page! Here, you can track your attendance records.",
+      disableBeacon: true,
+    },
+    {
+      target: ".month-selector",
+      content: "Use this dropdown to select the month for which you want to view attendance.",
+      disableBeacon: true,
+    },
+    {
+      target: ".year-selector",
+      content: "Select the year for attendance records from this dropdown.",
+      disableBeacon: true,
+    },
+    {
+      target: ".calendar-section",
+      content: "This calendar provides a detailed view of your daily attendance records.",
+      disableBeacon: true,
+    },
+    {
+      target: ".ticket-button",
+      content: "Need help? Click here to create a support ticket related to attendance.",
+      disableBeacon: true,
+    },
+  ];
+
 
   if (loading) {
     return <CircularProgress />;
   }
-
+console.log(attendance_data,'attendance')
   const totalClasses = (attendance_data?.onlineClassCount ?? 0) + (attendance_data?.offlineClassCount ?? 0);
 
   return (
+
+    
     <Box
       className={classes.root}
+      
       sx={{ 
         padding: tabView ? "20px" : "56px 40px 17px 40px",
       }}
     >
+
+<Joyride
+        steps={steps}
+        run={runTour}
+        continuous
+        showSkipButton
+        disableOverlayClose
+        spotlightClicks
+        disableScrolling
+        styles={{ options: { zIndex: 10000 } }}
+      />
+
       <Box className={classes.card}>
         {/* Header Section */}
-        <Box
+        <Box className="attendance-title"
           sx={{
             display: "flex",
             justifyContent: "space-between",
@@ -178,7 +248,7 @@ const Attendance = () => {
             <Grid item xs={12} md={4}>
               <Box sx={{ padding: "0 20px" }}>
                 {/* Month Selector */}
-                <FormControl fullWidth sx={{ mb: 2 }}>
+                <FormControl fullWidth sx={{ mt: 3 }}  className="month-selector">
                   <Select
                     value={selectedMonth}
                     onChange={handleChange}
@@ -192,9 +262,29 @@ const Attendance = () => {
                   </Select>
                 </FormControl>
 
+                <FormControl fullWidth sx={{ mt: 2 }}  className="year-selector">
+          <Select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
+            {years.map((year, index) => (
+              <MenuItem key={index} value={year}>{year}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
                 {/* Stats Boxes */}
-                <Box className={classes.statsContainer}>
+                <Box
+                 sx={{
+                
+                  mt: "20px",
+    
+                }}
+                 className={classes.statsContainer}>
                   {[
+                    {
+                      title: "Classes Atten",
+                      color: "#FFF5D1",
+                      value: `${attendance_data?.attendedClassCount ?? 0}/${totalClasses}`,
+                      textColor: "#9F8015"
+                    },
                     {
                       title: "Present days",
                       color: "#D5FFDA",
@@ -207,21 +297,20 @@ const Attendance = () => {
                       value: attendance_data?.totalAbsentDays ?? 0,
                       textColor: "#A04A4A"
                     },
-                    {
-                      title: "Classes Atten",
-                      color: "#FFF5D1",
-                      value: `${attendance_data?.attendedClassCount ?? 0}/${totalClasses}`,
-                      textColor: "#9F8015"
-                    }
+                    
                   ].map((stat, index) => (
                     <Box
                       key={index}
                       sx={{
                         backgroundColor: stat.color,
-                        borderRadius: "10px",
+                        borderRadius: "0px",
                         padding: "20px",
                         width: tabView ? "100%" : "calc(50% - 10px)",
-                        boxSizing: "border-box"
+                        boxSizing: "border-box",
+                        transition: "background-color 0.3s ease",
+            '&:hover': {
+              backgroundColor: "#dcdcdc"
+            }
                       }}
                     >
                       <Typography 
@@ -246,11 +335,11 @@ const Attendance = () => {
                 </Box>
 
                 {/* Create Ticket Button */}
-                <Button
+                <Button  className="ticket-button"
                   fullWidth
                   variant="contained"
                   sx={{ 
-                    mt: 2,
+                    mt: 10,
                     backgroundColor: "#0D6EFD",
                     color: "white",
                     '&:hover': {
@@ -265,11 +354,14 @@ const Attendance = () => {
             </Grid>
 
             {/* Calendar Section */}
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={8} className="calendar-section">
               <CustomCalendar 
                 attendanceData={attendance} 
                 getAttedenceDetails={getAttedenceDetails} 
                 attendance_data={attendance_data}
+                setSelectedMonth={setSelectedMonth}
+                selectedMonth={selectedMonth}
+                selectedYear={selectedYear}
               />
             </Grid>
           </Grid>

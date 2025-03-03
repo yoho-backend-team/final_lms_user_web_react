@@ -10,9 +10,11 @@ import ChatHeader from "./ChatHeader";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ChatLog from "./chatLogs";
 import BottomBar from "./bottomBar";
+import ChatGroupDetails from "./Models/Chatgroupdetails";
 
 const Chat = ({ currentChat, socket, Messages, setMessages }) => {
   const theme = useTheme();
+  const [viewGroup, setViewGroup] = useState(false);
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [isConnected, setIsConnected] = useState(false);
 
@@ -71,20 +73,31 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
         flexDirection: "column",
       }}
     >
-      {currentChat ? (
+          {viewGroup ? (
+        <ChatGroupDetails 
+          currentChat={currentChat} 
+          setViewGroup={setViewGroup} 
+        />
+      ) : (
+      
+        currentChat ? (
         <Card
           sx={{
-            height: "100%",
+            height: "99%",
             width: "100%",
             display: "flex",
             flexDirection: "column",
             boxShadow: "none",
-            borderRadius: 0,
+            
+            borderRadius: "20px",  // Curved edges for the main card
             overflow: "hidden",
           }}
         >
           {/* Chat Header */}
-          <ChatHeader currentChat={currentChat} />
+          <ChatHeader 
+              currentChat={currentChat} 
+              onViewGroup={setViewGroup} 
+            />
 
           {/* Message Log */}
           <Box
@@ -129,7 +142,12 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
                 </Typography>
               </Box>
             </Box>*/}
-            <ChatLog socket={socket} Messages={Messages} />
+            <ChatLog
+  socket={socket}
+  Messages={Messages}
+  currentUserId={currentChat.currentUserId} // Replace with the actual user ID
+  setMessages={setMessages}
+/>
           </Box>
 
           {/* Bottom Bar */}
@@ -166,20 +184,22 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
               alt="No Chat Selected"
             />
             <Typography
-              sx={{
-                color: "blue",
-                fontSize: "14px",
-                fontWeight: 500,
-                lineHeight: "24px",
-                ml: "20px", // Add margin only for the text
-              }}
-            >
-              Send and receive messages here...
-            </Typography>
-          </Box>
-        </Box>
-      )}
-    </Box>
+      sx={{
+        color:"blue",
+        fontSize: "14px",
+        fontWeight: 500,
+        lineHeight: "24px",
+        ml: "20px", // Add margin only for the text
+      }}
+    >
+      Send and receive messages here...
+    </Typography>
+  </Box>
+  </Box>
+      )
+)}
+  </Box>
+
   );
 };
 

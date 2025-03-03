@@ -4,10 +4,9 @@ import Chart from "react-apexcharts";
 import { Card, Box } from "@mui/material";
 import { AttedenceBg } from "utils/images";
 
-const AttendanceCard = ({Attendance}) => {
-  const current_month = new Date().getMonth()
-  const attendance_data = Attendance?.find((atten ) => atten.month === current_month )
-  
+const AttendanceCard = ({ Attendance }) => {
+  const current_month = new Date().getMonth();
+  const attendance_data = Attendance?.find((atten) => atten.month === current_month);
 
   const options = {
     chart: {
@@ -15,13 +14,13 @@ const AttendanceCard = ({Attendance}) => {
       type: "radialBar",
     },
     series: [attendance_data?.total?.percentage || 76],
-    colors:["#5611B1"],
+    colors: ["#5611B1"],
     plotOptions: {
       radialBar: {
         hollow: {
           margin: 1,
           size: "30%",
-          rotate : "90deg"
+          rotate: "90deg",
         },
         dataLabels: {
           showOn: "always",
@@ -47,122 +46,133 @@ const AttendanceCard = ({Attendance}) => {
     labels: [""],
   };
 
- 
   return (
-    <>
-      <Card 
-      sx={{
-        p: 3, boxShadow: "none", 
-        background: `url("${AttedenceBg}")`,
-        backgroundSize: "cover", 
-        width: "369px",
-        height: "202px",
-        }}>
+    
+    <Card
+  sx={{
+    p: 3,
+    boxShadow: "0px 4px 10px rgba(0,0,0,0.1)", 
+    background: `url("${AttedenceBg}")`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundColor: "#fff", 
+    border: "1px solid #ddd",
+    borderRadius: "8px",
+    width: "369px",
+    height: "202px",
+    overflow: "hidden", 
+    boxSizing: "border-box", 
+    borderBottom: "1px solid #ddd", 
+  }}
+>
+
+      <Grid
+        container
+        sx={{
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+        }}
+      >
         <Grid
-          container
-          sx={{
-            justifyContent: "center",
-            alignItems: "center",
-            display: "flex",
-          }}
+          xs={12}
+          sx={{ justifyContent: "space-between", display: "flex" }}
         >
-          <Grid
-            xs={12}
-            sx={{ justifyContent: "space-between", display: "flex" }}
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: "bold",
+              fontFamily: "Poppins",
+              color: "#442189",
+              fontSize: "20px",
+            }}
           >
-            <Typography
-              variant="h4"
+            Attendance
+          </Typography>
+          <Typography
+            sx={{
+              fontWeight: 700,
+              letterSpacing: "-0.2px",
+              color: "#2F0C77",
+            }}
+          >
+            OverAll
+          </Typography>
+        </Grid>
+        
+        <Grid item xs={7} sx={{ mt: "10px" }}>
+          <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
+            <Box
               sx={{
-                fontWeight: "bold",
-                fontFamily: "poppins",
-                color: "#442189",
-                fontWeight: 900,
-                fontSize: "20px"
+                height: 16,
+                width: 16,
+                borderRadius: "50%",
+                backgroundColor: "#32D445",
               }}
-            >
-              Attendance
-            </Typography>
+            ></Box>
             <Typography
               sx={{
-                fontWeight: "semi-bold",
-                fontWeight: 700,
-                letterSpacing: "-0.2px",
+                fontFamily: "Poppins",
+                fontWeight: 500,
                 color: "#2F0C77",
               }}
             >
-              OverAll
+              OverAll {attendance_data?.total?.percentage}% Attendance
             </Typography>
-          </Grid>
-          <Grid item xs={7} sx={{ mt: "10px"}} >
-            <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
-              <Box
-                sx={{
-                  height: 16,
-                  width: 16,
-                  borderRadius: "100%",
-                  backgroundColor: "#32D445",
-                }}
-              ></Box>
-              <Typography
-                sx={{
-                  fontFamily: "poppins",
-                  fontWeight: 500,
-                  color: "#2F0C77",
-                }}
-              >
-                OverAll {attendance_data?.total?.percentage}% Attendance
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
-              <Box
-                sx={{
-                  height: 16,
-                  width: 16,
-                  borderRadius: "100%",
-                  backgroundColor: "#F6C92A",
-                }}
-              ></Box>
-              <Typography
-                sx={{
-                  fontFamily: "poppins",
-                  fontWeight: 500,
-                  color: "#2F0C77",
-                }}
-              >
-                12% Attendance Remaining
-              </Typography>
-            </Box>
-            <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
-              <Box
-                sx={{
-                  height: 16,
-                  width: 16,
-                  borderRadius: "100%",
-                  backgroundColor: "#FF1B1B",
-                }}
-              ></Box>
-              <Typography
-                sx={{
-                  fontFamily: "poppins",
-                  fontWeight: 500,
-                  color: "#2F0C77",
-                }}
-              >
-                {attendance_data?.absent?.percentage}% Days Absent
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={5} sx={{ mt: "30px"}} >
-            <Chart
-              options={options}
-              series={options.series}
-              type="radialBar"
-              height={300}
-            />
-          </Grid>
+          </Box>
+          <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
+            <Box
+              sx={{
+                height: 16,
+                width: 16,
+                borderRadius: "50%",
+                backgroundColor: "#F6C92A",
+              }}
+            ></Box>
+            <Typography
+              sx={{
+                fontFamily: "Poppins",
+                fontWeight: 500,
+                color: "#2F0C77",
+              }}
+            >
+              12% Attendance Remaining
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
+            <Box
+              sx={{
+                height: 16,
+                width: 16,
+                borderRadius: "50%",
+                backgroundColor: "#FF1B1B",
+              }}
+            ></Box>
+            <Typography
+              sx={{
+                fontFamily: "Poppins",
+                fontWeight: 500,
+                color: "#2F0C77",
+              }}
+            >
+              {attendance_data?.absent?.percentage}% Days Absent
+            </Typography>
+          </Box>
         </Grid>
-      </Card>
-    </>
+
+        {/* Fixed Chart Layout */}
+        <Grid item xs={5} sx={{ mt: "30px" }}>
+          <Chart
+            options={options}
+            series={options.series}
+            type="radialBar"
+            height={250} // Adjusted height to fit well inside the card
+            width={"100%"} // Ensures responsiveness
+          />
+        </Grid>
+      </Grid>
+    </Card>
   );
 };
 

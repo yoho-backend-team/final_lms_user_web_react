@@ -1,37 +1,30 @@
-const { Box, Typography } = require("@mui/material");
+import { Box, Typography } from "@mui/material";
+import { keyframes } from "@mui/system";
+
+const boomEffect = keyframes`
+  0% { transform: scale(1); box-shadow: none; }
+  50% { transform: scale(1.1); box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.3); }
+  100% { transform: scale(1.05); box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.25); }
+`;
 
 const PaymentCard = ({ icon, title, amount, style, border }) => {
   return (
-    // <Box
-    //   sx={{
-    //     display: "flex",
-    //     flexDirection: "row",
-    //     p: "12px 65px 13px 20px",
-    //     border: border && "1px solid #C3C3C3",
-    //     backgroundColor: style?.bg,
-    //     borderRadius: "10px",
-    //     gap: "18px",
-    //   }}
-    // >
     <Box
-  sx={{
-    display: "flex",
-    flexDirection: "row",
-    p: "12px 65px 13px 20px",
-    border: border && "1px solid #C3C3C3",
-    backgroundColor: style?.bg,
-    borderRadius: "10px",
-    gap: "18px",
-    transition: "transform 0.3s, box-shadow 0.3s, background-color 0.3s", // Smooth hover effect
-    "&:hover": {
-      backgroundColor: style?.hoverBg || "#F5F5F5", // Change background color on hover
-      boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)", // Add shadow effect
-      transform: "scale(1.02)", // Slightly enlarge the box on hover
-    },
-  }}
->
-  
-
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        p: "12px 65px 13px 20px",
+        border: border && "1px solid #C3C3C3",
+        backgroundColor: style?.bg,
+        borderRadius: "10px",
+        gap: "10px",
+        transition: "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out",
+        "&:hover": {
+          backgroundColor: style?.hoverBg || "#EAEAEA",
+          animation: `${boomEffect} 1s ease-in-out`,
+        },
+      }}
+    >
       <Box>{icon}</Box>
       <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
         <Box>
