@@ -4,21 +4,41 @@ import ChatHeader from "./ChatHeader";
 import ChatLog from "./chatLogs";
 import BottomBar from "./bottomBar";
 
-
 const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) => {
-  const isTablet = useMediaQuery("(max-width: 768px)"); // Check for tablet screen size
+  const isTablet = useMediaQuery("(max-width: 768px)"); 
 
   useEffect(() => {
+    // Handle incoming messages
     const handleMessage = (message) => {
       setMessages((prev) => [...prev, message]);
     };
 
-    socket?.on("newMessage", handleMessage);
+    // Ensure socket is initialized and listen for new messages
+    if (socket) {
+      socket.on("newMessage", handleMessage);
+    }
 
+    // Cleanup function to remove the listener
     return () => {
-      socket?.off("newMessage", handleMessage);
+      if (socket) {
+        socket.off("newMessage", handleMessage);
+      }
     };
   }, [socket, setMessages]);
+
+  // Function to send a message
+  const sendMessage = (messageContent) => {
+    if (socket && currentChat) {
+      const message = {
+        content: messageContent,
+        chatId: currentChat.id,
+        senderId: socket.id, 
+        timestamp: new Date().toISOString(),
+      };
+      socket.emit("sendMessage", message); 
+      setMessages((prev) => [...prev, message]); 
+    }
+  };
 
   return (
     <Box
@@ -28,9 +48,6 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#F6F6F6",
-        
-        
-        
       }}
     >
       {currentChat ? (
@@ -41,7 +58,7 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
             display: "flex",
             flexDirection: "column",
             boxShadow: "none",
-            borderRadius: "8px", // Modern rounded design
+            borderRadius: "8px", 
             backgroundColor: "#FFFFFF",
           }}
         >
@@ -52,11 +69,10 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
           <Box
             sx={{
               flex: 1,
-             
               overflowY: "auto",
               display: "flex",
               flexDirection: "column",
-              gap: 10
+              gap: 10,
             }}
           >
             {/* Chat Log */}
@@ -66,17 +82,11 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
           {/* Bottom Bar for Sending Messages */}
           <Box
             sx={{
-              
-            
-             
-              
-            paddingBottom:"1px", 
+              paddingBottom: "1px",
               borderTop: "1px solid #E0E0E0",
             }}
-
-            
           >
-            <BottomBar socket={socket} community={currentChat} />
+            <BottomBar socket={socket} community={currentChat} sendMessage={sendMessage} />
           </Box>
         </Card>
       ) : (
@@ -97,15 +107,15 @@ const Chat = ({ currentChat, socket, setCurrentChat, Messages, setMessages }) =>
             src="https://cdn-icons-png.flaticon.com/512/9388/9388030.png"
             alt="Group Chat Logo"
             sx={{
-              width: isTablet ? "100px" : "120px", // Adjust size for tablets
-              height: isTablet ? "100px" : "120px", // Adjust size for tablets
+              width: isTablet ? "100px" : "120px", 
+              height: isTablet ? "100px" : "120px", 
               borderRadius: "50%",
             }}
           />
           <Typography
             sx={{
               color: "#747474",
-              fontSize: isTablet ? "14px" : "16px", // Adjust font size for tablets
+              fontSize: isTablet ? "14px" : "16px", 
               fontWeight: 500,
               lineHeight: "24px",
             }}

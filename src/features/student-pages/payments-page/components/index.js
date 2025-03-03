@@ -1108,7 +1108,6 @@ const Payment = () => {
                         {item.type}
                       </Typography>
 
-<<<<<<< HEAD
                       <Typography
                         variant="body1"
                         component={Link}
@@ -1133,7 +1132,6 @@ const Payment = () => {
                       >
                      view
                       </Typography>
-=======
                       {item.hasDue && (
             <button
               onClick={() => handlePayDue(item.id)}
@@ -1171,7 +1169,6 @@ const Payment = () => {
           >
             View
           </button>
->>>>>>> 8af8f866a944d6af625d1e9e5bdbfecbc62ffc03
                     </div>
                   </Grid>
                 ))}
@@ -1185,4 +1182,4 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default Payment;     

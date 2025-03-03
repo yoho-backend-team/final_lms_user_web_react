@@ -276,7 +276,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useInstructorLogin } from "../services";
-import { useTabResponsive } from "utils/tabResponsive";
 import toast from "react-hot-toast";
 import { useSpinner } from "context/SpinnerProvider";
 import { useAtom } from "jotai";
@@ -284,6 +283,7 @@ import { instructorLoginStepAtom } from "store/atoms/authAtoms";
 import { ForgetPassword_Step } from "lib/constants";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
+// Validation schema
 const validationSchema = yup.object({
   email: yup.string("Enter your email").email("Enter a valid email").required("Email is required"),
   password: yup.string("Enter your password").min(8, "Password should be at least 8 characters").required("Password is required"),
@@ -354,8 +354,7 @@ const InstructorLoginForm = () => {
           <FormHelperText>{formik.touched.password && formik.errors.password}</FormHelperText>
         </FormControl>
 
-        
-         <Box display="flex" justifyContent="space-between" alignItems="center" mt={2} p={1} borderRadius={1} bgcolor="#f3f4f6">
+        <Box display="flex" justifyContent="space-between" alignItems="center" mt={2} p={1} borderRadius={1} bgcolor="#f3f4f6">
           <Typography fontSize={14} color="textSecondary" fontWeight={100}>Forgot Password?</Typography>
           <Link to="#" onClick={handleForgetPassword} style={{ fontSize: 14, color: "#666cff", textDecoration: "underline", fontWeight: 600 }}>
             Reset it
