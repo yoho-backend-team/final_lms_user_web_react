@@ -25,6 +25,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CustomPagination from "./customPaginaton";
 import TimelineComponent from "./Timeline";
+ 
 
 const styledInput = styled('input')({
   padding : "11.8px 14.8px 12px 14.8px",
@@ -42,11 +43,13 @@ const ActivityLog = ({data}) => {
 
 
   return (
+   
     <>
       <Box
         sx={{
           display: "flex",
           padding: "60px 40px 20px 40px",
+         
         }}
       >
         <Box

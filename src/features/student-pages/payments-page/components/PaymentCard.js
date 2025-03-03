@@ -51,3 +51,4 @@ const PaymentCardStudent = ({ icon, title, amount, style, border }) => {
 };
 
 export default PaymentCardStudent;
+ 

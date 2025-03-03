@@ -26,6 +26,7 @@ import { imagePlaceholder } from "utils/placeholders";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import PasswordReset from "features/instructor-pages/profile-page/components/ResetPassword";
 import { fileUpload } from "features/common/upload"; // Ensure this path is correct
+import BackgroundImage from 'assets/images/background/instructor.png';
 
 const ProfilePage = () => {
   const fileInputRef = useRef(null);
@@ -90,6 +91,15 @@ const ProfilePage = () => {
   };
 
   return (
+    <Box
+      sx={{
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        p: 3,
+      }}
+    >
     <Box sx={{ display: 'flex', height: '100vh', padding: '70px' }}>
       <Box
         sx={{
@@ -239,10 +249,10 @@ const ProfilePage = () => {
                         <Avatar
                           alt="user"
                           src={instructor?.image ? getImageUrl(instructor?.image) : imagePlaceholder}
-                          sx={{ width: 175, height: 175, mb: 2, ml: 10, border: '2px solid #0D6EFD' }}
+                          sx={{ width: 175, height: 175, mb: 2, ml: 15, border: '2px solid #0D6EFD' }}
                         />
                         {isEditMode && (
-                          <Button onClick={handleButtonClick} startIcon={<FileUploadOutlinedIcon />} sx={{ mt: 2 }}>
+                          <Button onClick={handleButtonClick} startIcon={<FileUploadOutlinedIcon />} sx={{ mt: 2, ml: 21}}>
                             Upload Photo
                           </Button>
                         )}
@@ -329,6 +339,7 @@ const ProfilePage = () => {
           </Grid>
         </Grid>
       </Box>
+    </Box>
     </Box>
   );
 };

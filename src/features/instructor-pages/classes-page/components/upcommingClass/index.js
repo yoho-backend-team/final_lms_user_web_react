@@ -31,6 +31,7 @@ import React, { useState } from "react";
 import Joyride from "react-joyride";
 import { Box } from "@mui/material";
 import ClassCard from "../card/ClassCard";
+import  { ClassCardHeader } from "../card/ClassCard";
 
 const defaultStyles = {
   calendarColor: "#000000",
@@ -76,6 +77,7 @@ const UpcomingClassList = ({ data, classType, group, image }) => {
       <Box id="upcoming-class-list" sx={{ mt: 3, px: "40px" }}>
         {data?.map((cls) => (
           <Box key={cls.id} id="upcoming-class-card">
+             <ClassCardHeader />
             <ClassCard
               cls={cls}
               style={defaultStyles}

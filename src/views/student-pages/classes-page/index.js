@@ -24,6 +24,7 @@ import {
   selectStudentClasses,
 } from "features/student-pages/classes-page/redux/selectors";
 import ClassLoader from "components/ui/loaders/classLoading";
+import Joyride from "react-joyride"; // Import Joyride
 
 const ClassesPage = () => {
   const location = useLocation();
@@ -37,6 +38,7 @@ const ClassesPage = () => {
     month: "",
     year: "",
   });
+  const [runTour, setRunTour] = useState(true); // Start the tour automatically
   const dispatch = useDispatch();
   const classes = useSelector(selectStudentClasses);
   const loading = useSelector(selectLoading);
@@ -108,7 +110,6 @@ const ClassesPage = () => {
       await dispatch(getAllClasses(data));
     } catch (error) {
       console.error("Failed to fetch classes:", error);
-      // Optionally, you can set an error state here to display an error message to the user
     }
   };
 
@@ -137,14 +138,49 @@ const ClassesPage = () => {
     navigate(`?tab=${value}&classType=${classType}&page=${page - 1}`);
   };
 
+  // Define the Joyride steps
+  const steps = [
+    {
+      target: "body",
+      content: "Welcome to the Classes Page! Let's start with the tabs.",
+      placement: "center",
+      disableBeacon: true,
+    },
+    {
+      target: ".class-tabs",
+      content: "Here are the tabs where you can navigate between different class categories.",
+      placement: "bottom",
+      disableBeacon: true,
+    },
+    {
+      target: ".class-filter",
+      content: "You can filter classes by course, month, and year.",
+      placement: "bottom",
+      disableBeacon: true,
+    },
+    {
+      target: ".class-type-selector",
+      content: "You can change between live and offline classes here.",
+      placement: "bottom",
+      disableBeacon: true,
+    },
+    {
+      target: ".pagination",
+      content: "You can navigate between pages using these buttons.",
+      placement: "top",
+      disableBeacon: true,
+    },
+  ];
+
   return (
     <ClassLayout>
-      <Box sx={{ display: "flex", flexDirection: "column", width: "100vw" }}>
+     <Box sx={{ display: "flex", flexDirection: "column", width: "100%", height: "100vh", }}>
+
         <Box>
           <Typography
             sx={{
               fontWeight: 700,
-              fontSize: 28,
+              fontSize: 29,
               color: "#484848",
               mb: "4px",
               pl: "40px",
@@ -154,7 +190,7 @@ const ClassesPage = () => {
           </Typography>
         </Box>
         <Card>
-          <Grid container sx={{ height: "auto", width: "100%" }}>
+          <Grid container sx={{ height: "auto", width: "100%",overflow:"auto" }}>
             <Grid
               item
               xs={8}
@@ -186,7 +222,7 @@ const ClassesPage = () => {
                 </Typography>
                 <img src={OfflineClassIcon} alt="Live Class" />
               </Box>
-              <Box>
+              <Box className="class-tabs">
                 <ClassTabs
                   tabs={tabs}
                   value={value}
@@ -209,7 +245,7 @@ const ClassesPage = () => {
               tabIndex={2}
             >
               <Box>
-                <FormControl>
+                <FormControl className="class-type-selector">
                   <Select value={classType} onChange={handleClassTypeChange}>
                     {classTypes.map((list) => (
                       <MenuItem key={list.id} value={list.value}>
@@ -226,13 +262,7 @@ const ClassesPage = () => {
         {loading ? <ClassLoader /> : renderComponents[value]}
 
         {classes?.last_page > 1 && (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "end",
-              py: "40px",
-            }}
-          >
+          <Box sx={{ display: "flex", justifyContent: "end", py: "40px" }}>
             <Box sx={{ display: "flex", gap: "40px", alignItems: "center" }}>
               <Typography
                 onClick={page === 1 ? null : handlePrevious}
@@ -296,6 +326,20 @@ const ClassesPage = () => {
           </Box>
         )}
       </Box>
+
+      {/* <Joyride
+        steps={steps}
+        run={runTour}
+        continuous
+        showSkipButton
+        scrollToFirstStep
+        disableScrolling
+        callback={({ status }) => {
+          if (status === "finished" || status === "skipped") {
+            setRunTour(false); // Stop the tour when it is finished or skipped
+          }
+        }}
+      /> */}
     </ClassLayout>
   );
 };

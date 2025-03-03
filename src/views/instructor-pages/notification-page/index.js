@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectNotificationList,selectSelectedNotification } from "features/common/redux/selector";
 import { setNotifications,setSelectedNotification } from "features/common/redux/slices";
+import BackgroundImage from 'assets/images/background/instructor.png';
 
 const NotificationList = () => {
     const navigate = useNavigate()
@@ -30,6 +31,15 @@ const NotificationList = () => {
     }
 
     return(
+      <Box
+      sx={{
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "50vh",
+        p: 3,
+      }}
+    >
           <>
             <Box 
             sx={{
@@ -71,7 +81,8 @@ const NotificationList = () => {
                    </Grid>
                </Grid>
             </Box>
-          </>
+            </>
+          </Box>
     )
 }
 
