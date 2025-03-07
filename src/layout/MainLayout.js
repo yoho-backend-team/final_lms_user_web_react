@@ -8,20 +8,25 @@ import axios from "axios";
 const MainLayout = () => {
     const user2 = getStudentDetails();
      const user = getInstructorDetails();
-  function liveupdated(){
-    if(user){
+  function liveupdated(status){
+    if(user && status){
        axios.post(`${process.env.REACT_APP_URL}/online`,{user})
     }else{
+       axios.post(`${process.env.REACT_APP_URL}/offline`,{user})
+    }
+   if(user2 && status){
        axios.post(`${process.env.REACT_APP_URL}/online`,{user2})
+    }else{
+       axios.post(`${process.env.REACT_APP_URL}/offline`,{user2})
     }
   }
 
   window.addEventListener("online", () => { 
-     liveupdated();
+     liveupdated(true);
   });
 
   window.addEventListener("offline", () => {
-      liveupdated();
+      liveupdated(false);
   });
 
 
