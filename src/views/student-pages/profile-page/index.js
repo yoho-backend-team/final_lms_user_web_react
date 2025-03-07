@@ -11,6 +11,10 @@ import {
   TextField,
   useTheme,
   useMediaQuery,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  InputAdornment,
 } from "@mui/material";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PersonIcon from "@mui/icons-material/Person";
@@ -23,6 +27,7 @@ import FemaleIcon from "@mui/icons-material/Female";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import BoySharpIcon from "@mui/icons-material/BoySharp";
 import Groups2Icon from "@mui/icons-material/Groups2";
+import BackgroundImage from 'assets/images/background/student.png'; 
 import {
   getprofilewithId,
   UpdateprofilewithId,
@@ -37,6 +42,10 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { FaIdCard } from "react-icons/fa";
 import { useSpinner } from "context/SpinnerProvider";
 import { useNavigate } from "react-router-dom";
+import { Formik, Form } from "formik";
+import * as Yup from "yup"; // Import Yup for validation
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const ProfilePage = () => {
   const theme = useTheme();
@@ -56,18 +65,12 @@ const ProfilePage = () => {
     image: "",
   });
 
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState({
-    oldPassword: false,
-    newPassword: false,
-    confirmPassword: false,
-  });
-
   const [editing, setEditing] = useState(false);
   const [editedPersonalInfo, setEditedPersonalInfo] = useState({});
   const [activeSection, setActiveSection] = useState("personalInfo");
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   const getProfile = async () => {
@@ -125,7 +128,7 @@ const ProfilePage = () => {
   };
 
   const handleInputChange = (field, value) => {
-    setEditedPersonalInfo(prevState => ({
+    setEditedPersonalInfo((prevState) => ({
       ...prevState,
       [field]: value,
     }));
@@ -154,43 +157,40 @@ const ProfilePage = () => {
   };
 
   const handleNavigateBack = () => {
-    navigate('/');
+    navigate("/");
   };
 
   const handleCancelEdit = () => {
     setEditing(false);
   };
 
-  const handleSave = async () => {
-    const newErrors = {
-      oldPassword: !oldPassword,
-      newPassword: !newPassword,
-      confirmPassword: !confirmPassword,
-    };
-    setErrors(newErrors);
-    if (oldPassword && newPassword) {
-      try {
-        const response = await changePassword({
-          oldPassword,
-          newPassword,
-          email: editedPersonalInfo.email,
-          confirmPassword,
-        });
+  const handleUpdatePassword = async (values) => {
+    try {
+      const response = await changePassword({
+        oldPassword: values.current_password,
+        newPassword: values.password,
+        email: editedPersonalInfo.email,
+        confirmPassword: values.confirmPassword,
+      });
 
-        if (response.status === "success") {
-          navigate("/student/login");
-          toast.success("Password updated successfully");
-          setOldPassword("");
-          setNewPassword("");
-          setConfirmPassword("");
-        } else {
-          toast.error(response.message || "Error updating password");
-        }
-      } catch (error) {
-        toast.error(error.message || "Error updating password");
+      if (response.status === "success") {
+        navigate("/student/login");
+        toast.success("Password updated successfully");
+      } else {
+        toast.error(response.message || "Error updating password");
       }
+    } catch (error) {
+      toast.error(error.message || "Error updating password");
     }
   };
+
+  const validationSchema = Yup.object().shape({
+    current_password: Yup.string().required("Current Password is required"),
+    password: Yup.string().required("New Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Confirm Password is required"),
+  });
 
   const infoItems = [
     {
@@ -254,56 +254,65 @@ const ProfilePage = () => {
   ];
 
   return (
+    <Box
+      sx={{
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "50vh",
+        p: 3,
+      }}
+    >
     <Box sx={{ display: 'flex', height: '100vh', padding: '70px' }}>
       <Box
         sx={{
-          width: '300px',
-          background: 'white',
-          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'space-between', // Changed to space-between
-          alignItems: 'center',
+          width: "300px",
+          background: "white",
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "center",
           padding: 2,
           margin: 2,
-          height: 'auto',
-          position: 'fixed',
+          height: "auto",
+          position: "fixed",
           top: 0,
           left: 0,
           bottom: 0,
           paddingTop: 4,
           paddingBottom: 4,
-          marginTop: '140px',
-          marginBottom: '70px',
-          marginLeft: '60px',
-          marginRight: '20px',
+          marginTop: "140px",
+          marginBottom: "70px",
+          marginLeft: "60px",
+          marginRight: "20px",
         }}
       >
-        <Box sx={{ width: '107%' }}>
-        <Box
+        <Box sx={{ width: "107%" }}>
+          <Box
             onClick={() => setActiveSection("personalInfo")}
             sx={{
-              position: 'relative',
-              padding: '12px 20px',
-              marginBottom: '8px',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              background: activeSection === "personalInfo" 
-                ? 'linear-gradient(90deg, rgba(13, 110, 253, 0.1) 0%, rgba(13, 110, 253, 0.05) 100%)' 
-                : 'transparent',
-              '&:hover': {
-                background: 'rgba(13, 110, 253, 0.05)'
+              position: "relative",
+              padding: "12px 20px",
+              marginBottom: "8px",
+              borderRadius: "4px",
+              cursor: "pointer",
+              background:
+                activeSection === "personalInfo"
+                  ? "linear-gradient(90deg, rgba(13, 110, 253, 0.1) 0%, rgba(13, 110, 253, 0.05) 100%)"
+                  : "transparent",
+              "&:hover": {
+                background: "rgba(13, 110, 253, 0.05)",
               },
-              borderLeft: activeSection === "personalInfo" 
-                ? '4px solid #0D6EFD' 
-                : 'none'
+              borderLeft:
+                activeSection === "personalInfo" ? "4px solid #0D6EFD" : "none",
             }}
           >
             <Typography
               sx={{
                 fontWeight: 600,
-                color: activeSection === "personalInfo" ? '#0D6EFD' : '#666',
-                fontSize: '16px'
+                color: activeSection === "personalInfo" ? "#0D6EFD" : "#666",
+                fontSize: "16px",
               }}
             >
               Profile Info
@@ -312,27 +321,27 @@ const ProfilePage = () => {
           <Box
             onClick={() => setActiveSection("security")}
             sx={{
-              position: 'relative',
-              padding: '12px 20px',
-              marginBottom: '8px',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              background: activeSection === "security" 
-                ? 'linear-gradient(90deg, rgba(13, 110, 253, 0.1) 0%, rgba(13, 110, 253, 0.05) 100%)' 
-                : 'transparent',
-              '&:hover': {
-                background: 'rgba(13, 110, 253, 0.05)'
+              position: "relative",
+              padding: "12px 20px",
+              marginBottom: "8px",
+              borderRadius: "4px",
+              cursor: "pointer",
+              background:
+                activeSection === "security"
+                  ? "linear-gradient(90deg, rgba(13, 110, 253, 0.1) 0%, rgba(13, 110, 253, 0.05) 100%)"
+                  : "transparent",
+              "&:hover": {
+                background: "rgba(13, 110, 253, 0.05)",
               },
-              borderLeft: activeSection === "security" 
-                ? '4px solid #0D6EFD' 
-                : 'none'
+              borderLeft:
+                activeSection === "security" ? "4px solid #0D6EFD" : "none",
             }}
           >
             <Typography
               sx={{
                 fontWeight: 600,
-                color: activeSection === "security" ? '#0D6EFD' : '#666',
-                fontSize: '16px'
+                color: activeSection === "security" ? "#0D6EFD" : "#666",
+                fontSize: "16px",
               }}
             >
               Security
@@ -345,19 +354,29 @@ const ProfilePage = () => {
           fullWidth
           sx={{
             mt: 1,
-            background: 'linear-gradient(45deg, #FF5722 30%, #D84315 90%)',
-            color: 'white',
-            padding: '10px 20px',
-            boxShadow: '0 3px 5px 2px rgba(255, 87, 34, .3)',
-            '&:hover': {
-              background: 'linear-gradient(45deg, #D84315 30%, #FF5722 90%)',
+            background: "linear-gradient(45deg, #FF5722 30%, #D84315 90%)",
+            color: "white",
+            padding: "10px 20px",
+            boxShadow: "0 3px 5px 2px rgba(255, 87, 34, .3)",
+            "&:hover": {
+              background: "linear-gradient(45deg, #D84315 30%, #FF5722 90%)",
             },
           }}
         >
           Go Back
         </Button>
       </Box>
-      <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', padding: 2, marginLeft: '250px', mt: 2, mb: 2 }}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          justifyContent: "center",
+          padding: 2,
+          marginLeft: "250px",
+          mt: 2,
+          mb: 2,
+        }}
+      >
         <Grid container xs={12} spacing={2} sx={{ gap: { md: "20px", xl: "72px" } }}>
           <Grid item xs={12}>
             <Card
@@ -365,11 +384,11 @@ const ProfilePage = () => {
                 backgroundColor: "white",
                 overflow: "auto",
                 padding: "20px",
-                height: '90%',
+                height: "90%",
                 boxShadow: 3,
-                width: 'calc(100% - 80px)',
-                marginLeft: '80px',
-                borderRadius: '10px',
+                width: "calc(100% - 80px)",
+                marginLeft: "80px",
+                borderRadius: "10px",
               }}
             >
               <Card sx={{ mb: 4, position: "relative", boxShadow: "none" }}>
@@ -699,86 +718,194 @@ const ProfilePage = () => {
                     </>
                   )}
                   {activeSection === "security" && (
-                    <Box display="flex" flexDirection="column" alignItems="center">
-                      <Box width="100%" mt={5}>
-                        <Typography
-                          variant="body1"
-                          sx={{
-                            mb: 2,
-                            color: "#000000",
-                            fontFamily: "Nunito Sans",
-                            fontSize: isTabletScreen ? "22px" : "20px",
-                            fontWeight: 700,
-                            lineHeight: "32px",
-                            textAlign: "left",
-                          }}
-                        >
-                          Security
+                    <Box sx={{ maxWidth: "1000px", margin: "0 auto", p: 0 }}>
+                      <Box sx={{ display: "flex", justifyContent: "start", alignItems: "center" }}>
+                        <Typography variant="h4" sx={{ fontWeight: "600", color: "#2d3748", mb: 5 }}>
+                          Change Password
                         </Typography>
-                        <Box sx={{ mb: 1 }}>
-                          <Grid container spacing={2} alignItems="center">
-                            <Grid item xs={4}>
-                              <Box sx={{ display: "flex", alignItems: "center" }}>
-                                <TextField
-                                  label="Old Password"
-                                  type="password"
-                                  value={oldPassword}
-                                  onChange={(e) => setOldPassword(e.target.value)}
-                                  error={errors.oldPassword}
-                                  helperText={
-                                    errors.oldPassword
-                                      ? "Old Password is required"
-                                      : ""
-                                  }
-                                  fullWidth
-                                />
-                              </Box>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Box sx={{ display: "flex", alignItems: "center" }}>
-                                <TextField
-                                  label="New Password"
-                                  type="password"
-                                  value={newPassword}
-                                  onChange={(e) => setNewPassword(e.target.value)}
-                                  error={errors.newPassword}
-                                  helperText={
-                                    errors.newPassword ? "New Password is required" : ""
-                                  }
-                                  fullWidth
-                                />
-                              </Box>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Box sx={{ display: "flex", alignItems: "center" }}>
-                                <TextField
-                                  label="Confirm Password"
-                                  type="password"
-                                  value={confirmPassword}
-                                  onChange={(e) =>
-                                    setConfirmPassword(e.target.value)
-                                  }
-                                  error={errors.confirmPassword}
-                                  helperText={
-                                    errors.confirmPassword
-                                      ? "Confirm Password is required"
-                                      : ""
-                                  }
-                                  fullWidth
-                                />
-                              </Box>
-                            </Grid>
-                          </Grid>
-                        </Box>
-                        <Button
-                          sx={{ mt: "9px" }}
-                          variant="contained"
-                          color="primary"
-                          onClick={handleSave}
-                        >
-                          Save
-                        </Button>
                       </Box>
+
+                      <Formik
+                        initialValues={{ password: "", confirmPassword: "", current_password: "" }}
+                        validationSchema={validationSchema}
+                        onSubmit={handleUpdatePassword}
+                      >
+                        {({ errors, touched, handleChange, values }) => (
+                          <Form>
+                            <Box
+                              sx={{
+                                backgroundColor: "#f8f9fa",
+                                borderRadius: "12px",
+                                p: 4,
+                                boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                              }}
+                            >
+                              <Grid container spacing={3}>
+                                {/* Current Password */}
+                                <Grid item xs={12}>
+                                  <FormControl
+                                    fullWidth
+                                    variant="outlined"
+                                    error={touched.current_password && Boolean(errors.current_password)}
+                                  >
+                                    <InputLabel htmlFor="current-password" sx={{ color: "#4a5568" }}>
+                                      Current Password
+                                    </InputLabel>
+                                    <OutlinedInput
+                                      id="current-password"
+                                      name="current_password"
+                                      type={showCurrentPassword ? "text" : "password"}
+                                      placeholder="Enter current password"
+                                      sx={{
+                                        backgroundColor: "white",
+                                        borderRadius: "8px",
+                                        "& .MuiOutlinedInput-notchedOutline": {
+                                          borderColor: "#e2e8f0",
+                                        },
+                                      }}
+                                      value={values.current_password}
+                                      onChange={handleChange}
+                                      endAdornment={
+                                        <InputAdornment position="end">
+                                          <IconButton
+                                            aria-label="toggle current password visibility"
+                                            onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                                            edge="end"
+                                          >
+                                            {showCurrentPassword ? <VisibilityOff /> : <Visibility />}
+                                          </IconButton>
+                                        </InputAdornment>
+                                      }
+                                      label="Current Password"
+                                    />
+                                    {touched.current_password && errors.current_password && (
+                                      <Typography variant="caption" color="error" sx={{ mt: 1, display: "block" }}>
+                                        {errors.current_password}
+                                      </Typography>
+                                    )}
+                                  </FormControl>
+                                </Grid>
+
+                                {/* New Password */}
+                                <Grid item xs={12}>
+                                  <FormControl
+                                    fullWidth
+                                    variant="outlined"
+                                    error={touched.password && Boolean(errors.password)}
+                                  >
+                                    <InputLabel htmlFor="new-password" sx={{ color: "#4a5568" }}>
+                                      New Password
+                                    </InputLabel>
+                                    <OutlinedInput
+                                      id="new-password"
+                                      name="password"
+                                      type={showNewPassword ? "text" : "password"}
+                                      placeholder="Enter new password"
+                                      sx={{
+                                        backgroundColor: "white",
+                                        borderRadius: "8px",
+                                        "& .MuiOutlinedInput-notchedOutline": {
+                                          borderColor: "#e2e8f0",
+                                        },
+                                      }}
+                                      value={values.password}
+                                      onChange={handleChange}
+                                      endAdornment={
+                                        <InputAdornment position="end">
+                                          <IconButton
+                                            aria-label="toggle new password visibility"
+                                            onClick={() => setShowNewPassword(!showNewPassword)}
+                                            edge="end"
+                                          >
+                                            {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                                          </IconButton>
+                                        </InputAdornment>
+                                      }
+                                      label="New Password"
+                                    />
+                                    {touched.password && errors.password && (
+                                      <Typography variant="caption" color="error" sx={{ mt: 1, display: "block" }}>
+                                        {errors.password}
+                                      </Typography>
+                                    )}
+                                  </FormControl>
+                                </Grid>
+
+                                {/* Confirm Password */}
+                                <Grid item xs={12}>
+                                  <FormControl
+                                    fullWidth
+                                    variant="outlined"
+                                    error={touched.confirmPassword && Boolean(errors.confirmPassword)}
+                                  >
+                                    <InputLabel htmlFor="confirm-password" sx={{ color: "#4a5568" }}>
+                                      Confirm New Password
+                                    </InputLabel>
+                                    <OutlinedInput
+                                      id="confirm-password"
+                                      name="confirmPassword"
+                                      type={showConfirmPassword ? "text" : "password"}
+                                      placeholder="Confirm new password"
+                                      sx={{
+                                        backgroundColor: "white",
+                                        borderRadius: "8px",
+                                        "& .MuiOutlinedInput-notchedOutline": {
+                                          borderColor: "#e2e8f0",
+                                        },
+                                      }}
+                                      value={values.confirmPassword}
+                                      onChange={handleChange}
+                                      endAdornment={
+                                        <InputAdornment position="end">
+                                          <IconButton
+                                            aria-label="toggle confirm password visibility"
+                                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                            edge="end"
+                                          >
+                                            {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                                          </IconButton>
+                                        </InputAdornment>
+                                      }
+                                      label="Confirm New Password"
+                                    />
+                                    {touched.confirmPassword && errors.confirmPassword && (
+                                      <Typography variant="caption" color="error" sx={{ mt: 1, display: "block" }}>
+                                        {errors.confirmPassword}
+                                      </Typography>
+                                    )}
+                                  </FormControl>
+                                </Grid>
+
+                                {/* Submit Button */}
+                                <Grid item xs={12} sx={{ mt: 2 }}>
+                                  <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                                    <Button
+                                      variant="contained"
+                                      type="submit"
+                                      sx={{
+                                        px: 6,
+                                        py: 1.5,
+                                        borderRadius: "8px",
+                                        textTransform: "none",
+                                        fontSize: "16px",
+                                        fontWeight: "600",
+                                        background: "linear-gradient(45deg, #3b82f6 30%, #2563eb 90%)",
+                                        boxShadow: "0 4px 6px -1px rgba(59, 130, 246, 0.3)",
+                                        "&:hover": {
+                                          background: "linear-gradient(45deg, #2563eb 30%, #3b82f6 90%)",
+                                          boxShadow: "0 6px 8px -1px rgba(59, 130, 246, 0.4)",
+                                        },
+                                      }}
+                                    >
+                                      Change Password
+                                    </Button>
+                                  </Box>
+                                </Grid>
+                              </Grid>
+                            </Box>
+                          </Form>
+                        )}
+                      </Formik>
                     </Box>
                   )}
                 </CardContent>
@@ -787,6 +914,7 @@ const ProfilePage = () => {
           </Grid>
         </Grid>
       </Box>
+    </Box>
     </Box>
   );
 };

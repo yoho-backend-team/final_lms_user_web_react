@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
-import { Box, Typography, Button } from "@mui/material";
-import { useTheme } from "@emotion/react";
+import { Box, Typography, Button, Card, useTheme } from "@mui/material";
+import { styled } from "@mui/system";
 import { useVerifyOTP } from "../services/index";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -9,64 +8,52 @@ import { useSpinner } from "context/SpinnerProvider";
 import { useAtomValue } from "jotai";
 import { instructorOtpAtom } from "store/atoms/authAtoms";
 
-// OTP Input Component
-function OTP({ separator, length, value, onChange }) {
-  const inputRefs = useRef([...Array(length)].map(() => React.createRef()));
+const InputElement = styled("input")(() => ({
+  width: "57px",
+  height: "50px",
+  fontSize: "20px",
+  fontWeight: "600",
+  textAlign: "center",
+  borderRadius: "8px",
+  border: "2px solid #A8A8A8",
+  background: "#FFFFFF",
+  transition: "0.3s",
+  outline: "none",
+  '&:focus': {
+    borderColor: "#5611B1",
+    boxShadow: "0px 0px 8px rgba(86, 17, 177, 0.5)",
+  },
+}));
+
+const OTPInput = ({ length, value, onChange }) => {
+  const inputRefs = useRef(new Array(length).fill(null));
 
   const handleChange = (event, index) => {
-    const { value: inputValue } = event.target;
+    const newValue = event.target.value.slice(-1);
     const newOtp = value.split("");
-
-    newOtp[index] = inputValue.slice(-1);
+    newOtp[index] = newValue;
     onChange(newOtp.join(""));
 
-    if (inputValue && index < length - 1) {
-      inputRefs.current[index + 1].current.focus();
-    }
-  };
-
-  const handleKeyDown = (event, index) => {
-    if (event.key === "Backspace" && !value[index] && index > 0) {
-      inputRefs.current[index - 1].current.focus();
+    if (newValue && index < length - 1) {
+      inputRefs.current[index + 1].focus();
     }
   };
 
   return (
-    <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-      {Array.from({ length }, (_, index) => (
-        <React.Fragment key={index}>
-          <input
-            type="text"
-            ref={inputRefs.current[index]}
-            onChange={(e) => handleChange(e, index)}
-            onKeyDown={(e) => handleKeyDown(e, index)}
-            value={value[index] ?? ""}
-            style={{
-              width: "40px",
-              fontSize: "1rem",
-              padding: "8px",
-              borderRadius: "8px",
-              textAlign: "center",
-              border: "1px solid #A8A8A8",
-              background: "#fff",
-            }}
-            maxLength={1}
-          />
-          {index < length - 1 && separator}
-        </React.Fragment>
+    <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
+      {Array.from({ length }).map((_, index) => (
+        <InputElement
+          key={index}
+          ref={(el) => (inputRefs.current[index] = el)}
+          value={value[index] || ""}
+          onChange={(e) => handleChange(e, index)}
+          maxLength={1}
+        />
       ))}
     </Box>
   );
-}
-
-OTP.propTypes = {
-  length: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
-  separator: PropTypes.node,
-  value: PropTypes.string.isRequired,
 };
 
-// OTP Verification Component
 export default function InstructorOTPInput() {
   const [otp, setOtp] = useState("");
   const [timeLeft, setTimeLeft] = useState(60);
@@ -111,59 +98,51 @@ export default function InstructorOTPInput() {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
-      <Typography sx={{ fontSize: "24px", fontWeight: 700, textAlign: "center" }}>
-        Enter the Code Sent to Your Email
-      </Typography>
-      <Typography sx={{ fontSize: "18px", fontWeight: 500, textAlign: "center", my: 1 }}>
+    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+      <Card sx={{ padding: 5, boxShadow: 3, textAlign: "center", borderRadius: "16px", maxWidth: "400px" }}>
+        <Typography variant="h2" fontWeight={700} mb={2}>
+          Enter OTP
+        </Typography>
+        <Typography variant="h4" color="textSecondary" mb={3}>
+          Enter the Code sent to your registered email
+        </Typography>
+        <Typography sx={{ fontSize: "18px", fontWeight: 500, textAlign: "center", my: 1 }}>
         Your OTP: {otpData?.otp}
-      </Typography>
-
-      <OTP value={otp} onChange={setOtp} length={6} />
-
-      {error && (
-        <Typography color="error" variant="body2">
-          {error}
+       </Typography>
+       
+        <OTPInput value={otp} onChange={setOtp} length={6} />
+        {error && <Typography color="error" mt={1}>{error}</Typography>}
+        <Typography mt={5}>
+          {Math.floor(timeLeft / 60)}:{String(timeLeft % 60).padStart(2, "0")}
         </Typography>
-      )}
-
-      <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", px: "40px", pt: "16px" }}>
-        <Typography sx={{ fontSize: "16px", fontWeight: 700 }}>
-          {Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? "0" : ""}
-          {timeLeft % 60}
-        </Typography>
-        {timeLeft === 0 && (
-          <Button
-            variant="text"
-            onClick={handleResend}
-            sx={{
-              fontSize: "14px",
-              fontWeight: 700,
-              textDecoration: "underline",
-              color: "#8D8E90",
-              ":hover": { backgroundColor: "transparent" },
-            }}
-          >
-            Resend
-          </Button>
-        )}
-      </Box>
-
-      <Button
-        sx={{
-          backgroundColor: "#5611B1",
-          color: "white",
-          borderRadius: "36px",
-          fontSize: "14px",
-          fontWeight: 700,
-          width: "120px",
-          height: "40px",
-          ":hover": { backgroundColor: "#5611B1" },
-        }}
-        onClick={handleVerify}
-      >
-        Verify
-      </Button>
+        <Button
+          disabled={timeLeft > 0}
+          onClick={handleResend}
+          sx={{
+            mt: 2,
+            borderRadius: 5,
+            color: timeLeft > 0 ? theme.palette.text.disabled : theme.palette.primary.main,
+            fontSize: "14px",
+            textDecoration: "underline",
+            fontWeight: 700,
+            padding: "0px",
+            ":hover": {
+              border: "none",
+              backgroundColor: timeLeft > 0 ? "transparent" : theme.palette.background.default,
+            },
+          }}
+        >
+          Resend OTP
+        </Button>
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{ mt: 5, backgroundColor: "#5611B1", borderRadius: "8px" }}
+          onClick={handleVerify}
+        >
+          Verify OTP
+        </Button>
+      </Card>
     </Box>
   );
 }

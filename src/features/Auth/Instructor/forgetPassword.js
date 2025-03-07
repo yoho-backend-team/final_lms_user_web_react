@@ -38,8 +38,10 @@ const ForgetPasswordPage = () => {
 
   const handleBackToLogin = () => {
     showSpinner();
-    setLoginStep(instructorLoginStepAtom);
-    hideSpinner();
+    setTimeout(() => {
+      setLoginStep(instructorLoginStepAtom);
+      hideSpinner();
+    }, 1000);
   };
 
   const handleSubmit = async () => {
@@ -51,18 +53,24 @@ const ForgetPasswordPage = () => {
       setEmailError("Enter a valid email address.");
       return;
     }
-
+    
+    showSpinner();
     try {
       const response = await forgetPassword(email);
       if (response?.status === "success") {
         const { token } = response.data;
         setOtpAtom({ email, token });
-        setLoginStep(ForgetPassword_Otp_Step);
+        setTimeout(() => {
+          setLoginStep(ForgetPassword_Otp_Step);
+          hideSpinner();
+        }, 1000);
       } else {
         setEmailError("Email not found.");
+        hideSpinner();
       }
     } catch (error) {
       toast.error(error?.message || "An error occurred. Please try again.");
+      hideSpinner();
     }
   };
 
@@ -79,7 +87,6 @@ const ForgetPasswordPage = () => {
       <Card
         sx={{
           width: 500,
-        
           padding: 4,
           boxShadow: 3,
           borderRadius: 2,
@@ -110,25 +117,9 @@ const ForgetPasswordPage = () => {
           {emailError && <FormHelperText>{emailError}</FormHelperText>}
         </FormControl>
 
-        <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 10 }}>
-          <Button
-            variant="contained"
-            onClick={handleSubmit}
-            sx={{
-              backgroundColor: "#5611B1",
-              color: "white",
-              py: 1,
-              px: 4,
-              borderRadius: 2,
-              fontSize: "1rem",
-              textTransform: "none",
-              boxShadow: "none",
-              ":hover": { backgroundColor: "#6302e3" },
-            }}
-          >
-            Verify
-          </Button>
-
+        {/* Buttons Aligned Properly */}
+        <Box sx={{ display: "flex", justifyContent: "space-between", mt: 10 }}>
+          {/* Back to Login Button (Left) */}
           <Button
             variant="outlined"
             onClick={handleBackToLogin}
@@ -145,6 +136,25 @@ const ForgetPasswordPage = () => {
           >
             <ChevronLeftIcon sx={{ width: 20, height: 20, mr: 1 }} />
             Back to Login
+          </Button>
+
+          {/* Verify Button (Right) */}
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            sx={{
+              backgroundColor: "#5611B1",
+              color: "white",
+              py: 1,
+              px: 4,
+              borderRadius: 2,
+              fontSize: "1rem",
+              textTransform: "none",
+              boxShadow: "none",
+              ":hover": { backgroundColor: "#6302e3" },
+            }}
+          >
+            Verify
           </Button>
         </Box>
       </Card>

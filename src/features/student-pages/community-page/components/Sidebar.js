@@ -85,12 +85,27 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, s
                 ":hover": { backgroundColor: "#D1E4E8" },
               }}
             >
-              <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              {/* <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
                 <Avatar
                   src={group?.batch?.course?.image ? getImageUrl(group?.batch?.course?.image) : imagePlaceholder}
                   alt={group?.batch?.batch_name}
-                  sx={{ width: 85, height: 50 }}
-                />
+                  sx={{ width: 95, height: 70 }}
+                /> */}
+                <Box sx={{ display: "flex", gap: "12px", alignItems: "center" }}>
+  <Avatar
+    src={group?.batch?.course?.image ? getImageUrl(group?.batch?.course?.image) : imagePlaceholder}
+    alt={group?.batch?.batch_name}
+    sx={{
+      width: 80,
+      height: 55,
+      borderRadius: "50%", // Makes it circular like WhatsApp
+      border: "1px solid #ddd", // Subtle border like WhatsApp
+      boxShadow: 1, // Adds a slight shadow for depth
+    }}
+  />
+  
+
+
                 <Box>
                   <Typography sx={{ fontWeight: 500 }}>{group?.batch?.batch_name}</Typography>
                   <Typography sx={{ fontSize: "12px", color: "#09132C" }}>

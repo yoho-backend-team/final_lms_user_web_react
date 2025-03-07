@@ -187,7 +187,7 @@ const StudentTicketsPage = ({
             </ScrollableContainer>
 
             {/* Pagination Controls - Only show for "All" tab */}
-            {value === "1" && (
+            {false && (
               <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 4, gap: "40px" }}>
                 <Typography
                   sx={{
