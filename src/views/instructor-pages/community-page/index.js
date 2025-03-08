@@ -536,7 +536,7 @@ const Community = () => {
         padding: "40px",
       }}
     >
-      <Joyride
+      {/* <Joyride
         steps={tourSteps}
         run={runTour}
         continuous={true}
@@ -548,7 +548,7 @@ const Community = () => {
             zIndex: 10000, // Ensure it's above all elements
           },
         }}
-      />
+      /> */}
       <Box
         sx={{
           backgroundColor: "#FFFFFF",

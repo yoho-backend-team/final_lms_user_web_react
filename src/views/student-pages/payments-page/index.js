@@ -518,7 +518,7 @@ const PaymentStudentInterface = () => {
 
   return (
     <>
-      <Joyride
+      {/* <Joyride
         steps={steps}
         run={runTour}
         continuous
@@ -529,7 +529,7 @@ const PaymentStudentInterface = () => {
         callback={({ status }) => {
           if (status === 'finished' || status === 'skipped') setRunTour(false);
         }}
-      />
+      /> */}
 
       <Box
         sx={{

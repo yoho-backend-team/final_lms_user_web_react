@@ -154,14 +154,14 @@ return (
       }}
     >
       <>
-        <ReactTour
+        {/* <ReactTour
           steps={steps}
           isOpen={isTourOpen}
           onRequestClose={() => setIsTourOpen(false)}
           rounded={5}
           accentColor="#5cbfba"
           className="tour"
-        />
+        /> */}
   
         <Grid container p={12}>
           <Grid item xs={12} sm={4} className="MainGrid-1">

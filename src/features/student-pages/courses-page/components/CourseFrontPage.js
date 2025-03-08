@@ -47,7 +47,7 @@ const CourseFrontPage = ({ Course }) => {
 
   return (
     <Box sx={{ p: "41px 41px 41px 71px", overflowY: "auto", maxHeight: "100vh" }}>
-      <Joyride
+      {/* <Joyride
         steps={steps}
         continuous={true}
         showProgress={true}
@@ -56,7 +56,7 @@ const CourseFrontPage = ({ Course }) => {
         disableScrolling
         run={tourActive}
         styles={{ options: { zIndex: 10000 } }}
-      />
+      /> */}
       <Box sx={{ display: "flex", flexDirection: "column", pr: "90px" }}>
         <Typography
           sx={{

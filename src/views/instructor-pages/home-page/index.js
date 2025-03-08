@@ -116,14 +116,14 @@ const InstructorDashBoard = () => {
       gap={tabView ? "0px" : "30px"}
       xs={12}
     >
-      <ReactTour
+      {/* <ReactTour
         steps={steps}
         isOpen={isTourOpen}
         onRequestClose={() => setIsTourOpen(false)}
         rounded={5}
         accentColor="#5cbfba"
         className="tour" // Add a class for custom styling
-      />
+      /> */}
       <Grid item xs={tabView ? 6 : 3.2} className="MainGrid-1">
         <Card>
           <Box>

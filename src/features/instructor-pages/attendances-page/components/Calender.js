@@ -119,7 +119,7 @@ function InstructorAttendance({ attendance_data, getAttedenceDetails, handleUpda
 
   return (
     <Box sx={{ height: "67vh", display: "flex", flexDirection: "column", p: 2 }}>
-      <Joyride steps={tourSteps} run={runTour} continuous showSkipButton showProgress disableOverlayClose spotlightClicks styles={{ options: { zIndex: 10000 } }} />
+      {/* <Joyride steps={tourSteps} run={runTour} continuous showSkipButton showProgress disableOverlayClose spotlightClicks styles={{ options: { zIndex: 10000 } }} /> */}
       
       <Box sx={{ flexGrow: 1, overflowY: "auto" }} id="calendar-view">
         {generateCalendar()}
