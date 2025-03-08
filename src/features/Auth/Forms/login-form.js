@@ -42,8 +42,8 @@ const LoginForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: "mariecurie@gmail.com",
-      password: "Wecandoit@2025",
+      email: "kalam@gmail.com",
+      password: "Wecandoit@2024",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
