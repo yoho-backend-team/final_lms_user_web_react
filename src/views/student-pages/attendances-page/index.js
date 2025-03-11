@@ -249,27 +249,47 @@ console.log(attendance_data,'attendance')
             <Grid item xs={12} md={4}>
               <Box sx={{ padding: "0 20px" }}>
                 {/* Month Selector */}
-                <FormControl fullWidth sx={{ mt: 3 }}  className="month-selector">
-                  <Select
-                    value={selectedMonth}
-                    onChange={handleChange}
-                    IconComponent={ExpandMoreIcon}
-                  >
-                    {months.map((month, index) => (
-                      <MenuItem key={index} value={index}>
-                        {month}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                <FormControl fullWidth sx={{ mt: 3, borderRadius: "8px", border: "1px solid #2196F3", overflow: "hidden" }}>
+  <Select
+    value={selectedMonth}
+    onChange={handleChange}
+    IconComponent={ExpandMoreIcon}
+    sx={{
+      backgroundColor: "#E3F2FD", // Light blue shade
+      '&:hover': {
+        backgroundColor: "#BBDEFB", // Slightly darker blue on hover
+      },
+      borderRadius: "8px",
+      padding: "8px 16px"
+    }}
+  >
+    {months.map((month, index) => (
+      <MenuItem key={index} value={index}>
+        {month}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
 
-                <FormControl fullWidth sx={{ mt: 2 }}  className="year-selector">
-          <Select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)}>
-            {years.map((year, index) => (
-              <MenuItem key={index} value={year}>{year}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+<FormControl fullWidth sx={{ mt: 2, borderRadius: "8px", border: "1px solid #4CAF50", overflow: "hidden" }}>
+  <Select 
+    value={selectedYear} 
+    onChange={(e) => setSelectedYear(e.target.value)}
+    sx={{
+      backgroundColor: "#E8F5E9", // Light green shade
+      '&:hover': {
+        backgroundColor: "#C8E6C9", // Slightly darker green on hover
+      },
+      borderRadius: "8px",
+      padding: "8px 16px"
+    }}
+  >
+    {years.map((year, index) => (
+      <MenuItem key={index} value={year}>{year}</MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
 
                 {/* Stats Boxes */}
                 <Box
@@ -284,19 +304,22 @@ console.log(attendance_data,'attendance')
                       title: "Classes Atten",
                       color: "#FFF5D1",
                       value: `${attendance_data?.attendedClassCount ?? 0}/${totalClasses}`,
-                      textColor: "#9F8015"
+                      textColor: "#9F8015",
+                      hoverColor: "#FFE08A"  // Brighter Yellow on Hover
                     },
                     {
                       title: "Present days",
                       color: "#D5FFDA",
                       value: `${attendance_data?.totalPresentDays ?? 0}/${attendance_data?.totalWorkingDays ?? 0}`,
-                      textColor: "#2C9939"
+                      textColor: "#2C9939",
+                      hoverColor: "#A8F0B0"  // Soft Green on Hover
                     },
                     {
                       title: "Absent days",
                       color: "#FFD5D5",
                       value: attendance_data?.totalAbsentDays ?? 0,
-                      textColor: "#A04A4A"
+                      textColor: "#A04A4A",
+                      hoverColor: "#FFB3B3"  // Softer Red on Hover
                     },
                     
                   ].map((stat, index) => (
@@ -310,7 +333,7 @@ console.log(attendance_data,'attendance')
                         boxSizing: "border-box",
                         transition: "background-color 0.3s ease",
             '&:hover': {
-              backgroundColor: "#dcdcdc"
+              backgroundColor: stat.hoverColor
             }
                       }}
                     >

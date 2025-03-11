@@ -3,13 +3,15 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import { imagePlaceholder, profilePlaceholder } from "utils/placeholders"
 import { getImageUrl } from "utils/common/imageUtlils";
 
+
+
 const NotificationView = ({selectedNotification}) => {
     return(
            <Box sx={{ height: "90vh", backgroundColor: "#FFF",color:"0px 0px 64px 0px #0000001a",padding: "31px 28px 18px 24px"}} >
               <Box sx={{ display: 'flex', justifyContent: 'space-between'}} >
                  <Box sx={{ display: 'flex', gap:"13px"}} >
                     <Box>
-                     <Avatar
+                     {/* <Avatar
                      src={selectedNotification?.staff?.image ? getImageUrl(selectedNotification?.staff?.image):profilePlaceholder}
                      alt="image"
                      sx={{
@@ -17,7 +19,7 @@ const NotificationView = ({selectedNotification}) => {
                         height : "52px",
                         borderRadius : "52px"
                      }}
-                     />
+                     /> */}
                     </Box>
                     <Box sx={{ display: "flex", flexDirection: "column", gap:"5px"}} >
                       <Typography sx={{ color: "#000000",fontSize:"16px",fontWeight:700}} >{selectedNotification?.title}</Typography>
@@ -29,14 +31,16 @@ const NotificationView = ({selectedNotification}) => {
                        <DeleteOutlineOutlinedIcon sx={{ color: "#7F7F7F"}} />
                     </Box>
                     <Box>
-                      <Typography sx={{ color: "#7F7F7F", fontSize: "11.5px",fontWeight:400}} >20 june 2022 : 9:16AM</Typography>
-                    </Box>
+  <Typography sx={{ color: "#7F7F7F", fontSize: "11.5px", fontWeight: 400 }}>
+    {new Date().toLocaleDateString()} : {new Date().toLocaleTimeString()}
+  </Typography>
+</Box>
                  </Box>
               </Box>
               <Box sx={{ display: "flex", flexDirection: "column"}} >
                  <Box>
                     <Typography sx={{ color: '#000000', fontSize: "23px",fontWeight:400, py: "22px"}} >
-                        UI project : Client Dashboar
+                        UI project : Client Dashboard
                     </Typography>
                  </Box>
                  <Box>

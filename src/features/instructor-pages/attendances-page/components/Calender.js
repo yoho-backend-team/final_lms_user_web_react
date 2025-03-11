@@ -86,7 +86,7 @@ function InstructorAttendance({
   };
 
   return (
-    <Box sx={{ padding: "20px", backgroundColor: "#fff", borderRadius: "10px" }}>
+    <Box sx={{ padding: "20px", backgroundColor: "transparent", borderRadius: "10px" }}>
       <Joyride steps={[
         { target: "body", content: "Welcome to the Attendance Calendar!", placement: "center" },
         { target: "#month-selector", content: "Select a month to view attendance records." },
@@ -106,24 +106,26 @@ function InstructorAttendance({
         </Grid>
         
         {calendar.map((week, weekIndex) => (
-          <Grid container key={weekIndex} spacing={1}>
+          <Grid container key={weekIndex} spacing={0.1}>
             {week.map((day, dayIndex) => (
               <Grid item xs={1.71} key={dayIndex}>
                 <Card  sx={{ 
                 backgroundColor: day?.status === "present" ? "rgba(59, 232, 53, 0.3)" : "transparent",
-                border: day?.status === "present" ? "1px solid rgb(33, 231, 52)" :
-                day?.status === "absent" ? "1px solid rgba(253, 36, 36, 0.8)" : "#f0f0f0",  // Lighter red border
-                minHeight: day?.day ? "50px":'',
+                border: day?.status 
+                ? "1px solid purple"  // Blue Border for Both Present and Absent
+                : "#f0f0f0", 
+                minHeight: day?.day ? "70px":'',
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  borderRadius: 0 , // Square Edges
                   margin: '5px'
               }}> {day?.day && 
                 <CardContent>
                     <Typography sx={{ textAlign: "center" }}>
                       {day?.day}
                     </Typography>
-                    <Typography sx={{ fontSize:'10px', position:'absolute', fontWeight: 600 }}>
+                    <Typography sx={{ fontSize:'13px', position:'absolute', fontWeight: 600,ml:"-20px" }}>
                       {day?.status === 'present' ? 'Present':''}
                     </Typography>
                   </CardContent>

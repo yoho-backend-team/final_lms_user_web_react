@@ -254,7 +254,8 @@ class Client {
       get_messages : (params) => httpClient.get(HTTP_END_POINTS.Instructor.community.get_messages + params?.community,{},"instructor")
     },
     notification : {
-      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.get,params,"instructor")
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.get,params,"instructor"),
+      put : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.put,params,"instructor")
     },
     payment: {
       get: (params) => httpClient.get( HTTP_END_POINTS.Instructor.payments.getSalaries,  params, "instructor"),

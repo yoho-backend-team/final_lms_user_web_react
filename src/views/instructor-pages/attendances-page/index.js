@@ -372,7 +372,7 @@ const Attendance = () => {
           alignItems: "center", 
       transition: "background-color 0.3s ease",
 '&:hover': {
-backgroundColor: "#dcdcdc"
+  backgroundColor: "#FFD700"  // Brighter Yellow on Hover
 } }}
   >
     <Typography sx={{ color: "#9F8015", fontSize: "20px", fontWeight: 600 }}>
@@ -391,7 +391,7 @@ backgroundColor: "#dcdcdc"
     sx={{ backgroundColor: "#B8FEBF", minWidth: "180px", minHeight: "120px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
       transition: "background-color 0.3s ease",
 '&:hover': {
-backgroundColor: "#dcdcdc"
+  backgroundColor: "#90EE90"  // Light Green on Hover
 } }}
   >
     <Typography sx={{ color: "#2C9939", fontSize: "20px", fontWeight: 600 }}>
@@ -410,7 +410,7 @@ backgroundColor: "#dcdcdc"
     sx={{ backgroundColor: "#EBACAC", maxWidth: "40px", minHeight: "120px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" , 
       transition: "background-color 0.3s ease",
 '&:hover': {
-backgroundColor: "#dcdcdc"
+  backgroundColor: "#FF6B6B"  // Softer Red on Hover
 }}}
   >
     <Typography sx={{ color: "#A04A4A", fontSize: "20px", fontWeight: 600 }}>
