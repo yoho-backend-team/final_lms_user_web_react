@@ -6,24 +6,31 @@ import { getInstructorDetails, getStudentDetails } from "store/atoms/authorized-
 import axios from "axios";
 
 const MainLayout = () => {
-  const user2 = getStudentDetails();
-  const user = getInstructorDetails();
+    const user2 = getStudentDetails();
+     const user = getInstructorDetails();
+  function liveupdated(status){
+    if(user && status){
+       axios.post(`${process.env.REACT_APP_URL}/online`,{user})
+    }else{
+       axios.post(`${process.env.REACT_APP_URL}/offline`,{user})
+    }
+   if(user2 && status){
+       axios.post(`${process.env.REACT_APP_URL}/online`,{user2})
+    }else{
+       axios.post(`${process.env.REACT_APP_URL}/offline`,{user2})
+    }
+  }
 
-function updateStatus(user){
-  window.addEventListener("online", () => {
-  axios.post("http://localhost:3002/online",{user})
+  window.addEventListener("online", () => { 
+     liveupdated(true);
   });
 
   window.addEventListener("offline", () => {
-  axios.post("http://localhost:3002/offline",{user})
+      liveupdated(false);
   });
-}
 
-if(user){
-  updateStatus(user._id)
-}else{
-  updateStatus(user2._id)
-}
+
+
 
   useEffect(()=>{
   const urlBase64ToUint8Array = (base64String) => {

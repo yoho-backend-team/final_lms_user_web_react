@@ -33,9 +33,6 @@ const AttendanceCard = ({ Attendance }) => {
   }, [dispatch]);
  
 
-
-
-
   const options = {
     chart: {
       height: 300, // Reduced from 800, more appropriate size

@@ -85,7 +85,7 @@ const CommunityPage = () => {
 
   return (
     <>
-      <Joyride
+      {/* <Joyride
   steps={tourSteps}
   run={runTour && isLoaded} // Ensure tour starts only when content is loaded
   continuous
@@ -95,11 +95,11 @@ const CommunityPage = () => {
   disableScrolling
   styles={{ options: { zIndex: 10000 } }}
   
-/>
+/> */}
 
-      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "30px", height: "95vh", backgroundColor: "#f9f9f9" }}>
+      <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "20px", height: "95vh", backgroundColor: "#f9f9f9" }}>
         <Fade in={isLoaded} timeout={1000}>
-          <Box sx={{ backgroundColor: "#FFFFFF", borderRadius: "16px", border: "1px solid #C3C3C3", height: "90%", width: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+          <Box sx={{ backgroundColor: "#FFFFFF", borderRadius: "16px", border: "1px solid #C3C3C3", height: "89%", width: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
             <Grid container sx={{ flex: 1 }}>
               <Grid item xs={4} id="community-sidebar" sx={{ borderRight: "1px solid #E0E0E0" }}>
                 <SideBar

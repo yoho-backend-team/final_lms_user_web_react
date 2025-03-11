@@ -1,219 +1,174 @@
-import React, { useEffect, useRef,useState } from "react";
-import { Box, Grid, Typography, useMediaQuery } from "@mui/material";
-import { getStudentDetails } from "store/atoms/authorized-atom";
+import React, { useRef, useEffect, useState } from "react";
+import { Box, Grid, Typography, IconButton } from "@mui/material";
+import { getInstructorDetails } from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
 import DoneIcon from "@mui/icons-material/Done";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ChatLog = ({ socket, Messages }) => {
-  const student = getStudentDetails();
-  const messagesEndRef = useRef(null);
-  const messageRefs = useRef(new Map());
-  const isTablet = useMediaQuery("(max-width: 768px)"); // Detect tablet screen size
-  const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
-  const [readMessages, setReadMessages] = useState(new Set());
+  const instructor = getInstructorDetails();
+  const chatEndRef = useRef(null);
+  const [messages, setMessages] = useState(Messages);
 
   useEffect(() => {
-    const handleFocus = () => setIsWindowFocused(true);
-    const handleBlur = () => setIsWindowFocused(false);
+    setMessages(Messages);
+  }, [Messages]);
 
-    window.addEventListener("focus", handleFocus);
-    window.addEventListener("blur", handleBlur);
-
-    return () => {
-      window.removeEventListener("focus", handleFocus);
-      window.removeEventListener("blur", handleBlur);
+  useEffect(() => {
+    const handleDeleteMessage = (updatedMessages) => {
+      setMessages(updatedMessages);
     };
-  }, []);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && isWindowFocused) {
-            const messageId = entry.target.getAttribute("data-id");
+    socket.on("messageDeleted", handleDeleteMessage);
+    return () => {
+      socket.off("messageDeleted", handleDeleteMessage);
+    };
+  }, [socket]);
 
-            if (!readMessages.has(messageId)) {
-              setTimeout(() => {
-                if (entry.isIntersecting && isWindowFocused) {
-                  triggerMessageRead(messageId);
-                }
-              }, 1500); // Optional delay for confirmation
-            }
-          }
-        });
-      },
-      { threshold: 0.8 } // 80% of message must be visible
+  const handleDeleteMessage = (messageId) => {
+    socket.emit("deleteMessage", { messageId, userId: instructor?._id });
+
+    setMessages((prevMessages) =>
+      prevMessages.filter((message) => message._id !== messageId)
     );
-     messageRefs.current.forEach((ref) => {
-    if (ref instanceof Element) {
-      observer.observe(ref);
-    }
-
-  });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [Messages, isWindowFocused, readMessages]);
-
-  const triggerMessageRead = (messageId) => {
-    const msg = Messages.find((m) => m._id === messageId);
-
-    if (msg && !readMessages.has(messageId)) {
-      const now = new Date();
-      const formattedTime = now.toLocaleTimeString("en-US", { hour12: false });
-
-      console.log(`Message ${messageId} read at ${formattedTime}`);
-      socket.emit("messageRead", { messageId, userId: student?._id });
-      setReadMessages((prev) => new Set([...prev, messageId]));
-    }
   };
 
   const scrollToBottom = () => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {  
+  useEffect(() => {
     scrollToBottom();
-  }, [Messages]);
+  }, [messages]);
 
   return (
     <Box
       sx={{
-        height: "100vh", // Full viewport height
-        overflowY: "auto", // Scrollable content
+        height: "100vh",
+        overflowY: "auto",
         backgroundImage:
           "url('https://i.pinimg.com/originals/62/8a/06/628a064e53d4d2afa7ef36075e98f1b1.jpg')",
-        backgroundColor: "#F5F5F5",
-        backgroundSize: "cover", // Image covers the full background
-        backgroundPosition: "center", // Centers the image
-        backgroundRepeat: "no-repeat", // Prevents tiling
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
       }}
     >
+      {/* Notification Banner */}
+      <Box
+        sx={{
+          position: "sticky",
+          top: 0,
+          zIndex: 10,
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
+          padding: "6px 12px",
+          borderRadius: "15px",
+          color: "white",
+          textAlign: "center",
+          fontSize: "12px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          maxWidth: "80%",
+          margin: "10px auto",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+        }}
+      >
+        <LockOutlinedIcon sx={{ fontSize: "16px", marginRight: "6px" }} />
+        Messages are end-to-end encrypted. No one outside this chat can read them.
+      </Box>
+
       {/* Messages */}
-      {Messages.map((message) => (
+      {messages?.map((msg) => (
         <Grid
           container
-          key={message._id}
+          key={msg._id}
           justifyContent={
-            message.sender === student?._id ? "flex-end" : "flex-start"
+            msg.sender === instructor?._id ? "flex-end" : "flex-start"
           }
-          sx={{ padding: isTablet ? "8px" : "16px" }}
+          sx={{ marginBottom: "8px" }}
         >
-          <Grid item xs={10} sm={8} md={6}>
-            <Typography
-              sx={{
-                color: "#0B3048",
-                fontSize: isTablet ? "11px" : "12px",
-                fontWeight: 400,
-                opacity: "0.7",
-                marginBottom: isTablet ? "8px" : "10px",
-                textAlign: message.sender === student?._id ? "end" : "start",
-              }}
-            >
-              {message.time}
-            </Typography>
+          <Grid item xs={9} sm={7} md={6}>
             <Box
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: message.sender === student?._id ? "flex-end" : "flex-start",
+                alignItems: msg.sender === instructor?._id ? "flex-end" : "flex-start",
               }}
             >
               <Box
                 sx={{
-                  backgroundColor:
-                    message.sender === student?._id ? "#61C554" : "#E8ECEF",
-                  padding: isTablet ? "12px 16px" : "15px 20px",
+                  backgroundColor: msg.sender === instructor?._id ? "#61C554" : "#E8ECEF",
                   borderRadius: "10px",
+                  padding: "8px 12px",
                   minWidth: "180px",
+                  maxWidth: "100%",
+                  wordWrap: "break-word",
                 }}
               >
-                {message.sender !== student?._id && (
-                  <Typography
-                    sx={{
-                      fontSize: isTablet ? "9px" : "10px",
-                      alignSelf: "start",
-                    }}
-                  >
-                    {message.sender_name}
+                {msg.sender !== instructor?._id && (
+                  <Typography sx={{ fontSize: "10px", fontWeight: 600 }}>
+                    {msg.sender_name}
                   </Typography>
                 )}
                 <Typography
                   variant="body1"
                   sx={{
-                    wordBreak: "break-word",
-                    color: message.sender === student?._id ? "white" : "#000000",
-                    fontSize: isTablet ? "13px" : "14px",
+                    color: msg.sender === instructor?._id ? "white" : "#000",
+                    fontSize: "14px",
                     fontWeight: 400,
+                    textAlign: "left",
                   }}
                 >
-                  {message.message}
+                  {msg.message}
                 </Typography>
-                <Typography
+                <Box
                   sx={{
-                    textAlign: "end",
                     display: "flex",
-                    justifyContent: "flex-end",
-                    marginTop: isTablet ? "-2px" : "-3px",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginTop: "4px",
                   }}
                 >
-                  {message?.sender === student?._id &&
-                    message?.status?.some((s) => s.delivered) &&
-                    !message?.status?.every((s) => s.delivered) && (
-                      <DoneIcon
-                        sx={{
-                          color: "white",
-                          width: "16px",
-                          height: "16px",
-                        }}
-                      />
-                    )}
+                  <Typography sx={{ fontSize: "11px", color: "#727272" }}>
+                    {formatTime(msg?.createdAt)}
+                  </Typography>
 
-                  {message?.sender === student?._id &&
-                    message?.status?.every((s) => s.delivered) &&
-                    !message?.status?.every((s) => s.read) && (
-                      <DoneAllIcon
-                        sx={{
-                          color: "white",
-                          width: "16px",
-                          height: "16px",
-                        }}
-                      />
-                    )}
+                  {/* Read/Delivered Status */}
+                  {msg.sender === instructor?._id &&
+                    (msg.status?.some((s) => s.delivered) ? (
+                      msg.status?.every((s) => s.read) ? (
+                        <DoneAllIcon sx={{ color: "#0D6EFD", width: "16px" }} />
+                      ) : (
+                        <DoneAllIcon sx={{ color: "white", width: "16px" }} />
+                      )
+                    ) : (
+                      <DoneIcon sx={{ color: "white", width: "16px" }} />
+                    ))}
 
-                  {message?.sender === student?._id &&
-                    message?.status?.every((s) => s.read) && (
-                      <DoneAllIcon
-                        sx={{
-                          color: "#0D6EFD",
-                          width: "16px",
-                          height: "16px",
-                        }}
-                      />
-                    )}
-                </Typography>
-              </Box>
-              <Box sx={{ marginTop: isTablet ? "3px" : "5px" }}>
-                <Typography
-                  sx={{
-                    color: "#727272",
-                    fontSize: isTablet ? "10px" : "11px",
-                    fontWeight: 500,
-                    textAlign: "end",
-                  }}
-                >
-                  {formatTime(message?.createdAt)}
-                </Typography>
+                  {/* Delete Button for Instructor */}
+                  {msg.sender === instructor?._id && (
+                    <IconButton
+                      onClick={() => handleDeleteMessage(msg._id)}
+                      sx={{ color: "white", padding: "2px" }}
+                    >
+                      <DeleteIcon sx={{ fontSize: "16px" }} />
+                    </IconButton>
+                  )}
+                </Box>
               </Box>
             </Box>
           </Grid>
         </Grid>
       ))}
-      <div ref={messagesEndRef} />
+
+      {/* Auto Scroll Reference */}
+      <div ref={chatEndRef} />
     </Box>
   );
 };

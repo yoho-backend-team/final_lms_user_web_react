@@ -31,6 +31,7 @@ import { Link } from "react-router-dom";
 import { useSocket } from "context/instructorSocket";
 import { addNotification } from "features/common/redux/slices";
 import { selectNotificationList } from "features/common/redux/selector";
+import BackgroundImage from 'assets/images/background/instructor.png'; 
 import ReactTour from 'reactour';
 
 const InstructorDashBoard = () => {
@@ -99,6 +100,15 @@ const InstructorDashBoard = () => {
   const [isTourOpen, setIsTourOpen] = React.useState(true);
 
   return (
+    <Box
+      sx={{
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        p: 3,
+      }}
+    >
     <Grid
       container
       p={tabView ? 4 : 8}
@@ -106,14 +116,14 @@ const InstructorDashBoard = () => {
       gap={tabView ? "0px" : "30px"}
       xs={12}
     >
-      <ReactTour
+      {/* <ReactTour
         steps={steps}
         isOpen={isTourOpen}
         onRequestClose={() => setIsTourOpen(false)}
         rounded={5}
         accentColor="#5cbfba"
         className="tour" // Add a class for custom styling
-      />
+      /> */}
       <Grid item xs={tabView ? 6 : 3.2} className="MainGrid-1">
         <Card>
           <Box>
@@ -357,6 +367,7 @@ const InstructorDashBoard = () => {
         </Box>
       </Box>
     </Grid>
+        </Box>
   );
 };
 

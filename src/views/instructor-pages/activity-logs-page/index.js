@@ -147,6 +147,7 @@
 // };
 
 // export default ActivityLogsPage;
+
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -166,6 +167,7 @@ import {
   selectLoading,
 } from "features/instructor-pages/activity-logs-page/redux/selectors";
 import { useSpinner } from "context/SpinnerProvider";
+import BackgroundImage from 'assets/images/background/instructor.png';
 
 const ActivityLogsPage = () => {
   const dispatch = useDispatch();
@@ -213,8 +215,11 @@ const ActivityLogsPage = () => {
           borderRadius: "5px",
           backgroundColor: "#FFFFFF",
           width: "100%",
-          minHeight: "100vh",
+          minHeight: "130vh",
           paddingBottom: "20px",
+          backgroundImage: `url(${BackgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
         {/* Header Section */}
@@ -282,7 +287,16 @@ const ActivityLogsPage = () => {
         </Box>
 
         {/* Activity Log Content */}
-        <Paper sx={{ boxShadow: "none", marginTop: "20px", padding: "20px" }}>
+        <Paper
+          sx={{
+            boxShadow: "none",
+            marginTop: "20px",
+            padding: "20px",
+            backgroundColor: "#FFFFFF",
+            opacity: 0.8, // Make the background slightly transparent
+            borderRadius: "10px", // Round the corners for better UI
+          }}
+        >
           <Box sx={{ maxHeight: "500px", overflowY: "auto", padding: "10px" }}>
             {loading ? (
               <Box sx={{ display: "flex", justifyContent: "center", padding: "20px" }}>

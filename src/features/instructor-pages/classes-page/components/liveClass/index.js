@@ -30,8 +30,9 @@
 // export default LiveClassList;
 import React, { useState } from "react";
 import Joyride from "react-joyride";
-import { Box } from "@mui/material";
+import { Box,Typography  } from "@mui/material";
 import ClassCard from "../card/ClassCard";
+import  { ClassCardHeader } from "../card/ClassCard";
 
 const defaultStyles = {
   calendarColor: "#000000",
@@ -60,7 +61,7 @@ const LiveClassList = ({ data, classType, group, image }) => {
 
   return (
     <>
-      <Joyride
+      {/* <Joyride
         steps={tourSteps}
         run={runTour}
         continuous={true}
@@ -72,10 +73,11 @@ const LiveClassList = ({ data, classType, group, image }) => {
             zIndex: 10000,
           },
         }}
-      />
+      /> */}
       <Box id="live-class-list" sx={{ mt: 3, px: "40px" }}>
         {data?.map((cls) => (
           <Box key={cls.id} id="live-class-card">
+            <ClassCardHeader />
             <ClassCard
               cls={cls}
               style={defaultStyles}
@@ -85,6 +87,7 @@ const LiveClassList = ({ data, classType, group, image }) => {
             />
           </Box>
         ))}
+        
       </Box>
     </>
   );

@@ -27,6 +27,7 @@ import FemaleIcon from "@mui/icons-material/Female";
 import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import BoySharpIcon from "@mui/icons-material/BoySharp";
 import Groups2Icon from "@mui/icons-material/Groups2";
+import BackgroundImage from 'assets/images/background/student.png'; 
 import {
   getprofilewithId,
   UpdateprofilewithId,
@@ -253,7 +254,16 @@ const ProfilePage = () => {
   ];
 
   return (
-    <Box sx={{ display: "flex", height: "100vh", padding: "70px" }}>
+    <Box
+      sx={{
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        minHeight: "50vh",
+        p: 3,
+      }}
+    >
+    <Box sx={{ display: 'flex', height: '100vh', padding: '70px' }}>
       <Box
         sx={{
           width: "300px",
@@ -904,6 +914,7 @@ const ProfilePage = () => {
           </Grid>
         </Grid>
       </Box>
+    </Box>
     </Box>
   );
 };

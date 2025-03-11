@@ -1,8 +1,10 @@
-import React from "react";
+import React ,{ useState } from "react";
 import {
   Typography,
   Box,
   Button,
+   Snackbar, 
+  Alert,
   Grid,
   Breadcrumbs,
   AvatarGroup,
@@ -29,6 +31,7 @@ import { useSpinner } from "context/SpinnerProvider";
 const ClassCard = ({ type, classDetails, getClass, group }) => {
   const navigate = useNavigate();
   const { showSpinner, hideSpinner } = useSpinner();
+  const [open, setOpen] = useState(false);
 
   const showJoinClassButtons = classDetails?.study_materials?.length === 0 || classDetails?.notes?.length === 0;
 
@@ -67,6 +70,20 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
       scrollableBox.scrollBy({ top: scrollAmount, behavior: "smooth" });
     }
   };
+
+
+  
+    const handleClick = () => {
+      setOpen(true); // Show the popup
+    };
+  
+    const handleClose = (event, reason) => {
+      if (reason === "clickaway") {
+        return;
+      }
+      setOpen(false);
+    };
+  
   
   return (
     <Box sx={{ paddingTop: "5px", width: "100%", overflow: "none" }}>
@@ -377,33 +394,65 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
           </Typography>
 
           <Box sx={{ display: "flex", justifyContent: "flex-start", gap: "200px", pt: "5px" }}>
-            <Button
-              variant="contained"
-              sx={{
-                borderRadius: "24px", 
-                backgroundColor: "#0D6EFD",
-                padding: "8px 18px", 
-                color: "white",
-                fontSize: "16px",
-                fontWeight: 600,
-                lineHeight: "24px",
-                width: "220px", 
-                height: "46px", 
-                ml:6,      
-                boxShadow: "0px 6px 34px -8px #A4A4A4", 
-                cursor : "pointer",
-               "&:hover": {
-                background: "linear-gradient(45deg, #FF5733, #EA0234)", 
-               transform: "scale(1.05)", 
-                boxShadow: "0px 6px 8px rgba(0, 0, 0, 0.2)",
-                
-                },
-            
-              }}
-              tabIndex={2}
-            >
-              Join Now
-            </Button>
+      <Button
+        variant="contained"
+        sx={{
+          borderRadius: "24px",
+          backgroundColor: "#0D6EFD",
+          padding: "8px 18px",
+          color: "white",
+          fontSize: "16px",
+          fontWeight: 600,
+          lineHeight: "24px",
+          width: "220px",
+          height: "46px",
+          ml: 6,
+          boxShadow: "0px 6px 34px -8px #A4A4A4",
+          cursor: "pointer",
+          "&:hover": {
+            background: "linear-gradient(45deg, #FF5733, #EA0234)",
+            transform: "scale(1.05)",
+            boxShadow: "0px 6px 8px rgba(0, 0, 0, 0.2)",
+          },
+        }}
+        onClick={handleClick}
+      >
+        Join Now
+      </Button>
+
+       {/* Stylish Snackbar popup */}
+       <Snackbar
+        open={open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }} // Bottom-center position
+        sx={{ 
+          "& .MuiSnackbarContent-root": {
+            backgroundColor: "#ff4757", // Custom red background
+            color: "white", // White text
+            fontSize: "18px",
+            fontWeight: "bold",
+            borderRadius: "12px", // Rounded corners
+            padding: "12px 24px", // More padding
+            boxShadow: "0px 4px 20px rgba(0,0,0,0.3)", // Shadow effect
+            textAlign: "center",
+          } 
+        }}
+      >
+        <Alert
+          onClose={handleClose}
+          severity="error"
+          sx={{
+            backgroundColor: "transparent", // Transparent to match Snackbar style
+            color: "red",
+            fontSize: "16px",
+            fontWeight: "600",
+            textAlign: "center",
+          }}
+        >
+          🚫 Link is not available.
+        </Alert>
+      </Snackbar>
 
             <Button
               variant="outlined"
@@ -792,7 +841,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                       </Typography>
                     </Box>
                   </Box>
-                  <Box
+                 {/* <Box
                     sx={{
                       mt: 2,
                       backgroundImage: `url(${ClassCoordinatorViewCard})`,
@@ -807,8 +856,8 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                          },
                     }}
                   >
-                    {/* <Typography variant="body1" sx={{ fontWeight: '500',fontSize:"12px",lineHeight:"16px",color:"#435D85",p:"20px" }} >Jerome Bell</Typography> */}
-                    <Box sx={{ padding: "20px" }}>
+                     <Typography variant="body1" sx={{ fontWeight: '500',fontSize:"12px",lineHeight:"16px",color:"#435D85",p:"20px" }} >Jerome Bell</Typography> */}
+                    {/* <Box sx={{ padding: "20px" }}>
                       <Typography
                         variant="body2"
                         sx={{
@@ -854,8 +903,8 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                       >
                         Total {classDetails?.batch?.student?.length}
                       </Typography>
-                    </Box>
-                  </Box>
+                    </Box> 
+                  </Box>*/}
                 </Box>
                 <Box sx={{ mt: 4 }}>
                   <Typography
