@@ -65,7 +65,7 @@ const LiveClassList = ({ data, classType, group, image }) => {
 
   return (
     <>
-      <Joyride
+      {/* <Joyride
         steps={tourSteps}
         run={runTour}
         continuous={true}
@@ -77,7 +77,7 @@ const LiveClassList = ({ data, classType, group, image }) => {
             zIndex: 10000,
           },
         }}
-      />
+      /> */}
       <Box id="live-class-list" sx={{ mt: 3, px: "40px" }}>
         {data && data.length > 0 ? (
           data.map((cls) => (

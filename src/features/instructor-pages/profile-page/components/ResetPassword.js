@@ -41,8 +41,8 @@ const PasswordReset = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: '800px', margin: '0 auto', p: 3 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+    <Box sx={{ maxWidth: '1000px', margin: '0 auto', p: 3}}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 6 }}>
         <Typography variant="h4" sx={{ fontWeight: '600', color: '#2d3748' }}>
           Change Password
         </Typography>

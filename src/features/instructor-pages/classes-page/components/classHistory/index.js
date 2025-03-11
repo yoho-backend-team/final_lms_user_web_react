@@ -118,7 +118,7 @@ const ClassHistory = ({ data, classType, group, image }) => {
 
   return (
     <>
-      <Joyride
+      {/* <Joyride
         steps={tourSteps}
         run={runTour}
         continuous={true}
@@ -130,7 +130,7 @@ const ClassHistory = ({ data, classType, group, image }) => {
             zIndex: 10000,
           },
         }}
-      />
+      /> */}
       <Box id="filter-section">
         <FilterHeader
           filters={filters}

@@ -29,10 +29,25 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
 
     socket.on("newMessage", handleMessage);
 
+    // Cleanup function to remove the listener
     return () => {
       socket.off("newMessage", handleMessage);
     };
   }, [socket, setMessages]);
+
+  // Function to send a message
+  const sendMessage = (messageContent) => {
+    if (socket && currentChat) {
+      const message = {
+        content: messageContent,
+        chatId: currentChat.id,
+        senderId: socket.id, 
+        timestamp: new Date().toISOString(),
+      };
+      socket.emit("sendMessage", message); 
+      setMessages((prev) => [...prev, message]); 
+    }
+  };
 
   return (
     <Box
@@ -81,7 +96,7 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
               backgroundColor: "#FFFFFF", 
             }}
           >
-            <BottomBar socket={socket} community={currentChat} />
+            <BottomBar socket={socket} community={currentChat} sendMessage={sendMessage} />
           </Box>
         </Card>
       ) : (
@@ -102,8 +117,8 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
             src="https://cdn-icons-png.flaticon.com/512/9388/9388030.png"
             alt="Group Chat Logo"
             sx={{
-              width: isTablet ? "100px" : "120px", // Adjust size for tablets
-              height: isTablet ? "100px" : "120px", // Adjust size for tablets
+              width: isTablet ? "100px" : "120px", 
+              height: isTablet ? "100px" : "120px", 
               borderRadius: "50%",
             }}
           />
@@ -112,7 +127,7 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
           <Typography
             sx={{
               color: "#747474",
-              fontSize: isTablet ? "14px" : "16px", // Adjust font size for tablets
+              fontSize: isTablet ? "14px" : "16px", 
               fontWeight: 500,
               lineHeight: "24px",
             }}

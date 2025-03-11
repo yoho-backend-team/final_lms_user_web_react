@@ -386,7 +386,7 @@ const TicketsPage = () => {
       }}
     >
       {/* Guided Tour Component */}
-      <Joyride
+      {/* <Joyride
         steps={tourSteps}
         run={tourActive}
         continuous={true}
@@ -397,7 +397,7 @@ const TicketsPage = () => {
           buttonClose: { display: "none" },
           buttonBack: { marginRight: 10 },
         }}
-      />
+      /> */}
 
       <Box sx={{ p: tabView ? "62px 40px 20px 38px" : "62px 40px 20px 80px" }}>
         {open || ticketView ? (

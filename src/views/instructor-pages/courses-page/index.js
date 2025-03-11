@@ -84,7 +84,7 @@ const CourseListMainPage = () => {
 
   return (
     <CourseLayout>
-      <Tour steps={tourSteps} isOpen={isTourOpen} onRequestClose={() => setIsTourOpen(false)} />
+      {/* <Tour steps={tourSteps} isOpen={isTourOpen} onRequestClose={() => setIsTourOpen(false)} /> */}
 
       <Box sx={{ padding: "40px" }}>
         {/* Title */}
