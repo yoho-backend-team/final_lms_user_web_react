@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
       minHeight: "140px",
       alignItems: "center",
-      padding: theme.spacing(3),
+      padding: 3,
       borderRadius: "14px",
       cursor: "pointer",
       "&:hover": {
@@ -25,10 +25,10 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
     text: {
-      marginBottom: theme.spacing(1),
+      marginBottom: 1,
     },
     browseButton: {
-      marginTop: theme.spacing(2),
+      marginTop: 2,
     },
     helperText: {
       "& .MuiFormHelperText-root": {
