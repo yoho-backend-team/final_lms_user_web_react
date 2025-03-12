@@ -20,87 +20,47 @@ const ChatGroupDetails = ({ currentChat, setViewGroup }) => {
   ];
 
   return (
-    <Box sx={{ 
-      height: '100vh', 
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
-      {/* Fullscreen Background */}
+    <Box sx={{ height: '100vh', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+      {/* Group Wallpaper */}
       <Box sx={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
         width: '100%',
-        height: '100%',
-        backgroundImage: `url(${
-          currentChat?.batch?.course?.image 
-            ? getImageUrl(currentChat?.batch?.course?.image) 
-            : imagePlaceholder
-        })`,
+        height: '350px', // Adjust height as needed
+        backgroundImage: `url(${currentChat?.batch?.course?.image ? getImageUrl(currentChat?.batch?.course?.image) : imagePlaceholder})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         filter: 'brightness(50%)',
-        zIndex: 1
-      }} />
+        position: 'relative'
+      }}>
+        {/* Back Button */}
+        <IconButton 
+          onClick={() => setViewGroup(false)}
+          sx={{ 
+            position: 'absolute', 
+            top: 10, 
+            left: 10, 
+            color: 'black' 
+          }}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+      </Box>
 
-      {/* Back Button */}
-      <IconButton 
-        onClick={() => {
-          
-          setViewGroup(false);
-        }}
-        sx={{ 
-          position: 'absolute', 
-          top: 10, 
-          left: 10, 
-          zIndex: 3,
-          color: 'white' 
-        }}
-      >
-        <ArrowBackIcon />
-      </IconButton>
-
-      {/* Group Details Overlay */}
+      {/* Group Details */}
       <Box sx={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        zIndex: 2,
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        flexDirection: 'column',
-        justifyContent: 'center',
         alignItems: 'center',
-        color: 'white',
         textAlign: 'center',
-        p: 3
+        p: 3,
+        color: 'black'
       }}>
-        {/* Group Name and Description */}
-        <Box sx={{
-          textAlign: 'center',
-          pt: 10,
-          px: 3,
-          
-        }}>
-          <Typography variant="h4" sx={{ 
-            fontWeight: 'bold', 
-            mb: 1,
-            color:"white",
-            textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
-          }}>
-            {currentChat?.batch?.batch_name || 'Group Name'}
-          </Typography>
-          <Typography variant="h6" sx={{ 
-            mb: 3,
-            opacity: 0.8,
-            color:"white",
-            textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-          }}>
-            {currentChat?.batch?.description || 'No description available'}
-          </Typography>
-        </Box>
+        <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 1, textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+          {currentChat?.batch?.batch_name || 'Group Name'}
+        </Typography>
+        <Typography variant="h6" sx={{ mb: 3, opacity: 0.8, textShadow: '1px 1px 2px rgba(0,0,0,0.5)' }}>
+          {currentChat?.batch?.description || 'No description available'}
+        </Typography>
 
         {/* Members List */}
         <Box sx={{ 
@@ -112,18 +72,14 @@ const ChatGroupDetails = ({ currentChat, setViewGroup }) => {
           borderRadius: 2,
           p: 2
         }}>
-          <Typography variant="h6" sx={{color: 'white', mb: 2 }}>
+          <Typography variant="h6" sx={{ color: 'black', mb: 2 }}>
             {`Members (${allMembers.length})`}
           </Typography>
           <List>
             {allMembers.map((member) => (
               <ListItem 
                 key={member.id} 
-                sx={{ 
-                  backgroundColor: 'rgba(255,255,255,0.1)',
-                  borderRadius: 1,
-                  mb: 1
-                }}
+                sx={{ backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 1, mb: 1 }}
               >
                 <ListItemAvatar>
                   <Avatar 
@@ -132,16 +88,8 @@ const ChatGroupDetails = ({ currentChat, setViewGroup }) => {
                   />
                 </ListItemAvatar>
                 <ListItemText 
-                  primary={
-                    <Typography variant="body1" sx={{ color: 'white' }}>
-                      {member.full_name}
-                    </Typography>
-                  }
-                  secondary={
-                    <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)' }}>
-                      {member.role}
-                    </Typography>
-                  }
+                  primary={<Typography variant="body1" sx={{ color: 'black' }}>{member.full_name}</Typography>}
+                  secondary={<Typography variant="body2" sx={{ color: 'rgba(20, 16, 16, 0.7)' }}>{member.role}</Typography>}
                 />
               </ListItem>
             ))}
@@ -153,3 +101,4 @@ const ChatGroupDetails = ({ currentChat, setViewGroup }) => {
 };
 
 export default ChatGroupDetails;
+

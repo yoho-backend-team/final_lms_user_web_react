@@ -21,7 +21,7 @@ import { useStudentLogin } from "../services";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { getErrorMessage } from "utils/common/error";
-import { ForgetPassword_Step } from "lib/constants";
+import { ForgetPassword_Step, Login_Step } from "lib/constants";
 import { useSpinner } from "context/SpinnerProvider";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import InfoIcon from "@mui/icons-material/Info";
@@ -42,7 +42,7 @@ const LoginForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: "student@gmail.com",
+      email: "kalam@gmail.com",
       password: "Wecandoit@2024",
     },
     validationSchema: validationSchema,

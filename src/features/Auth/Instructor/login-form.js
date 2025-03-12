@@ -148,6 +148,7 @@ import { instructorLoginStepAtom } from "store/atoms/authAtoms";
 import { ForgetPassword_Step } from "lib/constants";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
+// Validation schema
 const validationSchema = yup.object({
   email: yup.string("Enter your email").email("Enter a valid email").required("Email is required"),
   password: yup.string("Enter your password").min(8, "Password should be at least 8 characters").required("Password is required"),
@@ -163,8 +164,8 @@ const InstructorLoginForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: "teacher@gmail.com",
-      password: "Wecandoit@2024",
+      email: "mariecurie@gmail.com",
+      password: "Wecandoit@2025",
     },
     validationSchema,
     onSubmit: async (values) => {

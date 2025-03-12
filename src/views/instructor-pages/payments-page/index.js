@@ -237,7 +237,7 @@ const PaymentInterface = () => {
   return (
     <>
       {/* Joyride Guided Tour */}
-      <Joyride
+      {/* <Joyride
         steps={tourSteps}
         run={runTour}
         continuous={true}
@@ -245,7 +245,7 @@ const PaymentInterface = () => {
         disableOverlayClose={true}
         spotlightClicks={true}
         styles={{ options: { zIndex: 10000 } }}
-      />
+      /> */}
 
       {/* Main Container */}
       <Box

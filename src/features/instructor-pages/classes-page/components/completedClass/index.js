@@ -111,7 +111,7 @@ const CompletedClassList = ({ data, classType, group, image }) => {
         scrollBehavior: "smooth",
       }}
     >
-      <Joyride
+      {/* <Joyride
         steps={tourSteps}
         run={runTour}
         continuous={true}
@@ -123,7 +123,7 @@ const CompletedClassList = ({ data, classType, group, image }) => {
             zIndex: 10000,
           },
         }}
-      />
+      /> */}
       <Box id="class-header">
         <ClassCardHeader />
       </Box>

@@ -85,7 +85,7 @@ const CommunityPage = () => {
 
   return (
     <>
-      <Joyride
+      {/* <Joyride
   steps={tourSteps}
   run={runTour && isLoaded} // Ensure tour starts only when content is loaded
   continuous
@@ -95,7 +95,7 @@ const CommunityPage = () => {
   disableScrolling
   styles={{ options: { zIndex: 10000 } }}
   
-/>
+/> */}
 
       <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", padding: "20px", height: "95vh", backgroundColor: "#f9f9f9" }}>
         <Fade in={isLoaded} timeout={1000}>

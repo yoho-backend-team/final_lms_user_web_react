@@ -249,10 +249,10 @@ const ProfilePage = () => {
                         <Avatar
                           alt="user"
                           src={instructor?.image ? getImageUrl(instructor?.image) : imagePlaceholder}
-                          sx={{ width: 175, height: 175, mb: 2, ml: 10, border: '2px solid #0D6EFD' }}
+                          sx={{ width: 175, height: 175, mb: 2, ml: 15, border: '2px solid #0D6EFD' }}
                         />
                         {isEditMode && (
-                          <Button onClick={handleButtonClick} startIcon={<FileUploadOutlinedIcon />} sx={{ mt: 2 }}>
+                          <Button onClick={handleButtonClick} startIcon={<FileUploadOutlinedIcon />} sx={{ mt: 2, ml: 21}}>
                             Upload Photo
                           </Button>
                         )}

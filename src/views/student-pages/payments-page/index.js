@@ -111,6 +111,10 @@ const PaymentStudentInterface = () => {
           }
         }}
       /> */}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1eeeccc4f417a49e9c1ea911f8656e127c0b3943
       <Box
         sx={{
           mx: tabView ? "0px" : "40px",

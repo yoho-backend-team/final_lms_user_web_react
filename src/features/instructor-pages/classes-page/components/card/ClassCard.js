@@ -45,7 +45,7 @@ export const ClassCardHeader = () => (
           ml: 14,
         }}
       >
-       Classes Starting Date
+        Start Date
       </Typography>
     </Grid>
     <Grid item xs={2}>
@@ -59,7 +59,7 @@ export const ClassCardHeader = () => (
           ml: 1,
         }}
       >
-        Classes Starting Time
+         StartTime
       </Typography>
     </Grid>
     <Grid item xs={2}>

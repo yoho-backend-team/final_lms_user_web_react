@@ -36,9 +36,9 @@ export const ClassCardHeader = () => (
         <Typography
           variant="body1"
           sx={{
-            fontWeight: 600,
+            fontWeight: 800,
             fontFamily: "Poppins",
-            fontSize: "14px",
+            fontSize: "16px",
             color: "white",
             ml: 25,
           }}
@@ -50,37 +50,37 @@ export const ClassCardHeader = () => (
         <Typography
           variant="body1"
           sx={{
-            fontWeight: 600,
+            fontWeight: 800,
             fontFamily: "Poppins",
-            fontSize: "14px",
+            fontSize: "16px",
             color: "white",
-            ml: 15,
+            ml: 19,
           }}
         >
-          Classes Starting Date
+           Start Date
         </Typography>
       </Grid>
       <Grid item xs={2}>
         <Typography
           variant="body1"
           sx={{
-            fontWeight: 600,
+            fontWeight: 800,
             fontFamily: "Poppins",
-            fontSize: "14px",
+            fontSize: "16px",
             color: "white",
             ml: 1,
           }}
         >
-          Classes Starting Time
+          Start Time
         </Typography>
       </Grid>
       <Grid item xs={2}>
         <Typography
           variant="body1"
           sx={{
-            fontWeight: 600,
+            fontWeight: 800,
             fontFamily: "Poppins",
-            fontSize: "14px",
+            fontSize: "16px",
             color: "white",
             ml: 22,
           }}
@@ -92,9 +92,9 @@ export const ClassCardHeader = () => (
         <Typography
           variant="body1"
           sx={{
-            fontWeight: 600,
+            fontWeight: 800,
             fontFamily: "Poppins",
-            fontSize: "14px",
+            fontSize: "16px",
             color: "white",
             textAlign: "right",
             mr: 16,
@@ -115,15 +115,16 @@ const ClassCard = ({ cls, style, type, group }) => {
       sx={{
         overflowY: "auto",
         scrollBehavior: "smooth",
-        paddingBottom: "16px",
+        paddingBottom: "3px",
       }}
     >
       <Card
         sx={{
-          mt: 0.5,  // Reduced from 1
+          mt: 1,  // Reduced from 1
           mx: 4,
           mb: 0.2,  // Keeping consistent spacing
-          p: 0.01,
+          // py: 0.1,
+          ps: 0.5,
           transition: "transform 0.3s ease, box-shadow 0.3s ease",
           "&:hover": {
             transform: "scale(1.02)",
@@ -142,10 +143,11 @@ const ClassCard = ({ cls, style, type, group }) => {
             backgroundRepeat: "no-repeat",
             backgroundPosition: "right",
             cursor: "pointer",
+            height: "55px"
           }}
         >
           {/* Class Name and Course */}
-          <Grid item xs={3} sx={{ p: 2 }}>
+          <Grid item xs={3} sx={{ p: 1 }}>
             <Box>
               <Typography
                 variant="h6"
@@ -258,9 +260,9 @@ const ClassCard = ({ cls, style, type, group }) => {
           <Grid
             item
             xs={3}
-            sx={{ display: "flex", justifyContent: "flex-end", pr: 2 }}
+            sx={{ display: "flex", justifyContent: "flex-end", pr: 5 }}
           >
-            <Button
+           <Button
   component={Link}
   to={`/student/class/${cls.uuid}?type=${type}&group=${group}`}
   state={{ id: cls.uuid }}
@@ -268,6 +270,9 @@ const ClassCard = ({ cls, style, type, group }) => {
   sx={{
     backgroundColor: group === "history" ? "white" : "blue",
     color: group === "history" ? "#5611B1" : "white",
+    padding: "4px 12px", // Reduced padding
+    fontSize: "0.90rem", // Smaller font size
+    minWidth: "auto", // Removes unnecessary width
     "&:hover": {
       backgroundColor: group === "history" ? "white" : "#add8e6", // lighter shade for hover
       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
@@ -276,6 +281,7 @@ const ClassCard = ({ cls, style, type, group }) => {
 >
   View Class
 </Button>
+
 
           </Grid>
         </Grid>
