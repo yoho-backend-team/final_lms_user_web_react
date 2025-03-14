@@ -1,56 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
 import CloseIcon from '@mui/icons-material/Close';
-import { Grid, IconButton } from '@mui/material';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import { PDFViewer } from 'react-view-pdf';
+import { Grid, IconButton, Dialog, DialogContent, DialogTitle, CircularProgress } from '@mui/material';
 import { getImageUrl } from 'utils/common/imageUtlils';
 
-const PdfViewer = ({ open, handleViewClose, pdf }) => {
+// Configure PDF.js worker
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
- 
+const PdfViewer = ({ open, handleViewClose, pdf }) => {
+  const [numPages, setNumPages] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const pdfUrl = getImageUrl(pdf?.file);
+
   return (
-    <div>
-      <Dialog
-       fullScreen
-        open={open}
-        onClose={handleViewClose}
-        aria-labelledby="user-view-View"
-        aria-describedby="user-view-View-description"
+    <Dialog fullScreen open={open} onClose={handleViewClose} aria-labelledby="pdf-viewer">
+      <DialogTitle
+        sx={{
+          textAlign: 'center',
+          fontSize: '1.5rem !important',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'center'
+        }}
       >
-        <DialogTitle
-          id="user-view-View"
-          sx={{
-            textAlign: 'center',
-            fontSize: '1.5rem !important',
-            px: (theme) => [`${theme.spacing(5)} !important`, `${theme.spacing(10)} !important`],
-            pt: (theme) => [`${theme.spacing(6)} !important`, `${theme.spacing(5)} !important`],
-            display: 'flex',
-            justifyContent: 'flex-end',
-            alignItems: 'center'
-          }}
-        >
-          <IconButton onClick={handleViewClose}>
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent
-          sx={{
-            pt: (theme) => [`${theme.spacing(6)} !important`, `${theme.spacing(1)} !important`],
-            pb: (theme) => `${theme.spacing(5)} !important`,
-            px: (theme) => [`${theme.spacing(5)} !important`, `${theme.spacing(8)} !important`]
-          }}
-        >
-          <Grid container spacing={2}>
+        <IconButton onClick={handleViewClose} aria-label="close">
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh'
+        }}
+      >
+        {pdfUrl ? (
+          <Grid container spacing={2} justifyContent="center">
             <Grid item xs={12} sm={12} sx={{ mb: 4, mt: 1.5 }}>
-              <PDFViewer url={getImageUrl(pdf?.file)} />
+              <Document
+                file={pdfUrl}
+                onLoadSuccess={({ numPages }) => {
+                  setNumPages(numPages);
+                  setLoading(false);
+                }}
+                onLoadError={(error) => {
+                  console.error("PDF Load Error:", error);
+                  setLoading(false);
+                }}
+              >
+                {loading && <CircularProgress />}
+                {Array.from(new Array(numPages), (el, index) => (
+                  <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+                ))}
+              </Document>
             </Grid>
           </Grid>
-        </DialogContent>
-      </Dialog>
-    </div>
+        ) : (
+          <p style={{ textAlign: 'center', color: 'red' }}>Invalid or missing PDF file.</p>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 };
 
-export default PdfViewer
+export default PdfViewer;

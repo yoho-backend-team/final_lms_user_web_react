@@ -64,6 +64,7 @@ const NotificationTab = ({ tabValue, handleTabChange, notifications, handleNotif
                             <Tab label={<Badge badgeContent={unreadCount} color="primary">Unread</Badge>} />
                         </Tabs>
                     </Box>
+                    <Box sx={{ maxHeight: "65vh", overflow: "auto" }}></Box>
                     {
                         filteredNotifications?.map((notifi, index) => (
                             <Box key={index} sx={{ display: 'flex', gap: "13px", padding: "18.5px", cursor: "pointer" }} onClick={() => handleNotificationChange(notifi)}>

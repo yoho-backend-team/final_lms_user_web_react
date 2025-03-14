@@ -2,16 +2,12 @@ import React, { useState, useEffect } from "react";
 import Joyride from "react-joyride";
 import {
   Button,
-  MenuItem,
-  Select,
-  FormControl,
   Typography,
   Card,
   CardContent,
   Grid,
   Box,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
@@ -30,7 +26,6 @@ function InstructorAttendance({
   const [runTour, setRunTour] = useState(true);
   const [calendar, setCalendar] = useState([]);
 
-  // Convert month name to index
   const monthIndex = months.indexOf(selectedMonth);
   const currentYear = new Date().getFullYear();
 
@@ -38,7 +33,7 @@ function InstructorAttendance({
     if (selectedMonth) {
       generateCalendar();
     }
-  }, [selectedMonth, attendance_data]);  // Dependency array ensures updates
+  }, [selectedMonth, attendance_data]);
 
   const generateCalendar = () => {
     const firstDay = new Date(currentYear, monthIndex, 1).getDay();
@@ -47,12 +42,7 @@ function InstructorAttendance({
     let weeks = [];
     let currentWeek = new Array(firstDay).fill(null);
 
-    // for (let i = 0; i < firstDay; i++) {
-    //   currentWeek[i] = null;
-    // }
-
     for (let day = 1; day <= daysInMonth; day++) {
-      const weekday = (firstDay + day - 1) % 7;
       const attendanceForDate = attendance_data?.workingDays?.find((item) => {
         const itemDate = new Date(item?.date);
         return itemDate.getMonth() === monthIndex && itemDate.getDate() === day;
@@ -65,9 +55,9 @@ function InstructorAttendance({
         weeks.push(currentWeek);
         currentWeek = [];
       }
-
-      setCalendar(weeks);
     }
+
+    setCalendar(weeks);
   };
 
   const handleMonthChange = (event) => {
@@ -87,13 +77,22 @@ function InstructorAttendance({
 
   return (
     <Box sx={{ padding: "20px", backgroundColor: "transparent", borderRadius: "10px" }}>
-      <Joyride steps={[
-        { target: "body", content: "Welcome to the Attendance Calendar!", placement: "center" },
-        { target: "#month-selector", content: "Select a month to view attendance records." },
-        { target: "#calendar-view", content: "View attendance status for each day." },
-        { target: "#prev-month", content: "Go to the previous month." },
-        { target: "#next-month", content: "Go to the next month." }
-      ]} run={runTour} continuous showSkipButton showProgress disableOverlayClose spotlightClicks styles={{ options: { zIndex: 10000 } }}  />
+      <Joyride 
+        steps={[
+          { target: "body", content: "Welcome to the Attendance Calendar!", placement: "center" },
+          { target: "#month-selector", content: "Select a month to view attendance records." },
+          { target: "#calendar-view", content: "View attendance status for each day." },
+          { target: "#prev-month", content: "Go to the previous month." },
+          { target: "#next-month", content: "Go to the next month." }
+        ]}
+        run={runTour} 
+        continuous 
+        showSkipButton 
+        showProgress 
+        disableOverlayClose 
+        spotlightClicks 
+        styles={{ options: { zIndex: 10000 } }}  
+      />
 
       {/* Calendar View */}
       <Box id="calendar-view" sx={{ marginTop: "25px" }}>
@@ -109,42 +108,31 @@ function InstructorAttendance({
           <Grid container key={weekIndex} spacing={0.1}>
             {week.map((day, dayIndex) => (
               <Grid item xs={1.71} key={dayIndex}>
-                <Card  sx={{ 
-                backgroundColor: day?.status === "present" ? "rgba(59, 232, 53, 0.3)" : "transparent",
-                border: day?.status 
-                ? "1px solid purple"  // Blue Border for Both Present and Absent
-                : "#f0f0f0", 
-                minHeight: day?.day ? "70px":'',
+                <Card sx={{ 
+                  backgroundColor: day?.status === "present" ? "rgba(59, 232, 53, 0.3)" : "transparent",
+                  border: day?.status ? "1px solid purple" : "#f0f0f0",
+                  minHeight: day?.day ? "85px" : '',
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  borderRadius: 0 , // Square Edges
+                  borderRadius: 0,
                   margin: '5px'
-              }}> {day?.day && 
-                <CardContent>
-                    <Typography sx={{ textAlign: "center" }}>
-                      {day?.day}
-                    </Typography>
-                    <Typography sx={{ fontSize:'13px', position:'absolute', fontWeight: 600,ml:"-20px" }}>
-                      {day?.status === 'present' ? 'Present':''}
-                    </Typography>
-                  </CardContent>
-              }                  
+                }}>
+                  {day?.day && (
+                    <CardContent>
+                      <Typography sx={{ textAlign: "center" }}>
+                        {day?.day}
+                      </Typography>
+                      <Typography sx={{ fontSize:'13px', fontWeight: 600, ml:"-20px" }}>
+                        {day?.status === 'present' ? 'Present' : ''}
+                      </Typography>
+                    </CardContent>
+                  )}
                 </Card>
               </Grid>
             ))}
           </Grid>
         ))}
-      </Grid>
-    ));
-  };
-
-  return (
-    <Box sx={{ height: "67vh", display: "flex", flexDirection: "column", p: 2 }}>
-      <Joyride steps={tourSteps} run={runTour} continuous showSkipButton showProgress disableOverlayClose spotlightClicks styles={{ options: { zIndex: 10000 } }} />
-      
-      <Box sx={{ flexGrow: 1, overflowY: "auto" }} id="calendar-view">
-        {generateCalendar()}
       </Box>
 
       {/* Navigation Buttons */}
