@@ -9,6 +9,9 @@ import {
   MenuItem,
   Button,
   CircularProgress,
+  IconButton,
+  Collapse,
+  Paper,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import {
@@ -21,6 +24,7 @@ import {
 import Client from "../../../api/index";
 import { useTabResponsive } from "utils/tabResponsive";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
 import CustomCalendar from "features/student-pages/attendances-page/components/Calendar/CustomCalendar";
@@ -81,6 +85,12 @@ const useStyles = makeStyles({
       gap: "15px",
     },
   },
+  filterContainer: {
+    padding: "10px",
+    marginBottom: "15px",
+    borderRadius: "8px",
+    transition: "all 0.3s ease",
+  },
 });
 
 const Attendance = () => {
@@ -95,6 +105,7 @@ const Attendance = () => {
   const navigate = useNavigate();
   const date = new Date();
   const [runTour, setRunTour] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
 
   const getAttedenceDetails = async (month, year) => {
     try {
@@ -114,12 +125,17 @@ const Attendance = () => {
       hideSpinner();
     }
   };
- console.log(attendance,"att")
   
-  const handleChange = (event) => {
+  const handleMonthChange = (event) => {
     const newMonth = event.target.value;
     setSelectedMonth(newMonth);
-    getAttedenceDetails(newMonth);
+    getAttedenceDetails(newMonth, selectedYear);
+  };
+
+  const handleYearChange = (event) => {
+    const newYear = event.target.value;
+    setSelectedYear(newYear);
+    getAttedenceDetails(selectedMonth, newYear);
   };
 
   useEffect(() => {
@@ -151,13 +167,8 @@ const Attendance = () => {
       disableBeacon: true,
     },
     {
-      target: ".month-selector",
-      content: "Use this dropdown to select the month for which you want to view attendance.",
-      disableBeacon: true,
-    },
-    {
-      target: ".year-selector",
-      content: "Select the year for attendance records from this dropdown.",
+      target: ".filter-button",
+      content: "Click this filter icon to show month and year selection options.",
       disableBeacon: true,
     },
     {
@@ -172,35 +183,19 @@ const Attendance = () => {
     },
   ];
 
-
   if (loading) {
     return <CircularProgress />;
   }
-console.log(attendance_data,'attendance')
+
   const totalClasses = (attendance_data?.onlineClassCount ?? 0) + (attendance_data?.offlineClassCount ?? 0);
 
   return (
-
-    
     <Box
       className={classes.root}
-      
       sx={{ 
         padding: tabView ? "20px" : "56px 40px 17px 40px",
       }}
     >
-
-{/*<Joyride
-        steps={steps}
-        run={runTour}
-        continuous
-        showSkipButton
-        disableOverlayClose
-        spotlightClicks
-        disableScrolling
-        styles={{ options: { zIndex: 10000 } }}
-      />*/}
-
       <Box className={classes.card}>
         {/* Header Section */}
         <Box className="attendance-title"
@@ -211,15 +206,30 @@ console.log(attendance_data,'attendance')
             padding: "20px 31px",
           }}
         >
-          <Typography
-            sx={{
-              color: "#282828",
-              fontSize: "24px",
-              fontWeight: 800,
-            }}
-          >
-            Attendance
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Typography
+              sx={{
+                color: "#282828",
+                fontSize: "24px",
+                fontWeight: 800,
+              }}
+            >
+              Attendance
+            </Typography>
+            <IconButton 
+              className="filter-button"
+              onClick={() => setShowFilters(!showFilters)}
+              sx={{
+                ml:"25px",
+                backgroundColor: "#0D6EFD",
+                borderRadius: "18px",
+                padding: "8px",
+               
+              }}
+            >
+              <FilterListIcon sx={{ color: "white" }} />
+            </IconButton>
+          </Box>
           {!tabView && (
             <Box>
               <img
@@ -236,11 +246,71 @@ console.log(attendance_data,'attendance')
                   fontSize: "20px",
                 }}
               >
-                {months[selectedMonth]} {date.getFullYear()}
+                {months[selectedMonth]} {selectedYear}
               </Typography>
             </Box>
           )}
         </Box>
+
+        {/* Filter Section */}
+        <Collapse in={showFilters}>
+          <Box 
+            sx={{ 
+              padding: "0 31px",
+              marginBottom: 2,
+              display: "flex",
+              gap: 2,
+              flexWrap: "wrap",
+            }}
+          >
+            
+              {/* Month Selector */}
+              <FormControl sx={{ minWidth: 180 }}>
+                <Select
+                  value={selectedMonth}
+                  onChange={handleMonthChange}
+                  IconComponent={ExpandMoreIcon}
+                  className="month-selector"
+                  sx={{
+                    backgroundColor: "#E3F2FD",
+                    '&:hover': {
+                      backgroundColor: "#BBDEFB",
+                    },
+                    borderRadius: "8px",
+                    border: "1px solid #2196F3",
+                  }}
+                >
+                  {months.map((month, index) => (
+                    <MenuItem key={index} value={index}>
+                      {month}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+
+              {/* Year Selector */}
+              <FormControl sx={{ minWidth: 180 }}>
+                <Select 
+                  value={selectedYear} 
+                  onChange={handleYearChange}
+                  className="year-selector"
+                  sx={{
+                    backgroundColor: "#E8F5E9",
+                    '&:hover': {
+                      backgroundColor: "#C8E6C9",
+                    },
+                    borderRadius: "8px",
+                    border: "1px solid #4CAF50",
+                  }}
+                >
+                  {years.map((year, index) => (
+                    <MenuItem key={index} value={year}>{year}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+           
+          </Box>
+        </Collapse>
 
         {/* Scrollable Content Container */}
         <Box className={classes.scrollContainer}>
@@ -248,110 +318,66 @@ console.log(attendance_data,'attendance')
             {/* Sidebar Section */}
             <Grid item xs={12} md={4}>
               <Box sx={{ padding: "0 20px" }}>
-                {/* Month Selector */}
-                <FormControl fullWidth sx={{ mt: 3, borderRadius: "8px", border: "1px solid #2196F3", overflow: "hidden" }}>
-  <Select
-    value={selectedMonth}
-    onChange={handleChange}
-    IconComponent={ExpandMoreIcon}
-    sx={{
-      backgroundColor: "#E3F2FD", // Light blue shade
-      '&:hover': {
-        backgroundColor: "#BBDEFB", // Slightly darker blue on hover
-      },
-      borderRadius: "8px",
-      padding: "8px 16px"
-    }}
-  >
-    {months.map((month, index) => (
-      <MenuItem key={index} value={index}>
-        {month}
-      </MenuItem>
-    ))}
-  </Select>
-</FormControl>
-
-<FormControl fullWidth sx={{ mt: 2, borderRadius: "8px", border: "1px solid #4CAF50", overflow: "hidden" }}>
-  <Select 
-    value={selectedYear} 
-    onChange={(e) => setSelectedYear(e.target.value)}
-    sx={{
-      backgroundColor: "#E8F5E9", // Light green shade
-      '&:hover': {
-        backgroundColor: "#C8E6C9", // Slightly darker green on hover
-      },
-      borderRadius: "8px",
-      padding: "8px 16px"
-    }}
-  >
-    {years.map((year, index) => (
-      <MenuItem key={index} value={year}>{year}</MenuItem>
-    ))}
-  </Select>
-</FormControl>
-
-
                 {/* Stats Boxes */}
                 <Box
-                 sx={{
-                
-                  mt: "20px",
-    
-                }}
-                 className={classes.statsContainer}>
+                  sx={{
+                    mt: "20px",
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "10px",
+                  }}
+                  className={classes.statsContainer}
+                >
                   {[
                     {
                       title: "Classes Atten",
-                      color: "#FFF5D1",
+                      color: "#FFE896",
                       value: `${attendance_data?.attendedClassCount ?? 0}/${totalClasses}`,
                       textColor: "#9F8015",
-                      hoverColor: "#FFE08A"  // Brighter Yellow on Hover
+                      hoverColor: "#FFD700",
                     },
                     {
-                      title: "Present days",
-                      color: "#D5FFDA",
+                      title: "Present Days",
+                      color: "#B8FEBF",
                       value: `${attendance_data?.totalPresentDays ?? 0}/${attendance_data?.totalWorkingDays ?? 0}`,
                       textColor: "#2C9939",
-                      hoverColor: "#A8F0B0"  // Soft Green on Hover
+                      hoverColor: "#90EE90",
                     },
                     {
-                      title: "Absent days",
-                      color: "#FFD5D5",
+                      title: "Absent Days",
+                      color: "#EBACAC",
                       value: attendance_data?.totalAbsentDays ?? 0,
                       textColor: "#A04A4A",
-                      hoverColor: "#FFB3B3"  // Softer Red on Hover
+                      hoverColor: "#FF6B6B",
                     },
-                    
                   ].map((stat, index) => (
                     <Box
                       key={index}
                       sx={{
                         backgroundColor: stat.color,
-                        borderRadius: "0px",
-                        padding: "20px",
-                        width: tabView ? "100%" : "calc(50% - 10px)",
-                        boxSizing: "border-box",
+                        minWidth: "195px",
+                        minHeight: "120px",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        borderRadius: "10px",
                         transition: "background-color 0.3s ease",
-            '&:hover': {
-              backgroundColor: stat.hoverColor
-            }
+                        "&:hover": {
+                          backgroundColor: stat.hoverColor,
+                        },
                       }}
                     >
-                      <Typography 
-                        sx={{ 
-                          color: stat.textColor, 
-                          fontSize: "18px", 
-                          mb: 2 
+                      <Typography
+                        sx={{
+                          color: stat.textColor,
+                          fontSize: "20px",
+                          fontWeight: 600,
                         }}
                       >
                         {stat.title}
                       </Typography>
-                      <Typography 
-                        sx={{ 
-                          fontSize: "32px", 
-                          fontWeight: "bold" 
-                        }}
-                      >
+                      <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
                         {stat.value}
                       </Typography>
                     </Box>
@@ -359,7 +385,8 @@ console.log(attendance_data,'attendance')
                 </Box>
 
                 {/* Create Ticket Button */}
-                <Button  className="ticket-button"
+                <Button  
+                  className="ticket-button"
                   fullWidth
                   variant="contained"
                   sx={{ 

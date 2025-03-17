@@ -8,6 +8,8 @@ import {
   MenuItem,
   Button,
   CircularProgress,
+  IconButton,
+  Collapse,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
@@ -21,6 +23,7 @@ import Client from "../../../api/index";
 import { getInstructorDetails } from "store/atoms/authorized-atom";
 import { useTabResponsive } from "utils/tabResponsive";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import { useSpinner } from "context/SpinnerProvider";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -126,6 +129,15 @@ const useStyles = makeStyles(() => ({
       width: '100%',
     },
   },
+  filterIcon: {
+    marginRight: "20px",
+    marginTop: "15px",
+    backgroundColor: "#5611B1",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "#4a0f9e"
+    }
+  },
 }));
 
 const months = [
@@ -150,10 +162,15 @@ const Attendance = () => {
   const [attendance_data, setAttendanceData] = useState([]);
   const [attendance_report, setAttendance_report] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [filterVisible, setFilterVisible] = useState(false);
   const { tabView } = useTabResponsive();
   const { showSpinner, hideSpinner } = useSpinner();
   const navigate = useNavigate();
   const date = new Date();
+
+  const toggleFilter = () => {
+    setFilterVisible(!filterVisible);
+  };
 
   const getAttedenceDetails = async (month) => {
     try {
@@ -252,6 +269,23 @@ const Attendance = () => {
               Attendance
             </Typography>
             
+            <IconButton 
+              onClick={toggleFilter} 
+              className={classes.filterIcon}
+              sx={{
+                mr:"20px",
+                backgroundColor: "white",
+                borderRadius: "22px",
+                padding: "6px",
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  backgroundColor: "#E3F2FD",
+                }
+              }}
+            >
+              <FilterListIcon  sx={{ color: "#E3F2FD" }}/>
+            </IconButton>
+            
             <Box className={classes.headerImgContainer}>
               <img
                 src={AttedenceHeaderImg}
@@ -271,160 +305,141 @@ const Attendance = () => {
 
           <Grid container>
             <Grid item xs={12} md={4} className={classes.sidebar}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: tabView ? "column" : "row",
-                  justifyContent: "space-between",
-                  gap: "10px",
-                  marginBottom: "20px",
-                }}
-              >
-                <Box
-  sx={{
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px",
-    marginBottom: "20px",
-    width:"100%",
-  }}
->
+              <Collapse in={filterVisible}>
+              <Box sx={{ display: "flex", gap: 2, alignItems: "center", mt: 1, mb: 2 }}>
   {/* Month Selector */}
-  <FormControl className={classes.formControl}>
+  <FormControl sx={{ flex: 1, border: "1px solid #2196F3", borderRadius: "8px", overflow: "hidden" }}>
     <Select
-      fullWidth
-      id="month-select"
-      size="small"
       value={selectedMonth}
-      onChange={handleChange}
+      onChange={(e) => setSelectedMonth(e.target.value)}
       IconComponent={ExpandMoreIcon}
       sx={{
-        border: "1px solid #5611B1",
-        backgroundColor: "white",
+        backgroundColor: "#E3F2FD",
+        "&:hover": { backgroundColor: "#BBDEFB" },
         borderRadius: "8px",
+        padding: "4px 12px",  // Reduced height
+        height: "50px",  // Set a fixed height
       }}
     >
       {months.map((month, index) => (
-        <MenuItem key={index} value={month}>
-          {month}
-        </MenuItem>
+        <MenuItem key={index} value={month}>{month}</MenuItem>
       ))}
     </Select>
   </FormControl>
 
   {/* Year Selector */}
-  <FormControl className={classes.formControl}>
+  <FormControl sx={{ flex: 1, border: "1px solid #5611B1", borderRadius: "8px", overflow: "hidden" }}>
     <Select
-      fullWidth
-      id="year-select"
-      size="small"
       value={selectedYear}
       onChange={(e) => setSelectedYear(e.target.value)}
       IconComponent={ExpandMoreIcon}
       sx={{
-        border: "1px solid #5611B1",
         backgroundColor: "white",
+        "&:hover": { backgroundColor: "#F5F5F5" },
         borderRadius: "8px",
+        padding: "4px 12px",  // Reduced height
+        height: "50px",  // Set a fixed height
       }}
     >
       {years.map((year, index) => (
-        <MenuItem key={index} value={year}>
-          {year}
-        </MenuItem>
+        <MenuItem key={index} value={year}>{year}</MenuItem>
       ))}
     </Select>
   </FormControl>
 </Box>
 
+
                 
-                <Box className={classes.mobileCreateTicketContainer}>
-                  <Button
-                    fullWidth
-                    sx={{
-                      backgroundColor: "#5611B1",
-                      boxShadow: "0px 6px 34px -8px #5611B1",
-                      borderRadius: "8px",
-                      padding: "9px 24px",
-                      fontSize: "14px",
-                      fontWeight: 500,
-                      color: "#FBFBFB",
-                      ":hover": { backgroundColor: "#5611B1" },
-                    }}
-                    component={Link}
-                    to="/instructor/ticket?create=true"
-                    onClick={handleTicketView}
-                  >
-                    Create Ticket
-                  </Button>
-                </Box>
+              </Collapse>
+              
+              <Box className={classes.mobileCreateTicketContainer}>
+                <Button
+                  fullWidth
+                  sx={{
+                    backgroundColor: "#5611B1",
+                    boxShadow: "0px 6px 34px -8px #5611B1",
+                    borderRadius: "8px",
+                    padding: "9px 24px",
+                    fontSize: "14px",
+                    fontWeight: 500,
+                    color: "#FBFBFB",
+                    ":hover": { backgroundColor: "#5611B1" },
+                  }}
+                  component={Link}
+                  to="/instructor/ticket?create=true"
+                  onClick={handleTicketView}
+                >
+                  Create Ticket
+                </Button>
               </Box>
 
               <Box className={classes.statsContainer}>
-  <Box 
-    className={classes.statsBox}
-    sx={{ backgroundColor: "#FFE896",
-       minWidth: "180px",
-        minHeight: "120px",
-         display: "flex", 
-        
-         flexDirection: "column", 
-         justifyContent: "center",
-          alignItems: "center", 
-      transition: "background-color 0.3s ease",
-'&:hover': {
-  backgroundColor: "#FFD700"  // Brighter Yellow on Hover
-} }}
-  >
-    <Typography sx={{ color: "#9F8015", fontSize: "20px", fontWeight: 600 }}>
-      Classes Atten
-    </Typography>
-    <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
-      {attendance_report?.total_class || 0}
-      <Typography component="span" sx={{ color: "#9F8015",fontSize: "40px", fontWeight: 600 }}>
-        /{attendance_report?.total_class || 0}
-      </Typography>
-    </Typography>
-  </Box>
+                <Box 
+                  className={classes.statsBox}
+                  sx={{ backgroundColor: "#FFE896",
+                    minWidth: "180px",
+                    minHeight: "120px",
+                    display: "flex", 
+                    flexDirection: "column", 
+                    justifyContent: "center",
+                    alignItems: "center", 
+                    transition: "background-color 0.3s ease",
+                    '&:hover': {
+                      backgroundColor: "#FFD700"  // Brighter Yellow on Hover
+                    }
+                  }}
+                >
+                  <Typography sx={{ color: "#9F8015", fontSize: "20px", fontWeight: 600 }}>
+                    Classes Atten
+                  </Typography>
+                  <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
+                    {attendance_report?.total_class || 0}
+                    <Typography component="span" sx={{ color: "#9F8015",fontSize: "40px", fontWeight: 600 }}>
+                      /{attendance_report?.total_class || 0}
+                    </Typography>
+                  </Typography>
+                </Box>
 
-  <Box 
-    className={classes.statsBox}
-    sx={{ backgroundColor: "#B8FEBF", minWidth: "180px", minHeight: "120px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
-      transition: "background-color 0.3s ease",
-'&:hover': {
-  backgroundColor: "#90EE90"  // Light Green on Hover
-} }}
-  >
-    <Typography sx={{ color: "#2C9939", fontSize: "20px", fontWeight: 600 }}>
-      Present Days
-    </Typography>
-    <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
-      {attendance_report?.presentDays || 0}
-      <Typography component="span" sx={{ color: "#2C9939",fontSize: "40px", fontWeight: 600 }}>
-        /{attendance_report?.totalWorkingDays || 0}
-      </Typography>
-    </Typography>
-  </Box>
+                <Box 
+                  className={classes.statsBox}
+                  sx={{ backgroundColor: "#B8FEBF", minWidth: "180px", minHeight: "120px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
+                    transition: "background-color 0.3s ease",
+                    '&:hover': {
+                      backgroundColor: "#90EE90"  // Light Green on Hover
+                    }
+                  }}
+                >
+                  <Typography sx={{ color: "#2C9939", fontSize: "20px", fontWeight: 600 }}>
+                    Present Days
+                  </Typography>
+                  <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
+                    {attendance_report?.presentDays || 0}
+                    <Typography component="span" sx={{ color: "#2C9939",fontSize: "40px", fontWeight: 600 }}>
+                      /{attendance_report?.totalWorkingDays || 0}
+                    </Typography>
+                  </Typography>
+                </Box>
 
-  <Box 
-    className={classes.statsBox}
-    sx={{ backgroundColor: "#EBACAC", maxWidth: "40px", minHeight: "120px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" , 
-      transition: "background-color 0.3s ease",
-'&:hover': {
-  backgroundColor: "#FF6B6B"  // Softer Red on Hover
-}}}
-  >
-    <Typography sx={{ color: "#A04A4A", fontSize: "20px", fontWeight: 600 }}>
-      Absent Days
-    </Typography>
-    <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
-      {attendance_report?.absentDays || 0}
-      <Typography component="span" sx={{ color: "#A04A4A",fontSize: "40px", fontWeight: 600 }}>
-        /{attendance_report?.totalWorkingDays || 0}
-      </Typography>
-    </Typography>
-  </Box>
-</Box>
-
+                <Box 
+                  className={classes.statsBox}
+                  sx={{ backgroundColor: "#EBACAC", maxWidth: "40px", minHeight: "120px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" , 
+                    transition: "background-color 0.3s ease",
+                    '&:hover': {
+                      backgroundColor: "#FF6B6B"  // Softer Red on Hover
+                    }
+                  }}
+                >
+                  <Typography sx={{ color: "#A04A4A", fontSize: "20px", fontWeight: 600 }}>
+                    Absent Days
+                  </Typography>
+                  <Typography sx={{ fontSize: "40px", fontWeight: 600 }}>
+                    {attendance_report?.absentDays || 0}
+                    <Typography component="span" sx={{ color: "#A04A4A",fontSize: "40px", fontWeight: 600 }}>
+                      /{attendance_report?.totalWorkingDays || 0}
+                    </Typography>
+                  </Typography>
+                </Box>
+              </Box>
 
               <Box className={classes.createTicketContainer}>
                 <Button
