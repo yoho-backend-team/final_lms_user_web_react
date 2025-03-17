@@ -77,7 +77,7 @@ function InstructorAttendance({
 
   return (
     <Box sx={{ padding: "20px", backgroundColor: "transparent", borderRadius: "10px" }}>
-      <Joyride 
+      {/* <Joyride 
         steps={[
           { target: "body", content: "Welcome to the Attendance Calendar!", placement: "center" },
           { target: "#month-selector", content: "Select a month to view attendance records." },
@@ -92,7 +92,7 @@ function InstructorAttendance({
         disableOverlayClose 
         spotlightClicks 
         styles={{ options: { zIndex: 10000 } }}  
-      />
+      /> */}
 
       {/* Calendar View */}
       <Box id="calendar-view" sx={{ marginTop: "25px" }}>
@@ -123,7 +123,7 @@ function InstructorAttendance({
                       <Typography sx={{ textAlign: "center" }}>
                         {day?.day}
                       </Typography>
-                      <Typography sx={{ fontSize:'13px', fontWeight: 600, ml:"-20px" }}>
+                      <Typography sx={{ fontSize:'13px', fontWeight: 600, ml:"-2px" }}>
                         {day?.status === 'present' ? 'Present' : ''}
                       </Typography>
                     </CardContent>

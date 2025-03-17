@@ -333,17 +333,19 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
             </Typography>*/}
             <Box sx={{ display: 'flex', gap: "21px"}} >
               <Typography
-                sx={{ fontSize: "14px", color: "#495057", fontWeight: 700,fontFamily:"Nunito Sans" }}
+                sx={{ fontSize: "19px", color: "#495057", fontWeight: 900,fontFamily:"Nunito Sans" }}
               >
                 Raised Date & time:
               </Typography>
               <Typography
                 sx={{
                   color: "#0D6EFD",
-                  fontSize: "15px",
+                  fontSize: "17px",
                   fontWeight: "600",
                   lineHeight: "14px",
-                  fontFamily:"Nunito Sans"
+                  fontFamily:"Nunito Sans",
+                  mt:"7px",
+                  
                 }}
               >
                 {formatDate(selectedTicket?.createdAt)}{" "}{formatTime(selectedTicket?.createdAt)}
@@ -352,12 +354,19 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
           </Box>
 
           <CardContent sx={{ height: "calc(90vh - 100px)", overflow: "auto" }}>
-  <Grid container spacing={2} sx={{ height: "100%" }}>
+  <Grid container spacing={8} sx={{ height: "90%" }}>
     <Grid item xs={12} md={8}>
-      <Paper sx={{ p: 2, mb: 2, height: "400x" }}> {/* Increased height */}
-        <Box sx={{ height: "328px", overflowY: "scroll" }}> {/* Increased height */}
-          {MessageBox()}
-        </Box>
+      <Paper sx={{ p: 2, mb: 2, height: "300x" }}> {/* Increased height */}
+      <Box sx={{ height: "345px", overflowY: "scroll", display: "flex", justifyContent: "center", alignItems: "center" }}>
+  {selectedTicket?.messages && selectedTicket.messages.length > 0 ? (
+    MessageBox()
+  ) : (
+    <Typography variant="body1" color="textSecondary">
+      "No chats available now"
+    </Typography>
+  )}
+</Box>
+
                   {
                   selectedTicket?.status === "opened" &&<Box
                     sx={{
@@ -400,38 +409,37 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                       />
                     </Box>
                     <TextField
-                      variant="outlined"
-                      fullWidth
-                      value ={ message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      sx={{
-                        backgroundColor: "#E8E8E8",
-                        px: "24px",
-                        mr: "10px",
-                        borderRadius: "24px",
-                        "& .MuiOutlinedInput-root": {
-                          "& fieldset": {
-                            borderColor: "transparent",
-                          },
-                          "&:hover fieldset": {
-                            borderColor: "transparent",
-                          },
-                          "&.Mui-focused fieldset": {
-                            borderColor: "transparent",
-                            boxShadow: "none", // Prevent any shadow/bloom effect
-                          },
-                        },
-                      }}
-                      placeholder="Say Something..."
-                      InputProps={{
-                        endAdornment: (
-                          <AttachFileIcon
-                            sx={{ color: "#78787C", rotate: "35deg" , cursor:"pointer"}}
-                            onClick={handleAttachClick}
-                          />
-                        ),
-                      }}
-                    />
+  variant="outlined"
+  fullWidth
+  value={message}
+  onChange={(e) => setMessage(e.target.value)}
+  sx={{
+    backgroundColor: "#E8E8E8",
+    mr:"25px",
+    borderRadius: "150px",
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        border: "none",
+      },
+      "&:hover fieldset": {
+        border: "none",
+      },
+      "&.Mui-focused": {
+        outline: "none",
+        boxShadow: "none", // Prevents focus border
+      },
+      "&.Mui-focused fieldset": {
+        border: "none",
+      },
+    },
+    "& .MuiInputBase-root": {
+      outline: "none", // Removes default browser outline
+    },
+  }}
+  placeholder="Say Something..."
+/>
+
+
                     <Box
                       sx={{
                         display: "flex",
@@ -440,7 +448,15 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                         alignItems: 'center'
                       }}
                     >
-                      <IconButton onClick={hanldeSendMessage} >
+                      <IconButton onClick={hanldeSendMessage}
+                       sx={{
+                        ml:"-50px",
+                        "&:hover": {
+                          backgroundColor: "#E0E0E0", // Light grey background on hover
+                          color: "#0D6EFD", // Change the icon color on hover (blue)
+                        },
+                        transition: "all 0.3s ease", // Smooth transition for hover effect
+                      }}>
                         <SendIconMessage sx={{ color: "black" }} />
                       </IconButton>
                     </Box>
@@ -450,9 +466,9 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4}>
-                <Paper
+                <Box
                   sx={{
-                    p: 2,
+                    p: 4,
                     display: "flex",
                     flexDirection: "column",
                     gap: "40px",
@@ -468,7 +484,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                   >
                     <Typography
                       sx={{
-                        fontSize: "14px",
+                        fontSize: "16px",
                         fontWeight: 800,
                         lineHeight: "24px",
                         color:'#000',
@@ -479,7 +495,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                     </Typography>
                     <Typography
                       sx={{
-                        fontSize: "14px",
+                        fontSize: "15px",
                         fontWeight: 600,
                         lineHeight: "22px",
                         color: "#6C757D",
@@ -499,7 +515,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                   >
                     <Typography
                       sx={{
-                        fontSize: "14px",
+                        fontSize: "16px",
                         fontWeight: 800,
                         lineHeight: "24px",
                         color:'#000',
@@ -510,7 +526,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                     </Typography>
                     <Typography
                       sx={{
-                        fontSize: "14px",
+                        fontSize: "15px",
                         fontWeight: "600",
                         lineHeight: "22px",
                         color: "#6C757D",
@@ -529,7 +545,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                   >
                     <Typography
                       sx={{
-                        fontSize: "14px",
+                        fontSize: "16px",
                         fontWeight: 800,
                         lineHeight: "24px",
                         color:'#000',
@@ -549,7 +565,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                     >
                     <Typography
                       sx={{
-                        fontSize: "14px",
+                        fontSize: "15px",
                         fontWeight: "600",
                         lineHeight: "22px",
                         color: "#6C757D",
@@ -572,7 +588,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                   >
                     <Typography
                       sx={{
-                        fontSize: "14px",
+                        fontSize: "16px",
                         fontWeight: 800,
                         lineHeight: "24px",
                         color:'#000',
@@ -583,7 +599,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                     </Typography>
                     <Typography
                       sx={{
-                        fontSize: "14px",
+                        fontSize: "15px",
                         fontWeight: "600",
                         lineHeight: "22px",
                         color: "#6C757D",
@@ -615,7 +631,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                   >
                     <Typography
                       sx={{
-                        fontSize: "14px",
+                        fontSize: "16px",
                         fontWeight: 800,
                         lineHeight: "24px",
                         color:'#000',
@@ -626,7 +642,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                     </Typography>
                     <Typography
                       sx={{
-                        fontSize: "14px",
+                        fontSize: "15px",
                         fontWeight: "600",
                         lineHeight: "24px",
                         color: "#000",
@@ -636,7 +652,7 @@ function TicketView({ selectedTicket,handleTicketViewClose,setSelectedTicket }) 
                       1
                     </Typography>
                   </Box>
-                </Paper>
+                </Box>
               </Grid>
             </Grid>
           </CardContent>

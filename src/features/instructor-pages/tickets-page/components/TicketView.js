@@ -33,8 +33,8 @@ function TicketView({ selectedTicket, handleTicketViewClose, setSelectedTicket }
     closed: "#EBA13A",
   };
 
-  const handleFileOpen = (file) => {
-    setFile(file);
+  const handleFileOpen = (ticket) => {
+    setFile(ticket);
     setFileView(true);
   };
 
@@ -178,7 +178,7 @@ function TicketView({ selectedTicket, handleTicketViewClose, setSelectedTicket }
           </IconButton>
           <Box sx={{ display: "flex", justifyContent: "space-between", width: "100%", mb: "20px", }}>
             <Box sx={{ display: "inline-flex", alignItems: "center", gap: "20px", }}>
-              <Typography sx={{ fontSize: "30px", fontWeight: 700 }}>Ticket</Typography>
+              <Typography sx={{ fontSize: "33px", fontWeight: 300 }}>Ticket</Typography>
               <Typography variant="h6" sx={{ color: "#595959", fontSize: "18px" }}>
                 Ticket ID: Ticket #{selectedTicket?._id}
               </Typography>
@@ -218,9 +218,9 @@ function TicketView({ selectedTicket, handleTicketViewClose, setSelectedTicket }
               <Typography variant="body1" sx={{ color: "#000000", fontSize: "20px", fontWeight: "700", mt: "2px", ml: "10px", pb: "20px", pt: "20px" }}>
                 #{selectedTicket?.id} {selectedTicket?.query}
               </Typography>
-              <Typography sx={{ color: "black", fontSize: "25px", fontWeight: "700", mt: "10px", }}>Show activates</Typography>
+              {/* <Typography sx={{ color: "black", fontSize: "25px", fontWeight: "700", mt: "10px", }}>Show activates</Typography> */}
               {/* <Button size="small" sx={{ color: "black", backgroundColor: "#DADADA", padding: "10px", fontSize: "14px",mt:"10px", }}>Close ticket</Button> */}
-              <Button
+              {/* <Button
                 size="small"
                 sx={{
                   color: "black",
@@ -240,7 +240,7 @@ function TicketView({ selectedTicket, handleTicketViewClose, setSelectedTicket }
                 }}
               >
                 Close ticket
-              </Button>
+              </Button> */}
 
               <Box sx={{ display: 'flex', gap: "21px" }}>
                 <Typography sx={{ fontSize: "18px", color: "#495057", fontWeight: 700, mt: "10px" }}>Raised Date & time:</Typography>
@@ -274,26 +274,69 @@ function TicketView({ selectedTicket, handleTicketViewClose, setSelectedTicket }
             </Box>
 
             <CardContent>
-              <Grid container spacing={2}>
+              <Grid container spacing={8}>
                 <Grid item xs={12} md={8}>
                   <Paper sx={{ p: 2, mb: 2 }}>
-                    <Box sx={{ height: "245px", overflowY: "scroll" }}>
-                      {MessageBox()}
-                    </Box>
+                  <Box sx={{ height: "345px", overflowY: "scroll", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                     {selectedTicket?.messages && selectedTicket.messages.length > 0 ? (
+                       MessageBox()
+                        ) : (
+                           <Typography variant="body1" color="textSecondary">
+                           "No chats available now"
+                          </Typography>
+                         )}
+                          </Box>
+
                     {selectedTicket?.status === "opened" && (
                       <Box sx={{ display: "flex", alignItems: "end", paddingTop: "10px", paddingBottom: "10px", marginBottom: "10px", }}>
+                         
+                                              <AddBoxOutlinedIcon
+                                                sx={{
+                                                  color: "#0D6EFD",
+                                                  mb: "12px",
+                                                  "& path:first-of-type": {
+                                                    color: "#130F26",
+                                                    display:"flex",
+                                                    width: '24px',
+                                                    height:"24px",
+                                                    padding:"2px",
+                                                    
+                                                    alignItems:"center",
+                                                    justifyContent: 'center'
+                                                  },
+                                                }}
+                                              />
                         <TextField
                           variant="outlined"
-                          fullWidth
-                          value={message}
-                          onChange={(e) => setMessage(e.target.value)}
-                          sx={{ backgroundColor: "#E8E8E8", px: "24px", mr: "10px", borderRadius: "30px" }}
-                          placeholder="Say Something..."
-                          InputProps={{
-                            endAdornment: <AttachFileIcon sx={{ color: "#78787C", rotate: "35deg" }} />
-                          }}
-                        />
-                     
+                        fullWidth
+                     value={message}
+                   onChange={(e) => setMessage(e.target.value)}
+                             sx={{
+                               backgroundColor: "#E8E8E8",
+                                    ml:"25px",
+                            borderRadius: "25px",
+                               "& .MuiOutlinedInput-root": {
+                                      "& fieldset": {
+                                   border: "none",
+                                  },
+                                "&:hover fieldset": {
+                                  border: "none",
+                                    },
+                              "&.Mui-focused": {
+                                 outline: "none",
+                                     boxShadow: "none", // Removes focus border
+                                        },
+                                      "&.Mui-focused fieldset": {
+                                      border: "none",
+                               },
+                                   },
+                                      "& .MuiInputBase-root": {
+                                     outline: "none", // Ensures no outline on input field
+                                        },
+                                               }}                                        
+                                 placeholder="Say Something..."
+/>
+
                         <Box sx={{ display: "flex", justifyContent: "flex-end", pl: "20px" }}>
                           {/* <IconButton onClick={handleSendMessage}>
                             <SendIcon sx={{ color: "black" }} />
@@ -317,22 +360,22 @@ function TicketView({ selectedTicket, handleTicketViewClose, setSelectedTicket }
                   </Paper>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Paper sx={{ p: 2, display: "flex", flexDirection: "column", gap: "40px" }}>
+                  <Box sx={{ p: 2, display: "flex", flexDirection: "column", gap: "40px" }}>
                     <Box>
-                      <Typography sx={{ fontSize: "15px", fontWeight: 800 }}>Issue Description:</Typography>
-                      <Typography sx={{ fontSize: "14px", fontWeight: "600", color: "#6C757D", mt: "5px" }}>
+                      <Typography sx={{ fontSize: "15px", fontWeight: 600 }}>Issue Description:</Typography>
+                      <Typography sx={{ fontSize: "14px", fontWeight: "400", color: "#6C757D", mt: "5px" }}>
                         {selectedTicket?.description}
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography sx={{ fontSize: "15px", fontWeight: 800, }}>Issue Category:</Typography>
-                      <Typography sx={{ fontSize: "14px", fontWeight: "600", color: "#6C757D", mt: "5px" }}>
+                      <Typography sx={{ fontSize: "15px", fontWeight: 600, }}>Issue Category:</Typography>
+                      <Typography sx={{ fontSize: "14px", fontWeight: "400", color: "#6C757D", mt: "5px" }}>
                         {selectedTicket?.category}
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography sx={{ fontSize: "15px", fontWeight: 800, }}>Attachments:</Typography>
-                      <Typography sx={{ fontSize: "14px", fontWeight: "600", color: "#6C757D", mt: "5px" }}>
+                      <Typography sx={{ fontSize: "15px", fontWeight: 600, }}>Attachments:</Typography>
+                      <Typography sx={{ fontSize: "14px", fontWeight: "400", color: "#6C757D", mt: "5px" }}>
                         {selectedTicket?.file?.split("/")[2]}
                       </Typography>
                       <Typography onClick={() => handleFileOpen(selectedTicket)} sx={{ color: "#5611B1", fontSize: "15px", cursor: "pointer" }}>
@@ -340,7 +383,7 @@ function TicketView({ selectedTicket, handleTicketViewClose, setSelectedTicket }
                       </Typography>
                     </Box>
                     <Box>
-                      <Typography sx={{ fontSize: "15px", fontWeight: 800 }}>Status:</Typography>
+                      <Typography sx={{ fontSize: "15px", fontWeight: 600 }}>Status:</Typography>
                       {/* <Button size="small" sx={{ color: "black", backgroundColor: statusColor[selectedTicket?.status], borderRadius: "8px", fontSize: "16px",mt:"10px" }}>  */}
                       <Button
                         size="small"
@@ -358,7 +401,7 @@ function TicketView({ selectedTicket, handleTicketViewClose, setSelectedTicket }
                         {selectedTicket?.status}
                       </Button>
                     </Box>
-                  </Paper>
+                  </Box>
                 </Grid>
               </Grid>
             </CardContent>
