@@ -1,12 +1,12 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 import { CourseCardBg } from "utils/images";
 import StarIcon from "@mui/icons-material/Star";
 import UpdateIcon from "@mui/icons-material/Update";
 import NoteIcon from "assets/icons/noteIcon";
 import CertificateIcon from "assets/icons/certificateIcon";
 import LanguageIcon from "assets/icons/languageIcon";
-import { getImageUrl } from "utils/common/imageUtlils";
+import { getImageUrl } from "utils/common/imageUtlils"; 
 import CircularProgressWithStudentLabel from "./cirularProgresswitjLabel.js";
 import { formatDate } from "utils/formatDate.js";
 
@@ -43,8 +43,19 @@ const CourseStudentDetails = ({ Course }) => {
       height: "100vh", 
       overflow: "hidden",
       display: "flex",
-      flexDirection: "column"
+      flexDirection: "column",
+      position: "relative"
     }}>
+      <Divider orientation="vertical" sx={{ 
+        position: "absolute",
+        left: "100%",
+        top: "10%",
+        bottom: 0,
+        height: "40%",
+        transform: "translateX(-50%)",
+        borderRightWidth: 3,
+        borderColor: "#e0e0e0" 
+      }} />
       <Box sx={{ 
         pr: "90px",
         overflowY: "auto",
@@ -68,7 +79,7 @@ const CourseStudentDetails = ({ Course }) => {
           <Typography
             sx={{
               color: "#000000",
-              fontSize: "16px",
+              fontSize: "20px",
               fontWeight: 800,
               lineHeight: "24px",
               fontFamily: "Nunito Sans",
@@ -76,30 +87,7 @@ const CourseStudentDetails = ({ Course }) => {
           >
             Course Details
           </Typography>
-          <Typography>
-            <span
-              style={{
-                color: "#000000",
-                fontSize: "12px",
-                lineHeight: "14px",
-                fontWeight: 600,
-                fontFamily: "Poppins"
-              }}
-            >
-              Purchased on: 
-            </span>
-            <span
-              style={{
-                color: "#000000",
-                fontSize: "12px",
-                lineHeight: "14px",
-                fontWeight: 600,
-                fontFamily: "Poppins"
-              }}
-            >
-              {formatDate(Course.createdAt)}
-            </span>
-          </Typography>
+          
         </Box>
         <Box sx={{ pb: "27px" }}>
           <img
@@ -112,7 +100,7 @@ const CourseStudentDetails = ({ Course }) => {
           <Typography
             sx={{
               color: "#000000",
-              fontSize: "16px",
+              fontSize: "17px",
               fontWeight: 700,
               lineHeight: "32px",
               fontFamily: "Nunito Sans"
@@ -120,22 +108,7 @@ const CourseStudentDetails = ({ Course }) => {
           >
             {Course?.course_name}
           </Typography>
-          <Typography
-            sx={{ display: "inline-flex", gap: "5px", alignItems: "center" }}
-          >
-            <StarIcon sx={{ color: "#EEBA02" }} />
-            <span
-              style={{
-                color: "#000000",
-                fontSize: "12px",
-                fontWeight: 700,
-                fontFamily: "Nunito Sans",
-                lineHeight: "13px",
-              }}
-            >
-              ( 4.0 )
-            </span>
-          </Typography>
+          
         </Box>
         <Box
           sx={{
@@ -167,30 +140,15 @@ const CourseStudentDetails = ({ Course }) => {
               textTransform: "uppercase",
             }}
           >
-            Rajalakshmi Institute
+            Bharathidasan University{Course?.institute?.institute_name}
           </Typography>
-          <Typography
-            sx={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
-          >
-            <UpdateIcon sx={{ color: "black" }} />
-            <span
-              style={{
-                color: "#000000",
-                fontSize: "14px",
-                fontWeight: 600,
-                lineHeight: "10px",
-                fontFamily: "Nunito Sans"
-              }}
-            >
-              {Course.duration}hrs
-            </span>
-          </Typography>
+          
         </Box>
         <Box>
           <Typography
             sx={{
               color: "#6C757D",
-              fontSize: "12px",
+              fontSize: "15px",
               fontWeight: 400,
               lineHeight: "16px",
               fontFamily: "Nunito Sans"
@@ -229,7 +187,7 @@ const CourseStudentDetails = ({ Course }) => {
               }}
             >
               {" "}
-              {Course?.duration}months
+              {Course?.duration}
             </Typography>
           </Box>
           <Box
@@ -263,12 +221,6 @@ const CourseStudentDetails = ({ Course }) => {
               {" "}
               {Course?.class_type?.[0]}{" "}
             </Typography>
-          </Box>
-          <Box
-            sx={{ display: "inline-flex", gap: "15px", alignItems: "center", }}
-          >
-            <Typography sx={{ fontFamily: "Nunito Sans", fontWeight: 700, fontSize: "16px", color: "#000", lineHeight: "normal" }}>Status:</Typography>
-            <CircularProgressWithStudentLabel />
           </Box>
         </Box>
         {/* Uncomment this section if you want to display benefits */}
