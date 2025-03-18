@@ -127,7 +127,7 @@ const CourseStudentDetails = ({ Course }) => {
             <span
               style={{
                 color: "#000000",
-                fontSize: "12px",
+                fontSize: "12px", 
                 fontWeight: 700,
                 fontFamily: "Nunito Sans",
                 lineHeight: "13px",
