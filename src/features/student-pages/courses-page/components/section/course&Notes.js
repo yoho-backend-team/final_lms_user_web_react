@@ -71,7 +71,7 @@ const modules = [
     return modules[randomIndex].style;
   };             
                 return (
-                  <Box sx={{ padding: tabView ? "20px" : "60px", backgroundColor: "#e0f7fa", }}>
+                  <Box sx={{ padding: tabView ? "20px" : "60px", }}>
                     <Grid container xs={12} gap={tabView ? "60px" : "20px"}>
                     {classes?.map((module,index) => (
                         <Grid item key={module.id} xs={2.5}  sx={{display:"flex",flexDirection:"row",justifyContent: "center", alignItems: "center",cursor: "pointer"}} tabIndex={1}>
