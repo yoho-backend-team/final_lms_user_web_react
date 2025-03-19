@@ -36,10 +36,9 @@ import { checkUser, getInstituteDetails, getInstructorDetails } from "store/atom
 import { useTabResponsive } from "utils/tabResponsive";
 import { getImageUrl } from "utils/common/imageUtlils";
 import NotificationListView from "../Components/NotificationListModel";
-import { getInstructorNotifications } from "features/instructor-pages/home-page/services";
 import { selectNotificationList,selectNotifcationsLoading,selectSelectedNotification} from "features/common/redux/selector"
 import { useDispatch, useSelector } from "react-redux";
-import updateInstructorNotifications from "../redux/thunks";
+import updateInstructorNotifications, { getInstructorNotifications } from "../redux/thunks";
 import { setSelectedNotification } from "../redux/slices";
 import { useNavigate } from "react-router-dom";
 import { useSocket } from "context/instructorSocket";
@@ -80,7 +79,7 @@ export default function InstructorNavBar() {
   }, []);
 
   useEffect(() => {
-    dispatch(updateInstructorNotifications())
+    dispatch(getInstructorNotifications())
   },[])
 
   useEffect(() => {

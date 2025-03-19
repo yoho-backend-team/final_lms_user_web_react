@@ -84,9 +84,10 @@ function CustomCalendar({
                   backgroundColor: dayData.status === 'present' 
                     ? 'rgba(46, 204, 113, 0.1)' 
                     : 'rgba(235, 229, 228, 0.1)',
-                  border: dayData.status === 'present' 
-                    ? '1px solid rgba(46, 204, 113, 0.5)' 
-                    : '1px solid rgba(231, 76, 60, 0.5)'
+                    border: '1px solid #87CEEB' // Sky Blue Border
+                  // border: dayData.status === 'present' 
+                  //   ? '1px solid rgba(46, 204, 113, 0.5)' 
+                  //   : '1px solid rgba(231, 76, 60, 0.5)'
                 }}
               >
                 <CardContent 

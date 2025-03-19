@@ -200,6 +200,7 @@ const generateEndpoints = () => {
       },
       notification: {
         get: `/institutes/staff/notifications`,
+        put: `institutes/staff/notifications/status/`
        
       },
       payments: {
