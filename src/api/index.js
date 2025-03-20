@@ -255,7 +255,7 @@ class Client {
     },
     notification : {
       get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.get,params,"instructor"),
-      put : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.put,params,"instructor")
+      put : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.put + params?.uuid,params,"instructor")
     },
     payment: {
       get: (params) => httpClient.get( HTTP_END_POINTS.Instructor.payments.getSalaries,  params, "instructor"),

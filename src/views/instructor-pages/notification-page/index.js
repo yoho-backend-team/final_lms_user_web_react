@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectNotificationList,selectSelectedNotification } from "features/common/redux/selector";
 import { setNotifications,setSelectedNotification } from "features/common/redux/slices";
+import { getInstructorNotifications } from "features/common/redux/thunks";
 
 const NotificationList = () => {
     const navigate = useNavigate();
@@ -19,23 +20,26 @@ const NotificationList = () => {
     const notificationList = useSelector(selectNotificationList);
     const selectedNotification = useSelector(selectSelectedNotification);
 
+    console.log(notificationList, "notify")
+
     // Fetch notifications from the API when the component mounts
     useEffect(() => {
         const fetchNotifications = async () => {
-            try {
-                const response = await fetch("/api/notifications");
-                const data = await response.json();
+            // try {
+            //     const response = await fetch("/api/notifications");
+            //     const data = await response.json();
 
-                if (data) {
-                    dispatch(setNotifications(data));
-                    localStorage.setItem("notifications", JSON.stringify(data)); // Sync with localStorage
-                }
-            } catch (error) {
-                console.error("Error fetching notifications:", error);
-                // If API fails, use stored notifications
-                const storedNotifications = JSON.parse(localStorage.getItem("notifications")) || [];
-                dispatch(setNotifications(storedNotifications));
-            }
+            //     if (data) {
+            //         dispatch(setNotifications(data));
+            //         localStorage.setItem("notifications", JSON.stringify(data)); // Sync with localStorage
+            //     }
+            // } catch (error) {
+            //     console.error("Error fetching notifications:", error);
+            //     // If API fails, use stored notifications
+            //     const storedNotifications = JSON.parse(localStorage.getItem("notifications")) || [];
+            //     dispatch(setNotifications(storedNotifications));
+            // }
+            dispatch(getInstructorNotifications())
         };
 
         fetchNotifications();
