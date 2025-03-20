@@ -1,6 +1,7 @@
 import httpClient from "./httpClient";
 import HTTP_END_POINTS from "./http_end_points";
 
+
 class Client {
   Student = {
     login: (data, params) =>
@@ -39,6 +40,7 @@ class Client {
         params,
         "student"
       ),
+     
       logout: (data) =>
         httpClient.post(
           HTTP_END_POINTS.Student.auth.log_out,{},
@@ -301,5 +303,6 @@ class Client {
     },
   };
 }
+
 
 export default new Client();
