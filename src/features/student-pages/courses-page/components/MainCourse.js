@@ -172,7 +172,7 @@ const MainCourse = () => {
                     marginBottom: "10px",
                   }}
                 />
-                <Typography
+                <Typography      
                   variant="body1"
                   sx={{
                     color: "black",

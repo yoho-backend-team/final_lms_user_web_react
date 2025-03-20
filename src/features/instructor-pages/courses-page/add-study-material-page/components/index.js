@@ -33,7 +33,7 @@ const AddStudyMaterialsPage = ({ Course, getCourseDetails }) => {
         <Box sx={{ display: "flex", alignItems: "center", mb: "5px" }}>
           <Typography variant="h3" sx={{ flex: 1 }}>Add Notes & Materials</Typography>
           <Box sx={{ display: "flex", gap: "20px" }}>
-            <IconButton
+            {/* <IconButton
               onClick={() => handleSectionChange("videos")}
               sx={{
                 display: "flex",
@@ -55,7 +55,7 @@ const AddStudyMaterialsPage = ({ Course, getCourseDetails }) => {
             >
               <VideoLibraryIcon />
               <Typography variant="caption" sx={{ color: "inherit"}} >Videos</Typography>
-            </IconButton>
+            </IconButton> */}
             <IconButton
               onClick={() => handleSectionChange("materials")}
               sx={{

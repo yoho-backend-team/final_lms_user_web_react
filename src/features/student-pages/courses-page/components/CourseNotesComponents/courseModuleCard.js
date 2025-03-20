@@ -39,7 +39,7 @@ const CourseStudentModuleCard = ({
         sx={{
           display: "flex",
           gap: "20px",
-          justifyContent: "flex-start",
+          justifyContent: "flex-start", 
           pb: "24px",
           alignItems: "center",
           fontSize: "21px",

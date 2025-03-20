@@ -104,4 +104,4 @@ const NotificationList = () => {
     )
 }
 
-export default NotificationList;
+export default NotificationList
