@@ -9,10 +9,81 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 const ChatLog = ({ socket, Messages }) => {
   const instructor = getInstructorDetails();
   const chatRef = useRef(null);
+  const messagesEndRef = useRef(null);
   const messageRefs = useRef(new Map());
   const [messages, setMessages] = useState(Messages);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedMessage, setSelectedMessage] = useState(null);
+  const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
+  const [readMessages, setReadMessages] = useState(new Set());
+
+  useEffect(() => {
+    const handleFocus = () => setIsWindowFocused(true);
+    const handleBlur = () => setIsWindowFocused(false);
+
+    window.addEventListener("focus", handleFocus);
+    window.addEventListener("blur", handleBlur);
+
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("blur", handleBlur);
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && isWindowFocused) {
+            const messageId = entry.target.getAttribute("data-id");
+
+            if (!readMessages.has(messageId)) {
+              setTimeout(() => {
+                if (entry.isIntersecting && isWindowFocused) {
+                  triggerMessageRead(messageId);
+                }
+              }, 1500); // Optional delay for confirmation
+            }
+          }
+        });
+      },
+      { threshold: 0.8 } // 80% of message must be visible
+    );
+     messageRefs.current.forEach((ref) => {
+    if (ref instanceof Element) {
+      observer.observe(ref);
+    }
+
+  });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [Messages, isWindowFocused, readMessages]);
+
+  const triggerMessageRead = (messageId) => {
+    const msg = Messages.find((m) => m._id === messageId);
+
+    if (msg && !readMessages.has(messageId)) {
+      const now = new Date();
+      const formattedTime = now.toLocaleTimeString("en-US", { hour12: false });
+
+      console.log(`Message ${messageId} read at ${formattedTime}`);
+      socket.emit("messageRead", { messageId, userId: student?._id });
+      setReadMessages((prev) => new Set([...prev, messageId]));
+    }
+  };
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {  
+    scrollToBottom();
+  }, [Messages]);
+
 
   useEffect(() => {
     setMessages(Messages);
@@ -141,7 +212,7 @@ const ChatLog = ({ socket, Messages }) => {
           </Grid>
         </Grid>
       ))}
-      
+      <div ref={messagesEndRef} />
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu}>
         <MenuItem onClick={handleDeleteMessage}>Delete Message</MenuItem>
       </Menu>
