@@ -79,8 +79,9 @@ export default function InstructorNavBar() {
   }, []);
 
   useEffect(() => {
-    dispatch(getInstructorNotifications())
-  },[])
+    dispatch(getInstructorNotifications());
+}, [dispatch]); // Added dispatch to dependencies
+
 
   useEffect(() => {
    
