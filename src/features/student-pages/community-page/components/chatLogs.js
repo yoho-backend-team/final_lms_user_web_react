@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Box, Grid, Typography, IconButton } from "@mui/material";
-import {  getStudentDetails} from "store/atoms/authorized-atom";
+import { getStudentDetails } from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
 import DoneIcon from "@mui/icons-material/Done";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
@@ -9,67 +9,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const ChatLog = ({ socket, Messages }) => {
   const student = getStudentDetails();
-  const chatEndRef = useRef(null);
-  const [messages, setMessages] = useState(Messages);
-  const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
+  const messagesEndRef = useRef(null);
+  const messageRefs = useRef(new Map());
   const [readMessages, setReadMessages] = useState(new Set());
-
-  useEffect(() => {
-    const handleFocus = () => setIsWindowFocused(true);
-    const handleBlur = () => setIsWindowFocused(false);
-
-    window.addEventListener("focus", handleFocus);
-    window.addEventListener("blur", handleBlur);
-
-    return () => {
-      window.removeEventListener("focus", handleFocus);
-      window.removeEventListener("blur", handleBlur);
-    };
-  }, []);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && isWindowFocused) {
-            const messageId = entry.target.getAttribute("data-id");
-
-            if (!readMessages.has(messageId)) {
-              setTimeout(() => {
-                if (entry.isIntersecting && isWindowFocused) {
-                  triggerMessageRead(messageId);
-                }
-              }, 1500); // Optional delay for confirmation
-            }
-          }
-        });
-      },
-      { threshold: 0.8 } // 80% of message must be visible
-    );
-     messageRefs.current.forEach((ref) => {
-    if (ref instanceof Element) {
-      observer.observe(ref);
-    }
-
-  });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [Messages, isWindowFocused, readMessages]);
-
-  const triggerMessageRead = (messageId) => {
-    const msg = Messages.find((m) => m._id === messageId);
-
-    if (msg && !readMessages.has(messageId)) {
-      const now = new Date();
-      const formattedTime = now.toLocaleTimeString("en-US", { hour12: false });
-
-      console.log(`Message ${messageId} read at ${formattedTime}`);
-      socket.emit("messageRead", { messageId, userId: student?._id });
-      setReadMessages((prev) => new Set([...prev, messageId]));
-    }
-  };
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
@@ -77,34 +19,47 @@ const ChatLog = ({ socket, Messages }) => {
     }
   };
 
-  useEffect(() => {  
+  useEffect(() => {
     scrollToBottom();
   }, [Messages]);
 
-
   useEffect(() => {
-    setMessages(Messages);
-  }, [Messages]);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const messageId = entry.target.getAttribute("data-id");
+            if (messageId && !readMessages.has(messageId)) {
+              triggerMessageRead(messageId);
+            }
+          }
+        });
+      },
+      { threshold: 0.8 }
+    );
 
-  useEffect(() => {
-    const handleDeleteMessage = (updatedMessages) => {
-      setMessages(updatedMessages);
-    };
+    messageRefs.current.forEach((ref) => {
+      if (ref instanceof Element) {
+        observer.observe(ref);
+      }
+    });
 
-    socket.on("messageDeleted", handleDeleteMessage);
     return () => {
-      socket.off("messageDeleted", handleDeleteMessage);
+      observer.disconnect();
     };
-  }, [socket]);
+  }, [Messages, readMessages]);
+
+  const triggerMessageRead = (messageId) => {
+    if (!readMessages.has(messageId)) {
+      socket.emit("messageRead", { messageId, userId: student?._id });
+      setReadMessages((prev) => new Set([...prev, messageId]));
+    }
+  };
 
   const handleDeleteMessage = (messageId) => {
     socket.emit("deleteMessage", { messageId, userId: student?._id });
-
-    setMessages((prevMessages) =>
-      prevMessages.filter((message) => message._id !== messageId)
-    );
   };
-
+  console.log(Messages)
   return (
     <Box
       sx={{
@@ -121,7 +76,6 @@ const ChatLog = ({ socket, Messages }) => {
         gap: "10px",
       }}
     >
-      {/* Notification Banner */}
       <Box
         sx={{
           position: "sticky",
@@ -145,8 +99,7 @@ const ChatLog = ({ socket, Messages }) => {
         Messages are end-to-end encrypted. No one outside this chat can read them.
       </Box>
 
-      {/* Messages */}
-      {messages?.map((msg) => (
+      {Messages?.map((msg) => (
         <Grid
           container
           key={msg._id}
@@ -154,6 +107,8 @@ const ChatLog = ({ socket, Messages }) => {
             msg.sender === student?._id ? "flex-end" : "flex-start"
           }
           sx={{ marginBottom: "8px" }}
+          data-id={msg._id}
+          ref={(el) => messageRefs.current.set(msg._id, el)}
         >
           <Grid item xs={9} sm={7} md={6}>
             <Box
@@ -184,7 +139,6 @@ const ChatLog = ({ socket, Messages }) => {
                     color: msg.sender === student?._id ? "white" : "#000",
                     fontSize: "14px",
                     fontWeight: 400,
-                    textAlign: "left",
                   }}
                 >
                   {msg.message}
@@ -201,7 +155,6 @@ const ChatLog = ({ socket, Messages }) => {
                     {formatTime(msg?.createdAt)}
                   </Typography>
 
-                  {/* Read/Delivered Status */}
                   {msg.sender === student?._id &&
                     (msg.status?.some((s) => s.delivered) ? (
                       msg.status?.every((s) => s.read) ? (
@@ -213,11 +166,10 @@ const ChatLog = ({ socket, Messages }) => {
                       <DoneIcon sx={{ color: "white", width: "16px" }} />
                     ))}
 
-                  {/* Delete Button for Instructor */}
                   {msg.sender === student?._id && (
                     <IconButton
                       onClick={() => handleDeleteMessage(msg._id)}
-                      sx={{ color: "white", padding: "2px" }}
+                      sx={{ color: "white", padding: "2px", display: "none" }}
                     >
                       <DeleteIcon sx={{ fontSize: "16px" }} />
                     </IconButton>
@@ -229,8 +181,7 @@ const ChatLog = ({ socket, Messages }) => {
         </Grid>
       ))}
 
-      {/* Auto Scroll Reference */}
-      <div ref={chatEndRef} />
+      <div ref={messagesEndRef} />
     </Box>
   );
 };

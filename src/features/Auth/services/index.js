@@ -231,9 +231,7 @@ export const useChangePassword = () => {
     try {
       const response = await Client.Student.reset_password({
         email: otpAtom.email,
-        otp: otpAtom.otp,
-        token: otpAtom.token,
-        confirmPassword,
+        ...confirmPassword,
       });
       setOtpAtom({ email: null, token: null, otp: "" });
       setLoginStep(Login_Step);

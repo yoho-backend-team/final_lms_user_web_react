@@ -88,7 +88,7 @@ export default function InstructorOTPInput() {
       showSpinner();
       const response = await verifyOTP(otp);
       toast.success(response?.message);
-      navigate("/");
+      navigate("/instructor/home");
     } catch (error) {
       setError("Invalid OTP. Please try again.");
       toast.error(error?.message);
