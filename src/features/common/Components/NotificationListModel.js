@@ -268,7 +268,8 @@ const NotificationListView = ({handleSelectNotification, id, anchorE2, isOpen, s
                   boxShadow: "0px 6px 34px -8px #0D6EFD",
                   padding: "9px 24px",
                   ":hover": { backgroundColor: "#5611B1" }
-                }} 
+                }}
+                onClick={setClose} 
               >
                 View all Notifications
               </Button>

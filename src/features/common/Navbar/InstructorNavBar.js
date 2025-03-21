@@ -64,7 +64,7 @@ export default function InstructorNavBar() {
   const socket = useSocket()
   const instructorLogout = useInstructorLogout()
   const institute_details = getInstituteDetails()
-  console.log(institute_details,"institute")
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -146,6 +146,8 @@ export default function InstructorNavBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const unreadCount = Notifications?.filter((i)=>i.status === "unread")?.length
   
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -192,7 +194,7 @@ export default function InstructorNavBar() {
               onClick={handleNotification} 
               aria-controls={notification_id}
               >
-                <Badge badgeContent={Notifications?.filter((i)=>i.status === "unread").length} color="error">
+                <Badge badgeContent={unreadCount} color="error">
                   <NotificationsOutlinedIcon
                     sx={{ color: theme.palette.dark.main }}
                   />
@@ -242,7 +244,15 @@ export default function InstructorNavBar() {
         </Toolbar>
       </AppBar>
       {renderMenu}
-      <NotificationListView handleSelectNotification={handleSelectNotification} id={notification_id} notifications={Notifications} anchorE2={anchorE2} isOpen={isNotificationOpen} setClose={()=>setAnchorE2(null)} />
+      <NotificationListView 
+      handleSelectNotification={handleSelectNotification} 
+      id={notification_id} 
+      notifications={Notifications} 
+      anchorE2={anchorE2} 
+      isOpen={isNotificationOpen} 
+      setClose={()=>setAnchorE2(null)}
+      unreadCount={unreadCount} 
+      />
     </Box>
   );
 }
