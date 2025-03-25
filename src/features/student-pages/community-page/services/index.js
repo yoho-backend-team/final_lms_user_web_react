@@ -13,7 +13,7 @@ export const getCommunities = async (data) => {
 export const getCommunityMessages = async (data) => {
    try {
     const response = await Client.Student.community.get_messages(data)
-    return response?.data
+    return { data: response?.data, pagination: response.pagination }
    } catch (error) {
     const error_message = getErrorMessage(error)
      throw new Error(error_message)

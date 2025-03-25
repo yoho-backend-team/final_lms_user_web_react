@@ -10,7 +10,7 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder } from "utils/placeholders";
 
-const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, setMessages }) => {
+const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, setMessages, messagePagination,setMessagePagination }) => {
   const { showSpinner, hideSpinner } = useSpinner();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCommunities, setFilteredCommunities] = useState(communities);
@@ -27,7 +27,8 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, s
     try {
       showSpinner();
       setCurrentChat(group);
-      const data = await getCommunityMessages({ community: group?._id });
+      const { data, pagination } = await getCommunityMessages({ community: group?._id });
+      setMessagePagination(pagination)
       setMessages(data.reverse());
       socket.emit("joinGroup", { groupId: group?._id }, (error) => {
         if (error) console.log(error, "error");

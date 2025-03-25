@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Box, Grid, Typography, IconButton } from "@mui/material";
+import { Box, Grid, Typography, IconButton, Button } from "@mui/material";
 import { getStudentDetails } from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
 import DoneIcon from "@mui/icons-material/Done";
@@ -7,11 +7,14 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const ChatLog = ({ socket, Messages }) => {
+const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, FetchMessages }) => {
   const student = getStudentDetails();
   const messagesEndRef = useRef(null);
+  const messageContainerRef = useRef(null);
   const messageRefs = useRef(new Map());
   const [readMessages, setReadMessages] = useState(new Set());
+  const [isFetching, setIsFetching] = useState(false);
+  const [isUserAtBottom, setIsUserAtBottom] = useState(true);
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
@@ -19,8 +22,17 @@ const ChatLog = ({ socket, Messages }) => {
     }
   };
 
+  const handleScroll = () => {
+    if (messageContainerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = messageContainerRef.current;
+      setIsUserAtBottom(scrollTop + clientHeight >= scrollHeight - 10);
+    }
+  };
+
   useEffect(() => {
-    scrollToBottom();
+    if (isUserAtBottom) {
+      scrollToBottom();
+    }
   }, [Messages]);
 
   useEffect(() => {
@@ -59,9 +71,27 @@ const ChatLog = ({ socket, Messages }) => {
   const handleDeleteMessage = (messageId) => {
     socket.emit("deleteMessage", { messageId, userId: student?._id });
   };
-  console.log(Messages)
+
+  const handleLoadMore = async () => {
+    if (messagePagination.currentPage < messagePagination.totalPages) {
+      const chatContainer = messagesEndRef.current.parentElement;
+      const scrollOffset = chatContainer.scrollHeight - chatContainer.scrollTop;
+
+    setIsFetching(true);
+    const nextPage = messagePagination.currentPage + 1;
+    await FetchMessages(nextPage);
+    setIsFetching(false);
+
+    setTimeout(() => {
+      chatContainer.scrollTop = chatContainer.scrollHeight - scrollOffset;
+    }, 0);
+    }
+  };
+
   return (
     <Box
+      ref={messageContainerRef}
+      onScroll={handleScroll}
       sx={{
         height: "100vh",
         overflowY: "auto",
@@ -76,28 +106,29 @@ const ChatLog = ({ socket, Messages }) => {
         gap: "10px",
       }}
     >
-      <Box
-        sx={{
-          position: "sticky",
-          top: 0,
-          zIndex: 10,
-          backgroundColor: "rgba(0, 0, 0, 0.7)",
-          padding: "6px 12px",
-          borderRadius: "15px",
-          color: "white",
-          textAlign: "center",
-          fontSize: "12px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          maxWidth: "80%",
-          margin: "10px auto",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
-        }}
-      >
-        <LockOutlinedIcon sx={{ fontSize: "16px", marginRight: "6px" }} />
-        Messages are end-to-end encrypted. No one outside this chat can read them.
-      </Box>
+      {messagePagination?.currentPage < messagePagination?.totalPages && (
+        <Box
+          sx={{
+            textAlign: "center",
+            marginBottom: "10px",
+          }}
+        >
+          <Button
+            onClick={handleLoadMore}
+            variant="contained"
+            disabled={isFetching}
+            sx={{
+              backgroundColor: "rgba(0, 0, 0, 0.7)",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "rgba(0, 0, 0, 0.9)",
+              },
+            }}
+          >
+            {isFetching ? "Loading..." : "Load More Messages"}
+          </Button>
+        </Box>
+      )}
 
       {Messages?.map((msg) => (
         <Grid
@@ -185,5 +216,6 @@ const ChatLog = ({ socket, Messages }) => {
     </Box>
   );
 };
+
 
 export default ChatLog;

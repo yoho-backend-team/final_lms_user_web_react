@@ -130,7 +130,7 @@ class Client {
           params,
           "student"
         ),
-      get_messages : (params) => httpClient.get(HTTP_END_POINTS.Student.community.get_messages + params?.community,{},"student")
+      get_messages : (params) => httpClient.get(HTTP_END_POINTS.Student.community.get_messages + params?.community,params,"student")
     },
   };
 

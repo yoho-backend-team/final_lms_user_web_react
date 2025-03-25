@@ -12,7 +12,7 @@ import ChatLog from "./chatLogs";
 import BottomBar from "./bottomBar";
 import GroupDetails from "./Models/GroupDetails";
 
-const Chat = ({ currentChat, socket, Messages, setMessages }) => {
+const Chat = ({ currentChat, socket, Messages, setMessages,messagePagination,setMessagePagination,FetchMessages }) => {
   const theme = useTheme();
   const [viewGroup, setViewGroup] = useState(false);
 
@@ -86,7 +86,7 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
               gap: 10,
             }}
           >
-            <ChatLog socket={socket} Messages={Messages} />
+            <ChatLog socket={socket} Messages={Messages} messagePagination={messagePagination} setMessagePagination={setMessagePagination} FetchMessages={FetchMessages} />
           </Box>
 
           <Box

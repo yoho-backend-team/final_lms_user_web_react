@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import SideBar from "features/student-pages/community-page/components/Sidebar";
 import Chat from "features/student-pages/community-page/components/Chat";
+import { getCommunityMessages } from "features/student-pages/community-page/services";
 
 const CommunityPage = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const CommunityPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCommunities, setFilteredCommunities] = useState(communities);
+  const [messagePagination,setMessagePagination] = useState({})
   const[runTour,setruntour]=useState(true)
 
 
@@ -50,6 +52,17 @@ const CommunityPage = () => {
         : communities
     );
   }, [searchTerm, communities]);
+
+  const FetchMessages = async (page) => {
+     try {
+      const params = { community: currentChat?._id, page}
+      const { data, pagination } = await getCommunityMessages(params)
+      setMessagePagination(pagination)
+      setMessages((prevMessages) => [...data.reverse(),...prevMessages])
+     } catch (error) {
+      toast.error(error?.message)
+     }
+  }
 
   const tourSteps = [
     {
@@ -111,10 +124,22 @@ const CommunityPage = () => {
                   setMessages={setMessages}
                   searchTerm={searchTerm}
                   setSearchTerm={setSearchTerm}
+                  messagePagination={messagePagination}
+                  setMessagePagination={setMessagePagination}
+                  FetchMessages={FetchMessages}
                 />
               </Grid>
               <Grid item xs={8} id="community-chat" sx={{ display: "flex" }}>
-                <Chat currentChat={currentChat} socket={socket} setCurrentChat={setCurrentChat} setMessages={setMessages} Messages={Messages} />
+                <Chat 
+                currentChat={currentChat} 
+                socket={socket} 
+                setCurrentChat={setCurrentChat} 
+                setMessages={setMessages} 
+                Messages={Messages}
+                messagePagination={messagePagination}
+                setMessagePagination={setMessagePagination} 
+                FetchMessages={FetchMessages}
+                />
               </Grid>
             </Grid>
           </Box>
