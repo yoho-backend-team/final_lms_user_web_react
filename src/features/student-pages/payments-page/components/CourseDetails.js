@@ -130,6 +130,7 @@ const CourseStudentDetails = () => {
     paddingBottom: "8px"
   };
 
+  console.log(feesData,"feesData")
   return (
     <>
       <Grid container spacing={2} sx={{ p: 3 }}>
@@ -283,7 +284,7 @@ const CourseStudentDetails = () => {
                         marginLeft: "159px"
                       }}
                     >
-                      ₹ {feesData?.course?.mrp.toLocaleString()}
+                      ₹ {feesData?.course?.mrp?.toLocaleString()}
                     </Typography>
                     
                     {/* Rating and Price */}
@@ -303,7 +304,7 @@ const CourseStudentDetails = () => {
                           marginLeft: "-20px"
                         }}
                       >
-                        ( {feesData?.course?.ratingnumber.toLocaleString()} )
+                        ( {feesData?.course?.ratingnumber?.toLocaleString()} )
                       </span>
                       <Typography
                         variant="body1"

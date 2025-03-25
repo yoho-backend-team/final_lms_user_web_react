@@ -1,11 +1,11 @@
-import { getInstructorNotifications } from "features/instructor-pages/home-page/services"
+import { getInstructorNotificationsClient, updateInstructorNotificationsClient } from "features/instructor-pages/home-page/services"
 import { setNotifications,setLoading} from "./slices"
 
 
-const updateInstructorNotifications = () => async(dispatch) => {
+export const getInstructorNotifications = (data) => async(dispatch) => {
       try {
       dispatch(setLoading(true))  
-      const response = await getInstructorNotifications()
+      const response = await getInstructorNotificationsClient(data)
       dispatch(setNotifications(response))
       } catch (error) {
         throw new Error(error)
@@ -14,4 +14,15 @@ const updateInstructorNotifications = () => async(dispatch) => {
       }
 }
 
-export default updateInstructorNotifications
+export const updateInstructorNotifications = (data) => async(dispatch) => {
+  try {
+  dispatch(setLoading(true))  
+  const response = await updateInstructorNotificationsClient(data)
+  dispatch(setNotifications(response))
+  } catch (error) {
+    throw new Error(error)
+  }finally{
+   dispatch(setLoading(false))
+  }
+}
+

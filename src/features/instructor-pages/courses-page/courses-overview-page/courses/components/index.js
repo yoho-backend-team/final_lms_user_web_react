@@ -85,7 +85,7 @@ const CourseListPage = ({ courses }) => {
 
   return (
     <Grid container spacing={2}>
-      {courses.map((course) => (
+      {courses?.map((course) => (
         <Grid item key={course._id} xs={12} sm={6} md={3.4}>
           <CourseCard course={course} onClick={handleCourseView} />
         </Grid>

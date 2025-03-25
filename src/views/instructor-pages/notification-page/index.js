@@ -1,45 +1,64 @@
-import { Box, IconButton, Typography, Grid } from "@mui/material"
-import KeyboardBackspaceSharpIcon from '@mui/icons-material/KeyboardBackspaceSharp';
-import ZoomInMapOutlinedIcon from '@mui/icons-material/ZoomInMapOutlined';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import { Box, IconButton, Typography, Grid } from "@mui/material";
+import KeyboardBackspaceSharpIcon from "@mui/icons-material/KeyboardBackspaceSharp";
+import ZoomInMapOutlinedIcon from "@mui/icons-material/ZoomInMapOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import NotificationView from "features/instructor-pages/notification-page/components/NotificationView";
 import NotificationTab from "features/instructor-pages/notification-page/components/NotificationTab";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectNotificationList,selectSelectedNotification } from "features/common/redux/selector";
 import { setNotifications,setSelectedNotification } from "features/common/redux/slices";
-import BackgroundImage from 'assets/images/background/instructor.png';
+import { getInstructorNotifications } from "features/common/redux/thunks";
 
 const NotificationList = () => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const [tabValue,setTabValue] = useState(0)
-    const selectedNotification = useSelector(selectSelectedNotification)
-    const notificationList = useSelector(selectNotificationList)
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [tabValue, setTabValue] = useState(0);
 
-    const handleTabChange = (e,value) => {
-      setTabValue(value)
-    }
-    
+    // Redux state
+    const notificationList = useSelector(selectNotificationList);
+    const selectedNotification = useSelector(selectSelectedNotification);
+
+    console.log(notificationList, "notify")
+
+    // Fetch notifications from the API when the component mounts
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            // try {
+            //     const response = await fetch("/api/notifications");
+            //     const data = await response.json();
+
+            //     if (data) {
+            //         dispatch(setNotifications(data));
+            //         localStorage.setItem("notifications", JSON.stringify(data)); // Sync with localStorage
+            //     }
+            // } catch (error) {
+            //     console.error("Error fetching notifications:", error);
+            //     // If API fails, use stored notifications
+            //     const storedNotifications = JSON.parse(localStorage.getItem("notifications")) || [];
+            //     dispatch(setNotifications(storedNotifications));
+            // }
+            dispatch(getInstructorNotifications())
+        };
+
+        fetchNotifications();
+    }, [dispatch]);
+
+    // Handles tab change
+    const handleTabChange = (e, value) => {
+        setTabValue(value);
+    };
+
     const handleBack = () => {
-      navigate(-1)
-    }
+        navigate(-1);
+    };
 
     const handleNotificationChange = (notification) => {
           dispatch(setSelectedNotification(notification))
     }
 
     return(
-      <Box
-      sx={{
-        backgroundImage: `url(${BackgroundImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "50vh",
-        p: 3,
-      }}
-    >
           <>
             <Box 
             sx={{
@@ -58,8 +77,8 @@ const NotificationList = () => {
                     <IconButton sx={{ width: "16px", height: "18.5px"}} >
                       <ZoomInMapOutlinedIcon sx={{ color : "#000000"}} />
                     </IconButton>
-                    <IconButton sx={{ width: "11px", height: "11px"}} >
-                      <CloseOutlinedIcon sx={{ color: "#000000"}} />
+                    <IconButton sx={{ width: "11px", height: "11px" }}>
+                        <CloseOutlinedIcon sx={{ color: "#000000" }} />
                     </IconButton>
                   </Box>
                </Box>
@@ -81,8 +100,7 @@ const NotificationList = () => {
                    </Grid>
                </Grid>
             </Box>
-            </>
-          </Box>
+          </>
     )
 }
 

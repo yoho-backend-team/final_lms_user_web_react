@@ -28,11 +28,15 @@
 // };
 
 // export default LiveClassList;
+
+
+
+
 import React, { useState } from "react";
 import Joyride from "react-joyride";
-import { Box,Typography  } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ClassCard from "../card/ClassCard";
-import  { ClassCardHeader } from "../card/ClassCard";
+import { ClassCardHeader } from "../card/ClassCard";
 
 const defaultStyles = {
   calendarColor: "#000000",
@@ -75,19 +79,25 @@ const LiveClassList = ({ data, classType, group, image }) => {
         }}
       /> */}
       <Box id="live-class-list" sx={{ mt: 3, px: "40px" }}>
-        {data?.map((cls) => (
-          <Box key={cls.id} id="live-class-card">
-            <ClassCardHeader />
-            <ClassCard
-              cls={cls}
-              style={defaultStyles}
-              type={classType}
-              group={group}
-              img={image}
-            />
-          </Box>
-        ))}
-        
+        {data && data.length > 0 ? (
+        <>
+          <ClassCardHeader />
+          {data.map((cls) => (
+            <Box key={cls.id} id="live-class-card">
+              <ClassCard cls={cls} style={defaultStyles} type={classType} group={group} img={image} />
+            </Box>
+          ))}</>
+        ) : (
+          <Box sx={{ py: 5,textAlign:"center" }}>
+                   <img src="https://cdni.iconscout.com/illustration/premium/thumb/employee-is-unable-to-find-sensitive-data-illustration-download-in-svg-png-gif-file-formats--no-found-misplaced-files-business-pack-illustrations-8062128.png" alt="No data available" style={{ maxWidth: '100%', height: '270px' }} />
+                  <Typography variant="h6" color="textSecondary" fontSize={'32px'}>
+                    No Live Classes Available
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" fontSize={'25px'}>
+                    Stay tuned for upcoming sessions.
+                  </Typography>
+                </Box>
+        )}
       </Box>
     </>
   );

@@ -3,12 +3,12 @@ import { Box, IconButton, TextField, InputAdornment } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import EmojiIcon from "assets/icons/EmojiIcon";
 import EmojiPicker from "./EmojiPicker";
-import { getInstructorDetails } from "store/atoms/authorized-atom";
+import { getStudentDetails } from "store/atoms/authorized-atom";
 
 const BottomBar = ({ socket, community }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [message, setMessage] = useState("");
-  const instructor = getInstructorDetails();
+  const student = getStudentDetails();
   const emojiPickerRef = useRef(null);
 
   useEffect(() => {
@@ -41,9 +41,9 @@ const BottomBar = ({ socket, community }) => {
       "sendMessage",
       {
         content: message,
-        senderId: instructor?._id,
+        senderId: student?._id,
         groupId: community?._id,
-        name: instructor?.full_name || instructor?.first_name
+        name: student?.full_name || student?.first_name
       },
       (response) => {}
     );

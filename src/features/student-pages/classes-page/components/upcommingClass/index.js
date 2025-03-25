@@ -43,9 +43,9 @@ const UpcomingClassList = ({ data, classType ,group}) => {
      sx={{ mt: 3, px: "40px" }}>
       
       {data.length > 0 ? (
-      data.map((cls) => (
-        <>
-        <ClassCardHeader/>
+      <>
+      <ClassCardHeader/>
+     { data.map((cls) => (
         <ClassCard
           key={cls.id}
           cls={cls}
@@ -53,9 +53,8 @@ const UpcomingClassList = ({ data, classType ,group}) => {
           type={classType}
           group={group}
         />
-        </>
        
-      ))
+      ))}  </>
     ) : (
       <Box sx={{ py: 5,textAlign:"center"  }}>
          <img src="https://cdni.iconscout.com/illustration/premium/thumb/employee-is-unable-to-find-sensitive-data-illustration-download-in-svg-png-gif-file-formats--no-found-misplaced-files-business-pack-illustrations-8062128.png" alt="No data available" style={{ maxWidth: '100%', height: '270px' }} />

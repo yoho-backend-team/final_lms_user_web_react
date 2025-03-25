@@ -1,56 +1,54 @@
 import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
-import { Grid, IconButton } from '@mui/material';
+import { Grid, IconButton, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { PDFViewer } from 'react-view-pdf';
 import { getImageUrl } from 'utils/common/imageUtlils';
 
 const PdfViewer = ({ open, handleViewClose, pdf }) => {
+  const pdfUrl = pdf?.file ? getImageUrl(pdf.file) : null;
 
- 
   return (
-    <div>
-      <Dialog
-       fullScreen
-        open={open}
-        onClose={handleViewClose}
-        aria-labelledby="user-view-View"
-        aria-describedby="user-view-View-description"
+    <Dialog
+      fullScreen
+      open={open}
+      onClose={handleViewClose}
+      aria-labelledby="pdf-view-dialog"
+    >
+      <DialogTitle
+        sx={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          alignItems: 'center'
+        }}
       >
-        <DialogTitle
-          id="user-view-View"
-          sx={{
-            textAlign: 'center',
-            fontSize: '1.5rem !important',
-            px: (theme) => [`${theme.spacing(5)} !important`, `${theme.spacing(10)} !important`],
-            pt: (theme) => [`${theme.spacing(6)} !important`, `${theme.spacing(5)} !important`],
-            display: 'flex',
-            justifyContent: 'flex-end',
-            alignItems: 'center'
-          }}
-        >
-          <IconButton onClick={handleViewClose}>
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent
-          sx={{
-            pt: (theme) => [`${theme.spacing(6)} !important`, `${theme.spacing(1)} !important`],
-            pb: (theme) => `${theme.spacing(5)} !important`,
-            px: (theme) => [`${theme.spacing(5)} !important`, `${theme.spacing(8)} !important`]
-          }}
-        >
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={12} sx={{ mb: 4, mt: 1.5 }}>
-              <PDFViewer url={getImageUrl(pdf?.file)} />
-            </Grid>
+        <IconButton onClick={handleViewClose}>
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={12}>
+            {pdfUrl ? (
+              <iframe
+                src={pdfUrl}
+                width="100%"
+                height="600px"
+                title="PDF Viewer"
+                frameBorder="0"
+                allowFullScreen
+              />
+            ) : (
+              <Typography variant="body1" color="error">
+                No PDF file available
+              </Typography>
+            )}
           </Grid>
-        </DialogContent>
-      </Dialog>
-    </div>
+        </Grid>
+      </DialogContent>
+    </Dialog>
   );
 };
 
-export default PdfViewer
+export default PdfViewer;
