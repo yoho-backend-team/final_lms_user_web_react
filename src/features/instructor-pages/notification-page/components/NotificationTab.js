@@ -4,10 +4,10 @@ import { imagePlaceholder, profilePlaceholder } from "utils/placeholders";
 import { getImageUrl } from "utils/common/imageUtlils";
 
 const NotificationTab = ({ tabValue, handleTabChange, notifications, handleNotificationChange }) => {
-    const readCount = notifications?.filter((i) => i.status === "read").length || 0;
-    const unreadCount = notifications?.filter((i) => i.status === "unread").length || 0;
+    const readCount = notifications && notifications?.filter((i) => i.status === "read").length || 0;
+    const unreadCount = notifications && notifications?.filter((i) => i.status === "unread").length || 0;
 
-    const filteredNotifications = notifications?.filter((notification) => {
+    const filteredNotifications = notifications && notifications?.filter((notification) => {
         if (tabValue === 0) return true;
         if (tabValue === 1) return notification.status === "read";
         if (tabValue === 2) return notification.status === "unread";
@@ -64,10 +64,10 @@ const NotificationTab = ({ tabValue, handleTabChange, notifications, handleNotif
                             <Tab label={<Badge badgeContent={unreadCount} color="primary">Unread</Badge>} />
                         </Tabs>
                     </Box>
-                    <Box sx={{ maxHeight: "65vh", overflow: "auto" }}></Box>
+                    <Box sx={{ height: "63vh", overflow: "auto", paddingVertical: "10px" }}>
                     {
                         filteredNotifications?.map((notifi, index) => (
-                            <Box key={index} sx={{ display: 'flex', gap: "13px", padding: "18.5px", cursor: "pointer" }} onClick={() => handleNotificationChange(notifi)}>
+                            <Box key={index} sx={{ display: 'flex', gap: "13px", padding: "18px", cursor: "pointer" }} onClick={() => handleNotificationChange(notifi)}>
                                 <Box sx={{ display: 'flex', justifyContent: "flex-start", flexDirection: "column" }}>
                                     <Avatar
                                         alt="profile"
@@ -97,6 +97,7 @@ const NotificationTab = ({ tabValue, handleTabChange, notifications, handleNotif
                             </Box>
                         ))
                     }
+                    </Box>
                 </Box>
             </Box>
         </Box>

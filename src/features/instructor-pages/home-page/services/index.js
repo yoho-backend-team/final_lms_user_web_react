@@ -30,3 +30,14 @@ export const updateInstructorNotificationsClient = async (data) => {
     throw new Error(message)  
   }
 }
+
+
+export const deleteInstructorNotificationsClient = async (data) => {
+  try {
+  const response = await Client.Instructor.notification.delete(data) 
+  return response?.data   
+  } catch (error) {
+    const message = error?.response?.data?.message ? error?.response?.data?.message : error?.message
+    throw new Error(message)  
+  }
+}

@@ -8,8 +8,10 @@ import { getImageUrl } from "utils/common/imageUtlils";
 import { profilePlaceholder } from "utils/placeholders";
 import axios from "axios";
 
-const NotificationListView = ({handleSelectNotification, id, anchorE2, isOpen, setClose, notifications, unreadCount}) => {
+const NotificationListView = ({handleSelectNotification, id, anchorE2, isOpen, setClose, notifications}) => {
     const [ tabValue, setTabValue ] = useState(0);
+    
+      const unreadCount = notifications && notifications?.filter((i)=>i.status === "unread")?.length
 
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
@@ -28,7 +30,7 @@ const NotificationListView = ({handleSelectNotification, id, anchorE2, isOpen, s
       }
     };
 
-    const filteredNotifications = notifications?.filter((notification) => {
+    const filteredNotifications = notifications && notifications?.filter((notification) => {
         if (tabValue === 0) return true;
         if (tabValue === 1) return notification.status === "read";
         if (tabValue === 2) return notification.status === "unread";
@@ -268,7 +270,8 @@ const NotificationListView = ({handleSelectNotification, id, anchorE2, isOpen, s
                   boxShadow: "0px 6px 34px -8px #0D6EFD",
                   padding: "9px 24px",
                   ":hover": { backgroundColor: "#5611B1" }
-                }} 
+                }}
+                onClick={setClose} 
               >
                 View all Notifications
               </Button>
