@@ -200,8 +200,8 @@ const generateEndpoints = () => {
       },
       notification: {
         get: `/institutes/staff/notifications`,
-        put: `institutes/staff/notifications/status/`
-       
+        put: `institutes/staff/notifications/status/`,
+        delete: `/institutes/staff/notifications/status/deleteId`
       },
       payments: {
         getSalaries: "/institutes/payments/staff-salary/salary",

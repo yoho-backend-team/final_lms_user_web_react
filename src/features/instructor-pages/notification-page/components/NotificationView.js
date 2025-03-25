@@ -3,18 +3,26 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import { profilePlaceholder } from "utils/placeholders";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { deleteInstructorNotifications } from "features/common/redux/thunks";
+import { get } from "lodash";
 
 const NotificationView = ({ selectedNotification, onDelete }) => {
-  const [visible, setVisible] = useState(true);
+  const dispatch = useDispatch();
+  console.log(selectedNotification, "selectedNotification");
 
   const handleDelete = () => {
-    setVisible(false);
-    if (onDelete) {
-      onDelete(selectedNotification?.id);
-    }
+    dispatch(deleteInstructorNotifications({uuid: selectedNotification?.uuid}));
   };
 
-  if (!visible) return null;
+  const getFormattedTime = (time) => {
+    const date = new Date(time);
+    return date.toLocaleString("en-US", {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+  }
 
   return (
     <Box
@@ -25,10 +33,10 @@ const NotificationView = ({ selectedNotification, onDelete }) => {
         padding: "31px 28px 18px 24px",
       }}
     >
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Box sx={{ display: "flex", gap: "13px" }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
+        <Box sx={{ display: "flex", gap: "8px" }}>
           <Box>
-            <Avatar
+            {/* <Avatar
               src={
                 selectedNotification?.staff?.image
                   ? getImageUrl(selectedNotification?.staff?.image)
@@ -40,36 +48,24 @@ const NotificationView = ({ selectedNotification, onDelete }) => {
                 height: "52px",
                 borderRadius: "52px",
               }}
-            />
+            /> */}
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "5px" }}>
             <Typography sx={{ color: "#000000", fontSize: "16px", fontWeight: 700 }}>
               {selectedNotification?.title}
             </Typography>
-            <Typography>{selectedNotification?.body}</Typography>
+            <Typography sx={{width: '80%'}}>{selectedNotification?.body}</Typography>
           </Box>
         </Box>
-        <Box sx={{ display: "flex", gap: "22px", alignItems: "center" }}>
+        <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
           <IconButton onClick={handleDelete}>
-            <DeleteOutlineOutlinedIcon sx={{ color: "#7F7F7F" }} />
+            <DeleteOutlineOutlinedIcon sx={{ color: "red" }} />
           </IconButton>
           <Box>
-            <Typography sx={{ color: "#7F7F7F", fontSize: "11.5px", fontWeight: 400 }}>
-              {new Date().toLocaleDateString()} : {new Date().toLocaleTimeString()}
+            <Typography sx={{ color: "#7F7F7F", fontSize: "11px", fontWeight: 400 }}>
+              {getFormattedTime(selectedNotification?.createdAt)}
             </Typography>
           </Box>
-        </Box>
-      </Box>
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <Box>
-          <Typography sx={{ color: "#000000", fontSize: "23px", fontWeight: 400, py: "22px" }}>
-            UI project : Client Dashboard
-          </Typography>
-        </Box>
-        <Box>
-          <Typography sx={{ color: "#7F7F7F", fontSize: "11.4px", fontWeight: 400, lineHeight: "normal" }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Convallis tellus id interdum velit laoreet. Enim eu turpis egestas pretium. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Convallis tellus id interdum velit laoreet. Enim eu turpis egestas pretium
-          </Typography>
         </Box>
       </Box>
     </Box>
