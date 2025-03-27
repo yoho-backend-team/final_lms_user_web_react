@@ -263,7 +263,7 @@ const Attendance = () => {
                 lineHeight: "24px",
                 paddingBottom: tabView ? "10px" : "0",
                 ml:"35px",
-                mt:"20px"
+                mt:"27px"
               }}
             >
               Attendance
@@ -273,10 +273,10 @@ const Attendance = () => {
               onClick={toggleFilter} 
               className={classes.filterIcon}
               sx={{
-                mr:"20px",
-                backgroundColor: "white",
-                borderRadius: "22px",
-                padding: "6px",
+                ml:"-120px",
+                backgroundColor: "#0D6EFD",
+                borderRadius: "18px",
+                padding: "8px",
                 transition: "all 0.3s ease",
                 "&:hover": {
                   backgroundColor: "#E3F2FD",
