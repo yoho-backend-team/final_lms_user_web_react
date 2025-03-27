@@ -1,53 +1,143 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Box, Grid, Typography, Menu, MenuItem } from "@mui/material";
+import React, { useRef, useEffect, useState, useCallback } from "react";
+import PropTypes from 'prop-types';
+import { 
+  Box, 
+  Grid, 
+  Typography, 
+  IconButton, 
+  Menu, 
+  MenuItem 
+} from "@mui/material";
 import { getInstructorDetails } from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
 import DoneIcon from "@mui/icons-material/Done";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import DeleteIcon from "@mui/icons-material/Delete";
 
+/**
+ * ChatLog component for displaying paginated messages with encryption banner and design
+ * @param {Object} props - Component props
+ * @param {Object} props.socket - Socket connection for real-time updates
+ * @param {Array} props.Messages - Array of message objects
+ */
 const ChatLog = ({ socket, Messages }) => {
   const instructor = getInstructorDetails();
-  const chatRef = useRef(null);
-  const messagesEndRef = useRef(null);
+  const chatEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
   const messageRefs = useRef(new Map());
-  const [messages, setMessages] = useState(Messages);
+  const [displayedMessages, setDisplayedMessages] = useState([]);
+  const [allMessages, setAllMessages] = useState([]);
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [hasMoreOlder, setHasMoreOlder] = useState(true);
+  const [hasMoreNewer, setHasMoreNewer] = useState(false);
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
   const [readMessages, setReadMessages] = useState(new Set());
+  const messagesPerPage = 5;
 
-  useEffect(() => {
-    const handleFocus = () => setIsWindowFocused(true);
-    const handleBlur = () => setIsWindowFocused(false);
-
-    window.addEventListener("focus", handleFocus);
-    window.addEventListener("blur", handleBlur);
-
-    return () => {
-      window.removeEventListener("focus", handleFocus);
-      window.removeEventListener("blur", handleBlur);
-    };
+  // Process and validate messages
+  const processMessages = useCallback((messageList) => {
+    if (!messageList || messageList.length === 0) return [];
+    
+    return messageList.map(msg => ({
+      ...msg,
+      message: msg.message || "Empty message",
+      sender_name: msg.sender_name || "Unknown",
+      createdAt: msg.createdAt || new Date().toISOString()
+    }));
   }, []);
 
+  // Initial message setup
+  useEffect(() => {
+    if (!Messages || Messages.length === 0) {
+      setAllMessages([]);
+      setDisplayedMessages([]);
+      setHasMoreOlder(false);
+      setHasMoreNewer(false);
+      return;
+    }
+    
+    const validatedMessages = processMessages(Messages);
+    setAllMessages(validatedMessages);
+    
+    const totalPages = Math.ceil(validatedMessages.length / messagesPerPage);
+    const lastPageIndex = Math.max(0, totalPages - 1);
+    const startIdx = lastPageIndex * messagesPerPage;
+    const endIdx = validatedMessages.length;
+    
+    setDisplayedMessages(validatedMessages.slice(startIdx, endIdx));
+    setCurrentPageIndex(lastPageIndex);
+    setHasMoreOlder(lastPageIndex > 0);
+    setHasMoreNewer(false);
+    
+    setInitialLoadComplete(false);
+    setTimeout(() => {
+      setInitialLoadComplete(true);
+      chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, 500);
+  }, [Messages, processMessages]);
+
+  // Scroll to bottom when new messages are added
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [displayedMessages]);
+
+  // Load older messages
+  const loadOlderMessages = useCallback(() => {
+    if (!hasMoreOlder || isLoadingMore) return;
+    
+    setIsLoadingMore(true);
+    
+    const container = chatContainerRef.current;
+    const initialScrollHeight = container ? container.scrollHeight : 0;
+    
+    const prevPageIndex = currentPageIndex - 1;
+    const startIdx = prevPageIndex * messagesPerPage;
+    const endIdx = currentPageIndex * messagesPerPage;
+    
+    setTimeout(() => {
+      const olderMessages = allMessages.slice(startIdx, endIdx);
+      const updatedMessages = [...olderMessages, ...displayedMessages];
+      
+      setDisplayedMessages(updatedMessages);
+      setCurrentPageIndex(prevPageIndex);
+      setHasMoreOlder(prevPageIndex > 0);
+      setHasMoreNewer(true);
+      
+      setTimeout(() => {
+        if (container) {
+          const newScrollHeight = container.scrollHeight;
+          const scrollHeightDiff = newScrollHeight - initialScrollHeight;
+          container.scrollTop = scrollHeightDiff;
+        }
+        
+        setIsLoadingMore(false);
+      }, 50);
+    }, 300);
+  }, [allMessages, currentPageIndex, displayedMessages, hasMoreOlder, isLoadingMore]);
+
+  // Handle message read status
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && isWindowFocused) {
             const messageId = entry.target.getAttribute("data-id");
-
             if (!readMessages.has(messageId)) {
               setTimeout(() => {
                 if (entry.isIntersecting && isWindowFocused) {
                   triggerMessageRead(messageId);
                 }
-              }, 1500); // Optional delay for confirmation
+              }, 1500);
             }
           }
         });
       },
-      { threshold: 0.8 } // 80% of message must be visible
+      { threshold: 0.8 }
     );
 
     messageRefs.current.forEach((ref) => {
@@ -59,49 +149,37 @@ const ChatLog = ({ socket, Messages }) => {
     return () => {
       observer.disconnect();
     };
-  }, [Messages, isWindowFocused, readMessages]);
+  }, [displayedMessages, isWindowFocused, readMessages]);
 
   const triggerMessageRead = (messageId) => {
-    const msg = Messages.find((m) => m._id === messageId);
-
+    const msg = allMessages.find((m) => m._id === messageId);
     if (msg && !readMessages.has(messageId)) {
-      const now = new Date();
-      const formattedTime = now.toLocaleTimeString("en-US", { hour12: false });
-
-      console.log(`Message ${messageId} read at ${formattedTime}`);
       socket.emit("messageRead", { messageId, userId: instructor?._id });
       setReadMessages((prev) => new Set([...prev, messageId]));
     }
   };
 
-  const scrollToBottom = () => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  useEffect(() => {
-    setMessages(Messages);
-    scrollToBottom();
-  }, [Messages]);
-
-  useEffect(() => {
-    socket.on("messageDeleted", (updatedMessages) => {
-      setMessages(updatedMessages);
+  // Delete message handler
+  const handleDeleteMessage = useCallback((messageId) => {
+    if (!socket || !messageId) return;
+    
+    const updatedAllMessages = allMessages.filter(message => message._id !== messageId);
+    setAllMessages(updatedAllMessages);
+    
+    const updatedDisplayed = displayedMessages.filter(message => message._id !== messageId);
+    setDisplayedMessages(updatedDisplayed);
+    
+    socket.emit("deleteMessage", { 
+      messageId, 
+      userId: instructor?._id 
     });
-    return () => {
-      socket.off("messageDeleted");
-    };
-  }, [socket]);
+    
+    const totalPages = Math.ceil(updatedAllMessages.length / messagesPerPage);
+    setHasMoreOlder(currentPageIndex > 0);
+    setHasMoreNewer(currentPageIndex < totalPages - 1);
+  }, [socket, allMessages, displayedMessages, currentPageIndex, instructor?._id]);
 
-  const handleOpenMenu = (event, messageId, senderId) => {
-    if (senderId !== instructor?._id) {
-      return;
-    }
+  const handleOpenMenu = (event, messageId) => {
     setAnchorEl(event.currentTarget);
     setSelectedMessage(messageId);
   };
@@ -111,18 +189,18 @@ const ChatLog = ({ socket, Messages }) => {
     setSelectedMessage(null);
   };
 
-  const handleDeleteMessage = () => {
+  const handleDeleteMessageFromMenu = () => {
     if (selectedMessage) {
-      socket.emit("deleteMessage", { messageId: selectedMessage, userId: instructor?._id });
-      setMessages((prevMessages) => prevMessages.filter((msg) => msg._id !== selectedMessage));
+      handleDeleteMessage(selectedMessage);
     }
     handleCloseMenu();
   };
 
   return (
     <Box
+      ref={chatContainerRef}
       sx={{
-        height: "200vh",
+        height: "100vh",
         overflowY: "auto",
         backgroundImage:
           "url('https://i.pinimg.com/originals/62/8a/06/628a064e53d4d2afa7ef36075e98f1b1.jpg')",
@@ -132,7 +210,7 @@ const ChatLog = ({ socket, Messages }) => {
         padding: "20px",
         display: "flex",
         flexDirection: "column",
-        gap: "15px",
+        gap: "10px",
       }}
     >
       <Box
@@ -140,26 +218,49 @@ const ChatLog = ({ socket, Messages }) => {
           position: "sticky",
           top: 0,
           zIndex: 10,
-          backgroundColor: "rgba(0, 0, 0, 0.6)",
-          padding: "5px 10px",
-          borderRadius: "6px",
+          backgroundColor: "rgba(0, 0, 0, 0.7)",
+          padding: "6px 12px",
+          borderRadius: "15px",
           color: "white",
           textAlign: "center",
-          marginBottom: "10px",
           fontSize: "12px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          maxWidth: "90%",
+          maxWidth: "80%",
           margin: "10px auto",
-          boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
         }}
       >
         <LockOutlinedIcon sx={{ fontSize: "16px", marginRight: "6px" }} />
-        Messages are end-to-end encrypted. No one outside of this chat can read or listen to them.
+        Messages are end-to-end encrypted. No one outside this chat can read them.
       </Box>
 
-      {messages?.map((msg) => (
+      {hasMoreOlder && (
+        <Box 
+          sx={{ 
+            display: "flex", 
+            justifyContent: "center", 
+            mb: 2 
+          }}
+        >
+          <Typography 
+            variant="button"
+            onClick={loadOlderMessages}
+            sx={{ 
+              cursor: "pointer",
+              backgroundColor: "rgba(0,0,0,0.5)",
+              color: "white",
+              padding: "8px 16px",
+ borderRadius: "16px"
+            }}
+          >
+            {isLoadingMore ? "Loading..." : "Load Older Messages"}
+          </Typography>
+        </Box>
+      )}
+
+      {displayedMessages?.map((msg) => (
         <Grid
           container
           key={msg._id}
@@ -167,7 +268,7 @@ const ChatLog = ({ socket, Messages }) => {
           sx={{ marginBottom: "8px" }}
           ref={(el) => messageRefs.current.set(msg._id, el)}
         >
-          <Grid item xs={8} sm={7} md={6}>
+          <Grid item xs={9} sm={7} md={6}>
             <Box
               sx={{
                 display: "flex",
@@ -177,58 +278,98 @@ const ChatLog = ({ socket, Messages }) => {
             >
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
                   backgroundColor: msg.sender === instructor?._id ? "#61C554" : "#E8ECEF",
                   borderRadius: "10px",
-                  padding: "10px 15px",
-                  minWidth: "200px",
-                  cursor: "pointer",
+                  padding: "8px 12px",
+                  minWidth: "180px",
+                  maxWidth: "100%",
+                  wordWrap: "break-word",
                 }}
-                onClick={(event) => handleOpenMenu(event, msg._id, msg.sender)}
+                data-id={msg._id}
+                onClick={(event) => handleOpenMenu(event, msg._id)}
               >
-                {msg?.sender !== instructor?._id && (
-                  <Typography sx={{ fontSize: "10px", alignSelf: "start" }}>
+                {msg.sender !== instructor?._id && (
+                  <Typography sx={{ fontSize: "10px", fontWeight: 600 }}>
                     {msg.sender_name}
                   </Typography>
                 )}
                 <Typography
                   variant="body1"
                   sx={{
-                    wordBreak: "break-word",
-                    color: msg.sender === instructor?._id ? "white" : "#000000",
+                    color: msg.sender === instructor?._id ? "white" : "#000",
                     fontSize: "14px",
                     fontWeight: 400,
+                    textAlign: "left",
                   }}
                 >
                   {msg.message}
                 </Typography>
-                <Typography sx={{ textAlign: "end", fontSize: "11px", marginTop: "3px" }}>
-                  {formatTime(msg?.createdAt)}
-                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginTop: "4px",
+                  }}
+                >
+                  <Typography sx={{ fontSize: "11px", color: "#727272" }}>
+                    {formatTime(msg?.createdAt)}
+                  </Typography>
 
-                 {msg.sender === instructor?._id &&
-                  (msg.status?.some((s) => s.delivered) ? (
-                    msg.status?.every((s) => s.read) ? (
-                      <DoneAllIcon sx={{ color: "#0D6EFD", width: "16px" }} />
+                  {msg.sender === instructor?._id &&
+                    (msg.status?.some((s) => s.delivered) ? (
+                      msg.status?.every((s) => s.read) ? (
+                        <DoneAllIcon sx={{ color: "#0D6EFD", width: "16px" }} />
+                      ) : (
+                        <DoneAllIcon sx={{ color: "white", width: "16px" }} />
+                      )
                     ) : (
-                      <DoneAllIcon sx={{ color: "white", width: "16px" }} />
-                    )
-                  ) : (
-                    <DoneIcon sx={{ color: "white", width: "16px" }} />
-                  ))}
+                      <DoneIcon sx={{ color: "white", width: "16px" }} />
+                    ))}
 
+                  {msg.sender === instructor?._id && (
+                    <IconButton
+                      onClick={() => handleDeleteMessage(msg._id)}
+                      sx={{ color: "white", padding: "2px" }}
+                    >
+                      <DeleteIcon sx={{ fontSize: "16px" }} />
+                    </IconButton>
+                  )}
+                </Box>
               </Box>
             </Box>
           </Grid>
         </Grid>
       ))}
-      <div ref={messagesEndRef} />
+
+      {displayedMessages.length === 0 && (
+        <Box sx={{ textAlign: "center", mt: 4 }}>
+          <Typography variant="body1" sx={{ color: "white" }}>
+            No messages yet. Start the conversation!
+          </Typography>
+        </Box>
+      )}
+
+      <div ref={chatEndRef} />
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu}>
-        <MenuItem onClick={handleDeleteMessage}>Delete Message</MenuItem>
+        <MenuItem onClick={handleDeleteMessageFromMenu}>Delete Message</MenuItem>
       </Menu>
     </Box>
   );
+};
+
+// PropTypes for type checking
+ChatLog.propTypes = {
+  socket: PropTypes.shape({
+    on: PropTypes.func.isRequired,
+    emit: PropTypes.func.isRequired
+  }),
+  Messages: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
+    sender: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired
+  })).isRequired
 };
 
 export default ChatLog;
