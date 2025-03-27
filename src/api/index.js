@@ -31,8 +31,8 @@ class Client {
         HTTP_END_POINTS.Student.auth.reset_password,
         data,
         params,
-        "student"
-      ),
+      "student"), 
+    resend_otp : (data,para) => httpClient.post(HTTP_END_POINTS.Student.auth.resent_otp,data,para,"student"),
     change_password: (data, params) =>
       httpClient.post(
         HTTP_END_POINTS.Student.auth.change_password,
@@ -47,6 +47,7 @@ class Client {
           data,
           "student"
         ),
+                  
     course: {
       get: (params) =>
         httpClient.get(HTTP_END_POINTS.Student.course.get, params, "student"),
@@ -56,7 +57,7 @@ class Client {
         httpClient.get(HTTP_END_POINTS.Student.profile.get, params, "student"),
       update: (data) =>
         httpClient.update(
-          HTTP_END_POINTS.Student.profile.update,
+          HTTP_END_POINTS.Student.profile.update, 
           data,
           "student"
         ),
@@ -159,6 +160,7 @@ class Client {
         params,
         "instructor"
       ),
+      
     changePassword : (data,params) => httpClient.post(HTTP_END_POINTS.Instructor.auth.change_password,data,params,"instructor"),
     log_out: (data) => httpClient.post(HTTP_END_POINTS.Instructor.auth.log_out,data,{},"instructor"),
     attendance: {
@@ -256,7 +258,8 @@ class Client {
       get_messages : (params) => httpClient.get(HTTP_END_POINTS.Instructor.community.get_messages + params?.community,{},"instructor")
     },
     notification : {
-      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.get,params,"instructor")
+      get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.get,params,"instructor"),
+      put : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.put,params,"instructor")
     },
     payment: {
       get: (params) => httpClient.get( HTTP_END_POINTS.Instructor.payments.getSalaries,  params, "instructor"),
@@ -265,7 +268,7 @@ class Client {
       create: (data, params) =>
         httpClient.post(
           HTTP_END_POINTS.Instructor.ticket.create,
-          data,
+          data,     
           params,
           "instructor"
         ),

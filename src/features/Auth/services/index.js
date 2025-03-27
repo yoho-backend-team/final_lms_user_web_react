@@ -357,8 +357,33 @@ export const useStudentLogout = () => {
       }
     }
   )
+ 
   return studentLogout
 }
+export const useResendOtp = (isInstructor = false) => {
+  const setOtpAtom = useSetAtom(isInstructor ? instructorOtpAtom : studentOtpAtom);
+  const otpData = useAtomValue(isInstructor ? instructorOtpAtom : studentOtpAtom);
 
+  const resendOtp = async () => {
+    try {
+      const response = await (isInstructor 
+        ? Client.Instructor.resendOtp({ email: otpData.email }) 
+        : Client.Student.resendOtp({ email: otpData.email })
+      );
 
+      setOtpAtom(prev => ({
+        ...prev,
+        otp: response?.data?.otp,
+        token: response?.data?.token,
+      }));           
+
+      return { success: true, message: response?.message };
+    } catch (error) {
+      console.error("Error resending OTP:", error);
+      throw new Error(getErrorMessage(error));
+    }
+  };
+
+  return resendOtp;
+};
 

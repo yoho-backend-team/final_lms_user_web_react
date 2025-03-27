@@ -96,6 +96,7 @@ const generateEndpoints = () => {
         verify_otp: "/institutes/auth/student/verify-otp",
         forget_password: "/institutes/auth/profile/forgot-password",
         reset_password: "/institutes/auth/profile/reset-password",
+        resent_otp : "/institutes/auth/sudent/resend-otp",
         change_password: "institutes/auth/profile/change-password",
         log_out : "/institutes/auth/student/logout"
       },
@@ -167,6 +168,7 @@ const generateEndpoints = () => {
         verify_otp: "/institutes/auth/teaching-staff/verify-otp",
         change_password : "/institutes/auth/teaching-staff/change-password",
         log_out: "/institutes/auth/teaching-staff/logout",
+        resent_otp : "/institutes/auth/sudent/resend-otp",
       },
       attendance: {
         get: "/institutes/attedance/staff/",
@@ -200,6 +202,7 @@ const generateEndpoints = () => {
       },
       notification: {
         get: `/institutes/staff/notifications`,
+        put: `institutes/staff/notifications/status/`
        
       },
       payments: {

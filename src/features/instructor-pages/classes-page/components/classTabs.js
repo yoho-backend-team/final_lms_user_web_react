@@ -11,6 +11,7 @@ const ClassTabs = ({ tabs, value, handleChange }) => {
           cursor: "pointer",
           "& .MuiTabs-indicator": { backgroundColor: "#5611B1" },
           color: "#5611B1",
+          fontSize: "1rem",
           ".Mui-selected": {
               color : "#5611B1",
           }
@@ -20,7 +21,7 @@ const ClassTabs = ({ tabs, value, handleChange }) => {
         aria-label="secondary tabs example"
       >
         {tabs.map((tab) => (
-          <Tab key={tab.id} label={tab.title} value={tab.value} />
+          <Tab key={tab.id} label={tab.title} value={tab.value} sx={{ fontSize: "1.2rem" }} />
         ))}
       </Tabs>
     </Card>
@@ -28,3 +29,4 @@ const ClassTabs = ({ tabs, value, handleChange }) => {
 };
 
 export default ClassTabs;
+

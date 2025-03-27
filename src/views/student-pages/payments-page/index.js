@@ -111,10 +111,6 @@ const PaymentStudentInterface = () => {
           }
         }}
       /> */}
-
-
-
-
       <Box
         sx={{
           mx: tabView ? "0px" : "40px",

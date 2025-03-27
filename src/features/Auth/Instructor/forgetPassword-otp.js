@@ -125,6 +125,7 @@ export default function ForgetPasswordOTPInput() {
     resetTimer();
   };
 
+
   const handleVerify = async () => {
     if (otp.trim().length !== 6) {
       setError("Please enter a valid 6-digit OTP.");

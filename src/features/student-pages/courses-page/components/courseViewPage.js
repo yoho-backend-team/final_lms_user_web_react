@@ -47,18 +47,18 @@ const CourseStudentViewPage = ({ Course }) => {
                 <IconButton onClick={() => navigate(-1)} sx={{ mr: 2 }}>
                   <ArrowBackIcon />
                 </IconButton>
-                <Typography
-                  sx={{
-                    color: "#333333", 
-                    fontFamily: "Roboto", 
-                    fontSize: "18px", 
-                    fontWeight: 700,
-                    lineHeight: "28px", 
-                    textAlign: "center", 
-                  }}
-                >
-                  Course List & Details
-                </Typography>
+                <Typography 
+          sx={{
+            color: "#000000",
+            fontSize: "18px",
+            fontWeight: 600,
+            lineHeight: "24px",
+            fontFamily: "Nunito Sans"
+          }}
+        >
+          Course List
+        </Typography>
+
               </Box>
             ) : (
               <ArrowBack
@@ -87,13 +87,13 @@ const CourseStudentViewPage = ({ Course }) => {
                     backgroundColor: "#5611B1",
                   },
                   "& .MuiTab-root": {
-                    color: "#6A1B9A", 
+                    color: "#000000", 
                     fontSize: "18px",  
                     fontWeight: 700,  
                     fontFamily: "Roboto, sans-serif",
                   },
                   "& .Mui-selected": {
-                    color: "#1A237E",
+                    color: "#0D6EFD",
                   },
                 }}
               >

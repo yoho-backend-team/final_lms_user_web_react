@@ -11,7 +11,7 @@ export const getReports = async (data) => {
     }
 }
 
-export const getInstructorNotifications = async (data) => {
+export const getInstructorNotificationsClient = async (data) => {
     try {
     const response = await Client.Instructor.notification.get(data) 
     return response?.data   
@@ -19,4 +19,14 @@ export const getInstructorNotifications = async (data) => {
       const message = error?.response?.data?.message ? error?.response?.data?.message : error?.message
       throw new Error(message)  
     }
+}
+
+export const updateInstructorNotificationsClient = async (data) => {
+  try {
+  const response = await Client.Instructor.notification.put(data) 
+  return response?.data   
+  } catch (error) {
+    const message = error?.response?.data?.message ? error?.response?.data?.message : error?.message
+    throw new Error(message)  
+  }
 }
