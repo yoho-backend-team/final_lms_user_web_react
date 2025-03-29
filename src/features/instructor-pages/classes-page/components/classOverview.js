@@ -37,7 +37,7 @@ import SaveAltOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
 import { useSpinner } from "context/SpinnerProvider";
 import VideoUpload from "./model/videoUpload";
 import VideoCard from "./card/videoCard";
-import NoteOffIcon from '@mui/icons-material/NoteOff';
+
 
 const ClassCard = ({ type, classDetails, getClass,group }) => {
   const navigate = useNavigate();
