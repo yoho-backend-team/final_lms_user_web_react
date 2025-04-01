@@ -77,16 +77,49 @@ const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, Fe
       const chatContainer = messagesEndRef.current.parentElement;
       const scrollOffset = chatContainer.scrollHeight - chatContainer.scrollTop;
 
-    setIsFetching(true);
-    const nextPage = messagePagination.currentPage + 1;
-    await FetchMessages(nextPage);
-    setIsFetching(false);
+      setIsFetching(true);
+      const nextPage = messagePagination.currentPage + 1;
+      await FetchMessages(nextPage);
+      setIsFetching(false);
 
-    setTimeout(() => {
-      chatContainer.scrollTop = chatContainer.scrollHeight - scrollOffset;
-    }, 0);
+      setTimeout(() => {
+        chatContainer.scrollTop = chatContainer.scrollHeight - scrollOffset;
+      }, 0);
     }
   };
+
+  // Function to format date and check if we need to show a date divider
+  const formatMessageDate = (date) => {
+    const messageDate = new Date(date);
+    return messageDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  };
+
+  // Group messages by date
+  const groupMessagesByDate = () => {
+    const groups = [];
+    let currentDate = null;
+    
+    Messages?.forEach(msg => {
+      const msgDate = formatMessageDate(msg.createdAt);
+      
+      if (msgDate !== currentDate) {
+        currentDate = msgDate;
+        groups.push({
+          type: 'date',
+          date: msgDate
+        });
+      }
+      
+      groups.push({
+        type: 'message',
+        message: msg
+      });
+    });
+    
+    return groups;
+  };
+
+  const groupedMessages = groupMessagesByDate();
 
   return (
     <Box
@@ -130,92 +163,118 @@ const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, Fe
         </Box>
       )}
 
-      {Messages?.map((msg) => (
-        <Grid
-          container
-          key={msg._id}
-          justifyContent={
-            msg.sender === student?._id ? "flex-end" : "flex-start"
-          }
-          sx={{ marginBottom: "8px" }}
-          data-id={msg._id}
-          ref={(el) => messageRefs.current.set(msg._id, el)}
-        >
-          <Grid item xs={9} sm={7} md={6}>
-            <Box
+      {groupedMessages.map((item, index) => (
+        item.type === 'date' ? (
+          // Date divider
+          <Box 
+            key={`date-${index}`} 
+            sx={{ 
+              textAlign: 'center', 
+              margin: '10px 0',
+            }}
+          >
+            <Typography
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: msg.sender === student?._id ? "flex-end" : "flex-start",
+                display: 'inline-block',
+                backgroundColor: 'rgba(225, 245, 254, 0.8)',
+                borderRadius: '8px',
+                padding: '4px 12px',
+                fontSize: '12px',
+                fontWeight: 500,
+                color: '#455A64',
+                boxShadow: '0 1px 1px rgba(0,0,0,0.1)'
               }}
             >
+              {item.date}
+            </Typography>
+          </Box>
+        ) : (
+          // Message
+          <Grid
+            container
+            key={item.message._id}
+            justifyContent={
+              item.message.sender === student?._id ? "flex-end" : "flex-start"
+            }
+            sx={{ marginBottom: "8px" }}
+            data-id={item.message._id}
+            ref={(el) => messageRefs.current.set(item.message._id, el)}
+          >
+            <Grid item xs={9} sm={7} md={6}>
               <Box
                 sx={{
-                  backgroundColor: msg.sender === student?._id ? "#61C554" : "#E8ECEF",
-                  borderRadius: "10px",
-                  padding: "8px 12px",
-                  minWidth: "180px",
-                  maxWidth: "100%",
-                  wordWrap: "break-word",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: item.message.sender === student?._id ? "flex-end" : "flex-start",
                 }}
               >
-                {msg.sender !== student?._id && (
-                  <Typography sx={{ fontSize: "10px", fontWeight: 600 }}>
-                    {msg.sender_name}
-                  </Typography>
-                )}
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: msg.sender === student?._id ? "white" : "#000",
-                    fontSize: "14px",
-                    fontWeight: 400,
-                  }}
-                >
-                  {msg.message}
-                </Typography>
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginTop: "4px",
+                    backgroundColor: item.message.sender === student?._id ? "#61C554" : "#E8ECEF",
+                    borderRadius: "10px",
+                    padding: "8px 12px",
+                    minWidth: "180px",
+                    maxWidth: "100%",
+                    wordWrap: "break-word",
                   }}
                 >
-                  <Typography sx={{ fontSize: "11px", color: "#727272" }}>
-                    {formatTime(msg?.createdAt)}
-                  </Typography>
-
-                  {msg.sender === student?._id &&
-                    (msg.status?.some((s) => s.delivered) ? (
-                      msg.status?.every((s) => s.read) ? (
-                        <DoneAllIcon sx={{ color: "#0D6EFD", width: "16px" }} />
-                      ) : (
-                        <DoneAllIcon sx={{ color: "white", width: "16px" }} />
-                      )
-                    ) : (
-                      <DoneIcon sx={{ color: "white", width: "16px" }} />
-                    ))}
-
-                  {msg.sender === student?._id && (
-                    <IconButton
-                      onClick={() => handleDeleteMessage(msg._id)}
-                      sx={{ color: "white", padding: "2px", display: "none" }}
-                    >
-                      <DeleteIcon sx={{ fontSize: "16px" }} />
-                    </IconButton>
+                  {item.message.sender !== student?._id && (
+                    <Typography sx={{ fontSize: "10px", fontWeight: 600 }}>
+                      {item.message.sender_name}
+                    </Typography>
                   )}
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: item.message.sender === student?._id ? "white" : "#000",
+                      fontSize: "14px",
+                      fontWeight: 400,
+                    }}
+                  >
+                    {item.message.message}
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginTop: "4px",
+                    }}
+                  >
+                    <Typography sx={{ fontSize: "11px", color: "#727272" }}>
+                      {formatTime(item.message?.createdAt)}
+                    </Typography>
+
+                    {item.message.sender === student?._id &&
+                      (item.message.status?.some((s) => s.delivered) ? (
+                        item.message.status?.every((s) => s.read) ? (
+                          <DoneAllIcon sx={{ color: "#0D6EFD", width: "16px" }} />
+                        ) : (
+                          <DoneAllIcon sx={{ color: "white", width: "16px" }} />
+                        )
+                      ) : (
+                        <DoneIcon sx={{ color: "white", width: "16px" }} />
+                      ))}
+
+                    {item.message.sender === student?._id && (
+                      <IconButton
+                        onClick={() => handleDeleteMessage(item.message._id)}
+                        sx={{ color: "white", padding: "2px", display: "none" }}
+                      >
+                        <DeleteIcon sx={{ fontSize: "16px" }} />
+                      </IconButton>
+                    )}
+                  </Box>
                 </Box>
               </Box>
-            </Box>
+            </Grid>
           </Grid>
-        </Grid>
+        )
       ))}
 
       <div ref={messagesEndRef} />
     </Box>
   );
 };
-
 
 export default ChatLog;
