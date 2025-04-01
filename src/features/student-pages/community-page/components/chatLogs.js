@@ -11,6 +11,8 @@ const ChatLog = ({ socket, Messages }) => {
   const student = getStudentDetails();
   const chatEndRef = useRef(null);
   const [messages, setMessages] = useState(Messages);
+  const messagesEndRef = useRef(null);
+  const messageRefs = useRef(new Map());
   const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
   const [readMessages, setReadMessages] = useState(new Set());
 

@@ -69,7 +69,7 @@ const ChatLog = ({ socket, Messages }) => {
       const formattedTime = now.toLocaleTimeString("en-US", { hour12: false });
 
       console.log(`Message ${messageId} read at ${formattedTime}`);
-      socket.emit("messageRead", { messageId, userId: student?._id });
+      socket.emit("messageRead", { messageId, userId: instructor?._id });
       setReadMessages((prev) => new Set([...prev, messageId]));
     }
   };
