@@ -145,7 +145,7 @@ const generateEndpoints = () => {
       profile: {
         get: `institutes/auth/profile/me/`,
         // update: `/institutes/auth/student/update/${getStudentDetails()?.uuid}`,
-        update: 'institutes/auth/profile/me/'
+        update: '/institutes/auth/profile/me/'
       },
     },
     common: {
