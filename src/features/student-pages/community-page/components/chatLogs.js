@@ -88,9 +88,43 @@ const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, Fe
     }
   };
 
-  // Function to format date and check if we need to show a date divider
+  // Enhanced function to format date with "Today", "Yesterday", weekday names, or full date
   const formatMessageDate = (date) => {
     const messageDate = new Date(date);
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+    
+    // Compare year, month, and day
+    const isSameDay = (date1, date2) => {
+      return (
+        date1.getFullYear() === date2.getFullYear() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getDate() === date2.getDate()
+      );
+    };
+    
+    // Check if date is today
+    if (isSameDay(messageDate, today)) {
+      return "Today";
+    }
+    
+    // Check if date is yesterday
+    if (isSameDay(messageDate, yesterday)) {
+      return "Yesterday";
+    }
+    
+    // Check if date is within the last week (7 days)
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(today.getDate() - 6); // 6 days ago + today = 7 days total
+    
+    if (messageDate >= oneWeekAgo) {
+      // Return day name
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      return days[messageDate.getDay()];
+    }
+    
+    // For older dates, return month, day, year
     return messageDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   };
 
