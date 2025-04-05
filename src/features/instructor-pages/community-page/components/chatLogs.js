@@ -51,6 +51,57 @@ const ChatLog = ({ socket, Messages }) => {
     }));
   }, []);
 
+  // Format message date function with enhanced relative date display
+  const formatMessageDate = (dateString) => {
+    const messageDate = new Date(dateString);
+    const today = new Date();
+    
+    // Reset hours to compare just the dates
+    const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const messageDateOnly = new Date(messageDate.getFullYear(), messageDate.getMonth(), messageDate.getDate());
+    
+    // Calculate difference in days
+    const diffTime = todayDate.getTime() - messageDateOnly.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) {
+      return "Today";
+    } else if (diffDays === 1) {
+      return "Yesterday";
+    } else if (diffDays > 1 && diffDays <= 7) {
+      // Show day of week for messages within the past week
+      return messageDate.toLocaleDateString('en-US', { weekday: 'long' });
+    } else {
+      // For older messages, show the month, day and year
+      return messageDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    }
+  };
+
+  // Group messages by date
+  const groupMessagesByDate = useCallback((messages) => {
+    const groups = [];
+    let currentDate = null;
+    
+    messages?.forEach(msg => {
+      const msgDate = formatMessageDate(msg.createdAt);
+      
+      if (msgDate !== currentDate) {
+        currentDate = msgDate;
+        groups.push({
+          type: 'date',
+          date: msgDate
+        });
+      }
+      
+      groups.push({
+        type: 'message',
+        message: msg
+      });
+    });
+    
+    return groups;
+  }, []);
+
   // Initial message setup
   useEffect(() => {
     if (!Messages || Messages.length === 0) {
@@ -80,6 +131,20 @@ const ChatLog = ({ socket, Messages }) => {
       chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 500);
   }, [Messages, processMessages]);
+
+  // Window focus detection for message read tracking
+  useEffect(() => {
+    const handleFocus = () => setIsWindowFocused(true);
+    const handleBlur = () => setIsWindowFocused(false);
+    
+    window.addEventListener('focus', handleFocus);
+    window.addEventListener('blur', handleBlur);
+    
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('blur', handleBlur);
+    };
+  }, []);
 
   // Scroll to bottom when new messages are added
   useEffect(() => {
@@ -196,6 +261,9 @@ const ChatLog = ({ socket, Messages }) => {
     handleCloseMenu();
   };
 
+  // Group the displayed messages by date
+  const groupedMessages = groupMessagesByDate(displayedMessages);
+
   return (
     <Box
       ref={chatContainerRef}
@@ -213,7 +281,7 @@ const ChatLog = ({ socket, Messages }) => {
         gap: "10px",
       }}
     >
-      <Box
+      {/* <Box
         sx={{
           position: "sticky",
           top: 0,
@@ -234,7 +302,7 @@ const ChatLog = ({ socket, Messages }) => {
       >
         <LockOutlinedIcon sx={{ fontSize: "16px", marginRight: "6px" }} />
         Messages are end-to-end encrypted. No one outside this chat can read them.
-      </Box>
+      </Box> */}
 
       {hasMoreOlder && (
         <Box 
@@ -252,7 +320,7 @@ const ChatLog = ({ socket, Messages }) => {
               backgroundColor: "rgba(0,0,0,0.5)",
               color: "white",
               padding: "8px 16px",
- borderRadius: "16px"
+              borderRadius: "16px"
             }}
           >
             {isLoadingMore ? "Loading..." : "Load Older Messages"}
@@ -260,86 +328,111 @@ const ChatLog = ({ socket, Messages }) => {
         </Box>
       )}
 
-      {displayedMessages?.map((msg) => (
-        <Grid
-          container
-          key={msg._id}
-          justifyContent={msg.sender === instructor?._id ? "flex-end" : "flex-start"}
-          sx={{ marginBottom: "8px" }}
-          ref={(el) => messageRefs.current.set(msg._id, el)}
-        >
-          <Grid item xs={9} sm={7} md={6}>
-            <Box
+      {groupedMessages.map((item, index) => (
+        item.type === 'date' ? (
+          <Box
+            key={`date-${index}`}
+            sx={{
+              textAlign: 'center',
+              margin: '10px 0',
+            }}
+          >
+            <Typography
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: msg.sender === instructor?._id ? "flex-end" : "flex-start",
+                display: 'inline-block',
+                backgroundColor: 'rgba(225, 245, 254, 0.8)',
+                borderRadius: '8px',
+                padding: '4px 12px',
+                fontSize: '12px',
+                fontWeight: 500,
+                color: '#455A64',
+                boxShadow: '0 1px 1px rgba(0,0,0,0.1)'
               }}
             >
+              {item.date}
+            </Typography>
+          </Box>
+        ) : (
+          <Grid
+            container
+            key={item.message._id}
+            justifyContent={item.message.sender === instructor?._id ? "flex-end" : "flex-start"}
+            sx={{ marginBottom: "8px" }}
+            ref={(el) => messageRefs.current.set(item.message._id, el)}
+          >
+            <Grid item xs={9} sm={7} md={6}>
               <Box
                 sx={{
-                  backgroundColor: msg.sender === instructor?._id ? "#61C554" : "#E8ECEF",
-                  borderRadius: "10px",
-                  padding: "8px 12px",
-                  minWidth: "180px",
-                  maxWidth: "100%",
-                  wordWrap: "break-word",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: item.message.sender === instructor?._id ? "flex-end" : "flex-start",
                 }}
-                data-id={msg._id}
-                onClick={(event) => handleOpenMenu(event, msg._id)}
               >
-                {msg.sender !== instructor?._id && (
-                  <Typography sx={{ fontSize: "10px", fontWeight: 600 }}>
-                    {msg.sender_name}
-                  </Typography>
-                )}
-                <Typography
-                  variant="body1"
-                  sx={{
-                    color: msg.sender === instructor?._id ? "white" : "#000",
-                    fontSize: "14px",
-                    fontWeight: 400,
-                    textAlign: "left",
-                  }}
-                >
-                  {msg.message}
-                </Typography>
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    marginTop: "4px",
+                    backgroundColor: item.message.sender === instructor?._id ? "#61C554" : "#E8ECEF",
+                    borderRadius: "10px",
+                    padding: "8px 12px",
+                    minWidth: "180px",
+                    maxWidth: "100%",
+                    wordWrap: "break-word",
                   }}
+                  data-id={item.message._id}
+                  onClick={(event) => handleOpenMenu(event, item.message._id)}
                 >
-                  <Typography sx={{ fontSize: "11px", color: "#727272" }}>
-                    {formatTime(msg?.createdAt)}
-                  </Typography>
-
-                  {msg.sender === instructor?._id &&
-                    (msg.status?.some((s) => s.delivered) ? (
-                      msg.status?.every((s) => s.read) ? (
-                        <DoneAllIcon sx={{ color: "#0D6EFD", width: "16px" }} />
-                      ) : (
-                        <DoneAllIcon sx={{ color: "white", width: "16px" }} />
-                      )
-                    ) : (
-                      <DoneIcon sx={{ color: "white", width: "16px" }} />
-                    ))}
-
-                  {msg.sender === instructor?._id && (
-                    <IconButton
-                      onClick={() => handleDeleteMessage(msg._id)}
-                      sx={{ color: "white", padding: "2px" }}
-                    >
-                      <DeleteIcon sx={{ fontSize: "16px" }} />
-                    </IconButton>
+                  {item.message.sender !== instructor?._id && (
+                    <Typography sx={{ fontSize: "10px", fontWeight: 600 }}>
+                      {item.message.sender_name}
+                    </Typography>
                   )}
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: item.message.sender === instructor?._id ? "white" : "#000",
+                      fontSize: "14px",
+                      fontWeight: 400,
+                      textAlign: "left",
+                    }}
+                  >
+                    {item.message.message}
+                  </Typography>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      marginTop: "4px",
+                    }}
+                  >
+                    <Typography sx={{ fontSize: "11px", color: "#727272" }}>
+                      {formatTime(item.message?.createdAt)}
+                    </Typography>
+
+                    {item.message.sender === instructor?._id &&
+                      (item.message.status?.some((s) => s.delivered) ? (
+                        item.message.status?.every((s) => s.read) ? (
+                          <DoneAllIcon sx={{ color: "#0D6EFD", width: "16px" }} />
+                        ) : (
+                          <DoneAllIcon sx={{ color: "white", width: "16px" }} />
+                        )
+                      ) : (
+                        <DoneIcon sx={{ color: "white", width: "16px" }} />
+                      ))}
+
+                    {item.message.sender === instructor?._id && (
+                      <IconButton
+                        onClick={() => handleDeleteMessage(item.message._id)}
+                        sx={{ color: "white", padding: "2px" }}
+                      >
+                        <DeleteIcon sx={{ fontSize: "16px" }} />
+                      </IconButton>
+                    )}
+                  </Box>
                 </Box>
               </Box>
-            </Box>
+            </Grid>
           </Grid>
-        </Grid>
+        )
       ))}
 
       {displayedMessages.length === 0 && (
