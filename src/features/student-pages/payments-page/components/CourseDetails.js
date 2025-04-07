@@ -117,7 +117,8 @@ const CourseStudentDetails = () => {
     fontStyle: "normal",
     fontWeight: 700,
     lineHeight: isXs ? "26px" : "32px",
-    paddingBottom: "16px"
+    paddingBottom: "16px",
+    marginTop: "10px"
   };
 
   const subtitleStyle = {
@@ -130,594 +131,598 @@ const CourseStudentDetails = () => {
     paddingBottom: "8px"
   };
 
-  console.log(feesData,"feesData")
+  // Divider style
+  const dividerStyle = {
+    borderTop: "1px solid #E0E0E0",
+    width: "100%",
+    margin: "10px 0 20px 0"
+  };
+
+  console.log(feesData, "feesData");
+  
   return (
     <>
-      <Grid container spacing={2} sx={{ p: 3 }}>
+      <Grid container spacing={3} sx={{ p: { xs: 2, md: 3 } }}>
         {/* Left Column - Course & Fee Details */}
-        <Grid item xs={12} sm={7}>
+        <Grid item xs={12} md={7} sx={{ mb: { xs: 3, md: 0 } }}>
           {/* Course Details Section */}
           <Typography variant="body1" style={sectionTitleStyle}>
             Course Details
           </Typography>
           
-          <Grid item xs={12} sm={7}>
-            <hr style={{ borderTop: "1px solid #ccc", width: "auto" }} />
-          </Grid>
+          <hr style={dividerStyle} />
           
-          <Grid container spacing={2} sx={{ p: 2 }}>
-            <Grid item xs={12} sm={8}>
-              <Grid item xs={12} sm={6} md={6} lg={2.4}>
-                {/* Course Card */}
-                <Box
-                  p={2}
-                  border={1}
-                  borderRadius={2}
-                  textAlign="center"
+          <Box sx={{ px: { xs: 1, sm: 2 }, py: 2 }}>
+            <Box
+              p={2}
+              sx={{
+                borderRadius: "20px",
+                border: "1px solid #E0E0E0",
+                background: "#FFF",
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+                maxWidth: "400px",
+                height: "96px",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+                mb: 3,
+                overflow: "hidden"
+              }}
+            >
+              {/* Course Image */}
+              <Box
+                sx={{
+                  width: "38%",
+                  height: "96px",
+                  display: "flex",
+                  borderTopLeftRadius: "20px",
+                  borderBottomLeftRadius: "20px",
+                  overflow: "hidden",
+                  position: "relative",
+                  margin: "-8px 0 -8px -8px"
+                }}
+              >
+                <img
+                  src={
+                    feesData?.course?.image
+                      ? getImageUrl(feesData?.course?.image)
+                      : imagePlaceholder
+                  }
+                  alt={feesData?.course?.course_name || "course_name"}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover"
+                  }}
+                />
+              </Box>
+
+              {/* Course Details */}
+              <Box
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  pl: 2,
+                  py: 1,
+                  height: "100%"
+                }}
+              >
+                {/* Course Name */}
+                <Typography
+                  variant="body1"
                   sx={{
-                    borderRadius: "20px",
-                    border: "1px solid #C3C3C3",
-                    background: "#FFF",
-                    display: "flex",
-                    alignItems: "left",
-                    width: "372.434px",
-                    height: "96.515px",
-                    justifyContent: "left",
-                    flexShrink: 0,
-                    padding: "none !important",
-                    marginBottom: "20px",
+                    color: "#000",
+                    fontFamily: "Nunito Sans",
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    lineHeight: "18px",
+                    textAlign: "left",
+                    mb: 0.5
                   }}
                 >
-                  {/* Course Image */}
-                  <Box
-                    sx={{
-                      width: "40%",
-                      height: "100%",
-                      display: "flex",
-                      backgroundImage: "cover",
-                      backgroundAttachment: "fixed",
-                      borderTopLeftRadius: "20px",
-                      borderBottomLeftRadius: "20px",
-                      overflow: "hidden"
-                    }}
-                  >
+                  {feesData?.course?.course_name}
+                </Typography>
+                
+                {/* Institute Name */}
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "#555",
+                    fontFamily: "Nunito Sans",
+                    fontSize: "13px",
+                    fontWeight: 400,
+                    lineHeight: "16px",
+                    textAlign: "left",
+                    mb: 0.5
+                  }}
+                >
+                  {feesData?.fees?.[0]?.institute_id?.institute_name}
+                </Typography>
+                
+                {/* Bottom Row: Duration, Rating, Price */}
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+                  {/* Duration */}
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
                     <img
-                      src={
-                        feesData?.course?.image
-                          ? getImageUrl(feesData?.course?.image)
-                          : imagePlaceholder
-                      }
-                      alt={feesData?.course?.course_name || "course_name"}
+                      src={hours}
+                      alt="hours"
                       style={{
-                        width: "100%",
-                        height: "auto",
-                        maxWidth: "100%"
+                        width: "10px",
+                        height: "10px",
+                        marginRight: "5px"
                       }}
                     />
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "#555",
+                        fontFamily: "Nunito Sans",
+                        fontSize: "12px",
+                        fontWeight: 400
+                      }}
+                    >
+                      {feesData?.course?.duration}hrs
+                    </Typography>
                   </Box>
-
-                  {/* Course Details */}
-                  <Box
-                    sx={{
-                      justifyContent: "left",
-                      paddingLeft: "10px",
-                      paddingTop: "10px"
-                    }}
-                  >
-                    {/* Course Name */}
+                  
+                  {/* Rating */}
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Rating rating={feesData?.course?.starrating || 0} />
                     <Typography
-                      variant="body1"
+                      variant="body2"
                       sx={{
-                        color: "#000",
                         fontFamily: "Nunito Sans",
-                        fontSize: "14px",
-                        fontStyle: "normal",
+                        fontSize: "12px",
                         fontWeight: 400,
-                        lineHeight: "20px",
-                        textAlign: "left"
+                        ml: 0.5
                       }}
                     >
-                      {feesData?.course?.course_name}
+                      ({feesData?.course?.ratingnumber?.toLocaleString()})
                     </Typography>
-                    
-                    {/* Institute Name */}
+                  </Box>
+                  
+                  {/* Price */}
+                  <Box sx={{ textAlign: "right" }}>
                     <Typography
-                      variant="body1"
-                      sx={{
-                        color: "#000",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "13px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                        lineHeight: "20px",
-                        textAlign: "left"
-                      }}
-                    >
-                      {feesData?.fees?.[0]?.institute_id?.institute_name}
-                    </Typography>
-                    
-                    {/* Duration */}
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        paddingTop: "5px"
-                      }}
-                    >
-                      <img
-                        src={hours}
-                        alt="hours"
-                        style={{
-                          width: "9.841px",
-                          height: "9.841px",
-                          marginRight: "5px"
-                        }}
-                      />
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          color: "#000",
-                          fontFamily: "Nunito Sans",
-                          fontSize: "13px",
-                          fontStyle: "normal",
-                          fontWeight: 400,
-                          lineHeight: "9.841px"
-                        }}
-                      >
-                        {feesData?.course?.duration}hrs
-                      </Typography>
-                    </Box>
-                    
-                    {/* MRP */}
-                    <Typography
-                      variant="body1"
+                      variant="body2"
                       sx={{
                         color: "#474747",
                         fontFamily: "Nunito Sans",
-                        fontSize: "13px",
-                        fontStyle: "normal",
+                        fontSize: "12px",
                         fontWeight: 400,
-                        lineHeight: "9.841px",
                         textDecoration: "line-through",
-                        textAlign: "right",
-                        marginRight: "-16px",
-                        marginLeft: "159px"
+                        mb: 0.5
                       }}
                     >
-                      ₹ {feesData?.course?.mrp?.toLocaleString()}
+                      ₹{feesData?.course?.mrp?.toLocaleString()}
                     </Typography>
-                    
-                    {/* Rating and Price */}
-                    <Box
+                    <Typography
+                      variant="body1"
                       sx={{
-                        display: "flex",
-                        justifyContent: "space-between"
+                        color: "#009919",
+                        fontFamily: "Nunito Sans",
+                        fontSize: "14px",
+                        fontWeight: 700
                       }}
                     >
-                      <Rating rating={feesData?.course?.starrating || 0} />
-                      <span
-                        style={{
-                          fontFamily: "Nunito Sans",
-                          fontSize: "13px",
-                          fontWeight: "350",
-                          fontStyle: "normal",
-                          marginLeft: "-20px"
-                        }}
-                      >
-                        ( {feesData?.course?.ratingnumber?.toLocaleString()} )
-                      </span>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          color: "#009919",
-                          fontFamily: "Nunito Sans",
-                          fontSize: "14px",
-                          fontStyle: "normal",
-                          fontWeight: 800,
-                          lineHeight: "9.841px",
-                          paddingTop: "5px",
-                          marginRight: "-10px"
-                        }}
-                      >
-                        ₹ {feesData?.course?.actual_price.toLocaleString()}
-                      </Typography>
-                    </Box>
+                      ₹{feesData?.course?.actual_price?.toLocaleString()}
+                    </Typography>
                   </Box>
                 </Box>
-              </Grid>
-            </Grid>
-          </Grid>
+              </Box>
+            </Box>
+          </Box>
 
           {/* Fees Details Section */}
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="body1" style={sectionTitleStyle}>
-                Fees Details
-              </Typography>
-            </Grid>
-            
-            <Grid item xs={12}>
-              <hr style={{ borderTop: "1px solid #ccc", width: "auto" }} />
-            </Grid>
-            
-            {/* Student Information Row */}
-            <Grid item xs={12}>
-              <Box
+          <Typography variant="body1" style={sectionTitleStyle}>
+            Fees Details
+          </Typography>
+          
+          <hr style={dividerStyle} />
+          
+          {/* Student Information Row */}
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              px: { xs: 1, sm: 3 },
+              py: 2,
+              gap: 2
+            }}
+          >
+            {/* Student Name */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1
+              }}
+            >
+              <Typography
+                variant="body1"
                 sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  justifyContent: "space-between",
-                  padding: "0 30px"
+                  color: "#495057",
+                  fontFamily: "Nunito Sans",
+                  fontSize: "14px",
+                  fontWeight: 700
                 }}
               >
-                {/* Student Name */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    flexWrap: "wrap"
-                  }}
-                >
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: "#495057",
-                      fontFamily: "Nunito Sans",
-                      fontSize: "14px",
-                      fontStyle: "normal",
-                      fontWeight: 700
-                    }}
-                  >
-                    Student:
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: "#495057",
-                      fontFamily: "Nunito Sans",
-                      fontSize: "14px",
-                      fontStyle: "normal",
-                      fontWeight: 400,
-                      marginLeft: "-2px"
-                    }}
-                  >
-                    {getStudentDetails()?.full_name}
-                  </Typography>
-                </Box>
-                
-                {/* Category */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    flexWrap: "wrap"
-                  }}
-                >
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: "#495057",
-                      fontFamily: "Nunito Sans",
-                      fontSize: "14px",
-                      fontStyle: "normal",
-                      fontWeight: 700
-                    }}
-                  >
-                    Category:
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: "#495057",
-                      fontFamily: "Nunito Sans",
-                      fontSize: "14px",
-                      fontStyle: "normal",
-                      fontWeight: 400,
-                      marginLeft: "-2px"
-                    }}
-                  >
-                    {feesData?.course?.course_name}
-                  </Typography>
-                </Box>
-                
-                {/* Enrolled Date */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    flexWrap: "wrap"
-                  }}
-                >
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: "#495057",
-                      fontFamily: "Nunito Sans",
-                      fontSize: "14px",
-                      fontStyle: "normal",
-                      fontWeight: 700
-                    }}
-                  >
-                    Enrolled date:
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: "#495057",
-                      fontFamily: "Nunito Sans",
-                      fontSize: "14px",
-                      fontStyle: "normal",
-                      fontWeight: 400,
-                      marginLeft: "-2px"
-                    }}
-                  >
-                    {formatDate(feesData?.fees?.[0]?.createdAt)}
-                  </Typography>
-                </Box>
-              </Box>
-            </Grid>
+                Student:
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#495057",
+                  fontFamily: "Nunito Sans",
+                  fontSize: "14px",
+                  fontWeight: 400
+                }}
+              >
+                {getStudentDetails()?.full_name}
+              </Typography>
+            </Box>
+            
+            {/* Category */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1
+              }}
+            >
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#495057",
+                  fontFamily: "Nunito Sans",
+                  fontSize: "14px",
+                  fontWeight: 700
+                }}
+              >
+                Category:
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#495057",
+                  fontFamily: "Nunito Sans",
+                  fontSize: "14px",
+                  fontWeight: 400
+                }}
+              >
+                {feesData?.course?.course_name}
+              </Typography>
+            </Box>
+            
+            {/* Enrolled Date */}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 1
+              }}
+            >
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#495057",
+                  fontFamily: "Nunito Sans",
+                  fontSize: "14px",
+                  fontWeight: 700
+                }}
+              >
+                Enrolled date:
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#495057",
+                  fontFamily: "Nunito Sans",
+                  fontSize: "14px",
+                  fontWeight: 400
+                }}
+              >
+                {formatDate(feesData?.fees?.[0]?.createdAt)}
+              </Typography>
+            </Box>
+          </Box>
 
-            <Grid item xs={12}>
-              <hr style={{ borderTop: "1px solid #ccc", width: "auto" }} />
-            </Grid>
+          <hr style={dividerStyle} />
 
-            {/* Fee Details Table */}
-            <Grid item xs={12}>
-              <Box sx={{ padding: "0 30px" }}>
-                <TableContainer component={Paper} sx={{ margin: "0 30px" }}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell 
-                          sx={{ 
-                            fontWeight: "bold", 
-                            color: "blue", 
-                            fontFamily: "Nunito Sans" 
-                          }}
-                        >
-                          Description
-                        </TableCell>
-                        <TableCell 
-                          sx={{ 
-                            fontWeight: "bold", 
-                            color: "blue", 
-                            fontFamily: "Nunito Sans" 
-                          }} 
-                          align="right"
-                        >
-                          Amount (INR)
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell>Tuition Amount</TableCell>
-                        <TableCell align="right">{feesData?.course_fees} INR</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Software Cost</TableCell>
-                        <TableCell align="right">13,000.00 INR</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>GST Tax</TableCell>
-                        <TableCell align="right">1,800.00 INR</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Paid Amount</TableCell>
-                        <TableCell align="right">{feesData?.totalAmount} INR</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Pending</TableCell>
-                        <TableCell align="right" sx={{ color: "#F00" }}>
-                          ₹{feesData?.pending_payment} INR
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+          {/* Fee Details Table */}
+          <Box sx={{ px: { xs: 1, sm: 3 }, mb: 3 }}>
+            <TableContainer 
+              component={Paper} 
+              sx={{ 
+                boxShadow: '0 2px 10px rgba(0,0,0,0.08)',
+                borderRadius: '8px',
+                overflow: 'hidden'
+              }}
+            >
+              <Table>
+                <TableHead>
+                  <TableRow sx={{ backgroundColor: '#f7f9fc' }}>
+                    <TableCell 
+                      sx={{ 
+                        fontWeight: "700", 
+                        color: "#0051C8", 
+                        fontFamily: "Nunito Sans",
+                        py: 1.5
+                      }}
+                    >
+                      Description
+                    </TableCell>
+                    <TableCell 
+                      sx={{ 
+                        fontWeight: "700", 
+                        color: "#0051C8", 
+                        fontFamily: "Nunito Sans",
+                        py: 1.5
+                      }} 
+                      align="right"
+                    >
+                      Amount (INR)
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell sx={{ py: 1.5 }}>Tuition Amount</TableCell>
+                    <TableCell align="right" sx={{ py: 1.5 }}>{feesData?.course_fees} INR</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{ py: 1.5 }}>Software Cost</TableCell>
+                    <TableCell align="right" sx={{ py: 1.5 }}>13,000.00 INR</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{ py: 1.5 }}>GST Tax</TableCell>
+                    <TableCell align="right" sx={{ py: 1.5 }}>1,800.00 INR</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{ py: 1.5 }}>Paid Amount</TableCell>
+                    <TableCell align="right" sx={{ py: 1.5 }}>{feesData?.totalAmount} INR</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell sx={{ py: 1.5, fontWeight: 600 }}>Pending</TableCell>
+                    <TableCell 
+                      align="right" 
+                      sx={{ 
+                        color: "#F00", 
+                        fontWeight: 600,
+                        py: 1.5
+                      }}
+                    >
+                      ₹{feesData?.pending_payment} INR
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
 
-                {/* Download Receipt Button */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    marginTop: 2
-                  }}
-                >
-                  <Button
-                    variant="body1"
-                    sx={{
-                      color: "#0051C8",
-                      fontFamily: "Nunito Sans",
-                      fontSize: "14px",
-                      fontWeight: 600,
-                      textDecorationLine: "underline"
-                    }}
-                    onClick={handleDownloadPDF1}
-                  >
-                    Download Receipt
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
+            {/* Download Receipt Button */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                mt: 2
+              }}
+            >
+              <Button
+                variant="text"
+                sx={{
+                  color: "#0051C8",
+                  fontFamily: "Nunito Sans",
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  textDecoration: "underline",
+                  '&:hover': {
+                    backgroundColor: 'rgba(0, 81, 200, 0.05)'
+                  }
+                }}
+                onClick={handleDownloadPDF1}
+              >
+                Download Receipt
+              </Button>
+            </Box>
+          </Box>
         </Grid>
 
         {/* Right Column - Payment History */}
-        <Grid item xs={12} sm={12} md={6} lg={5}>
-          <Typography
-            variant="body1"
-            style={{
-              ...subtitleStyle,
-              paddingTop: "10px",
-              marginBottom: '5px'
+        <Grid item xs={12} md={5}>
+          <Box 
+            sx={{ 
+              backgroundColor: '#f9fbff', 
+              borderRadius: '12px',
+              p: 3,
+              boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+              height: '100%'
             }}
           >
-            Payment History
-          </Typography>
-          
-          <Box
-            sx={{
-              maxHeight: "300px",
-              overflowY: "auto",
-              paddingRight: "15px"
-            }}
-          >
-            <Grid container spacing={3}>
+            <Typography
+              variant="h6"
+              sx={{
+                color: "#151010",
+                fontFamily: "Nunito Sans",
+                fontSize: "18px",
+                fontWeight: 700,
+                mb: 3
+              }}
+            >
+              Payment History
+            </Typography>
+            
+            <Box
+              sx={{
+                maxHeight: "400px",
+                overflowY: "auto",
+                pr: 1,
+                scrollbarWidth: 'thin',
+                '&::-webkit-scrollbar': {
+                  width: '6px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  backgroundColor: '#c1c1c1',
+                  borderRadius: '6px',
+                }
+              }}
+            >
               {/* Section for Viewing PDFs */}
-              <Grid item xs={12}>
-                <Typography variant="h6" sx={{ marginBottom: 2 }}>
-                  View PDF
-                </Typography>
-                
-                {feesData?.payment_history?.map((item) => (
+              <Typography 
+                variant="h6" 
+                sx={{ 
+                  mb: 2, 
+                  fontSize: '16px',
+                  fontWeight: 600,
+                  color: '#333' 
+                }}
+              >
+                View PDF
+              </Typography>
+              
+              {feesData?.payment_history?.some(item => item.paid_amount > 0) ? (
+                feesData?.payment_history?.map((item) => (
                   item.paid_amount > 0 && (
                     <Box
                       key={item.id}
                       sx={{
                         display: "flex",
-                        flexDirection: "row",
-                        padding: "10px",
-                        borderBottom: "1px solid #ccc",
-                        borderRadius: "9px",
+                        padding: "12px 16px",
+                        borderRadius: "12px",
                         background: "linear-gradient(90deg, #6380E6 0%, #00C9C0 100%)",
-                        marginBottom: 2
+                        boxShadow: "0 2px 8px rgba(99, 128, 230, 0.2)",
+                        mb: 2
                       }}
                     >
                       <Box sx={{ 
                         display: "flex", 
                         alignItems: "center", 
-                        marginBottom: "10px", 
                         width: "100%",
+                        justifyContent: "space-between"
                       }}>
-                        <img
-                          src={pdfgroup}
-                          alt="Logo"
-                          style={{
-                            width: '15px',
-                            height: '19px',
-                            marginRight: '10px'
-                          }}
-                        />
-                        <Typography
-                          variant="body1"
-                          style={{
-                            flex: 1,
-                            color: "#495057",
-                            fontFamily: "Poppins",
-                            fontSize: "16px",
-                            fontStyle: "normal",
-                            fontWeight: 400,
-                            lineHeight: "40px"
-                          }}
-                        >
-                          {formatDate(item.payment_date)}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          component="a"
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <img
+                            src={pdfgroup}
+                            alt="Logo"
+                            style={{
+                              width: '18px',
+                              height: '22px',
+                              marginRight: '12px'
+                            }}
+                          />
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              color: "#FFF",
+                              fontFamily: "Poppins",
+                              fontSize: "14px",
+                              fontWeight: 500
+                            }}
+                          >
+                            {formatDate(item.payment_date)}
+                          </Typography>
+                        </Box>
+                        <Button
                           onClick={() => handleClickOpen(item)}
                           sx={{
-                            display: "inline-flex",
-                            padding: "9px 24px",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            gap: "8px",
-                            borderRadius: "54px",
-                            border: "1px solid var(--Gray-300, #DEE2E6)",
-                            background: "#CFE3FF",
+                            padding: "6px 16px",
+                            borderRadius: "20px",
+                            background: "rgba(255, 255, 255, 0.9)",
                             color: "#0D6EFD",
                             fontFamily: "Poppins",
-                            fontSize: "14px",
+                            fontSize: "13px",
                             fontWeight: 500,
-                            lineHeight: "22px",
-                            textDecoration: "none",
-                            cursor: "pointer",
-                            marginLeft: "10px"
+                            '&:hover': {
+                              background: "rgba(255, 255, 255, 1)",
+                            }
                           }}
                         >
                           View PDF
-                        </Typography>
+                        </Button>
                       </Box>
                     </Box>
                   )
-                ))}
-              </Grid>
+                ))
+              ) : (
+                <Typography sx={{ mb: 3, color: '#666', fontStyle: 'italic' }}>
+                  No payment records available
+                </Typography>
+              )}
 
               {/* Section for Paying Dues */}
-              <Grid item xs={12}>
-                <Typography variant="h6" sx={{ marginBottom: 2 }}>
-                  Pay Due
-                </Typography>
-                
-                {feesData?.payment_history?.map((item) => (
+              <Typography 
+                variant="h6" 
+                sx={{ 
+                  mb: 2, 
+                  mt: 4,
+                  fontSize: '16px',
+                  fontWeight: 600,
+                  color: '#333' 
+                }}
+              >
+                Pay Due
+              </Typography>
+              
+              {feesData?.payment_history?.some(item => item.balance > 0) ? (
+                feesData?.payment_history?.map((item) => (
                   item.balance > 0 && (
                     <Box
                       key={item.id}
                       sx={{
                         display: "flex",
-                        flexDirection: "row",
-                        padding: "10px",
-                        borderBottom: "1px solid #ccc",
-                        borderRadius: "9px",
-                        background: "linear-gradient(90deg, #FFD1D1 0%,#FF4D4D 100%)",
-                        marginBottom: 2
+                        padding: "12px 16px",
+                        borderRadius: "12px",
+                        background: "linear-gradient(90deg, #FFD1D1 0%, #FF4D4D 100%)",
+                        boxShadow: "0 2px 8px rgba(255, 77, 77, 0.2)",
+                        mb: 2
                       }}
                     >
                       <Box sx={{ 
                         display: "flex", 
                         alignItems: "center", 
-                        marginBottom: "10px",
-                        width: "100%" 
+                        width: "100%",
+                        justifyContent: "space-between"
                       }}>
                         <Typography
                           variant="body1"
-                          style={{
-                            flex: 1,
-                            color: "#495057",
-                            fontFamily: "Poppins",
-                            fontSize: "16px",
-                            fontStyle: "normal",
-                            fontWeight: 400,
-                            lineHeight: "40px"
-                          }}
-                        >
-                          {formatDate(item.duepaymentdate)}
-                        </Typography>
-                        <Typography
-                          variant="body1"
-                          component="a"
-                          onClick={() => navigateToPaymentPage(item.id)}
                           sx={{
-                            display: "inline-flex",
-                            padding: "9px 24px",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            gap: "8px",
-                            borderRadius: "54px",
-                            border: "1px solid var(--Gray-300, #DEE2E6)",
-                            background: "#FFD1D1",
-                            color: "#FF4D4D",
+                            color: "#FFF",
                             fontFamily: "Poppins",
                             fontSize: "14px",
+                            fontWeight: 500
+                          }}
+                        >
+                          Due: {formatDate(item.duepaymentdate)}
+                        </Typography>
+                        <Button
+                          onClick={() => navigateToPaymentPage(item.id)}
+                          sx={{
+                            padding: "6px 16px",
+                            borderRadius: "20px",
+                            background: "rgba(255, 255, 255, 0.9)",
+                            color: "#FF4D4D",
+                            fontFamily: "Poppins",
+                            fontSize: "13px",
                             fontWeight: 500,
-                            lineHeight: "22px",
-                            textDecoration: "none",
-                            cursor: "pointer",
-                            marginLeft: "10px"
+                            '&:hover': {
+                              background: "rgba(255, 255, 255, 1)",
+                            }
                           }}
                         >
                           Pay Due
-                        </Typography>
+                        </Button>
                       </Box>
                     </Box>
                   )
-                ))}
-              </Grid>
-            </Grid>
+                ))
+              ) : (
+                <Typography sx={{ color: '#666', fontStyle: 'italic' }}>
+                  No pending payments
+                </Typography>
+              )}
+            </Box>
           </Box>
         </Grid>
       </Grid>
