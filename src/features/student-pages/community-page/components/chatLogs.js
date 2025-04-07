@@ -13,6 +13,7 @@ const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, Fe
   const [messages, setMessages] = useState(Messages);
   const messagesEndRef = useRef(null);
   const messageRefs = useRef(new Map());
+  const messageContainerRef = useRef(null);
   const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
   const [readMessages, setReadMessages] = useState(new Set());
   const [isFetching, setIsFetching] = useState(false);
