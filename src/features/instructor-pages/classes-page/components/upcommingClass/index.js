@@ -76,12 +76,13 @@ const UpcomingClassList = ({ data, classType, group, image }) => {
       /> */}
       <Box id="upcoming-class-list" sx={{ mt: 3, px: "40px" }}>
         {data && data.length > 0 ? (
-          data.map((cls) => (
+          <>
+          <ClassCardHeader />
+          {data.map((cls) => (
             <Box key={cls.id} id="upcoming-class-card">
-              <ClassCardHeader />
               <ClassCard cls={cls} style={defaultStyles} type={classType} group={group} img={image} />
             </Box>
-          ))
+          ))} </>
         ) : (
           <Box sx={{ py: 5,textAlign:"center"  }}>
                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/employee-is-unable-to-find-sensitive-data-illustration-download-in-svg-png-gif-file-formats--no-found-misplaced-files-business-pack-illustrations-8062128.png" alt="No data available" style={{ maxWidth: '100%', height: '270px' }} />

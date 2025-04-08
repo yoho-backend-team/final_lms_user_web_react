@@ -79,7 +79,7 @@ class Client {
           params,
           "student"
         ),
-    },
+    },      
     // attendance : (params) => httpClient.get(HTTP_END_POINTS.Student.attendance,params,"student"),
     attendance: {
     get: (params) => httpClient.get(`${HTTP_END_POINTS.Student.attendance.get}`,params,"student"),
@@ -259,7 +259,7 @@ class Client {
     },
     notification : {
       get : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.get,params,"instructor"),
-      put : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.put,params,"instructor")
+      put : (params) => httpClient.get(HTTP_END_POINTS.Instructor.notification.put + params?.uuid,params,"instructor")
     },
     payment: {
       get: (params) => httpClient.get( HTTP_END_POINTS.Instructor.payments.getSalaries,  params, "instructor"),
@@ -302,7 +302,7 @@ class Client {
           HTTP_END_POINTS.Instructor.index.get,
           data,
           "instructor"
-        ),
+        ), 
     },
   };
 }

@@ -380,7 +380,7 @@ export const useResendOtp = (isInstructor = false) => {
       return { success: true, message: response?.message };
     } catch (error) {
       console.error("Error resending OTP:", error);
-      throw new Error(getErrorMessage(error));
+      throw new Error(getErrorMessage(error)); 
     }
   };
 

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Box, Grid, Typography, IconButton } from "@mui/material";
-import { getInstructorDetails } from "store/atoms/authorized-atom";
+import {  getStudentDetails} from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
 import DoneIcon from "@mui/icons-material/Done";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
@@ -8,9 +8,79 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const ChatLog = ({ socket, Messages }) => {
-  const instructor = getInstructorDetails();
+  const student = getStudentDetails();
   const chatEndRef = useRef(null);
   const [messages, setMessages] = useState(Messages);
+  const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
+  const [readMessages, setReadMessages] = useState(new Set());
+
+  useEffect(() => {
+    const handleFocus = () => setIsWindowFocused(true);
+    const handleBlur = () => setIsWindowFocused(false);
+
+    window.addEventListener("focus", handleFocus);
+    window.addEventListener("blur", handleBlur);
+
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("blur", handleBlur);
+    };
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && isWindowFocused) {
+            const messageId = entry.target.getAttribute("data-id");
+
+            if (!readMessages.has(messageId)) {
+              setTimeout(() => {
+                if (entry.isIntersecting && isWindowFocused) {
+                  triggerMessageRead(messageId);
+                }
+              }, 1500); // Optional delay for confirmation
+            }
+          }
+        });
+      },
+      { threshold: 0.8 } // 80% of message must be visible
+    );
+     messageRefs.current.forEach((ref) => {
+    if (ref instanceof Element) {
+      observer.observe(ref);
+    }
+
+  });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [Messages, isWindowFocused, readMessages]);
+
+  const triggerMessageRead = (messageId) => {
+    const msg = Messages.find((m) => m._id === messageId);
+
+    if (msg && !readMessages.has(messageId)) {
+      const now = new Date();
+      const formattedTime = now.toLocaleTimeString("en-US", { hour12: false });
+
+      console.log(`Message ${messageId} read at ${formattedTime}`);
+      socket.emit("messageRead", { messageId, userId: student?._id });
+      setReadMessages((prev) => new Set([...prev, messageId]));
+    }
+  };
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {  
+    scrollToBottom();
+  }, [Messages]);
+
 
   useEffect(() => {
     setMessages(Messages);
@@ -28,20 +98,12 @@ const ChatLog = ({ socket, Messages }) => {
   }, [socket]);
 
   const handleDeleteMessage = (messageId) => {
-    socket.emit("deleteMessage", { messageId, userId: instructor?._id });
+    socket.emit("deleteMessage", { messageId, userId: student?._id });
 
     setMessages((prevMessages) =>
       prevMessages.filter((message) => message._id !== messageId)
     );
   };
-
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
 
   return (
     <Box
@@ -89,7 +151,7 @@ const ChatLog = ({ socket, Messages }) => {
           container
           key={msg._id}
           justifyContent={
-            msg.sender === instructor?._id ? "flex-end" : "flex-start"
+            msg.sender === student?._id ? "flex-end" : "flex-start"
           }
           sx={{ marginBottom: "8px" }}
         >
@@ -98,12 +160,12 @@ const ChatLog = ({ socket, Messages }) => {
               sx={{
                 display: "flex",
                 flexDirection: "column",
-                alignItems: msg.sender === instructor?._id ? "flex-end" : "flex-start",
+                alignItems: msg.sender === student?._id ? "flex-end" : "flex-start",
               }}
             >
               <Box
                 sx={{
-                  backgroundColor: msg.sender === instructor?._id ? "#61C554" : "#E8ECEF",
+                  backgroundColor: msg.sender === student?._id ? "#61C554" : "#E8ECEF",
                   borderRadius: "10px",
                   padding: "8px 12px",
                   minWidth: "180px",
@@ -111,7 +173,7 @@ const ChatLog = ({ socket, Messages }) => {
                   wordWrap: "break-word",
                 }}
               >
-                {msg.sender !== instructor?._id && (
+                {msg.sender !== student?._id && (
                   <Typography sx={{ fontSize: "10px", fontWeight: 600 }}>
                     {msg.sender_name}
                   </Typography>
@@ -119,7 +181,7 @@ const ChatLog = ({ socket, Messages }) => {
                 <Typography
                   variant="body1"
                   sx={{
-                    color: msg.sender === instructor?._id ? "white" : "#000",
+                    color: msg.sender === student?._id ? "white" : "#000",
                     fontSize: "14px",
                     fontWeight: 400,
                     textAlign: "left",
@@ -140,7 +202,7 @@ const ChatLog = ({ socket, Messages }) => {
                   </Typography>
 
                   {/* Read/Delivered Status */}
-                  {msg.sender === instructor?._id &&
+                  {msg.sender === student?._id &&
                     (msg.status?.some((s) => s.delivered) ? (
                       msg.status?.every((s) => s.read) ? (
                         <DoneAllIcon sx={{ color: "#0D6EFD", width: "16px" }} />
@@ -152,7 +214,7 @@ const ChatLog = ({ socket, Messages }) => {
                     ))}
 
                   {/* Delete Button for Instructor */}
-                  {msg.sender === instructor?._id && (
+                  {msg.sender === student?._id && (
                     <IconButton
                       onClick={() => handleDeleteMessage(msg._id)}
                       sx={{ color: "white", padding: "2px" }}

@@ -186,7 +186,7 @@ export default function ForgetPasswordOTPInput() {
             }}
           >
             Resend OTP
-          </Button>
+          </Button>                                    
         )}
 
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}>
