@@ -591,7 +591,7 @@ const ClassCard = ({ type, classDetails, getClass, group }) => {
                       lineHeight: "32px",
                       fontFamily:"Nunito Sans",
                       ml:9,
-                      mb:1,
+                      mb:9,
                     }}
                     
                   >

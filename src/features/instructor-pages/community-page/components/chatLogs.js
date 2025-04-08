@@ -9,8 +9,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 const ChatLog = ({ socket, Messages }) => {
   const instructor = getInstructorDetails();
   const chatRef = useRef(null);
-  const messagesEndRef = useRef(null);
-  const messageRefs = useRef(new Map());
+  const messagesEndRef = useRef(null); // Ensure this is declared
+  const messageRefs = useRef(new Map()); // Ensure this is declared
   const [messages, setMessages] = useState(Messages);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedMessage, setSelectedMessage] = useState(null);
@@ -49,12 +49,12 @@ const ChatLog = ({ socket, Messages }) => {
       },
       { threshold: 0.8 } // 80% of message must be visible
     );
-     messageRefs.current.forEach((ref) => {
-    if (ref instanceof Element) {
-      observer.observe(ref);
-    }
 
-  });
+    messageRefs.current.forEach((ref) => {
+      if (ref instanceof Element) {
+        observer.observe(ref);
+      }
+    });
 
     return () => {
       observer.disconnect();
@@ -69,7 +69,7 @@ const ChatLog = ({ socket, Messages }) => {
       const formattedTime = now.toLocaleTimeString("en-US", { hour12: false });
 
       console.log(`Message ${messageId} read at ${formattedTime}`);
-      socket.emit("messageRead", { messageId, userId: student?._id });
+      socket.emit("messageRead", { messageId, userId: instructor?._id });
       setReadMessages((prev) => new Set([...prev, messageId]));
     }
   };
@@ -80,13 +80,13 @@ const ChatLog = ({ socket, Messages }) => {
     }
   };
 
-  useEffect(() => {  
+  useEffect(() => {
     scrollToBottom();
-  }, [Messages]);
-
+  }, [messages]);
 
   useEffect(() => {
     setMessages(Messages);
+    scrollToBottom();
   }, [Messages]);
 
   useEffect(() => {
@@ -99,7 +99,6 @@ const ChatLog = ({ socket, Messages }) => {
   }, [socket]);
 
   const handleOpenMenu = (event, messageId, senderId) => {
-    // Only show delete option for messages sent by the instructor
     if (senderId !== instructor?._id) {
       return;
     }
@@ -207,6 +206,18 @@ const ChatLog = ({ socket, Messages }) => {
                 <Typography sx={{ textAlign: "end", fontSize: "11px", marginTop: "3px" }}>
                   {formatTime(msg?.createdAt)}
                 </Typography>
+
+                {msg.sender === instructor?._id &&
+                  (msg.status?.some((s) => s.delivered) ? (
+                    msg.status?.every((s) => s.read) ? (
+                      <DoneAllIcon sx={{ color: "#0D6EFD", width: "16px" }} />
+                    ) : (
+                      <DoneAllIcon sx={{ color: "white", width: "16px" }} />
+                    )
+                  ) : (
+                    <DoneIcon sx={{ color: "white", width: "16px" }} />
+                  ))}
+
               </Box>
             </Box>
           </Grid>
@@ -221,4 +232,3 @@ const ChatLog = ({ socket, Messages }) => {
 };
 
 export default ChatLog;
-
