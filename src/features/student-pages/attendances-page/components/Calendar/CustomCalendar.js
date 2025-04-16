@@ -17,6 +17,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 function CustomCalendar({ 
   attendanceData, 
+  attendance_data,
   getAttendanceDetails = () => {
     console.warn('getAttendanceDetails not provided');
   },
@@ -24,18 +25,11 @@ function CustomCalendar({
   setSelectedMonth 
 }) {
   const theme = useTheme();
-  // const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
 
   const months = [
     "January", "February", "March", "April", "May", "June", 
     "July", "August", "September", "October", "November", "December"
   ];
-
-  const handleMonthChange = (event) => {
-    const newMonth = event.target.value;
-    setSelectedMonth(newMonth);
-    getAttendanceDetails(newMonth);
-  };
 
   const generateCalendar = () => {
     const year = new Date().getFullYear();
@@ -53,7 +47,7 @@ function CustomCalendar({
     for (let day = 1; day <= daysInMonth; day++) {
       const weekday = (firstDay + day - 1) % 7;
       
-      const attendanceForDate = attendanceData?.find(
+      const attendanceForDate = attendance_data?.formattedAttendance?.attendance?.find(
         (item) => {
           const itemDate = new Date(item?.date);
           return itemDate.getMonth() === month && 
@@ -151,7 +145,7 @@ function CustomCalendar({
     <Box sx={{ height: '67vh', display: 'flex', flexDirection: 'column', p: 2 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <FormControl sx={{ minWidth: 120 }}>
-          {/*<Select
+          {/* <Select
             value={selectedMonth}
             onChange={handleMonthChange}
             IconComponent={ExpandMoreIcon}
@@ -161,7 +155,7 @@ function CustomCalendar({
                 {month}
               </MenuItem>
             ))}
-          </Select>*/}
+          </Select> */}
         </FormControl>
       </Box>
 

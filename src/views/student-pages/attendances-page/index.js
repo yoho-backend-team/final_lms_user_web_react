@@ -31,6 +31,9 @@ import CustomCalendar from "features/student-pages/attendances-page/components/C
 import { getStudentDetails } from "store/atoms/authorized-atom";
 import { useNavigate } from "react-router-dom";
 import Joyride from "react-joyride";
+import { getAllAttendances } from "features/student-pages/attendances-page/redux/thunks";
+import { useDispatch, useSelector } from "react-redux";
+import { selectStudentAttendance } from "features/student-pages/attendances-page/redux/selectors";
 
 const months = [
   "January", "February", "March", "April", "May", "June", 
@@ -99,9 +102,11 @@ const Attendance = () => {
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [attendance, setAttendance] = useState([]);
   const [attendance_data, setAttendanceData] = useState([]);
+  const attendanceData1 = useSelector( selectStudentAttendance)
   const [loading, setLoading] = useState(false);
   const { tabView } = useTabResponsive();
   const { showSpinner, hideSpinner } = useSpinner();
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const date = new Date();
   const [runTour, setRunTour] = useState(true);
@@ -110,15 +115,14 @@ const Attendance = () => {
   const getAttedenceDetails = async (month, year) => {
     try {
       showSpinner();
-      const user = getStudentDetails();
-      const response = await Client.Student.attendance.get({
-        userId: user.uuid, 
+      const user = await getStudentDetails();
+      const params_data = {
+        userId: user?.uuid, 
         month: month, 
         year: year,
-        instituteId: user.institute_id?.uuid
-      });
-      setAttendanceData(response?.data);
-      setAttendance(response?.data?.attendanceDetails || []);
+        instituteId: user?.institute_id?.uuid
+      }
+      dispatch(getAllAttendances(params_data))
     } catch (error) {
       toast.error(error?.message);
     } finally {
@@ -159,6 +163,7 @@ const Attendance = () => {
     return () => clearInterval(checkElements);
   }, []);
 
+
   const steps = [
     {
       target: "body",
@@ -187,7 +192,7 @@ const Attendance = () => {
     return <CircularProgress />;
   }
 
-  const totalClasses = (attendance_data?.onlineClassCount ?? 0) + (attendance_data?.offlineClassCount ?? 0);
+  const totalClasses = (attendanceData1?.onlineClassCount ?? 0) + (attendanceData1?.offlineClassCount ?? 0);
 
   return (
     <Box
@@ -332,21 +337,21 @@ const Attendance = () => {
                     {
                       title: "Classes Atten",
                       color: "#FFE896",
-                      value: `${attendance_data?.attendedClassCount ?? 0}/${totalClasses}`,
+                      value: `${attendanceData1?.attendedClassCount ?? 0}/${totalClasses}`,
                       textColor: "#9F8015",
                       hoverColor: "#FFD700",
                     },
                     {
                       title: "Present Days",
                       color: "#B8FEBF",
-                      value: `${attendance_data?.totalPresentDays ?? 0}/${attendance_data?.totalWorkingDays ?? 0}`,
+                      value: `${attendanceData1?.totalPresentDays ?? 0}/${attendanceData1?.totalWorkingDays ?? 0}`,
                       textColor: "#2C9939",
                       hoverColor: "#90EE90",
                     },
                     {
                       title: "Absent Days",
                       color: "#EBACAC",
-                      value: attendance_data?.totalAbsentDays ?? 0,
+                      value: attendanceData1?.totalAbsentDays ?? 0,
                       textColor: "#A04A4A",
                       hoverColor: "#FF6B6B",
                     },
@@ -409,7 +414,7 @@ const Attendance = () => {
               <CustomCalendar 
                 attendanceData={attendance} 
                 getAttedenceDetails={getAttedenceDetails} 
-                attendance_data={attendance_data}
+                attendance_data={attendanceData1}
                 setSelectedMonth={setSelectedMonth}
                 selectedMonth={selectedMonth}
                 selectedYear={selectedYear}

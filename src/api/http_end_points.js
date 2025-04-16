@@ -42,7 +42,6 @@ const courseId = () => {
 
 const getStudentDetails = () => {
   const user = getAndDecompress(Student_Details)
-  console.log(user,'user')
   const userDetail = user
   return userDetail;
 };
@@ -59,7 +58,6 @@ const branchStudentId = () => {
 
 const courseStudentId = () => {
   const userDetails = getStudentDetails();
-  console.log(userDetails,"userDetails")
   return userDetails?.userDetail?.course;
 };
 const studentCourseId = () => {
