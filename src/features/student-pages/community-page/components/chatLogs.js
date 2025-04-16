@@ -1,11 +1,11 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Box, Grid, Typography, IconButton, Button } from "@mui/material";
+import React, { useRef, useEffect, useState, useCallback } from "react";
+import { Box, Grid, Typography, IconButton, Button, Menu, MenuItem, Popover } from "@mui/material";
 import { getStudentDetails } from "store/atoms/authorized-atom";
 import { formatTime } from "utils/formatDate";
 import DoneIcon from "@mui/icons-material/Done";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
+// Removed unused LockOutlinedIcon import
 
 const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, FetchMessages }) => {
   const student = getStudentDetails();
@@ -18,6 +18,27 @@ const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, Fe
   const [readMessages, setReadMessages] = useState(new Set());
   const [isFetching, setIsFetching] = useState(false);
   const [isUserAtBottom, setIsUserAtBottom] = useState(true);
+  
+  // Emoji reaction states
+  const [emojiMenuAnchorEl, setEmojiMenuAnchorEl] = useState(null);
+  const [selectedMessageId, setSelectedMessageId] = useState(null);
+  const [messageReactions, setMessageReactions] = useState({});
+  
+  // Reaction details popover
+  const [reactionDetailsAnchorEl, setReactionDetailsAnchorEl] = useState(null);
+  const [selectedReactionEmoji, setSelectedReactionEmoji] = useState(null);
+  const [selectedReactionMessage, setSelectedReactionMessage] = useState(null);
+  
+  // Enhanced emoji options with categories
+  const emojiCategories = {
+    popular: ["👍", "❤️", "😂", "😮", "😢", "🙏"],
+    faces: ["😀", "😊", "🤔", "😎", "🥳", "😴"],
+    gestures: ["👋", "✌️", "👏", "🤝", "🙌", "🫂"],
+    symbols: ["⭐", "🔥", "💯", "✅", "⚡", "💪"]
+  };
+  
+  // Track current emoji category
+  const [currentEmojiCategory, setCurrentEmojiCategory] = useState("popular");
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
@@ -36,7 +57,15 @@ const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, Fe
     if (isUserAtBottom) {
       scrollToBottom();
     }
-  }, [Messages]);
+  }, [Messages, isUserAtBottom]);
+
+  // Using useCallback to memoize triggerMessageRead function
+  const triggerMessageRead = useCallback((messageId) => {
+    if (!readMessages.has(messageId)) {
+      socket.emit("messageRead", { messageId, userId: student?._id });
+      setReadMessages((prev) => new Set([...prev, messageId]));
+    }
+  }, [readMessages, socket, student?._id]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -62,14 +91,7 @@ const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, Fe
     return () => {
       observer.disconnect();
     };
-  }, [Messages, readMessages]);
-
-  const triggerMessageRead = (messageId) => {
-    if (!readMessages.has(messageId)) {
-      socket.emit("messageRead", { messageId, userId: student?._id });
-      setReadMessages((prev) => new Set([...prev, messageId]));
-    }
-  };
+  }, [Messages, readMessages, triggerMessageRead]);
 
   const handleDeleteMessage = (messageId) => {
     socket.emit("deleteMessage", { messageId, userId: student?._id });
@@ -88,6 +110,128 @@ const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, Fe
       setTimeout(() => {
         chatContainer.scrollTop = chatContainer.scrollHeight - scrollOffset;
       }, 0);
+    }
+  };
+
+  // Handle right click or long press to open emoji menu
+  const handleRightClick = (event, messageId) => {
+    event.preventDefault();
+    setEmojiMenuAnchorEl(event.currentTarget);
+    setSelectedMessageId(messageId);
+    setCurrentEmojiCategory("popular"); // Reset to popular category when opening menu
+  };
+
+  // Close emoji menu
+  const handleCloseEmojiMenu = () => {
+    setEmojiMenuAnchorEl(null);
+    setSelectedMessageId(null);
+  };
+
+  // Change emoji category
+  const handleChangeEmojiCategory = (category) => {
+    setCurrentEmojiCategory(category);
+  };
+
+  // Show reaction details (who reacted) when clicking on an emoji
+  const handleShowReactionDetails = (event, messageId, emoji) => {
+    event.stopPropagation();
+    setReactionDetailsAnchorEl(event.currentTarget);
+    setSelectedReactionEmoji(emoji);
+    setSelectedReactionMessage(messageId);
+  };
+
+  // Close reaction details popover
+  const handleCloseReactionDetails = () => {
+    setReactionDetailsAnchorEl(null);
+    setSelectedReactionEmoji(null);
+    setSelectedReactionMessage(null);
+  };
+
+  // Add an emoji reaction to a message with optimistic update and proper backend syncing
+  const handleAddReaction = (emoji) => {
+    if (selectedMessageId) {
+      // Prepare reaction data
+      const reactionData = {
+        messageId: selectedMessageId,
+        userId: student?._id,
+        username: student?.name,
+        emoji: emoji,
+        timestamp: new Date().toISOString() // Add timestamp for sorting/tracking
+      };
+      
+      // Optimistic update for UI responsiveness
+      setMessageReactions(prev => {
+        const updatedReactions = { ...prev };
+        if (!updatedReactions[selectedMessageId]) {
+          updatedReactions[selectedMessageId] = [];
+        }
+        
+        // Check if user already reacted with this emoji
+        const existingReactionIndex = updatedReactions[selectedMessageId].findIndex(
+          r => r.emoji === emoji && r.userId === student?._id
+        );
+        
+        if (existingReactionIndex >= 0) {
+          // Remove reaction if it already exists (toggle behavior)
+          updatedReactions[selectedMessageId].splice(existingReactionIndex, 1);
+        } else {
+          // Add new reaction
+          updatedReactions[selectedMessageId].push({
+            emoji,
+            userId: student?._id,
+            username: student?.name,
+            timestamp: reactionData.timestamp
+          });
+        }
+        
+        return updatedReactions;
+      });
+      
+      // Emit socket event for reaction with proper error handling
+      socket.emit("messageReaction", reactionData, (acknowledgement) => {
+        if (acknowledgement && acknowledgement.error) {
+          console.error("Error saving reaction:", acknowledgement.error);
+          // Revert optimistic update if there was an error
+          socket.emit("getMessageReactions", { messageId: selectedMessageId }, (response) => {
+            if (response && response.reactions) {
+              setMessageReactions(prev => ({
+                ...prev,
+                [selectedMessageId]: response.reactions
+              }));
+            }
+          });
+        }
+      });
+      
+      handleCloseEmojiMenu();
+    }
+  };
+  
+  // Remove a specific reaction (when clicking on an existing reaction)
+  const handleRemoveReaction = (messageId, emoji) => {
+    // Check if the reaction belongs to current user before allowing removal
+    const userHasThisReaction = messageReactions[messageId]?.some(
+      r => r.emoji === emoji && r.userId === student?._id
+    );
+    
+    if (userHasThisReaction) {
+      // Optimistic update
+      setMessageReactions(prev => {
+        const updatedReactions = { ...prev };
+        if (updatedReactions[messageId]) {
+          updatedReactions[messageId] = updatedReactions[messageId].filter(
+            r => !(r.emoji === emoji && r.userId === student?._id)
+          );
+        }
+        return updatedReactions;
+      });
+      
+      // Send to backend
+      socket.emit("removeMessageReaction", {
+        messageId,
+        userId: student?._id,
+        emoji
+      });
     }
   };
 
@@ -155,6 +299,51 @@ const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, Fe
     
     return groups;
   };
+
+  // Listen for reaction updates from socket
+  useEffect(() => {
+    if (socket) {
+      // Handle reaction updates
+      socket.on("messageReactionUpdate", (data) => {
+        if (data && data.messageId) {
+          setMessageReactions(prev => ({
+            ...prev,
+            [data.messageId]: data.reactions
+          }));
+        }
+      });
+      
+      // Handle reaction removals
+      socket.on("messageReactionRemoved", (data) => {
+        if (data && data.messageId) {
+          setMessageReactions(prev => {
+            const updatedReactions = { ...prev };
+            if (updatedReactions[data.messageId]) {
+              // Remove the specific reaction
+              updatedReactions[data.messageId] = updatedReactions[data.messageId].filter(
+                r => !(r.userId === data.userId && r.emoji === data.emoji)
+              );
+            }
+            return updatedReactions;
+          });
+        }
+      });
+      
+      // Initialize reactions from existing messages if they have them
+      const initialReactions = {};
+      Messages?.forEach(msg => {
+        if (msg.reactions && msg.reactions.length > 0) {
+          initialReactions[msg._id] = msg.reactions;
+        }
+      });
+      setMessageReactions(initialReactions);
+      
+      return () => {
+        socket.off("messageReactionUpdate");
+        socket.off("messageReactionRemoved");
+      };
+    }
+  }, [socket, Messages]);
 
   const groupedMessages = groupMessagesByDate();
 
@@ -246,6 +435,18 @@ const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, Fe
                 }}
               >
                 <Box
+                  onContextMenu={(e) => handleRightClick(e, item.message._id)}
+                  // Add long-press support for mobile
+                  onTouchStart={(e) => {
+                    const longPressTimer = setTimeout(() => {
+                      handleRightClick(e, item.message._id);
+                    }, 500);
+                    
+                    // Clear timeout if touch ends before long press triggers
+                    e.currentTarget.addEventListener('touchend', () => {
+                      clearTimeout(longPressTimer);
+                    }, { once: true });
+                  }}
                   sx={{
                     backgroundColor: item.message.sender === student?._id ? "#61C554" : "#E8ECEF",
                     borderRadius: "10px",
@@ -253,6 +454,8 @@ const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, Fe
                     minWidth: "180px",
                     maxWidth: "100%",
                     wordWrap: "break-word",
+                    position: "relative",
+                    cursor: "default"
                   }}
                 >
                   {item.message.sender !== student?._id && (
@@ -302,12 +505,170 @@ const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, Fe
                       </IconButton>
                     )}
                   </Box>
+                  
+                  {/* WhatsApp-style reactions display without background color */}
+                  {messageReactions[item.message._id] && messageReactions[item.message._id].length > 0 && (
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        bottom: -10,
+                        [item.message.sender === student?._id ? "left" : "right"]: "10px",
+                        backgroundColor: "white",
+                        borderRadius: "10px",
+                        padding: "2px 4px",
+                        boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                        display: "flex",
+                        gap: "2px",
+                        zIndex: 1
+                      }}
+                    >
+                      {/* Group same emoji reactions and count them */}
+                      {Object.entries(
+                        messageReactions[item.message._id].reduce((acc, reaction) => {
+                          acc[reaction.emoji] = (acc[reaction.emoji] || 0) + 1;
+                          return acc;
+                        }, {})
+                      ).map(([emoji, count], i) => (
+                        <Box
+                          key={i}
+                          onClick={(e) => handleShowReactionDetails(e, item.message._id, emoji)}
+                          sx={{
+                            fontSize: "12px",
+                            padding: "1px 3px",
+                            cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "2px"
+                          }}
+                        >
+                          <span>{emoji}</span>
+                          {count > 1 && <span>{count}</span>}
+                        </Box>
+                      ))}
+                    </Box>
+                  )}
                 </Box>
               </Box>
             </Grid>
           </Grid>
         )
       ))}
+
+      {/* Enhanced emoji reaction menu with categories */}
+      <Menu
+        anchorEl={emojiMenuAnchorEl}
+        open={Boolean(emojiMenuAnchorEl)}
+        onClose={handleCloseEmojiMenu}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+      >
+        {/* Category selector */}
+        <MenuItem sx={{ display: "flex", justifyContent: "space-between", padding: "4px" }}>
+          {Object.keys(emojiCategories).map((category) => (
+            <Button
+              key={category}
+              onClick={() => handleChangeEmojiCategory(category)}
+              variant={currentEmojiCategory === category ? "contained" : "text"}
+              size="small"
+              sx={{
+                minWidth: "unset",
+                padding: "2px 6px",
+                fontSize: "11px",
+                textTransform: "capitalize"
+              }}
+            >
+              {category}
+            </Button>
+          ))}
+        </MenuItem>
+        
+        {/* Emoji grid */}
+        <MenuItem sx={{ display: "flex", flexWrap: "wrap", gap: 1, maxWidth: "280px" }}>
+          {emojiCategories[currentEmojiCategory].map((emoji, index) => (
+            <Box
+              key={index}
+              onClick={() => handleAddReaction(emoji)}
+              sx={{
+                cursor: "pointer",
+                fontSize: "20px",
+                padding: "2px 4px",
+                "&:hover": {
+                  backgroundColor: "rgba(0,0,0,0.04)",
+                  borderRadius: "4px",
+                },
+              }}
+            >
+              {emoji}
+            </Box>
+          ))}
+        </MenuItem>
+      </Menu>
+
+      {/* WhatsApp-style reactions details popover - shows who reacted with a specific emoji */}
+      <Popover
+        open={Boolean(reactionDetailsAnchorEl)}
+        anchorEl={reactionDetailsAnchorEl}
+        onClose={handleCloseReactionDetails}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+      >
+        <Box sx={{ padding: "8px 12px", maxWidth: "200px" }}>
+          <Typography variant="subtitle2" sx={{ borderBottom: "1px solid #eee", pb: 1, mb: 1 }}>
+            {selectedReactionEmoji} {messageReactions[selectedReactionMessage]?.filter(r => r.emoji === selectedReactionEmoji).length} 
+          </Typography>
+          
+          {/* List of users who reacted with this emoji */}
+          {messageReactions[selectedReactionMessage]?.filter(r => r.emoji === selectedReactionEmoji).map((reaction, index) => (
+            <Box 
+              key={index} 
+              sx={{ 
+                display: "flex", 
+                alignItems: "center", 
+                gap: 1, 
+                mb: 0.5
+              }}
+            >
+              <Typography variant="body2" sx={{ 
+                fontWeight: reaction.userId === student?._id ? 600 : 400,
+                fontSize: "13px"
+              }}>
+                {reaction.userId === student?._id ? "You" : reaction.username}
+              </Typography>
+            </Box>
+          ))}
+          
+          {/* Remove reaction button if the current user has this reaction */}
+          {messageReactions[selectedReactionMessage]?.some(r => r.emoji === selectedReactionEmoji && r.userId === student?._id) && (
+            <Button 
+              variant="text" 
+              size="small" 
+              onClick={() => {
+                handleRemoveReaction(selectedReactionMessage, selectedReactionEmoji);
+                handleCloseReactionDetails();
+              }}
+              sx={{ 
+                mt: 1, 
+                fontSize: "12px",
+                color: "#F44336"
+              }}
+            >
+              Remove
+            </Button>
+          )}
+        </Box>
+      </Popover>
 
       <div ref={messagesEndRef} />
     </Box>

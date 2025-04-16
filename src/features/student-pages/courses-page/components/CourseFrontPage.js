@@ -1,11 +1,13 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Chip, Paper, Grid } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import UpdateIcon from "@mui/icons-material/Update";
 import StarIcon from "@mui/icons-material/Star";
-import { getImageUrl } from "utils/common/imageUtlils";
+import SchoolIcon from "@mui/icons-material/School";
 import LayersOutlinedIcon from "@mui/icons-material/LayersOutlined";
 import TimerOutlinedIcon from "@mui/icons-material/TimerOutlined";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder } from "utils/placeholders";
 
 const isCompleted = (endDate) => {
@@ -27,116 +29,245 @@ const CourseFrontPage = ({ Course }) => {
   const renderCourseCard = (course, isMainCourse = false) => {
     const courseData = isMainCourse ? Course : course;
     return (
-      <Box
+      <Paper
         key={isMainCourse ? Course?._id : course.id}
+        elevation={2}
         sx={{
           mb: 4,
-          p: 3,
-          border: "1px solid #eee",
-          borderRadius: "10px",
-          boxShadow: 2,
-          maxWidth: "400px",
-          backgroundColor: "#f8f9fa",
+          overflow: "hidden",
+          borderRadius: "16px",
           transition: "transform 0.3s, box-shadow 0.3s",
           "&:hover": {
-            transform: "scale(1.02)",
-            boxShadow: 3,
+            transform: "translateY(-5px)",
+            boxShadow: "0 12px 20px rgba(0, 0, 0, 0.1)",
           },
+          maxWidth: "400px",
+          bgcolor: "#ffffff",
         }}
       >
-        <Link to={`/student/courses/${Course?.uuid}`}>
-          <img
-            src={imageUrl}
-            style={{
-              width: "100%",
-              height: "160px",
-              borderRadius: "15px",
-              objectFit: "cover",
-              opacity: 0.9,
+        <Box position="relative">
+          <Link to={`/student/courses/${Course?.uuid}`}>
+            <img
+              src={imageUrl}
+              style={{
+                width: "100%",
+                height: "180px",
+                objectFit: "cover",
+              }}
+              alt="course"
+            />
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                width: "100%",
+                background: "linear-gradient(transparent, rgba(0,0,0,0.7))",
+                padding: "15px",
+              }}
+            >
+              {isMainCourse ? (
+                <Chip 
+                  label="Main Course" 
+                  size="small" 
+                  sx={{ 
+                    bgcolor: "#5611B1", 
+                    color: "white",
+                    fontWeight: "600",
+                  }} 
+                />
+              ) : isCompleted(course?.end_date) ? (
+                <Chip 
+                  label="Completed" 
+                  size="small" 
+                  sx={{ 
+                    bgcolor: "#4caf50", 
+                    color: "white",
+                    fontWeight: "600",
+                  }} 
+                />
+              ) : (
+                <Chip 
+                  label="Active" 
+                  size="small" 
+                  sx={{ 
+                    bgcolor: "#0D6EFD", 
+                    color: "white",
+                    fontWeight: "600",
+                  }} 
+                />
+              )}
+            </Box>
+          </Link>
+        </Box>
+        
+        <Box sx={{ p: 3 }}>
+          <Typography
+            sx={{
+              color: "#1A237E",
+              fontSize: "18px",
+              fontWeight: 700,
+              mb: 1.5,
+              lineHeight: 1.2,
+              height: "45px",
+              display: "-webkit-box",
+              overflow: "hidden",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 2,
             }}
-            alt="course"
-          />
-        </Link>
-        <Typography
-          sx={{
-            color: "#000",
-            fontSize: "18px",
-            fontWeight: 700,
+          >
+            {isMainCourse ? Course?.course_name : course.course_name}
+          </Typography>
+          
+          <Typography 
+            variant="body2" 
+            sx={{ 
+              color: "#666", 
+              fontSize: "14px", 
+              mb: 2,
+              height: "60px",
+              display: "-webkit-box",
+              overflow: "hidden",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 3,
+            }}
+          >
+            {courseData?.description || "Comprehensive course covering all fundamental concepts"}
+          </Typography>
+          
+          <Box sx={{ 
+            display: "flex", 
+            flexDirection: "column", 
+            gap: 1.5,
             mt: 2,
-            mb: 1,
-          }}
-        >
-          {isMainCourse ? Course?.course_name : course.course_name}
-        </Typography>
-        <Typography variant="body2" sx={{ color: "#666", fontSize: "14px", mb: 1 }}>
-          {courseData?.description || "Comprehensive course covering all fundamental concepts"}
-        </Typography>
-        
-        
-        {isMainCourse && (
-          <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
-            <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
-              <LayersOutlinedIcon sx={{ color: "#5611B1" }} />
-              <Typography>{courseData?.coursemodules?.length || 0} modules</Typography>
-            </Box>
-            <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
-              <TimerOutlinedIcon sx={{ color: "#5611B1" }} />
-              <Typography>{courseData?.duration}</Typography>
-            </Box>
+            pt: 2,
+            borderTop: "1px solid #eee"
+          }}>
+            <Grid container spacing={1}>
+              <Grid item xs={6}>
+                <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                  <LayersOutlinedIcon sx={{ color: "#5611B1", fontSize: "18px" }} />
+                  <Typography variant="body2" fontWeight="500">
+                    {courseData?.coursemodules?.length || 0} modules
+                  </Typography>
+                </Box>
+              </Grid>
+              
+              <Grid item xs={6}>
+                <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                  <TimerOutlinedIcon sx={{ color: "#5611B1", fontSize: "18px" }} />
+                  <Typography variant="body2" fontWeight="500">
+                    {courseData?.duration || "N/A"}
+                  </Typography>
+                </Box>
+              </Grid>
+            </Grid>
+            
+            {!isMainCourse && (
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}>
+                <CalendarTodayIcon sx={{ color: "#5611B1", fontSize: "18px" }} />
+                <Typography variant="body2" sx={{ fontStyle: "italic", fontWeight: "500" }}>
+                  {isCompleted(course?.end_date) ? "Completed on: " : "Ends on: "}
+                  <span style={{ color: "#0D6EFD" }}>
+                    {new Date(course.end_date).toLocaleDateString()}
+                  </span>
+                </Typography>
+              </Box>
+            )}
           </Box>
-        )}
-        
-        {!isMainCourse && (
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <Typography variant="body2" sx={{ fontStyle: "italic" }}>
-              Completed:
-            </Typography>
-            <Typography variant="body2" sx={{ color: "#0D6EFD" }}>
-              {new Date(course.end_date).toLocaleDateString()}
-            </Typography>
-          </Box>
-        )}
-      </Box>
+        </Box>
+      </Paper>
     );
   };
 
   return (
-    <Box sx={{ p: "41px 41px 41px 71px", overflowY: "auto", maxHeight: "100vh" }}>
-      <Box sx={{ display: "flex", flexDirection: "column", pr: "90px" }}>
-        <Typography
-          sx={{
-            color: "#1A237E",
-            fontSize: "24px",
-            fontWeight: 900,
-            lineHeight: "32px",
-            fontFamily: "Arial,sans-serif",
-            mb: 3,
+    <Box 
+      sx={{ 
+        p: { xs: "20px", sm: "30px", md: "41px 41px 41px 71px" }, 
+        overflowY: "auto", 
+        maxHeight: "100vh",
+      }}
+    >
+      <Box sx={{ display: "flex", flexDirection: "column", pr: { xs: "20px", sm: "60px", md: "90px" } }}>
+        <Box 
+          sx={{ 
+            display: "flex", 
+            alignItems: "center", 
+            mb: 4,
+            pb: 2,
+            borderBottom: "2px solid #f0f0f0"
           }}
         >
-          Course
-        </Typography>
+          <SchoolIcon 
+            sx={{ 
+              color: "#5611B1", 
+              fontSize: "32px", 
+              mr: 1.5,
+              backgroundColor: "rgba(86, 17, 177, 0.1)",
+              p: 1,
+              borderRadius: "12px"
+            }} 
+          />
+          <Typography
+            sx={{
+              color: "#1A237E",
+              fontSize: "24px",
+              fontWeight: 900,
+              lineHeight: "32px",
+              fontFamily: "Arial,sans-serif",
+            }}
+          >
+            Courses
+          </Typography>
+        </Box>
 
-        <Box id="course-list">
+        <Grid container spacing={3} id="course-list">
           {/* Display all current courses */}
           {currentCourses.length > 0 && 
-            currentCourses.map((course) => renderCourseCard(course))
+            currentCourses.map((course) => (
+              <Grid item xs={12} sm={6} md={4} key={course.id}>
+                {renderCourseCard(course)}
+              </Grid>
+            ))
           }
           
           {/* Display main course if no batches */}
-          {shouldShowMainCourse && renderCourseCard(null, true)}
+          {shouldShowMainCourse && (
+            <Grid item xs={12} sm={6} md={4}>
+              {renderCourseCard(null, true)}
+            </Grid>
+          )}
           
           {/* Display all completed courses */}
           {completedCourses.length > 0 && 
-            completedCourses.map((course) => renderCourseCard(course))
+            completedCourses.map((course) => (
+              <Grid item xs={12} sm={6} md={4} key={course.id}>
+                {renderCourseCard(course)}
+              </Grid>
+            ))
           }
           
           {/* Display a message if no courses at all */}
           {currentCourses.length === 0 && !shouldShowMainCourse && completedCourses.length === 0 && (
-            <Typography sx={{ mt: 3, textAlign: "center", fontSize: "18px", fontWeight: 600 }}>
-              No courses available
-            </Typography>
+            <Grid item xs={12}>
+              <Box 
+                sx={{
+                  mt: 3, 
+                  textAlign: "center", 
+                  p: 5, 
+                  bgcolor: "#fff", 
+                  borderRadius: "16px", 
+                  boxShadow: "0 4px 10px rgba(0,0,0,0.05)"
+                }}
+              >
+                <SchoolIcon sx={{ fontSize: 60, color: "#ccc", mb: 2 }} />
+                <Typography sx={{ fontSize: "18px", fontWeight: 600, color: "#666" }}>
+                  No courses available
+                </Typography>
+              </Box>
+            </Grid>
           )}
-        </Box>
+        </Grid>
       </Box>
     </Box>
   );
