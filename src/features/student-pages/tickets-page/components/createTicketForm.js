@@ -140,27 +140,31 @@ const StudentCreateTicketForm = ({ handleClose }) => {
 
   const handleAttachmentChange = async (event) => {
     try {
-      showSpinner();    
+      showSpinner();
       const file = event.target.files?.[0];
   
+      const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+  
       if (file) {
-        if (file.type !== 'application/pdf') {
-          toast.error("Only PDF files are allowed.");
+        if (!allowedTypes.includes(file.type)) {
+          toast.error("Only PDF or image files (JPG, PNG) are allowed.");
           return;
         }
   
         const form_data = new FormData();
         form_data.append("file", file);
-        const response = await fileUpload(form_data);  
+  
+        const response = await fileUpload(form_data);
         formik.setFieldValue("file", response?.file);
         toast.success("File uploaded successfully");
       }
     } catch (error) {
-      toast.error(error?.message);
+      toast.error(error?.message || "Something went wrong during file upload");
     } finally {
       hideSpinner();
     }
   };
+  
   
   const handleOpen = () => setOpen(true);
   const handleCloseCancel = () => setOpen(false);
