@@ -9,9 +9,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const ChatLog = ({ socket, Messages, messagePagination, setMessagePagination, FetchMessages }) => {
   const student = getStudentDetails();
+  const chatEndRef = useRef(null);
+  const [messages, setMessages] = useState(Messages);
   const messagesEndRef = useRef(null);
-  const messageContainerRef = useRef(null);
   const messageRefs = useRef(new Map());
+  const messageContainerRef = useRef(null);
+  const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
   const [readMessages, setReadMessages] = useState(new Set());
   const [isFetching, setIsFetching] = useState(false);
   const [isUserAtBottom, setIsUserAtBottom] = useState(true);

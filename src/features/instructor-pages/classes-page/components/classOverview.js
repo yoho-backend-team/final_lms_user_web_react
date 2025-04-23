@@ -38,6 +38,7 @@ import { useSpinner } from "context/SpinnerProvider";
 import VideoUpload from "./model/videoUpload";
 import VideoCard from "./card/videoCard";
 
+
 const ClassCard = ({ type, classDetails, getClass,group }) => {
   const navigate = useNavigate();
   const [showAttendance, setShowAttendance] = useState(false);
@@ -507,7 +508,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                   <Box
                     sx={{
                       display: "flex",
-                      gap: "40px",
+                      gap: "20px",
                       flexDirection: "column",
                     }}
                   >
@@ -525,8 +526,10 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                           
                         }}
                       >
-                        {classDetails?.notes?.map((item) => (
+                        {classDetails?.notes?.length > 0 ? (
+                        classDetails?.notes?.map((item) => (
                           <Box
+                            key={item.id}
                             sx={{
                               display: "flex",
                               padding: "14px 20px 14px 5px",
@@ -534,7 +537,6 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                               border: "1px solid #CCCCCC",
                               borderRadius: "8px",
                               gap: "23px",
-                              
                             }}
                           >
                             <Box>
@@ -553,6 +555,7 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                               <Typography>{item?.description}</Typography>
                             </Box>
                             <Box
+                            
                               sx={{
                                 display: "flex",
                                 justifyContent: "flex-end",
@@ -570,15 +573,31 @@ const ClassCard = ({ type, classDetails, getClass,group }) => {
                               />
                             </Box>
                           </Box>
-                        ))}
-                      </Box>
+                        ))
+                      ) :
+(                        
+
+<Typography
+                          sx={{
+                            color: "#828282",
+                            fontSize: "14px",
+                            fontWeight: 400,
+                            textAlign: "center",
+                            width: "100%",
+                            p: 2,
+                          }}
+                        >
+                          No notes available
+                        </Typography>
+                      )}
                     </Box>
+                  </Box>
                     <Box
                       sx={{
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
-                        gap: "33px",
+                        gap: "5px",
                         mr:"500px",
                         
                       }}

@@ -118,7 +118,7 @@ const Attendance = () => {
         instituteId: user.institute_id?.uuid
       });
       setAttendanceData(response?.data);
-      setAttendance(response?.data?.attendanceDetails || []);
+      setAttendance(response?.data?.formattedAttendance?.attendance || []);
     } catch (error) {
       toast.error(error?.message);
     } finally {

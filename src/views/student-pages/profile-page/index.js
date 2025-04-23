@@ -141,7 +141,7 @@ const ProfilePage = () => {
         gender: editedPersonalInfo.gender || personalInfo.gender,
         contact_info: {
           phone_number: editedPersonalInfo.contact || personalInfo.contact_info.phone_number,
-          alternate_phone_number: "+91-1234567890",
+          alternate_phone_number: editedPersonalInfo?.contact_info?.alternate_phone_number ,
           address1: editedPersonalInfo.address1 || personalInfo.contact_info.address1,
           address2: editedPersonalInfo.address2 || personalInfo.contact_info.address2,
           pincode: editedPersonalInfo.pincode || personalInfo.contact_info.pincode,
