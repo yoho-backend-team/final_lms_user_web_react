@@ -77,8 +77,7 @@ const InstructorLoginForm = () => {
           <Input name="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur} required />
           <FormHelperText>{formik.touched.email && formik.errors.email}</FormHelperText>
         </FormControl>
-
-        <FormControl fullWidth margin="normal" error={formik.touched.password && Boolean(formik.errors.password)}>
+          <FormControl fullWidth margin="normal" error={formik.touched.password && Boolean(formik.errors.password)}>
           <InputLabel>Password</InputLabel>
           <Input
             type={showPassword ? "text" : "password"}

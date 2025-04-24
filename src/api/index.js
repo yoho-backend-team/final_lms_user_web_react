@@ -44,8 +44,7 @@ class Client {
       logout: (data) =>
         httpClient.post(
           HTTP_END_POINTS.Student.auth.log_out,{},
-          data,
-          "student"
+          data,"student"
         ),
                   
     course: {
@@ -247,7 +246,7 @@ class Client {
           "instructor"
         ),
       update: (data) =>
-        httpClient.update(
+        httpClient.update(                                                                                                    
           HTTP_END_POINTS.Instructor.class.update + data?.uuid,
           data,
           "instructor"
