@@ -458,7 +458,7 @@ const Attendance = () => {
                     }
                   }}
                   component={Link}
-                  to="/instructor/ticket?create=true"
+                  to="/instructor/tickets?create=true"
                   onClick={handleTicketView}
                 >
                   Create Ticket

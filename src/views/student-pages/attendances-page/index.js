@@ -402,7 +402,7 @@ const Attendance = () => {
                       backgroundColor: "#0D6EFD",
                     }
                   }}
-                  onClick={() => navigate("/student/tickets?create=true")}
+                  onClick={() => navigate("/student/create-ticket")}
                 >
                   Create Ticket
                 </Button>
