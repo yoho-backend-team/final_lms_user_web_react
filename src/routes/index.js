@@ -36,7 +36,7 @@ import NotificationList from "views/instructor-pages/notification-page";
   const StudentInvoice = Loadable(lazy(() => import("features/student-pages/payments-page/components/InvoiceReceipt")))
 
   const StudentProfilePage = Loadable(lazy(() => import("views/student-pages/profile-page")))
-  const StudentCreateTicketPage = Loadable(lazy(() => import("views/student-pages/create-ticket-page")))
+  const StudentCreateTicketPage = Loadable(lazy(() => import("features/student-pages/tickets-page/components/createTicketForm")))
   const StudentTicketViewPage = Loadable(lazy(() => import("views/student-pages/tickets-page")))
   const StudentNotificationList = Loadable(lazy(() => import("views/student-pages/notification-page/index")))
 

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
-  Link,
+  
 } from "@mui/material";
 import { useTabResponsive } from "utils/tabResponsive";
+import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { useSpinner } from "context/SpinnerProvider";
 import { getStudentFees } from "features/student-pages/payments-page/services";
@@ -150,8 +151,9 @@ const PaymentStudentInterface = () => {
             <Box sx={{ textAlign: "end" }}>
               <Typography
                 variant="body1"
-                component={Link}
-                to="/student/tickets"
+                component={RouterLink}
+                to="/student/create-ticket"
+
                 className="raise-ticket"
                 sx={{
                   color: "#0D6EFD",
@@ -160,6 +162,7 @@ const PaymentStudentInterface = () => {
                   lineHeight: "22px",
                   textDecoration: "underline",
                 }}
+                 
               >
                 Raise A Ticket?
               </Typography>

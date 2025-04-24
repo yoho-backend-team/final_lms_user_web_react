@@ -27,6 +27,7 @@ import { getStudentDetails } from "store/atoms/authorized-atom";
 import toast from "react-hot-toast";
 import { useSpinner } from "context/SpinnerProvider";
 import { fileUpload } from "features/common/upload/index.js";
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = yup.object({
   problem: yup.string("Select problem").required("Problem is required"),
@@ -88,6 +89,7 @@ const StudentCreateTicketForm = ({ handleClose }) => {
   const [open, setOpen] = useState(false);
   const { tabView } = useTabResponsive();
   const { showSpinner,hideSpinner} = useSpinner()
+  const navigate = useNavigate();
 
   const problems = [
     { value: "attendance", label: "Attendance Issue" },
@@ -169,10 +171,9 @@ const StudentCreateTicketForm = ({ handleClose }) => {
   const handleOpen = () => setOpen(true);
   const handleCloseCancel = () => setOpen(false);
   const handleCancel = () => {
-    setOpen(false);
+    navigate(-1);
   };
 
-  console.log(formik.errors,"formik")
 
   return (
     <>
@@ -185,7 +186,7 @@ const StudentCreateTicketForm = ({ handleClose }) => {
         }}
       >
         <Box sx={{ display: "flex", gap: "30px", pb: "40px" }}>
-          <Box sx={{ ":hover": { cursor: "pointer" } }} onClick={handleClose}>
+          <Box sx={{ ":hover": { cursor: "pointer" } }} onClick={handleClose || handleCancel}>
             <ArrowBackIcon />
           </Box>
           <Box>
