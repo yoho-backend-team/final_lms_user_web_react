@@ -264,7 +264,7 @@ const CourseStudentDetails = () => {
                           lineHeight: "9.841px"
                         }}
                       >
-                        {feesData?.course?.duration}hrs
+                        {feesData?.course?.duration}
                       </Typography>
                     </Box>
                     
@@ -284,14 +284,15 @@ const CourseStudentDetails = () => {
                         marginLeft: "159px"
                       }}
                     >
-                      ₹ {feesData?.course?.mrp?.toLocaleString()}
+                      {feesData?.course?.mrp?.toLocaleString()}
                     </Typography>
                     
                     {/* Rating and Price */}
                     <Box
                       sx={{
                         display: "flex",
-                        justifyContent: "space-between"
+                        justifyContent: "space-between",
+                        mt:"10px"
                       }}
                     >
                       <Rating rating={feesData?.course?.starrating || 0} />
@@ -304,7 +305,7 @@ const CourseStudentDetails = () => {
                           marginLeft: "-20px"
                         }}
                       >
-                        ( {feesData?.course?.ratingnumber?.toLocaleString()} )
+                        {/* ( {feesData?.course?.ratingnumber?.toLocaleString()} ) */}
                       </span>
                       <Typography
                         variant="body1"
@@ -497,14 +498,14 @@ const CourseStudentDetails = () => {
                         <TableCell>Tuition Amount</TableCell>
                         <TableCell align="right">{feesData?.course_fees} INR</TableCell>
                       </TableRow>
-                      <TableRow>
+                      {/* <TableRow>
                         <TableCell>Software Cost</TableCell>
                         <TableCell align="right">13,000.00 INR</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>GST Tax</TableCell>
                         <TableCell align="right">1,800.00 INR</TableCell>
-                      </TableRow>
+                      </TableRow> */}
                       <TableRow>
                         <TableCell>Paid Amount</TableCell>
                         <TableCell align="right">{feesData?.totalAmount} INR</TableCell>
@@ -512,7 +513,7 @@ const CourseStudentDetails = () => {
                       <TableRow>
                         <TableCell>Pending</TableCell>
                         <TableCell align="right" sx={{ color: "#F00" }}>
-                          ₹{feesData?.pending_payment} INR
+                          {feesData?.pending_payment} INR
                         </TableCell>
                       </TableRow>
                     </TableBody>
@@ -534,6 +535,7 @@ const CourseStudentDetails = () => {
                       fontFamily: "Nunito Sans",
                       fontSize: "14px",
                       fontWeight: 600,
+                      mr:"-30px",
                       textDecorationLine: "underline"
                     }}
                     onClick={handleDownloadPDF1}
