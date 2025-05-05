@@ -164,8 +164,8 @@
 
 import React, { useEffect, useState } from "react";
 import { Box, Typography, useMediaQuery,  Stack} from "@mui/material";
-// import { instructorPaymentCardData } from "data/instructor";
-// import PaymentCard from "features/instructor-pages/payments-page/components/paymentCard";
+import { instructorPaymentCardData } from "data/instructor";
+import PaymentCard from "features/instructor-pages/payments-page/components/paymentCard";
 import { PaymentBg } from "utils/images";
 import PaymentIcon from "@mui/icons-material/Payment";
 import SalaryDetailsTable from "features/instructor-pages/payments-page/components/salaryTable";
@@ -326,7 +326,7 @@ const PaymentInterface = () => {
           </Box>
 
           {/* Payment Cards Section */}
-          {/* <Box
+          <Box
             id="payment-cards"
             sx={{
               display: "flex",
@@ -345,7 +345,7 @@ const PaymentInterface = () => {
                 style={i.style}
               />
             ))}
-          </Box> */}
+          </Box>
 
           {/* Salary Table Section */}
           <Box id="salary-table" sx={{ p: "30px" }}>
