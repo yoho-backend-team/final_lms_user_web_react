@@ -9,71 +9,63 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 const ChatLog = ({ socket, Messages }) => {
   const instructor = getInstructorDetails();
   const chatRef = useRef(null);
-  const messagesEndRef = useRef(null); // Ensure this is declared
-  const messageRefs = useRef(new Map()); // Ensure this is declared
-  const [messages, setMessages] = useState(Messages);
+  const messagesEndRef = useRef(null);
+  const messageRefs = useRef(new Map());
+  const [messages, setMessages] = useState(Messages || []);
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [isWindowFocused, setIsWindowFocused] = useState(document.hasFocus());
   const [readMessages, setReadMessages] = useState(new Set());
 
+  // Handle window focus
   useEffect(() => {
     const handleFocus = () => setIsWindowFocused(true);
     const handleBlur = () => setIsWindowFocused(false);
-
     window.addEventListener("focus", handleFocus);
     window.addEventListener("blur", handleBlur);
-
     return () => {
       window.removeEventListener("focus", handleFocus);
       window.removeEventListener("blur", handleBlur);
     };
   }, []);
 
+  // Observe visibility to mark as read
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && isWindowFocused) {
             const messageId = entry.target.getAttribute("data-id");
-
             if (!readMessages.has(messageId)) {
               setTimeout(() => {
                 if (entry.isIntersecting && isWindowFocused) {
                   triggerMessageRead(messageId);
                 }
-              }, 1500); // Optional delay for confirmation
+              }, 1500);
             }
           }
         });
       },
-      { threshold: 0.8 } // 80% of message must be visible
+      { threshold: 0.8 }
     );
 
     messageRefs.current.forEach((ref) => {
-      if (ref instanceof Element) {
-        observer.observe(ref);
-      }
+      if (ref instanceof Element) observer.observe(ref);
     });
 
-    return () => {
-      observer.disconnect();
-    };
-  }, [Messages, isWindowFocused, readMessages]);
+    return () => observer.disconnect();
+  }, [messages, isWindowFocused, readMessages]);
 
+  // Trigger message read
   const triggerMessageRead = (messageId) => {
-    const msg = Messages.find((m) => m._id === messageId);
-
+    const msg = messages.find((m) => m._id === messageId);
     if (msg && !readMessages.has(messageId)) {
-      const now = new Date();
-      const formattedTime = now.toLocaleTimeString("en-US", { hour12: false });
-
-      console.log(`Message ${messageId} read at ${formattedTime}`);
       socket.emit("messageRead", { messageId, userId: instructor?._id });
       setReadMessages((prev) => new Set([...prev, messageId]));
     }
   };
 
+  // Scroll to bottom
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -84,24 +76,37 @@ const ChatLog = ({ socket, Messages }) => {
     scrollToBottom();
   }, [messages]);
 
+  // Update messages from props
   useEffect(() => {
     setMessages(Messages);
     scrollToBottom();
   }, [Messages]);
 
+  // Listen for message deletion
   useEffect(() => {
     socket.on("messageDeleted", (updatedMessages) => {
       setMessages(updatedMessages);
     });
+
     return () => {
       socket.off("messageDeleted");
     };
   }, [socket]);
 
+  // Listen for new message being received
+  useEffect(() => {
+    socket.on("messageSent", (newMessage) => {
+      setMessages((prev) => [...prev, newMessage]);
+    });
+
+    return () => {
+      socket.off("messageSent");
+    };
+  }, [socket]);
+
+  // Handle message menu
   const handleOpenMenu = (event, messageId, senderId) => {
-    if (senderId !== instructor?._id) {
-      return;
-    }
+    if (String(senderId) !== String(instructor?._id)) return;
     setAnchorEl(event.currentTarget);
     setSelectedMessage(messageId);
   };
@@ -114,7 +119,7 @@ const ChatLog = ({ socket, Messages }) => {
   const handleDeleteMessage = () => {
     if (selectedMessage) {
       socket.emit("deleteMessage", { messageId: selectedMessage, userId: instructor?._id });
-      setMessages((prevMessages) => prevMessages.filter((msg) => msg._id !== selectedMessage));
+      setMessages((prev) => prev.filter((msg) => msg._id !== selectedMessage));
     }
     handleCloseMenu();
   };
@@ -159,71 +164,76 @@ const ChatLog = ({ socket, Messages }) => {
         Messages are end-to-end encrypted. No one outside of this chat can read or listen to them.
       </Box>
 
-      {messages?.map((msg) => (
-        <Grid
-          container
-          key={msg._id}
-          justifyContent={msg.sender === instructor?._id ? "flex-end" : "flex-start"}
-          sx={{ marginBottom: "8px" }}
-          ref={(el) => messageRefs.current.set(msg._id, el)}
-        >
-          <Grid item xs={8} sm={7} md={6}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: msg.sender === instructor?._id ? "flex-end" : "flex-start",
-              }}
-            >
+      {messages.map((msg) => {
+        const isUser = String(msg.sender) === String(instructor?._id);
+        return (
+          <Grid
+            container
+            key={msg._id}
+            justifyContent={isUser ? "flex-end" : "flex-start"}
+            sx={{ marginBottom: "8px" }}
+            ref={(el) => messageRefs.current.set(msg._id, el)}
+          >
+            <Grid item xs={8} sm={7} md={6}>
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  backgroundColor: msg.sender === instructor?._id ? "#61C554" : "#E8ECEF",
-                  borderRadius: "10px",
-                  padding: "10px 15px",
-                  minWidth: "200px",
-                  cursor: "pointer",
+                  alignItems: isUser ? "flex-end" : "flex-start",
                 }}
-                onClick={(event) => handleOpenMenu(event, msg._id, msg.sender)}
               >
-                {msg?.sender !== instructor?._id && (
-                  <Typography sx={{ fontSize: "10px", alignSelf: "start" }}>
-                    {msg.sender_name}
-                  </Typography>
-                )}
-                <Typography
-                  variant="body1"
+                <Box
+                  data-id={msg._id}
                   sx={{
-                    wordBreak: "break-word",
-                    color: msg.sender === instructor?._id ? "white" : "#000000",
-                    fontSize: "14px",
-                    fontWeight: 400,
+                    display: "flex",
+                    flexDirection: "column",
+                    backgroundColor: isUser ? "#61C554" : "#E8ECEF",
+                    borderRadius: "10px",
+                    padding: "10px 15px",
+                    minWidth: "200px",
+                    cursor: isUser ? "pointer" : "default",
                   }}
+                  onClick={(event) => handleOpenMenu(event, msg._id, msg.sender)}
                 >
-                  {msg.message}
-                </Typography>
-                <Typography sx={{ textAlign: "end", fontSize: "11px", marginTop: "3px" }}>
-                  {formatTime(msg?.createdAt)}
-                </Typography>
+                  {!isUser && (
+                    <Typography sx={{ fontSize: "10px", alignSelf: "start" }}>
+                      {msg.sender_name}
+                    </Typography>
+                  )}
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      wordBreak: "break-word",
+                      color: isUser ? "white" : "#000000",
+                      fontSize: "14px",
+                      fontWeight: 400,
+                    }}
+                  >
+                    {msg.message}
+                  </Typography>
+                  <Typography sx={{ textAlign: "end", fontSize: "11px", marginTop: "3px" }}>
+                    {formatTime(msg?.createdAt)}
+                  </Typography>
 
-                {msg.sender === instructor?._id &&
-                  (msg.status?.some((s) => s.delivered) ? (
-                    msg.status?.every((s) => s.read) ? (
-                      <DoneAllIcon sx={{ color: "#0D6EFD", width: "16px" }} />
+                  {isUser &&
+                    (msg.status?.some((s) => s.delivered) ? (
+                      msg.status?.every((s) => s.read) ? (
+                        <DoneAllIcon sx={{ color: "#0D6EFD", width: "16px" }} />
+                      ) : (
+                        <DoneAllIcon sx={{ color: "white", width: "16px" }} />
+                      )
                     ) : (
-                      <DoneAllIcon sx={{ color: "white", width: "16px" }} />
-                    )
-                  ) : (
-                    <DoneIcon sx={{ color: "white", width: "16px" }} />
-                  ))}
-
+                      <DoneIcon sx={{ color: "white", width: "16px" }} />
+                    ))}
+                </Box>
               </Box>
-            </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      ))}
+        );
+      })}
+
       <div ref={messagesEndRef} />
+
       <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleCloseMenu}>
         <MenuItem onClick={handleDeleteMessage}>Delete Message</MenuItem>
       </Menu>

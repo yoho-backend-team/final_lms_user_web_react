@@ -1,6 +1,7 @@
 import { Card, Grid, Box, Typography, CircularProgress } from "@mui/material";
 import { ProgressBgLeft, ProgressBgRight } from "utils/images";
-import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied"; // <-- import an icon
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+
 
 const CourseProgressCard = () => {
   const batches = [
@@ -142,15 +143,15 @@ const CourseProgressCard = () => {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                mt: 10,
+                mt:1,
               }}
             >
-              <SentimentDissatisfiedIcon sx={{ fontSize: 60, color: "#aaa" }} /> {/* Icon */}
+             <InfoOutlinedIcon sx={{ fontSize: 40, color: "#6fa8dc", mb: 2 }} />
               <Typography
                 sx={{
                   color: "#481D0C",
-                  fontWeight: 600,
-                  fontSize: "18px",
+                  fontWeight: 500,
+                  fontSize: "15px",
                   textAlign: "center",
                   mt: 1,
                 }}

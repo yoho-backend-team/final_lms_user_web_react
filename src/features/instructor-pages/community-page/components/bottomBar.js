@@ -5,7 +5,7 @@ import EmojiIcon from "assets/icons/EmojiIcon";
 import EmojiPicker from "./EmojiPicker";
 import { getInstructorDetails } from "store/atoms/authorized-atom";
 
-const BottomBar = ({ socket, community }) => {
+const BottomBar = ({ sendMessage }) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [message, setMessage] = useState("");
   const instructor = getInstructorDetails();
@@ -17,7 +17,6 @@ const BottomBar = ({ socket, community }) => {
         setShowEmojiPicker(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -25,43 +24,29 @@ const BottomBar = ({ socket, community }) => {
   }, []);
 
   const handleEmojiClick = () => {
-    setShowEmojiPicker(!showEmojiPicker);
+    setShowEmojiPicker((prev) => !prev);
   };
 
   const handleEmojiSelect = (emoji) => {
-    setMessage((prevMessage) => prevMessage + emoji.native);
+    setMessage((prev) => prev + emoji.native);
     setShowEmojiPicker(false);
   };
 
   const handleSendClick = () => {
     if (!message.trim()) return;
+    sendMessage(message); // ✅ Use passed-in function
     setMessage("");
     setShowEmojiPicker(false);
-    socket.emit(
-      "sendMessage",
-      {
-        content: message,
-        senderId: instructor?._id,
-        groupId: community?._id,
-        name: instructor?.full_name || instructor?.first_name
-      },
-      (response) => {}
-    );
   };
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event?.key === "Enter" || event?.key === 13) {
-        if (message?.length !== 0) {
-          handleSendClick();
-        }
+      if ((event?.key === "Enter" || event?.keyCode === 13) && message.trim()) {
+        handleSendClick();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [message]);
 
   return (
@@ -76,13 +61,12 @@ const BottomBar = ({ socket, community }) => {
         backgroundColor: "#F6F6F6",
       }}
     >
-      <div ref={emojiPickerRef} style={{ }}>
+      <div ref={emojiPickerRef}>
         <IconButton onClick={handleEmojiClick}>
           <EmojiIcon />
         </IconButton>
-        
         {showEmojiPicker && (
-          <div style={{}}>
+          <div>
             <EmojiPicker onSelect={handleEmojiSelect} />
           </div>
         )}
@@ -100,19 +84,16 @@ const BottomBar = ({ socket, community }) => {
           borderRadius: "20px",
           "& .MuiOutlinedInput-root": {
             paddingRight: 0,
-            boxShadow: "none !important", // Ensures no shadow
+            boxShadow: "none !important",
             "& fieldset": {
               borderColor: "transparent",
             },
             "&:hover fieldset": {
               borderColor: "transparent",
             },
-            "&.Mui-focused": {
-              boxShadow: "none !important", // Removes focus shadow
-            },
             "&.Mui-focused fieldset": {
               borderColor: "transparent !important",
-              boxShadow: "none !important", // Extra safeguard to remove any lingering shadow
+              boxShadow: "none !important",
             },
           },
           "& .MuiOutlinedInput-input": {
@@ -120,7 +101,7 @@ const BottomBar = ({ socket, community }) => {
           },
         }}
         InputProps={{
-          endAdornment: <InputAdornment position="end" />
+          endAdornment: <InputAdornment position="end" />,
         }}
       />
 
