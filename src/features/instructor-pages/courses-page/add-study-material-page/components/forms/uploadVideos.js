@@ -14,78 +14,87 @@ import * as Yup from "yup";
 import { makeStyles } from "@mui/styles";
 import VideoPlayIcon from "assets/icons/course/videoIcon";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
+import { useNavigate } from "react-router-dom"; // Updated import for react-router-dom v6+
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: "flex",
     flexDirection: "column",
-    minHeight: "140px",
     alignItems: "center",
-    padding: "16px",
+    padding: 16,
     border: "2px dashed #6a11cb",
-    borderRadius: "14px",
-    background: "linear-gradient(145deg, rgba(255, 255, 255, 1) 0%, rgba(230, 230, 230, 1) 100%)",
+    borderRadius: "16px",
+    background: "#fafbff",
+    transition: "0.3s",
     cursor: "pointer",
-    transition: "all 0.3s ease",
     "&:hover": {
-      background: "linear-gradient(145deg, rgba(245, 245, 245, 1) 0%, rgba(230, 230, 230, 1) 100%)",
-      transform: "scale(1.03)",
-      boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+      background: "#f1f3ff",
+      boxShadow: "0px 4px 20px rgba(0,0,0,0.08)",
     },
   },
   input: {
     display: "none",
   },
   icon: {
-    fontSize: 48,
-    marginBottom: "8px",
+    fontSize: 42,
     color: "#6a11cb",
   },
-  text: {
-    marginBottom: "8px",
-    fontWeight: "600",
-    color: "#333",
-  },
   browseButton: {
-    marginTop: "8px",
-    background: "linear-gradient(145deg, #6a11cb, #2575fc)",
-    borderRadius: "25px",
+    marginTop: 4,
+    background: "linear-gradient(to right, #6a11cb, #2575fc)",
+    borderRadius: 20,
     color: "#fff",
     fontWeight: 600,
     textTransform: "none",
     "&:hover": {
-      background: "linear-gradient(145deg, #5e10a3, #1f64e3)",
+      background: "linear-gradient(to right, #5a0faa, #1f64e3)",
     },
   },
   cancelButton: {
     border: "1.5px solid #6a11cb",
-    borderRadius: "29px",
+    borderRadius: "25px",
     color: "#6a11cb",
     fontWeight: 600,
-    padding: "10px 24px",
+    padding: "6px 20px",
     "&:hover": {
-      background: "rgba(230, 230, 230, 0.2)",
+      backgroundColor: "#f2f2f2",
     },
   },
   uploadButton: {
-    background: "linear-gradient(145deg, #6a11cb, #2575fc)",
+    background: "linear-gradient(to right, #6a11cb, #2575fc)",
     color: "#fff",
-    borderRadius: "29px",
+    borderRadius: "25px",
     fontWeight: 600,
-    padding: "10px 24px",
+    padding: "6px 20px",
     "&:hover": {
-      background: "linear-gradient(145deg, #5e10a3, #1f64e3)",
+      background: "linear-gradient(to right, #5a0faa, #1f64e3)",
     },
   },
 }));
 
 const UploadVideos = () => {
   const classes = useStyles();
+  const navigate = useNavigate(); // Using useNavigate for navigation
 
+  // Handle file upload logic
   const handleFileUpload = (event) => {
-    // Handle file upload logic here
+    const file = event.currentTarget.files[0];
+    if (file) {
+      const isValidType = file.type.startsWith("video/");
+      const maxSizeMB = 100; // Example: 100MB max size
+      if (!isValidType) {
+        alert("Please select a valid video file.");
+        return;
+      }
+      if (file.size > maxSizeMB * 1024 * 1024) {
+        alert(`File size should be under ${maxSizeMB}MB.`);
+        return;
+      }
+      formik.setFieldValue("file", file);
+    }
   };
 
+  // Formik setup
   const formik = useFormik({
     initialValues: {
       heading: "",
@@ -96,188 +105,101 @@ const UploadVideos = () => {
     },
     validationSchema: Yup.object({
       heading: Yup.string().required("Heading is required"),
-      handledBy: Yup.string().required("Class handled by is required"),
+      handledBy: Yup.string().required("Instructor name is required"),
       date: Yup.date().required("Date is required"),
       time: Yup.string().required("Time is required"),
       file: Yup.mixed().required("File is required"),
     }),
     onSubmit: (values) => {
-      // Form submission logic
+      // Handle file upload (e.g., submit data to API)
+      console.log("Uploading:", values);
+      alert("Video uploaded successfully!");
     },
   });
+
+  // Cancel button logic
+  const handleCancel = () => {
+    formik.resetForm(); // Reset Formik form
+    
+  };
 
   return (
     <Box
       sx={{
         display: "flex",
-        flexDirection: "row",
         width: "100%",
-        px: "20px",
-        pt: "20px",
-        overflow: "auto",
-        pb: "60px",
-        background: "#f4f6f9",  // Light theme background
+        px: 3,
+        pt: 3,
+        pb: 5,
+        background: "#f8f9fb",
       }}
     >
-      <Box sx={{ flexGrow: 1, maxWidth: "50%" }}>
+      <Box sx={{ flex: 1, maxWidth: "500px" }}>
         <Typography
-          variant="h4"
-          component="h1"
-          sx={{
-            mb: 4,
-            color: "#333",
-            fontSize: "28px",
-            fontWeight: "700",
-            lineHeight: "32px",
-          }}
+          variant="h5"
+          sx={{ mb: 2, fontWeight: "700", color: "#222", fontSize: "18px" }}
         >
-          Upload Videos
+          Upload Video
         </Typography>
-        <form
-          onSubmit={formik.handleSubmit}
-          style={{ display: "flex", gap: "20px", flexDirection: "column" }}
-        >
-          <FormControl fullWidth sx={{ mb: 2, maxWidth: "330px" }}>
-            <FormLabel
-              htmlFor="heading"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#333",
-                pb: "6px",
-              }}
-            >
-              Heading
-            </FormLabel>
-            <TextField
-              fullWidth
-              id="heading"
-              name="heading"
-              placeholder="Enter heading"
-              value={formik.values.heading}
-              onChange={formik.handleChange}
-              sx={{
-                "& .MuiInputBase-input": {
-                  color: "#333",
-                },
-                "& fieldset": {
-                  border: "1.5px solid #6a11cb",
-                  borderRadius: "30px",
-                },
-              }}
-              error={formik.touched.heading && Boolean(formik.errors.heading)}
-              helperText={formik.touched.heading && formik.errors.heading}
-            />
-          </FormControl>
 
-          <FormControl fullWidth sx={{ mb: 2, maxWidth: "330px" }}>
-            <FormLabel
-              htmlFor="handledBy"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#333",
-                pb: "6px",
-              }}
-            >
-              Class handled by
-            </FormLabel>
-            <TextField
-              fullWidth
-              id="handledBy"
-              name="handledBy"
-              placeholder="Enter instructor's name"
-              value={formik.values.handledBy}
-              onChange={formik.handleChange}
-              sx={{
-                "& .MuiInputBase-input": {
-                  color: "#333",
-                },
-                "& fieldset": {
-                  border: "1.5px solid #6a11cb",
-                  borderRadius: "30px",
-                },
-              }}
-              error={formik.touched.handledBy && Boolean(formik.errors.handledBy)}
-              helperText={formik.touched.handledBy && formik.errors.handledBy}
-            />
-          </FormControl>
+        <form onSubmit={formik.handleSubmit}>
+          {[
+            { name: "heading", label: "Heading", type: "text", placeholder: "Enter heading" },
+            { name: "handledBy", label: "Class handled by", type: "text", placeholder: "Instructor's name" },
+            { name: "date", label: "Date", type: "date" },
+            { name: "time", label: "Time", type: "time" },
+          ].map(({ name, label, type, placeholder }) => (
+            <FormControl fullWidth sx={{ mb: 2 }} key={name}>
+              <FormLabel sx={{ fontSize: "14px", fontWeight: 600, mb: 1 }}>
+                {label}
+              </FormLabel>
+              <TextField
+                fullWidth
+                id={name}
+                name={name}
+                type={type}
+                placeholder={placeholder}
+                value={formik.values[name]}
+                onChange={formik.handleChange}
+                error={formik.touched[name] && Boolean(formik.errors[name])}
+                helperText={formik.touched[name] && formik.errors[name]}
+                size="small"
+                sx={{
+                  background: "#fff",
+                  borderRadius: "20px",
+                  boxShadow: "0 2px 8px rgba(106, 17, 203, 0.08)",
+                  transition: "0.3s ease-in-out",
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "20px",
+                    "& fieldset": {
+                      borderColor: "#6a11cb",
+                      borderWidth: "1.5px",
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "#5e10a3",
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#2575fc",
+                      boxShadow: "0 0 0 3px rgba(37, 117, 252, 0.15)",
+                    },
+                    "& input": {
+                      padding: "10px 14px",
+                      fontWeight: 500,
+                      color: "#333",
+                    },
+                  },
+                  "& .MuiFormHelperText-root": {
+                    fontSize: "12px",
+                    marginLeft: "8px",
+                    color: "#d32f2f",
+                  },
+                }}
+              />
+            </FormControl>
+          ))}
 
-          <FormControl fullWidth sx={{ mb: 2, maxWidth: "330px" }}>
-            <FormLabel
-              htmlFor="date"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#333",
-                pb: "6px",
-              }}
-            >
-              Date
-            </FormLabel>
-            <TextField
-              fullWidth
-              id="date"
-              name="date"
-              type="date"
-              value={formik.values.date}
-              onChange={formik.handleChange}
-              sx={{
-                "& .MuiInputBase-input": {
-                  color: "#333",
-                },
-                "& fieldset": {
-                  border: "1.5px solid #6a11cb",
-                  borderRadius: "30px",
-                },
-              }}
-              error={formik.touched.date && Boolean(formik.errors.date)}
-              helperText={formik.touched.date && formik.errors.date}
-            />
-          </FormControl>
-
-          <FormControl fullWidth sx={{ mb: 2, maxWidth: "330px" }}>
-            <FormLabel
-              htmlFor="time"
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#333",
-                pb: "6px",
-              }}
-            >
-              Time
-            </FormLabel>
-            <TextField
-              fullWidth
-              id="time"
-              name="time"
-              type="time"
-              value={formik.values.time}
-              onChange={formik.handleChange}
-              sx={{
-                "& .MuiInputBase-input": {
-                  color: "#333",
-                },
-                "& fieldset": {
-                  border: "1.5px solid #6a11cb",
-                  borderRadius: "30px",
-                },
-              }}
-              error={formik.touched.time && Boolean(formik.errors.time)}
-              helperText={formik.touched.time && formik.errors.time}
-            />
-          </FormControl>
-
-          <FormControl fullWidth sx={{ mb: 2, maxWidth: "460px" }}>
-            <FormLabel
-              sx={{
-                fontSize: "16px",
-                fontWeight: 600,
-                color: "#333",
-                pb: "10px",
-              }}
-            >
+          <FormControl fullWidth sx={{ mb: 2 }}>
+            <FormLabel sx={{ fontSize: "14px", fontWeight: 600, mb: 1 }}>
               Upload session / Class video
             </FormLabel>
             <Paper className={classes.root} variant="outlined" component="label">
@@ -287,18 +209,11 @@ const UploadVideos = () => {
                 className={classes.input}
                 onChange={handleFileUpload}
               />
-              <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                 <VideoPlayIcon className={classes.icon} />
                 <Box>
-                  <Typography
-                    variant="subtitle1"
-                    className={classes.text}
-                    sx={{ color: "#333" }}
-                  >
-                    Drag & Drop file
-                  </Typography>
-                  <Typography sx={{ color: "#787380", fontSize: "12px" }}>
-                    or
+                  <Typography fontWeight={600} color="text.primary">
+                    Drag & Drop or
                   </Typography>
                 </Box>
                 <Button
@@ -310,23 +225,21 @@ const UploadVideos = () => {
                 </Button>
               </Box>
             </Paper>
+            {formik.values.file && (
+              <Typography sx={{ mt: 1, fontSize: "14px", color: "#6a11cb", fontWeight: 500 }}>
+                Selected: {formik.values.file.name}
+              </Typography>
+            )}
           </FormControl>
 
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              gap: "20px",
-              maxWidth: "460px",
-            }}
-          >
-            <Button variant="outlined" className={classes.cancelButton}>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
+            <Button className={classes.cancelButton} onClick={handleCancel}>
               Cancel
             </Button>
             <Button
-              variant="contained"
-              type="submit"
               className={classes.uploadButton}
+              type="submit"
+              variant="contained"
               endIcon={<FileUploadOutlinedIcon />}
             >
               Upload
@@ -334,20 +247,31 @@ const UploadVideos = () => {
           </Box>
         </form>
       </Box>
-      <Divider orientation="vertical" flexItem sx={{ mx: 2, bgcolor: "#6a11cb" }} />
+
+      <Divider
+        orientation="vertical"
+        flexItem
+        sx={{
+          mx: 3,
+          borderColor: "#6a11cb", // bright gradient purple theme color
+          ml: "40px",
+          borderWidth: "2px", // make the line bolder
+          opacity: 0.9, // slightly reduce transparency for brightness
+        }}
+      />
+
       <Box
         sx={{
-          flexGrow: 1,
+          flex: 1,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Typography sx={{ color: "#333" }}>No Uploads</Typography>
+        <Typography color="text.secondary">No Uploads</Typography>
       </Box>
     </Box>
   );
 };
 
 export default UploadVideos;
-
