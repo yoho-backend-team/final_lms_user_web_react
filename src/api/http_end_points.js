@@ -94,7 +94,7 @@ const generateEndpoints = () => {
         verify_otp: "/institutes/auth/student/verify-otp",
         forget_password: "/institutes/auth/profile/forgot-password",
         reset_password: "/institutes/auth/profile/reset-password",
-        change_password: "institutes/auth/profile/change-password",
+        change_password: "institutes/auth/student/change-password",
         log_out : "/institutes/auth/student/logout"
       },
       course: {
@@ -143,7 +143,7 @@ const generateEndpoints = () => {
       profile: {
         get: `institutes/auth/profile/me/`,
         // update: `/institutes/auth/student/update/${getStudentDetails()?.uuid}`,
-        update: 'institutes/auth/profile/me/'
+        update: '/institutes/auth/profile/me/'
       },
     },
     common: {

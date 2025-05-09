@@ -12,7 +12,7 @@ const AddStudyMaterialsPage = ({ Course, getCourseDetails }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const [currentSection, setCurrentSection] = useState(queryParams.get("section") || "videos");
+  const [currentSection, setCurrentSection] = useState(queryParams.get("section") || "materials");
 
     useEffect(() => {
       const newSection = queryParams.get("section");

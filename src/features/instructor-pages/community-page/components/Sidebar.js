@@ -15,8 +15,10 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, setMessages
       const community_id = group?._id;
       const instructor = getInstructorDetails();
       const data = { community: community_id };
+      console.log(data,"community data")
       const response = await getInstructorCommunityMessages(data);
-      setMessages(response);
+      console.log(response,"response")
+      setMessages(response.reverse());
       socket.emit("joinGroup", { groupId: community_id, userId: instructor?._id }, (error) => {
         console.log(error, "error");
       });

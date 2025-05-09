@@ -38,11 +38,11 @@ const Chat = ({ currentChat, socket, Messages, setMessages }) => {
     socket.on("disconnect", handleDisconnection);
 
     // Verify message delivery on reload
-    if (Messages.length > 0) {
-      Messages.forEach((msg) => {
-        socket.emit("messageDelivered", msg.id); // Assuming each message has a unique id
-      });
-    }
+    // if (Messages.length > 0) {
+    //   Messages.forEach((msg) => {
+    //     socket.emit("messageDelivered", msg.id); // Assuming each message has a unique id
+    //   });
+    // }
 
     return () => {
       socket.off("newMessage", handleMessage);

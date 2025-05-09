@@ -10,7 +10,7 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import { getImageUrl } from "utils/common/imageUtlils";
 import { imagePlaceholder } from "utils/placeholders";
 
-const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, setMessages }) => {
+const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, setMessages, messagePagination,setMessagePagination }) => {
   const { showSpinner, hideSpinner } = useSpinner();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredCommunities, setFilteredCommunities] = useState(communities);
@@ -27,8 +27,9 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, s
     try {
       showSpinner();
       setCurrentChat(group);
-      const data = await getCommunityMessages({ community: group?._id });
-      setMessages(data);
+      const { data, pagination } = await getCommunityMessages({ community: group?._id });
+      setMessagePagination(pagination)
+      setMessages(data.reverse());
       socket.emit("joinGroup", { groupId: group?._id }, (error) => {
         if (error) console.log(error, "error");
       });
@@ -92,17 +93,13 @@ const SideBar = ({ communities, currentChat, setCurrentChat, socket, Messages, s
                   sx={{ width: 95, height: 70 }}
                 /> */}
                 <Box sx={{ display: "flex", gap: "12px", alignItems: "center" }}>
-  <Avatar
-    src={group?.batch?.course?.image ? getImageUrl(group?.batch?.course?.image) : imagePlaceholder}
-    alt={group?.batch?.batch_name}
-    sx={{
-      width: 80,
-      height: 55,
-      borderRadius: "50%", // Makes it circular like WhatsApp
-      border: "1px solid #ddd", // Subtle border like WhatsApp
-      boxShadow: 1, // Adds a slight shadow for depth
-    }}
-  />
+                <Box>
+                  <img
+                    src={getImageUrl(group?.batch?.course?.image)}
+                    alt={group?.group}
+                    style={{ height: "60px", width: "60px", borderRadius: "50%" }}
+                  />
+                </Box>
   
 
 

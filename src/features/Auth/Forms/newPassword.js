@@ -53,7 +53,7 @@ const EnterNewPassword = () => {
     }
 
     try {
-      const response = await changePassword({ otp: otpAtom, password });
+      const response = await changePassword({ new_password : password,confirm_password:confirmPassword });
       toast.success(response.message);
     } catch (error) {
       console.error("Error resetting password", error);

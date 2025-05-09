@@ -120,9 +120,16 @@ const Attendance = () => {
         userId: user?.uuid, 
         month: month, 
         year: year,
+<<<<<<< HEAD
         instituteId: user?.institute_id?.uuid
       }
       dispatch(getAllAttendances(params_data))
+=======
+        instituteId: user.institute_id?.uuid
+      });
+      setAttendanceData(response?.data);
+      setAttendance(response?.data?.formattedAttendance?.attendance || []);
+>>>>>>> 3b0b1a47c6e2cedb9e576b79b1ae736a7efee0c4
     } catch (error) {
       toast.error(error?.message);
     } finally {
