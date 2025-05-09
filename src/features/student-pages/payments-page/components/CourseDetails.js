@@ -286,59 +286,7 @@ const CourseStudentDetails = () => {
                   {/* Price */}
                   <Box sx={{ textAlign: "right" }}>
                     <Typography
-<<<<<<< HEAD
-                      variant="body1"
-                      sx={{
-                        color: "#000",
-                        fontFamily: "Nunito Sans",
-                        fontSize: "13px",
-                        fontStyle: "normal",
-                        fontWeight: 400,
-                        lineHeight: "20px",
-                        textAlign: "left"
-                      }}
-                    >
-                      {feesData?.fees?.[0]?.institute_id?.institute_name}
-                    </Typography>
-                    
-                    {/* Duration */}
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        paddingTop: "5px"
-                      }}
-                    >
-                      <img
-                        src={hours}
-                        alt="hours"
-                        style={{
-                          width: "9.841px",
-                          height: "9.841px",
-                          marginRight: "5px"
-                        }}
-                      />
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          color: "#000",
-                          fontFamily: "Nunito Sans",
-                          fontSize: "13px",
-                          fontStyle: "normal",
-                          fontWeight: 400,
-                          lineHeight: "9.841px"
-                        }}
-                      >
-                        {feesData?.course?.duration}
-                      </Typography>
-                    </Box>
-                    
-                    {/* MRP */}
-                    <Typography
-                      variant="body1"
-=======
                       variant="body2"
->>>>>>> 3b0b1a47c6e2cedb9e576b79b1ae736a7efee0c4
                       sx={{
                         color: "#474747",
                         fontFamily: "Nunito Sans",
@@ -348,50 +296,11 @@ const CourseStudentDetails = () => {
                         mb: 0.5
                       }}
                     >
-<<<<<<< HEAD
-                      {feesData?.course?.mrp?.toLocaleString()}
-=======
                       ₹{feesData?.course?.mrp?.toLocaleString()}
->>>>>>> 3b0b1a47c6e2cedb9e576b79b1ae736a7efee0c4
                     </Typography>
                     <Typography
                       variant="body1"
                       sx={{
-<<<<<<< HEAD
-                        display: "flex",
-                        justifyContent: "space-between",
-                        mt:"10px"
-                      }}
-                    >
-                      <Rating rating={feesData?.course?.starrating || 0} />
-                      <span
-                        style={{
-                          fontFamily: "Nunito Sans",
-                          fontSize: "13px",
-                          fontWeight: "350",
-                          fontStyle: "normal",
-                          marginLeft: "-20px"
-                        }}
-                      >
-                        {/* ( {feesData?.course?.ratingnumber?.toLocaleString()} ) */}
-                      </span>
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          color: "#009919",
-                          fontFamily: "Nunito Sans",
-                          fontSize: "14px",
-                          fontStyle: "normal",
-                          fontWeight: 800,
-                          lineHeight: "9.841px",
-                          paddingTop: "5px",
-                          marginRight: "-10px"
-                        }}
-                      >
-                        ₹ {feesData?.course?.actual_price.toLocaleString()}
-                      </Typography>
-                    </Box>
-=======
                         color: "#009919",
                         fontFamily: "Nunito Sans",
                         fontSize: "14px",
@@ -400,7 +309,6 @@ const CourseStudentDetails = () => {
                     >
                       ₹{feesData?.course?.actual_price?.toLocaleString()}
                     </Typography>
->>>>>>> 3b0b1a47c6e2cedb9e576b79b1ae736a7efee0c4
                   </Box>
                 </Box>
               </Box>
@@ -524,89 +432,6 @@ const CourseStudentDetails = () => {
 
           <hr style={dividerStyle} />
 
-<<<<<<< HEAD
-            {/* Fee Details Table */}
-            <Grid item xs={12}>
-              <Box sx={{ padding: "0 30px" }}>
-                <TableContainer component={Paper} sx={{ margin: "0 30px" }}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell 
-                          sx={{ 
-                            fontWeight: "bold", 
-                            color: "blue", 
-                            fontFamily: "Nunito Sans" 
-                          }}
-                        >
-                          Description
-                        </TableCell>
-                        <TableCell 
-                          sx={{ 
-                            fontWeight: "bold", 
-                            color: "blue", 
-                            fontFamily: "Nunito Sans" 
-                          }} 
-                          align="right"
-                        >
-                          Amount (INR)
-                        </TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell>Tuition Amount</TableCell>
-                        <TableCell align="right">{feesData?.course_fees} INR</TableCell>
-                      </TableRow>
-                      {/* <TableRow>
-                        <TableCell>Software Cost</TableCell>
-                        <TableCell align="right">13,000.00 INR</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>GST Tax</TableCell>
-                        <TableCell align="right">1,800.00 INR</TableCell>
-                      </TableRow> */}
-                      <TableRow>
-                        <TableCell>Paid Amount</TableCell>
-                        <TableCell align="right">{feesData?.totalAmount} INR</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>Pending</TableCell>
-                        <TableCell align="right" sx={{ color: "#F00" }}>
-                          {feesData?.pending_payment} INR
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-
-                {/* Download Receipt Button */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    marginTop: 2
-                  }}
-                >
-                  <Button
-                    variant="body1"
-                    sx={{
-                      color: "#0051C8",
-                      fontFamily: "Nunito Sans",
-                      fontSize: "14px",
-                      fontWeight: 600,
-                      mr:"-30px",
-                      textDecorationLine: "underline"
-                    }}
-                    onClick={handleDownloadPDF1}
-                  >
-                    Download Receipt
-                  </Button>
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
-=======
           {/* Fee Details Table */}
           <Box sx={{ px: { xs: 1, sm: 3 }, mb: 3 }}>
             <TableContainer 
@@ -703,7 +528,6 @@ const CourseStudentDetails = () => {
               </Button>
             </Box>
           </Box>
->>>>>>> 3b0b1a47c6e2cedb9e576b79b1ae736a7efee0c4
         </Grid>
 
         {/* Right Column - Payment History */}
