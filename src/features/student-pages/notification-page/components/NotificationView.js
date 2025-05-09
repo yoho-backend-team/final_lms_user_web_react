@@ -76,7 +76,7 @@ const NotificationView = ({ selectedNotification, handleDeleteNotification }) =>
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "center",                                                                 
           height: "100vh",
           backgroundColor: "#FFF",
           padding: "24px",

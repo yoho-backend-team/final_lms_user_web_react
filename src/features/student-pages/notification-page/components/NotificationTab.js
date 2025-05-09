@@ -55,7 +55,6 @@ const NotificationTab = ({
         backgroundColor: "#FFF",
         color: "#333",
         borderLeft: "1px solid #E0E0E0",
-        // boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
         ml: "15px",
         mr: "10px"
       }}
@@ -77,9 +76,17 @@ const NotificationTab = ({
           </Typography>
         </Box>
 
+        {/* Search Box */}
         <Paper
           component="form"
-          sx={{ display: 'flex', alignItems: 'center', padding: '6px 12px', borderRadius: '20px', backgroundColor: "#F5F5F5" }}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            padding: '6px 16px',
+            borderRadius: '24px',
+            backgroundColor: "#F9F9F9",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+          }}
         >
           <IconButton sx={{ p: '10px' }}>
             <SearchIcon sx={{ color: "#757575" }} />
@@ -100,7 +107,20 @@ const NotificationTab = ({
         </Tabs>
 
         {/* Notifications List */}
-        <Box sx={{ overflowY: "auto", height: "60vh", padding: "8px" }}>
+        <Box
+          sx={{
+            overflowY: "auto",
+            height: "60vh",
+            padding: "8px",
+            '&::-webkit-scrollbar': {
+              width: '6px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: '#c1c1c1',
+              borderRadius: '10px',
+            },
+          }}
+        >
           {filteredNotifications?.map((notifi) => (
             <Grid
               container
@@ -109,11 +129,15 @@ const NotificationTab = ({
               sx={{
                 padding: "12px",
                 cursor: "pointer",
-                backgroundColor: notifi?._id === selectedNotification?._id ? "#F0F0F0" : "transparent",
-                border: notifi?._id === selectedNotification?._id ? "1px solid #B0BEC5" : "none",
-                borderRadius: "8px",
-                marginBottom: "8px",
+                backgroundColor: notifi?._id === selectedNotification?._id ? "#E3F2FD" : "#FFF",
+                border: "1px solid #E0E0E0",
+                borderRadius: "12px",
+                marginBottom: "10px",
                 alignItems: "center",
+                transition: "0.2s",
+                '&:hover': {
+                  backgroundColor: "#F5F5F5",
+                },
               }}
             >
               <Avatar
@@ -123,17 +147,17 @@ const NotificationTab = ({
                     ? getImageUrl(notifi?.student?.image)
                     : profilePlaceholder
                 }
-                sx={{ width: "40px", height: "40px" }}
+                sx={{ width: "44px", height: "44px" }}
               />
-              <Box sx={{ marginLeft: "12px", flex: 1 }}>
-                <Typography sx={{ fontSize: "14px", fontWeight: 500 }}>
+              <Box sx={{ marginLeft: "14px", flex: 1 }}>
+                <Typography sx={{ fontSize: "15px", fontWeight: 600, color: "#212121" }}>
                   {notifi?.title}
                 </Typography>
-                <Typography sx={{ fontSize: "12px", color: "#757575" }}>
+                <Typography sx={{ fontSize: "13px", color: "#616161", mt: "4px" }}>
                   {notifi?.body}
                 </Typography>
               </Box>
-              <Typography sx={{ fontSize: "11px", color: "#9E9E9E" }}>
+              <Typography sx={{ fontSize: "11px", color: "#B0BEC5" }}>
                 {new Date(notifi?.createdAt).toLocaleTimeString([], {
                   hour: '2-digit',
                   minute: '2-digit',
@@ -141,6 +165,13 @@ const NotificationTab = ({
               </Typography>
             </Grid>
           ))}
+
+          {/* Empty state */}
+          {filteredNotifications?.length === 0 && (
+            <Typography sx={{ fontSize: "14px", color: "#9E9E9E", textAlign: "center", mt: 2 }}>
+              No notifications found.
+            </Typography>
+          )}
         </Box>
       </Box>
     </Box>
