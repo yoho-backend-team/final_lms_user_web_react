@@ -1,37 +1,63 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 
 const StudentHelpCard = ({ section, title, setView, category }) => {
   return (
     <Box
       sx={{
-        borderRadius: "16px",
+        borderRadius: "20px",
         marginBottom: 3,
         width: "100%",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+        boxShadow: "0px 6px 16px rgba(0, 0, 0, 0.06)",
         overflow: "hidden",
         backgroundColor: "white",
+        transition: "transform 0.3s, box-shadow 0.3s",
+        border: "1px solid #F0F0F0",
+        "&:hover": {
+          transform: "translateY(-5px)",
+          boxShadow: "0px 12px 24px rgba(86, 17, 177, 0.15)",
+        },
+        "&:focus-within": {
+          outline: "2px solid #5611B1",
+          outlineOffset: "2px",
+        },
       }}
+      role="article"
+      aria-labelledby={`section-title-${category}`}
     >
       {/* Header Section */}
       <Box
         sx={{
-          padding: "20px",
-          backgroundColor: "#EDE0FF",
-          borderBottom: "1px solid #DADADA",
+          padding: "24px 28px",
+          background: "linear-gradient(135deg, #EDE0FF 0%, #F7F1FF 100%)",
+          borderBottom: "1px solid #F0F0F0",
+          position: "relative",
+          overflow: "hidden",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "4px",
+            background: "linear-gradient(90deg, #5611B1 0%, #9747FF 100%)",
+          },
         }}
       >
         {/* Category Tag */}
         <Typography
+          component="span"
           sx={{
-            padding: "4px 10px",
-            backgroundColor: "#F5F5F5",
-            color: "#646464",
-            fontSize: "12px",
-            fontWeight: 400,
-            borderRadius: "8px",
+            padding: "6px 14px",
+            backgroundColor: "rgba(86, 17, 177, 0.1)",
+            color: "#5611B1",
+            fontSize: "13px",
+            fontWeight: 600,
+            borderRadius: "20px",
             display: "inline-block",
             textTransform: "uppercase",
+            letterSpacing: "0.5px",
+            marginBottom: "16px",
           }}
         >
           {category}
@@ -39,48 +65,78 @@ const StudentHelpCard = ({ section, title, setView, category }) => {
 
         {/* Section Title */}
         <Typography
+          id={`section-title-${category}`}
+          variant="h6"
           sx={{
-            color: "#000000",
-            fontSize: "18px",
-            fontWeight: 600,
-            marginTop: "12px",
-            lineHeight: "1.4",
+            color: "#1A1A1A",
+            fontSize: "22px",
+            fontWeight: 700,
+            lineHeight: 1.3,
+            marginBottom: "8px",
           }}
         >
           {section}
         </Typography>
+
+        {/* Subtitle - using the title prop if available */}
+        {title && (
+          <Typography
+            sx={{
+              color: "#555555",
+              fontSize: "15px",
+              fontWeight: 400,
+              lineHeight: 1.5,
+            }}
+          >
+            {title}
+          </Typography>
+        )}
       </Box>
 
       {/* Content Section */}
       <Box
         sx={{
-          padding: "20px",
+          padding: "24px 28px",
           backgroundColor: "white",
+          display: "flex",
+          justifyContent: "flex-start",
         }}
       >
-        <Typography
+        <Button
           onClick={() => {
             setView(category);
           }}
+          variant="contained"
+          disableElevation
+          aria-label={`View ${category} section`}
           sx={{
-            fontSize: "14px",
-            fontWeight: 500,
-            color: "#5611B1",
-            padding: "10px 20px",
-            borderRadius: "16px",
+            fontSize: "15px",
+            fontWeight: 600,
+            color: "#FFFFFF",
+            padding: "10px 24px",
+            borderRadius: "12px",
             cursor: "pointer",
-            backgroundColor: "#F3EDFF",
-            textAlign: "center",
-            display: "inline-block",
-            transition: "all 0.3s",
+            backgroundColor: "#5611B1",
+            textTransform: "none",
+            transition: "all 0.2s",
+            boxShadow: "0px 4px 8px rgba(86, 17, 177, 0.2)",
             "&:hover": {
-              backgroundColor: "#5611B1",
-              color: "white",
+              backgroundColor: "#4A0E9C",
+              transform: "translateY(-2px)",
+              boxShadow: "0px 6px 12px rgba(86, 17, 177, 0.3)",
+            },
+            "&:active": {
+              backgroundColor: "#400D85",
+              transform: "translateY(0px)",
+              boxShadow: "0px 2px 4px rgba(86, 17, 177, 0.2)",
+            },
+            "&:focus": {
+              boxShadow: "0px 0px 0px 3px rgba(86, 17, 177, 0.3)",
             },
           }}
         >
-          Click to View
-        </Typography>
+          View Details
+        </Button>
       </Box>
     </Box>
   );

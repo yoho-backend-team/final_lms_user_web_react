@@ -274,9 +274,9 @@ setAnchorEl(null);
               <Box
                 variant="h5"
                 component="div"
-                sx={{ display: { xs: "none", sm: "block" } }}
+                sx={{ display: { xs: "none", sm: "block" ,right:"30px"} }}
               >
-                <img src={institute_details ? getImageUrl(institute_details?.image) : imagePlaceholder} alt="logo" height={40} />
+                <img src={institute_details ? getImageUrl(institute_details?.logo) : imagePlaceholder} alt="logo" height={40} />
               </Box>
             </Grid>
     
