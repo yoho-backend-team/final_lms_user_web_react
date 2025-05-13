@@ -4,8 +4,9 @@ import SendIcon from "@mui/icons-material/Send";
 import EmojiIcon from "assets/icons/EmojiIcon";
 import EmojiPicker from "./EmojiPicker";
 import { getInstructorDetails } from "store/atoms/authorized-atom";
+import socket from "utils/socket";
 
-const BottomBar = ({ sendMessage }) => {
+const BottomBar = ({ sendMessage ,community}) => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [message, setMessage] = useState("");
   const instructor = getInstructorDetails();
@@ -34,9 +35,19 @@ const BottomBar = ({ sendMessage }) => {
 
   const handleSendClick = () => {
     if (!message.trim()) return;
-    sendMessage(message); // ✅ Use passed-in function
+    // sendMessage(message); // ✅ Use passed-in function
     setMessage("");
     setShowEmojiPicker(false);
+    socket.emit(
+      "sendMessage",
+      {
+        content: message,
+        senderId: instructor?._id,
+        groupId: community?._id,
+        name: instructor?.full_name || instructor?.first_name
+      },
+      (response) => {}
+    );
   };
 
   useEffect(() => {
