@@ -168,7 +168,7 @@ export default function InstructorNavBar() {
                   justifyContent: "start",
                 }}
               >
-                <img style={{ cursor: "pointer" }} onClick={() => navigate("/instructor/home")} src={getImageUrl(institute_details?.image)} alt={institute_details?.institute_name} height={40} />
+                <img style={{ cursor: "pointer" }} onClick={() => navigate("/instructor/home")} src={getImageUrl(institute_details?.logo)} alt={institute_details?.institute_name} height={40} />
               </Box>
             </Grid>
             <InstructorNavLinks />

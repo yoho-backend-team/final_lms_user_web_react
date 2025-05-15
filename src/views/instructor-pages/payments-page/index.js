@@ -163,10 +163,11 @@
 // export default PaymentInterface;
 
 import React, { useEffect, useState } from "react";
-import { Box, Typography, useMediaQuery } from "@mui/material";
+import { Box, Typography, useMediaQuery,  Stack} from "@mui/material";
 import { instructorPaymentCardData } from "data/instructor";
 import PaymentCard from "features/instructor-pages/payments-page/components/paymentCard";
 import { PaymentBg } from "utils/images";
+import PaymentIcon from "@mui/icons-material/Payment";
 import SalaryDetailsTable from "features/instructor-pages/payments-page/components/salaryTable";
 import { useTabResponsive } from "utils/tabResponsive";
 import updateStaffSalaries from "features/instructor-pages/payments-page/redux/thunks";
@@ -281,19 +282,22 @@ const PaymentInterface = () => {
               textAlign: isTablet ? "center" : "left",
             }}
           >
-            <Typography
-              sx={{
-                color: "#151010",
-                fontSize: isTablet ? "24px" : "28px",
-                fontWeight: "700",
-                lineHeight: "32px",
-              }}
-            >
-              Payment
-            </Typography>
+            <Stack direction="row" alignItems="center" spacing={1}>
+  <PaymentIcon sx={{ color: "#151010", fontSize: isTablet ? 28 : 32 }} />
+  <Typography
+    sx={{
+      color: "#151010",
+      fontSize: isTablet ? "24px" : "28px",
+      fontWeight: "700",
+      lineHeight: "32px",
+    }}
+  >
+    Payment
+  </Typography>
+</Stack>
 
             {/* Raise Ticket Section */}
-            <Box id="raise-ticket" sx={{ textAlign: isTablet ? "center" : "end" }}>
+            {/* <Box id="raise-ticket" sx={{ textAlign: isTablet ? "center" : "end" }}>
               <Typography
                 sx={{
                   color: "#0D6EFD",
@@ -318,7 +322,7 @@ const PaymentInterface = () => {
               >
                 For any queries, please raise your ticket here.
               </Typography>
-            </Box>
+            </Box> */}
           </Box>
 
           {/* Payment Cards Section */}
