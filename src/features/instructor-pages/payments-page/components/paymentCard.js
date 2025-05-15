@@ -11,7 +11,7 @@ const PaymentCard = ({ icon, title, amount, style, border }) => {
   return (
     <Box
       sx={{
-        display: "flex",
+        display: "flex", 
         flexDirection: "row",
         p: "12px 65px 13px 20px",
         border: border && "1px solid #C3C3C3",

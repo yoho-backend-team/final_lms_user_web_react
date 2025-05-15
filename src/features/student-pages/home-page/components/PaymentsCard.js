@@ -149,7 +149,7 @@ const PaymentsCard = () => {
                     >
                       Check Payment
                     </Typography>
-                    <Button
+                    {/* <Button
                       component={Link}
                       to="/student/payment/pay"
                       sx={{
@@ -170,7 +170,7 @@ const PaymentsCard = () => {
                       }}
                     >
                       Pay now
-                    </Button>
+                    </Button> */}
                   </Box>
                 </>
               ) : (
