@@ -22,7 +22,7 @@
     "@mui/icons-material": "^6.1.2",
     "@mui/joy": "^5.0.0-beta.48",
     "@mui/lab": "5.0.0-alpha.128",
-    "@mui/material": "^6.1.2",
+    "@mui/material": "^5.15.18",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@mui/styles": "^5.15.17",
     "@mui/system": "^6.1.2",
