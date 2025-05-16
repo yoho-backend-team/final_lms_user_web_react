@@ -8,14 +8,14 @@ import axios from "axios";
 const MainLayout = () => {
     const user2 = getStudentDetails();
      const user = getInstructorDetails();
-   let Dates = localStorage.getItem('LastRunDate')
-   let LastRunDate;
-   if (typeof Dates == 'string') {
-    LastRunDate = Dates.split('T')[0]
-   }else{
-    LastRunDate = undefined
-   }
-    const DateNow = new Date().toISOString().split('T')[0]
+  //  let Dates = localStorage.getItem('LastRunDate')
+  //  let LastRunDate;
+  //  if (typeof Dates == 'string') {
+  //   LastRunDate = Dates.split('T')[0]
+  //  }else{
+  //   LastRunDate = undefined
+  //  }
+    // const DateNow = new Date().toISOString().split('T')[0]
   function liveupdated(status){
     if(user && status){
        axios.post(`${process.env.REACT_APP_URL}/online`,{user})
@@ -66,11 +66,11 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-if(DateNow != LastRunDate || LastRunDate == undefined){
+// if(DateNow != LastRunDate || LastRunDate == undefined){
 
   if ('serviceWorker' in navigator && 'PushManager' in window) {
     let subscription;
-    const LastRuns = new Date().toISOString();
+    // const LastRuns = new Date().toISOString();
     navigator.serviceWorker.ready
       .then(async (registration) => {
         const sub = await registration.pushManager.getSubscription();
@@ -82,7 +82,7 @@ if(DateNow != LastRunDate || LastRunDate == undefined){
             applicationServerKey: urlBase64ToUint8Array("BPuKg5TjyllZIaWn1l2KlrrBJAixq3QytV1dCHRQ_Q2ct2zF-UsX1wI450TzKVykD5yGmzKpGyl59VrZhlD58lU")
           });
         }
-        localStorage.setItem('LastRunDate',LastRuns)
+        // localStorage.setItem('LastRunDate',LastRuns)
       })
       .then(async (sub) => {
         const endPoint = `${process.env.REACT_APP_BACK_END_URL}notification/subscribe`;
@@ -97,7 +97,7 @@ if(DateNow != LastRunDate || LastRunDate == undefined){
       })
       .catch((error) => console.error('Error subscribing to push notifications', error));
   }
-}
+// }
   },[])
 
   
