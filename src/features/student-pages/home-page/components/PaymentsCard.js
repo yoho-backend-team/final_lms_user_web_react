@@ -5,7 +5,7 @@ import CurrencyRupeeRoundedIcon from "@mui/icons-material/CurrencyRupeeRounded";
 import { Link } from "react-router-dom";
 import { getStudentFees } from "features/student-pages/payments-page/services";
 
-const PaymentsCard = () => {
+const PaymentsCard = ({tabView}) => {
   const [feesData, setFeesData] = useState(null);
 
   useEffect(() => {
@@ -23,7 +23,9 @@ const PaymentsCard = () => {
       <Card
         sx={{
           boxShadow: "none",
-          width: "453px",
+          // width: "453px",
+          width: tabView  ? '400px' : null,
+          // width:'max-content',
           height: "195px",
           display: "flex",
           justifyContent: "space-between",

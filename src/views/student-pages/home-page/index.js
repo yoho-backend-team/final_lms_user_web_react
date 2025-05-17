@@ -27,6 +27,7 @@ import { selectStudentNotifications } from "features/common/redux/studentSelecto
 import { getInstituteDetails, getStudentDetails, getStudentInstituteDetails } from "store/atoms/authorized-atom.js";
 import ReactTour from 'reactour';
 import BackgroundImage from 'assets/images/background/student.png'; 
+import { useTabResponsive } from "utils/tabResponsive.js";
 
 
 const StudentDashboard = () => {
@@ -36,6 +37,7 @@ const StudentDashboard = () => {
   const [isTourOpen, setIsTourOpen] = useState(false);
   const Notification = useSelector(selectStudentNotifications);
   const studentDetails = getStudentInstituteDetails();
+  const { tabView } = useTabResponsive();
 
   const dispatch = useDispatch();
   const reports = useSelector(selectStudentDashboard);
@@ -153,7 +155,6 @@ return (
         p: 3,
       }}
     >
-      <>
         {/* <ReactTour
           steps={steps}
           isOpen={isTourOpen}
@@ -163,9 +164,9 @@ return (
           className="tour"
         /> */}
   
-        <Grid container p={12}>
+        <Grid container p={12} style={{gap: tabView ? "10%" : null}}>
           <Grid item xs={12} sm={4} className="MainGrid-1">
-            <Card sx={{ boxShadow: "none" }}>
+            <Card sx={{ boxShadow: "none" }} style={{width: tabView ? '350px' : null}}>
               <Box>
                 <img
                   src={studentheaderpic}
@@ -371,24 +372,24 @@ return (
                 </Card>
               </Box>
             </Card>
-            <TicketStatusCard />
+            <TicketStatusCard tabView={tabView}/>
           </Grid>
   
           {/* Middle Section */}
-          <Grid item xs={12} sm={6} md={5.5} lg={2} xl={4}>
-            <Grid item xs={12} px={3} mb={2}>
-              <CourseCard />
+          <Grid item xs={12} sm={6} md={5.5} lg={2} xl={4} px={4}>
+            <Grid item xs={12} px={3} mb={2} pb={1}>
+              <CourseCard tabView={tabView}/>
             </Grid>
-            <Grid item xs={12} px={3}>
-              <AttendanceCard />
+            <Grid item xs={12} px={3} py={1}>
+              <AttendanceCard tabView={tabView}/>
             </Grid>
-            <Grid item xs={12} px={3}>
-              <PaymentsCard />
+            <Grid item xs={12} px={3} py={1}>
+              <PaymentsCard tabView={tabView}/>
             </Grid>
           </Grid>
   
           {/* Updates Section */}
-          <Grid item xs={12} sm={4} md={8} lg={2} xl={4} className="MainGrid-3">
+          <Grid item xs={12} sm={4} md={12} lg={2} xl={4} className="MainGrid-3" style={{marginTop:tabView ? '20px' : null}}>
             <UpdatesCard
               image={studentdashboardimage}
               notification={Notification}
@@ -447,7 +448,6 @@ return (
             </Typography>
           </Box>
         </Box>
-      </>
     </Box>
   );
   

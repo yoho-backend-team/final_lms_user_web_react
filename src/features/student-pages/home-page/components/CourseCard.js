@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 import getAllReports from '../redux/thunks';
 import { selectStudentDashboard } from '../redux/selectors';
 
-const CourseCard = () => {
+const CourseCard = ({tabView}) => {
   const dispatch = useDispatch();
   const reports = useSelector(selectStudentDashboard); 
   const { showSpinner, hideSpinner } = useSpinner();
@@ -88,7 +88,8 @@ const CourseCard = () => {
         boxShadow: "0px 0px 30px rgba(53, 177, 48, 0.1)",
         border: "1px",
         borderRadius: "20px",
-        maxWidth: "460px",
+        // maxWidth: "460px",
+        width: tabView ? '400px' : null,
         height: "200px",
       }}
     >
@@ -111,7 +112,7 @@ const CourseCard = () => {
               fontSize: "1.5rem",
               fontWeight: 900,
               mt: 0.1,
-              mr: "251px",
+              // mr: "251px",
               textAlign: "center",
               textShadow: "1px 1px 2px rgba(0,0,0,0.5)", // Added text shadow for readability
             }}

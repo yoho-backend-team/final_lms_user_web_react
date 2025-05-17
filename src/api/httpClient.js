@@ -122,6 +122,12 @@ Axios.interceptors.request.use((config) => {
 
 Axios.interceptors.response.use(
   (response) =>response,
+  (responce)=>{
+  if (responce.response.status === 401) {
+    showSessionExpiredModal();
+  }
+    return Promise.reject(responce);
+  },
   (error) => {
     if (
       error.response &&
