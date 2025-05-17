@@ -8,7 +8,8 @@ export const getInstructorNotifications = (data) => async(dispatch) => {
       const response = await getInstructorNotificationsClient(data)
       dispatch(setNotifications(response))
       } catch (error) {
-        throw new Error(error)
+        // throw new Error(error)
+        console.log("institute notification error",error)
       }finally{
        dispatch(setLoading(false))
       }

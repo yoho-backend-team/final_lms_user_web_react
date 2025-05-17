@@ -17,7 +17,8 @@ export const getInstructorNotificationsClient = async (data) => {
     return response?.data   
     } catch (error) {
       const message = error?.response?.data?.message ? error?.response?.data?.message : error?.message
-      throw new Error(message)  
+      // throw new Error(message)  
+      console.log("institute notification client error ",error)
     }
 }
 

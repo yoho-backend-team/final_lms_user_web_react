@@ -12,6 +12,9 @@ import {
 } from "lib/constants";
 import Cookies from "js-cookie";
 import { getAndDecompress } from "utils/auth_helpers";
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { Modal,Box,Typography,Button } from "@mui/material";
 
 const backendUrl = process.env.REACT_APP_BACK_END_URL;
 
@@ -22,6 +25,76 @@ const Axios = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+const removeSecureItem = (key) => {
+  // secureLocalStorage.removeItem(key);
+  // localStorage.removeItem(key)
+};
+
+export const showSessionExpiredModal = () => {
+  const modalContainer = document.createElement("div");    
+  modalContainer.setAttribute("id", "session-expired-modal"); 
+  document.body.appendChild(modalContainer);
+  const root = createRoot(modalContainer);
+
+  const handleLogout =() => {
+        const modalToRemove = document.getElementById("session-expired-modal");
+        if (modalToRemove) {
+            root.unmount(); 
+            document.body.removeChild(modalToRemove); 
+        }
+
+    console.log("all cleared");
+    const data = Cookies.get(Instructor_Details) || null
+    const datas = Cookies.get(Student_Details) || null
+     if(data){
+      window.location.replace("/instructor/login");
+     }
+     if (datas){
+      window.location.replace("/#/login");
+     }
+      Cookies.remove(isAuthenticatedInstructor)
+      Cookies.remove(isAuthenticatedStudent)
+      Cookies.remove(Instructor_Details);
+      Cookies.remove(Student_Details);
+  };
+
+  root.render(
+      <Modal open={true} sx={{opacity:0.6}}>
+          <Box
+              sx={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  width: 400,
+                  bgcolor: "background.paper",
+                  boxShadow: 24,
+                  p: 4,
+                  borderRadius: 2,
+                  textAlign: "center",
+              }}
+          >
+              <Typography variant="h6">Your session has expired</Typography>
+              <Typography variant="body2" sx={{ mt: 2 }}>
+                  Please log in again to continue.
+              </Typography>
+              <Button 
+                  variant="contained" 
+                  color="primary" 
+                  sx={{ mt: 3 }} 
+                  onClick={handleLogout}
+              >
+                  Logout
+              </Button>
+          </Box>
+      </Modal>
+  );
+};
+
+
+
+
 
 Axios.interceptors.request.use((config) => {
   const instructorUser = getAndDecompress(Instructor_Details)
@@ -48,19 +121,19 @@ Axios.interceptors.request.use((config) => {
 });
 
 Axios.interceptors.response.use(
-  (response) => response,
+  (response) =>response,
   (error) => {
     if (
       error.response &&
       error.response.status === 401 &&
       error.response.statusText === "Unauthorized"
     ) {
-       Cookies.remove(isAuthenticatedInstructor)
-       Cookies.remove(isAuthenticatedStudent)
-       Cookies.remove(Instructor_Details);
-       Cookies.remove(Student_Details);
+      //  Cookies.remove(isAuthenticatedInstructor)
+      //  Cookies.remove(isAuthenticatedStudent)
+      //  Cookies.remove(Instructor_Details);
+      //  Cookies.remove(Student_Details);
+      showSessionExpiredModal();
     }
-    console.log(error,"error")
     return Promise.reject(error);
   },
 );
