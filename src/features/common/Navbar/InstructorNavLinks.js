@@ -100,7 +100,7 @@ const InstructorNavLinks = () => {
               alignItems: "center",
               justifyContent: "center",
               textDecoration: "none",
-              marginTop: "-4rem",
+              marginTop:tabView ? "-6rem" : "-4rem",
               pt: 5,
               transition: "transform 0.3s ease, color 0.3s ease",
               "&:hover": {
