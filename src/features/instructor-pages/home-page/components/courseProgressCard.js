@@ -26,7 +26,7 @@ const CourseProgressCard = () => {
   };
 
   return (
-    <Card sx={{ mt: 3, minHeight: "450px" }}>
+    <Card sx={{ mt: 3}}>
       <Grid
         xs={12}
         sx={{
@@ -38,7 +38,6 @@ const CourseProgressCard = () => {
           p: 2,
           flexDirection: "column",
           height: "100%",
-          minHeight: "450px"
         }}
       >
         <Box>

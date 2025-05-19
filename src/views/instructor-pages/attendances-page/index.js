@@ -263,8 +263,9 @@ const Attendance = () => {
                 lineHeight: "24px",
                 paddingBottom: tabView ? "10px" : "0",
                 ml:"35px",
-                mt:"27px"
+                mt:"27px",
               }}
+          
             >
               Attendance
             </Typography>
@@ -273,7 +274,7 @@ const Attendance = () => {
               onClick={toggleFilter} 
               className={classes.filterIcon}
               sx={{
-                ml:"-120px",
+                ml:"",
                 backgroundColor: "#0D6EFD",
                 borderRadius: "18px",
                 padding: "8px",
@@ -422,7 +423,7 @@ const Attendance = () => {
 
                 <Box 
                   className={classes.statsBox}
-                  sx={{ backgroundColor: "#EBACAC", maxWidth: "40px", minHeight: "120px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" , 
+                  sx={{ backgroundColor: "#EBACAC", minWidth: "180px", minHeight: "120px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" , 
                     transition: "background-color 0.3s ease",
                     '&:hover': {
                       backgroundColor: "#FF6B6B"  // Softer Red on Hover

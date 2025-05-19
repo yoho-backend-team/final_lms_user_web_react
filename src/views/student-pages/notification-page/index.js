@@ -47,7 +47,8 @@ const StudentNotificationList = () => {
                 dispatch(setStudentSelectedNotification(response));
                 dispatch(getAllStudentNotifications());
             } catch (error) {
-                toast.error(`Failed to update notification: ${error.message}`);
+                // toast.error(`Failed to update notification: ${error.message}`);
+                console.log("notification error:",error)
             } finally {
                 hideSpinner();
             }
@@ -65,7 +66,8 @@ const StudentNotificationList = () => {
             toast.success("Notification deleted successfully!");
             dispatch(getAllStudentNotifications());
         } catch (error) {
-            toast.error(`Failed to delete notification: ${error.message}`);
+            // toast.error(`Failed to delete notification: ${error.message}`);
+            console.log("notification delete:",error)
         } finally {
             hideSpinner();
         }

@@ -7,24 +7,11 @@ import toast from 'react-hot-toast';
 import getAllReports from '../redux/thunks';
 import { selectStudentDashboard } from '../redux/selectors';
 
-const GradientCard = styled(Card)(({ theme }) => ({
-  borderRadius: '8px',
-  border: '1px solid #CB89E2',
-  background: 'linear-gradient(106deg, #F1D2FD 36%, #FFE2AB 100%)',
-  boxShadow: '0px 0px 63px 0px rgba(0, 0, 0, 0.10)',
-  width: '100%', 
-  maxWidth: '464px',  
-  height: '150px',
-  marginTop: '25px',
-  padding: '5px',
-  [theme.breakpoints.up('sm')]: {
-    padding: '10px', 
-  },
-}));
+
 
 const Header = styled(Box)({
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'space-around',
   alignItems: 'center',
   marginBottom: '10px',
 });
@@ -51,8 +38,22 @@ const StatusItem = styled(Box)(({ theme, bgColor }) => ({
     },
   }));
 
-const TicketStatusCard = () => {
+const TicketStatusCard = ({tabView}) => {
 
+  const GradientCard = styled(Card)(({ theme }) => ({
+    borderRadius: '8px',
+    border: '1px solid #CB89E2',
+    background: 'linear-gradient(106deg, #F1D2FD 36%, #FFE2AB 100%)',
+    boxShadow: '0px 0px 63px 0px rgba(0, 0, 0, 0.10)',
+    width: tabView? '350px' :'100%', 
+    // maxWidth: '464px',  
+    height: '150px',
+    marginTop: '25px',
+    padding: '5px',
+    [theme.breakpoints.up('sm')]: {
+      padding: '10px', 
+    },
+  }));
   
   const dispatch = useDispatch()
   const reports = useSelector(selectStudentDashboard); 

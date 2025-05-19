@@ -7,7 +7,8 @@ const getAllStudentNotifications = (params) => async (dispatch) => {
     const response = await getStudentNotifications()
     dispatch(setStudentNotifications(response))   
     } catch (error) {
-      throw new Error(error)  
+      // throw new Error(error)  
+      console.log("get all notification error",error)
     } finally{
         dispatch(setLoading(false))
     }

@@ -125,7 +125,7 @@ const InstructorDashBoard = () => {
         className="tour" // Add a class for custom styling
       /> */}
       <Grid item xs={tabView ? 6 : 3.2} className="MainGrid-1">
-        <Card>
+        <Card style={{height:"630px", width: tabView ? "410px" : undefined}}>
           <Box>
             <img
               src={StudentBg1}
@@ -138,6 +138,7 @@ const InstructorDashBoard = () => {
               display: "flex",
               alignContent: "center",
               justifyContent: "space-between",
+              marginTop: '20px'
             }}
           >
             <Grid xs={8}>
@@ -208,7 +209,7 @@ const InstructorDashBoard = () => {
               </Button>
             </Grid>
           </Grid>
-          <Grid container>
+          <Grid container style={{ marginTop: '20px'}}>
             <Grid item xs={12} alignItems="center">
               <Typography variant="h4" sx={{ mb: 1, mx: { xs: 3, sm: 5 } }}>
                 Class
@@ -277,6 +278,7 @@ const InstructorDashBoard = () => {
                 border: "1px solid ",
                 borderColor: theme.palette.secondary.main,
                 backgroundColor: "#DFC7FF",
+                marginTop: '20px'
               }}
             >
               <Grid
@@ -286,6 +288,7 @@ const InstructorDashBoard = () => {
                   display: "flex",
                   alignItems: "center",
                   p: 2,
+                  marginTop: '20px'
                 }}
               >
                 <Grid item xs={6}>
@@ -306,6 +309,7 @@ const InstructorDashBoard = () => {
                       fontSize: 12,
                       color: "#330076",
                       mt: 2,
+                      marginTop: '20px'
                     }}
                   >
                     {reports?.institute?.institute_name}, Vellore
@@ -321,12 +325,13 @@ const InstructorDashBoard = () => {
             </Card>
           </Box>
         </Card>
-        {tabView ? <CourseProgressCard /> : <TicketCard ticket={reports?.tickets} />}
+        {/* {tabView ? <CourseProgressCard /> : null} */}
       </Grid>
       {!tabView && (
         <Grid item sm={3.3} className="MainGrid-2">
           <AttendanceCard Attendance={reports?.attendance} />
           <CourseProgressCard />
+          <TicketCard ticket={reports?.tickets} />
         </Grid>
       )}
       {!tabView && (
@@ -338,9 +343,16 @@ const InstructorDashBoard = () => {
       )}
       {tabView && (
         <Grid item xs={6}>
-          <UpdatesCard image={UpdateCardBg} notification={NotificationList} />
+          {/* <UpdatesCard image={UpdateCardBg} notification={NotificationList} /> */}
           <AttendanceCard Attendance={reports?.attendance} />
+          <CourseProgressCard /> 
           <TicketCard ticket={reports?.tickets} />
+        </Grid>
+      )}
+
+      {tabView && (
+        <Grid item xs={12} style={{marginTop:'20px'}}>
+          <UpdatesCard image={UpdateCardBg} notification={NotificationList} />
         </Grid>
       )}
       <Box sx={{ display: 'flex', backdropFilter: "blur(4px)", padding: "25px 60px 26px 58px", background: "#CCCCCC29", borderRadius: "8px", justifyContent: "space-between", width: "inherit" }}>

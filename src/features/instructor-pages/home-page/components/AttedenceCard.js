@@ -4,9 +4,10 @@ import Chart from "react-apexcharts";
 import { Card, Box } from "@mui/material";
 import { AttedenceBg } from "utils/images";
 
-const AttendanceCard = ({ Attendance }) => {
+const AttendanceCard = ({ Attendance ,tabView}) => {
   const current_month = new Date().getMonth();
   const attendance_data = Attendance?.find((atten) => atten.month === current_month);
+  const cardh = tabView ? "0px" : "202px"
 
   const options = {
     chart: {
@@ -59,8 +60,8 @@ const AttendanceCard = ({ Attendance }) => {
     backgroundColor: "#fff", 
     border: "1px solid #ddd",
     borderRadius: "8px",
-    width: "369px",
-    height: "202px",
+    // width: "369px",
+    height: tabView ? "302px" : "202px",
     overflow: "hidden", 
     boxSizing: "border-box", 
     borderBottom: "1px solid #ddd", 

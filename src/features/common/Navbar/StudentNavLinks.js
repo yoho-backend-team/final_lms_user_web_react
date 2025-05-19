@@ -86,13 +86,13 @@ const StudentNavLinks = ({ student }) => {
     >
       <Box sx={{ position: "absolute" }}>
         <img
-         src={tabView ? NavMobileBg : NavReplace}
+         src={tabView ? NavReplace : NavReplace}
           style={{
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
-            marginTop: isSmallScreen ? "-64px" : "18px"
-
+            marginTop: isSmallScreen ? "-64px" : "18px",
+            width: tabView ? "600px" : undefined,
           }}
           alt="nav background"
         />
@@ -106,8 +106,7 @@ const StudentNavLinks = ({ student }) => {
           padding: tabView ? "25px 45px 45px 45px" : 7,
           borderBottomLeftRadius: 80,
           borderBottomRightRadius: 80,  
-          marginTop:  "55px",       
-          
+          marginTop: tabView ? "0px" :"55px",       
         }}
       >
         {nav_items.map((item) => (

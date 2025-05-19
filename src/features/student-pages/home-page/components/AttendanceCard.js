@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 import getAllReports from '../redux/thunks';
 import { selectStudentDashboard } from '../redux/selectors';
 
-const AttendanceCard = ({ Attendance }) => {
+const AttendanceCard = ({ Attendance ,tabView}) => {
 
     
   const dispatch = useDispatch()
@@ -79,7 +79,9 @@ const AttendanceCard = ({ Attendance }) => {
       p: 3,
       boxShadow: "0px 0px 64px 0px rgba(0, 0, 0, 0.2)",
       background: "#BAA3E8",
-      width: "455px",
+      // width: "455px",
+      width: tabView ? '400px' : null,
+      // width:'max-content',
       height: "202px",
       borderRadius: "16px",
       border: "1px solid #BAA3E8",
